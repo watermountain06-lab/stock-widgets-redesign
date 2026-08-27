@@ -880,7 +880,7 @@
         <div class="subscore-label"><span>밸류에이션</span><span class="subscore-max">18.2/33</span></div>
         <div class="subscore-val">18.2</div>
         <div class="subscore-bar"><div class="subscore-bar-fill" style="width:55.2%;"></div></div>
-        <div class="subscore-desc">PER·PBR·목표주가 종합 2.8/5단계 — PBR은 피어 대비 매우 높지만(자본효율 격차) 목표주가는 낮은 편(1단계)</div>
+        <div class="subscore-desc">PER·PBR·목표주가 종합 2.8/5단계(낮을수록 저평가) — PBR은 피어 대비 매우 높지만(자본효율 격차) 목표주가 상승여력은 큰 편(1단계·+32.7%)</div>
       </div>
       <div class="subscore-box">
         <div class="subscore-label"><span>재무건전성</span><span class="subscore-max">25.1/33</span></div>
@@ -902,7 +902,7 @@
       <span>재무 데이터 기준일 2024-12-31(FY2024 20-F)</span>
       <span class="scorecard-disclaimer">서술적 스냅샷 지표 - 지금 저평가·재무건전성·성장성이 어느 수준인지 요약할 뿐이며, 향후 수익률과의 상관관계는 검증하지 않았습니다. 기술점수와의 단순평균도 순위·매수판단용이 아닙니다.</span>
     </div>
-    <div style="margin-top:8px;font-size:10.5px;color:var(--text3);line-height:1.5;">※ 다른 5개 티커는 SEC us-gaap XBRL(10-K/10-Q)로 산출되나, TSM은 20-F/IFRS 공시라 표준 파이프라인이 자동 지원하지 않는다. 이 점수는 <code>fetch_financials.py</code> 자동수집이 아니라, TSM의 SEC EDGAR ifrs-full 태그(Revenue/ProfitLossFromOperatingActivities/Assets 등, FY2017~2024 8개년)를 직접 조회해 같은 v1.0.0 산식에 수동으로 대입한 결과다 — 임의 추정치가 아닌 실제 공시 수치 기반이지만, 소스 파이프라인이 다른 유일한 티커라는 점은 밝혀둔다.</div>
+    <div style="margin-top:8px;font-size:10.5px;color:var(--text3);line-height:1.5;">※ 다른 5개 티커는 SEC us-gaap XBRL(10-K/10-Q)로 산출되나, TSM은 20-F/IFRS 공시라 표준 파이프라인이 자동 지원하지 않는다. 이 점수는 <code>fetch_financials.py</code> 자동수집이 아니라, TSM의 SEC EDGAR ifrs-full 태그(Revenue/ProfitLossFromOperatingActivities/Assets 등, FY2017~2024 8개년)를 직접 조회해 같은 v1.0.0 산식에 수동으로 대입한 결과다 — 임의 추정치가 아닌 실제 공시 수치 기반이지만, 소스 파이프라인이 다른 유일한 티커라는 점은 밝혀둔다. 밸류에이션 축(18.2/33)도 다른 5개 티커의 "5년 자체 PER/PBR 이력" 기준이 아니라 이 카드 #valuation 탭의 순수 파운드리 피어(UMC·GFS) 앵커 스테이지를 그대로 재사용한 것이라, 총점을 다른 티커와 직접 비교할 때는 이 방법론 차이를 감안해야 한다.</div>
   </div>
 
   <div class="card">
