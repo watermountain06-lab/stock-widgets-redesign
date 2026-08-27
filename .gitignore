@@ -1,0 +1,7 @@
+scripts/
+data/
+prototypes/
+.claude/
+__pycache__/
+*.pyc
+.DS_Store
