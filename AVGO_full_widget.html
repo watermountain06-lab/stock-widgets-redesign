@@ -870,9 +870,47 @@
     </div>
   </div>
 
-  <div class="card" style="background:rgba(154,160,184,0.06);border-style:dashed;">
-    <div class="card-title">기본 점수(펀더멘털 스코어) — 이번 티커는 미산출</div>
-    <div style="font-size:11.5px;color:var(--text2);line-height:1.6;">이 사이트의 기본 점수 v1.0.0(<code>compute_fundamental_score.py</code>)이 참조하는 라이브 저장소의 <code>valuation_signals.json</code>은 asOf 2026-08-14 시점의 stale한 PER(82.39x, 당시가 $392.99 기준 GAAP TTM EPS $4.77 — FY25 연간치를 그대로 쓴 값으로 확인됨)을 담고 있어, 이번 세션에서 새로 검증한 수치(EPS $6.01, PER 60.8x)와 맞지 않는다. 잘못된 입력으로 점수를 내는 대신 이 카드는 미산출로 남긴다 — 라이브 파이프라인이 갱신되면 그때 채운다.</div>
+  <div class="scorecard">
+    <div class="scorecard-top">
+      <div>
+        <div class="scorecard-score"><span class="num">69.7</span><span class="denom">/100</span></div>
+      </div>
+      <div class="scorecard-verdict">
+        <div><span class="scorecard-grade grade-positive">재무 기본점수 · 양호 구간</span></div>
+        <div class="scorecard-noOpp-inline">기술 45 · 평균 57.4</div>
+      </div>
+    </div>
+    <div class="scorecard-bar"><div class="scorecard-bar-fill" style="width:69.7%;"></div></div>
+    <div class="scorecard-subtitle">3축(밸류에이션·재무건전성·성장·수익성) 종합, 100점 만점 환산 · 모델 v1.0.0 산식 동결 2026-08-25</div>
+
+    <div class="scorecard-subscores">
+      <div class="subscore-box">
+        <div class="subscore-label"><span>밸류에이션</span><span class="subscore-max">20.6/33</span></div>
+        <div class="subscore-val">20.6</div>
+        <div class="subscore-bar"><div class="subscore-bar-fill" style="width:62.4%;"></div></div>
+        <div class="subscore-desc">PER 3단계·PBR 4단계, 목표주가는 애널리스트 49명 컨센서스 기준 1단계(+44%) — 종합 2.5/5단계</div>
+      </div>
+      <div class="subscore-box">
+        <div class="subscore-label"><span>재무건전성</span><span class="subscore-max">18.5/33</span></div>
+        <div class="subscore-val">18.5</div>
+        <div class="subscore-bar"><div class="subscore-bar-fill" style="width:56.1%;"></div></div>
+        <div class="subscore-desc">유동비율 170.5%·이자보상배율 7.9x는 양호하나, VMware 인수로 부채비율 110.5%·차입금의존도 39.2%까지 레버리지 상승</div>
+      </div>
+      <div class="subscore-box">
+        <div class="subscore-label"><span>성장·수익성</span><span class="subscore-max">30.6/34</span></div>
+        <div class="subscore-val">30.6</div>
+        <div class="subscore-bar"><div class="subscore-bar-fill" style="width:90.0%;"></div></div>
+        <div class="subscore-desc">매출 CAGR +24.3%·영업이익률 39.9%·순이익률 36.2%로 고성장·고수익 동시 충족</div>
+      </div>
+    </div>
+
+    <div class="scorecard-noflags">ℹ️ 데이터 상태 · 주요 재무지표가 기준 커버리지를 충족합니다</div>
+
+    <div class="scorecard-footer">
+      <span>재무 데이터 기준일 2025-11-02(FY2025 10-K)</span>
+      <span class="scorecard-disclaimer">서술적 스냅샷 지표 - 지금 저평가·재무건전성·성장성이 어느 수준인지 요약할 뿐이며, 향후 수익률과의 상관관계는 검증하지 않았습니다. 기술점수와의 단순평균도 순위·매수판단용이 아닙니다.</span>
+    </div>
+    <div style="margin-top:8px;font-size:10.5px;color:var(--text3);line-height:1.5;">※ 라이브 저장소의 <code>valuation_signals.json</code>은 이 카드의 AVGO 항목이 stale해(asOf 2026-08-14, FY25 연간 GAAP EPS $4.77 기준 PER 82.39x — 이번 세션에서 검증한 TTM 기준 EPS $6.01·PER 60.8x와 다름) 대신 이 카드 #valuation 탭에 이미 검증된 스테이지 숫자를 로컬로 대입해 산출했다. 밸류에이션 축(20.6/33)은 다른 5개 티커의 "5년 자체 PER/PBR 이력" 기준이 아니라 반도체·SW 피어(MRVL·ORCL, 매출비중 68:32 가중평균) 앵커 스테이지라서, 총점을 다른 티커와 직접 비교할 때는 이 방법론 차이를 감안해야 한다.</div>
   </div>
 
   <div class="card">
