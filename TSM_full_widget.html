@@ -398,9 +398,29 @@
     .bull-bear { grid-template-columns: 1fr; }
   }
 
+  body { padding-top: 46px; }
+  .back-bar { position: fixed; top: 0; left: 0; right: 0; height: 46px; background: rgba(10,11,17,0.92); backdrop-filter: blur(8px); border-bottom: 1px solid var(--border); z-index: 1000; display: flex; align-items: center; justify-content: space-between; padding: 0 20px; }
+  .back-bar-left { display: flex; align-items: center; gap: 8px; text-decoration: none; }
+  .back-bar-logo { width: 20px; height: 20px; border-radius: 5px; background: var(--accent2); flex-shrink: 0; }
+  .back-bar-left span { color: var(--text2); font-size: 12.5px; font-weight: 600; transition: color 0.2s; }
+  .back-bar-left:hover span { color: var(--accent2); }
+  .back-bar-right { display: flex; align-items: center; gap: 16px; font-size: 12px; }
+  .back-bar-nav { color: var(--text2); text-decoration: none; font-weight: 600; transition: color 0.2s; }
+  .back-bar-nav:hover { color: var(--accent2); }
+  .back-bar-nav.disabled { color: var(--text3); pointer-events: none; }
+  .back-bar-current { color: var(--text); font-weight: 700; padding: 4px 10px; background: var(--bg3); border-radius: 6px; white-space: nowrap; }
 </style>
 </head>
 <body>
+<div class="back-bar">
+  <a class="back-bar-left" href="index.html"><span class="back-bar-logo"></span><span>[사이트명] · 전체 종목 목록</span></a>
+  <div class="back-bar-right">
+    <a class="back-bar-nav" href="AMZN_full_widget.html">◀ AMZN</a>
+    <span class="back-bar-current">TSM · 시총 6위</span>
+    <span class="back-bar-nav disabled">다음 ▶</span>
+  </div>
+</div>
+
 <!-- HEADER -->
 <div class="header">
   <div class="header-top">
