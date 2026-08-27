@@ -50,8 +50,6 @@
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', -apple-system, sans-serif; font-size: 14px; line-height: 1.6; }
   .page { max-width: 1100px; margin: 0 auto; padding: 28px 32px; }
-  .proto-banner { background: rgba(159,219,47,0.1); border: 1px solid var(--accent3); border-radius: 8px; padding: 10px 16px; margin-bottom: 20px; font-size: 12px; color: var(--text2); }
-  .proto-banner b { color: var(--accent2); }
 
   .section-title { font-size: 16px; font-weight: 700; color: var(--accent2); margin-bottom: 20px; padding-bottom: 10px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 8px; }
   .section-title::before { content: ''; width: 4px; height: 18px; background: var(--accent); border-radius: 2px; display: inline-block; }
@@ -141,8 +139,6 @@
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', -apple-system, sans-serif; font-size: 14px; line-height: 1.6; }
   .page { max-width: 1100px; margin: 0 auto; padding: 28px 32px; }
-  .proto-banner { background: rgba(159,219,47,0.1); border: 1px solid var(--accent3); border-radius: 8px; padding: 10px 16px; margin-bottom: 20px; font-size: 12px; color: var(--text2); }
-  .proto-banner b { color: var(--accent2); }
 
   .section-title { font-size: 16px; font-weight: 700; color: var(--accent2); margin-bottom: 20px; padding-bottom: 10px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 8px; }
   .section-title::before { content: ''; width: 4px; height: 18px; background: var(--accent); border-radius: 2px; display: inline-block; }
@@ -239,8 +235,6 @@
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', -apple-system, sans-serif; font-size: 14px; line-height: 1.6; }
   .page { max-width: 1100px; margin: 0 auto; padding: 28px 32px; }
-  .proto-banner { background: rgba(159,219,47,0.1); border: 1px solid var(--accent3); border-radius: 8px; padding: 10px 16px; margin-bottom: 20px; font-size: 12px; color: var(--text2); }
-  .proto-banner b { color: var(--accent2); }
 
   .section-title { font-size: 16px; font-weight: 700; color: var(--accent2); margin-bottom: 20px; padding-bottom: 10px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 8px; }
   .section-title::before { content: ''; width: 4px; height: 18px; background: var(--accent); border-radius: 2px; display: inline-block; }
@@ -310,8 +304,6 @@
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', -apple-system, sans-serif; font-size: 14px; line-height: 1.6; }
   .page { max-width: 1100px; margin: 0 auto; padding: 28px 32px; }
-  .proto-banner { background: rgba(159,219,47,0.1); border: 1px solid var(--accent3); border-radius: 8px; padding: 10px 16px; margin-bottom: 20px; font-size: 12px; color: var(--text2); }
-  .proto-banner b { color: var(--accent2); }
 
   .section-title { font-size: 16px; font-weight: 700; color: var(--accent2); margin-bottom: 20px; padding-bottom: 10px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 8px; }
   .section-title::before { content: ''; width: 4px; height: 18px; background: var(--accent); border-radius: 2px; display: inline-block; }
@@ -371,8 +363,6 @@
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', -apple-system, sans-serif; font-size: 14px; line-height: 1.6; }
   .page { max-width: 1100px; margin: 0 auto; padding: 28px 32px; }
-  .proto-banner { background: rgba(159,219,47,0.1); border: 1px solid var(--accent3); border-radius: 8px; padding: 10px 16px; margin-bottom: 20px; font-size: 12px; color: var(--text2); }
-  .proto-banner b { color: var(--accent2); }
 
   .section-title { font-size: 16px; font-weight: 700; color: var(--accent2); margin-bottom: 20px; padding-bottom: 10px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 8px; }
   .section-title::before { content: ''; width: 4px; height: 18px; background: var(--accent); border-radius: 2px; display: inline-block; }
@@ -405,9 +395,6 @@
 </style>
 </head>
 <body>
-<div class="page" style="max-width:1100px;margin:0 auto;padding:16px 32px 0;">
-  <div class="proto-banner"><b>조립본</b> — stock-widgets 재설계, NVDA 5개 탭(#tech/#fund/#valuation/#news/#invest) 최초 통합 조립. 각 탭 프로토타입 파일의 최종 확정 내용을 그대로 이관(내용 변경 없음), 구조적으로 다음만 새로 추가/조정: (1) 헤더(티커/가격/52주/통계 5개 필드)·"핵심 투자 논리" 배너·nav — 라이브 NVDA_analysis_widget.html의 마크업을 그대로 재사용하되 헤더 통계 필드에서 CEO 항목 제외(분석적 가치가 낮고, 향후 다른 티커 카드에도 일관 적용할 필드 집합에서 우선순위가 낮다고 판단 — 시가총액/섹터/TTM매출/EPS(TTM)/배당수익률 5개로 통일). (2) nav는 5개 탭만 유지(#us 폐지 확정 반영, 재설계 계획대로). (3) "핵심 투자 논리" 배너는 스크롤 고정(sticky)이 아니라 그냥 nav 위, 모든 탭에서 공통으로 보이는 고정 위치 배치(라이브 위젯과 동일 동작). (4) 탭 전환 시 차트 지연 렌더링(renderCharts 컨트롤러) — 라이브 위젯의 동일 패턴을 그대로 재사용, #fund/#valuation 차트가 숨겨진 탭에서 0-크기로 렌더링되는 걸 방지. (5) CSS 클래스 충돌 2건 수정: ①.tag-current를 #tech(현재가 마커, 골드)와 #fund(분기 신기록 배지, 초록)가 같은 이름으로 다른 색을 쓰고 있어서 #fund쪽을 .tag-record로 개명. ②.detail-toggle/.collapsible-body가 #fund(margin-top:2px, 라이브 위젯과 동일한 원본)와 #invest(margin-top:10px, 이번 세션에서 만들 때 값이 달라짐)에 중복 정의돼 있어서 #fund쪽(원본)만 남기고 #invest 쪽 중복 제거. 각 탭 개별 프로토타입 파일(NVDA_*_tab.html)의 proto-banner에 담긴 세부 변경 이력·근거는 그대로 남아있으니 참고. [2026-08-23 소급 수정] MSFT·GOOGL 빌드 때 정한 "자본배분·주주환원 카드는 회사별로 실제 의미 있는 요소만 담는다"는 기준에 맞춰 재작성 — 잔여 바이백 한도가 SEC 10-Q Note 12 원문과 다른 잘못된 값($62.2B+, 근거 불명)이었던 걸 발견해 실제 값($38.5B, 2026.04.26 기준)으로 정정. 자사주매입 액수도 현금흐름표 기준($19.3B)에서 자본거래 노트 기준($20.2B, 통상 매입 규모 언급 시 표준)으로 통일, "분기 신기록" 태그는 2015년 이후 전 분기 데이터로 직접 재검증(직전 최고 $14.5B 대비 실제 최대). 분기 마감 후(2026.5.18) 발표된 배당 25배 인상($0.01→$0.25)·$80B 추가 매입승인 이벤트를 배당 항목에 태그로 반영. 라이브 stock-widgets 저장소와는 무관한 로컬 시안 — 구조가 최종 확정되면 그때 라이브에 반영.</div>
-</div>
 <!-- HEADER -->
 <div class="header">
   <div class="header-top">
