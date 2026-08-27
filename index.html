@@ -202,15 +202,16 @@
 
   function renderRank(){
     if(DATA.length===0) return emptyState();
-    var cols = '56px 300px 130px 110px 100px 44px';
-    var head = '<div class="head-grid" style="grid-template-columns:'+cols+';max-width:780px;">'
-      + '<div class="head-cell">순위</div><div class="head-cell">종목</div><div class="head-cell">업종</div>'
+    var cols = '56px 300px 130px 1fr 110px 100px 44px';
+    var head = '<div class="head-grid" style="grid-template-columns:'+cols+';max-width:900px;">'
+      + '<div class="head-cell">순위</div><div class="head-cell">종목</div><div class="head-cell">업종</div><div></div>'
       + '<div class="head-cell num" style="text-align:right;">현재가</div><div class="head-cell num" style="text-align:right;">등락률</div><div></div></div>';
     var rows = DATA.map(function(d){
-      return '<div class="row-grid" data-href="'+d.href+'" style="grid-template-columns:'+cols+';max-width:780px;">'
+      return '<div class="row-grid" data-href="'+d.href+'" style="grid-template-columns:'+cols+';max-width:900px;">'
         + '<div class="num" style="font-size:13.5px;color:var(--text2);font-weight:600;">'+d.rank+'</div>'
         + nameCell(d)
         + '<div><span class="tag">'+d.sector+'</span></div>'
+        + '<div></div>'
         + '<div class="num" style="font-size:14.5px;font-weight:700;text-align:right;">'+d.price+'</div>'
         + '<div style="text-align:right;">'+changeCell(d.change)+'</div>'
         + '<div class="star-cell">'+STAR+'</div></div>';
@@ -220,7 +221,7 @@
 
   function renderSector(){
     if(DATA.length===0) return emptyState();
-    var cols = '300px 120px 100px 44px';
+    var cols = '300px 1fr 120px 100px 44px';
     var bySector = {};
     var order = [];
     DATA.forEach(function(d){
@@ -231,8 +232,9 @@
     order.forEach(function(sec){
       out += '<div class="sector-head">'+sec+' <span style="font-weight:400;color:var(--text3);">'+bySector[sec].length+'</span></div>';
       out += bySector[sec].map(function(d){
-        return '<div class="row-grid" data-href="'+d.href+'" style="grid-template-columns:'+cols+';max-width:604px;">'
+        return '<div class="row-grid" data-href="'+d.href+'" style="grid-template-columns:'+cols+';max-width:900px;">'
           + nameCell(d)
+          + '<div></div>'
           + '<div class="num" style="font-size:14.5px;font-weight:700;text-align:right;">'+d.price+'</div>'
           + '<div style="text-align:right;">'+changeCell(d.change)+'</div>'
           + '<div class="star-cell">'+STAR+'</div></div>';
