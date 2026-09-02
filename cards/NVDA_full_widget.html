@@ -494,14 +494,6 @@
     <div style="font-size:11px;color:var(--text3);margin-top:10px;" id="techRangeSummary">52주 최저 $164.07 (2025.09) → 52주 최고 $236.54 (2026.05) → 현재 $225.14</div>
   </div>
 
-  <!-- ══════════ 1.5 예상밴드 백테스트 8종목 교차검증 (2026-09-02, NVDA 단독 검증에 대한 신뢰도 보강) ══════════ -->
-  <div class="card" style="margin-bottom:16px;">
-    <div class="card-title">"비싸지면 밴드 상단 이탈" 판단, 실제로 신뢰할 만한가 — 8종목 교차검증</div>
-    <div style="font-size:12px;color:var(--text2);line-height:1.7;margin-top:8px;">
-      8개 대형 테크주(AAPL·AMZN·AVGO·GOOGL·META·MSFT·NVDA·TSLA)의 2021~2026년 데이터로 "비싸다"는 신호가 이후 수익률과 실제로 관련 있는지 확인했다. 3~6개월 구간에서는 약한 관련성이 나타났지만, 종목 간 공통 흐름을 걷어낸 더 엄격한 검정에서는 통계적으로 유의하지 않았다. 관측 기간이 짧고 시장 국면도 제한적이라 매매 판단의 근거로 삼기엔 이르다.
-    </div>
-  </div>
-
   <!-- ══════════ 2. 기술 상태 스코어카드 ══════════ -->
   <div class="scorecard">
     <div class="scorecard-top">
@@ -1694,7 +1686,8 @@ const NVDA_BACKTEST = [{"checkpoint_date":"2023-08-28","predicted_low":18.33,"pr
         backtestSummaryEl.innerHTML = `<strong style="color:#f0c040;">예상밴드 백테스트</strong> — 체크포인트 ${resolved.length}개 중 `
           + `<strong style="color:#2ecc71;">적중 ${hit}개</strong> · <strong style="color:#e74c3c;">상단 이탈 ${top}개</strong> · <strong style="color:#e74c3c;">하단 이탈 ${bot}개</strong>`
           + (both ? ` · 양쪽 이탈 ${both}개` : '')
-          + `. 그 시점까지 발표된 재무제표만으로 예상 가격대를 계산해, 이후 실제 주가가 그 범위 안에 있었는지 확인한 결과다(미래 정보 미사용). 노란 점선 구간은 진행 중.`;
+          + `. 그 시점까지 발표된 재무제표만으로 예상 가격대를 계산해, 이후 실제 주가가 그 범위 안에 있었는지 확인한 결과다(미래 정보 미사용). 노란 점선 구간은 진행 중.`
+          + ` 참고로 같은 방식을 8개 대형 테크주 전체에 적용해봐도, "비싸지면 이후 수익률이 낮다"는 신호는 약했고 통계적으로 뚜렷하지 않았다.`;
       } else {
         backtestSummaryEl.style.display = 'none';
       }
