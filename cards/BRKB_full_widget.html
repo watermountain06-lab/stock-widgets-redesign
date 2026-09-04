@@ -1317,7 +1317,7 @@ const BRKB_BACKTEST = [{"checkpoint_date":"2023-11-06","predicted_low":278.81,"p
         const top = resolved.filter(cp=>cp.zone==='breached_top').length;
         const bot = resolved.filter(cp=>cp.zone==='breached_bottom').length;
         const both = resolved.filter(cp=>cp.zone==='breached_both').length;
-        const epsCaveat = ` <span style="color:#f0c040;">⚠ 버크셔 GAAP EPS는 2022년 보유 지분증권 평가손실로 한때 마이너스 근접까지 떨어졌다 — 이 기간(2022.08~2023.08)은 PER을 무의미하게 부풀려 트레일링 PER 표본에서 수동으로 제외했다(자동 감지 아님, 실제 확인된 비영업 왜곡 구간).</span>`;
+        const epsCaveat = ` <span style="color:#f0c040;">⚠ 버크셔 GAAP EPS는 2022년 보유 지분증권 평가손실로 한때 마이너스 근접까지 떨어졌다(ASU 2016-01은 상시 적용 규정이지만 이 시기엔 영향이 극단적이었음) — 이 기간(2022.08~2023.08)은 PER을 무의미하게 부풀려 트레일링 PER 표본에서 수동으로 제외했다(자동 감지 아님, 실제 확인된 비영업 왜곡 구간). 남은 밴드는 통계적 신뢰구간이 아니라 정제된 과거 PER 분포의 경험적 범위다 — 특히 표본이 아직 적은 초반 체크포인트일수록 실제 변동폭을 과소평가할 수 있다.</span>`;
         backtestSummaryEl.style.display = 'block';
         backtestSummaryEl.innerHTML = `<strong style="color:#f0c040;">예상밴드 백테스트</strong> — 체크포인트 ${resolved.length}개 중 `
           + `<strong style="color:#2ecc71;">적중 ${hit}개</strong> · <strong style="color:#e74c3c;">상단 이탈 ${top}개</strong> · <strong style="color:#e74c3c;">하단 이탈 ${bot}개</strong>`
