@@ -785,7 +785,7 @@
   <div class="grid-2">
     <div class="card">
       <div class="card-title">멀티플 5단계 평가</div>
-      <div style="font-size:10.5px;color:var(--text3);line-height:1.5;margin:-4px 0 14px;">※ PER·PBR 2개만 5단계 평가에 반영(가중치 1.0). PSR·PCR·EV/EBITDA는 아래 각 항목에 적은 구조적 이유로 5단계 평가·종합판단에서 제외(가중치 0)했다 — 실제 배수는 참고용으로 계속 표시한다.</div>
+      <div style="font-size:10.5px;color:var(--text3);line-height:1.5;margin:-4px 0 14px;">※ 종합판정에는 PER·PBR만 반영하며(가중치 1.0), PSR·PCR·EV/EBITDA는 각 항목에 적은 구조적 이유로 참고용으로만 표시한다.</div>
 
       <div class="val-item" data-metric="per" onclick="selectMultiple('per')">
         <div class="val-header"><span class="val-name">PER (조정, TTM)</span><div style="display:flex;align-items:center;gap:8px;"><span class="val-number">24.9x</span><span class="stage-badge stage-3">3단계 적정</span></div></div>
@@ -881,7 +881,7 @@
       <span>재무 데이터 기준일 2025-12-31(FY2025 10-K)</span>
       <span class="scorecard-disclaimer">서술적 스냅샷 지표 - 지금 저평가·재무건전성·성장성이 어느 수준인지 요약할 뿐이며, 향후 수익률과의 상관관계는 검증하지 않았습니다. 기술점수와의 단순평균도 순위·매수판단용이 아닙니다.</span>
     </div>
-    <div style="margin-top:8px;font-size:10.5px;color:var(--text3);line-height:1.5;">※ 이 카드는 이 저장소 공용 파이프라인(<code>scripts/fundamental_scores/BRK_B_fundamental_score.json</code>, 2026-09-04 기준 최신 산출물)의 결과를 그대로 전재했다. 위 "멀티플 5단계 평가" 카드(자체 10년 역사+컨센서스 앵커, 2026.06.30 실적 기준)와는 완전히 별개의 모델·다른 기준일이라 두 판정이 다를 수 있으며 — 실제로 이 카드는 "저평가", 위 카드는 "적정"으로 서로 다르게 나온다. 이는 오류가 아니라 서로 다른 입력·산식을 쓰는 두 시스템이 각자 독립적으로 계산한 결과다.</div>
+    <div style="margin-top:8px;font-size:10.5px;color:var(--text3);line-height:1.5;">※ 공용 파이프라인(<code>scripts/fundamental_scores/BRK_B_fundamental_score.json</code>, 2026-09-04 산출) 결과를 그대로 전재 — 위 "멀티플 5단계 평가" 카드(2026.06.30 실적 기준)와 산식·기준일이 달라 판정도 다르게 나온다(이 카드 "저평가" vs 위 카드 "적정").</div>
   </div>
 
   <div class="card">
@@ -1317,13 +1317,12 @@ const BRKB_BACKTEST = [{"checkpoint_date":"2023-11-06","predicted_low":292.94,"p
         const top = resolved.filter(cp=>cp.zone==='breached_top').length;
         const bot = resolved.filter(cp=>cp.zone==='breached_bottom').length;
         const both = resolved.filter(cp=>cp.zone==='breached_both').length;
-        const epsCaveat = ` <span style="color:#f0c040;">⚠ 버크셔의 GAAP EPS에는 ASU 2016-01에 따라 애플 등 보유 지분증권(상장주식) 투자의 미실현 평가손익이 순이익으로 반영되므로 분기별 변동성이 매우 크다(2022년에는 이 영향으로 TTM EPS가 한때 마이너스로 전환되기도 했다). 이 백테스트는 다른 티커와 동일하게 공시된 GAAP EPS를 그대로 사용하므로, 특히 2023~2024년 체크포인트의 예상 가격대가 매우 넓거나 불규칙하게 나타난다 — 주로 기초 EPS와 그에 따른 PER 분포의 변동성이 반영된 결과다. 버크셔가 별도로 제시하는 "영업이익"(#fund 탭 참고) 기준으로 계산하면 밴드가 더 안정적일 수 있지만, 종목 간 방법론을 통일하기 위해 별도 조정하지 않았다.</span>`;
+        const epsCaveat = ` <span style="color:#f0c040;">⚠ 버크셔 GAAP EPS는 보유 지분증권 평가손익 반영으로 변동성이 커 2022년엔 한때 마이너스로 전환됐다 — 그 여파로 2023~2024년 일부 구간은 EPS가 0에 근접해 PER 밴드가 비정상적으로 넓어지며, 이 구간의 "적중"은 밴드 자체가 넓어 쉽게 맞은 것에 가깝다(예측력 지표로 보기 어려움).</span>`;
         backtestSummaryEl.style.display = 'block';
         backtestSummaryEl.innerHTML = `<strong style="color:#f0c040;">예상밴드 백테스트</strong> — 체크포인트 ${resolved.length}개 중 `
           + `<strong style="color:#2ecc71;">적중 ${hit}개</strong> · <strong style="color:#e74c3c;">상단 이탈 ${top}개</strong> · <strong style="color:#e74c3c;">하단 이탈 ${bot}개</strong>`
           + (both ? ` · 양쪽 이탈 ${both}개` : '')
-          + `. 그 시점까지 발표된 재무제표만으로 예상 가격대를 계산해, 이후 실제 주가가 그 범위 안에 있었는지 확인한 결과다(미래 정보 미사용). 노란 점선 구간은 진행 중.`
-          + ` 참고로 같은 방식을 8개 대형 테크주 전체에 적용해봐도, "비싸지면 이후 수익률이 낮다"는 신호는 약했고 통계적으로 뚜렷하지 않았다.`
+          + `(과거 시점 재무제표만 사용, 미래 정보 미사용, 노란 점선은 진행 중).`
           + epsCaveat;
       } else {
         backtestSummaryEl.style.display = 'none';

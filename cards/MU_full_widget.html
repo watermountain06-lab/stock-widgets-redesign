@@ -820,7 +820,7 @@
   <div class="grid-2">
     <div class="card">
       <div class="card-title">멀티플 5단계 평가</div>
-      <div style="font-size:10.5px;color:var(--text3);line-height:1.5;margin:-4px 0 14px;">※ 밴드는 메모리 반도체 사이클 저점~고점의 역사적 배수 범위로 설정(피어 가중평균 방식이 아님) — TSM/AVGO식 "피어 앵커"나 NVDA/AAPL식 "5년 자체 이력" 어느 쪽도 아닌 세 번째 방식. TTM GAAP 지표(PER 포함)는 현재의 극단적 마진 확장(GM 35%→85%)이 사이클 정점 부근의 일시적 현상일 수 있다는 점을 감안해서 봐야 한다 — 이 우려는 카드 본문에 명시했다.</div>
+      <div style="font-size:10.5px;color:var(--text3);line-height:1.5;margin:-4px 0 14px;">※ 밴드는 메모리 반도체 사이클 저점~고점의 역사적 배수 범위로 설정(피어 가중평균 방식이 아님). TTM GAAP 지표(PER 포함)는 현재의 극단적 마진 확장(GM 35%→85%)이 사이클 정점 부근의 일시적 현상일 수 있다는 점을 감안해서 볼 것.</div>
 
       <div class="val-item" data-metric="per" onclick="selectMultiple('per')">
         <div class="val-header"><span class="val-name">PER (GAAP, TTM)</span><div style="display:flex;align-items:center;gap:8px;"><span class="val-number">21.7x</span><span class="stage-badge stage-2">2단계 낮음</span></div></div>
@@ -916,14 +916,14 @@
       <span>재무 데이터 기준일 2025-08-28(FY2025 10-K, 연간 지표 기준)</span>
       <span class="scorecard-disclaimer">서술적 스냅샷 지표 - 지금 저평가·재무건전성·성장성이 어느 수준인지 요약할 뿐이며, 향후 수익률과의 상관관계는 검증하지 않았습니다. 기술점수와의 단순평균도 순위·매수판단용이 아닙니다.</span>
     </div>
-    <div style="margin-top:8px;font-size:10.5px;color:var(--text3);line-height:1.5;">※ 라이브 저장소의 <code>valuation_signals.json</code>에는 MU 항목이 없어, 이 카드 #valuation 탭에 이미 검증된 스테이지 숫자(PER 2단계·PBR 4단계·목표주가 1단계)를 로컬로 대입해 산출했다. 재무건전성·성장·수익성 두 축은 스크립트가 연간(FY) 데이터만 사용하도록 설계돼 있어 Q3 FY26의 극적인 개선분(차입금 급감, 마진 폭발)이 아직 반영되지 않았다 — 위 서술에서 그 차이를 명시했다.</div>
+    <div style="margin-top:8px;font-size:10.5px;color:var(--text3);line-height:1.5;">※ 재무건전성·성장·수익성 두 축은 연간(FY2025) 데이터 기준이라 Q3 FY26의 최근 개선분(차입금 급감, 마진 폭발)이 아직 반영되지 않았다.</div>
   </div>
 
   <div class="card">
     <div class="card-title">종합 밸류에이션</div>
     <div class="verdict-summary-head">종합 판단 <span class="tag mixed">적정 — Forward PER은 메모리 피어와 동급, PBR만 사이클 프리미엄</span></div>
     <div class="verdict-summary-body">GAAP TTM PER(21.7x)·EV/EBITDA(15.6x)는 밴드 2단계(낮음)에 머물고, PSR(12.0x)·PCR(41.3x)은 3단계(적정) — <strong style="color:var(--text);">5개 지표 중 PBR을 제외하면 고평가로 보기 어렵다</strong>. Forward PER(FY2027E 컨센서스 EPS $155 기준) 6.2x는 SK하이닉스(~6.4~6.8x)·삼성전자(~5.7x) Forward PER과 거의 같아 메모리 피어 대비 프리미엄이 없다. <strong style="color:var(--text);">PBR(10.7x)만 4단계(높음)로 뚜렷한 프리미엄</strong>인데, 이는 장부가가 최근 폭발적 이익 증가분을 아직 다 흡수하지 못한 결과에 가깝다.</div>
-    <div class="verdict-summary-risk">⚠️ 이 판정 전체가 "지금의 마진(GM 84.6%)이 사이클 정점이 아니라 새로운 정상 수준"이라는 전제에 기대고 있다 — 과거 메모리 사이클처럼 마진이 되돌아간다면 지금 "낮음"으로 보이는 Trailing PER·EV/EBITDA도 사실은 고점 이익 기준의 착시였다는 게 드러날 수 있다.</div>
+    <div class="verdict-summary-risk">⚠️ 낮게 보이는 Trailing PER·EV/EBITDA는 지금의 높은 마진(GM 84.6%)이 유지될 때만 유효하다 — 과거 사이클 수준으로 마진이 되돌아가면 두 배수 모두 크게 상승할 수 있다.</div>
   </div>
 </div>
 <div id="news" class="section">
@@ -1357,9 +1357,8 @@ const MU_BACKTEST = [{"checkpoint_date":"2024-10-04","predicted_low":4.96,"predi
         backtestSummaryEl.innerHTML = `<strong style="color:#f0c040;">예상밴드 백테스트</strong> — 체크포인트 ${resolved.length}개 중 `
           + `<strong style="color:#2ecc71;">적중 ${hit}개</strong> · <strong style="color:#e74c3c;">상단 이탈 ${top}개</strong> · <strong style="color:#e74c3c;">하단 이탈 ${bot}개</strong>`
           + (both ? ` · 양쪽 이탈 ${both}개` : '')
-          + `. 그 시점까지 발표된 재무제표만으로 예상 가격대를 계산해, 이후 실제 주가가 그 범위 안에 있었는지 확인한 결과다(미래 정보 미사용). 노란 점선 구간은 진행 중.`
-          + ` 참고로 같은 방식을 8개 대형 테크주 전체에 적용해봐도, "비싸지면 이후 수익률이 낮다"는 신호는 약했고 통계적으로 뚜렷하지 않았다.`
-          + ` MU는 체크포인트 간 TTM EPS가 $0.70~$44.17로 약 63배 변했다. 예상 밴드 폭도 1.66~8.00배로 편차가 컸으며 중앙값은 5.97배였다. 완료된 7개 구간에서는 상단 및 하단 이탈이 각각 3개 구간에서 관찰됐다(양쪽 이탈 1개 포함). 이는 실적 변동이 큰 구간에서 트레일링 PER 기반 밴드의 예측력이 제한될 수 있음을 보여준다.`;
+          + `(과거 시점 재무제표만 사용, 미래 정보 미사용, 노란 점선은 진행 중).`
+          + ` <span style="color:#f0c040;">⚠ MU는 체크포인트 간 TTM EPS가 최대 63배($0.70~$44.17) 변동해 예상 밴드 폭도 1.66~8.00배(중앙값 5.97배)로 편차가 컸다 — 실적 변동이 큰 구간에서는 트레일링 PER 밴드의 예측력이 제한적일 수 있다.</span>`;
       } else {
         backtestSummaryEl.style.display = 'none';
       }
