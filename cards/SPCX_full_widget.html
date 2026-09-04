@@ -1,0 +1,941 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SPCX 종합 분석 위젯 (재설계 조립본 v1, WIP — 상장 초기 데이터 제한)</title>
+<style>
+
+  /* HEADER (라이브 NVDA_analysis_widget.html에서 재사용) */
+  .header { background: linear-gradient(135deg, #101a05 0%, #0f1117 40%, #1a1d27 100%); border-bottom: 2px solid var(--accent3); padding: 28px 32px 24px; position: relative; overflow: hidden; max-width: 1100px; margin: 0 auto; }
+  .box-key { background: rgba(118,185,0,0.1); border: 1px solid var(--accent3); border-radius: 10px; padding: 12px 16px; max-width: 1100px; margin: 0 auto 16px; }
+  .header::before { content: ''; position: absolute; top: -60px; right: -60px; width: 240px; height: 240px; background: radial-gradient(circle, rgba(118,185,0,0.14) 0%, transparent 70%); pointer-events: none; }
+  .header-top { display: flex; align-items: flex-start; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
+  .ticker-block { display: flex; align-items: center; gap: 16px; }
+  .ticker-badge { background: linear-gradient(135deg, var(--accent3), var(--accent)); color: #0f1117; font-size: 13px; font-weight: 800; padding: 5px 12px; border-radius: 6px; letter-spacing: 1px; }
+  .company-name { font-size: 22px; font-weight: 700; color: var(--text); }
+  .company-sub { font-size: 12px; color: var(--text3); margin-top: 2px; }
+  .price-block { text-align: right; }
+  .price-main { font-size: 32px; font-weight: 800; color: var(--accent2); letter-spacing: -1px; }
+  .price-change { font-size: 13px; color: var(--red); font-weight: 600; }
+  .header-meta { display: flex; justify-content: space-between; gap: 16px; margin-top: 16px; flex-wrap: wrap; }
+  .meta-item { display: flex; flex-direction: column; }
+  .meta-label { font-size: 11px; color: var(--text3); text-transform: uppercase; letter-spacing: 0.8px; }
+  .meta-value { font-size: 14px; font-weight: 600; color: var(--text2); margin-top: 2px; }
+  .meta-value.highlight { color: var(--accent2); }
+
+  /* NAV */
+  .nav { display: flex; justify-content: space-between; gap: 4px; padding: 12px 32px; background: var(--bg2); border-bottom: 1px solid var(--border); overflow-x: auto; scrollbar-width: none; max-width: 1100px; margin: 0 auto; }
+  .nav::-webkit-scrollbar { display: none; }
+  .nav-btn { background: none; border: none; color: var(--text3); font-size: 12px; font-weight: 600; padding: 7px 14px; border-radius: 20px; cursor: pointer; white-space: nowrap; transition: all 0.2s; letter-spacing: 0.3px; }
+  .nav-btn:hover { color: var(--text); background: var(--bg3); }
+  .nav-btn.active { background: var(--accent3); color: var(--accent2); }
+
+  /* SECTIONS (tab show/hide) */
+  .section { display: none; padding: 28px 32px; max-width: 1100px; margin: 0 auto; }
+  .section.active { display: block; }
+
+
+
+/* ══════ #tech ══════ */
+  :root {
+    --bg: #0f1117; --bg2: #1a1d27; --bg3: #22263a; --border: #2e3347;
+    --text: #e8eaf0; --text2: #9aa0b8; --text3: #5c6282;
+    --accent: #76b900; --accent2: #9fdb2f; --accent3: #4d7a00;
+    --ma5: #ff6b9d; --ma20: #9b59b6; --ma60: #f0c040; --ma120: #22d3ee;
+    --green: #2ecc71; --red: #e74c3c; --gold: #f0c040; --blue: #3498db;
+    --radius: 10px; --shadow: 0 4px 20px rgba(0,0,0,0.4);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', -apple-system, sans-serif; font-size: 14px; line-height: 1.6; }
+  .page { max-width: 1100px; margin: 0 auto; padding: 28px 32px; }
+
+  .section-title { font-size: 16px; font-weight: 700; color: var(--accent2); margin-bottom: 20px; padding-bottom: 10px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 8px; }
+  .section-title::before { content: ''; width: 4px; height: 18px; background: var(--accent); border-radius: 2px; display: inline-block; }
+
+  .card { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius); padding: 18px 20px; margin-bottom: 16px; }
+  .card-title { font-size: 11px; color: var(--text3); text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 12px; font-weight: 600; }
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+  .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+
+  .ma-row { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid var(--border); }
+  .ma-row:last-child { border-bottom: none; }
+  .ma-dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; margin-right: 8px; }
+  .ma-name { display: flex; align-items: center; font-size: 13px; color: var(--text2); }
+  .ma-val { font-size: 13px; font-weight: 600; }
+  .ma-status { font-size: 11px; padding: 3px 8px; border-radius: 12px; font-weight: 600; }
+  .status-above { background: rgba(46,204,113,0.15); color: var(--green); }
+  .status-below { background: rgba(231,76,60,0.15); color: var(--red); }
+
+  .zone-list { display: flex; flex-direction: column; gap: 8px; margin-top: 4px; }
+  .zone-item { display: flex; justify-content: space-between; align-items: center; padding: 8px 12px; background: var(--bg3); border-radius: 6px; }
+  .zone-label { font-size: 12px; color: var(--text2); }
+  .zone-val { font-size: 13px; font-weight: 700; color: var(--accent2); }
+  .zone-tag { font-size: 10px; padding: 2px 8px; border-radius: 10px; font-weight: 600; }
+  .tag-support { background: rgba(46,204,113,0.15); color: var(--green); }
+  .tag-resist { background: rgba(231,76,60,0.15); color: var(--red); }
+  .tag-current { background: rgba(240,192,64,0.15); color: var(--gold); }
+
+  .range-toggle { display: flex; gap: 6px; flex-wrap: wrap; }
+  .range-btn { background: var(--bg3); border: 1px solid var(--border); color: var(--text3); font-size: 11px; font-weight: 700; padding: 4px 11px; border-radius: 999px; cursor: pointer; transition: all .15s; }
+  .range-btn:hover { color: var(--text); border-color: var(--text2); }
+  .range-btn.active { background: rgba(118,185,0,0.18); color: var(--accent2); border-color: var(--accent); }
+  .ma-toggle-btn { background: var(--bg3); border: 1px solid; font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: 999px; cursor: pointer; opacity: 1; transition: opacity .15s; }
+  .ma-toggle-btn.ma-off { opacity: 0.35; }
+  .price-chart-container { margin-bottom: 16px; }
+
+  /* ── SCORECARD (신규) ── */
+  .scorecard { background: linear-gradient(135deg, var(--bg2) 0%, #171a26 100%); border: 1px solid var(--border); border-radius: var(--radius); padding: 22px 24px; margin-bottom: 20px; }
+  .scorecard-top { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 12px; margin-bottom: 14px; }
+  .scorecard-score { display: flex; align-items: baseline; gap: 4px; }
+  .scorecard-score .num { font-size: 40px; font-weight: 800; color: var(--accent2); line-height: 1; }
+  .scorecard-score .denom { font-size: 16px; color: var(--text3); font-weight: 600; }
+  .scorecard-grade { font-size: 12px; font-weight: 700; padding: 6px 14px; border-radius: 999px; background: rgba(46,204,113,0.15); color: var(--green); white-space: nowrap; }
+  .scorecard-grade.grade-strong { background: rgba(46,204,113,0.18); color: var(--green); }
+  .scorecard-grade.grade-positive { background: rgba(159,219,47,0.15); color: var(--accent2); }
+  .scorecard-grade.grade-mixed { background: rgba(240,192,64,0.18); color: var(--gold); }
+  .scorecard-grade.grade-weak { background: rgba(231,76,60,0.15); color: var(--red); }
+  .scorecard-bar { height: 6px; background: var(--bg3); border-radius: 999px; overflow: hidden; margin-bottom: 6px; }
+  .scorecard-bar-fill { height: 100%; background: linear-gradient(90deg, var(--accent3), var(--accent2)); border-radius: 999px; }
+  .scorecard-subtitle { font-size: 11.5px; color: var(--text3); margin-bottom: 18px; }
+  .scorecard-subscores { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-bottom: 10px; }
+  .subscore-box { background: var(--bg3); border-radius: 8px; padding: 12px 14px; }
+  .subscore-box .subscore-label { font-size: 11px; color: var(--text2); margin-bottom: 6px; display: flex; justify-content: space-between; }
+  .subscore-box .subscore-val { font-size: 20px; font-weight: 700; color: var(--text); }
+  .subscore-box .subscore-max { font-size: 12px; color: var(--text3); font-weight: 500; }
+  .subscore-bar { height: 4px; background: var(--bg); border-radius: 999px; overflow: hidden; margin-top: 8px; }
+  .subscore-bar-fill { height: 100%; background: var(--accent2); border-radius: 999px; }
+  .subscore-desc { font-size: 10.5px; color: var(--text3); margin-top: 8px; }
+  .subscores-note { font-size: 10.5px; color: var(--text3); margin-bottom: 16px; line-height: 1.5; }
+  .scorecard-flags { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 14px; }
+  .risk-flag { font-size: 11px; font-weight: 700; padding: 4px 11px; border-radius: 999px; background: rgba(231,76,60,0.15); color: var(--red); position: relative; cursor: help; }
+  .risk-flag[data-tooltip]::after { content: attr(data-tooltip); position: absolute; bottom: calc(100% + 8px); left: 50%; transform: translateX(-50%); width: max-content; max-width: 260px; background: #05060a; color: var(--text2); font-size: 11px; font-weight: 500; line-height: 1.5; padding: 8px 10px; border-radius: 8px; border: 1px solid var(--border); box-shadow: var(--shadow); opacity: 0; visibility: hidden; transition: opacity 0.15s ease; pointer-events: none; z-index: 20; text-align: left; white-space: normal; }
+  .risk-flag[data-tooltip]::before { content: ''; position: absolute; bottom: 100%; left: 50%; transform: translateX(-50%); border: 5px solid transparent; border-top-color: #05060a; opacity: 0; visibility: hidden; transition: opacity 0.15s ease; z-index: 20; }
+  .risk-flag[data-tooltip]:hover::after, .risk-flag[data-tooltip]:hover::before { opacity: 1; visibility: visible; }
+  .scorecard-noflags { font-size: 11.5px; color: var(--text3); margin-bottom: 14px; }
+  .opportunity-badge { font-size: 11px; font-weight: 700; padding: 4px 11px; border-radius: 999px; background: rgba(52,152,219,0.18); color: var(--blue); }
+  .opportunity-badge .sub { font-weight: 500; opacity: 0.85; }
+  .scorecard-verdict { display: flex; flex-direction: column; align-items: flex-end; gap: 6px; }
+  .scorecard-noOpp-inline { font-size: 10.5px; color: var(--text3); white-space: nowrap; }
+  .scorecard-evidence { list-style: none; display: flex; flex-direction: column; gap: 7px; margin-bottom: 14px; }
+  .scorecard-evidence li { font-size: 12.5px; color: var(--text2); padding-left: 16px; position: relative; }
+  .scorecard-evidence li::before { content: '●'; position: absolute; left: 0; color: var(--accent2); font-size: 8px; top: 5px; }
+  .scorecard-footer { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; padding-top: 12px; border-top: 1px dashed var(--border); font-size: 10.5px; color: var(--text3); }
+  .scorecard-disclaimer { font-size: 10.5px; color: var(--text3); font-style: italic; }
+
+  @media (max-width: 640px) {
+    .page { padding: 20px 16px; }
+    .grid-3, .grid-4 { grid-template-columns: 1fr 1fr; }
+    .scorecard-subscores { grid-template-columns: 1fr; }
+  }
+
+/* ══════ #fund ══════ */
+  :root {
+    --bg: #0f1117; --bg2: #1a1d27; --bg3: #22263a; --border: #2e3347;
+    --text: #e8eaf0; --text2: #9aa0b8; --text3: #5c6282;
+    --accent: #76b900; --accent2: #9fdb2f; --accent3: #4d7a00;
+    --green: #2ecc71; --red: #e74c3c; --gold: #f0c040; --blue: #3498db;
+    --radius: 10px; --shadow: 0 4px 20px rgba(0,0,0,0.4);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', -apple-system, sans-serif; font-size: 14px; line-height: 1.6; }
+  .page { max-width: 1100px; margin: 0 auto; padding: 28px 32px; }
+
+  .section-title { font-size: 16px; font-weight: 700; color: var(--accent2); margin-bottom: 20px; padding-bottom: 10px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 8px; }
+  .section-title::before { content: ''; width: 4px; height: 18px; background: var(--accent); border-radius: 2px; display: inline-block; }
+
+  .card { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius); padding: 18px 20px; margin-bottom: 16px; }
+  .card-title { font-size: 11px; color: var(--text3); text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 12px; font-weight: 600; }
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+  .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+
+  .chart-wrap { position: relative; }
+  .chart-wrap canvas { max-width: 100%; }
+
+  /* STAT BOX */
+  .stat-box { background: var(--bg3); border: 1px solid var(--border); border-radius: 8px; padding: 14px 16px; }
+  .stat-label { font-size: 11px; color: var(--text3); text-transform: uppercase; letter-spacing: 0.8px; }
+  .stat-value { font-size: 22px; font-weight: 700; color: var(--text); margin: 4px 0 2px; }
+  .stat-sub { font-size: 11px; color: var(--text3); }
+  .stat-value.gold { color: var(--accent2); }
+
+  .yoy-footnote { font-size: 11px; color: var(--text3); margin-top: 10px; }
+  .yoy-footnote a { color: var(--accent2); text-decoration: none; }
+
+  .section-label { font-size: 13px; color: var(--text); font-weight: 700; margin-bottom: 10px; display:flex; align-items:center; gap:6px; }
+  .section-label .dot { width:6px; height:6px; border-radius:50%; background:var(--accent2); }
+  .diag-summary { display:flex; align-items:center; gap:12px; background: linear-gradient(90deg, rgba(46,204,113,0.14), rgba(46,204,113,0.03)); border:1px solid rgba(46,204,113,0.3); border-radius:8px; padding:12px 16px; margin-bottom:14px; }
+  .diag-summary .icon { font-size:24px; }
+  .diag-summary .title { font-size:14px; font-weight:800; color:var(--green); }
+  .diag-summary .sub { font-size:12px; color:var(--text2); margin-top:2px; line-height:1.4; }
+  .diag-summary.watch { background: linear-gradient(90deg, rgba(240,192,64,0.14), rgba(240,192,64,0.03)); border-color: rgba(240,192,64,0.35); }
+  .diag-summary.watch .title { color: var(--gold); }
+  .diag-list { display:flex; flex-direction:column; gap:6px; margin-bottom: 22px; }
+  .diag-row { display:flex; align-items:center; justify-content:space-between; background:var(--bg3); border-radius:8px; padding:10px 14px; }
+  .diag-left { display:flex; align-items:baseline; gap:10px; }
+  .diag-label { font-size:13px; color:var(--text); font-weight:600; min-width:96px; }
+  .diag-value { font-size:15px; font-weight:700; color:var(--text); }
+  .diag-note { font-size:11.5px; color:var(--text2); }
+  .diag-badge { font-size:11px; font-weight:700; padding:4px 10px; border-radius:999px; display:flex; align-items:center; gap:4px; white-space:nowrap; }
+  .diag-badge.safe { background:rgba(46,204,113,0.16); color:var(--green); }
+  .diag-badge.info { background:rgba(154,160,184,0.14); color:var(--text2); }
+  .diag-badge.watch { background:rgba(240,192,64,0.16); color:var(--gold); }
+
+  .detail-toggle { cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 8px; user-select: none; font-size: 12.5px; color: var(--text2); font-weight: 600; padding: 10px 2px 6px; border-top: 1px dashed var(--bg3); margin-top: 2px; }
+  .detail-toggle:hover { color: var(--text); }
+  .detail-toggle .toggle-hint { display: flex; align-items: center; gap: 6px; background: rgba(159,219,47,0.12); border: 1px solid rgba(159,219,47,0.35); border-radius: 999px; padding: 5px 11px; flex-shrink: 0; transition: background 0.2s ease, border-color 0.2s ease; }
+  .detail-toggle:hover .toggle-hint { background: rgba(159,219,47,0.22); border-color: rgba(159,219,47,0.5); }
+  .detail-toggle .toggle-hint-text { font-size: 10.5px; font-weight: 700; color: var(--accent2); white-space: nowrap; }
+  .detail-toggle .chevron { font-size: 11px; color: var(--accent2); transition: transform 0.25s ease; flex-shrink: 0; }
+  .detail-toggle.collapsed .chevron { transform: rotate(-90deg); }
+  .collapsible-body { overflow: hidden; opacity: 1; transition: max-height 0.3s ease, opacity 0.2s ease, margin-top 0.2s ease; }
+  .collapsible-body.collapsed { max-height: 0 !important; opacity: 0; margin-top: 0 !important; }
+
+  .activity-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 12px; }
+  .act-card { background: var(--bg3); border-radius: 8px; padding: 12px 14px; display:flex; align-items:center; gap:12px; }
+  .act-icon { font-size: 19px; width:34px; height:34px; display:flex; align-items:center; justify-content:center; background:rgba(159,219,47,0.1); border-radius:8px; flex-shrink:0; }
+  .act-label { font-size: 11.5px; color: var(--text2); font-weight:600; margin-bottom:2px; }
+  .act-value { font-size: 15px; font-weight: 700; color: var(--text); }
+  .act-sub { font-size: 11px; color: var(--text2); margin-top:1px; }
+  .ccc-card { background: var(--bg3); border-radius: 8px; padding: 16px 18px 12px; }
+  .ccc-head { display:flex; align-items:center; justify-content:space-between; margin-bottom: 6px; }
+  .ccc-head-label { font-size:12.5px; color:var(--text); font-weight:700; }
+  .ccc-head-value { font-size:18px; font-weight:800; color:var(--gold); }
+  .ccc-explain { font-size: 11.5px; color: var(--text2); line-height: 1.6; margin-bottom: 22px; }
+  .tl-bar-wrap { position: relative; margin: 40px 4px 8px; }
+  .tl-bar { height: 18px; border-radius: 5px; overflow: hidden; display: flex; }
+  .tl-seg-inv { background: linear-gradient(90deg,#3498db,#2980b9); display:flex; align-items:center; justify-content:center; font-size:10px; font-weight:700; color:#fff; }
+  .tl-seg-ar { background: linear-gradient(90deg,#9fdb2f,#76b900); display:flex; align-items:center; justify-content:center; font-size:10px; font-weight:700; color:#0f1117; }
+  .tl-marker { position: absolute; top: -18px; width: 2px; background: var(--gold); }
+  .tl-marker-label { position: absolute; top: -32px; transform: translateX(-50%); font-size: 10.5px; font-weight: 700; color: var(--gold); white-space: nowrap; }
+  .tl-ccc-span { position: absolute; height: 3px; background: rgba(240,192,64,0.6); border-radius: 2px; top: 24px; }
+
+  /* ZONE (자본배분·주주환원) */
+  .zone-list { display: flex; flex-direction: column; gap: 8px; margin-top: 4px; }
+  .zone-item { display: flex; justify-content: space-between; align-items: center; padding: 8px 12px; background: var(--bg3); border-radius: 6px; }
+  .zone-label { font-size: 12px; color: var(--text2); }
+  .zone-val { font-size: 13px; font-weight: 700; color: var(--accent2); }
+  .zone-tag { font-size: 10px; padding: 2px 8px; border-radius: 10px; font-weight: 600; }
+  .tag-record { background: rgba(118,185,0,0.2); color: var(--accent2); }
+
+  @media (max-width: 640px) {
+    .page { padding: 20px 16px; }
+    .grid-3, .grid-4 { grid-template-columns: 1fr 1fr; }
+    .activity-grid { grid-template-columns: 1fr; }
+  }
+
+/* ══════ #valuation ══════ */
+  :root {
+    --bg: #0f1117; --bg2: #1a1d27; --bg3: #22263a; --border: #2e3347;
+    --text: #e8eaf0; --text2: #9aa0b8; --text3: #5c6282;
+    --accent: #76b900; --accent2: #9fdb2f; --accent3: #4d7a00;
+    --green: #2ecc71; --red: #e74c3c; --gold: #f0c040; --blue: #3498db;
+    --radius: 10px; --shadow: 0 4px 20px rgba(0,0,0,0.4);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', -apple-system, sans-serif; font-size: 14px; line-height: 1.6; }
+  .page { max-width: 1100px; margin: 0 auto; padding: 28px 32px; }
+
+  .section-title { font-size: 16px; font-weight: 700; color: var(--accent2); margin-bottom: 20px; padding-bottom: 10px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 8px; }
+  .section-title::before { content: ''; width: 4px; height: 18px; background: var(--accent); border-radius: 2px; display: inline-block; }
+
+  .card { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius); padding: 18px 20px; margin-bottom: 16px; }
+  .card-title { font-size: 11px; color: var(--text3); text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 12px; font-weight: 600; }
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .chart-wrap { position: relative; }
+  .chart-wrap canvas { max-width: 100%; }
+
+  /* VALUATION METER */
+  .val-item { margin-bottom: 18px; padding: 8px; margin-left: -8px; margin-right: -8px; border-radius: 8px; border: 1px solid transparent; transition: background 0.15s ease, border-color 0.15s ease; cursor: pointer; }
+  .val-item:last-child { margin-bottom: 0; }
+  .val-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+  .val-item:hover { background: rgba(255,255,255,0.03); }
+  .val-item.selected { background: rgba(159,219,47,0.08); border-color: rgba(159,219,47,0.35); }
+  .val-name { position: relative; font-size: 13px; font-weight: 600; color: var(--text); }
+  .val-item.selected .val-name::after { content: '▸ 비교 보기'; font-size: 9.5px; font-weight: 600; color: var(--accent2); margin-left: 8px; vertical-align: middle; }
+  .val-number { font-size: 14px; font-weight: 700; color: var(--accent2); }
+  .val-track { height: 8px; background: var(--bg3); border-radius: 4px; position: relative; overflow: hidden; }
+  .val-fill { height: 100%; border-radius: 4px; transition: width 0.8s ease; }
+  .val-labels { display: flex; justify-content: space-between; margin-top: 4px; }
+  .val-low { font-size: 10px; color: var(--green); }
+  .val-mid { font-size: 10px; color: var(--accent2); text-align: center; }
+  .val-high { font-size: 10px; color: var(--red); }
+  .stage-badge { font-size: 13px; padding: 2px 10px; border-radius: 12px; font-weight: 700; }
+  .stage-1 { background: rgba(46,204,113,0.2); color: #2ecc71; }
+  .stage-2 { background: rgba(39,174,96,0.2); color: #27ae60; }
+  .stage-3 { background: rgba(200,168,75,0.2); color: var(--accent2); }
+  .stage-4 { background: rgba(231,126,35,0.2); color: #e67e22; }
+  .stage-5 { background: rgba(231,76,60,0.2); color: var(--red); }
+
+
+  /* PEER-COMPARE VERDICT BLOCK */
+  .verdict-line { font-size:15px; font-weight:700; color:var(--text); line-height:1.45; margin-top:14px; }
+  .verdict-caveat { font-size:11px; color:var(--text3); margin-top:5px; line-height:1.5; display:flex; align-items:flex-start; gap:6px; }
+  .caveat-icon { display:inline-flex; align-items:center; justify-content:center; width:14px; height:14px; border-radius:50%; background:var(--gold); color:#0f1117; font-size:10px; font-weight:800; flex-shrink:0; margin-top:1.5px; }
+  .anchor-card { margin-top:14px; background:var(--bg3); border-radius:8px; padding:12px 14px; }
+  .anchor-card-label { font-size:10.5px; color:var(--text3); text-transform:uppercase; letter-spacing:0.6px; margin-bottom:8px; }
+  .anchor-card-formula { font-family:'SF Mono',Menlo,Consolas,monospace; font-size:12.5px; font-weight:500; color:var(--text2); line-height:1.5; padding:2px 0 2px 10px; border-left:2px solid var(--text3); }
+  .anchor-card-formula + .anchor-card-formula { margin-top:6px; }
+  .anchor-card-cross { font-size:11px; color:var(--text3); margin-top:10px; padding-top:8px; border-top:1px dashed rgba(255,255,255,0.06); line-height:1.5; }
+  .secondary-row { margin-top:10px; background:rgba(52,152,219,0.08); border:1px solid rgba(52,152,219,0.25); border-radius:8px; padding:10px 12px; }
+  .secondary-row-label { font-size:11.5px; font-weight:700; color:var(--blue); }
+  .secondary-row-caveat { font-size:10.5px; color:var(--text3); margin-top:4px; line-height:1.5; }
+
+  /* SYNTHESIS VERDICT (종합 밸류에이션) */
+  .verdict-summary-head { font-size:14px; font-weight:800; color:var(--text); }
+  .verdict-summary-head .tag { font-size:11.5px; font-weight:700; color:var(--green); margin-left:4px; }
+  .verdict-summary-head .tag.mixed { color:var(--gold); }
+  .verdict-summary-head .tag.negative { color:var(--red); }
+  .verdict-summary-body { font-size:12.5px; color:var(--text2); line-height:1.7; margin-top:10px; }
+  .verdict-summary-risk { margin-top:12px; background:rgba(240,192,64,0.08); border:1px solid rgba(240,192,64,0.25); border-radius:8px; padding:10px 12px; font-size:11.5px; color:var(--text2); line-height:1.6; }
+
+  @media (max-width: 640px) {
+    .page { padding: 20px 16px; }
+    .grid-2 { grid-template-columns: 1fr; }
+  }
+
+/* ══════ #news ══════ */
+  :root {
+    --bg: #0f1117; --bg2: #1a1d27; --bg3: #22263a; --border: #2e3347;
+    --text: #e8eaf0; --text2: #9aa0b8; --text3: #5c6282;
+    --accent: #76b900; --accent2: #9fdb2f; --accent3: #4d7a00;
+    --green: #2ecc71; --red: #e74c3c; --gold: #f0c040; --blue: #3498db;
+    --event-major: #38bdf8; --event-neutral: #f1c40f;
+    --radius: 10px; --shadow: 0 4px 20px rgba(0,0,0,0.4);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', -apple-system, sans-serif; font-size: 14px; line-height: 1.6; }
+  .page { max-width: 1100px; margin: 0 auto; padding: 28px 32px; }
+
+  .section-title { font-size: 16px; font-weight: 700; color: var(--accent2); margin-bottom: 20px; padding-bottom: 10px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 8px; }
+  .section-title::before { content: ''; width: 4px; height: 18px; background: var(--accent); border-radius: 2px; display: inline-block; }
+
+  .card { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius); padding: 18px 20px; margin-bottom: 16px; }
+  .card-title { font-size: 11px; color: var(--text3); text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 12px; font-weight: 600; }
+
+  /* TIMELINE (unchanged from live widget) */
+  .timeline { position: relative; padding-left: 24px; }
+  .timeline::before { content: ''; position: absolute; left: 8px; top: 0; bottom: 0; width: 2px; background: var(--border); }
+  .tl-item { position: relative; margin-bottom: 20px; }
+  .tl-item:last-child { margin-bottom: 0; }
+  .tl-dot { position: absolute; left: -20px; top: 4px; width: 10px; height: 10px; border-radius: 50%; background: var(--event-major); border: 2px solid var(--bg); }
+  .tl-dot.red { background: var(--red); }
+  .tl-dot.green { background: var(--green); }
+  .tl-dot.blue { background: var(--blue); }
+  .tl-dot.neutral { background: var(--event-neutral); }
+  .tl-date { font-size: 10px; color: var(--accent); font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; }
+  .tl-title { font-size: 13px; font-weight: 600; color: var(--text); margin: 3px 0; }
+  .tl-desc { font-size: 12px; color: var(--text2); line-height: 1.5; }
+  .tl-source { display: inline-flex; align-items: center; gap: 4px; margin-top: 6px; font-size: 11px; font-weight: 600; color: var(--accent2); text-decoration: none; }
+  .tl-source:hover { text-decoration: underline; }
+  .tl-reaction { display:inline-block; margin-left:8px; font-size:10px; font-weight:700; padding:2px 7px; border-radius:999px; }
+  .tl-reaction.up { background:rgba(46,204,113,0.15); color:var(--green); }
+  .tl-reaction.down { background:rgba(231,76,60,0.15); color:var(--red); }
+  .tl-reaction.flat { background:rgba(154,160,184,0.15); color:var(--text3); }
+
+  .price-ladder { position: relative; padding-left: 20px; }
+  .price-ladder::before { content: ''; position: absolute; left: 5px; top: 8px; bottom: 8px; width: 2px; background: var(--border); }
+  .ladder-item { position: relative; padding: 11px 0; display: grid; grid-template-columns: 68px 1fr 1fr; align-items: baseline; border-bottom: 1px dashed var(--bg3); }
+  .ladder-item:last-child { border-bottom: none; }
+  .ladder-dot { position: absolute; left: -20px; top: 16px; width: 10px; height: 10px; border-radius: 50%; border: 2px solid var(--bg2); }
+  .ladder-label { font-size: 12px; color: var(--text2); }
+  .ladder-value { font-size: 15px; font-weight: 700; text-align: center; }
+  .ladder-meta { font-size: 10.5px; color: var(--text3); text-align: right; }
+
+  /* SYNTHESIS CARD (종합 해석, new) — reuses #valuation's 종합 밸류에이션 verdict pattern */
+  .verdict-summary-head { font-size:14px; font-weight:800; color:var(--text); }
+  .verdict-summary-head .tag { font-size:11.5px; font-weight:700; color:var(--green); margin-left:4px; }
+  .verdict-summary-head .tag.mixed { color:var(--gold); }
+  .verdict-summary-head .tag.negative { color:var(--red); }
+  .verdict-summary-body { font-size:12.5px; color:var(--text2); line-height:1.7; margin-top:10px; }
+  .verdict-summary-counter { margin-top:12px; background:rgba(240,192,64,0.08); border:1px solid rgba(240,192,64,0.25); border-radius:8px; padding:10px 12px; font-size:11.5px; color:var(--text2); line-height:1.6; }
+  .verdict-summary-next { margin-top:10px; background:rgba(52,152,219,0.08); border:1px solid rgba(52,152,219,0.25); border-radius:8px; padding:10px 12px; font-size:11.5px; color:var(--text2); line-height:1.6; }
+
+  @media (max-width: 640px) {
+    .page { padding: 20px 16px; }
+  }
+
+/* ══════ #invest ══════ */
+  :root {
+    --bg: #0f1117; --bg2: #1a1d27; --bg3: #22263a; --border: #2e3347;
+    --text: #e8eaf0; --text2: #9aa0b8; --text3: #5c6282;
+    --accent: #76b900; --accent2: #9fdb2f; --accent3: #4d7a00;
+    --green: #2ecc71; --red: #e74c3c; --gold: #f0c040; --blue: #3498db;
+    --bull: #D85A30; --bear: #185FA5;
+    --radius: 10px; --shadow: 0 4px 20px rgba(0,0,0,0.4);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', -apple-system, sans-serif; font-size: 14px; line-height: 1.6; }
+  .page { max-width: 1100px; margin: 0 auto; padding: 28px 32px; }
+
+  .section-title { font-size: 16px; font-weight: 700; color: var(--accent2); margin-bottom: 20px; padding-bottom: 10px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 8px; }
+  .section-title::before { content: ''; width: 4px; height: 18px; background: var(--accent); border-radius: 2px; display: inline-block; }
+
+  .card { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius); padding: 18px 20px; margin-bottom: 16px; }
+  .card-title { font-size: 11px; color: var(--text3); text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 12px; font-weight: 600; }
+
+  /* BULL/BEAR (unchanged from live widget) */
+  .bull-bear { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .bb-box { background: var(--bg3); border-radius: var(--radius); padding: 16px; }
+  .bb-title { font-size: 13px; font-weight: 700; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+  .bb-bull { color: var(--bull); }
+  .bb-bear { color: var(--bear); }
+  .bb-item { display: flex; gap: 8px; margin-bottom: 10px; font-size: 12px; color: var(--text2); line-height: 1.5; }
+  .bb-icon { flex-shrink: 0; margin-top: 2px; }
+
+  /* DETAIL TOGGLE / COLLAPSIBLE (시나리오 근거 상세 — #fund 재무건전성 카드와 동일 패턴) */
+
+  /* ZONE LIST (5개 분석 종합, unchanged from live widget) */
+  .zone-list { display: flex; flex-direction: column; gap: 8px; margin-top: 4px; }
+  .zone-item { display: flex; justify-content: space-between; align-items: center; padding: 8px 12px; background: var(--bg3); border-radius: 6px; }
+  .zone-label { font-size: 12px; color: var(--text2); }
+  .zone-val { font-size: 13px; font-weight: 700; color: var(--accent2); }
+
+  @media (max-width: 640px) {
+    .page { padding: 20px 16px; }
+    .bull-bear { grid-template-columns: 1fr; }
+  }
+
+  body { padding-top: 46px; }
+  .back-bar { position: fixed; top: 0; left: 0; right: 0; height: 46px; background: rgba(10,11,17,0.92); backdrop-filter: blur(8px); border-bottom: 1px solid var(--border); z-index: 1000; display: flex; align-items: center; justify-content: space-between; padding: 0 20px; }
+  .back-bar-left { display: flex; align-items: center; gap: 8px; text-decoration: none; }
+  .back-bar-logo { width: 20px; height: 20px; border-radius: 5px; background: var(--accent2); flex-shrink: 0; }
+  .back-bar-left span { color: var(--text2); font-size: 12.5px; font-weight: 600; transition: color 0.2s; }
+  .back-bar-left:hover span { color: var(--accent2); }
+  .back-bar-right { display: flex; align-items: center; gap: 16px; font-size: 12px; }
+  .back-bar-nav { color: var(--text2); text-decoration: none; font-weight: 600; transition: color 0.2s; }
+  .back-bar-nav:hover { color: var(--accent2); }
+  .back-bar-nav.disabled { color: var(--text3); pointer-events: none; }
+  .back-bar-current { color: var(--text); font-weight: 700; padding: 4px 10px; background: var(--bg3); border-radius: 6px; white-space: nowrap; }
+</style>
+</head>
+<body>
+<div class="back-bar">
+  <a class="back-bar-left" href="../index.html"><span class="back-bar-logo"></span><span>[사이트명] · 전체 종목 목록</span></a>
+  <div class="back-bar-right">
+    <a class="back-bar-nav" href="TSM_full_widget.html">◀ TSM</a>
+    <span class="back-bar-current">SPCX · 시총 7위</span>
+    <a class="back-bar-nav" href="AVGO_full_widget.html">다음 AVGO ▶</a>
+  </div>
+</div>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="header-top">
+    <div class="ticker-block">
+      <div>
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:4px;">
+          <span class="ticker-badge">SPCX</span>
+          <span style="font-size:11px;color:var(--accent);font-weight:600;">NASDAQ · Falcon·Starship·Starlink·AI</span>
+        </div>
+        <div class="company-name">Space Exploration Technologies Corp.</div>
+        <div class="company-sub">발사체 · Starlink 위성인터넷 · AI 인프라 · S&amp;P 500 미편입(상장 2026.06.12)</div>
+      </div>
+    </div>
+    <div class="price-block">
+      <div class="price-main">$147.76</div>
+      <div class="price-change" style="color:var(--green);">▲ +5.01% (2026.09.03 기준)</div>
+      <div style="font-size:11px;color:var(--text3);margin-top:2px;">상장 이후 최저 $104.83 (2026.08.03) · 최고 $225.64 (2026.06.16)</div>
+    </div>
+  </div>
+  <div class="header-meta">
+    <div class="meta-item"><span class="meta-label">시가총액</span><span class="meta-value highlight">$1.95T</span></div>
+    <div class="meta-item"><span class="meta-label">섹터</span><span class="meta-value">Aerospace &amp; Defense · Space Technology</span></div>
+    <div class="meta-item"><span class="meta-label">매출 (Q2 2026, 단일분기)</span><span class="meta-value">$7.81B(+92% YoY)</span></div>
+    <div class="meta-item"><span class="meta-label">EPS (Q2 2026, 단일분기)</span><span class="meta-value">-$0.09(GAAP, 순손실)</span></div>
+    <div class="meta-item"><span class="meta-label">배당수익률</span><span class="meta-value">무배당</span></div>
+  </div>
+</div>
+<div class="box-key">
+  <div style="font-size:13px;font-weight:700;color:var(--accent2);display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:10px;">
+    <span style="display:flex;align-items:center;gap:6px;"><span style="width:4px;height:14px;background:var(--accent2);border-radius:2px;display:inline-block;"></span>핵심 투자 논리 <span style="color:var(--gold);font-weight:600;">(데이터 초기 단계)</span></span>
+    <span style="font-size:11px;font-weight:700;padding:4px 10px;border-radius:999px;background:rgba(46,204,113,0.15);color:var(--green);">성장 · 매출 +92%</span>
+    <span style="font-size:11px;font-weight:700;padding:4px 10px;border-radius:999px;background:rgba(231,76,60,0.15);color:var(--red);">적자 · Capex 부담</span>
+  </div>
+  <div style="font-size:17px;font-weight:800;color:var(--text);margin-bottom:12px;">매출은 폭발적으로 늘고 있지만 아직 적자이고, 상장한 지 3개월·공개된 분기 실적이 1건뿐이라 검증된 데이터가 많지 않다.</div>
+  <div style="display:flex;flex-direction:column;gap:8px;">
+    <div style="font-size:12px;color:var(--text2);line-height:1.5;"><strong style="color:var(--accent2);">01</strong>&nbsp; 상장 후 첫(유일한) 분기 실적(Q2 2026)에서 매출 $7.81B(+92% YoY) — Starlink 기반 Connectivity 부문이 $4.3B로 견인.</div>
+    <div style="font-size:12px;color:var(--text2);line-height:1.5;"><strong style="color:var(--accent2);">02</strong>&nbsp; AI 인프라 부문 매출이 $2.6B(+247% YoY)로 빠르게 부상 — 우주 발사·통신 회사에서 AI 인프라 회사로 사업 축이 확장되는 중.</div>
+    <div style="font-size:12px;color:var(--text2);line-height:1.5;"><strong style="color:var(--accent2);">03</strong>&nbsp; 영업손실 $143M·순손실 $541M — 6개월 누적 Capex만 $28.5B에 달해 여전히 대규모 투자 국면.</div>
+    <div style="font-size:12px;color:var(--text2);line-height:1.5;"><strong style="color:var(--accent2);">04</strong>&nbsp; 상장 3개월·재무제표 1건뿐이라 밸류에이션·기술점수·예상밴드 백테스트처럼 다년치 데이터가 필요한 지표는 이 카드에서 아직 제공하지 않는다.</div>
+  </div>
+</div>
+
+<!-- NAV -->
+<div class="nav">
+  <button class="nav-btn active" onclick="showSection('tech')">📈 기술적 분석</button>
+  <button class="nav-btn" onclick="showSection('fund')">📊 기본적 분석</button>
+  <button class="nav-btn" onclick="showSection('valuation')">⚖️ 밸류에이션</button>
+  <button class="nav-btn" onclick="showSection('news')">📰 시계열 뉴스</button>
+  <button class="nav-btn" onclick="showSection('invest')">🎯 투자 포인트</button>
+</div>
+
+<div id="tech" class="section active">
+  <div class="section-title" id="techHeaderTitle">기술적 분석 — 일봉 캔들스틱 (상장 이후, 2026.06 ~ 2026.09) · 상장 후 수익률 <span id="techHeaderReturn">--</span></div>
+
+  <!-- ══════════ 1. 차트 ══════════ -->
+  <div class="price-chart-container">
+    <div style="margin-bottom:10px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
+      <div class="range-toggle" id="spcxRangeToggle">
+        <button class="range-btn" data-range="1M">1개월</button>
+        <button class="range-btn active" data-range="ALL">전체(상장 이후)</button>
+      </div>
+      <div id="spcxMaToggle" style="display:flex;gap:8px;flex-wrap:wrap;"></div>
+    </div>
+    <svg id="spcxCandleSvg" viewBox="0 0 720 240" width="100%" style="display:block;background:var(--bg3);border-radius:8px 8px 0 0;padding:4px;" role="img" aria-label="SPCX 일봉 캔들스틱 차트"></svg>
+    <svg id="spcxVolumeSvg" viewBox="0 0 720 70" width="100%" style="display:block;background:var(--bg3);border-radius:0 0 8px 8px;padding:0 4px 4px;" role="img" aria-label="SPCX 거래량 차트"></svg>
+    <div style="margin-top:10px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
+      <div style="font-size:11px;color:var(--text3);" id="techRangeSummary">상장 이후 최저 $104.83 (2026.08) → 상장 이후 최고 $225.64 (2026.06) → 현재 $147.76</div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;">
+        <button class="ma-toggle-btn" data-ma="ma5" style="color:var(--ma5);border-color:var(--ma5);">● MA5</button>
+        <button class="ma-toggle-btn" data-ma="ma20" style="color:var(--ma20);border-color:var(--ma20);">● MA20</button>
+        <button class="ma-toggle-btn" data-ma="pricelabels" style="color:var(--text2);border-color:var(--text2);margin-left:4px;">◆ 가격라벨</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════ 2. 기술 상태 스코어카드 — 데이터 부족으로 준비 중 ══════════ -->
+  <div class="scorecard">
+    <div class="scorecard-top">
+      <div class="scorecard-verdict" style="align-items:flex-start;">
+        <div class="scorecard-grade" style="background:rgba(154,160,184,0.16);color:var(--text2);">데이터 부족 — 준비 중</div>
+      </div>
+    </div>
+    <div class="scorecard-subtitle">가격·거래량 기반 기술 상태 점수는 MA150·MA200(최소 150~200 거래일)이 필요합니다. SPCX는 2026-06-12 상장으로 현재 거래일이 58일뿐이라 아직 계산할 수 없습니다 — 매일 가격 데이터가 쌓이는 대로 채워질 예정입니다(MA200 완성까지 약 1년 소요 예상).</div>
+  </div>
+
+  <!-- ══════════ 3. 핵심 가격대 (상장 이후 기준) ══════════ -->
+  <div class="card">
+    <div class="card-title">핵심 가격대 (상장 이후 기준)</div>
+    <div class="price-ladder">
+      <div class="ladder-item">
+        <div class="ladder-dot" style="background:var(--red);"></div>
+        <span class="ladder-label">상장 이후 최고</span>
+        <span class="ladder-value" style="color:var(--red);">$225.64</span><span class="ladder-meta">2026.06.16 · 저항선</span>
+      </div>
+      <div class="ladder-item">
+        <div class="ladder-dot" style="background:var(--gold);"></div>
+        <span class="ladder-label">현재가</span>
+        <span class="ladder-value" style="color:var(--gold);">$147.76</span><span class="ladder-meta">고점 대비 -34.5%</span>
+      </div>
+      <div class="ladder-item">
+        <div class="ladder-dot" style="background:var(--green);"></div>
+        <span class="ladder-label">상장 이후 최저</span>
+        <span class="ladder-value" style="color:var(--green);">$104.83</span><span class="ladder-meta">2026.08.03 · 첫 분기 실적 발표 직전</span>
+      </div>
+    </div>
+    <div style="margin-top:10px;font-size:11px;color:var(--text3);">MA60·MA120·52주 범위 등 다년치 데이터가 필요한 지표는 아직 표시하지 않는다 — 데이터가 쌓이는 대로 순차적으로 추가할 예정.</div>
+  </div>
+</div>
+
+<div id="fund" class="section">
+  <div class="section-title">기본적 분석 — 상장 후 첫(유일한) 분기 실적 (Q2 2026 · 2026.06.30 기준)</div>
+  <div style="font-size:10.5px;color:var(--text3);margin:-12px 0 16px;">※ 2026-06-12 상장 이후 공개된 분기보고서(10-Q)가 이 1건뿐이라, 여러 분기 추세를 보여주는 차트·재무건전성 비율(회전율·CCC 등 다기간 비교가 필요한 지표)은 아직 만들 수 없다. 분기가 쌓이는 대로 순차적으로 채워 넣을 예정.</div>
+
+  <!-- ══════════ 1. Q2 2026 핵심 손익 (YoY) ══════════ -->
+  <div class="grid-4">
+    <div class="stat-box">
+      <div class="stat-label">매출 (Q2 2026)</div>
+      <div class="stat-value up">$7.81B</div>
+      <div class="stat-sub">+92.0% YoY (전년동기 $4.07B)</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-label">영업손실 (Q2 2026)</div>
+      <div class="stat-value down">-$143M</div>
+      <div class="stat-sub">영업손실률 -1.8%</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-label">순손실 (Q2 2026)</div>
+      <div class="stat-value down">-$541M</div>
+      <div class="stat-sub">전년동기 -$1,008M 대비 적자폭 46% 축소</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-label">다음 실적</div>
+      <div class="stat-value gold">2026년 11월경 (예상)</div>
+      <div class="stat-sub">Q3 2026 · 아직 공식 일정 미확정</div>
+    </div>
+  </div>
+
+  <!-- ══════════ 2. 매출 구성 — 3개 사업부문 ══════════ -->
+  <div class="card" style="margin-top:16px;">
+    <div class="card-title">매출 구성 — 사업 부문 (Q2 2026 · 2026.06.30 기준)</div>
+    <div class="zone-list">
+      <div class="zone-item">
+        <span class="zone-label">Connectivity (Starlink — Consumer·Enterprise&amp;Government)</span>
+        <span class="zone-val">$4.29B · 54.9% <span style="color:var(--green);">(+65.9% YoY)</span></span>
+      </div>
+      <div class="zone-item">
+        <span class="zone-label">AI (Advertising·AI Solutions&amp;Infrastructure)</span>
+        <span class="zone-val">$2.56B · 32.8% <span style="color:var(--green);">(+247.5% YoY)</span></span>
+      </div>
+      <div class="zone-item">
+        <span class="zone-label">Space (Launch Services·Launch&amp;Development)</span>
+        <span class="zone-val">$0.96B · 12.3% <span style="color:var(--green);">(+29.0% YoY)</span></span>
+      </div>
+    </div>
+    <div style="margin-top:10px;font-size:11.5px;color:var(--text2);line-height:1.6;">이제는 "로켓 회사"보다 "Starlink 통신사"에 가깝다 — 매출의 절반 이상(54.9%)이 Connectivity(Starlink)에서 나온다. 다만 가장 빠르게 크는 쪽은 AI 부문으로, 1년 만에 매출이 3.5배(+247.5%)로 뛰며 두 번째로 큰 사업부가 됐다. 로켓 발사 자체(Space)는 매출 비중이 12.3%로 가장 작다.</div>
+    <div class="yoy-footnote" style="margin-top:10px;">출처: <a href="https://www.sec.gov/Archives/edgar/data/1181412/000162828026052535/spcx-20260630.htm" target="_blank" rel="noopener">Space Exploration Technologies Corp. Form 10-Q, Q2 2026 (SEC EDGAR) →</a></div>
+  </div>
+
+  <!-- ══════════ 3. 재무 스냅샷 (단일 시점, 비율·추세 아님) ══════════ -->
+  <div class="card" style="margin-top:16px;">
+    <div class="card-title">재무 스냅샷 (2026.06.30 기준 — 단일 시점, 다기간 비율 아님)</div>
+    <div class="zone-list">
+      <div class="zone-item"><span class="zone-label">현금 및 현금성자산</span><span class="zone-val">$93.52B</span></div>
+      <div class="zone-item"><span class="zone-label">총부채(원금 기준)</span><span class="zone-val">$38.43B</span></div>
+      <div class="zone-item"><span class="zone-label">자기자본</span><span class="zone-val">$127.22B</span></div>
+      <div class="zone-item"><span class="zone-label">영업활동현금흐름 (상반기 누적)</span><span class="zone-val">$3.47B</span></div>
+      <div class="zone-item"><span class="zone-label">설비투자(Capex, 상반기 누적)</span><span class="zone-val" style="color:var(--red);">$28.48B</span></div>
+    </div>
+    <div style="margin-top:10px;font-size:11.5px;color:var(--text2);line-height:1.6;">현금(93.5B)이 부채(38.4B)보다 훨씬 많아 당장의 지급 능력 자체는 넉넉하다. 다만 상반기 영업현금흐름(3.47B)보다 설비투자(28.48B)가 8배 이상 커서, 영업으로 버는 돈만으로는 투자를 감당하지 못하고 있다 — 대규모 IPO 조달 자금으로 이 투자 속도를 뒷받침하는 국면으로 해석된다. 유동비율·부채비율 등 기준 대비 비율 평가는 비교할 전분기 데이터가 없어 아직 하지 않는다.</div>
+  </div>
+</div>
+<div id="valuation" class="section">
+  <div class="section-title">밸류에이션 (Valuation Multiples) — 준비 중</div>
+  <div class="card">
+    <div class="card-title">데이터 부족 — 아직 계산할 수 없음</div>
+    <div style="font-size:12.5px;color:var(--text2);line-height:1.7;">PER·PSR·EV/EBITDA 등 밸류에이션 배수는 보통 TTM(직전 4개 분기 합산) 실적을 기준으로 계산한다. SPCX는 2026-06-12 상장 이후 공개된 분기보고서가 Q2 2026 1건뿐이라 TTM을 만들 수 없다 — 게다가 이 유일한 분기도 순손실(-$541M)이라 PER 자체가 정의되지 않는다.</div>
+    <div style="margin-top:12px;font-size:12.5px;color:var(--text2);line-height:1.7;">분기가 4개 쌓이면(2027년 상반기 예상) TTM 기준 지표부터 순차적으로 채워 넣을 예정이다. 참고로 시가총액은 $1.95T(2026-09-03 종가 $147.76 × 발행주식 131.8억주 기준)이다.</div>
+  </div>
+</div>
+<div id="news" class="section">
+  <div class="section-title">시계열 주요 뉴스 (2026.05 ~ 2026.09, 상장 전체 기간)</div>
+
+  <div class="card">
+    <div class="card-title">종합 해석</div>
+    <div class="verdict-summary-head">지배적 내러티브 · 사상 최대 IPO의 전형적인 급등-급락-재조정 사이클<span class="tag mixed">낮은 유통물량 · 상장 초기 극단적 변동성</span></div>
+    <div class="verdict-summary-body">$135에 상장(6/12)한 뒤 나흘 만에 $225.64까지(+67%) 급등했다가, 전체 발행주식의 5% 미만만 유통되는 낮은 유통물량과 과열 논란 속에 첫 실적 발표 직전인 8/3 $104.83까지(고점 대비 -53.5%) 미끄러졌다. 첫 실적(8/4)에서 매출 서프라이즈로 장중 +9.4%까지 갔다가 대규모 Capex 부담에 시간외 -8.6%로 반납하는 등, 상장 3개월 동안 이미 두 차례의 급등락 사이클을 겪었다.</div>
+    <div class="verdict-summary-counter">⚠️ 반대 신호 — 첫 분기부터 순손실(-$541M)을 기록했고 상반기 Capex($28.5B)가 영업현금흐름(3.5B)의 8배가 넘는다. 낮은 유통물량은 상승뿐 아니라 하락도 증폭시키는 구조라, 지금까지의 큰 변동폭을 "정상화되는 과정"으로만 보기는 이르다.</div>
+    <div class="verdict-summary-next">🔍 다음 확인 포인트 — Q3 2026 실적(2026년 11월경 예상)에서 순손실 폭이 줄어드는지, Connectivity·AI 두 성장 부문의 매출 증가세가 유지되는지, 유통물량 확대(락업 해제 등) 일정이 있는지.</div>
+  </div>
+
+  <div style="display:flex;gap:14px;flex-wrap:wrap;margin-bottom:16px;font-size:11px;color:var(--text2);">
+    <span style="display:flex;align-items:center;gap:5px;"><span style="width:10px;height:10px;border-radius:50%;background:var(--event-major);display:inline-block;"></span>초대형 이벤트</span>
+    <span style="display:flex;align-items:center;gap:5px;"><span style="width:10px;height:10px;border-radius:50%;background:var(--green);display:inline-block;"></span>긍정</span>
+    <span style="display:flex;align-items:center;gap:5px;"><span style="width:10px;height:10px;border-radius:50%;background:var(--red);display:inline-block;"></span>부정</span>
+    <span style="display:flex;align-items:center;gap:5px;"><span style="width:10px;height:10px;border-radius:50%;background:var(--event-neutral);display:inline-block;"></span>중립</span>
+  </div>
+
+  <div class="card">
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-date">2026년 8월 4일 발표 · 반응 — 상장 후 첫 분기(Q2 2026) 실적<span class="tl-reaction down">시간외 -8.6%</span></div>
+        <div class="tl-title">매출 $7.81B(+92%) 서프라이즈로 장중 +9.4% 급등했지만 대규모 Capex 부담에 시간외 -8.6%로 반납</div>
+        <div class="tl-desc">매출은 컨센서스를 크게 웃돌았지만 상반기 Capex $28.5B 규모가 부각되며 정규장 상승분을 시간외에 반납했다.</div>
+        <a class="tl-source" href="https://www.sec.gov/Archives/edgar/data/1181412/000162828026052535/spcx-20260630.htm" target="_blank" rel="noopener">관련 공시 보기 (SEC 10-Q) →</a>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot red"></div>
+        <div class="tl-date">2026년 6월 16일~8월 3일 — 고점 대비 -53.5% 조정</div>
+        <div class="tl-title">낮은 유통물량(발행주식의 5% 미만)발 과열 논란 속 상장 직후 고점을 대부분 반납</div>
+        <div class="tl-desc">유통물량이 적어 상장 초기 변동성이 특히 컸고, 손실 규모와 공격적인 투자 계획에 대한 우려가 겹치며 6주 만에 고점 대비 반토막 수준까지 조정됐다.</div>
+        <a class="tl-source" href="https://www.bloomberg.com/news/articles/2026-07-28/spacex-falls-20-below-ipo-price-erasing-1-2-trillion-value" target="_blank" rel="noopener">관련 뉴스 보기 (Bloomberg) →</a>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-date">2026년 6월 12일 상장 → 6월 16일 고점<span class="tl-reaction up">+67% (IPO가 대비)</span></div>
+        <div class="tl-title">사상 최대 규모 IPO — $135에 상장, 나흘 만에 장중 $225.64까지 급등</div>
+        <div class="tl-desc">나스닥에 SPCX로 상장했고 낮은 유통물량과 시장 기대가 겹치며 나흘 만에 IPO가 대비 +67%까지 급등했다.</div>
+        <a class="tl-source" href="https://ir.spacex.com/updates/releases-details/2026/Space-Exploration-Technologies-Corp--Announces-Closing-of-Initial-Public-Offering-Including-Full-Exercise-of-Underwriters-Option-to-Purchase-Additional-Shares-2026-RgoR-Y1Vwh/default.aspx" target="_blank" rel="noopener">관련 발표 보기 (SpaceX IR) →</a>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot neutral"></div>
+        <div class="tl-date">2026년 5월 20일 — S-1 상장신고서 제출</div>
+        <div class="tl-title">최초로 재무제표 일부가 공개된 시점 — IPO 절차의 시작</div>
+        <div class="tl-desc">SEC에 S-1을 제출하며 비상장 시절 내부 재무 상태가 처음으로 외부에 공개됐다.</div>
+        <a class="tl-source" href="https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001181412&type=S-1" target="_blank" rel="noopener">관련 공시 보기 (SEC EDGAR) →</a>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="invest" class="section">
+  <div class="section-title">2026년 핵심 투자 포인트</div>
+
+  <div class="bull-bear">
+    <div class="bb-box">
+      <div class="bb-title bb-bull">🐂 Bull 요인</div>
+      <div class="bb-item"><span class="bb-icon" style="color:var(--bull);">▲</span><span><strong>매출 +92% YoY 고성장:</strong> 첫 공개 분기(Q2 2026) 매출 $7.81B, 전년동기($4.07B) 대비 거의 두 배.</span></div>
+      <div class="bb-item"><span class="bb-icon" style="color:var(--bull);">▲</span><span><strong>AI 부문 급부상:</strong> AI 매출이 1년 만에 3.5배(+247.5%)로 성장 — Starlink에 이은 두 번째 성장축으로 자리잡는 중.</span></div>
+      <div class="bb-item"><span class="bb-icon" style="color:var(--bull);">▲</span><span><strong>넉넉한 현금 보유:</strong> 현금 $93.5B, 부채 $38.4B — IPO로 확보한 실탄이 두터워 단기 지급 능력 자체는 여유 있음.</span></div>
+      <div class="bb-item"><span class="bb-icon" style="color:var(--bull);">▲</span><span><strong>순손실 폭 축소:</strong> 순손실이 전년동기 -$1,008M에서 -$541M로 46% 줄어 적자 규모가 개선되는 방향.</span></div>
+      <div class="bb-item"><span class="bb-icon" style="color:var(--bull);">▲</span><span><strong>애널리스트 대체로 우호적:</strong> Moderate Buy 컨센서스(매수 25·보유 5·매도 3, MarketBeat).</span></div>
+    </div>
+    <div class="bb-box">
+      <div class="bb-title bb-bear">🐻 Bear 요인</div>
+      <div class="bb-item"><span class="bb-icon" style="color:var(--bear);">▼</span><span><strong>여전히 적자:</strong> 영업손실 -$143M·순손실 -$541M — 아직 이익을 내는 회사가 아니다.</span></div>
+      <div class="bb-item"><span class="bb-icon" style="color:var(--bear);">▼</span><span><strong>현금흐름 대비 과도한 투자:</strong> 상반기 영업현금흐름(3.5B)의 8배가 넘는 Capex(28.5B) — 자체 현금창출력만으로는 투자를 감당하지 못함.</span></div>
+      <div class="bb-item"><span class="bb-icon" style="color:var(--bear);">▼</span><span><strong>낮은 유통물량발 극단적 변동성:</strong> 발행주식의 5% 미만만 유통 — 상장 3개월 만에 +67% 급등 후 고점 대비 -53.5% 급락을 이미 겪음.</span></div>
+      <div class="bb-item"><span class="bb-icon" style="color:var(--bear);">▼</span><span><strong>검증된 데이터가 거의 없음:</strong> 공개된 분기 실적이 1건뿐이라 이 성장률·손익 추세가 계속될지, 일회성인지 아직 판단할 근거가 부족하다.</span></div>
+      <div class="bb-item"><span class="bb-icon" style="color:var(--bear);">▼</span><span><strong>애널리스트 목표주가 편차가 매우 큼:</strong> 소스별 평균 $219~$232, 개별 목표가는 낮게는 $117·높게는 $450까지 — 컨센서스 자체의 신뢰도가 아직 낮다.</span></div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:16px;">
+    <div class="card-title">애널리스트 컨센서스 (참고용 — 상장 3개월차, 커버리지 초기 단계)</div>
+    <div class="grid-3">
+      <div class="stat-box">
+        <div class="stat-label">투자의견</div>
+        <div class="stat-value" style="color:var(--accent2);font-size:19px;">Moderate Buy</div>
+        <div class="stat-sub">매수 25 · 보유 5 · 매도 3 (MarketBeat)</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-label">평균 목표주가</div>
+        <div class="stat-value gold" style="font-size:19px;">$219~232</div>
+        <div class="stat-sub">소스별 편차 있음(S&amp;P Global 35명 $219.22 등)</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-label">목표주가 범위</div>
+        <div class="stat-value" style="font-size:19px;">$117 ~ $450</div>
+        <div class="stat-sub">최저~최고, 편차가 매우 큼</div>
+      </div>
+    </div>
+    <div style="margin-top:10px;font-size:11px;color:var(--text3);">상장한 지 3개월밖에 안 돼 커버리지 자체가 초기 단계다. 목표주가가 소스마다, 애널리스트마다 크게 갈리는 것 자체가 "아직 시장도 이 회사를 어떻게 밸류에이션해야 할지 합의하지 못했다"는 뜻으로 읽는 게 정확하다 — 다른 티커처럼 단일 신뢰 구간으로 요약하지 않는다.</div>
+  </div>
+
+  <div class="card" style="margin-top:16px;">
+    <div class="card-title">4개 분석 종합 — 한눈에 보기</div>
+    <div class="zone-list">
+      <div class="zone-item"><span class="zone-label">📈 기술적 분석</span><span class="zone-val" style="color:var(--text2);">데이터 부족(거래일 58일) — MA5·MA20만 계산 가능, 기술점수·52주 범위·백테스트는 준비 중</span></div>
+      <div class="zone-item"><span class="zone-label">📊 기본적 분석</span><span class="zone-val" style="color:var(--gold);">첫 공개 분기(Q2 2026) 매출 $7.81B(+92%)·순손실 -$541M(적자폭 46% 축소), 비교할 과거 분기 없음</span></div>
+      <div class="zone-item"><span class="zone-label">⚖️ 밸류에이션</span><span class="zone-val" style="color:var(--text2);">TTM 데이터 없음(분기 1개뿐) + 첫 분기 적자라 PER 자체가 정의되지 않음 — 준비 중</span></div>
+      <div class="zone-item"><span class="zone-label">📰 시계열 뉴스</span><span class="zone-val" style="color:var(--red);">상장 후 이미 급등(+67%)→급락(-53.5%)→실적발 급등락 사이클 한 번씩 경험 — 낮은 유통물량발 변동성 지속 중</span></div>
+    </div>
+  </div>
+</div>
+<div class="disclaimer" style="max-width:1100px;margin:0 auto;padding:0 32px 32px;font-size:11px;color:var(--text3);line-height:1.6;">
+  ⚠️ 본 위젯은 차트, 분기 재무제표, SEC 공시, 공개 뉴스를 기반으로 작성된 정보 제공 목적의 분석 자료입니다. 투자 권고 또는 매매 추천이 아니며, 모든 투자 결정은 본인의 판단과 책임 하에 이루어져야 합니다. 과거 실적이 미래 수익을 보장하지 않습니다.
+</div>
+<script>
+const SPCX_DAILY = [["2026-06-12",150.0,176.52,149.34,160.95,519234800],["2026-06-15",171.74,193.0,168.35,192.5,256226600],["2026-06-16",200.51,225.64,199.98,211.39,195401600],["2026-06-17",209.84,213.8,187.01,191.82,201719500],["2026-06-18",188.39,190.0,172.11,185.0,272126800],["2026-06-22",176.04,176.75,154.0,154.6,169183800],["2026-06-23",151.06,165.5,147.11,156.11,155848100],["2026-06-24",154.2,159.86,150.72,154.54,76101500],["2026-06-25",156.63,160.65,150.0,153.0,62212400],["2026-06-26",150.62,158.4,148.51,153.23,126932900],["2026-06-29",157.36,166.17,151.74,164.19,81443100],["2026-06-30",163.38,172.4,161.64,170.86,82047500],["2026-07-01",171.57,171.74,155.0,157.54,109317600],["2026-07-02",159.73,162.16,155.88,162.0,61257100],["2026-07-06",165.95,167.9,155.04,160.42,188831300],["2026-07-07",158.92,159.3,148.86,149.47,83779700],["2026-07-08",152.55,152.93,145.2,148.3,60949400],["2026-07-09",150.45,153.5,147.59,152.16,46468600],["2026-07-10",150.13,150.57,145.07,145.3,46826000],["2026-07-13",144.7,144.92,136.78,139.14,71456500],["2026-07-14",140.95,143.33,135.52,136.08,46694800],["2026-07-15",137.51,139.34,132.15,135.27,58040900],["2026-07-16",135.01,137.76,130.74,131.11,58725600],["2026-07-17",127.43,130.33,122.12,123.99,83706200],["2026-07-20",125.29,125.7,119.68,119.85,57337300],["2026-07-21",122.11,129.88,120.36,123.54,79718100],["2026-07-22",123.29,124.77,115.19,115.26,92731800],["2026-07-23",115.21,118.55,110.85,118.24,75246500],["2026-07-24",116.01,117.0,111.4,115.07,56786100],["2026-07-27",113.5,114.85,108.66,113.5,64540700],["2026-07-28",109.32,118.13,107.01,116.41,81714300],["2026-07-29",114.4,117.59,110.35,112.55,53995200],["2026-07-30",115.14,118.93,111.35,112.2,56008000],["2026-07-31",113.1,113.64,107.57,108.37,58835700],["2026-08-03",106.4,114.92,104.83,114.53,70524000],["2026-08-04",117.33,126.71,115.72,125.33,144130100],["2026-08-05",112.37,117.5,106.66,108.27,208488400],["2026-08-06",107.09,115.75,105.11,114.92,255176600],["2026-08-07",114.97,133.48,114.53,133.11,242130700],["2026-08-10",134.95,139.26,130.17,138.74,169934300],["2026-08-11",138.66,139.98,130.5,133.29,108900600],["2026-08-12",135.05,149.6,134.01,146.15,167236400],["2026-08-13",143.75,145.05,139.76,141.29,120282200],["2026-08-14",142.9,144.02,135.5,140.0,96727800],["2026-08-17",139.98,149.8,139.58,146.23,116675400],["2026-08-18",140.73,146.46,139.41,143.34,84191000],["2026-08-19",144.96,145.01,136.72,139.65,76612300],["2026-08-20",137.29,137.88,130.39,134.0,119813200],["2026-08-21",134.32,137.35,131.22,136.97,78808300],["2026-08-24",134.36,138.33,133.1,135.0,60188400],["2026-08-25",136.94,139.75,136.1,137.95,53075000],["2026-08-26",137.0,140.18,135.1,139.63,61380500],["2026-08-27",139.99,142.06,138.6,140.87,55268800],["2026-08-28",139.83,143.29,137.9,141.5,55111200],["2026-08-31",140.08,144.14,139.88,143.69,63145000],["2026-09-01",141.87,145.23,141.17,142.23,53808100],["2026-09-02",142.68,143.1,138.17,140.71,49771100],["2026-09-03",141.36,149.84,141.05,147.76,46301755]];
+const SPCX_MA5 = [null,null,null,null,188.332,187.062,179.784,168.414,160.65,154.296,156.214,159.164,159.764,161.564,163.002,160.058,155.546,154.47,151.13,146.874,144.196,141.59,137.38,133.118,129.26,126.752,122.75,120.176,118.392,117.122,115.696,115.154,113.946,112.606,112.812,114.596,113.74,114.284,119.232,124.074,125.666,133.242,138.516,139.894,141.392,143.402,142.102,140.644,140.038,137.792,136.714,136.71,138.084,138.99,140.728,141.584,141.8,143.178];
+const SPCX_MA20 = [null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,163.126,161.8825,159.021,155.007,151.6155,148.358,146.805,144.7625,142.9475,141.051,139.0645,136.6755,133.76,131.493,128.8115,126.517,125.31,123.3085,121.4465,120.837,120.817,120.6775,121.2215,121.7305,122.531,123.85,124.84,126.0595,126.8475,127.9425,129.0175,130.0945,131.4485,132.882,134.5385,135.9965,136.8415,138.4635,140.1055];
+
+
+(function(){
+  const svgCandle = document.getElementById('spcxCandleSvg');
+  const svgVol = document.getElementById('spcxVolumeSvg');
+  const toggle = document.getElementById('spcxRangeToggle');
+  const headerTitle = document.getElementById('techHeaderTitle');
+  const headerReturn = document.getElementById('techHeaderReturn');
+  const rangeSummary = document.getElementById('techRangeSummary');
+  if(!svgCandle || !svgVol || !toggle) return;
+  const RANGES = {'1M':21,'ALL':Infinity};
+  const RANGE_LABELS = {'1M':'1개월','ALL':'전체(상장 이후)'};
+  const NS = 'http://www.w3.org/2000/svg';
+  const UP='#2ecc71', DOWN='#e74c3c';
+  const maColors = {ma5:'#ff6b9d', ma20:'#9b59b6'};
+  const maState = {ma5:true, ma20:true, pricelabels:true};
+  let currentRange = 'ALL';
+
+  function updateHeader(rangeKey, data, prevClose){
+    const base = prevClose != null ? prevClose : data[0][4];
+    const last = data[data.length-1][4];
+    const retPct = ((last/base - 1) * 100).toFixed(1);
+    const sign = retPct >= 0 ? '+' : '';
+    const dateFrom = data[0][0].slice(0,7).replace('-','.');
+    const dateTo = data[data.length-1][0].slice(0,7).replace('-','.');
+    headerTitle.childNodes[0].textContent = `기술적 분석 — 일봉 캔들스틱 (${dateFrom} ~ ${dateTo}) · ${RANGE_LABELS[rangeKey]} 수익률 `;
+    headerReturn.textContent = `${sign}${retPct}%`;
+    headerReturn.style.color = retPct >= 0 ? 'var(--green)' : 'var(--red)';
+
+    const highs = data.map(d=>d[2]), lows = data.map(d=>d[3]);
+    const periodHigh = Math.max(...highs), periodLow = Math.min(...lows);
+    const highDate = data[highs.indexOf(periodHigh)][0].slice(0,7).replace('-','.');
+    const lowDate = data[lows.indexOf(periodLow)][0].slice(0,7).replace('-','.');
+    rangeSummary.textContent = `${RANGE_LABELS[rangeKey]} 최저 $${periodLow.toFixed(2)} (${lowDate}) → ${RANGE_LABELS[rangeKey]} 최고 $${periodHigh.toFixed(2)} (${highDate}) → 현재 $${last.toFixed(2)}`;
+  }
+
+  function draw(rangeKey){
+    currentRange = rangeKey;
+    const n = RANGES[rangeKey];
+    const data = SPCX_DAILY.slice(-n);
+    const startIdx = SPCX_DAILY.length - data.length;
+    const prevClose = startIdx > 0 ? SPCX_DAILY[startIdx - 1][4] : null;
+    const ma5 = SPCX_MA5.slice(-n), ma20 = SPCX_MA20.slice(-n);
+    updateHeader(rangeKey, data, prevClose);
+    while(svgCandle.firstChild) svgCandle.removeChild(svgCandle.firstChild);
+    while(svgVol.firstChild) svgVol.removeChild(svgVol.firstChild);
+
+    const W=720,H=240,pL=45,pR=12,pT=10,pB=20;
+    const cW=W-pL-pR,cH=H-pT-pB;
+    const highs=data.map(d=>d[2]), lows=data.map(d=>d[3]);
+    const maVals=[...ma5,...ma20].filter(v=>v!=null);
+    const mx=Math.max(...highs,...maVals), mn=Math.min(...lows,...maVals);
+    const pad=(mx-mn)*0.06 || mx*0.02;
+    const top=mx+pad, bot=mn-pad, rng=(top-bot)||1;
+    const py = v => pT + cH*(1-(v-bot)/rng);
+    const colW = cW/data.length;
+    const bodyW = Math.max(colW*0.62, 0.4);
+
+    for(let i=0;i<=3;i++){
+      const v = bot + rng*i/3;
+      const y = py(v);
+      const l=document.createElementNS(NS,'line');
+      l.setAttribute('x1',pL);l.setAttribute('x2',W-pR);l.setAttribute('y1',y);l.setAttribute('y2',y);
+      l.setAttribute('stroke','rgba(255,255,255,.08)');l.setAttribute('stroke-width','1');
+      svgCandle.appendChild(l);
+      const t=document.createElementNS(NS,'text');
+      t.setAttribute('x',pL-4);t.setAttribute('y',y+3);t.setAttribute('text-anchor','end');
+      t.setAttribute('font-size','9');t.setAttribute('fill','rgba(154,160,184,.8)');
+      t.textContent='$'+v.toFixed(0);
+      svgCandle.appendChild(t);
+    }
+
+    data.forEach((d,i)=>{
+      const [,o,h,l,c] = d;
+      const cx = pL + (i+0.5)*colW;
+      const up = c >= o;
+      const col = up ? UP : DOWN;
+      const wick=document.createElementNS(NS,'line');
+      wick.setAttribute('x1',cx);wick.setAttribute('x2',cx);
+      wick.setAttribute('y1',py(h));wick.setAttribute('y2',py(l));
+      wick.setAttribute('stroke',col);wick.setAttribute('stroke-width', Math.max(colW*0.12,0.4));
+      svgCandle.appendChild(wick);
+      const yTop = py(Math.max(o,c));
+      const yBot = py(Math.min(o,c));
+      const rect=document.createElementNS(NS,'rect');
+      rect.setAttribute('x', cx - bodyW/2);
+      rect.setAttribute('y', yTop);
+      rect.setAttribute('width', bodyW);
+      rect.setAttribute('height', Math.max(yBot-yTop, 0.6));
+      rect.setAttribute('fill', col);
+      svgCandle.appendChild(rect);
+    });
+
+    const drawMaLine = (vals, color) => {
+      let seg = [];
+      const flush = () => {
+        if (seg.length > 1) {
+          const pl = document.createElementNS(NS,'polyline');
+          pl.setAttribute('points', seg.join(' '));
+          pl.setAttribute('fill','none'); pl.setAttribute('stroke',color);
+          pl.setAttribute('stroke-width','1.4'); pl.setAttribute('opacity','0.95');
+          pl.setAttribute('stroke-linejoin','round'); pl.setAttribute('stroke-linecap','round');
+          svgCandle.appendChild(pl);
+        }
+        seg = [];
+      };
+      vals.forEach((v,i) => {
+        if (v == null) { flush(); return; }
+        seg.push(`${pL+(i+0.5)*colW},${py(v)}`);
+      });
+      flush();
+    };
+    if (maState.ma5) drawMaLine(ma5, maColors.ma5);
+    if (maState.ma20) drawMaLine(ma20, maColors.ma20);
+
+    if (maState.pricelabels) {
+    const closeIdx = data.length-1;
+    const closeVal = data[closeIdx][4];
+    const periodHigh = Math.max(...highs);
+    const periodLow = Math.min(...lows);
+    const highIdx = highs.indexOf(periodHigh);
+    const lowIdx = lows.indexOf(periodLow);
+    const markers = [
+      {idx: highIdx, v: periodHigh, color: UP, label:'최고', side:'above'},
+      {idx: lowIdx, v: periodLow, color: DOWN, label:'최저', side:'below'},
+      {idx: closeIdx, v: closeVal, color:'#60a5fa', label:'종가', side:'left'}
+    ];
+    markers.forEach(m=>{
+      const cx = pL + (m.idx+0.5)*colW;
+      const cy = py(m.v);
+      const dot=document.createElementNS(NS,'circle');
+      dot.setAttribute('cx',cx);dot.setAttribute('cy',cy);dot.setAttribute('r','3.5');
+      dot.setAttribute('fill',m.color);dot.setAttribute('stroke','#0f1117');dot.setAttribute('stroke-width','1.5');
+      svgCandle.appendChild(dot);
+
+      const labelText = `${m.label} $${m.v.toFixed(2)}`;
+      const labelW = labelText.length*5.2+6;
+      let tx, ty, anchor;
+      if (m.side === 'left') {
+        anchor = 'end'; tx = cx-7; ty = cy+3;
+      } else if (m.side === 'above') {
+        ty = cy-9;
+        if (cx < pL+cW*0.15) { anchor='start'; tx=cx+7; }
+        else if (cx > W-pR-cW*0.15) { anchor='end'; tx=cx-7; }
+        else { anchor='middle'; tx=cx; }
+      } else {
+        ty = cy+16;
+        if (cx < pL+cW*0.15) { anchor='start'; tx=cx+7; }
+        else if (cx > W-pR-cW*0.15) { anchor='end'; tx=cx-7; }
+        else { anchor='middle'; tx=cx; }
+      }
+      const bgX = anchor==='end' ? tx-labelW : anchor==='middle' ? tx-labelW/2 : tx;
+      const bg=document.createElementNS(NS,'rect');
+      bg.setAttribute('x', bgX);bg.setAttribute('y', ty-8);
+      bg.setAttribute('width', labelW);bg.setAttribute('height', 12);
+      bg.setAttribute('fill','rgba(15,17,23,0.85)');bg.setAttribute('rx','2');
+      svgCandle.appendChild(bg);
+      const t=document.createElementNS(NS,'text');
+      t.setAttribute('x', tx);t.setAttribute('y', ty+2);
+      t.setAttribute('text-anchor',anchor);t.setAttribute('font-size','9');
+      t.setAttribute('font-weight','700');t.setAttribute('fill', m.color);
+      t.textContent = labelText;
+      svgCandle.appendChild(t);
+    });
+    }
+
+    const labelCount = 5;
+    for(let i=0;i<labelCount;i++){
+      const idx = Math.round(i*(data.length-1)/((labelCount-1)||1));
+      const cx = pL + (idx+0.5)*colW;
+      const t=document.createElementNS(NS,'text');
+      t.setAttribute('x', Math.min(Math.max(cx,pL+10), W-20));
+      t.setAttribute('y', H-4);
+      t.setAttribute('text-anchor','middle');t.setAttribute('font-size','9');
+      t.setAttribute('fill','rgba(154,160,184,.8)');
+      t.textContent = data[idx][0].slice(2).replace(/-/g,'.');
+      svgCandle.appendChild(t);
+    }
+
+    const VW=720,VH=70,vpT=6,vpB=4;
+    const vcH=VH-vpT-vpB;
+    const maxV = Math.max(...data.map(d=>d[5]));
+    data.forEach((d,i)=>{
+      const [,o,,,c,v] = d;
+      const cx = pL + (i+0.5)*colW;
+      const up = c >= o;
+      const col = up ? 'rgba(46,204,113,0.55)' : 'rgba(231,76,60,0.55)';
+      const h = (v/maxV)*vcH;
+      const rect=document.createElementNS(NS,'rect');
+      rect.setAttribute('x', cx - bodyW/2);
+      rect.setAttribute('y', vpT + (vcH-h));
+      rect.setAttribute('width', bodyW);
+      rect.setAttribute('height', Math.max(h,0.6));
+      rect.setAttribute('fill', col);
+      svgVol.appendChild(rect);
+    });
+  }
+
+  toggle.querySelectorAll('.range-btn').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      toggle.querySelectorAll('.range-btn').forEach(b=>b.classList.remove('active'));
+      btn.classList.add('active');
+      draw(btn.dataset.range);
+    });
+  });
+
+  document.querySelectorAll('.ma-toggle-btn').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      const key = btn.dataset.ma;
+      maState[key] = !maState[key];
+      btn.classList.toggle('ma-off', !maState[key]);
+      draw(currentRange);
+    });
+  });
+
+  draw('ALL');
+})();
+
+function showSection(id) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  event.target.classList.add('active');
+}
+</script>
+</body>
+</html>
