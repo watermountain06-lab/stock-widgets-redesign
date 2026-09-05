@@ -1,0 +1,1213 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SKHY 종합 분석 위젯</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<style>
+
+  /* HEADER */
+  .header { background: linear-gradient(135deg, #2b0a06 0%, #0f1117 40%, #1a1d27 100%); border-bottom: 2px solid var(--accent3); padding: 28px 32px 24px; position: relative; overflow: hidden; max-width: 1100px; margin: 0 auto; }
+  .box-key { background: rgba(238,53,36,0.08); border: 1px solid var(--accent3); border-radius: 10px; padding: 12px 16px; max-width: 1100px; margin: 0 auto 16px; }
+  .header::before { content: ''; position: absolute; top: -60px; right: -60px; width: 240px; height: 240px; background: radial-gradient(circle, rgba(255,122,92,0.14) 0%, transparent 70%); pointer-events: none; }
+  .header-top { display: flex; align-items: flex-start; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
+  .ticker-block { display: flex; align-items: center; gap: 16px; }
+  .ticker-badge { background: linear-gradient(135deg, var(--accent3), var(--accent)); color: #fff; font-size: 13px; font-weight: 800; padding: 5px 12px; border-radius: 6px; letter-spacing: 1px; }
+  .company-name { font-size: 22px; font-weight: 700; color: var(--text); }
+  .company-sub { font-size: 12px; color: var(--text3); margin-top: 2px; }
+  .price-block { text-align: right; }
+  .price-main { font-size: 32px; font-weight: 800; color: var(--accent2); letter-spacing: -1px; }
+  .price-change { font-size: 13px; color: var(--red); font-weight: 600; }
+  .header-meta { display: flex; justify-content: space-between; gap: 16px; margin-top: 16px; flex-wrap: wrap; }
+  .meta-item { display: flex; flex-direction: column; }
+  .meta-label { font-size: 11px; color: var(--text3); text-transform: uppercase; letter-spacing: 0.8px; }
+  .meta-value { font-size: 14px; font-weight: 600; color: var(--text2); margin-top: 2px; }
+  .meta-value.highlight { color: var(--accent2); }
+
+  /* today-banner */
+  .today-banner { background: rgba(255,193,7,0.12); border: 1px solid #ffc107; border-radius: 8px; padding: 8px 32px; font-size: 12px; color: #ffc107; max-width: 1100px; margin: 0 auto; }
+
+  /* NAV */
+  .nav { display: flex; justify-content: space-between; gap: 4px; padding: 12px 32px; background: var(--bg2); border-bottom: 1px solid var(--border); overflow-x: auto; scrollbar-width: none; max-width: 1100px; margin: 0 auto; }
+  .nav::-webkit-scrollbar { display: none; }
+  .nav-btn { background: none; border: none; color: var(--text3); font-size: 12px; font-weight: 600; padding: 7px 14px; border-radius: 20px; cursor: pointer; white-space: nowrap; transition: all 0.2s; letter-spacing: 0.3px; }
+  .nav-btn:hover { color: var(--text); background: var(--bg3); }
+  .nav-btn.active { background: var(--accent3); color: var(--accent2); }
+
+  /* SECTIONS */
+  .section { display: none; padding: 28px 32px; max-width: 1100px; margin: 0 auto; }
+  .section.active { display: block; }
+
+/* ══════ shared ══════ */
+  :root {
+    --bg: #0f1117; --bg2: #1a1d27; --bg3: #22263a; --border: #2e3347;
+    --text: #e8eaf0; --text2: #9aa0b8; --text3: #5c6282;
+    --accent: #ee3524; --accent2: #ff7a5c; --accent3: #4a0f0a;
+    --ma5: #38bdf8; --ma20: #f59e0b; --ma60: #a78bfa; --ma120: #22c55e;
+    --green: #2ecc71; --red: #e74c3c; --gold: #f0c040; --blue: #3498db;
+    --bull: #D85A30; --bear: #185FA5;
+    --event-major: #38bdf8; --event-neutral: #f1c40f;
+    --radius: 10px; --shadow: 0 4px 20px rgba(0,0,0,0.4);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', -apple-system, sans-serif; font-size: 14px; line-height: 1.6; }
+
+  .section-title { font-size: 16px; font-weight: 700; color: var(--accent2); margin-bottom: 20px; padding-bottom: 10px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 8px; }
+  .section-title::before { content: ''; width: 4px; height: 18px; background: var(--accent); border-radius: 2px; display: inline-block; }
+
+  .card { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius); padding: 18px 20px; margin-bottom: 16px; }
+  .card-title { font-size: 11px; color: var(--text3); text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 12px; font-weight: 600; }
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+  .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+  .chart-wrap { position: relative; }
+  .chart-wrap canvas { max-width: 100%; }
+  .price-chart-container { margin-bottom: 16px; }
+
+  .stat-box { background: var(--bg3); border: 1px solid var(--border); border-radius: 8px; padding: 14px 16px; }
+  .stat-label { font-size: 11px; color: var(--text3); text-transform: uppercase; letter-spacing: 0.8px; }
+  .stat-value { font-size: 22px; font-weight: 700; color: var(--text); margin: 4px 0 2px; }
+  .stat-sub { font-size: 11px; color: var(--text3); }
+  .stat-value.up { color: var(--green); }
+  .stat-value.down { color: var(--red); }
+  .stat-value.gold { color: var(--accent2); }
+
+  .zone-list { display: flex; flex-direction: column; gap: 8px; margin-top: 4px; }
+  .zone-item { display: flex; justify-content: space-between; align-items: center; padding: 8px 12px; background: var(--bg3); border-radius: 6px; }
+  .zone-label { font-size: 12px; color: var(--text2); }
+  .zone-val { font-size: 13px; font-weight: 700; color: var(--accent2); }
+  .zone-tag { font-size: 10px; padding: 2px 8px; border-radius: 10px; font-weight: 600; }
+  .tag-support { background: rgba(46,204,113,0.15); color: var(--green); }
+  .tag-resist { background: rgba(231,76,60,0.15); color: var(--red); }
+  .tag-current { background: rgba(240,192,64,0.15); color: var(--gold); }
+
+  .range-toggle { display: flex; gap: 6px; flex-wrap: wrap; }
+  .range-btn { background: var(--bg3); border: 1px solid var(--border); color: var(--text3); font-size: 11px; font-weight: 700; padding: 4px 11px; border-radius: 999px; cursor: pointer; transition: all .15s; }
+  .range-btn:hover { color: var(--text); border-color: var(--text2); }
+  .range-btn.active { background: rgba(255,122,92,0.18); color: var(--accent2); border-color: var(--accent); }
+  .ma-toggle-btn { background: var(--bg3); border: 1px solid; font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: 999px; cursor: pointer; opacity: 1; transition: opacity .15s; }
+  .ma-toggle-btn.ma-off { opacity: 0.35; }
+
+  /* SCORECARD */
+  .scorecard { background: linear-gradient(135deg, var(--bg2) 0%, #171a26 100%); border: 1px solid var(--border); border-radius: var(--radius); padding: 22px 24px; margin-bottom: 20px; }
+  .scorecard-top { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 12px; margin-bottom: 14px; }
+  .scorecard-grade { font-size: 12px; font-weight: 700; padding: 6px 14px; border-radius: 999px; background: rgba(154,160,184,0.16); color: var(--text2); white-space: nowrap; }
+  .scorecard-verdict { display: flex; flex-direction: column; align-items: flex-end; gap: 6px; }
+  .scorecard-subtitle { font-size: 11.5px; color: var(--text3); margin-bottom: 4px; }
+
+  .price-ladder { position: relative; padding-left: 20px; }
+  .price-ladder::before { content: ''; position: absolute; left: 5px; top: 8px; bottom: 8px; width: 2px; background: var(--border); }
+  .ladder-item { position: relative; padding: 11px 0; display: grid; grid-template-columns: 68px 1fr 1fr; align-items: baseline; border-bottom: 1px dashed var(--bg3); }
+  .ladder-item:last-child { border-bottom: none; }
+  .ladder-dot { position: absolute; left: -20px; top: 16px; width: 10px; height: 10px; border-radius: 50%; border: 2px solid var(--bg2); }
+  .ladder-label { font-size: 12px; color: var(--text2); }
+  .ladder-value { font-size: 15px; font-weight: 700; text-align: center; }
+  .ladder-meta { font-size: 10.5px; color: var(--text3); text-align: right; }
+
+  .ma-row { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid var(--border); }
+  .ma-row:last-child { border-bottom: none; }
+  .ma-dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; margin-right: 8px; }
+  .ma-name { display: flex; align-items: center; font-size: 13px; color: var(--text2); }
+  .ma-val { font-size: 13px; font-weight: 600; }
+  .ma-status { font-size: 11px; padding: 3px 8px; border-radius: 12px; font-weight: 600; }
+  .status-above { background: rgba(46,204,113,0.15); color: var(--green); }
+  .status-below { background: rgba(231,76,60,0.15); color: var(--red); }
+
+  .yoy-footnote { font-size: 11px; color: var(--text3); margin-top: 10px; }
+  .yoy-footnote a { color: var(--accent2); text-decoration: none; }
+
+  .section-label { font-size: 13px; color: var(--text); font-weight: 700; margin-bottom: 10px; display:flex; align-items:center; gap:6px; }
+  .section-label .dot { width:6px; height:6px; border-radius:50%; background:var(--accent2); }
+  .diag-summary { display:flex; align-items:center; gap:12px; background: linear-gradient(90deg, rgba(46,204,113,0.14), rgba(46,204,113,0.03)); border:1px solid rgba(46,204,113,0.3); border-radius:8px; padding:12px 16px; margin-bottom:14px; }
+  .diag-summary .icon { font-size:24px; }
+  .diag-summary .title { font-size:14px; font-weight:800; color:var(--green); }
+  .diag-summary .sub { font-size:12px; color:var(--text2); margin-top:2px; line-height:1.4; }
+  .diag-summary.watch { background: linear-gradient(90deg, rgba(240,192,64,0.14), rgba(240,192,64,0.03)); border-color: rgba(240,192,64,0.35); }
+  .diag-summary.watch .title { color: var(--gold); }
+  .diag-list { display:flex; flex-direction:column; gap:6px; margin-bottom: 22px; }
+  .diag-row { display:flex; align-items:center; justify-content:space-between; background:var(--bg3); border-radius:8px; padding:10px 14px; }
+  .diag-left { display:flex; align-items:baseline; gap:10px; }
+  .diag-label { font-size:13px; color:var(--text); font-weight:600; min-width:96px; }
+  .diag-value { font-size:15px; font-weight:700; color:var(--text); }
+  .diag-note { font-size:11.5px; color:var(--text2); }
+  .diag-badge { font-size:11px; font-weight:700; padding:4px 10px; border-radius:999px; display:flex; align-items:center; gap:4px; white-space:nowrap; }
+  .diag-badge.safe { background:rgba(46,204,113,0.16); color:var(--green); }
+  .diag-badge.info { background:rgba(154,160,184,0.14); color:var(--text2); }
+  .diag-badge.watch { background:rgba(240,192,64,0.16); color:var(--gold); }
+
+  .detail-toggle { cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 8px; user-select: none; font-size: 12.5px; color: var(--text2); font-weight: 600; padding: 10px 2px 6px; border-top: 1px dashed var(--bg3); margin-top: 2px; }
+  .detail-toggle:hover { color: var(--text); }
+  .detail-toggle .toggle-hint { display: flex; align-items: center; gap: 6px; background: rgba(255,122,92,0.12); border: 1px solid rgba(255,122,92,0.35); border-radius: 999px; padding: 5px 11px; flex-shrink: 0; transition: background 0.2s ease, border-color 0.2s ease; }
+  .detail-toggle:hover .toggle-hint { background: rgba(255,122,92,0.22); border-color: rgba(255,122,92,0.5); }
+  .detail-toggle .toggle-hint-text { font-size: 10.5px; font-weight: 700; color: var(--accent2); white-space: nowrap; }
+  .detail-toggle .chevron { font-size: 11px; color: var(--accent2); transition: transform 0.25s ease; flex-shrink: 0; }
+  .detail-toggle.collapsed .chevron { transform: rotate(-90deg); }
+  .collapsible-body { overflow: hidden; opacity: 1; transition: max-height 0.3s ease, opacity 0.2s ease, margin-top 0.2s ease; }
+  .collapsible-body.collapsed { max-height: 0 !important; opacity: 0; margin-top: 0 !important; }
+
+  .activity-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 12px; }
+  .act-card { background: var(--bg3); border-radius: 8px; padding: 12px 14px; display:flex; align-items:center; gap:12px; }
+  .act-icon { font-size: 19px; width:34px; height:34px; display:flex; align-items:center; justify-content:center; background:rgba(255,122,92,0.1); border-radius:8px; flex-shrink:0; }
+  .act-label { font-size: 11.5px; color: var(--text2); font-weight:600; margin-bottom:2px; }
+  .act-value { font-size: 15px; font-weight: 700; color: var(--text); }
+  .act-sub { font-size: 11px; color: var(--text2); margin-top:1px; }
+  .ccc-card { background: var(--bg3); border-radius: 8px; padding: 16px 18px 12px; }
+  .ccc-head { display:flex; align-items:center; justify-content:space-between; margin-bottom: 6px; }
+  .ccc-head-label { font-size:12.5px; color:var(--text); font-weight:700; }
+  .ccc-head-value { font-size:18px; font-weight:800; color:var(--gold); }
+  .ccc-explain { font-size: 11.5px; color: var(--text2); line-height: 1.6; margin-bottom: 22px; }
+  .tl-bar-wrap { position: relative; margin: 40px 4px 8px; }
+  .tl-bar { height: 18px; border-radius: 5px; overflow: hidden; display: flex; }
+  .tl-seg-inv { background: linear-gradient(90deg,#3498db,#2980b9); display:flex; align-items:center; justify-content:center; font-size:10px; font-weight:700; color:#fff; }
+  .tl-seg-ar { background: linear-gradient(90deg,#ff9f7a,#ee3524); display:flex; align-items:center; justify-content:center; font-size:10px; font-weight:700; color:#0f1117; }
+  .tl-marker { position: absolute; top: -18px; width: 2px; background: var(--gold); }
+  .tl-marker-label { position: absolute; top: -32px; transform: translateX(-50%); font-size: 10.5px; font-weight: 700; color: var(--gold); white-space: nowrap; }
+
+  /* VALUATION METER */
+  .val-item { margin-bottom: 18px; padding: 8px; margin-left: -8px; margin-right: -8px; border-radius: 8px; border: 1px solid transparent; transition: background 0.15s ease, border-color 0.15s ease; cursor: pointer; }
+  .val-item:last-child { margin-bottom: 0; }
+  .val-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+  .val-item:hover { background: rgba(255,255,255,0.03); }
+  .val-item.selected { background: rgba(255,122,92,0.08); border-color: rgba(255,122,92,0.35); }
+  .val-name { position: relative; font-size: 13px; font-weight: 600; color: var(--text); }
+  .val-item.selected .val-name::after { content: '▸ 비교 보기'; font-size: 9.5px; font-weight: 600; color: var(--accent2); margin-left: 8px; vertical-align: middle; }
+  .val-number { font-size: 14px; font-weight: 700; color: var(--accent2); }
+  .val-track { height: 8px; background: var(--bg3); border-radius: 4px; position: relative; overflow: hidden; }
+  .val-fill { height: 100%; border-radius: 4px; transition: width 0.8s ease; }
+  .val-labels { display: flex; justify-content: space-between; margin-top: 4px; }
+  .val-low { font-size: 10px; color: var(--green); }
+  .val-mid { font-size: 10px; color: var(--accent2); text-align: center; }
+  .val-high { font-size: 10px; color: var(--red); }
+  .stage-badge { font-size: 13px; padding: 2px 10px; border-radius: 12px; font-weight: 700; }
+  .stage-1 { background: rgba(46,204,113,0.2); color: #2ecc71; }
+  .stage-2 { background: rgba(39,174,96,0.2); color: #27ae60; }
+  .stage-3 { background: rgba(240,192,64,0.2); color: var(--gold); }
+  .stage-4 { background: rgba(230,126,34,0.2); color: #e67e22; }
+  .stage-5 { background: rgba(231,76,60,0.2); color: var(--red); }
+
+  .verdict-line { font-size:15px; font-weight:700; color:var(--text); line-height:1.45; margin-top:14px; }
+  .verdict-caveat { font-size:11px; color:var(--text3); margin-top:5px; line-height:1.5; display:flex; align-items:flex-start; gap:6px; }
+  .caveat-icon { display:inline-flex; align-items:center; justify-content:center; width:14px; height:14px; border-radius:50%; background:var(--gold); color:#0f1117; font-size:10px; font-weight:800; flex-shrink:0; margin-top:1.5px; }
+  .anchor-card { margin-top:14px; background:var(--bg3); border-radius:8px; padding:12px 14px; }
+  .anchor-card-label { font-size:10.5px; color:var(--text3); text-transform:uppercase; letter-spacing:0.6px; margin-bottom:8px; }
+  .anchor-card-formula { font-family:'SF Mono',Menlo,Consolas,monospace; font-size:12.5px; font-weight:500; color:var(--text2); line-height:1.5; padding:2px 0 2px 10px; border-left:2px solid var(--text3); }
+  .anchor-card-formula + .anchor-card-formula { margin-top:6px; }
+  .anchor-card-cross { font-size:11px; color:var(--text3); margin-top:10px; padding-top:8px; border-top:1px dashed rgba(255,255,255,0.06); line-height:1.5; }
+  .secondary-row { margin-top:10px; background:rgba(52,152,219,0.08); border:1px solid rgba(52,152,219,0.25); border-radius:8px; padding:10px 12px; }
+  .secondary-row-label { font-size:11.5px; font-weight:700; color:var(--blue); }
+  .secondary-row-caveat { font-size:10.5px; color:var(--text3); margin-top:4px; line-height:1.5; }
+
+  .verdict-summary-head { font-size:14px; font-weight:800; color:var(--text); }
+  .verdict-summary-head .tag { font-size:11.5px; font-weight:700; color:var(--green); margin-left:4px; }
+  .verdict-summary-head .tag.mixed { color:var(--gold); }
+  .verdict-summary-head .tag.negative { color:var(--red); }
+  .verdict-summary-body { font-size:12.5px; color:var(--text2); line-height:1.7; margin-top:10px; }
+  .verdict-summary-risk { margin-top:12px; background:rgba(240,192,64,0.08); border:1px solid rgba(240,192,64,0.25); border-radius:8px; padding:10px 12px; font-size:11.5px; color:var(--text2); line-height:1.6; }
+  .verdict-summary-counter { margin-top:12px; background:rgba(240,192,64,0.08); border:1px solid rgba(240,192,64,0.25); border-radius:8px; padding:10px 12px; font-size:11.5px; color:var(--text2); line-height:1.6; }
+  .verdict-summary-next { margin-top:10px; background:rgba(52,152,219,0.08); border:1px solid rgba(52,152,219,0.25); border-radius:8px; padding:10px 12px; font-size:11.5px; color:var(--text2); line-height:1.6; }
+
+  /* TIMELINE */
+  .timeline { position: relative; padding-left: 24px; }
+  .timeline::before { content: ''; position: absolute; left: 8px; top: 0; bottom: 0; width: 2px; background: var(--border); }
+  .tl-item { position: relative; margin-bottom: 20px; }
+  .tl-item:last-child { margin-bottom: 0; }
+  .tl-dot { position: absolute; left: -20px; top: 4px; width: 10px; height: 10px; border-radius: 50%; background: var(--event-major); border: 2px solid var(--bg); }
+  .tl-dot.red { background: var(--red); }
+  .tl-dot.green { background: var(--green); }
+  .tl-dot.blue { background: var(--blue); }
+  .tl-dot.neutral { background: var(--event-neutral); }
+  .tl-date { font-size: 10px; color: var(--accent2); font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; }
+  .tl-title { font-size: 13px; font-weight: 600; color: var(--text); margin: 3px 0; }
+  .tl-desc { font-size: 12px; color: var(--text2); line-height: 1.5; }
+  .tl-source { display: inline-flex; align-items: center; gap: 4px; margin-top: 6px; font-size: 11px; font-weight: 600; color: var(--accent2); text-decoration: none; }
+  .tl-source:hover { text-decoration: underline; }
+  .tl-reaction { display:inline-block; margin-left:8px; font-size:10px; font-weight:700; padding:2px 7px; border-radius:999px; }
+  .tl-reaction.up { background:rgba(46,204,113,0.15); color:var(--green); }
+  .tl-reaction.down { background:rgba(231,76,60,0.15); color:var(--red); }
+  .tl-reaction.flat { background:rgba(154,160,184,0.15); color:var(--text3); }
+
+  /* BULL/BEAR */
+  .bull-bear { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .bb-box { background: var(--bg3); border-radius: var(--radius); padding: 16px; }
+  .bb-title { font-size: 13px; font-weight: 700; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+  .bb-bull { color: var(--bull); }
+  .bb-bear { color: var(--bear); }
+  .bb-item { display: flex; gap: 8px; margin-bottom: 10px; font-size: 12px; color: var(--text2); line-height: 1.5; }
+  .bb-icon { flex-shrink: 0; margin-top: 2px; }
+
+  @media (max-width: 640px) {
+    .section { padding: 20px 16px; }
+    .nav { padding: 10px 16px; }
+    .grid-3, .grid-4 { grid-template-columns: 1fr 1fr; }
+    .grid-2 { grid-template-columns: 1fr; }
+    .bull-bear { grid-template-columns: 1fr; }
+    .activity-grid { grid-template-columns: 1fr; }
+  }
+
+  body { padding-top: 46px; }
+  .back-bar { position: fixed; top: 0; left: 0; right: 0; height: 46px; background: rgba(10,11,17,0.92); backdrop-filter: blur(8px); border-bottom: 1px solid var(--border); z-index: 1000; display: flex; align-items: center; justify-content: space-between; padding: 0 20px; }
+  .back-bar-left { display: flex; align-items: center; gap: 8px; text-decoration: none; }
+  .back-bar-logo { width: 20px; height: 20px; border-radius: 5px; background: var(--accent2); flex-shrink: 0; }
+  .back-bar-left span { color: var(--text2); font-size: 12.5px; font-weight: 600; transition: color 0.2s; }
+  .back-bar-left:hover span { color: var(--accent2); }
+  .back-bar-right { display: flex; align-items: center; gap: 16px; font-size: 12px; }
+  .back-bar-nav { color: var(--text2); text-decoration: none; font-weight: 600; transition: color 0.2s; }
+  .back-bar-nav:hover { color: var(--accent2); }
+  .back-bar-nav.disabled { color: var(--text3); pointer-events: none; }
+  .back-bar-current { color: var(--text); font-weight: 700; padding: 4px 10px; background: var(--bg3); border-radius: 6px; white-space: nowrap; }
+
+  .disclaimer { max-width: 1100px; margin: 28px auto 16px; padding: 12px 16px; background: rgba(255,122,92,0.06); border: 1px solid var(--accent3); border-radius: 8px; font-size: 11px; color: var(--text3); line-height: 1.6; }
+  .info-box { background: rgba(255,122,92,0.1); border: 1px solid var(--accent3); border-radius: 8px; padding: 10px 14px; margin-bottom: 12px; font-size: 12px; color: var(--text2); }
+</style>
+</head>
+<body>
+<div class="back-bar">
+  <a class="back-bar-left" href="index.html"><span class="back-bar-logo"></span><span>[사이트명] · 전체 종목 목록</span></a>
+  <div class="back-bar-right">
+    <a class="back-bar-nav" href="JPM_full_widget.html">◀ JPM</a>
+    <span class="back-bar-current">SKHY · 시총 15위</span>
+    <a class="back-bar-nav" href="WMT_full_widget.html">다음 WMT ▶</a>
+  </div>
+</div>
+
+<div class="today-banner">⚠️ Nasdaq ADR 상장 41거래일(2026.07.10~2026.09.04) — 원주(KRX:000660, 1949년 설립·1996년 상장)와 별도 트랙, ADR 자체가 원주 대비 약 +47.5% 프리미엄에 거래 중(2026.09.03 기준). 재무는 원주(K-IFRS) 기준.</div>
+
+<div class="header">
+  <div class="header-top">
+    <div class="ticker-block">
+      <div>
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:4px;">
+          <span class="ticker-badge">SKHY</span>
+          <span style="font-size:11px;color:var(--accent2);font-weight:600;">NASDAQ ADR(2026.07.13 정식거래) · 원주 KRX:000660 · HBM 시장점유율 56% 세계 1위</span>
+        </div>
+        <div class="company-name">SK hynix Inc.</div>
+        <div class="company-sub">DRAM·NAND·HBM(고대역폭메모리) 종합 반도체 기업(IDM) · 글로벌 D램 2위(29.1%)·낸드 2위 · HBM 시장 1위(56.4%) · 시총 순위 15위(원주 기준 시가총액)</div>
+      </div>
+    </div>
+    <div class="price-block">
+      <div class="price-main">$169.86</div>
+      <div class="price-change" style="color:var(--green);">▲ +3.78% (2026.09.04 기준)</div>
+      <div style="font-size:11px;color:var(--text3);margin-top:2px;">상장 이후 최저 $124.80 (2026.07.29) · 최고 $194.80 (2026.07.14)</div>
+    </div>
+  </div>
+  <div class="header-meta">
+    <div class="meta-item"><span class="meta-label">시가총액</span><span class="meta-value highlight">$884B</span></div>
+    <div class="meta-item"><span class="meta-label">섹터</span><span class="meta-value">Information Technology · 메모리반도체</span></div>
+    <div class="meta-item"><span class="meta-label">Q2 FY26 매출(원주)</span><span class="meta-value">79.3조원 (+257% YoY)</span></div>
+    <div class="meta-item"><span class="meta-label">Q2 FY26 영업이익률</span><span class="meta-value">76.3%</span></div>
+    <div class="meta-item"><span class="meta-label">ADR-원주 괴리</span><span class="meta-value" style="color:var(--accent2);">+47.5% 프리미엄</span></div>
+    <div class="meta-item"><span class="meta-label">ADR 거래 경과</span><span class="meta-value">41거래일</span></div>
+  </div>
+</div>
+
+<div class="box-key">
+  <div style="font-size:13px;font-weight:700;color:var(--accent2);display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:10px;">
+    <span style="display:flex;align-items:center;gap:6px;"><span style="width:4px;height:14px;background:var(--accent2);border-radius:2px;display:inline-block;"></span>핵심 투자 논리 <span style="color:#27ae60;font-weight:600;">(저평가 — 단, ADR 프리미엄은 별개 리스크)</span></span>
+    <span style="font-size:11px;font-weight:700;padding:4px 10px;border-radius:999px;background:rgba(46,204,113,0.15);color:var(--green);">HBM 1위 · OPM 76%</span>
+    <span style="font-size:11px;font-weight:700;padding:4px 10px;border-radius:999px;background:rgba(255,122,92,0.18);color:var(--accent2);">Kioxia 매각이익 $27B+</span>
+    <span style="font-size:11px;font-weight:700;padding:4px 10px;border-radius:999px;background:rgba(231,76,60,0.15);color:var(--red);">ADR 프리미엄 +47.5%</span>
+  </div>
+  <div style="font-size:17px;font-weight:800;color:var(--text);margin-bottom:12px;">펀더멘털(HBM 슈퍼사이클) 자체는 메모리 반도체 역사적 밴드 대비 여전히 저평가 신호가 우세하지만, 미국 투자자가 실제로 사는 SKHY ADR은 원주(KRX:000660) 대비 이미 +47.5% 비싸게 거래되고 있다 — 두 판단은 서로 다른 질문이다.</div>
+  <div style="display:flex;flex-direction:column;gap:8px;">
+    <div style="font-size:12px;color:var(--text2);line-height:1.5;"><strong style="color:var(--accent2);">01</strong>&nbsp; Q2 FY26(4~6월) 원주 매출 79.3조원(+257% YoY)·영업이익 60.5조원(+557% YoY, 영업이익률 76.3%) — HBM 고부가가치 믹스 전환에 따른 이례적 수익성(SEC 6-K 반기보고서, KPMG Samjong 검토 완료 재무제표 직접 확인).</div>
+    <div style="font-size:12px;color:var(--text2);line-height:1.5;"><strong style="color:var(--accent2);">02</strong>&nbsp; Q2 GAAP 순이익엔 6월 Kioxia 지분 매각·재평가에 따른 세전 62.2조원 규모의 일회성 금융손익(순액)이 섞여 있다 — 이를 제외한 조정 TTM PER은 16.6x, GAAP 그대로면 10.3x로 착시성 저평가가 나온다.</div>
+    <div style="font-size:12px;color:var(--text2);line-height:1.5;"><strong style="color:var(--accent2);">03</strong>&nbsp; SKHY ADR($169.86)은 같은 날 원주(₩1,596,000 → ADR 환산 약 $115.15) 대비 +47.5% 비싸다 — 상장 첫 며칠의 일시적 소음이 아니라 41거래일이 지나도록 계속 관측되는 가격 괴리다.</div>
+    <div style="font-size:12px;color:var(--text2);line-height:1.5;"><strong style="color:var(--accent2);">04</strong>&nbsp; 41거래일이라는 짧은 ADR 자체 거래 이력 탓에 기술 상태 스코어(273거래일 필요)·예상밴드 백테스트(다년치 트레일링 PER 필요)는 정직하게 미제공 — 정직하게 계산 불가능한 지표를 억지로 만들지 않고 이 카드에서 명시적으로 생략한다.</div>
+  </div>
+</div>
+
+<div class="nav">
+  <button class="nav-btn active" onclick="showSection('tech')">📈 기술적 분석</button>
+  <button class="nav-btn" onclick="showSection('fund')">📊 기본적 분석</button>
+  <button class="nav-btn" onclick="showSection('valuation')">⚖️ 밸류에이션</button>
+  <button class="nav-btn" onclick="showSection('news')">📰 시계열 뉴스</button>
+  <button class="nav-btn" onclick="showSection('invest')">🎯 투자 포인트</button>
+</div>
+
+<div id="tech" class="section active">
+  <div class="section-title" id="techHeaderTitle">기술적 분석 — 일봉 캔들스틱 (2026.07 ~ 2026.09, ADR 상장 이후 전체) · 상장이후 수익률 <span id="techHeaderReturn">--</span></div>
+
+  <div class="price-chart-container">
+    <div style="margin-bottom:10px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
+      <div class="range-toggle" id="skhyRangeToggle">
+        <button class="range-btn" data-range="1M">1개월</button>
+        <button class="range-btn active" data-range="ALL">전체(상장이후)</button>
+      </div>
+      <div id="skhyMaToggle" style="display:flex;gap:8px;flex-wrap:wrap;">
+        <button class="ma-toggle-btn" data-ma="ma5" style="color:#38bdf8;border-color:#38bdf8;">● MA5</button>
+        <button class="ma-toggle-btn" data-ma="ma20" style="color:#f59e0b;border-color:#f59e0b;">● MA20</button>
+        <button class="ma-toggle-btn" data-ma="pricelabels" style="color:var(--text2);border-color:var(--text2);">◆ 가격라벨</button>
+      </div>
+    </div>
+    <svg id="skhyCandleSvg" viewBox="0 0 720 240" width="100%" style="display:block;background:var(--bg3);border-radius:8px 8px 0 0;padding:4px;" role="img" aria-label="SKHY 일봉 캔들스틱 차트"></svg>
+    <svg id="skhyVolumeSvg" viewBox="0 0 720 70" width="100%" style="display:block;background:var(--bg3);border-radius:0 0 8px 8px;padding:0 4px 4px;" role="img" aria-label="SKHY 거래량 차트"></svg>
+    <div style="margin-top:10px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
+      <div style="font-size:11px;color:var(--text3);" id="techRangeSummary">상장이후 최저 $124.80 (2026.07) → 상장이후 최고 $194.80 (2026.07) → 현재 $169.86</div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;">
+        <button class="ma-toggle-btn" data-ma="ma5" style="color:var(--ma5);border-color:var(--ma5);">● MA5</button>
+        <button class="ma-toggle-btn" data-ma="ma20" style="color:var(--ma20);border-color:var(--ma20);">● MA20</button>
+        <button class="ma-toggle-btn" data-ma="pricelabels" style="color:var(--text2);border-color:var(--text2);margin-left:4px;">◆ 가격라벨</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="scorecard">
+    <div class="scorecard-top">
+      <div class="scorecard-verdict" style="align-items:flex-start;">
+        <div class="scorecard-grade">데이터 부족 — 준비 중</div>
+      </div>
+    </div>
+    <div class="scorecard-subtitle">가격·거래량 기반 기술 상태 점수(모델 v1.0.0)는 52주 위치·추세구조 판정에 최소 273거래일이 필요합니다. SKHY ADR은 2026-07-10 최초거래 이후 41거래일뿐이라 아직 계산할 수 없습니다 — MA5·MA20만 표시 가능하며(MA60·MA120은 각 60·120거래일 필요), 273거래일 완성까지 약 10개월 이상 소요될 전망입니다. 예상밴드 백테스트(다년치 트레일링 PER 필요)도 같은 이유로 이번 카드에서는 제공하지 않습니다.</div>
+  </div>
+
+  <div class="grid-2">
+    <div class="card" style="margin-bottom:0;">
+      <div class="card-title">핵심 가격대 (ADR 상장 이후 기준)</div>
+      <div class="price-ladder">
+        <div class="ladder-item">
+          <div class="ladder-dot" style="background:var(--red);"></div>
+          <span class="ladder-label">상장이후 최고</span>
+          <span class="ladder-value" style="color:var(--red);">$194.80</span><span class="ladder-meta">2026.07.14 · 저항선</span>
+        </div>
+        <div class="ladder-item">
+          <div class="ladder-dot" style="background:var(--gold);"></div>
+          <span class="ladder-label">현재가</span>
+          <span class="ladder-value" style="color:var(--gold);">$169.86</span><span class="ladder-meta">고점 대비 -12.8%</span>
+        </div>
+        <div class="ladder-item">
+          <div class="ladder-dot" style="background:var(--green);"></div>
+          <span class="ladder-label">상장이후 최저</span>
+          <span class="ladder-value" style="color:var(--green);">$124.80</span><span class="ladder-meta">2026.07.29 · 강지지</span>
+        </div>
+      </div>
+      <div style="margin-top:10px;font-size:11px;color:var(--text3);">MA60·MA120·52주 범위 등 다년치 데이터가 필요한 지표는 아직 표시하지 않는다 — 데이터가 쌓이는 대로 순차적으로 추가할 예정.</div>
+    </div>
+    <div class="card" style="margin-bottom:0;">
+      <div class="card-title">이동평균선 현황 (MA5·MA20만 계산 가능)</div>
+      <div class="ma-row"><span class="ma-name"><span class="ma-dot" style="background:var(--ma5)"></span>MA5 (단기)</span><div style="display:flex;align-items:center;gap:10px;"><span class="ma-val">$164.78</span><span class="ma-status status-above">현재가 상회</span></div></div>
+      <div class="ma-row"><span class="ma-name"><span class="ma-dot" style="background:var(--ma20)"></span>MA20 (중단기)</span><div style="display:flex;align-items:center;gap:10px;"><span class="ma-val">$159.62</span><span class="ma-status status-above">현재가 상회</span></div></div>
+      <div style="margin-top:12px;padding:10px;background:var(--bg3);border-radius:6px;font-size:11.5px;color:var(--text2);">2개 이평선 모두 상회 — 다만 표본이 41거래일뿐이라 신뢰도가 표준적인 200거래일 이상 표본보다 낮다는 점을 감안해야 한다.</div>
+    </div>
+  </div>
+
+  <div style="display:flex;gap:7px;flex-wrap:wrap;margin-top:4px;">
+    <span style="font-size:11px;padding:3px 10px;border-radius:999px;font-weight:600;background:rgba(231,76,60,0.15);color:var(--red);">상장 41거래일 · 7/14 고점 대비 -12.8%</span>
+    <span style="font-size:11px;padding:3px 10px;border-radius:999px;font-weight:600;background:rgba(255,122,92,0.18);color:var(--accent2);">원주 대비 +47.5% 프리미엄(2026.09.03 기준) — 41거래일째 계속 관측되는 괴리</span>
+    <span style="font-size:11px;padding:3px 10px;border-radius:999px;font-weight:600;background:rgba(46,204,113,0.15);color:var(--green);">Q2 FY26 매출 +257%·영업이익률 76.3% — HBM 슈퍼사이클 실적</span>
+  </div>
+</div>
+
+<div id="fund" class="section">
+  <div class="section-title">기본적 분석 — 원주(KRX:000660) K-IFRS 연결재무제표 기준</div>
+  <div class="info-box">
+    <strong>왜 원주(K-IFRS) 기준 데이터인가?</strong>
+    <div style="margin-top:8px;">SK hynix는 미국 SEC에 F-1(등록서)·6-K(수시/반기보고서)만 제출하며, 아직 20-F(외국민간발행인 연차보고서)를 제출한 적이 없다(2026.07 상장 이후 첫 회계연도가 아직 끝나지 않음) — TSM처럼 SEC XBRL 연차 IFRS 태그를 쓸 수 있는 상황이 아니다. 대신 SEC에 실제로 제출된 2026.06.30 반기보고서(6-K, KPMG Samjong 검토 완료 K-IFRS 연결재무제표, 영문 번역본)와 F-1/424B4 등록설명서의 연간 비교표를 직접 소싱했다. ADR 1주 = 원주 0.1주.</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">원주(KRX:000660) 분기 매출·영업이익·영업이익률 (2024년 4분기 ~ 2026년 2분기)</div>
+    <div class="chart-wrap" style="height:260px;"><canvas id="skhyRevChart"></canvas></div>
+    <div style="margin-top:8px;font-size:11px;color:var(--text3);">단위: 조원(원주 KRX:000660 기준). Q1 2025·Q1 2026 두 분기는 SEC 6-K/424B4 원문과 직접 대조해 일치 확인. HBM 슈퍼사이클 진입 이후 6개 분기 연속 매출·영업이익·영업이익률 동반 가속.</div>
+  </div>
+
+  <div class="grid-4">
+    <div class="stat-box">
+      <div class="stat-label">Q2 FY26 매출</div>
+      <div class="stat-value up">79.3조원</div>
+      <div class="stat-sub">▲257% YoY, ▲51% QoQ</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-label">Q2 FY26 영업이익</div>
+      <div class="stat-value up">60.5조원</div>
+      <div class="stat-sub">▲557% YoY · 영업이익률 76.3%</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-label">Q2 FY26 GAAP 순이익</div>
+      <div class="stat-value gold">93.8조원</div>
+      <div class="stat-sub">Kioxia 매각·재평가 일회성 이익 포함(하단 참고)</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-label">다음 실적</div>
+      <div class="stat-value">2026년 10월 하순(예상)</div>
+      <div class="stat-sub">Q3 FY26 · 회사 공식 일정 미확정</div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:16px;">
+    <div class="card-title">Q2 FY26 GAAP 순이익의 일회성 요소 — Kioxia 지분 매각·재평가</div>
+    <div style="font-size:12px;color:var(--text2);line-height:1.7;">2026년 6월 SK hynix는 2018년부터 보유해온 Kioxia(일본 NAND 업체) 지분 일부를 매각했다. SEC 6-K 재무제표(Note 24, Finance Income and Expenses)를 직접 확인한 결과, Q2 2026 한 분기에만 "금융상품 평가이익" 53.2조원(6개월 누적 63.2조원)·배당수익 10.0조원(전년동기 34억원에서 급증)이 계상돼 순금융손익이 +62.2조원에 달했다 — 이 결과 세전이익(122.7조원)이 영업이익(60.5조원)의 두 배를 넘었다. 외신(WebSearch 교차확인)은 이 중 약 40조원(~$27.4B)을 Kioxia 매각·재평가 관련분으로 추정한다. 이 일회성 이익을 제외한 조정 밸류에이션은 <a href="#valuation" onclick="showSection('valuation');document.querySelectorAll('.nav-btn')[2].classList.add('active');document.querySelectorAll('.nav-btn')[0].classList.remove('active');return false;" style="color:var(--accent2);">밸류에이션 탭</a>에서 별도로 다룬다.</div>
+  </div>
+
+  <div class="card" style="margin-top:16px;">
+    <div class="card-title"><span>재무 건전성 — 안정성·활동성 (2026.06.30, K-IFRS 연결기준)</span></div>
+    <div style="font-size:10.5px;color:var(--text3);line-height:1.5;margin:-4px 0 14px;">※ SEC 6-K 반기보고서(2026.06.30 Statement of Financial Position, 검토 완료)에서 직접 계산. 활동성 회전율은 TTM(2025.07~2026.06) 기준.</div>
+
+    <div class="section-label"><span class="dot"></span>안정성 — 단기 지급능력·차입 의존도</div>
+    <div class="diag-summary">
+      <div class="icon">🩺</div>
+      <div>
+        <div class="title">종합 진단: 매우 안정적</div>
+        <div class="sub">HBM 슈퍼사이클 초과이익 + Kioxia 매각대금이 자기자본으로 급속히 쌓이며(자본총계 262.7조원, 6개월간 +117.8%) 유동성·차입 부담 모두 매우 낮은 수준</div>
+      </div>
+    </div>
+
+    <div class="detail-toggle collapsed" onclick="toggleCollapsible(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleCollapsible(this);}" role="button" tabindex="0" aria-expanded="false">
+      <span>안정성 상세 — 개별 비율 4개</span>
+      <span class="toggle-hint"><span class="toggle-hint-text">상세 보기</span><span class="chevron">▾</span></span>
+    </div>
+    <div class="collapsible-body collapsed">
+    <div class="diag-list">
+      <div class="diag-row">
+        <div class="diag-left"><span class="diag-label">유동비율</span><span class="diag-value">259.2%</span><span class="diag-note">기준 150%↑ · 유동자산 156.2조÷유동부채 60.3조</span></div>
+        <div class="diag-badge safe">✅ 매우 양호</div>
+      </div>
+      <div class="diag-row">
+        <div class="diag-left"><span class="diag-label">당좌비율</span><span class="diag-value">229.3%</span><span class="diag-note">기준 100%↑ · (유동자산-재고자산)÷유동부채</span></div>
+        <div class="diag-badge safe">✅ 매우 양호</div>
+      </div>
+      <div class="diag-row">
+        <div class="diag-left"><span class="diag-label">차입금의존도</span><span class="diag-value">5.3%</span><span class="diag-note">기준 30%↓ · 총차입금 18.6조÷총자산 348.9조</span></div>
+        <div class="diag-badge safe">✅ 매우 양호</div>
+      </div>
+      <div class="diag-row">
+        <div class="diag-left"><span class="diag-label">부채비율</span><span class="diag-value">32.8%</span><span class="diag-note">부채총계 86.2조÷자본총계 262.7조</span></div>
+        <div class="diag-badge safe">✅ 양호</div>
+      </div>
+    </div>
+    <div style="margin-top:14px;font-size:11px;color:var(--text3);">참고: 2026.03.31 대비(당시 유동비율 261.7%·부채비율 35.6%) 큰 방향 변화는 없으나 총자산·자본 규모 자체가 Kioxia 매각대금·유가증권 재평가로 6개월 만에 거의 2배(총자산 176.1조→348.9조)로 늘었다.</div>
+    </div>
+
+    <div class="section-label" style="margin-top:14px;"><span class="dot" style="background:var(--blue);"></span>활동성 — 회수·재고소진·지급 속도 (TTM 기준 · 2025.07~2026.06)</div>
+    <div class="diag-summary" style="background:linear-gradient(90deg, rgba(240,192,64,0.14), rgba(240,192,64,0.03)); border-color:rgba(240,192,64,0.3);">
+      <div class="icon">🔄</div>
+      <div>
+        <div class="title" style="color:var(--gold);">종합 진단: 길지만 업종 특성 — IDM 메모리반도체 재고 회전 구조</div>
+        <div class="sub">CCC 약 171일은 자체 팹을 운영하는 종합반도체(IDM) 특성상 구조적으로 긴 편(Micron(MU)도 이 프로젝트 자체 카드 기준 181.2일) — 폭발적 매출 성장으로 매출채권·재고가 신규 매출 규모를 아직 완전히 따라잡지 못한 영향도 있음</div>
+      </div>
+    </div>
+
+    <div class="detail-toggle collapsed" onclick="toggleCollapsible(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleCollapsible(this);}" role="button" tabindex="0" aria-expanded="false">
+      <span>활동성 상세 — 개별 비율·CCC 그래프</span>
+      <span class="toggle-hint"><span class="toggle-hint-text">상세 보기</span><span class="chevron">▾</span></span>
+    </div>
+    <div class="collapsible-body collapsed">
+    <div class="activity-grid">
+      <div class="act-card">
+        <div class="act-icon">💳</div>
+        <div><div class="act-label">매출채권 회전율·회전기간</div><div class="act-value">5.73회</div><div class="act-sub">63.7일 만에 현금화</div></div>
+      </div>
+      <div class="act-card">
+        <div class="act-icon">📦</div>
+        <div><div class="act-label">재고자산 회전율·회전기간</div><div class="act-value">2.78회</div><div class="act-sub">131.3일 재고 보유</div></div>
+      </div>
+      <div class="act-card">
+        <div class="act-icon">🧾</div>
+        <div><div class="act-label">매입채무 회전율·지급기간</div><div class="act-value">15.24회</div><div class="act-sub">24.0일 만에 지급</div></div>
+      </div>
+      <div class="act-card">
+        <div class="act-icon">🔄</div>
+        <div><div class="act-label">영업순환주기</div><div class="act-value">195.0일</div><div class="act-sub">재고보유+매출채권 회전기간</div></div>
+      </div>
+    </div>
+    <div class="ccc-card">
+      <div class="ccc-head">
+        <div class="ccc-head-label">⏱️ 현금창출주기 (CCC)</div>
+        <div class="ccc-head-value">+171.0일</div>
+      </div>
+      <div class="ccc-explain">재고를 사서 판매 대금을 회수하기까지 195.0일이 걸리는데, 그중 24.0일은 매입채무(외상)로 버티고 나머지 171.0일은 회사가 직접 현금으로 메워야 하는 기간이다. TTM(2025.07~2026.06) 매출·매출원가와 2025.12.31/2026.06.30 평균 잔액 기준. 자체 팹을 운영하는 IDM 업종 특성상 팹리스 대비 재고 회전이 느린 것은 구조적 특성이며, 급격한 매출 성장으로 매출채권·재고 잔액이 아직 신규 매출 규모에 완전히 맞춰지지 않은 영향도 섞여 있다.</div>
+      <div class="tl-bar-wrap">
+        <div class="tl-marker" style="left:12.3%; height:18px;"></div>
+        <div class="tl-marker-label" style="left:12.3%;">매입채무 지급 24.0일</div>
+        <div class="tl-bar">
+          <div class="tl-seg-inv" style="width:67.3%;">재고 131.3일</div>
+          <div class="tl-seg-ar" style="width:32.7%;">매출채권회수 63.7일</div>
+        </div>
+      </div>
+    </div>
+    </div>
+
+    <div style="margin-top:14px;font-size:11px;color:var(--text3);">HBM 슈퍼사이클發 초과이익·Kioxia 매각대금이 자본으로 빠르게 쌓이며 안정성은 매우 견고하다. 활동성 CCC가 긴 것은 IDM 업종 특성과 급격한 매출 성장의 결합으로, 재무 리스크 신호로 보기는 어렵다.</div>
+  </div>
+
+  <div class="grid-2">
+    <div class="card" style="margin-bottom:0;">
+      <div class="card-title">매출 구성 — 제품군 (Q1 FY26 기준, Q2 세부구성 미공개)</div>
+      <div class="zone-list">
+        <div class="zone-item"><span class="zone-label">DRAM(HBM 포함)</span><span class="zone-val">40.7조원 · 77.3% <span style="color:var(--green);">(+190% YoY)</span></span></div>
+        <div class="zone-item"><span class="zone-label">NAND flash</span><span class="zone-val">11.6조원 · 22.0% <span style="color:var(--green);">(+259% YoY)</span></span></div>
+        <div class="zone-item"><span class="zone-label">기타(파운드리·CIS 등)</span><span class="zone-val">0.3조원 · 0.7% <span style="color:var(--red);">(-8% YoY)</span></span></div>
+      </div>
+      <div style="margin-top:10px;font-size:11.5px;color:var(--text2);line-height:1.6;">DRAM(HBM 포함)이 매출의 77.3%로 압도적 비중이며, 이 안에서도 HBM이 고부가가치 믹스 전환을 이끌고 있다. NAND flash도 eSSD 수요 확대로 빠르게 성장 중이나 DRAM 대비 비중은 여전히 작다. Q2 FY26 세부 제품별 구성은 SEC 문서에 아직 공개되지 않아 Q1 수치를 사용했다 — 방향성은 Q2에도 유효할 것으로 추정되나 정확한 비율은 다를 수 있다.</div>
+      <div class="yoy-footnote">출처: SK hynix Inc. F-1/424B4 등록설명서(SEC EDGAR, "Results of Operations — First Quarter of 2026") →</div>
+    </div>
+    <div class="card" style="margin-bottom:0;">
+      <div class="card-title">자본배분 · 주주환원 (2026년 상황)</div>
+      <div class="zone-list">
+        <div class="zone-item">
+          <span class="zone-label">분기배당 (Q2 2026, 보통주 1주당)</span>
+          <div style="display:flex;align-items:center;gap:8px;">
+            <span class="zone-val">375원</span>
+          </div>
+        </div>
+        <div class="zone-item">
+          <span class="zone-label">배당수익률 (ADR 환산, 연환산)</span>
+          <span class="zone-val" style="color:var(--text2);">약 0.06%</span>
+        </div>
+        <div class="zone-item">
+          <span class="zone-label">신규 자사주매입(소각 목적, 2026.08.19 이사회 승인)</span>
+          <span class="zone-val" style="color:var(--gold);">40.0조원(약 $28.9B)</span>
+        </div>
+      </div>
+      <div style="margin-top:10px;font-size:11px;color:var(--text3);">2026년 8월 7일 이사회는 Q2 2026 분기배당(보통주 1주당 375원, 레코드데이트 8/31, 총지급액 2,733억원)을 결의했다 — 원주 기준 배당수익률 자체가 낮은 편으로, ADR 환산 시 연 0.06% 수준에 그친다(legacy 자료의 "~$0.75·0.5%" 추정치는 SEC 원문 대조 결과 실제보다 과대평가된 오류로 확인, 이번 카드에서 정정). 반면 8월 19일 이사회는 보통주 24,070,000주(발행주식의 약 3.3%)를 소각 목적으로 매입하는 40.0조원 규모 자사주매입 프로그램을 승인했다(2026.08.20~11.19 진행) — 배당보다 자사주매입·소각을 통한 주주환원에 무게가 실려 있다.</div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:16px;">
+    <div class="card-title">다음 실적 체크포인트 <span style="color:var(--gold);font-weight:600;">2026년 10월 하순(예상) · Q3 FY26</span></div>
+    <div style="font-size:12px;color:var(--text2);line-height:1.8;">
+      <div style="margin-bottom:8px;"><strong style="color:var(--accent2);">①</strong> Kioxia 매각이익을 제외한 핵심 영업수익성(영업이익률 76.3%)이 Q3에도 유지되는지</div>
+      <div style="margin-bottom:8px;"><strong style="color:var(--accent2);">②</strong> HBM4 양산·고객 인증 진행 상황과 시장점유율(현재 56.4%)이 유지되는지</div>
+      <div style="margin-bottom:8px;"><strong style="color:var(--accent2);">③</strong> 40.0조원 자사주매입 프로그램의 실제 진행 속도(2026.11.19 종료 예정)</div>
+      <div><strong style="color:var(--accent2);">④</strong> ADR-원주 가격 괴리(+47.5%)가 축소되는지, 아니면 구조적으로 유지되는지.</div>
+    </div>
+  </div>
+</div>
+
+<div id="valuation" class="section">
+  <div class="section-title">밸류에이션 — 메모리 반도체 사이클 밴드 + ADR 프리미엄 별도 평가</div>
+  <div style="font-size:10.5px;color:var(--text3);margin:-4px 0 12px;">※ SK hynix는 SEC에 F-1·6-K를 제출하는 등록 발행자이지만 20-F 연차 IFRS XBRL 이력이 아직 없고, Samsung Electronics는 SEC 미등록(KRX 상장만)이다 — 둘 다 TSM/AVGO식 SEC 피어 데이터 교차검증이 불가능해, Micron(MU)이 이 프로젝트에서 유일하게 검증된 SEC 등록 메모리 피어다. Micron 카드가 이미 채택한 "메모리 반도체 사이클 저점~고점 자체 밴드"(피어 평균이 아닌 역사적 사이클 범위) 방식을 그대로 재사용한다.</div>
+
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title">멀티플 5단계 평가</div>
+      <div class="val-item" data-metric="per" onclick="selectMultiple('per')">
+        <div class="val-header"><span class="val-name">PER (ADR 기준, 조정, TTM)</span><div style="display:flex;align-items:center;gap:8px;"><span class="val-number">16.6x</span><span class="stage-badge stage-1">1단계 매우낮음</span></div></div>
+        <div class="val-track"><div class="val-fill" style="width:16.4%;background:linear-gradient(90deg,#2ecc71,#27ae60);"></div></div>
+        <div class="val-labels"><span class="val-low">저 10x</span><span class="val-mid">중 25x</span><span class="val-high">고 50x</span></div>
+      </div>
+      <div class="val-item" data-metric="pbr" onclick="selectMultiple('pbr')">
+        <div class="val-header"><span class="val-name">PBR (ADR 기준)</span><div style="display:flex;align-items:center;gap:8px;"><span class="val-number">6.38x</span><span class="stage-badge stage-2">2단계 낮음</span></div></div>
+        <div class="val-track"><div class="val-fill" style="width:28.2%;background:linear-gradient(90deg,#27ae60,#f0c040);"></div></div>
+        <div class="val-labels"><span class="val-low">저 3x</span><span class="val-mid">중 8x</span><span class="val-high">고 15x</span></div>
+      </div>
+      <div class="val-item" data-metric="psr" onclick="selectMultiple('psr')">
+        <div class="val-header"><span class="val-name">PSR (ADR 기준, TTM)</span><div style="display:flex;align-items:center;gap:8px;"><span class="val-number">8.85x</span><span class="stage-badge stage-2">2단계 낮음</span></div></div>
+        <div class="val-track"><div class="val-fill" style="width:39.0%;background:linear-gradient(90deg,#27ae60,#f0c040);"></div></div>
+        <div class="val-labels"><span class="val-low">저 3x</span><span class="val-mid">중 9x</span><span class="val-high">고 18x</span></div>
+      </div>
+      <div class="val-item" data-metric="pcr" onclick="selectMultiple('pcr')">
+        <div class="val-header"><span class="val-name">PCR (ADR 기준, P/FCF, TTM)</span><div style="display:flex;align-items:center;gap:8px;"><span class="val-number">18.3x</span><span class="stage-badge stage-1">1단계 매우낮음</span></div></div>
+        <div class="val-track"><div class="val-fill" style="width:7.2%;background:linear-gradient(90deg,#2ecc71,#27ae60);"></div></div>
+        <div class="val-labels"><span class="val-low">저 15x</span><span class="val-mid">중 35x</span><span class="val-high">고 60x</span></div>
+      </div>
+      <div class="val-item" data-metric="evebitda" onclick="selectMultiple('evebitda')">
+        <div class="val-header"><span class="val-name">EV/EBITDA (ADR 기준, TTM, 추정)</span><div style="display:flex;align-items:center;gap:8px;"><span class="val-number">11.5x</span><span class="stage-badge stage-1">1단계 매우낮음</span></div></div>
+        <div class="val-track"><div class="val-fill" style="width:17.5%;background:linear-gradient(90deg,#2ecc71,#27ae60);"></div></div>
+        <div class="val-labels"><span class="val-low">저 8x</span><span class="val-mid">중 16x</span><span class="val-high">고 28x</span></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span id="multipleCompareTitle">PER 비교 — GAAP vs 조정 vs 메모리 사이클 밴드</span></div>
+      <div class="chart-wrap" style="height:230px;">
+        <canvas id="multipleChart"></canvas>
+      </div>
+      <div class="verdict-line" id="verdictLine"></div>
+      <div class="verdict-caveat" id="verdictCaveat"></div>
+      <div class="anchor-card">
+        <div class="anchor-card-label">계산 · 적정 기준</div>
+        <div class="anchor-card-formula" id="anchorCalc"></div>
+        <div class="anchor-card-formula" id="anchorFormula"></div>
+        <div class="anchor-card-cross" id="anchorCross"></div>
+      </div>
+      <div class="secondary-row" id="secondaryRow" style="display:none;">
+        <div class="secondary-row-label" id="secondaryLabel"></div>
+        <div class="secondary-row-caveat" id="secondaryCaveat"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">ADR 프리미엄 — 별도의, 독립적인 리스크 요인</div>
+    <div style="font-size:12.5px;color:var(--text2);line-height:1.7;">위 5개 멀티플은 전부 SKHY ADR의 실제 거래가($169.86, PER·PBR은 주가로 직접, PSR·PCR·EV/EBITDA는 이 가격에 총발행주식을 곱한 자체 시가총액 $1,207.8B로 간접) 기준으로 통일했다. 그런데 같은 회사 지분을 원주(KRX:000660)로 사면 2026년 9월 3일 종가(₩1,596,000, ADR 환산 약 $115.15) 기준으로, ADR이 원주보다 <strong style="color:var(--text);">47.5% 더 비싸다</strong>(반대로 보면 원주는 ADR보다 약 32.2% 저렴하다). ADR 1주=원주 0.1주라는 고정 비율에도 불구하고 두 시장 가격이 이만큼 벌어져 있다는 뜻이다. 원주 가격 기준으로 5개 멀티플을 전부 다시 계산하면 GAAP PER 6.97x·조정 PER 11.2x·PBR 4.33x·PSR 6.48x·PCR 13.4x·EV/EBITDA 8.44x로 전부 더 낮아진다(각 val-item 클릭 시 비교 차트에서 확인 가능) — 즉 "펀더멘털은 싸다"는 판단은 어느 가격 기준으로도 유지되지만, "ADR 자체가 원주보다 비싸다"는 사실은 두 기준 중 어느 하나만으로는 드러나지 않는, 완전히 별개의 축이다.</div>
+    <div style="margin-top:10px;font-size:11px;color:var(--text3);">계산: 원주 종가 ₩1,596,000 ÷ 1,386(USD/KRW, 2026.09 기준) × 0.1(ADR 환산비율) = $115.15/ADS-환산가. ($169.86 ÷ $115.15 - 1) × 100 = +47.5%. 이 카드가 쓰는 ADR가 기준 자체 시가총액($1,207.8B = 발행주식 7.111억주×10×$169.86)은 공식/외부에서 인용되는 원주 기준 시가총액($884B, 헤더에 표기)과 다르다 — 헤더의 시총 표기는 외부 소스(StockAnalysis.com 등)와 일치하는 원주 기준 공식치를 그대로 따르고, 밸류에이션 탭의 5개 멀티플만 ADR 실거래가 기준으로 내부 일관성을 맞췄다.</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">종합 밸류에이션</div>
+    <div class="verdict-summary-head">종합 판단 <span class="tag positive" style="color:var(--green);">저평가 — 단, ADR 프리미엄은 별도로 감안 필요</span></div>
+    <div class="verdict-summary-body">5개 멀티플(전부 ADR가 기준으로 통일)의 기계적 가중평균은 메모리 반도체 사이클 밴드 최하단(초저평가) 근처에 위치한다 — 조정 PER(16.6x)·PBR(6.38x)·PSR(8.85x)·EV/EBITDA(11.5x)는 사이클 밴드 하위 40% 이내이며, GAAP PER(10.3x)·PCR(18.3x)만 왜곡 소지가 있어 가중치 0.5로 반영했다(두 지표의 왜곡 경로는 서로 다르다 — GAAP PER은 손익계산서의 금융상품 평가이익·배당수익 인식, PCR은 현금흐름표의 실제 배당 현금 수령액). 다만 이 5개 지표는 <strong style="color:var(--text);">ADR이 원주 대비 이미 +47.5% 비싸다는 사실과는 무관하게 계산된 것</strong>이다 — 펀더멘털이 사이클 밴드상 싸 보인다는 결론과, 지금 이 ADR을 사는 가격이 (같은 회사의 더 저렴한 원주 대비) 적정한가는 서로 다른 질문이다. 기계적 계산이 가리키는 "초저평가"에서 한 단계 낮춰 "저평가"로 표기하는 이유가 이것이다.</div>
+    <div class="verdict-summary-risk">⚠️ ADR-원주 괴리가 축소되는 방향(예: 원주가 오르거나 ADR이 내리는 조합)으로 수렴하면, 펀더멘털과 무관하게 ADR 가격만 상당폭 조정될 수 있다 — 상장 초기 41거래일 동안 이 괴리가 좁혀지지 않고 오히려 지속된 점은 계속 지켜볼 필요가 있다.</div>
+  </div>
+</div>
+
+<div id="news" class="section">
+  <div class="section-title">시계열 주요 뉴스 (2026.07 ~ 2026.09)</div>
+
+  <div class="card">
+    <div class="card-title">종합 해석</div>
+    <div class="verdict-summary-head">지배적 내러티브 · 역대급 실적에도 ADR 자체는 상장 초기 극심한 변동성과 원주 대비 프리미엄이라는 이중 소음을 겪는 중<span class="tag mixed">펀더멘털 vs ADR 프라이싱 분리</span></div>
+    <div class="verdict-summary-body">ADR은 2026년 7월 10일 임시코드로 첫 거래된 뒤 첫 3주 동안 +27%·-14% 등 극심한 일간 등락을 반복하며 가격발견 과정을 거쳤다. 7월 29일 발표된 Q2 FY26 실적(매출 +257%·영업이익 +557%)은 절대 수치로는 역대급이었지만 컨센서스(영업이익 64조원 예상)에 못 미쳤고 HBM4 출하가 일부 다음 분기로 밀렸다는 우려가 겹치며 실적 발표 전후 7/23→7/29 누적으로 주가는 -25.2% 급락했다. 이후 8월 중순부터는 $155~170 구간에서 비교적 안정된 채 등락하고 있다.</div>
+    <div class="verdict-summary-counter">⚠️ 반대 신호 — Q2 GAAP 순이익(93.8조원)의 상당 부분은 6월 Kioxia 지분 매각·재평가에 따른 일회성 금융손익(세전 순액 62.2조원)이다. 이 일회성 이익을 걷어낸 핵심 영업이익(60.5조원, 영업이익률 76.3%)만 보면 시장이 "컨센서스 대비 실망"으로 받아들인 것은 일회성 이익이 아니라 HBM4 출하 지연이라는 영업 자체의 신호였다는 뜻이다.</div>
+    <div class="verdict-summary-next">🔍 다음 확인 포인트 — 10월 하순 Q3 FY26 실적에서 HBM4 출하 지연이 해소되는지, 40.0조원 자사주매입 프로그램(11/19 종료 예정)이 계획대로 진행되는지, ADR-원주 프리미엄(+47.5%)이 축소되는지.</div>
+  </div>
+
+  <div style="display:flex;gap:14px;flex-wrap:wrap;margin-bottom:16px;font-size:11px;color:var(--text2);">
+    <span style="display:flex;align-items:center;gap:5px;"><span style="width:10px;height:10px;border-radius:50%;background:var(--event-major);display:inline-block;"></span>초대형 이벤트</span>
+    <span style="display:flex;align-items:center;gap:5px;"><span style="width:10px;height:10px;border-radius:50%;background:var(--green);display:inline-block;"></span>긍정</span>
+    <span style="display:flex;align-items:center;gap:5px;"><span style="width:10px;height:10px;border-radius:50%;background:var(--red);display:inline-block;"></span>부정</span>
+    <span style="display:flex;align-items:center;gap:5px;"><span style="width:10px;height:10px;border-radius:50%;background:var(--event-neutral);display:inline-block;"></span>중립</span>
+  </div>
+
+  <div class="card">
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-dot neutral"></div>
+        <div class="tl-date">2026년 9월 4일 — Solidigm 프리IPO 자금조달설에 대한 조회공시 답변<span class="tl-reaction up">+3.8%(당일)</span></div>
+        <div class="tl-title">"Solidigm(SK hynix 미국 자회사) 약 5조원 규모 프리IPO 투자유치설" — SK hynix, "검토 중이나 확정된 바 없다"고 공식 부인</div>
+        <div class="tl-desc">Korea Economic Daily(Hankyung) 보도에 대해 SK hynix가 SEC 6-K로 공식 클래리피케이션을 제출했다. 확정 사실이 아니라는 신중한 톤이었음에도 이날 주가는 $163.68→$169.86로 +3.8% 상승했다 — Solidigm(NAND 자회사) 관련 기대감이 일부 반영됐을 가능성이 있으나, 하루짜리 가격 반응만으로 원인을 단정하기는 어렵다.</div>
+        <a class="tl-source" href="https://www.sec.gov/Archives/edgar/data/2120882/000119312526382688/d111778d6k.htm" target="_blank" rel="noopener">관련 자료 보기 (SEC 6-K) →</a>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-date">2026년 8월 19일 — 40.0조원 규모 자사주매입(소각 목적) + 소각 결의<span class="tl-reaction flat">+0.3%(당일)</span></div>
+        <div class="tl-title">보통주 24,070,000주(발행주식 약 3.3%), 40,004,340,000,000원 규모 매입·소각 승인(2026.08.20~11.19)</div>
+        <div class="tl-desc">이사회가 주주가치 제고를 위한 대규모 자사주매입 및 전량 소각을 동시에 승인했다. SK Securities를 통한 공개시장 매수 방식이며, 발표 당일(8/18 종가$155.62→8/19 종가$156.16) 주가 반응은 +0.3% 수준으로 뚜렷하지 않았다 — 시장이 이미 어느 정도 예상하고 있었거나, 같은 시기 HBM4 관련 불확실성이 더 크게 작용했을 가능성이 있다.</div>
+        <a class="tl-source" href="https://www.sec.gov/Archives/edgar/data/2120882/000119312526356133/d428222d6k.htm" target="_blank" rel="noopener">관련 자료 보기 (SEC 6-K) →</a>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot red"></div>
+        <div class="tl-date">2026년 7월 29일 발표 → 7/23~7/29 누적 반응 — Q2 FY26 실적, 컨센서스 미달<span class="tl-reaction down">-25.2%(7/23→7/29 누적)</span></div>
+        <div class="tl-title">매출 79.3조원(+257% YoY)·영업이익 60.5조원(+557% YoY, 컨센서스 64조원 하회)·영업이익률 76.3% — HBM4 출하 일부 지연 우려</div>
+        <div class="tl-desc">절대 실적은 역대 최대였지만 시장 컨센서스(영업이익 약 64조원, 매출 약 84조원)에는 못 미쳤다. CNBC 등 외신은 HBM4 출하량이 기대에 못 미쳐 일부 매출 인식이 다음 분기로 밀린 점을 원인으로 지목했다. 발표 전 7/23 종가 $169.50에서 7/29 종가 $126.79까지 누적 -25.2% 급락(장중 한때 고점 대비 -15% 이상 하락 후 낙폭 일부 축소, 외신 기준). 참고로 이 실적 발표에 6월 Kioxia 지분 매각·재평가에 따른 일회성 순이익(세전 순액 62.2조원)이 함께 포함돼 GAAP 순이익 자체는 93.8조원으로 사상 최대를 기록했다.</div>
+        <a class="tl-source" href="https://www.cnbc.com/2026/07/29/sk-hynix-earnings-profit-revenue-hbm-memory.html" target="_blank" rel="noopener">관련 뉴스 보기 (CNBC) →</a>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot neutral"></div>
+        <div class="tl-date">2026년 7월 22일 — Cheongju P&amp;T7 패키징 공장 투자 증액 승인 + Intel 오하이오 부지 인수설 부인</div>
+        <div class="tl-title">청주 첨단패키징 공장(P&amp;T7) 투자금액 증액 결의 · "Intel 오하이오 반도체 부지 인수 추진설"은 공식 부인</div>
+        <div class="tl-desc">이사회가 AI 메모리 수요 대응을 위한 청주 P&amp;T7 패키징 공장 투자를 증액했다. 같은 날 Korea Joongang Daily의 "Intel 오하이오 부지 인수 협상 중" 보도에 대해서는 "다양한 투자·인수 기회를 검토하고 있으나 해당 부지 인수를 추진하거나 결정한 바 없다"고 공식 부인했다.</div>
+        <a class="tl-source" href="https://www.sec.gov/Archives/edgar/data/2120882/000119312526311230/d121520d6k.htm" target="_blank" rel="noopener">관련 자료 보기 (SEC 6-K) →</a>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot red"></div>
+        <div class="tl-date">2026년 7월 13일 — 정식 티커 SKHY 거래 개시, 극심한 초기 변동성<span class="tl-reaction down">-9.3%(당일)</span></div>
+        <div class="tl-title">임시코드(SKHYV) 첫날 대비 정식 SKHY 전환 첫날 -9.9% — 원주 대비 프리미엄 형성 시작</div>
+        <div class="tl-desc">7월 10일 임시코드로 첫 거래된 뒤 7월 13일부터 정식 티커 SKHY로 전환됐다. 전환 첫날 종가 $152.35는 임시코드 첫날 종가($168.01) 대비 -9.3% 낮은 수준이었으나, 바로 다음날(7/14) 장중 $194.80까지 급등하는 등 극심한 변동성이 이어지며 이 시기부터 원주 대비 프리미엄이 형성되기 시작했다.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot neutral"></div>
+        <div class="tl-date">2026년 7월 10일 — Nasdaq 임시코드(SKHYV) 첫 거래, 외국기업 美 사상 최대 ADR 상장($26.5B)</div>
+        <div class="tl-title">$170.00 개장, 첫날 $168.01 마감 — 외국기업의 美 지분 매각으로는 역대 최대 규모</div>
+        <div class="tl-desc">SK hynix가 총 $26.5B 규모의 신주 발행형 ADR을 나스닥에 상장했다. 오버서브스크립션(초과청약)이 7배를 넘어서는 등 투자자 수요가 매우 높았다. 이 초과 수요와 이후 41거래일이 지나도록 이어지는 원주 대비 프리미엄(현재 +47.5%) 사이의 인과관계가 검증된 것은 아니지만, 시점상 맞물려 있다.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="invest" class="section">
+  <div class="section-title">2026년 핵심 투자 포인트</div>
+
+  <div class="bull-bear">
+    <div class="bb-box">
+      <div class="bb-title bb-bull">🐂 Bull 요인</div>
+      <div class="bb-item"><span class="bb-icon" style="color:var(--bull);">▲</span><span><strong>HBM 시장점유율 56.4% 세계 1위:</strong> AI 가속기 공급망의 핵심 병목 자산이며, Q2 FY26 영업이익률 76.3%는 메모리 반도체 업종 역사상 이례적 수준이다.</span></span></div>
+      <div class="bb-item"><span class="bb-icon" style="color:var(--bull);">▲</span><span><strong>5개 멀티플 중 4개가 메모리 사이클 밴드 하위 40% 이내(ADR가 기준):</strong> 조정 PER(16.6x)·PBR(6.38x)·PSR(8.85x)·EV/EBITDA(11.5x) 모두 "매우낮음~낮음" 구간이다.</span></span></div>
+      <div class="bb-item"><span class="bb-icon" style="color:var(--bull);">▲</span><span><strong>40.0조원(약 $28.9B) 자사주매입·소각 프로그램:</strong> 발행주식의 약 3.3%를 매입해 전량 소각하는 대규모 주주환원이 2026년 11월까지 진행 중이다.</span></span></div>
+      <div class="bb-item"><span class="bb-icon" style="color:var(--bull);">▲</span><span><strong>매우 견고한 재무구조:</strong> 유동비율 259.2%·부채비율 32.8%·차입금의존도 5.3% — Kioxia 매각대금까지 더해져 안정성이 매우 높다.</span></span></div>
+      <div class="bb-item"><span class="bb-icon" style="color:var(--bull);">▲</span><span><strong>애널리스트 컨센서스 Strong Buy:</strong> 14명 전원 매수 의견(StockAnalysis.com), 평균 목표가 $247.31로 현재가 대비 +45.6% 여력.</span></span></div>
+    </div>
+    <div class="bb-box">
+      <div class="bb-title bb-bear">🐻 Bear 요인</div>
+      <div class="bb-item"><span class="bb-icon" style="color:var(--bear);">▼</span><span><strong>ADR이 원주 대비 +47.5% 프리미엄:</strong> 상장 41거래일째까지 해소되지 않고 있는 가격 괴리 — 좁혀지는 방향으로 수렴하면 펀더멘털과 무관하게 ADR 가격이 조정될 수 있다.</span></span></div>
+      <div class="bb-item"><span class="bb-icon" style="color:var(--bear);">▼</span><span><strong>GAAP 순이익의 상당 부분이 일회성:</strong> Q2 GAAP 순이익 93.8조원 중 상당액이 Kioxia 매각·재평가 관련이며, 이를 제외한 조정 TTM PER은 16.6x로 GAAP 그대로(10.3x)보다 실제로는 더 비싸다.</span></span></div>
+      <div class="bb-item"><span class="bb-icon" style="color:var(--bear);">▼</span><span><strong>Q2 실적, 컨센서스 미달로 -25.2% 급락:</strong> 역대급 절대 실적에도 HBM4 출하 지연 우려로 시장 기대에는 못 미쳤다 — 메모리 사이클 고점 논쟁이 여전히 유효하다.</span></span></div>
+      <div class="bb-item"><span class="bb-icon" style="color:var(--bear);">▼</span><span><strong>기술적 분석 데이터 공백:</strong> 상장 41거래일뿐이라 기술 상태 스코어·MA60/120·예상밴드 백테스트 전부 아직 산출 불가 — 표준적인 기술적 분석 신뢰도를 기대하기 어렵다.</span></span></div>
+      <div class="bb-item"><span class="bb-icon" style="color:var(--bear);">▼</span><span><strong>Q3 실적 발표까지 정보 공백:</strong> 미국 기준 정식 분기보고서(10-Q)가 없어 다음 실적 전까지는 6-K 수시공시에 의존해야 한다.</span></span></div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:16px;">
+    <div class="card-title">목표가 밴드 — 조정 PER 시나리오별 공정가치 vs 현재가 · 애널리스트 목표가</div>
+    <div style="position:relative;height:70px;margin:28px 6px 6px;">
+      <div style="position:absolute;top:28px;left:0;right:0;height:10px;border-radius:5px;overflow:hidden;display:flex;">
+        <div style="width:18.2%;height:100%;background:rgba(46,204,113,0.45);"></div>
+        <div style="width:4.5%;height:100%;background:var(--bg3);"></div>
+        <div style="width:31.8%;height:100%;background:rgba(240,192,64,0.5);"></div>
+        <div style="width:4.6%;height:100%;background:var(--bg3);"></div>
+        <div style="width:40.9%;height:100%;background:rgba(231,76,60,0.45);"></div>
+      </div>
+      <div style="position:absolute;top:10px;left:38.9%;width:2px;height:28px;background:var(--gold);border-radius:1px;"></div>
+      <div style="position:absolute;top:-6px;left:38.9%;transform:translateX(-50%);font-size:11px;font-weight:800;color:var(--gold);white-space:nowrap;">현재 $169.86</div>
+      <div style="position:absolute;top:22px;left:73.2%;width:2px;height:24px;background:var(--red);border-radius:1px;"></div>
+      <div style="position:absolute;top:48px;left:73.2%;transform:translateX(-50%);font-size:10px;font-weight:700;color:var(--red);white-space:nowrap;">▲ 목표 $247.31 (+45.6%)</div>
+    </div>
+    <div style="display:flex;justify-content:space-between;font-size:10.5px;color:var(--text3);margin-top:4px;">
+      <span style="color:var(--green);">Bear $82~123 (조정 PER 8~12x)</span>
+      <span>Base $133~205 (조정 PER 13~20x)</span>
+      <span style="color:var(--red);">Bull $215~308 (조정 PER 21~30x)</span>
+    </div>
+
+    <div class="detail-toggle collapsed" onclick="toggleCollapsible(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleCollapsible(this);}" role="button" tabindex="0" aria-expanded="false" aria-controls="investScenarioDetailBody">
+      <span>시나리오 근거·투자의견 분포</span>
+      <span class="toggle-hint"><span class="toggle-hint-text">상세 보기</span><span class="chevron">▾</span></span>
+    </div>
+    <div id="investScenarioDetailBody" class="collapsible-body collapsed" aria-hidden="true">
+      <div style="display:flex;flex-direction:column;gap:8px;margin-top:10px;font-size:11.5px;color:var(--text2);line-height:1.6;">
+        <div><strong style="color:var(--green);">Bear $82~123</strong> — 조정 PER이 8~12x로 압축될 경우: HBM4 출하 지연이 장기화되거나 메모리 사이클이 예상보다 빠르게 정점을 지나는 국면 (조정 TTM EPS $10.26 기준)</div>
+        <div><strong style="color:var(--text);">Base $133~205</strong> — 조정 PER 13~20x 유지: HBM 슈퍼사이클과 현재의 수익성이 대체로 유지되는 경우 (조정 TTM EPS $10.26 기준) — 현재가($169.86)가 이 구간 안에 위치</div>
+        <div><strong style="color:var(--red);">Bull $215~308</strong> — 조정 PER 21~30x로 재평가: HBM4 리더십이 확대되고 메모리 슈퍼사이클이 구조적으로 지속되는 경우 (조정 TTM EPS $10.26 기준) — 애널리스트 평균 목표가($247.31)가 이 구간 안에 위치, 정적 밴드보다 시장이 향후 성장을 더 낙관적으로 선반영하고 있음을 시사한다</div>
+      </div>
+      <div style="margin-top:14px;padding-top:12px;border-top:1px solid var(--border);">
+        <div style="font-size:11px;color:var(--text3);margin-bottom:8px;">애널리스트 14명 투자의견 분포 (컨센서스 Strong Buy · StockAnalysis.com 집계)</div>
+        <div style="height:8px;border-radius:4px;overflow:hidden;display:flex;">
+          <div style="width:100%;height:100%;background:var(--green);"></div>
+        </div>
+        <div style="display:flex;justify-content:space-between;font-size:10.5px;margin-top:6px;">
+          <span style="color:var(--green);">매수 14명 전원 (Strong Buy)</span>
+        </div>
+        <div class="yoy-footnote" style="margin-top:8px;">출처: <a href="https://stockanalysis.com/stocks/skhy/forecast/" target="_blank" rel="noopener">StockAnalysis.com SKHY Analyst Forecast →</a> · 평균 목표가 $247.31(최고 $355·최저 $152), MarketBeat($248.00)·S&amp;P Global 경유 TipRanks($245.43) 등 복수 소스와 방향·범위 교차확인. 원주(000660) 애널리스트 커버리지와는 별도로 ADR(SKHY) 자체에 대한 커버리지가 이미 형성돼 있다는 점이 상장 초기 기준으로는 이례적으로 빠르다.</div>
+      </div>
+    </div>
+    <div style="margin-top:10px;font-size:11px;color:var(--text3);">현재가 $169.86은 Base 구간($133~205) 안에 위치하며, 컨센서스 평균 목표가 $247.31은 Bull 구간에 위치한다. 이 목표가 밴드는 ADR 자체의 가격/EPS를 기준으로 하므로, ADR-원주 프리미엄(+47.5%)이 축소되는 방향으로 움직이면 펀더멘털이 그대로여도 밴드 전체가 하향 이동할 수 있다는 점을 감안해야 한다.</div>
+  </div>
+
+  <div class="card" style="margin-top:16px;">
+    <div class="card-title">4개 분석 종합 — 한눈에 보기</div>
+    <div class="zone-list">
+      <div class="zone-item"><span class="zone-label">📈 기술적 분석</span><span class="zone-val" style="color:var(--text2);">데이터 부족(거래일 41일) — MA5·MA20만 상회, 기술점수·백테스트는 준비 중</span></div>
+      <div class="zone-item"><span class="zone-label">📊 기본적 분석</span><span class="zone-val" style="color:var(--green);">Q2 매출 +257%·영업이익률 76.3% — HBM 슈퍼사이클 실적, 재무 매우 안정적</span></div>
+      <div class="zone-item"><span class="zone-label">⚖️ 밸류에이션</span><span class="zone-val" style="color:#27ae60;">저평가(펀더멘털 기준) — 단, ADR이 원주 대비 +47.5% 별도 프리미엄</span></div>
+      <div class="zone-item"><span class="zone-label">📰 시계열 뉴스</span><span class="zone-val" style="color:var(--gold);">역대급 실적에도 컨센서스 미달로 -25.2% 급락 — HBM4 출하 지연 우려</span></div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:16px;">
+    <div class="card-title">투자의견 요약</div>
+    <div class="grid-3">
+      <div class="stat-box">
+        <div class="stat-label">투자의견</div>
+        <div class="stat-value" style="color:var(--accent2);font-size:19px;">Strong Buy</div>
+        <div class="stat-sub">애널리스트 14명 전원 매수(StockAnalysis.com)</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-label">평균 목표주가</div>
+        <div class="stat-value" style="color:#ffc107;font-size:19px;">$247.31</div>
+        <div class="stat-sub">+45.6% · 최고 $355·최저 $152</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-label">다음 실적</div>
+        <div class="stat-value" style="color:#ffc107;font-size:19px;">10월 하순(예상)</div>
+        <div class="stat-sub">Q3 FY26, 공식 일정 미확정</div>
+      </div>
+    </div>
+    <div class="stat-box" style="margin-top:12px;">
+      <div class="stat-label">결론</div>
+      <div style="display:flex;flex-direction:column;gap:8px;margin-top:6px;font-size:13px;color:var(--text);line-height:1.6;">
+        <div><strong style="color:var(--accent2);">1.</strong>&nbsp; HBM 시장점유율 56.4% 1위·영업이익률 76.3%라는 펀더멘털은 메모리 반도체 사이클 밴드 대비 여전히 저평가 신호가 우세하며, 40.0조원 자사주매입·소각까지 더해져 재무·주주환원 모두 견고하다.</div>
+        <div><strong style="color:var(--accent2);">2.</strong>&nbsp; 다만 지금 살 수 있는 SKHY ADR 자체는 같은 회사 지분인 원주(KRX:000660) 대비 이미 +47.5% 비싸게 거래되고 있고, 상장 41거래일이라는 짧은 이력 탓에 기술적 분석 신뢰도도 아직 낮다 — "회사가 싸다"와 "지금 이 ADR을 사는 값이 싸다"는 서로 다른 질문이라는 점을 유의해야 한다.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="disclaimer">
+  ⚠️ 본 위젯은 SEC EDGAR 공시(F-1/424B4, 6-K), 한국거래소(KRX) 공시, Yahoo Finance ADR 주가 데이터 및 공개 뉴스를 기반으로 작성된 정보 제공 목적의 분석 자료입니다. SKHY ADR은 2026년 7월 13일 정식거래를 시작해 상장 41거래일(2026.09.04 기준)로 가격 이력이 짧으며, 재무 데이터는 원주(KRX:000660) K-IFRS 연결재무제표 기준입니다. 투자 권고 또는 매매 추천이 아니며, 모든 투자 결정은 본인의 판단과 책임 하에 이루어져야 합니다. 과거 실적이 미래 수익을 보장하지 않습니다.
+</div>
+
+<script>
+const SKHY_DAILY = [["2026-07-10", 170.0, 177.0, 166.19, 168.01, 107674700],["2026-07-13", 152.62, 162.28, 151.3, 152.35, 57284300],["2026-07-14", 168.11, 194.8, 165.5, 193.92, 72647700],["2026-07-15", 181.81, 187.95, 166.48, 176.46, 76307700],["2026-07-16", 165.91, 168.2, 151.38, 152.31, 56250500],["2026-07-17", 152.11, 167.37, 145.57, 154.03, 73978300],["2026-07-20", 163.42, 163.43, 149.74, 151.16, 37817500],["2026-07-21", 161.75, 173.22, 160.54, 171.94, 38925600],["2026-07-22", 162.16, 170.09, 162.0, 165.27, 27122800],["2026-07-23", 170.72, 177.93, 167.02, 169.5, 36234900],["2026-07-24", 163.91, 164.2, 153.1, 154.57, 26255500],["2026-07-27", 159.7, 159.71, 139.01, 143.02, 50747400],["2026-07-28", 135.91, 136.49, 128.29, 130.17, 51088300],["2026-07-29", 129.95, 137.19, 124.8, 126.79, 65810000],["2026-07-30", 136.51, 150.36, 134.5, 149.0, 52881200],["2026-07-31", 159.88, 162.65, 143.51, 143.73, 46065100],["2026-08-03", 139.92, 144.17, 134.58, 142.72, 29619600],["2026-08-04", 150.18, 155.47, 146.7, 154.38, 34369800],["2026-08-05", 150.22, 155.95, 149.84, 151.03, 19977000],["2026-08-06", 139.0, 147.24, 137.71, 143.53, 22257500],["2026-08-07", 143.48, 143.65, 133.8, 137.91, 34377400],["2026-08-10", 135.03, 139.08, 134.28, 135.29, 17486200],["2026-08-11", 139.22, 141.87, 137.33, 141.65, 17091000],["2026-08-12", 150.7, 155.16, 147.26, 154.41, 25793200],["2026-08-13", 154.13, 168.5, 153.41, 165.67, 32480200],["2026-08-14", 169.32, 171.58, 163.76, 166.33, 20684800],["2026-08-17", 172.6, 178.43, 169.57, 171.38, 24223300],["2026-08-18", 161.78, 163.88, 154.53, 155.62, 22821900],["2026-08-19", 162.78, 163.8, 155.62, 156.16, 33980100],["2026-08-20", 162.07, 166.39, 160.13, 163.08, 21693000],["2026-08-21", 167.05, 167.46, 162.57, 163.41, 15475700],["2026-08-24", 157.37, 157.55, 151.5, 155.37, 16711100],["2026-08-25", 159.9, 161.2, 156.24, 159.53, 12287300],["2026-08-26", 158.61, 161.21, 157.59, 158.02, 10327400],["2026-08-27", 163.88, 164.73, 158.61, 161.61, 13394000],["2026-08-28", 159.2, 163.56, 157.97, 161.04, 11712000],["2026-08-31", 160.75, 165.07, 160.5, 164.58, 12183300],["2026-09-01", 161.5, 164.04, 158.52, 160.78, 10875700],["2026-09-02", 159.77, 165.47, 158.67, 164.98, 11261900],["2026-09-03", 160.82, 164.63, 157.73, 163.68, 14659800],["2026-09-04", 164.79, 170.65, 164.79, 169.86, 9219150]];
+const SKHY_MA5 = [null,null,null,null,168.61,165.814,165.576,161.18,158.942,162.38,162.488,160.86,152.506,144.81,140.71,138.542,138.482,143.324,148.172,147.078,145.914,144.428,141.882,142.558,146.986,152.67,159.888,162.682,163.032,162.514,161.93,158.728,159.51,159.882,159.588,159.114,160.956,161.206,162.598,163.012,164.776];
+const SKHY_MA20 = [null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,154.695,153.19,152.337,149.723,148.62,149.288,149.904,150.915,150.099,149.643,149.322,149.764,150.382,151.849,153.411,154.041,154.907,156.0,156.32,157.017,158.025,159.623];
+
+(function(){
+  const svgCandle = document.getElementById('skhyCandleSvg');
+  const svgVol = document.getElementById('skhyVolumeSvg');
+  const toggle = document.getElementById('skhyRangeToggle');
+  const maToggle = document.getElementById('skhyMaToggle');
+  const headerTitle = document.getElementById('techHeaderTitle');
+  const headerReturn = document.getElementById('techHeaderReturn');
+  const rangeSummary = document.getElementById('techRangeSummary');
+  if(!svgCandle || !svgVol || !toggle) return;
+  const RANGES = {'1M':21,'ALL':Infinity};
+  const RANGE_LABELS = {'1M':'1개월','ALL':'상장이후 전체'};
+  const NS = 'http://www.w3.org/2000/svg';
+  const UP='#2ecc71', DOWN='#e74c3c';
+  const maColors = {ma5:'var(--ma5)', ma20:'var(--ma20)'};
+  const maState = {ma5:true, ma20:true, pricelabels:true};
+  let currentRange = 'ALL';
+
+  function updateHeader(rangeKey, data, prevClose){
+    const base = prevClose != null ? prevClose : data[0][4];
+    const last = data[data.length-1][4];
+    const retPct = ((last/base - 1) * 100).toFixed(1);
+    const sign = retPct >= 0 ? '+' : '';
+    headerReturn.textContent = `${sign}${retPct}%`;
+    headerReturn.style.color = retPct >= 0 ? 'var(--green)' : 'var(--red)';
+
+    const highs = data.map(d=>d[2]), lows = data.map(d=>d[3]);
+    const periodHigh = Math.max(...highs), periodLow = Math.min(...lows);
+    const highDate = data[highs.indexOf(periodHigh)][0].slice(5,10).replace('-','.');
+    const lowDate = data[lows.indexOf(periodLow)][0].slice(5,10).replace('-','.');
+    rangeSummary.textContent = `상장이후 최저 $${periodLow.toFixed(2)} (${lowDate}) → 상장이후 최고 $${periodHigh.toFixed(2)} (${highDate}) → 현재 $${last.toFixed(2)}`;
+  }
+
+  function draw(rangeKey){
+    currentRange = rangeKey;
+    const n = RANGES[rangeKey];
+    const data = SKHY_DAILY.slice(-n);
+    const startIdx = SKHY_DAILY.length - data.length;
+    const prevClose = startIdx > 0 ? SKHY_DAILY[startIdx - 1][4] : null;
+    const ma5 = SKHY_MA5.slice(-n), ma20 = SKHY_MA20.slice(-n);
+    updateHeader(rangeKey, data, prevClose);
+    while(svgCandle.firstChild) svgCandle.removeChild(svgCandle.firstChild);
+    while(svgVol.firstChild) svgVol.removeChild(svgVol.firstChild);
+
+    const W=720,H=240,pL=45,pR=12,pT=10,pB=20;
+    const cW=W-pL-pR,cH=H-pT-pB;
+    const highs=data.map(d=>d[2]), lows=data.map(d=>d[3]);
+    const maVals=[...ma5,...ma20].filter(v=>v!=null);
+    const mx=Math.max(...highs,...maVals), mn=Math.min(...lows,...maVals);
+    const pad=(mx-mn)*0.06 || mx*0.02;
+    const top=mx+pad, bot=mn-pad, rng=(top-bot)||1;
+    const py = v => pT + cH*(1-(v-bot)/rng);
+    const colW = cW/data.length;
+    const bodyW = Math.max(colW*0.62, 0.4);
+
+    for(let i=0;i<=3;i++){
+      const v = bot + rng*i/3;
+      const y = py(v);
+      const l=document.createElementNS(NS,'line');
+      l.setAttribute('x1',pL);l.setAttribute('x2',W-pR);l.setAttribute('y1',y);l.setAttribute('y2',y);
+      l.setAttribute('stroke','rgba(255,255,255,.08)');l.setAttribute('stroke-width','1');
+      svgCandle.appendChild(l);
+      const t=document.createElementNS(NS,'text');
+      t.setAttribute('x',pL-4);t.setAttribute('y',y+3);t.setAttribute('text-anchor','end');
+      t.setAttribute('font-size','9');t.setAttribute('fill','rgba(154,160,184,.8)');
+      t.textContent='$'+v.toFixed(0);
+      svgCandle.appendChild(t);
+    }
+
+    data.forEach((d,i)=>{
+      const [,o,h,l,c] = d;
+      const cx = pL + (i+0.5)*colW;
+      const up = c >= o;
+      const col = up ? UP : DOWN;
+      const wick=document.createElementNS(NS,'line');
+      wick.setAttribute('x1',cx);wick.setAttribute('x2',cx);
+      wick.setAttribute('y1',py(h));wick.setAttribute('y2',py(l));
+      wick.setAttribute('stroke',col);wick.setAttribute('stroke-width', Math.max(colW*0.12,0.4));
+      svgCandle.appendChild(wick);
+      const yTop = py(Math.max(o,c));
+      const yBot = py(Math.min(o,c));
+      const rect=document.createElementNS(NS,'rect');
+      rect.setAttribute('x', cx - bodyW/2);
+      rect.setAttribute('y', yTop);
+      rect.setAttribute('width', bodyW);
+      rect.setAttribute('height', Math.max(yBot-yTop, 1));
+      rect.setAttribute('fill', col);
+      svgCandle.appendChild(rect);
+    });
+
+    const maDefs=[['ma5',ma5,'#38bdf8'],['ma20',ma20,'#f59e0b']];
+    maDefs.forEach(([key,series,color])=>{
+      if(!maState[key]) return;
+      const pts=[];
+      series.forEach((v,i)=>{ if(v!=null) pts.push(`${pL+(i+0.5)*colW},${py(v)}`); });
+      if(pts.length<2) return;
+      const line=document.createElementNS(NS,'polyline');
+      line.setAttribute('points',pts.join(' '));line.setAttribute('fill','none');line.setAttribute('stroke',color);line.setAttribute('stroke-width','1.5');
+      svgCandle.appendChild(line);
+    });
+
+    if (maState.pricelabels) {
+      const closeIdx = data.length-1;
+      const closeVal = data[closeIdx][4];
+      const periodHigh = Math.max(...highs);
+      const periodLow = Math.min(...lows);
+      const highIdx = highs.indexOf(periodHigh);
+      const lowIdx = lows.indexOf(periodLow);
+      const markers = [
+        {idx: highIdx, v: periodHigh, color: UP, label:'최고', side:'above'},
+        {idx: lowIdx, v: periodLow, color: DOWN, label:'최저', side:'below'},
+        {idx: closeIdx, v: closeVal, color:'#60a5fa', label:'종가', side:'left'}
+      ];
+      markers.forEach(m=>{
+        const cx = pL + (m.idx+0.5)*colW;
+        const cy = py(m.v);
+        const dot=document.createElementNS(NS,'circle');
+        dot.setAttribute('cx',cx);dot.setAttribute('cy',cy);dot.setAttribute('r','3.5');
+        dot.setAttribute('fill',m.color);dot.setAttribute('stroke','#0f1117');dot.setAttribute('stroke-width','1.5');
+        svgCandle.appendChild(dot);
+
+        const labelText = `${m.label} $${m.v.toFixed(2)}`;
+        const labelW = labelText.length*5.2+6;
+        let tx, ty, anchor;
+        if (m.side === 'left') {
+          anchor = 'end'; tx = cx-7; ty = cy+3;
+        } else if (m.side === 'above') {
+          ty = cy-9;
+          if (cx < pL+cW*0.15) { anchor='start'; tx=cx+7; }
+          else if (cx > W-pR-cW*0.15) { anchor='end'; tx=cx-7; }
+          else { anchor='middle'; tx=cx; }
+        } else {
+          ty = cy+16;
+          if (cx < pL+cW*0.15) { anchor='start'; tx=cx+7; }
+          else if (cx > W-pR-cW*0.15) { anchor='end'; tx=cx-7; }
+          else { anchor='middle'; tx=cx; }
+        }
+        const bgX = anchor==='end' ? tx-labelW : anchor==='middle' ? tx-labelW/2 : tx;
+        const bg=document.createElementNS(NS,'rect');
+        bg.setAttribute('x', bgX);bg.setAttribute('y', ty-8);
+        bg.setAttribute('width', labelW);bg.setAttribute('height', 12);
+        bg.setAttribute('fill','rgba(15,17,23,0.85)');bg.setAttribute('rx','2');
+        svgCandle.appendChild(bg);
+        const t=document.createElementNS(NS,'text');
+        t.setAttribute('x', tx);t.setAttribute('y', ty+2);
+        t.setAttribute('text-anchor',anchor);t.setAttribute('font-size','9');
+        t.setAttribute('font-weight','700');t.setAttribute('fill', m.color);
+        t.textContent = labelText;
+        svgCandle.appendChild(t);
+      });
+    }
+
+    data.forEach((d,i)=>{
+      const cx = pL + (i+0.5)*colW;
+      const t=document.createElementNS(NS,'text');
+      t.setAttribute('x', Math.min(Math.max(cx,pL+10), W-20));
+      t.setAttribute('y', H-4);
+      t.setAttribute('text-anchor','middle');t.setAttribute('font-size','9');
+      t.setAttribute('fill','rgba(154,160,184,.8)');
+      t.textContent = d[0].slice(5).replace(/-/g,'.');
+      svgCandle.appendChild(t);
+    });
+
+    const VW=720,VH=70,vpT=6,vpB=4;
+    const vcH=VH-vpT-vpB;
+    const maxV = Math.max(...data.map(d=>d[5]));
+    data.forEach((d,i)=>{
+      const [,o,,,c,v] = d;
+      const cx = pL + (i+0.5)*colW;
+      const up = c >= o;
+      const col = up ? 'rgba(46,204,113,0.55)' : 'rgba(231,76,60,0.55)';
+      const h = (v/maxV)*vcH;
+      const rect=document.createElementNS(NS,'rect');
+      rect.setAttribute('x', cx - bodyW/2);
+      rect.setAttribute('y', vpT + (vcH-h));
+      rect.setAttribute('width', bodyW);
+      rect.setAttribute('height', Math.max(h,1));
+      rect.setAttribute('fill', col);
+      svgVol.appendChild(rect);
+    });
+  }
+
+  if (toggle) toggle.querySelectorAll('.range-btn').forEach(btn=>btn.addEventListener('click',()=>{toggle.querySelectorAll('.range-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');draw(btn.dataset.range);}));
+  if (maToggle) {
+    maToggle.querySelectorAll('.ma-toggle-btn').forEach(btn=>{
+      btn.addEventListener('click', ()=>{
+        const key = btn.dataset.ma;
+        maState[key] = !maState[key];
+        btn.classList.toggle('ma-off', !maState[key]);
+        draw(currentRange);
+      });
+    });
+  }
+
+  draw('ALL');
+})();
+
+function toggleCollapsible(header) {
+  const body = header.nextElementSibling;
+  const hintText = header.querySelector('.toggle-hint-text');
+  const expandedLabel = '상세 숨기기';
+  const collapsedLabel = '상세 보기';
+  const collapsing = !header.classList.contains('collapsed');
+  if (collapsing) {
+    body.style.maxHeight = body.scrollHeight + 'px';
+    requestAnimationFrame(() => {
+      header.classList.add('collapsed');
+      body.classList.add('collapsed');
+      header.setAttribute('aria-expanded', 'false');
+      if (hintText) hintText.textContent = collapsedLabel;
+    });
+  } else {
+    header.classList.remove('collapsed');
+    body.classList.remove('collapsed');
+    body.style.maxHeight = body.scrollHeight + 'px';
+    header.setAttribute('aria-expanded', 'true');
+    if (hintText) hintText.textContent = expandedLabel;
+    body.addEventListener('transitionend', function clear() {
+      if (!header.classList.contains('collapsed')) body.style.maxHeight = 'none';
+      body.removeEventListener('transitionend', clear);
+    });
+  }
+}
+
+function renderFundChart() {
+  const ctx = document.getElementById('skhyRevChart');
+  if (!ctx) return;
+  const revenue=[19.767,17.639,22.232,24.449,32.827,52.58,79.32];
+  const opinc=[8.083,7.441,9.213,11.383,19.170,37.61,60.54];
+  const opm=[40.9,42.2,41.4,46.6,58.4,71.5,76.3];
+  new Chart(ctx,{
+    data:{
+      labels:['24년 4분기','25년 1분기','25년 2분기','25년 3분기','25년 4분기','26년 1분기','26년 2분기'],
+      datasets:[
+        {type:'bar',label:'매출(조원)',data:revenue,backgroundColor:'#ff7a5c',borderRadius:4,barPercentage:0.7,categoryPercentage:0.7,yAxisID:'y'},
+        {type:'bar',label:'영업이익(조원)',data:opinc,backgroundColor:'rgba(238,53,36,0.55)',borderRadius:4,barPercentage:0.7,categoryPercentage:0.7,yAxisID:'y'},
+        {type:'line',label:'영업이익률(%)',data:opm,borderColor:'#f0c040',backgroundColor:'rgba(240,192,64,.1)',tension:.35,pointRadius:4,borderWidth:2.5,fill:false,yAxisID:'y2'}
+      ]
+    },
+    options:{
+      responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{labels:{color:'#9aa0b8',font:{size:10}}}},
+      scales:{
+        x:{grid:{color:'rgba(255,255,255,0.05)'},ticks:{color:'#9aa0b8',font:{size:10}}},
+        y:{position:'left',grid:{color:'rgba(255,255,255,0.05)'},ticks:{color:'#9aa0b8',font:{size:10},callback:v=>v+'조'}},
+        y2:{position:'right',min:0,max:100,grid:{display:false},ticks:{color:'#f0c040',font:{size:10},callback:v=>v+'%'}}
+      }
+    }
+  });
+}
+
+const MULTIPLE_DATA = {
+  per: {
+    title: 'PER 비교 — GAAP vs 조정 vs 메모리 사이클 밴드',
+    unit: 'PER', max: 50, skhyValue: 16.6,
+    calcLine: '조정 PER = ADR가($169.86) ÷ 조정 TTM EPS($10.26 = TTM 영업이익 128.7조원 × (1-21.8% 클린세율) ÷ 가중평균 발행주식 7.077억주 × 0.1(ADR환산) ÷ 1,386원/달러) = 16.6x',
+    verdict: '조정 TTM PER 16.6x는 메모리 사이클 밴드(저10x·중25x·고50x) 하위 16% 지점 — 매우낮음 구간',
+    verdictCaveat: 'GAAP TTM PER은 10.3x로 조정치보다 더 낮게(더 싸게) 나온다 — 2026년 6월 Kioxia 지분 매각·재평가에 따른 일회성 금융손익(세전 순액 62.2조원, SEC 6-K Note 24 직접 확인)이 GAAP TTM 순이익(162.0조원)을 크게 부풀렸기 때문이다. 조정치는 TTM 영업이익에 Q1 FY26(왜곡 이전 분기)의 실효세율 21.8%를 적용해 산출했다.',
+    anchor: { value: '밴드 저10x·중25x·고50x', formula: 'Micron(MU) 카드에서 이미 검증된 메모리 반도체 사이클 저점~고점의 역사적 PER 범위(자체 설정, 피어 평균 아님) — SK hynix는 20-F 연차 XBRL 이력이 없고 Samsung은 SEC 미등록이라 TSM/AVGO식 SEC 피어 앵커를 쓸 수 없어 동일 방식 재사용', cross: '참고: 원주(KRX:000660) 종가 기준으로 재계산하면 GAAP PER 6.97x·조정 PER 11.2x(둘 다 ADR 프리미엄 미포함) — ADR 자체를 사는 가격 기준으로는 GAAP 10.3x·조정 16.6x가 실제 지불 가격이다' },
+    secondary: { label: 'GAAP TTM PER (참고 · 비교 부적합)', caveat: 'GAAP TTM EPS $16.51 기준 10.3x — Kioxia 매각·재평가 일회성 이익이 EPS를 부풀려 실제보다 훨씬 저평가로 보이게 한다' },
+    peers: [
+      { name:'Micron(MU) TTM GAAP', value:21.7, status:'reference' },
+      { name:'Micron(MU) Forward', value:6.2, status:'reference' }
+    ]
+  },
+  pbr: {
+    title: 'PBR 비교 — ADR가 vs 원주가 vs 메모리 사이클 밴드',
+    unit: 'PBR', max: 15, skhyValue: 6.38,
+    calcLine: 'PBR = ADR가($169.86) ÷ BPS($26.62 = 자기자본 262.4조원 ÷ 발행주식 7.111억주 × 0.1 ÷ 1,386원/달러) = 6.38x',
+    verdict: 'PBR 6.38x(ADR가 기준)는 메모리 사이클 밴드 하위 28% 지점 — 낮음 구간이나, 원주가 기준(4.33x)보다는 47.5% 높게 나온다',
+    verdictCaveat: 'PBR은 GAAP PER과 달리 Kioxia 매각이익이 "일회성 착시"라고 보기 어렵다 — 매각대금은 실제로 현금·자기자본으로 유입된 실물 자산 증가다. 다만 ADR가($169.86)로 계산하면 원주가(₩1,596,000 환산 $115.15)로 계산할 때보다 PBR이 47.5% 높게 나온다는 점은 그대로 남는다.',
+    anchor: { value: '밴드 저3x·중8x·고15x', formula: 'Micron(MU) 카드와 동일한 메모리 반도체 사이클 저점~고점의 역사적 PBR 범위(자체 설정)', cross: '원주가 기준 PBR은 4.33x로 밴드 하위 11% 지점(더 저평가) — ADR 프리미엄만큼 PBR도 함께 부풀려짐' },
+    secondary: null,
+    peers: [
+      { name:'원주가 기준 PBR', value:4.33, status:'reference' },
+      { name:'Micron(MU) PBR', value:10.7, status:'reference' }
+    ]
+  },
+  psr: {
+    title: 'PSR 비교 — ADR가 기준 시총 vs 메모리 사이클 밴드',
+    unit: 'PSR', max: 18, skhyValue: 8.85,
+    calcLine: 'PSR = ADR가 기준 시가총액($1,207.8B = 발행주식 7.111억주×10(ADR환산)×$169.86) ÷ TTM 매출($136.5B = 189.2조원 ÷ 1,386원/달러) = 8.85x',
+    verdict: 'PSR 8.85x(ADR가 기준)는 메모리 사이클 밴드 하위 39% 지점 — 낮음 구간. 매출 자체는 Kioxia 관련 손익과 무관한 순수 영업 지표라 분자(시총)만 ADR 프리미엄의 영향을 받는다',
+    verdictCaveat: '이 카드에 표시되는 공식 시가총액($884B)은 원주 가격 기준이라 PER·PBR과 다른 잣대가 된다 — 5개 멀티플 전부를 ADR가 기준으로 통일하기 위해 PSR·PCR·EV/EBITDA는 (발행주식×10×ADR가)로 계산한 자체 시가총액($1,207.8B)을 썼다. 원주가 기준(공식 시총 $884B)으로 계산하면 PSR은 6.48x로 더 낮아진다.',
+    anchor: { value: '밴드 저3x·중9x·고18x', formula: 'Micron(MU) 카드와 동일한 메모리 반도체 사이클 저점~고점의 역사적 PSR 범위(자체 설정)', cross: '원주가(공식 시총 $884B) 기준 PSR은 6.48x로 밴드 하위 23% 지점(더 저평가)' },
+    secondary: null,
+    peers: [
+      { name:'원주가 기준 PSR', value:6.48, status:'reference' },
+      { name:'Micron(MU) PSR', value:12.0, status:'reference' }
+    ]
+  },
+  pcr: {
+    title: 'PCR(P/FCF) 비교 — ADR가 기준 시총 vs 메모리 사이클 밴드',
+    unit: 'PCR', max: 60, skhyValue: 18.3,
+    calcLine: 'PCR(P/FCF) = ADR가 기준 시가총액($1,207.8B) ÷ TTM FCF($66.2B = TTM 영업현금흐름 126.9조원 - TTM Capex 35.2조원 = 91.7조원 ÷ 1,386원/달러) = 18.3x',
+    verdict: '평가 보류(가중치 0.5) — TTM 영업현금흐름에 Kioxia 관련 배당수령액(현금흐름표 기준 H1 2026 14.0조원, 전년동기 259억원)이 섞여 있어 일부 왜곡 가능성이 있다',
+    verdictCaveat: 'Capex(TTM 35.2조원)를 차감한 FCF 기준이라 GAAP 순이익만큼 극단적이지는 않지만, 영업현금흐름 자체에 Kioxia 지분 관련 배당수령액 급증분이 포함돼 매년 반복되지 않을 수 있는 항목이 섞여 있다는 점은 유의해야 한다(이는 GAAP 순이익을 부풀린 "금융상품 평가이익"과는 다른, 실제 현금흐름표상의 별도 항목이다). 이 지표는 종합판정에서 가중치 0.5로만 반영한다.',
+    anchor: { value: '밴드 저15x·중35x·고60x', formula: 'Micron(MU) 카드와 동일한 메모리 반도체 사이클 저점~고점의 역사적 PCR 범위(자체 설정)', cross: '원주가(공식 시총 $884B) 기준 PCR은 13.4x로 밴드 하한(15x)보다도 낮음' },
+    secondary: null,
+    peers: [
+      { name:'원주가 기준 PCR', value:13.4, status:'reference' },
+      { name:'Micron(MU) PCR', value:41.3, status:'reference' }
+    ]
+  },
+  evebitda: {
+    title: 'EV/EBITDA 비교 — ADR가 기준 EV vs 메모리 사이클 밴드',
+    unit: 'EV/EBITDA', max: 28, skhyValue: 11.5,
+    calcLine: 'EV/EBITDA = EV($1,201.8B, ADR가 기준 시총 $1,207.8B+총차입금 $13.4B−현금 $19.4B) ÷ EBITDA(TTM 영업이익 $92.9B + D&A 추정 $11.2B ≈ $104.1B) = 11.5x',
+    verdict: 'EV/EBITDA 11.5x(ADR가 기준)는 메모리 사이클 밴드 하위 17.5% 지점 — 매우낮음 구간. EBITDA는 영업이익 기반이라 Kioxia 손익과 무관하다',
+    verdictCaveat: 'D&A(감가상각비)는 TTM 정확치 대신 2026년 상반기 실적(7.75조원)을 단순 연환산(×2, 약 15.5조원)한 추정치를 사용했다 — 반도체 D&A는 분기별로 크게 변하지 않는 편이라 근사치로는 무리가 없으나, 정밀한 TTM 합산치는 아니다.',
+    anchor: { value: '밴드 저8x·중16x·고28x', formula: 'Micron(MU) 카드와 동일한 메모리 반도체 사이클 저점~고점의 역사적 EV/EBITDA 범위(자체 설정)', cross: '원주가(공식 시총 $884B) 기준 EV/EBITDA는 8.44x로 밴드 하위 2% 지점' },
+    secondary: null,
+    peers: [
+      { name:'원주가 기준 EV/EBITDA', value:8.44, status:'reference' },
+      { name:'Micron(MU) EV/EBITDA', value:15.6, status:'reference' }
+    ]
+  }
+};
+
+let multipleChart = null;
+function renderMultipleChart(key) {
+  const d = MULTIPLE_DATA[key];
+  const ctx = document.getElementById('multipleChart');
+  if (!ctx || !d) return;
+  if (multipleChart) multipleChart.destroy();
+  const labels = ['SKHY', ...d.peers.map(p=> p.name)];
+  const data = [d.skhyValue, ...d.peers.map(p=>p.value)];
+  const bg = ['#ff7a5c', ...d.peers.map(()=>'rgba(154,160,184,0.35)')];
+  const bd = ['#ee3524', ...d.peers.map(()=>'#5c6282')];
+  multipleChart = new Chart(ctx,{
+    type:'bar',
+    data:{ labels, datasets:[{ label:d.unit, data, backgroundColor:bg, borderColor:bd, borderWidth:1, borderRadius:5, minBarLength:6 }] },
+    options:{
+      responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=> `${d.unit} ${ctx.raw}x`}}},
+      scales:{
+        x:{grid:{display:false},ticks:{color:'#9aa0b8',font:{size:10.5}}},
+        y:{max:d.max,grid:{color:'rgba(255,255,255,0.05)'},ticks:{color:'#9aa0b8',font:{size:10},callback:v=>v+'x'}}
+      }
+    }
+  });
+}
+
+let currentMultipleKey = 'per';
+function selectMultiple(key) {
+  const d = MULTIPLE_DATA[key];
+  if (!d) return;
+  currentMultipleKey = key;
+  document.querySelectorAll('.val-item[data-metric]').forEach(el => el.classList.toggle('selected', el.dataset.metric === key));
+  document.getElementById('multipleCompareTitle').textContent = d.title;
+
+  document.getElementById('verdictLine').textContent = d.verdict;
+  document.getElementById('verdictCaveat').innerHTML = '<span class="caveat-icon">!</span><span>' + d.verdictCaveat + '</span>';
+
+  document.getElementById('anchorCalc').textContent = d.calcLine;
+  document.getElementById('anchorFormula').textContent = d.anchor.formula;
+  const crossEl = document.getElementById('anchorCross');
+  if (d.anchor.cross) { crossEl.textContent = d.anchor.cross; crossEl.style.display = ''; }
+  else { crossEl.style.display = 'none'; }
+
+  const secRow = document.getElementById('secondaryRow');
+  if (d.secondary) {
+    document.getElementById('secondaryLabel').textContent = d.secondary.label;
+    document.getElementById('secondaryCaveat').textContent = d.secondary.caveat;
+    secRow.style.display = '';
+  } else {
+    secRow.style.display = 'none';
+  }
+
+  renderMultipleChart(key);
+}
+
+const charts = {};
+
+function renderCharts(sectionId) {
+  setTimeout(() => {
+    if (sectionId === 'fund' && document.getElementById('skhyRevChart') && !charts['fundRev']) { renderFundChart(); charts['fundRev'] = true; }
+    if (sectionId === 'valuation' && document.getElementById('multipleChart') && !charts['multiple']) { selectMultiple(currentMultipleKey); charts['multiple'] = true; }
+  }, 50);
+}
+
+function showSection(id) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  event.target.classList.add('active');
+  renderCharts(id);
+}
+</script>
+</body>
+</html>
