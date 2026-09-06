@@ -913,10 +913,7 @@ const CSCO_MA120 = [null,null,null,null,null,null,null,null,null,null,null,null,
       while(lo<hi){ const mid=(lo+hi)>>1; if(dataDates[mid]<dateStr) lo=mid+1; else hi=mid; }
       return lo;
     }
-    const visibleCheckpoints = maState.backtest ? CSCO_BACKTEST.filter(cp=>{
-      const cpEnd = cp.period_end_date || dataDates[dataDates.length-1];
-      return cpEnd >= dataDates[0] && cp.checkpoint_date <= dataDates[dataDates.length-1];
-    }) : [];
+    const visibleCheckpoints = [];
     const backtestVals = visibleCheckpoints.flatMap(cp=>[cp.predicted_low, cp.predicted_high]);
     const maVals=[...ma5,...ma20,...ma60,...ma120,...backtestVals].filter(v=>v!=null);
     const mx=Math.max(...highs,...maVals), mn=Math.min(...lows,...maVals);
