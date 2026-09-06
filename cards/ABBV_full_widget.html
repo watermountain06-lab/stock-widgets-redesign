@@ -1,0 +1,1401 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ABBV 종합 분석 위젯</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<style>
+
+  /* HEADER */
+  .header { background: linear-gradient(135deg, #0a1730 0%, #0f1117 40%, #1a1d27 100%); border-bottom: 2px solid var(--accent3); padding: 28px 32px 24px; position: relative; overflow: hidden; max-width: 1100px; margin: 0 auto; }
+  .box-key { background: rgba(47,111,237,0.1); border: 1px solid var(--accent3); border-radius: 10px; padding: 12px 16px; max-width: 1100px; margin: 0 auto 16px; }
+  .header::before { content: ''; position: absolute; top: -60px; right: -60px; width: 240px; height: 240px; background: radial-gradient(circle, rgba(47,111,237,0.14) 0%, transparent 70%); pointer-events: none; }
+  .header-top { display: flex; align-items: flex-start; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
+  .ticker-block { display: flex; align-items: center; gap: 16px; }
+  .ticker-badge { background: linear-gradient(135deg, var(--accent3), var(--accent)); color: #fff; font-size: 13px; font-weight: 800; padding: 5px 12px; border-radius: 6px; letter-spacing: 1px; }
+  .company-name { font-size: 22px; font-weight: 700; color: var(--text); }
+  .company-sub { font-size: 12px; color: var(--text3); margin-top: 2px; }
+  .price-block { text-align: right; }
+  .price-main { font-size: 32px; font-weight: 800; color: var(--accent2); letter-spacing: -1px; }
+  .price-change { font-size: 13px; color: var(--red); font-weight: 600; }
+  .header-meta { display: flex; justify-content: space-between; gap: 16px; margin-top: 16px; flex-wrap: wrap; }
+  .meta-item { display: flex; flex-direction: column; }
+  .meta-label { font-size: 11px; color: var(--text3); text-transform: uppercase; letter-spacing: 0.8px; }
+  .meta-value { font-size: 14px; font-weight: 600; color: var(--text2); margin-top: 2px; }
+  .meta-value.highlight { color: var(--accent2); }
+
+  /* NAV */
+  .nav { display: flex; justify-content: space-between; gap: 4px; padding: 12px 32px; background: var(--bg2); border-bottom: 1px solid var(--border); overflow-x: auto; scrollbar-width: none; max-width: 1100px; margin: 0 auto; }
+  .nav::-webkit-scrollbar { display: none; }
+  .nav-btn { background: none; border: none; color: var(--text3); font-size: 12px; font-weight: 600; padding: 7px 14px; border-radius: 20px; cursor: pointer; white-space: nowrap; transition: all 0.2s; letter-spacing: 0.3px; }
+  .nav-btn:hover { color: var(--text); background: var(--bg3); }
+  .nav-btn.active { background: var(--accent3); color: var(--accent2); }
+
+  /* SECTIONS */
+  .section { display: none; padding: 28px 32px; max-width: 1100px; margin: 0 auto; }
+  .section.active { display: block; }
+
+/* ══════ shared ══════ */
+  :root {
+    --bg: #0f1117; --bg2: #1a1d27; --bg3: #22263a; --border: #2e3347;
+    --text: #e8eaf0; --text2: #9aa0b8; --text3: #5c6282;
+    --accent: #2f6fed; --accent2: #6fa3ff; --accent3: #14305e;
+    --ma5: #ff6b9d; --ma20: #9b59b6; --ma60: #f0c040; --ma120: #22d3ee;
+    --green: #2ecc71; --red: #e74c3c; --gold: #f0c040; --blue: #3498db;
+    --event-major: #38bdf8; --event-neutral: #f1c40f;
+    --bull: #D85A30; --bear: #185FA5;
+    --radius: 10px; --shadow: 0 4px 20px rgba(0,0,0,0.4);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', -apple-system, sans-serif; font-size: 14px; line-height: 1.6; }
+  .page { max-width: 1100px; margin: 0 auto; padding: 28px 32px; }
+
+  .section-title { font-size: 16px; font-weight: 700; color: var(--accent2); margin-bottom: 20px; padding-bottom: 10px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 8px; }
+  .section-title::before { content: ''; width: 4px; height: 18px; background: var(--accent); border-radius: 2px; display: inline-block; }
+
+  .card { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius); padding: 18px 20px; margin-bottom: 16px; }
+  .card-title { font-size: 11px; color: var(--text3); text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 12px; font-weight: 600; }
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+  .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+
+  .chart-wrap { position: relative; }
+  .chart-wrap canvas { max-width: 100%; }
+
+  .ma-row { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid var(--border); }
+  .ma-row:last-child { border-bottom: none; }
+  .ma-dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; margin-right: 8px; }
+  .ma-name { display: flex; align-items: center; font-size: 13px; color: var(--text2); }
+  .ma-val { font-size: 13px; font-weight: 600; }
+  .ma-status { font-size: 11px; padding: 3px 8px; border-radius: 12px; font-weight: 600; }
+  .status-above { background: rgba(46,204,113,0.15); color: var(--green); }
+  .status-below { background: rgba(231,76,60,0.15); color: var(--red); }
+
+  .zone-list { display: flex; flex-direction: column; gap: 8px; margin-top: 4px; }
+  .zone-item { display: flex; justify-content: space-between; align-items: center; padding: 8px 12px; background: var(--bg3); border-radius: 6px; }
+  .zone-label { font-size: 12px; color: var(--text2); }
+  .zone-val { font-size: 13px; font-weight: 700; color: var(--accent2); }
+  .zone-tag { font-size: 10px; padding: 2px 8px; border-radius: 10px; font-weight: 600; }
+  .tag-support { background: rgba(46,204,113,0.15); color: var(--green); }
+  .tag-resist { background: rgba(231,76,60,0.15); color: var(--red); }
+  .tag-current { background: rgba(240,192,64,0.15); color: var(--gold); }
+  .tag-record { background: rgba(52,152,219,0.18); color: var(--blue); }
+
+  .range-toggle { display: flex; gap: 6px; flex-wrap: wrap; }
+  .range-btn { background: var(--bg3); border: 1px solid var(--border); color: var(--text3); font-size: 11px; font-weight: 700; padding: 4px 11px; border-radius: 999px; cursor: pointer; transition: all .15s; }
+  .range-btn:hover { color: var(--text); border-color: var(--text2); }
+  .range-btn.active { background: rgba(47,111,237,0.18); color: var(--accent2); border-color: var(--accent); }
+  .ma-toggle-btn { background: var(--bg3); border: 1px solid; font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: 999px; cursor: pointer; opacity: 1; transition: opacity .15s; }
+  .ma-toggle-btn.ma-off { opacity: 0.35; }
+  .price-chart-container { margin-bottom: 16px; }
+
+  /* SCORECARD */
+  .scorecard { background: linear-gradient(135deg, var(--bg2) 0%, #171a26 100%); border: 1px solid var(--border); border-radius: var(--radius); padding: 22px 24px; margin-bottom: 20px; }
+  .scorecard-top { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 12px; margin-bottom: 14px; }
+  .scorecard-score { display: flex; align-items: baseline; gap: 4px; }
+  .scorecard-score .num { font-size: 40px; font-weight: 800; color: var(--accent2); line-height: 1; }
+  .scorecard-score .denom { font-size: 16px; color: var(--text3); font-weight: 600; }
+  .scorecard-grade { font-size: 12px; font-weight: 700; padding: 6px 14px; border-radius: 999px; background: rgba(46,204,113,0.15); color: var(--green); white-space: nowrap; }
+  .scorecard-grade.grade-strong { background: rgba(46,204,113,0.18); color: var(--green); }
+  .scorecard-grade.grade-positive { background: rgba(47,111,237,0.15); color: var(--accent2); }
+  .scorecard-grade.grade-mixed { background: rgba(240,192,64,0.18); color: var(--gold); }
+  .scorecard-grade.grade-weak { background: rgba(231,76,60,0.15); color: var(--red); }
+  .scorecard-bar { height: 6px; background: var(--bg3); border-radius: 999px; overflow: hidden; margin-bottom: 6px; }
+  .scorecard-bar-fill { height: 100%; background: linear-gradient(90deg, var(--accent3), var(--accent2)); border-radius: 999px; }
+  .scorecard-subtitle { font-size: 11.5px; color: var(--text3); margin-bottom: 18px; }
+  .scorecard-subscores { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-bottom: 10px; }
+  .subscore-box { background: var(--bg3); border-radius: 8px; padding: 12px 14px; }
+  .subscore-box .subscore-label { font-size: 11px; color: var(--text2); margin-bottom: 6px; display: flex; justify-content: space-between; }
+  .subscore-box .subscore-val { font-size: 20px; font-weight: 700; color: var(--text); }
+  .subscore-box .subscore-max { font-size: 12px; color: var(--text3); font-weight: 500; }
+  .subscore-bar { height: 4px; background: var(--bg); border-radius: 999px; overflow: hidden; margin-top: 8px; }
+  .subscore-bar-fill { height: 100%; background: var(--accent2); border-radius: 999px; }
+  .subscore-desc { font-size: 10.5px; color: var(--text3); margin-top: 8px; }
+  .subscores-note { font-size: 10.5px; color: var(--text3); margin-bottom: 16px; line-height: 1.5; }
+  .scorecard-flags { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 14px; }
+  .risk-flag { font-size: 11px; font-weight: 700; padding: 4px 11px; border-radius: 999px; background: rgba(231,76,60,0.15); color: var(--red); position: relative; cursor: help; }
+  .risk-flag[data-tooltip]::after { content: attr(data-tooltip); position: absolute; bottom: calc(100% + 8px); left: 50%; transform: translateX(-50%); width: max-content; max-width: 260px; background: #05060a; color: var(--text2); font-size: 11px; font-weight: 500; line-height: 1.5; padding: 8px 10px; border-radius: 8px; border: 1px solid var(--border); box-shadow: var(--shadow); opacity: 0; visibility: hidden; transition: opacity 0.15s ease; pointer-events: none; z-index: 20; text-align: left; white-space: normal; }
+  .risk-flag[data-tooltip]::before { content: ''; position: absolute; bottom: 100%; left: 50%; transform: translateX(-50%); border: 5px solid transparent; border-top-color: #05060a; opacity: 0; visibility: hidden; transition: opacity 0.15s ease; z-index: 20; }
+  .risk-flag[data-tooltip]:hover::after, .risk-flag[data-tooltip]:hover::before { opacity: 1; visibility: visible; }
+  .scorecard-noflags { font-size: 11.5px; color: var(--text3); margin-bottom: 14px; }
+  .opportunity-badge { font-size: 11px; font-weight: 700; padding: 4px 11px; border-radius: 999px; background: rgba(52,152,219,0.18); color: var(--blue); }
+  .scorecard-verdict { display: flex; flex-direction: column; align-items: flex-end; gap: 6px; }
+  .scorecard-noOpp-inline { font-size: 10.5px; color: var(--text3); white-space: nowrap; }
+  .scorecard-evidence { list-style: none; display: flex; flex-direction: column; gap: 7px; margin-bottom: 14px; }
+  .scorecard-evidence li { font-size: 12.5px; color: var(--text2); padding-left: 16px; position: relative; }
+  .scorecard-evidence li::before { content: '●'; position: absolute; left: 0; color: var(--accent2); font-size: 8px; top: 5px; }
+  .scorecard-footer { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; padding-top: 12px; border-top: 1px dashed var(--border); font-size: 10.5px; color: var(--text3); }
+  .scorecard-disclaimer { font-size: 10.5px; color: var(--text3); font-style: italic; }
+
+  .detail-toggle { cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 8px; user-select: none; font-size: 12.5px; color: var(--text2); font-weight: 600; padding: 10px 2px 6px; border-top: 1px dashed var(--bg3); margin-top: 2px; }
+  .detail-toggle:hover { color: var(--text); }
+  .detail-toggle .toggle-hint { display: flex; align-items: center; gap: 6px; background: rgba(47,111,237,0.12); border: 1px solid rgba(47,111,237,0.35); border-radius: 999px; padding: 5px 11px; flex-shrink: 0; transition: background 0.2s ease, border-color 0.2s ease; }
+  .detail-toggle:hover .toggle-hint { background: rgba(47,111,237,0.22); border-color: rgba(47,111,237,0.5); }
+  .detail-toggle .toggle-hint-text { font-size: 10.5px; font-weight: 700; color: var(--accent2); white-space: nowrap; }
+  .detail-toggle .chevron { font-size: 11px; color: var(--accent2); transition: transform 0.25s ease; flex-shrink: 0; }
+  .detail-toggle.collapsed .chevron { transform: rotate(-90deg); }
+  .collapsible-body { overflow: hidden; opacity: 1; transition: max-height 0.3s ease, opacity 0.2s ease, margin-top 0.2s ease; }
+  .collapsible-body.collapsed { max-height: 0 !important; opacity: 0; margin-top: 0 !important; }
+
+  .stat-box { background: var(--bg3); border: 1px solid var(--border); border-radius: 8px; padding: 14px 16px; }
+  .stat-label { font-size: 11px; color: var(--text3); text-transform: uppercase; letter-spacing: 0.8px; }
+  .stat-value { font-size: 22px; font-weight: 700; color: var(--text); margin: 4px 0 2px; }
+  .stat-sub { font-size: 11px; color: var(--text3); }
+  .stat-value.up { color: var(--green); }
+  .stat-value.down { color: var(--red); }
+  .stat-value.gold { color: var(--accent2); }
+
+  .yoy-footnote { font-size: 11px; color: var(--text3); margin-top: 10px; }
+  .yoy-footnote a { color: var(--accent2); text-decoration: none; }
+
+  .fy-note { background: rgba(47,111,237,0.07); border: 1px solid var(--accent3); border-radius: 8px; padding: 10px 14px; margin-bottom: 14px; font-size: 12px; color: var(--text2); }
+
+  .section-label { font-size: 13px; color: var(--text); font-weight: 700; margin-bottom: 10px; display:flex; align-items:center; gap:6px; }
+  .section-label .dot { width:6px; height:6px; border-radius:50%; background:var(--accent2); }
+  .diag-summary { display:flex; align-items:center; gap:12px; background: linear-gradient(90deg, rgba(240,192,64,0.14), rgba(240,192,64,0.03)); border:1px solid rgba(240,192,64,0.3); border-radius:8px; padding:12px 16px; margin-bottom:14px; }
+  .diag-summary .icon { font-size:24px; }
+  .diag-summary .title { font-size:14px; font-weight:800; color:var(--gold); }
+  .diag-summary .sub { font-size:12px; color:var(--text2); margin-top:2px; line-height:1.4; }
+  .diag-summary.ok { background: linear-gradient(90deg, rgba(46,204,113,0.14), rgba(46,204,113,0.03)); border-color: rgba(46,204,113,0.3); }
+  .diag-summary.ok .title { color: var(--green); }
+  .diag-list { display:flex; flex-direction:column; gap:6px; margin-bottom: 22px; }
+  .diag-row { display:flex; align-items:center; justify-content:space-between; background:var(--bg3); border-radius:8px; padding:10px 14px; }
+  .diag-left { display:flex; align-items:baseline; gap:10px; }
+  .diag-label { font-size:13px; color:var(--text); font-weight:600; min-width:96px; }
+  .diag-value { font-size:15px; font-weight:700; color:var(--text); }
+  .diag-note { font-size:11.5px; color:var(--text2); }
+  .diag-badge { font-size:11px; font-weight:700; padding:4px 10px; border-radius:999px; display:flex; align-items:center; gap:4px; white-space:nowrap; }
+  .diag-badge.safe { background:rgba(46,204,113,0.16); color:var(--green); }
+  .diag-badge.info { background:rgba(154,160,184,0.14); color:var(--text2); }
+  .diag-badge.watch { background:rgba(240,192,64,0.16); color:var(--gold); }
+  .diag-badge.warn { background:rgba(231,76,60,0.16); color:var(--red); }
+
+  .activity-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 12px; }
+  .act-card { background: var(--bg3); border-radius: 8px; padding: 12px 14px; display:flex; align-items:center; gap:12px; }
+  .act-icon { font-size: 19px; width:34px; height:34px; display:flex; align-items:center; justify-content:center; background:rgba(47,111,237,0.1); border-radius:8px; flex-shrink:0; }
+  .act-label { font-size: 11.5px; color: var(--text2); font-weight:600; margin-bottom:2px; }
+  .act-value { font-size: 15px; font-weight: 700; color: var(--text); }
+  .act-sub { font-size: 11px; color: var(--text2); margin-top:1px; }
+
+  /* VALUATION METER */
+  .val-item { margin-bottom: 18px; padding: 8px; margin-left: -8px; margin-right: -8px; border-radius: 8px; border: 1px solid transparent; transition: background 0.15s ease, border-color 0.15s ease; cursor: pointer; }
+  .val-item:last-child { margin-bottom: 0; }
+  .val-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+  .val-item:hover { background: rgba(255,255,255,0.03); }
+  .val-item.selected { background: rgba(47,111,237,0.08); border-color: rgba(47,111,237,0.35); }
+  .val-name { position: relative; font-size: 13px; font-weight: 600; color: var(--text); }
+  .val-item.selected .val-name::after { content: '▸ 비교 보기'; font-size: 9.5px; font-weight: 600; color: var(--accent2); margin-left: 8px; vertical-align: middle; }
+  .val-number { font-size: 14px; font-weight: 700; color: var(--accent2); }
+  .val-track { height: 8px; background: var(--bg3); border-radius: 4px; position: relative; overflow: hidden; }
+  .val-fill { height: 100%; border-radius: 4px; transition: width 0.8s ease; }
+  .val-labels { display: flex; justify-content: space-between; margin-top: 4px; }
+  .val-low { font-size: 10px; color: var(--green); }
+  .val-mid { font-size: 10px; color: var(--accent2); text-align: center; }
+  .val-high { font-size: 10px; color: var(--red); }
+  .stage-badge { font-size: 13px; padding: 2px 10px; border-radius: 12px; font-weight: 700; }
+  .stage-1 { background: rgba(46,204,113,0.2); color: #2ecc71; }
+  .stage-2 { background: rgba(39,174,96,0.2); color: #27ae60; }
+  .stage-3 { background: rgba(240,192,64,0.2); color: var(--gold); }
+  .stage-4 { background: rgba(231,126,35,0.2); color: #e67e22; }
+  .stage-5 { background: rgba(231,76,60,0.2); color: var(--red); }
+
+  .verdict-line { font-size:15px; font-weight:700; color:var(--text); line-height:1.45; margin-top:14px; }
+  .verdict-caveat { font-size:11px; color:var(--text3); margin-top:5px; line-height:1.5; display:flex; align-items:flex-start; gap:6px; }
+  .caveat-icon { display:inline-flex; align-items:center; justify-content:center; width:14px; height:14px; border-radius:50%; background:var(--gold); color:#0f1117; font-size:10px; font-weight:800; flex-shrink:0; margin-top:1.5px; }
+  .anchor-card { margin-top:14px; background:var(--bg3); border-radius:8px; padding:12px 14px; }
+  .anchor-card-label { font-size:10.5px; color:var(--text3); text-transform:uppercase; letter-spacing:0.6px; margin-bottom:8px; }
+  .anchor-card-formula { font-family:'SF Mono',Menlo,Consolas,monospace; font-size:12.5px; font-weight:500; color:var(--text2); line-height:1.5; padding:2px 0 2px 10px; border-left:2px solid var(--text3); }
+  .anchor-card-formula + .anchor-card-formula { margin-top:6px; }
+  .anchor-card-cross { font-size:11px; color:var(--text3); margin-top:10px; padding-top:8px; border-top:1px dashed rgba(255,255,255,0.06); line-height:1.5; }
+  .secondary-row { margin-top:10px; background:rgba(52,152,219,0.08); border:1px solid rgba(52,152,219,0.25); border-radius:8px; padding:10px 12px; }
+  .secondary-row-label { font-size:11.5px; font-weight:700; color:var(--blue); }
+  .secondary-row-caveat { font-size:10.5px; color:var(--text3); margin-top:4px; line-height:1.5; }
+
+  .verdict-summary-head { font-size:14px; font-weight:800; color:var(--text); }
+  .verdict-summary-head .tag { font-size:11.5px; font-weight:700; color:var(--green); margin-left:4px; }
+  .verdict-summary-head .tag.mixed { color:var(--gold); }
+  .verdict-summary-head .tag.negative { color:var(--red); }
+  .verdict-summary-body { font-size:12.5px; color:var(--text2); line-height:1.7; margin-top:10px; }
+  .verdict-summary-risk { margin-top:12px; background:rgba(240,192,64,0.08); border:1px solid rgba(240,192,64,0.25); border-radius:8px; padding:10px 12px; font-size:11.5px; color:var(--text2); line-height:1.6; }
+  .verdict-summary-counter { margin-top:12px; background:rgba(240,192,64,0.08); border:1px solid rgba(240,192,64,0.25); border-radius:8px; padding:10px 12px; font-size:11.5px; color:var(--text2); line-height:1.6; }
+  .verdict-summary-next { margin-top:10px; background:rgba(52,152,219,0.08); border:1px solid rgba(52,152,219,0.25); border-radius:8px; padding:10px 12px; font-size:11.5px; color:var(--text2); line-height:1.6; }
+
+  /* TIMELINE */
+  .timeline { position: relative; padding-left: 24px; }
+  .timeline::before { content: ''; position: absolute; left: 8px; top: 0; bottom: 0; width: 2px; background: var(--border); }
+  .tl-item { position: relative; margin-bottom: 20px; }
+  .tl-item:last-child { margin-bottom: 0; }
+  .tl-dot { position: absolute; left: -20px; top: 4px; width: 10px; height: 10px; border-radius: 50%; background: var(--event-major); border: 2px solid var(--bg); }
+  .tl-dot.red { background: var(--red); }
+  .tl-dot.green { background: var(--green); }
+  .tl-dot.blue { background: var(--blue); }
+  .tl-dot.neutral { background: var(--event-neutral); }
+  .tl-date { font-size: 10px; color: var(--accent); font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; }
+  .tl-title { font-size: 13px; font-weight: 600; color: var(--text); margin: 3px 0; }
+  .tl-desc { font-size: 12px; color: var(--text2); line-height: 1.5; }
+  .tl-source { display: inline-flex; align-items: center; gap: 4px; margin-top: 6px; font-size: 11px; font-weight: 600; color: var(--accent2); text-decoration: none; }
+  .tl-source:hover { text-decoration: underline; }
+  .tl-reaction { display:inline-block; margin-left:8px; font-size:10px; font-weight:700; padding:2px 7px; border-radius:999px; }
+  .tl-reaction.up { background:rgba(46,204,113,0.15); color:var(--green); }
+  .tl-reaction.down { background:rgba(231,76,60,0.15); color:var(--red); }
+  .tl-reaction.flat { background:rgba(154,160,184,0.15); color:var(--text3); }
+
+  /* BULL/BEAR */
+  .bull-bear { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .bb-box { background: var(--bg3); border-radius: var(--radius); padding: 16px; }
+  .bb-title { font-size: 13px; font-weight: 700; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+  .bb-bull { color: var(--bull); }
+  .bb-bear { color: var(--bear); }
+  .bb-item { display: flex; gap: 8px; margin-bottom: 10px; font-size: 12px; color: var(--text2); line-height: 1.5; }
+  .bb-icon { flex-shrink: 0; margin-top: 2px; }
+
+  @media (max-width: 640px) {
+    .page { padding: 20px 16px; }
+    .grid-3, .grid-4 { grid-template-columns: 1fr 1fr; }
+    .scorecard-subscores { grid-template-columns: 1fr; }
+    .activity-grid { grid-template-columns: 1fr; }
+    .grid-2 { grid-template-columns: 1fr; }
+    .bull-bear { grid-template-columns: 1fr; }
+  }
+
+  body { padding-top: 46px; }
+  .back-bar { position: fixed; top: 0; left: 0; right: 0; height: 46px; background: rgba(10,11,17,0.92); backdrop-filter: blur(8px); border-bottom: 1px solid var(--border); z-index: 1000; display: flex; align-items: center; justify-content: space-between; padding: 0 20px; }
+  .back-bar-left { display: flex; align-items: center; gap: 8px; text-decoration: none; }
+  .back-bar-logo { width: 20px; height: 20px; border-radius: 5px; background: var(--accent2); flex-shrink: 0; }
+  .back-bar-left span { color: var(--text2); font-size: 12.5px; font-weight: 600; transition: color 0.2s; }
+  .back-bar-left:hover span { color: var(--accent2); }
+  .back-bar-right { display: flex; align-items: center; gap: 16px; font-size: 12px; }
+  .back-bar-nav { color: var(--text2); text-decoration: none; font-weight: 600; transition: color 0.2s; }
+  .back-bar-nav:hover { color: var(--accent2); }
+  .back-bar-nav.disabled { color: var(--text3); pointer-events: none; opacity: 0.5; }
+  .back-bar-current { color: var(--text); font-weight: 700; padding: 4px 10px; background: var(--bg3); border-radius: 6px; white-space: nowrap; }
+</style>
+</head>
+<body>
+<div class="back-bar">
+  <a class="back-bar-left" href="../index.html"><span class="back-bar-logo"></span><span>[사이트명] · 전체 종목 목록</span></a>
+  <div class="back-bar-right">
+    <a class="back-bar-nav" href="ORCL_full_widget.html">◀ ORCL</a>
+    <span class="back-bar-current">ABBV · 시총 25위</span>
+    <a class="back-bar-nav" href="BAC_full_widget.html">다음 ▶</a>
+  </div>
+</div>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="header-top">
+    <div class="ticker-block">
+      <div>
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:4px;">
+          <span class="ticker-badge">ABBV</span>
+          <span style="font-size:11px;color:var(--accent2);font-weight:600;">NYSE · 제약(면역학·종양학·신경과학·에스테틱)</span>
+        </div>
+        <div class="company-name">AbbVie Inc.</div>
+        <div class="company-sub">Humira 특허절벽을 Skyrizi·Rinvoq 고성장으로 상쇄한 면역질환 중심 종합제약사 · Oncology·Neuroscience·Allergan Aesthetics(보톡스) 다각화 · 미국 상장기업 시총 25위</div>
+      </div>
+    </div>
+    <div class="price-block">
+      <div class="price-main">$256.46</div>
+      <div class="price-change" style="color:var(--red);">▼ -1.44% (2026.09.04 기준)</div>
+      <div style="font-size:11px;color:var(--text3);margin-top:2px;">52주 최저 $190.75 (2026.04.29) · 최고 $267.47 (2026.07.29)</div>
+    </div>
+  </div>
+  <div class="header-meta">
+    <div class="meta-item"><span class="meta-label">시가총액</span><span class="meta-value highlight">약 $453.2B</span></div>
+    <div class="meta-item"><span class="meta-label">섹터</span><span class="meta-value">제약 · 바이오</span></div>
+    <div class="meta-item"><span class="meta-label">FY2026 매출 가이던스</span><span class="meta-value">약 $67.6B (+10%대)</span></div>
+    <div class="meta-item"><span class="meta-label">FY2026 Adj.EPS 가이던스</span><span class="meta-value highlight">$13.87~14.07</span></div>
+    <div class="meta-item"><span class="meta-label">배당수익률</span><span class="meta-value">약 2.70% (분기 $1.73 · 연 $6.92)</span></div>
+  </div>
+</div>
+<div class="box-key">
+  <div style="font-size:13px;font-weight:700;color:var(--accent2);display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:10px;">
+    <span style="display:flex;align-items:center;gap:6px;"><span style="width:4px;height:14px;background:var(--accent2);border-radius:2px;display:inline-block;"></span>핵심 투자 논리 <span style="color:var(--gold);font-weight:600;">(적정~고평가)</span></span>
+    <span style="font-size:11px;font-weight:700;padding:4px 10px;border-radius:999px;background:rgba(46,204,113,0.15);color:var(--green);">Skyrizi+Rinvoq +24.5% · Immunology +15.1%</span>
+    <span style="font-size:11px;font-weight:700;padding:4px 10px;border-radius:999px;background:rgba(231,76,60,0.15);color:var(--red);">자기자본 마이너스(-$5.9B) · PBR 산출불가</span>
+  </div>
+  <div style="font-size:17px;font-weight:800;color:var(--text);margin-bottom:12px;">Humira 특허절벽 이후 Skyrizi·Rinvoq가 예상보다 강하게 매출 공백을 메우며 두 자릿수 성장을 이어가고 있지만, 반복되는 인수 관련 무형자산상각·IPR&amp;D충당금·조건부대가 재측정이 GAAP 이익을 크게 왜곡시켜 실질 밸류에이션 판단에는 Adjusted 지표가 필요하다 — 이 회계상 왜곡과 실제 성장 스토리 사이의 간극이 이 카드의 핵심 논쟁이다.</div>
+  <div style="display:flex;flex-direction:column;gap:8px;">
+    <div style="font-size:12px;color:var(--text2);line-height:1.5;"><strong style="color:var(--accent2);">01</strong>&nbsp; Skyrizi $5.505B(+24.5%)·Rinvoq $2.525B(+24.5%)가 Humira 감소분(-35.9%, -$424M)을 상쇄하고도 남아 Immunology 전체가 +15.1% 성장했다(상세 #fund).</div>
+    <div style="font-size:12px;color:var(--text2);line-height:1.5;"><strong style="color:var(--accent2);">02</strong>&nbsp; GAAP EPS(TTM) $3.54 기준 PER은 72.45x로 왜곡돼 있다 — Adjusted EPS(TTM) $10.87 기준 PER 23.60x가 실질에 가깝다(상세 #valuation).</div>
+    <div style="font-size:12px;color:var(--text2);line-height:1.5;"><strong style="color:var(--accent2);">03</strong>&nbsp; 자기자본이 -$5.9B(2026.6월말)로 마이너스라 PBR 산출이 불가능하다 — 수십 년 자사주매입과 Allergan 인수 부채·상각의 구조적 결과이며, 이자보상배율 6.38x로 상환능력 자체는 건전하다(상세 #fund).</div>
+    <div style="font-size:12px;color:var(--text2);line-height:1.5;"><strong style="color:var(--accent2);">04</strong>&nbsp; Allergan발 소송(오피오이드·ALCL 등) 합산 충당부채가 $1.7B로 늘었다 — 대부분 해결 국면에 들어섰으나 완전 종결은 아니다(상세 #invest).</div>
+  </div>
+</div>
+
+<!-- NAV -->
+<div class="nav">
+  <button class="nav-btn active" onclick="showSection('tech', this)">📈 기술적 분석</button>
+  <button class="nav-btn" onclick="showSection('fund', this)">📊 기본적 분석</button>
+  <button class="nav-btn" onclick="showSection('valuation', this)">⚖️ 밸류에이션</button>
+  <button class="nav-btn" onclick="showSection('news', this)">📰 시계열 뉴스</button>
+  <button class="nav-btn" onclick="showSection('invest', this)">🎯 투자 포인트</button>
+</div>
+
+<div id="tech" class="section active">
+  <div class="section-title" id="techHeaderTitle">기술적 분석 — 일봉 캔들스틱 (2025.09 ~ 2026.09) · 1년 수익률 <span id="techHeaderReturn">+20.4%</span></div>
+
+  <div class="price-chart-container">
+    <div style="margin-bottom:10px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
+      <div class="range-toggle" id="abbvRangeToggle">
+        <button class="range-btn" data-range="1M">1개월</button>
+        <button class="range-btn" data-range="6M">6개월</button>
+        <button class="range-btn active" data-range="1Y">1년</button>
+        <button class="range-btn" data-range="3Y">3년</button>
+        <button class="range-btn" data-range="5Y">5년</button>
+      </div>
+      <div id="abbvMaToggle" style="display:flex;gap:8px;flex-wrap:wrap;">
+        <button class="ma-toggle-btn ma-off" data-ma="backtest" style="color:#f0c040;border-color:#f0c040;">◆ 예상밴드 백테스트</button>
+      </div>
+    </div>
+    <div id="abbvBacktestSummary" style="display:none;font-size:11px;color:var(--text2);margin-bottom:8px;padding:8px 10px;background:var(--bg3);border-radius:6px;line-height:1.6;"></div>
+    <svg id="abbvCandleSvg" viewBox="0 0 720 240" width="100%" style="display:block;background:var(--bg3);border-radius:8px 8px 0 0;padding:4px;" role="img" aria-label="ABBV 일봉 캔들스틱 차트"></svg>
+    <svg id="abbvVolumeSvg" viewBox="0 0 720 70" width="100%" style="display:block;background:var(--bg3);border-radius:0 0 8px 8px;padding:0 4px 4px;" role="img" aria-label="ABBV 거래량 차트"></svg>
+    <div style="margin-top:10px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
+      <div style="font-size:11px;color:var(--text3);" id="techRangeSummary">52주 최저 $190.75 (2026.04) → 52주 최고 $267.47 (2026.07) → 현재 $256.46</div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;">
+        <button class="ma-toggle-btn" data-ma="ma5" style="color:var(--ma5);border-color:var(--ma5);">● MA5</button>
+        <button class="ma-toggle-btn" data-ma="ma20" style="color:var(--ma20);border-color:var(--ma20);">● MA20</button>
+        <button class="ma-toggle-btn" data-ma="ma60" style="color:var(--ma60);border-color:var(--ma60);">● MA60</button>
+        <button class="ma-toggle-btn" data-ma="ma120" style="color:var(--ma120);border-color:var(--ma120);">● MA120</button>
+        <button class="ma-toggle-btn" data-ma="pricelabels" style="color:var(--text2);border-color:var(--text2);margin-left:4px;">◆ 가격라벨</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="scorecard">
+    <div class="scorecard-top">
+      <div>
+        <div class="scorecard-score"><span class="num">80</span><span class="denom">/100</span></div>
+      </div>
+      <div class="scorecard-verdict">
+        <div class="scorecard-grade grade-positive">기술적 분석 적격</div>
+        <div class="scorecard-noOpp-inline">🎯 돌파 신호 없음</div>
+      </div>
+    </div>
+    <div class="scorecard-bar"><div class="scorecard-bar-fill" style="width:80%;"></div></div>
+    <div class="scorecard-subtitle">가격·거래량 기반 기술 상태 점수 (모델 v1.0.0 · 2026-09-04 기준) · 투자 권고 아님</div>
+
+    <div class="scorecard-subscores">
+      <div class="subscore-box">
+        <div class="subscore-label"><span>추세구조</span><span class="subscore-max">40/40</span></div>
+        <div class="subscore-val">40</div>
+        <div class="subscore-bar"><div class="subscore-bar-fill" style="width:100%;"></div></div>
+        <div class="subscore-desc">MA50/150/200 배열 조건 4개 전부 충족</div>
+      </div>
+      <div class="subscore-box">
+        <div class="subscore-label"><span>절대모멘텀</span><span class="subscore-max">20/40</span></div>
+        <div class="subscore-val">20</div>
+        <div class="subscore-bar"><div class="subscore-bar-fill" style="width:50%;"></div></div>
+        <div class="subscore-desc">최근 3개월~1년 가중 수익률 +13.8%</div>
+      </div>
+      <div class="subscore-box">
+        <div class="subscore-label"><span>52주위치</span><span class="subscore-max">20/20</span></div>
+        <div class="subscore-val">20</div>
+        <div class="subscore-bar"><div class="subscore-bar-fill" style="width:100%;"></div></div>
+        <div class="subscore-desc">저점 대비 +34.5%, 고점 대비 -4.1%</div>
+      </div>
+    </div>
+    <div class="subscores-note">추세구조·52주위치는 참고용으로 나눠 보여드리는 구성요소이며, 각각을 독립적인 매매 신호로 해석하지 마세요. 최종 점수는 지금처럼 세 구성요소를 합산한 방식 그대로입니다.</div>
+
+    <div class="scorecard-noflags">⚠️ 리스크 플래그 없음 — 장기 정배열·52주 고점권 유지 모두 양호한 구간</div>
+
+    <div class="detail-toggle collapsed" onclick="toggleCollapsible(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleCollapsible(this);}" role="button" tabindex="0" aria-expanded="false">
+      <span>상세 근거 보기</span>
+      <span class="toggle-hint"><span class="toggle-hint-text">상세 보기</span><span class="chevron">▾</span></span>
+    </div>
+    <div class="collapsible-body collapsed">
+    <ul class="scorecard-evidence">
+      <li>중장기 정배열 조건 4가지 모두 충족 — ① 현재가($256.46)가 MA150($229.44)·MA200($228.34)을 모두 상회 ② MA150이 MA200보다 높음 ③ MA200 자체가 21거래일 전($225.03) 대비 상승 중 ④ MA50($254.48)도 MA150·MA200 모두 상회.</li>
+      <li>최근 3개월~1년 가중 모멘텀은 +13.8%로 준수하지만 만점에는 못 미친다 — 7월 말 52주 신고가 이후 숨고르기 구간이 모멘텀 점수를 다소 낮췄다.</li>
+      <li>52주 저점 대비 +34.5%, 52주 고점 대비로는 -4.1%에 불과해 신고가권을 유지하고 있다.</li>
+      <li>52주 최저 $190.75(2026.04.29, 1분기 실적 발표일 장중 기록했으나 저가매수세로 그날 종가는 오히려 +3.1% 반등, #news 참고) 이후 뚜렷한 우상향이 이어지고 있다.</li>
+    </ul>
+    </div>
+
+    <div class="scorecard-footer">
+      <span>기준일 2026-09-04</span>
+      <span class="scorecard-disclaimer">가격/거래량 데이터로 계산한 규칙 기반 기술 상태 요약이며, 투자 권고나 미래 수익률 예측이 아닙니다.</span>
+    </div>
+  </div>
+
+  <div class="grid-2">
+    <div class="card" style="margin-bottom:0;">
+      <div class="card-title">핵심 가격대</div>
+      <div class="zone-list">
+        <div class="zone-item"><span class="zone-label">52주 최고</span><div style="display:flex;align-items:center;gap:8px;"><span class="zone-val" style="color:var(--red);">$267.47</span><span class="zone-tag tag-resist">2026.07.29 · 강저항</span></div></div>
+        <div class="zone-item"><span class="zone-label">MA20 저항(근접)</span><div style="display:flex;align-items:center;gap:8px;"><span class="zone-val" style="color:var(--red);">$257.54</span><span class="zone-tag tag-resist">저항선</span></div></div>
+        <div class="zone-item"><span class="zone-label">현재가</span><div style="display:flex;align-items:center;gap:8px;"><span class="zone-val" style="color:var(--gold);">$256.46</span><span class="zone-tag tag-current">현재</span></div></div>
+        <div class="zone-item"><span class="zone-label">MA60 지지</span><div style="display:flex;align-items:center;gap:8px;"><span class="zone-val" style="color:var(--green);">$250.02</span><span class="zone-tag tag-support">지지선</span></div></div>
+        <div class="zone-item"><span class="zone-label">52주 최저</span><div style="display:flex;align-items:center;gap:8px;"><span class="zone-val" style="color:var(--green);">$190.75</span><span class="zone-tag tag-support">2026.04.29 · 강지지</span></div></div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-bottom:0;">
+      <div class="card-title">이동평균선 현황</div>
+      <div class="ma-row"><span class="ma-name"><span class="ma-dot" style="background:var(--ma5)"></span>MA5 (단기)</span><div style="display:flex;align-items:center;gap:10px;"><span class="ma-val">$258.96</span><span class="ma-status status-below">현재가 하회</span></div></div>
+      <div class="ma-row"><span class="ma-name"><span class="ma-dot" style="background:var(--ma20)"></span>MA20 (중단기)</span><div style="display:flex;align-items:center;gap:10px;"><span class="ma-val">$257.54</span><span class="ma-status status-below">현재가 하회</span></div></div>
+      <div class="ma-row"><span class="ma-name"><span class="ma-dot" style="background:var(--ma60)"></span>MA60 (중기)</span><div style="display:flex;align-items:center;gap:10px;"><span class="ma-val">$250.02</span><span class="ma-status status-above">현재가 상회</span></div></div>
+      <div class="ma-row"><span class="ma-name"><span class="ma-dot" style="background:var(--ma120)"></span>MA120 (장기)</span><div style="display:flex;align-items:center;gap:10px;"><span class="ma-val">$230.10</span><span class="ma-status status-above">현재가 상회</span></div></div>
+      <div style="margin-top:12px;padding:10px;background:var(--bg3);border-radius:6px;font-size:11.5px;color:var(--text2);">MA5&gt;MA20&gt;현재가&gt;MA60&gt;MA120 순 — 4개 이평선 중 2개(MA60·MA120)는 현재가가 상회하지만, 가장 단기인 MA5·MA20은 근소하게(각각 -1.0%·-0.4%) 하회한다. 7월 말 신고가 이후의 짧은 숨고르기로, 중장기 정배열 자체는 온전히 유지되고 있다.</div>
+    </div>
+  </div>
+
+</div>
+
+<div id="fund" class="section">
+  <div class="section-title">기본적 분석 — 분기 재무제표 (SEC 10-Q/10-K, US GAAP 연결재무제표)</div>
+
+  <div class="card">
+    <div class="card-title">분기 매출 / 영업이익 / OPM (Q3'24 ~ Q2'26)</div>
+    <div class="chart-wrap" style="height:260px;">
+      <canvas id="abbvRevChart"></canvas>
+    </div>
+    <div style="font-size:11px;color:var(--text3);margin-top:10px;">SEC 10-Q/10-K 8개 분기 직접 확인. OPM 변동성이 큰 것은 실적 자체보다 분기마다 규모가 다른 '인수 관련 IPR&amp;D·마일스톤 비용' 때문이다 — Q4'24(-9.9%)는 대규모 IPR&amp;D 손상차손이 반영된 분기로, 공개적으로 알려진 파이프라인(에마클리딘) 임상 실패 시기와 겹친다. Q3'25(12.1%)는 그 분기에만 EPS -$1.50 영향을 준 대형 마일스톤 비용이 반영된 결과다.</div>
+  </div>
+
+  <div class="grid-4">
+    <div class="stat-box">
+      <div class="stat-label">FCF (TTM)</div>
+      <div class="stat-value up">$18.21B</div>
+      <div class="stat-sub">OCF $19.51B - Capex $1.30B · 매출의 28%대, 대형 제약사 특유의 견조한 현금창출력</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-label">Capex (TTM)</div>
+      <div class="stat-value">$1.30B</div>
+      <div class="stat-sub">매출의 2.0% · 자산경량형 제약 비즈니스 특성</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-label">OCF (TTM)</div>
+      <div class="stat-value up">$19.51B</div>
+      <div class="stat-sub">OCF 마진 30.3%</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-label">다음 실적</div>
+      <div class="stat-value gold">2026.10월 하순(잠정)</div>
+      <div class="stat-sub">Q3 2026 · Adj.EPS 가이던스 $3.84~3.88(2026.9.3 재확인)</div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:16px;">
+    <div class="card-title">재무 건전성 — 안정성·활동성 (2026.06.30 기준)</div>
+
+    <div class="section-label"><span class="dot"></span>안정성 — 자본구조·차입 의존도</div>
+    <div class="diag-summary">
+      <div class="icon">⚠️</div>
+      <div>
+        <div class="title">종합 진단: 유동성은 다소 빠듯하고 자기자본은 마이너스다</div>
+        <div class="sub">유동부채가 유동자산을 웃돌고(유동비율 80.9%), 자기자본비율은 -4.4%로 자본잠식 상태다 — 다만 이자보상배율 6.38x로 상환능력 자체는 건전하다</div>
+      </div>
+    </div>
+
+    <div class="detail-toggle collapsed" onclick="toggleCollapsible(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleCollapsible(this);}" role="button" tabindex="0" aria-expanded="false">
+      <span>안정성 상세 — 개별 비율 6개</span>
+      <span class="toggle-hint"><span class="toggle-hint-text">상세 보기</span><span class="chevron">▾</span></span>
+    </div>
+    <div class="collapsible-body collapsed">
+    <div class="diag-list">
+      <div class="diag-row">
+        <div class="diag-left"><span class="diag-label">유동비율</span><span class="diag-value">80.9%</span><span class="diag-note">유동자산 $33.67B÷유동부채 $41.64B · 유동부채의 상당수는 매입채무·미지급비용</span></div>
+        <div class="diag-badge watch">⚠️ 다소낮음</div>
+      </div>
+      <div class="diag-row">
+        <div class="diag-left"><span class="diag-label">당좌비율</span><span class="diag-value">68.6%</span><span class="diag-note">(유동자산-재고 $5.13B)÷유동부채</span></div>
+        <div class="diag-badge watch">⚠️ 다소낮음</div>
+      </div>
+      <div class="diag-row">
+        <div class="diag-left"><span class="diag-label">차입금의존도</span><span class="diag-value">52.4%</span><span class="diag-note">총차입금 $70.82B(유동성LTD $8.34B+장기차입금 $62.48B)÷총자산 $135.12B</span></div>
+        <div class="diag-badge warn">⚠️ 높음</div>
+      </div>
+      <div class="diag-row">
+        <div class="diag-left"><span class="diag-label">이자보상배율</span><span class="diag-value">6.38x</span><span class="diag-note">영업이익(TTM) $16.87B÷순이자비용(TTM) $2.65B · 기준 1x↑ 크게 상회, 상환능력 자체는 안전</span></div>
+        <div class="diag-badge safe">✅ 안전</div>
+      </div>
+      <div class="diag-row">
+        <div class="diag-left"><span class="diag-label">자기자본비율</span><span class="diag-value">-4.4%</span><span class="diag-note">자기자본 -$5.94B÷총자산 $135.12B · 자기주식 -$10.6B+누적 결손 -$17.3B 누적 결과, 자본잠식</span></div>
+        <div class="diag-badge warn">⚠️ 자본잠식</div>
+      </div>
+      <div class="diag-row">
+        <div class="diag-left"><span class="diag-label">총자산증가율</span><span class="diag-value">-1.5%</span><span class="diag-note">2026.6월말 $135.12B(전년동월 $137.18B) · 무형자산 상각이 신규 투자보다 커 소폭 감소, Apogee 인수(9/3 완료)는 다음 분기 반영 예정</span></div>
+        <div class="diag-badge info">ℹ️ 참고</div>
+      </div>
+    </div>
+    </div>
+
+    <div class="section-label" style="margin-top:14px;"><span class="dot" style="background:var(--blue);"></span>활동성 — 매출채권·재고자산 회전</div>
+    <div class="diag-summary ok">
+      <div class="icon">🔄</div>
+      <div>
+        <div class="title">종합 진단: 양호 — 매출채권 75일·재고자산 100일 회전</div>
+        <div class="sub">제조업형 제약사로 재고자산 회전까지 함께 봐야 한다 — 두 지표 모두 특별히 느려지는 추세는 없음</div>
+      </div>
+    </div>
+
+    <div class="detail-toggle collapsed" onclick="toggleCollapsible(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleCollapsible(this);}" role="button" tabindex="0" aria-expanded="false">
+      <span>활동성 상세 — 개별 비율</span>
+      <span class="toggle-hint"><span class="toggle-hint-text">상세 보기</span><span class="chevron">▾</span></span>
+    </div>
+    <div class="collapsible-body collapsed">
+    <div class="activity-grid">
+      <div class="act-card">
+        <div class="act-icon">💳</div>
+        <div><div class="act-label">매출채권 회전율·회전기간</div><div class="act-value">4.88회</div><div class="act-sub">74.9일 만에 현금화 · TTM매출 $64.39B÷평균매출채권 $13.21B</div></div>
+      </div>
+      <div class="act-card">
+        <div class="act-icon">📦</div>
+        <div><div class="act-label">재고자산 회전율·회전기간</div><div class="act-value">3.64회</div><div class="act-sub">100.1일 보유 · TTM매출원가 $18.37B÷평균재고 $5.04B</div></div>
+      </div>
+    </div>
+    </div>
+
+    <div style="margin-top:14px;font-size:11.5px;color:var(--text2);line-height:1.6;">자기자본비율만 보면 경고 신호처럼 보이지만, 이자보상배율 6.38x·OCF마진 30%가 보여주듯 실제 상환능력과 현금창출력은 견조하다. 차입금의존도(52.4%)가 높은 것은 사실이나, 그 대부분은 2020년 Allergan 인수($630억)와 이후 Cerevel·ImmunoGen 등 반복적 M&amp;A 자금조달에서 비롯된 구조다(#invest 참고).</div>
+  </div>
+
+  <div class="grid-2">
+    <div class="card" style="margin-bottom:0;">
+      <div class="card-title">매출 구성 — 제품군별 (Q2 2026 $16.99B 기준)</div>
+      <div style="display:flex;align-items:center;justify-content:center;gap:20px;">
+        <div class="chart-wrap" style="height:170px;width:170px;flex-shrink:0;">
+          <canvas id="segmentPieChart"></canvas>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:9px;">
+          <div style="display:flex;align-items:center;gap:7px;font-size:11px;color:var(--text2);white-space:nowrap;"><span style="width:8px;height:8px;border-radius:50%;background:#2f6fed;display:inline-block;flex-shrink:0;"></span>Immunology <strong style="color:var(--text);">$8.79B · 51.7%</strong></div>
+          <div style="display:flex;align-items:center;gap:7px;font-size:11px;color:var(--text2);white-space:nowrap;"><span style="width:8px;height:8px;border-radius:50%;background:#3498db;display:inline-block;flex-shrink:0;"></span>Neuroscience <strong style="color:var(--text);">$3.23B · 19.0%</strong></div>
+          <div style="display:flex;align-items:center;gap:7px;font-size:11px;color:var(--text2);white-space:nowrap;"><span style="width:8px;height:8px;border-radius:50%;background:#9b59b6;display:inline-block;flex-shrink:0;"></span>Oncology <strong style="color:var(--text);">$1.65B · 9.7%</strong></div>
+          <div style="display:flex;align-items:center;gap:7px;font-size:11px;color:var(--text2);white-space:nowrap;"><span style="width:8px;height:8px;border-radius:50%;background:#f0c040;display:inline-block;flex-shrink:0;"></span>Aesthetics <strong style="color:var(--text);">$1.28B · 7.5%</strong></div>
+          <div style="display:flex;align-items:center;gap:7px;font-size:11px;color:var(--text2);white-space:nowrap;"><span style="width:8px;height:8px;border-radius:50%;background:#5c6282;display:inline-block;flex-shrink:0;"></span>기타 <strong style="color:var(--text);">$2.04B · 12.0%</strong></div>
+        </div>
+      </div>
+      <div style="margin-top:14px;font-size:11.5px;color:var(--text2);line-height:1.6;">Immunology 내에서는 Skyrizi $5.51B가 62.7%를 차지하며 성장을 견인하고, Humira는 $756M(8.6%)까지 축소됐다. Oncology는 Imbruvica 매출 감소 등의 영향으로 전년동기 대비 -1.6% 감소한 유일한 축소 부문이고, Aesthetics는 +0.2%로 사실상 정체됐다.</div>
+    </div>
+
+    <div class="card" style="margin-bottom:0;">
+      <div class="card-title">자본배분 · 주주환원 (TTM 기준)</div>
+      <div class="zone-list">
+        <div class="zone-item">
+          <span class="zone-label">배당 (TTM)</span>
+          <span class="zone-val">$11.98B</span>
+        </div>
+        <div class="zone-item">
+          <span class="zone-label">자사주매입 (TTM)</span>
+          <span class="zone-val">$1.51B</span>
+        </div>
+        <div class="zone-item">
+          <span class="zone-label">합계 주주환원 (TTM)</span>
+          <span class="zone-val">$13.48B</span>
+        </div>
+      </div>
+      <div style="margin-top:10px;font-size:11px;color:var(--text3);">배당이 자사주매입보다 8배 가까이 크다(SEC 현금흐름표 직접 확인) — Allergan 인수 부채 상환과 자기자본 회복이 공격적 자사주매입보다 우선순위인 자본배분 기조로 해석된다. 분기 배당 $1.73/주는 8개 분기 연속 동결이다.</div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:16px;">
+    <div class="card-title">다음 실적 체크포인트 <span style="color:var(--gold);font-weight:600;">2026년 10월 하순(잠정) · Q3 2026</span></div>
+    <div style="font-size:12px;color:var(--text2);line-height:1.8;">
+      <div style="margin-bottom:8px;"><strong style="color:var(--accent2);">①</strong> Skyrizi·Rinvoq가 20%대 성장을 유지하며 Humira 감소분을 계속 상쇄하는지(컨센서스·회사 가이던스: Adj.EPS $3.84~3.88, 2026.9.3 재확인)</div>
+      <div style="margin-bottom:8px;"><strong style="color:var(--accent2);">②</strong> Apogee 인수($10.9B, 9/3 완료) 통합 비용과 zumilokibart 등 파이프라인의 초기 임상 업데이트</div>
+      <div style="margin-bottom:8px;"><strong style="color:var(--accent2);">③</strong> Immunology 외 Oncology(Imbruvica 감소)·Aesthetics(정체) 부문이 반등 조짐을 보이는지</div>
+      <div><strong style="color:var(--accent2);">④</strong> 오피오이드·ALCL 소송 준비금 $1.7B의 추가 변동 여부.</div>
+    </div>
+  </div>
+</div>
+
+<div id="valuation" class="section">
+  <div class="section-title">밸류에이션 (Valuation Multiples) — 현재가 $256.46 · Merck(MRK)·Pfizer(PFE) 피어 기준</div>
+  <div style="font-size:10.5px;color:var(--text3);margin:-4px 0 12px;">※ MRK·PFE는 이번에 새로 조사(2026-09-04/06 기준 stockanalysis.com). 둘 다 특허절벽·바이오시밀러/제네릭 경쟁을 겪고 있는 대형 다각화 제약사로 ABBV의 Humira 이후 스토리와 비교 가능하다고 판단했다 — 이미 이 프로젝트에 구축된 LLY는 GLP-1 단일 성장축이 압도적이라 사업 믹스가 크게 달라 피어에서 제외했다. PER은 GAAP TTM EPS($3.54) 기준으로 계산하면 72.45x로, 반복되는 인수 관련 무형자산상각·IPR&amp;D충당금·조건부대가 재측정 때문에 왜곡된다 — Adjusted EPS(TTM) $10.87 기준 23.60x를 대신 사용한다.</div>
+
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title">멀티플 5단계 평가</div>
+      <div style="font-size:10.5px;color:var(--text3);line-height:1.5;margin:-4px 0 14px;">※ PBR은 자기자본이 마이너스(-$5.94B, 2026.6월말)라 배수 자체를 계산할 수 없어 종합판단(가중치 0)에서 제외했다.</div>
+
+      <div class="val-item" data-metric="per" onclick="selectMultiple('per')">
+        <div class="val-header"><span class="val-name">PER (TTM Adjusted)</span><div style="display:flex;align-items:center;gap:8px;"><span class="val-number">23.60x</span><span class="stage-badge stage-3">3단계 적정</span></div></div>
+        <div class="val-track"><div class="val-fill" style="width:53.3%;background:linear-gradient(90deg,#f0c040,#e67e22);"></div></div>
+        <div class="val-labels"><span class="val-low">저 14x</span><span class="val-mid">적정 21x</span><span class="val-high">고 32x</span></div>
+      </div>
+
+      <div class="val-item" data-metric="pbr" onclick="selectMultiple('pbr')">
+        <div class="val-header"><span class="val-name">PBR</span><div style="display:flex;align-items:center;gap:8px;"><span class="val-number">평가보류</span><span class="stage-badge" style="background:rgba(154,160,184,0.18);color:var(--text2);">산출불가</span></div></div>
+        <div class="val-track"><div class="val-fill" style="width:0%;background:linear-gradient(90deg,#5c6282,#5c6282);"></div></div>
+        <div class="val-labels"><span class="val-low">자기자본 -$5.94B</span><span class="val-mid">산출 불가</span><span class="val-high">-</span></div>
+      </div>
+
+      <div class="val-item" data-metric="psr" onclick="selectMultiple('psr')">
+        <div class="val-header"><span class="val-name">PSR (시총/매출 TTM)</span><div style="display:flex;align-items:center;gap:8px;"><span class="val-number">7.04x</span><span class="stage-badge stage-3">3단계 적정</span></div></div>
+        <div class="val-track"><div class="val-fill" style="width:42.0%;background:linear-gradient(90deg,#f0c040,#e67e22);"></div></div>
+        <div class="val-labels"><span class="val-low">저 2x</span><span class="val-mid">적정 6x</span><span class="val-high">고 14x</span></div>
+      </div>
+
+      <div class="val-item" data-metric="pcr" onclick="selectMultiple('pcr')">
+        <div class="val-header"><span class="val-name">PCR (P/OCF)</span><div style="display:flex;align-items:center;gap:8px;"><span class="val-number">23.23x</span><span class="stage-badge stage-4">4단계 다소높음</span></div></div>
+        <div class="val-track"><div class="val-fill" style="width:67.8%;background:linear-gradient(90deg,#e67e22,#e74c3c);"></div></div>
+        <div class="val-labels"><span class="val-low">저 9x</span><span class="val-mid">적정 17x</span><span class="val-high">고 30x</span></div>
+      </div>
+
+      <div class="val-item" data-metric="evebitda" onclick="selectMultiple('evebitda')">
+        <div class="val-header"><span class="val-name">EV/EBITDA (TTM)</span><div style="display:flex;align-items:center;gap:8px;"><span class="val-number">20.89x</span><span class="stage-badge stage-4">4단계 다소높음</span></div></div>
+        <div class="val-track"><div class="val-fill" style="width:64.5%;background:linear-gradient(90deg,#e67e22,#e74c3c);"></div></div>
+        <div class="val-labels"><span class="val-low">저 8x</span><span class="val-mid">적정 16x</span><span class="val-high">고 28x</span></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span id="multipleCompareTitle">PER 비교 — Merck(MRK)·Pfizer(PFE)</span></div>
+      <div class="chart-wrap" style="height:230px;">
+        <canvas id="multipleChart"></canvas>
+      </div>
+
+      <div class="verdict-line" id="verdictLine"></div>
+      <div class="verdict-caveat" id="verdictCaveat"></div>
+
+      <div class="anchor-card">
+        <div class="anchor-card-label">계산 · 적정 기준</div>
+        <div class="anchor-card-formula" id="anchorCalc"></div>
+        <div class="anchor-card-formula" id="anchorFormula"></div>
+        <div class="anchor-card-cross" id="anchorCross"></div>
+      </div>
+
+      <div class="secondary-row" id="secondaryRow" style="display:none;">
+        <div class="secondary-row-label" id="secondaryLabel"></div>
+        <div class="secondary-row-caveat" id="secondaryCaveat"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">종합 밸류에이션</div>
+    <div class="verdict-summary-head">종합 판단 <span class="tag mixed">적정~고평가 — Adjusted PER·PSR은 무난하지만 PCR·EV/EBITDA는 피어 대비 뚜렷한 프리미엄</span></div>
+    <div class="verdict-summary-body">PBR을 제외한 4개 지표를 가중평균하면 3.5/5단계(적정~고평가)다. Adjusted PER(3단계)·PSR(3단계)은 MRK·PFE 평균과 큰 차이가 없지만, PCR(4단계)·EV/EBITDA(4단계)는 뚜렷한 프리미엄이다 — Skyrizi·Rinvoq가 만드는 두 자릿수 매출·현금흐름 성장이 MRK(Keytruda 특허절벽 임박)·PFE(코로나19 특수 소멸 이후 매출 감소)보다 우수하다는 점이 이 프리미엄의 근거가 될 수 있다. GAAP PER 72.45x는 반복되는 IPR&amp;D·무형자산상각 때문에 비교 대상으로 삼지 않았다.</div>
+    <div class="verdict-summary-risk">⚠️ 이 판단은 5개 배수만 반영한 것으로, 오피오이드·ALCL 등 진행 중인 소송(#invest 참고)이나 Apogee 등 반복적 M&amp;A가 실제 파이프라인 가치를 창출하는지는 포함하지 않는다.</div>
+  </div>
+</div>
+
+<div id="news" class="section">
+  <div class="section-title">시계열 주요 뉴스 (2025.09 ~ 2026.09)</div>
+
+  <div class="card">
+    <div class="card-title">종합 해석</div>
+    <div class="verdict-summary-head">지배적 내러티브 · Humira 이후 성장 스토리 신뢰 회복 속 반복되는 IPR&amp;D 서프라이즈<span class="tag mixed">완만한 우상향 · 1년 +20.4%</span></div>
+    <div class="verdict-summary-body">지난 1년간 ABBV는 분기 실적 때마다 규모가 들쭉날쭉한 인수 관련 IPR&amp;D·마일스톤 비용이 GAAP EPS를 예측하기 어렵게 흔들었지만, 그때마다 Skyrizi·Rinvoq의 20%대 이상 매출 성장이 우려를 상쇄하며 전반적으로는 우상향 흐름을 이어왔다. 2026년 4월에는 대규모 IPR&amp;D 비용 공시와 FDA의 새 보툴리눔톡신(트레니보툴리눔톡신E) 제조 이슈 승인거부(CRL)라는 부정적 소식이 겹친 가운데 1분기 실적 발표일 장중 52주 신저가 $190.75까지 밀렸으나, 그날조차 저가매수세로 종가는 오히려 반등했다. 이후 Apogee Therapeutics 인수 발표(6월)와 견조한 2분기 실적 기대감에 힘입어 7월 말 52주 신고가 $267.47을 기록했다.</div>
+    <div class="verdict-summary-counter">⚠️ 반대 신호 — 정작 7/31 2분기 실적은 매출이 컨센서스를 상회했음에도 Adjusted EPS가 소폭 미스하고 Apogee 인수분 희석을 반영해 가이던스가 근소하게 낮아지며, 발표 이후 3거래일간 -6.9% 조정됐다. 실적 발표 직후의 단기 변동성은 여전히 크다.</div>
+    <div class="verdict-summary-next">🔍 다음 확인 포인트 — 10월 하순 3분기 실적에서 Skyrizi·Rinvoq 성장률 유지 여부와 Apogee 통합 초기 코멘터리, 오피오이드·ALCL 소송 준비금의 추가 변동을 확인해야 한다.</div>
+  </div>
+
+  <div style="display:flex;gap:14px;flex-wrap:wrap;margin-bottom:16px;font-size:11px;color:var(--text2);">
+    <span style="display:flex;align-items:center;gap:5px;"><span style="width:10px;height:10px;border-radius:50%;background:var(--event-major);display:inline-block;"></span>초대형 이벤트</span>
+    <span style="display:flex;align-items:center;gap:5px;"><span style="width:10px;height:10px;border-radius:50%;background:var(--green);display:inline-block;"></span>긍정</span>
+    <span style="display:flex;align-items:center;gap:5px;"><span style="width:10px;height:10px;border-radius:50%;background:var(--red);display:inline-block;"></span>부정</span>
+    <span style="display:flex;align-items:center;gap:5px;"><span style="width:10px;height:10px;border-radius:50%;background:var(--event-neutral);display:inline-block;"></span>중립</span>
+  </div>
+
+  <div class="card">
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-dot neutral"></div>
+        <div class="tl-date">2026년 9월 3일 — Apogee Therapeutics 인수 완료<span class="tl-reaction flat">-0.6%(당일)</span></div>
+        <div class="tl-title">$10.9B 규모(주당 $135.11 현금) 인수 절차 완료, FY2026·Q3 2026 Adjusted EPS 가이던스 그대로 재확인</div>
+        <div class="tl-desc">6월 발표된 인수가 예정대로 마무리됐다. 회사는 같은 날 FY2026 가이던스($13.87~14.07)와 Q3 2026 가이던스($3.84~3.88)를 변경 없이 재확인했다 — 이미 시장에 반영된 이벤트라 주가 반응은 크지 않았다.</div>
+        <a class="tl-source" href="https://news.abbvie.com/2026-09-03-AbbVie-Completes-Acquisition-of-Apogee-Therapeutics" target="_blank" rel="noopener">관련 뉴스 보기 (AbbVie IR) →</a>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot red"></div>
+        <div class="tl-date">2026년 7월 31일 발표 → 발표 이후 3거래일 반응 — 2분기 실적, 매출 서프라이즈에도 조정<span class="tl-reaction down">-6.9%(3거래일)</span></div>
+        <div class="tl-title">매출 $16.99B(+10.2%, 컨센서스 상회)에도 Adjusted EPS $3.65가 소폭 미스, Apogee 희석 반영해 FY2026 가이던스 소폭 하향</div>
+        <div class="tl-desc">Skyrizi·Rinvoq·신경과학 부문이 각각 20%대 이상 성장하며 매출 자체는 좋았지만, Adjusted EPS가 컨센서스에 소폭 못 미치고 Apogee 인수 희석(-$0.14/주 예상)을 반영해 가이던스가 $13.91~14.11에서 $13.87~14.07로 낮아지자 실적 발표 이후 3거래일간 주가가 -6.9%(7/29 종가 $263.30 → 8/3 종가 $245.10) 밀렸다. 직전인 7월 말에는 실적 기대감에 52주 신고가 $267.47을 기록했던 터라 조정 폭이 두드러졌다.</div>
+        <a class="tl-source" href="https://www.investing.com/news/transcripts/earnings-call-transcript-abbvie-q2-2026-revenue-beats-eps-misses-as-stock-slips-93CH-4828744" target="_blank" rel="noopener">관련 뉴스 보기 (Investing.com) →</a>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot green"></div>
+        <div class="tl-date">2026년 6월 18일~22일 — Apogee Therapeutics 인수 발표<span class="tl-reaction up">+6.25%(첫 거래일)</span></div>
+        <div class="tl-title">$10.9B(주당 $135.11 현금) 규모 인수 계약 체결 — 아토피피부염(zumilokibart)·천식(APG273) 후기 파이프라인 확보</div>
+        <div class="tl-desc">면역질환 파이프라인을 확장하는 인수로, 발표 이후 첫 거래일 종가가 전일 대비 +6.25% 상승했다 — 대형 M&amp;A 발표치고는 이례적으로 우호적인 반응이었다.</div>
+        <a class="tl-source" href="https://www.prnewswire.com/news-releases/abbvie-to-acquire-apogee-therapeutics-deepening-immunology-portfolio-302806296.html" target="_blank" rel="noopener">관련 뉴스 보기 (PR Newswire) →</a>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot green"></div>
+        <div class="tl-date">2026년 4월 29일 — 1분기 실적 발표, 52주 신저가 기록 후 반등<span class="tl-reaction up">+3.1%(당일)</span></div>
+        <div class="tl-title">Adjusted EPS $2.65(컨센서스 상회)로 FY2026 가이던스를 직전 대비 $14.08~14.28로 상향, 같은 날 장중 52주 신저가 $190.75도 함께 기록</div>
+        <div class="tl-desc">4월 초 공시된 대규모 IPR&amp;D 비용 부담과 FDA의 새 보툴리눔톡신 제조이슈 승인거부(CRL, 안전성 문제는 아님, 4/24 보도) 우려가 남아있던 가운데 장중 $190.75까지 밀렸지만, 실적 자체가 컨센서스를 상회하고 가이던스가 상향되자 저가매수세가 유입되며 종가는 전일 대비 +3.1% 상승한 $203.89로 마감했다.</div>
+        <a class="tl-source" href="https://www.healio.com/news/dermatology/20260424/fda-issues-complete-response-letter-for-trenibotulinumtoxine" target="_blank" rel="noopener">관련 뉴스 보기 (Healio) →</a>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot red"></div>
+        <div class="tl-date">2026년 2월 4일 발표 → 반응 — 4분기·FY2025 실적, 최초 FY2026 가이던스 공개<span class="tl-reaction down">-3.8%(당일)</span></div>
+        <div class="tl-title">FY2025 매출 $61.16B(+8.6%)·Adjusted EPS $10.00(-1.2%, IPR&amp;D 비용 주당 -$2.76 영향) 발표, FY2026 Adjusted EPS 가이던스 $14.37~14.57 최초 제시</div>
+        <div class="tl-desc">FY2025 Adjusted EPS는 그 해 유독 컸던 인수 관련 IPR&amp;D 비용 때문에 전년 대비 소폭 감소했다. 발표 당일 종가는 전일 대비 -3.8% 하락했다.</div>
+        <a class="tl-source" href="https://www.sec.gov/Archives/edgar/data/1551152/000155115226000004/abbv-20251231xexhibit991.htm" target="_blank" rel="noopener">관련 공시 보기 (SEC 8-K) →</a>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot red"></div>
+        <div class="tl-date">2025년 10월 31일 — 3분기 실적, 매출·EPS 모두 컨센서스 상회에도 하락<span class="tl-reaction down">-4.5%(당일)</span></div>
+        <div class="tl-title">매출 $15.78B(+9.1%)·Adjusted EPS $1.86(컨센서스 $1.77 상회)에도 Aesthetics(안면미용 시술) 수요 둔화가 부각되며 하락</div>
+        <div class="tl-desc">해당 분기에만 EPS -$1.50 영향을 준 대형 인수 관련 마일스톤 비용으로 GAAP EPS는 $0.10에 그쳤지만, Adjusted 기준 실적 자체는 컨센서스를 상회했다. 그럼에도 보톡스 코스메틱 등 Aesthetics 부문 수요 둔화가 부각되며 종가가 전일 대비 -4.5% 하락했다 — 실적 서프라이즈보다 특정 부문의 성장 둔화 신호에 시장이 더 민감했던 사례다.</div>
+        <a class="tl-source" href="https://www.sec.gov/Archives/edgar/data/1551152/000155115225000047/abbv-20250930xexhibit991.htm" target="_blank" rel="noopener">관련 공시 보기 (SEC 8-K) →</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="invest" class="section">
+  <div class="section-title">2026년 핵심 투자 포인트</div>
+
+  <div class="bull-bear">
+    <div class="bb-box">
+      <div class="bb-title bb-bull">🐂 Bull 요인</div>
+      <div class="bb-item"><span class="bb-icon" style="color:var(--bull);">▲</span><span><strong>Skyrizi·Rinvoq 고성장:</strong> Q2'26 합산 $8.03B(+24.5% YoY), Humira 감소분을 상쇄하고도 Immunology 전체 +15.1% 성장(상세 #fund).</span></div>
+      <div class="bb-item"><span class="bb-icon" style="color:var(--bull);">▲</span><span><strong>견조한 현금창출력:</strong> OCF 마진 30%대, TTM FCF $18.2B로 대형 제약사 중에서도 견조(상세 #fund).</span></div>
+      <div class="bb-item"><span class="bb-icon" style="color:var(--bull);">▲</span><span><strong>우호적 애널리스트 컨센서스:</strong> 26명 중 21명 Buy·5명 Hold·0명 Sell, 평균 목표가 $275.95(상세 아래 목표가 밴드).</span></div>
+      <div class="bb-item"><span class="bb-icon" style="color:var(--bull);">▲</span><span><strong>Apogee 인수로 파이프라인 확장:</strong> 아토피피부염(zumilokibart)·천식(APG273) 등 후기 면역질환 자산 확보, 2026.9.3 완료(상세 #fund).</span></div>
+      <div class="bb-item"><span class="bb-icon" style="color:var(--bull);">▲</span><span><strong>건전한 상환능력:</strong> 이자보상배율 6.38x — 자기자본이 마이너스여도 즉각적 재무위험 신호는 아니다(상세 #fund).</span></div>
+    </div>
+    <div class="bb-box">
+      <div class="bb-title bb-bear">🐻 Bear 요인</div>
+      <div class="bb-item"><span class="bb-icon" style="color:var(--bear);">▼</span><span><strong>GAAP 이익 왜곡·예측 어려움:</strong> 반복되는 인수 관련 IPR&amp;D·마일스톤 비용으로 분기별 GAAP EPS 변동성이 매우 크다(Q3'25 단독 -$1.50/주 영향, 상세 #fund·#valuation).</span></div>
+      <div class="bb-item"><span class="bb-icon" style="color:var(--bear);">▼</span><span><strong>자기자본 마이너스(-$5.94B):</strong> 구조적이지만 재무제표상 이례적이며 PBR 산출 자체가 불가능하다(상세 #valuation).</span></div>
+      <div class="bb-item"><span class="bb-icon" style="color:var(--bear);">▼</span><span><strong>오피오이드·ALCL 소송 리스크:</strong> Allergan발 소송 준비금이 $1.7B로 늘었다 — 상당수 해결 국면이나 완전 종결은 아니다(상세 아래).</span></div>
+      <div class="bb-item"><span class="bb-icon" style="color:var(--bear);">▼</span><span><strong>Oncology·Aesthetics 정체:</strong> Imbruvica 매출 감소로 Oncology -1.6%, Aesthetics는 +0.2%로 사실상 보합(상세 #fund).</span></div>
+      <div class="bb-item"><span class="bb-icon" style="color:var(--bear);">▼</span><span><strong>밸류에이션 프리미엄:</strong> PCR·EV/EBITDA가 MRK·PFE 피어 대비 뚜렷하게 높다(상세 #valuation).</span></div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:16px;">
+    <div class="card-title">진행 중인 소송 리스크 — 오피오이드·ALCL(유방보형물)</div>
+    <div style="font-size:12px;color:var(--text2);line-height:1.7;">Allergan(2020년 인수) 관련 오피오이드·ALCL·Niaspan·기타 제조물책임 소송을 모두 합산한 총 추정 소송충당부채가 2026.6월말 $1.7B로 늘었다(2025년말 $1.6B, SEC 10-Q 확인) — 개별 사건별 금액은 공시되지 않는다. 오피오이드 관련 약 215건의 소송이 연방·주 법원에 계속 계류 중이며(대부분 오하이오주 연방법원 MDL로 병합), 2022년 발표된 최대 $2.37B 규모의 전국 합의는 이미 이행됐으나 개별·비합의 소송은 남아있다. 유방보형물(ALCL) 관련 소송은 2026년 6월 미국 내 소송 대부분을 해결하는 합의에 도달했지만, 약 1,080건의 해외 소송은 국가별로 별도 진행 중이다(네덜란드는 2025년 12월 전건 기각). Humira 리스트가격 관련 집단소송(Camargo v. AbbVie)은 2026년 1월 기각됐으나 원고가 항소해 계류 중이다.</div>
+  </div>
+
+  <div class="card" style="margin-top:16px;">
+    <div class="card-title">목표가 밴드 — 시나리오별 공정가치 vs 현재가 · 애널리스트 목표가</div>
+    <div style="position:relative;height:70px;margin:28px 6px 6px;">
+      <div style="position:absolute;top:28px;left:0;right:0;height:10px;border-radius:5px;overflow:hidden;display:flex;">
+        <div style="width:16.7%;height:100%;background:rgba(46,204,113,0.45);"></div>
+        <div style="width:5.6%;height:100%;background:var(--bg3);"></div>
+        <div style="width:33.3%;height:100%;background:rgba(240,192,64,0.5);"></div>
+        <div style="width:5.6%;height:100%;background:var(--bg3);"></div>
+        <div style="width:38.9%;height:100%;background:rgba(231,76,60,0.45);"></div>
+      </div>
+      <div style="position:absolute;top:10px;left:53.3%;width:2px;height:28px;background:var(--gold);border-radius:1px;"></div>
+      <div style="position:absolute;top:-6px;left:53.3%;transform:translateX(-50%);font-size:11px;font-weight:800;color:var(--gold);white-space:nowrap;">현재 $256.46</div>
+      <div style="position:absolute;top:22px;left:63.3%;width:2px;height:24px;background:var(--red);border-radius:1px;"></div>
+      <div style="position:absolute;top:48px;left:63.3%;transform:translateX(-50%);font-size:10px;font-weight:700;color:var(--red);white-space:nowrap;">▲ 목표 $275.95(+7.6%)</div>
+    </div>
+    <div style="display:flex;justify-content:space-between;font-size:10.5px;color:var(--text3);margin-top:4px;">
+      <span style="color:var(--green);">Bear $152.18~184.79 (PER 14~17x)</span>
+      <span>Base $195.66~260.88 (PER 18~24x)</span>
+      <span style="color:var(--red);">Bull $271.75~347.84 (PER 25~32x)</span>
+    </div>
+
+    <div class="detail-toggle collapsed" onclick="toggleCollapsible(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleCollapsible(this);}" role="button" tabindex="0" aria-expanded="false" aria-controls="investScenarioDetailBody">
+      <span>시나리오 근거·투자의견 분포</span>
+      <span class="toggle-hint"><span class="toggle-hint-text">상세 보기</span><span class="chevron">▾</span></span>
+    </div>
+    <div id="investScenarioDetailBody" class="collapsible-body collapsed" aria-hidden="true">
+      <div style="display:flex;flex-direction:column;gap:8px;margin-top:10px;font-size:11.5px;color:var(--text2);line-height:1.6;">
+        <div><strong style="color:var(--green);">Bear $152.18~184.79</strong> — Adjusted PER이 14~17x까지 압축(Skyrizi·Rinvoq 성장 둔화, 소송 리스크 확대, 반복적 IPR&amp;D 서프라이즈 지속 시), TTM Adjusted EPS $10.87 기준</div>
+        <div><strong style="color:var(--text);">Base $195.66~260.88</strong> — Adjusted PER이 현재 수준(23.6x)을 포함하는 18~24x 범위에 머무는 경우, 현재가 $256.46이 이 구간 상단 근처에 위치. TTM Adjusted EPS $10.87 기준</div>
+        <div><strong style="color:var(--red);">Bull $271.75~347.84</strong> — Adjusted PER이 25~32x까지 재평가(Apogee 파이프라인 조기 성과, Immunology 성장 가속, 소송 리스크 해소)될 경우, 애널리스트 평균 목표가 $275.95가 이 구간 하단 근처에 위치. TTM Adjusted EPS $10.87 기준</div>
+      </div>
+      <div style="margin-top:14px;padding-top:12px;border-top:1px solid var(--border);">
+        <div style="font-size:11px;color:var(--text3);margin-bottom:8px;">애널리스트 26명 종합 컨센서스: Buy 21 · Hold 5 · Sell 0. 평균 목표가는 MarketBeat 집계($275.95, 최고 $303·최저 $223) 기준이며, StockAnalysis.com의 31명 별도 집계($276.59)도 유사한 수준이라 교차 확인했다.</div>
+        <div style="display:flex;justify-content:space-between;font-size:10.5px;margin-top:6px;">
+          <span style="color:var(--green);">평균 목표가 $275.95(+7.6%, MarketBeat) · 최고 $303 · 최저 $223</span>
+        </div>
+        <div class="yoy-footnote" style="margin-top:8px;">출처: <a href="https://www.marketbeat.com/stocks/NYSE/ABBV/price-target/" target="_blank" rel="noopener">MarketBeat ABBV Price Target →</a></div>
+      </div>
+    </div>
+    <div style="margin-top:10px;font-size:11px;color:var(--text3);">현재가 $256.46은 Base 구간($195.66~260.88) 상단 근처에 위치하며, 26명 평균 목표가 $275.95는 Bull 구간 하단 근처에 있다 — 컨센서스는 Skyrizi·Rinvoq 성장이 이어지며 완만한 추가 상승을 기대하는 쪽에 무게를 두고 있다는 뜻이다.</div>
+  </div>
+
+  <div class="card" style="margin-top:16px;">
+    <div class="card-title">4개 분석 종합 — 한눈에 보기</div>
+    <div class="zone-list">
+      <div class="zone-item"><span class="zone-label">📈 기술적 분석</span><span class="zone-val" style="color:var(--green);">기술점수 80/100 적격 — 정배열 조건 4개 모두 충족, 52주 저점 대비 +34.5%·고점 대비 -4.1%로 신고가권 유지</span></div>
+      <div class="zone-item"><span class="zone-label">📊 기본적 분석</span><span class="zone-val" style="color:var(--gold);">Skyrizi·Rinvoq 고성장으로 Immunology +15.1%, OCF마진 30%대로 견조하나 자기자본 마이너스·GAAP EPS 변동성 큼</span></div>
+      <div class="zone-item"><span class="zone-label">⚖️ 밸류에이션</span><span class="zone-val" style="color:var(--gold);">적정~고평가 — Adjusted PER·PSR은 무난하나 PCR·EV/EBITDA는 피어 대비 프리미엄</span></div>
+      <div class="zone-item"><span class="zone-label">📰 시계열 뉴스</span><span class="zone-val" style="color:var(--green);">반복되는 IPR&amp;D 서프라이즈에도 Skyrizi·Rinvoq 성장 스토리로 완만한 우상향, 최근 1년 +20.4%</span></div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:16px;">
+    <div class="card-title">투자의견 요약</div>
+    <div class="grid-3">
+      <div class="stat-box">
+        <div class="stat-label">투자의견</div>
+        <div class="stat-value" style="color:var(--accent2);font-size:19px;">Buy</div>
+        <div class="stat-sub">애널리스트 26명 컨센서스(21 Buy·5 Hold·0 Sell)</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-label">평균 목표주가</div>
+        <div class="stat-value gold" style="font-size:19px;">$275.95</div>
+        <div class="stat-sub">+7.6%</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-label">다음 실적</div>
+        <div class="stat-value gold" style="font-size:19px;">2026.10월 하순</div>
+        <div class="stat-sub">Q3 2026 (잠정, 공식 미확정)</div>
+      </div>
+    </div>
+    <div class="stat-box" style="margin-top:12px;">
+      <div class="stat-label">결론</div>
+      <div style="display:flex;flex-direction:column;gap:6px;margin-top:6px;">
+        <div style="font-size:13px;color:var(--text);line-height:1.6;"><strong style="color:var(--accent2);">1.</strong>&nbsp; Skyrizi·Rinvoq가 만드는 두 자릿수 성장이 Humira 손실분을 상쇄하고도 남는 실적 모멘텀은 실재하지만, 반복되는 인수 관련 회계상 왜곡과 마이너스 자기자본이 재무제표를 읽기 어렵게 만든다.</div>
+        <div style="font-size:13px;color:var(--text);line-height:1.6;"><strong style="color:var(--accent2);">2.</strong>&nbsp; Apogee 통합 성과와 오피오이드·ALCL 소송 준비금의 추가 변동, Oncology·Aesthetics 정체의 반전 여부가 다음 재평가의 분수령이 될 것이다.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="disclaimer" style="max-width:1100px;margin:0 auto;padding:0 32px 32px;font-size:11px;color:var(--text3);line-height:1.6;">
+  ⚠️ 본 위젯은 차트, 분기 재무제표, SEC 공시, 공개 뉴스를 기반으로 작성된 정보 제공 목적의 분석 자료입니다. 투자 권고 또는 매매 추천이 아니며, 모든 투자 결정은 본인의 판단과 책임 하에 이루어져야 합니다. 과거 실적이 미래 수익을 보장하지 않습니다.
+</div>
+<script>
+const ABBV_DAILY = [["2021-09-07",110.45,111.57,108.32,109.03,12694200],["2021-09-08",108.06,110.9,107.72,110.36,10823200],["2021-09-09",109.44,109.74,107.2,107.27,10337100],["2021-09-10",107.48,108.32,106.36,106.68,7620100],["2021-09-13",107.39,108.77,106.81,107.48,7398900],["2021-09-14",107.99,108.07,106.25,106.48,6102700],["2021-09-15",106.59,108.8,106.03,107.77,7444300],["2021-09-16",108.24,108.75,106.53,108.08,5821800],["2021-09-17",107.5,108.25,107.1,107.73,14157200],["2021-09-20",106.1,107.49,105.56,106.4,7103400],["2021-09-21",106.25,107.41,106.2,107.15,6400400],["2021-09-22",107.01,107.58,105.93,106.41,6319100],["2021-09-23",106.99,108.27,106.65,107.36,5847800],["2021-09-24",106.87,108.05,106.44,107.07,5836100],["2021-09-27",107.13,108.64,107.02,107.72,4969600],["2021-09-28",107.62,108.62,107.04,107.34,6445600],["2021-09-29",107.85,109.58,107.48,108.84,6270100],["2021-09-30",109.2,110.42,107.78,107.87,7886400],["2021-10-01",108.25,109.69,106.87,109.09,8611500],["2021-10-04",108.84,110.2,107.69,108.73,9779200],["2021-10-05",109.39,110.58,109.1,109.51,7146900],["2021-10-06",109.3,109.67,108.15,109.32,5710300],["2021-10-07",109.78,111.79,109.56,110.87,7842600],["2021-10-08",111.05,111.75,110.64,111.18,5019800],["2021-10-11",111.14,111.4,110.28,110.34,4613800],["2021-10-12",110.12,110.26,108.16,108.57,6305800],["2021-10-13",108.59,109.04,108.0,108.53,5471100],["2021-10-14",107.96,108.99,107.8,108.91,7289500],["2021-10-15",109.15,109.96,109.08,109.33,4634500],["2021-10-18",108.99,108.99,107.09,107.43,7949400],["2021-10-19",107.75,108.07,106.86,107.45,4614900],["2021-10-20",107.5,109.11,107.5,108.41,5626800],["2021-10-21",108.41,108.95,107.15,108.76,4811800],["2021-10-22",108.67,109.22,108.31,109.14,4614400],["2021-10-25",109.08,109.14,107.75,108.5,5697400],["2021-10-26",108.81,109.58,108.2,109.49,5047400],["2021-10-27",109.58,109.72,108.17,108.4,4875300],["2021-10-28",108.39,109.9,108.2,109.67,5193300],["2021-10-29",112.09,114.92,111.42,114.67,16545000],["2021-11-01",115.25,115.72,113.57,114.81,7096800],["2021-11-02",115.25,117.69,115.16,116.53,10357800],["2021-11-03",116.53,117.61,116.24,117.57,6186900],["2021-11-04",117.57,117.72,116.33,117.06,4912200],["2021-11-05",116.73,117.32,115.5,117.18,4635800],["2021-11-08",117.2,117.45,115.78,116.06,7015000],["2021-11-09",116.24,116.59,115.41,115.61,3146800],["2021-11-10",115.4,117.1,115.39,116.75,4981100],["2021-11-11",116.94,117.49,116.29,116.63,3120900],["2021-11-12",117.4,117.4,116.43,116.97,2740300],["2021-11-15",116.95,117.8,116.22,116.84,3941000],["2021-11-16",116.61,117.47,116.34,116.42,3476400],["2021-11-17",116.6,117.62,116.25,117.35,4361500],["2021-11-18",117.41,118.37,116.64,117.07,3160300],["2021-11-19",117.63,117.8,115.86,116.24,5885800],["2021-11-22",115.95,117.34,115.01,115.65,3975800],["2021-11-23",116.56,119.33,116.15,118.88,8948300],["2021-11-24",118.68,119.24,118.08,118.66,5792800],["2021-11-26",117.61,118.11,115.83,116.51,5016700],["2021-11-29",116.83,117.92,116.58,116.89,4372500],["2021-11-30",116.68,116.79,115.1,115.28,8172100],["2021-12-01",115.78,118.98,115.61,115.91,6287500],["2021-12-02",116.25,117.6,115.6,116.87,4919800],["2021-12-03",117.74,119.0,117.0,118.85,6428100],["2021-12-06",119.63,122.45,119.21,121.35,8939900],["2021-12-07",121.98,122.14,121.0,121.51,6123300],["2021-12-08",121.96,122.44,120.75,121.87,5278100],["2021-12-09",122.21,124.46,122.1,124.15,8082300],["2021-12-10",123.72,126.01,123.72,125.47,7059500],["2021-12-13",125.2,127.74,125.2,126.51,7834200],["2021-12-14",125.7,127.85,125.38,127.29,6381400],["2021-12-15",128.25,130.78,127.6,130.23,9585600],["2021-12-16",130.1,133.28,129.91,131.78,9569000],["2021-12-17",130.84,131.02,129.37,129.53,12631100],["2021-12-20",128.51,131.39,128.23,130.86,7119200],["2021-12-21",131.23,131.35,129.15,129.95,6085900],["2021-12-22",129.91,132.58,129.78,132.05,7070900],["2021-12-23",132.33,133.77,132.17,133.09,5702300],["2021-12-27",133.19,134.48,133.16,134.41,4436800],["2021-12-28",134.55,135.26,133.74,134.39,4237200],["2021-12-29",134.61,135.87,134.08,135.36,5594300],["2021-12-30",135.75,136.83,135.63,135.93,6354300],["2021-12-31",136.04,136.21,135.3,135.4,3963400],["2022-01-03",135.41,135.7,133.51,135.42,6839800],["2022-01-04",135.33,136.22,134.38,135.16,6298300],["2022-01-05",135.0,138.15,135.0,135.87,7724900],["2022-01-06",136.4,136.66,135.16,135.23,4667000],["2022-01-07",135.25,135.84,134.13,134.88,8630300],["2022-01-10",135.08,136.9,134.57,136.39,9794400],["2022-01-11",135.85,137.09,134.8,136.97,7159400],["2022-01-12",136.52,137.39,136.03,137.29,6589300],["2022-01-13",135.0,135.12,132.9,133.52,8386400],["2022-01-14",133.35,136.05,132.29,135.87,10484500],["2022-01-18",135.51,137.98,135.28,136.78,12341900],["2022-01-19",136.41,137.5,134.84,135.21,6196700],["2022-01-20",134.5,134.8,132.75,133.03,6612800],["2022-01-21",133.06,134.25,131.67,131.98,7583000],["2022-01-24",132.82,133.25,128.26,132.16,13733800],["2022-01-25",131.49,134.32,130.79,133.09,10296500],["2022-01-26",133.29,135.48,132.83,134.23,8040300],["2022-01-27",135.5,138.3,135.36,135.97,8869100],["2022-01-28",135.99,137.98,134.6,137.92,8014400],["2022-01-31",136.82,137.17,135.62,136.89,10300000],["2022-02-01",137.37,137.84,136.04,137.0,7413900],["2022-02-02",135.41,139.41,133.05,138.62,11363100],["2022-02-03",139.5,141.71,139.04,140.73,10272700],["2022-02-04",140.15,142.8,139.23,140.65,6921500],["2022-02-07",141.17,143.01,140.33,142.53,9597800],["2022-02-08",142.03,143.6,141.25,143.51,7559500],["2022-02-09",143.98,143.98,142.84,143.2,5989100],["2022-02-10",143.15,144.42,142.31,142.71,7333400],["2022-02-11",142.86,143.61,141.54,142.01,6475200],["2022-02-14",141.78,143.19,139.44,143.0,9931900],["2022-02-15",143.35,145.46,143.2,144.76,9530100],["2022-02-16",144.74,147.22,144.16,145.87,8028900],["2022-02-17",144.8,145.47,143.58,144.97,5486600],["2022-02-18",144.69,145.73,143.37,144.03,7585900],["2022-02-22",141.25,146.35,141.25,145.56,11576800],["2022-02-23",146.22,148.35,145.36,146.76,9271000],["2022-02-24",143.61,145.7,143.47,145.27,12070200],["2022-02-25",146.13,150.36,146.05,149.54,8320700],["2022-02-28",146.65,148.08,145.76,147.77,11090600],["2022-03-01",147.67,149.5,146.21,147.69,7489900],["2022-03-02",147.7,151.25,147.22,149.57,8247200],["2022-03-03",149.81,150.79,148.85,150.41,5408400],["2022-03-04",148.6,150.68,148.1,150.56,5389500],["2022-03-07",149.0,150.75,148.19,149.45,7137700],["2022-03-08",149.0,149.89,146.36,147.15,8817500],["2022-03-09",148.26,150.11,147.76,148.84,5368900],["2022-03-10",148.07,149.75,147.7,149.17,4635700],["2022-03-11",149.34,150.4,148.98,149.06,5171400],["2022-03-14",150.73,152.97,149.02,152.1,8647200],["2022-03-15",152.26,156.43,152.16,155.88,8384300],["2022-03-16",156.5,156.82,153.52,156.05,7178900],["2022-03-17",157.17,158.61,156.21,158.59,7227900],["2022-03-18",158.0,159.44,157.14,159.2,9912800],["2022-03-21",159.95,160.95,158.99,160.05,5825000],["2022-03-22",160.05,160.3,158.02,160.01,5756600],["2022-03-23",160.01,161.18,158.36,158.42,6300600],["2022-03-24",159.22,160.73,158.85,160.28,4638100],["2022-03-25",160.55,161.98,160.23,161.33,5129400],["2022-03-28",160.61,162.03,159.53,161.97,4516500],["2022-03-29",162.99,163.28,161.29,162.18,6154100],["2022-03-30",161.72,164.35,161.72,163.75,5151800],["2022-03-31",162.93,164.66,162.1,162.11,8670100],["2022-04-01",162.15,163.07,160.1,162.68,5703300],["2022-04-04",162.5,163.84,161.46,161.89,6892400],["2022-04-05",161.89,165.96,161.84,163.43,6683300],["2022-04-06",164.49,169.27,163.8,168.91,8810800],["2022-04-07",167.67,174.59,167.54,173.28,7469000],["2022-04-08",173.0,175.91,172.5,174.96,7204200],["2022-04-11",174.9,175.04,169.32,169.83,8163200],["2022-04-12",169.31,170.56,166.21,167.31,8279700],["2022-04-13",165.0,165.0,156.45,158.95,18312600],["2022-04-14",157.85,163.87,156.82,162.31,11074800],["2022-04-18",161.96,162.79,158.75,159.36,6500200],["2022-04-19",160.4,160.5,153.71,156.35,9359900],["2022-04-20",156.36,158.1,155.52,156.7,6250000],["2022-04-21",157.0,160.38,155.35,158.52,7903300],["2022-04-22",157.28,158.32,154.34,154.99,7938300],["2022-04-25",154.84,156.64,152.84,156.3,6932600],["2022-04-26",156.44,159.69,155.82,156.18,6787800],["2022-04-27",156.56,159.5,154.56,157.62,6039100],["2022-04-28",158.36,158.44,154.34,156.31,7465000],["2022-04-29",149.56,149.86,139.93,146.88,25155900],["2022-05-02",146.65,148.9,143.44,147.87,9690800],["2022-05-03",148.05,150.74,147.95,149.6,6163400],["2022-05-04",148.18,152.37,147.59,151.59,5791500],["2022-05-05",152.77,153.32,150.04,152.18,6869300],["2022-05-06",149.68,153.52,149.01,152.83,6145600],["2022-05-09",151.62,153.54,148.93,150.96,6969000],["2022-05-10",151.27,154.53,150.51,152.09,6525200],["2022-05-11",151.02,154.76,150.94,151.96,5630000],["2022-05-12",153.38,154.35,150.15,154.29,6914800],["2022-05-13",153.42,154.39,151.9,153.5,6398500],["2022-05-16",153.93,156.89,153.27,155.47,6565600],["2022-05-17",155.38,155.79,152.85,154.78,6032200],["2022-05-18",154.79,155.7,151.75,152.43,6498100],["2022-05-19",151.2,152.4,149.28,151.72,5994800],["2022-05-20",152.33,153.52,147.81,151.01,6746400],["2022-05-23",151.65,152.0,147.19,148.03,6886400],["2022-05-24",147.03,151.35,146.61,149.11,6367200],["2022-05-25",150.36,152.99,149.79,151.96,5042600],["2022-05-26",151.63,153.07,150.39,150.57,6659300],["2022-05-27",149.52,150.05,147.75,150.0,8405000],["2022-05-31",148.64,148.88,146.67,147.37,11227800],["2022-06-01",147.79,147.89,144.32,146.02,5597900],["2022-06-02",146.65,147.07,142.9,146.75,5998900],["2022-06-03",146.75,148.21,146.75,147.17,4891800],["2022-06-06",147.0,147.82,145.66,146.53,3912400],["2022-06-07",146.92,149.35,145.87,149.14,4991200],["2022-06-08",148.9,149.85,148.25,149.25,4835200],["2022-06-09",149.72,150.52,145.3,145.43,5642900],["2022-06-10",144.34,144.63,142.15,143.2,5464700],["2022-06-13",140.86,142.07,138.78,139.42,5997000],["2022-06-14",139.44,140.66,136.32,137.62,5861800],["2022-06-15",136.57,139.09,136.23,138.09,5981800],["2022-06-16",136.54,139.29,135.76,139.15,6963400],["2022-06-17",137.6,139.53,137.19,138.28,10429900],["2022-06-21",139.95,143.97,139.7,143.47,7160500],["2022-06-22",143.72,150.1,143.61,147.56,7995700],["2022-06-23",148.72,150.8,147.54,149.45,7795000],["2022-06-24",150.89,152.74,149.62,152.34,8527600],["2022-06-27",153.0,155.45,152.75,153.14,5377300],["2022-06-28",153.17,155.12,151.39,152.49,5735700],["2022-06-29",153.9,156.62,153.35,154.14,6140900],["2022-06-30",153.17,154.04,150.87,153.16,7289500],["2022-07-01",153.08,153.86,151.46,153.8,4620000],["2022-07-05",151.9,154.05,149.66,153.93,5478800],["2022-07-06",154.61,154.99,151.69,152.53,5113600],["2022-07-07",150.2,152.58,150.01,152.0,6516100],["2022-07-08",152.0,155.25,151.79,152.85,4078400],["2022-07-11",152.28,154.5,152.28,153.23,4491000],["2022-07-12",153.0,154.57,152.06,152.46,5319500],["2022-07-13",152.0,153.83,151.3,152.15,5221200],["2022-07-14",148.89,151.01,148.49,150.44,7576900],["2022-07-15",151.84,153.87,151.43,153.62,4873000],["2022-07-18",153.8,154.47,148.89,149.57,6838400],["2022-07-19",150.0,150.23,148.8,149.74,5647100],["2022-07-20",149.53,150.45,147.34,147.69,5315700],["2022-07-21",147.24,147.84,146.02,147.75,4066800],["2022-07-22",148.47,149.29,147.58,148.47,3639700],["2022-07-25",148.54,150.94,148.51,150.22,4347000],["2022-07-26",151.15,153.56,150.33,150.87,4900600],["2022-07-27",149.5,151.5,148.93,151.15,4145800],["2022-07-28",151.44,152.41,146.62,149.75,6572300],["2022-07-29",145.44,146.3,139.05,143.51,17754700],["2022-08-01",141.51,142.84,139.15,140.22,8523900],["2022-08-02",141.18,142.84,140.1,140.39,5197100],["2022-08-03",141.72,143.02,140.65,141.2,5474200],["2022-08-04",142.09,142.58,138.69,138.92,7071700],["2022-08-05",139.05,139.91,137.95,138.04,5371100],["2022-08-08",138.04,140.8,137.77,140.34,4854600],["2022-08-09",140.68,142.24,139.88,140.25,3819700],["2022-08-10",140.91,141.06,139.0,140.94,4075300],["2022-08-11",140.23,142.87,139.66,142.08,5972800],["2022-08-12",141.89,143.09,140.27,142.6,5208700],["2022-08-15",143.11,143.28,140.42,142.29,4513200],["2022-08-16",142.11,143.98,142.08,142.55,3852300],["2022-08-17",141.42,142.76,140.55,141.44,3605200],["2022-08-18",141.49,141.58,139.82,141.29,3525200],["2022-08-19",141.78,143.36,141.46,141.85,4530700],["2022-08-22",141.97,142.66,139.96,140.34,4023500],["2022-08-23",139.65,140.85,138.45,139.02,3768100],["2022-08-24",139.05,139.46,137.7,137.91,5018900],["2022-08-25",138.77,139.56,137.67,139.33,3301200],["2022-08-26",138.89,139.85,136.25,136.35,3838800],["2022-08-29",136.2,136.72,134.76,135.71,3835800],["2022-08-30",135.14,136.49,134.89,135.55,4337100],["2022-08-31",135.69,136.04,134.17,134.46,5789600],["2022-09-01",134.64,138.59,134.1,138.45,4521000],["2022-09-02",138.66,139.4,135.81,136.28,3601600],["2022-09-06",137.3,139.35,136.24,137.59,4810600],["2022-09-07",137.55,139.04,135.34,138.71,4141700],["2022-09-08",139.64,140.57,138.65,140.52,3988300],["2022-09-09",140.4,142.17,140.1,141.42,4427000],["2022-09-12",141.01,142.87,140.32,142.24,4938400],["2022-09-13",140.55,141.93,137.49,138.53,6195900],["2022-09-14",139.17,140.44,138.27,139.55,4673600],["2022-09-15",139.99,143.9,139.39,142.51,6416900],["2022-09-16",143.4,144.85,141.36,144.06,13887500],["2022-09-19",143.64,143.86,141.43,142.66,5042500],["2022-09-20",141.82,142.49,140.37,141.77,4532900],["2022-09-21",142.15,143.63,140.29,140.31,5076100],["2022-09-22",140.21,144.46,140.0,143.01,6161000],["2022-09-23",142.07,143.42,140.95,143.06,5751600],["2022-09-26",142.08,142.8,140.11,141.21,5697800],["2022-09-27",142.59,145.54,141.29,141.72,5598000],["2022-09-28",144.22,145.32,142.62,144.6,5226700],["2022-09-29",144.85,145.25,141.83,142.72,5509400],["2022-09-30",142.2,142.32,134.09,134.21,15359000],["2022-10-03",135.88,138.8,135.31,138.32,7437500],["2022-10-04",139.21,142.72,137.76,141.99,6612300],["2022-10-05",141.47,144.47,141.11,143.33,4777900],["2022-10-06",142.79,142.99,139.9,140.29,5124800],["2022-10-07",139.01,140.05,137.55,138.76,4648800],["2022-10-10",139.03,139.59,136.87,138.31,3830800],["2022-10-11",138.02,143.68,138.02,141.51,5675100],["2022-10-12",141.64,143.06,139.93,139.98,4528000],["2022-10-13",136.7,143.18,136.27,142.92,5066200],["2022-10-14",142.6,144.48,142.21,142.94,5290500],["2022-10-17",142.65,144.93,142.1,144.41,4016200],["2022-10-18",145.23,145.87,143.53,144.6,3540400],["2022-10-19",144.8,145.45,142.31,143.13,3333300],["2022-10-20",143.16,144.04,142.43,142.93,3880100],["2022-10-21",143.34,147.76,142.43,147.06,5419400],["2022-10-24",148.71,151.53,148.7,150.89,5139700],["2022-10-25",148.03,150.6,147.29,149.82,5229400],["2022-10-26",151.01,152.89,150.7,152.51,4727900],["2022-10-27",153.76,153.99,152.06,153.5,6850400],["2022-10-28",145.93,148.98,142.34,147.61,10812200],["2022-10-31",145.17,146.78,144.08,146.4,8604800],["2022-11-01",146.66,147.7,144.55,146.91,6351200],["2022-11-02",147.03,148.08,144.48,144.52,5345000],["2022-11-03",144.0,145.42,143.03,144.42,3850700],["2022-11-04",145.35,145.58,143.08,145.28,4623700],["2022-11-07",145.28,148.8,144.7,148.1,4304000],["2022-11-08",148.83,151.63,147.96,148.53,4637500],["2022-11-09",148.59,150.57,147.04,147.62,4573700],["2022-11-10",150.66,150.66,147.75,149.72,5607700],["2022-11-11",149.54,150.52,145.75,150.16,6786400],["2022-11-14",150.98,154.54,150.98,151.74,7077100],["2022-11-15",153.39,153.42,149.96,153.04,5909500],["2022-11-16",153.44,156.69,151.23,151.87,7358700],["2022-11-17",150.97,153.07,149.97,152.16,5069500],["2022-11-18",153.67,155.64,153.67,154.98,5691100],["2022-11-21",155.4,158.63,154.43,157.11,6492100],["2022-11-22",157.69,159.88,157.56,159.79,5351100],["2022-11-23",159.95,160.94,158.82,159.39,3221100],["2022-11-25",159.59,160.75,159.24,159.62,1661900],["2022-11-28",160.0,160.73,157.83,158.43,3902800],["2022-11-29",158.31,159.43,157.21,158.2,3689000],["2022-11-30",158.79,161.18,156.46,161.18,12342500],["2022-12-01",161.0,163.2,159.98,161.63,5827800],["2022-12-02",160.72,163.76,160.51,163.66,4304900],["2022-12-05",162.89,165.19,162.89,163.94,4859400],["2022-12-06",164.03,164.39,161.55,163.72,5480400],["2022-12-07",163.69,165.53,163.26,165.4,4637800],["2022-12-08",165.4,166.23,164.28,165.99,4274400],["2022-12-09",166.76,167.75,162.81,163.06,4644800],["2022-12-12",163.21,165.49,162.75,165.32,4109400],["2022-12-13",166.95,167.5,164.67,164.79,5050400],["2022-12-14",164.6,165.98,162.83,164.86,4485400],["2022-12-15",163.89,164.61,161.95,163.1,5268300],["2022-12-16",162.05,163.32,160.48,160.48,18905500],["2022-12-19",160.78,162.23,160.06,161.49,4033400],["2022-12-20",161.61,161.85,160.07,160.58,4221000],["2022-12-21",161.45,162.73,160.36,162.21,3707200],["2022-12-22",161.87,163.39,161.53,163.27,3606000],["2022-12-23",163.39,163.82,162.33,163.1,2685100],["2022-12-27",163.49,163.81,161.78,162.99,2669200],["2022-12-28",163.7,164.69,162.11,162.23,2944500],["2022-12-29",162.96,163.88,162.19,162.56,3112500],["2022-12-30",162.23,162.85,159.82,161.61,3680400],["2023-01-03",162.04,163.02,160.81,162.38,4937500],["2023-01-04",162.4,164.28,161.51,163.69,4440400],["2023-01-05",163.09,164.49,162.34,163.49,3516000],["2023-01-06",164.84,168.11,164.12,166.55,5099100],["2023-01-09",165.9,166.28,160.88,161.66,7833000],["2023-01-10",162.23,162.42,158.3,159.64,5936200],["2023-01-11",159.22,159.34,155.06,157.17,7492000],["2023-01-12",155.0,155.26,151.72,152.22,7665100],["2023-01-13",152.09,153.81,151.34,153.6,6019300],["2023-01-17",153.8,155.1,152.58,152.83,8507000],["2023-01-18",152.12,152.42,149.07,149.2,6190800],["2023-01-19",148.95,150.54,147.33,148.71,7169900],["2023-01-20",149.43,149.71,147.15,149.59,7059000],["2023-01-23",149.86,150.43,148.05,148.55,7616400],["2023-01-24",148.08,148.87,146.44,147.69,5171400],["2023-01-25",147.38,147.98,146.5,147.79,5744300],["2023-01-26",147.92,148.7,147.11,147.4,4577800],["2023-01-27",147.31,147.68,146.01,146.28,4591500],["2023-01-30",145.87,147.12,145.26,145.65,4573400],["2023-01-31",145.63,147.85,144.41,147.75,5628700],["2023-02-01",146.63,147.44,145.25,146.6,5439900],["2023-02-02",145.93,145.93,143.44,144.84,6160800],["2023-02-03",145.92,146.8,144.7,145.2,6553000],["2023-02-06",145.74,146.33,144.81,145.02,4297000],["2023-02-07",144.58,145.46,143.66,145.14,5401900],["2023-02-08",145.41,146.35,144.47,144.61,5753800],["2023-02-09",148.5,153.7,147.9,148.7,12216900],["2023-02-10",149.69,153.18,148.77,152.05,8956700],["2023-02-13",152.02,153.78,151.26,153.73,5602600],["2023-02-14",153.92,154.0,151.76,152.59,4662800],["2023-02-15",152.62,153.49,150.83,151.06,5648100],["2023-02-16",149.11,150.5,148.73,149.53,3757500],["2023-02-17",149.15,151.39,148.61,151.31,4562400],["2023-02-21",149.82,153.02,149.82,152.0,8466100],["2023-02-22",151.0,152.15,150.24,150.67,6041700],["2023-02-23",150.9,153.57,149.17,152.07,5993300],["2023-02-24",151.3,152.98,150.91,152.71,5621100],["2023-02-27",153.26,154.75,153.1,154.28,6828800],["2023-02-28",153.96,154.37,152.62,153.9,7561700],["2023-03-01",152.76,155.58,152.37,155.27,5485800],["2023-03-02",155.23,155.77,154.21,154.38,4567800],["2023-03-03",154.33,156.17,154.01,156.06,4851200],["2023-03-06",155.79,156.46,154.54,155.28,4051900],["2023-03-07",155.57,155.67,152.05,152.93,4606900],["2023-03-08",152.79,153.74,148.54,149.6,5860100],["2023-03-09",150.07,150.91,146.57,147.35,5350200],["2023-03-10",147.84,150.64,147.47,149.71,6825500],["2023-03-13",149.0,153.32,149.0,151.95,7653800],["2023-03-14",151.95,153.99,151.46,153.85,6644100],["2023-03-15",152.18,154.38,151.73,154.06,6304600],["2023-03-16",153.2,155.92,152.51,155.3,6331200],["2023-03-17",155.78,156.07,151.88,154.22,42756400],["2023-03-20",154.52,156.34,154.46,156.12,4408200],["2023-03-21",156.64,157.05,155.1,156.77,4675700],["2023-03-22",155.68,156.88,153.61,153.67,4376900],["2023-03-23",154.1,156.5,154.02,155.3,4584000],["2023-03-24",155.28,158.48,154.59,158.02,4678700],["2023-03-27",158.83,159.14,157.38,157.54,3887800],["2023-03-28",157.8,158.6,157.45,158.25,3532500],["2023-03-29",158.98,159.7,156.36,158.0,3959900],["2023-03-30",158.01,158.53,157.42,157.92,3635800],["2023-03-31",158.43,159.57,157.73,159.37,4957300],["2023-04-03",158.25,160.47,157.79,160.42,4389400],["2023-04-04",160.51,161.73,159.53,159.78,4224400],["2023-04-05",160.0,161.67,159.01,160.8,5743000],["2023-04-06",160.8,162.19,160.62,161.55,5498300],["2023-04-10",161.71,162.06,160.21,161.28,3309500],["2023-04-11",161.49,162.59,161.19,161.38,2875800],["2023-04-12",162.12,163.48,161.6,162.36,4005000],["2023-04-13",161.0,162.86,160.55,162.69,3868500],["2023-04-14",162.64,163.0,160.93,161.59,3473100],["2023-04-17",161.92,162.2,160.65,161.18,4354100],["2023-04-18",161.0,161.23,158.41,159.59,4996200],["2023-04-19",158.67,161.44,158.52,161.21,4826900],["2023-04-20",161.18,161.77,160.58,161.74,3808100],["2023-04-21",162.59,163.19,162.02,162.41,4812100],["2023-04-24",162.57,164.36,162.33,164.08,4728900],["2023-04-25",164.81,166.2,164.49,164.9,5506200],["2023-04-26",162.68,163.26,160.5,161.8,5192000],["2023-04-27",153.87,153.87,147.16,148.87,17063000],["2023-04-28",147.97,151.39,147.44,151.12,7123800],["2023-05-01",150.84,154.71,150.82,153.71,5601000],["2023-05-02",153.55,155.02,151.2,151.62,5135600],["2023-05-03",151.07,151.51,148.45,149.25,6815300],["2023-05-04",149.0,149.0,146.35,147.36,5694300],["2023-05-05",148.54,149.38,147.14,148.03,4447700],["2023-05-08",148.15,148.2,146.74,147.45,3689500],["2023-05-09",147.41,148.46,146.27,146.83,4201600],["2023-05-10",146.52,146.98,145.15,146.42,4127300],["2023-05-11",147.29,147.57,145.19,146.59,4300400],["2023-05-12",146.79,147.6,146.07,147.15,3526500],["2023-05-15",147.67,148.9,145.66,146.59,4391800],["2023-05-16",145.86,146.94,143.23,143.29,4685400],["2023-05-17",143.02,143.52,140.52,143.35,5482000],["2023-05-18",142.61,143.56,141.98,143.44,4791200],["2023-05-19",143.86,145.8,143.8,145.11,5610300],["2023-05-22",145.47,146.66,143.78,144.9,3867300],["2023-05-23",144.45,144.82,142.34,142.52,5121900],["2023-05-24",142.59,142.94,140.94,141.15,4143500],["2023-05-25",140.03,140.2,138.26,138.62,6986600],["2023-05-26",138.72,139.85,137.1,137.56,7590300],["2023-05-30",135.49,136.84,135.25,136.44,7671500],["2023-05-31",136.62,138.71,135.77,137.96,12579100],["2023-06-01",135.26,135.26,131.1,133.44,11895600],["2023-06-02",133.71,136.97,133.5,136.87,6661600],["2023-06-05",137.0,138.31,136.29,136.86,4276200],["2023-06-06",137.47,137.54,134.63,135.43,4359900],["2023-06-07",134.9,137.06,134.26,136.5,4645200],["2023-06-08",137.0,137.89,136.0,137.64,4714200],["2023-06-09",137.56,139.19,137.08,138.18,4359500],["2023-06-12",139.58,139.67,136.91,137.73,4888500],["2023-06-13",137.51,138.47,137.2,138.31,4229100],["2023-06-14",138.81,139.27,136.08,136.23,6128300],["2023-06-15",136.75,136.84,135.46,135.89,6614900],["2023-06-16",136.7,138.92,136.49,138.64,14616000],["2023-06-20",137.1,138.95,136.66,137.82,4868800],["2023-06-21",136.75,137.43,134.68,136.86,5828400],["2023-06-22",137.15,137.9,135.89,137.41,4826900],["2023-06-23",137.3,138.69,135.67,135.92,7395600],["2023-06-26",136.15,136.15,133.69,134.95,6468100],["2023-06-27",134.88,134.88,132.52,132.6,7839900],["2023-06-28",132.6,133.17,130.96,132.51,6911900],["2023-06-29",132.37,133.91,132.13,133.23,4947600],["2023-06-30",133.47,135.93,132.8,134.73,8711300],["2023-07-03",134.0,135.43,133.15,135.01,2674600],["2023-07-05",135.18,137.88,134.64,137.62,6903300],["2023-07-06",137.48,138.28,136.44,137.25,6091000],["2023-07-07",137.15,137.65,135.35,135.5,6873200],["2023-07-10",135.41,136.09,134.06,134.49,5153300],["2023-07-11",134.0,135.76,133.68,135.57,5144800],["2023-07-12",135.82,136.6,134.79,134.98,4944100],["2023-07-13",132.93,134.1,132.7,133.59,4631800],["2023-07-14",134.73,136.62,134.12,136.01,5544100],["2023-07-17",135.82,136.23,134.56,134.83,4033000],["2023-07-18",134.8,137.9,134.71,136.58,5392800],["2023-07-19",137.24,138.06,136.95,137.68,4784200],["2023-07-20",138.84,142.72,138.55,142.19,7009800],["2023-07-21",142.2,144.18,141.94,143.74,5654300],["2023-07-24",143.1,144.43,142.84,143.18,4468700],["2023-07-25",142.4,142.93,141.32,141.63,4778200],["2023-07-26",141.43,142.28,140.52,141.9,5006800],["2023-07-27",144.48,151.37,144.48,148.85,13664400],["2023-07-28",149.92,151.76,148.56,150.85,8000300],["2023-07-31",150.43,150.5,147.62,149.58,9109200],["2023-08-01",150.0,150.87,147.84,148.54,4409600],["2023-08-02",148.11,150.57,148.11,149.38,5756400],["2023-08-03",148.96,149.36,148.18,149.05,4674300],["2023-08-04",148.97,150.57,147.16,147.73,4231200],["2023-08-07",148.0,150.88,147.8,150.33,3800600],["2023-08-08",150.78,151.75,148.92,149.62,4013400],["2023-08-09",150.49,152.06,149.91,150.77,3737100],["2023-08-10",151.2,152.84,150.57,151.44,3275800],["2023-08-11",151.95,153.5,151.72,152.18,3454800],["2023-08-14",153.02,153.14,151.57,152.27,2570900],["2023-08-15",151.57,152.9,150.79,152.12,3636300],["2023-08-16",152.59,153.6,151.38,151.55,3214900],["2023-08-17",151.16,151.91,149.92,150.02,5285700],["2023-08-18",150.29,150.93,149.23,150.14,4050900],["2023-08-21",149.71,150.35,148.88,150.16,3944800],["2023-08-22",150.0,150.0,147.97,148.24,3209300],["2023-08-23",148.67,149.0,145.94,147.08,5414800],["2023-08-24",146.92,147.82,146.35,146.63,3986300],["2023-08-25",147.02,147.67,146.2,146.69,3275100],["2023-08-28",147.09,148.07,146.77,147.43,2806900],["2023-08-29",147.99,148.91,146.5,147.59,3419100],["2023-08-30",148.12,148.8,146.9,148.32,3486400],["2023-08-31",148.39,148.71,146.87,146.96,4110700],["2023-09-01",147.36,148.89,147.36,148.2,3357800],["2023-09-05",148.5,148.96,145.86,146.1,3911100],["2023-09-06",146.1,146.12,143.74,145.61,5304300],["2023-09-07",146.15,149.0,145.87,148.91,5142100],["2023-09-08",149.0,149.76,148.2,149.02,4339800],["2023-09-11",148.86,149.41,148.42,149.04,2911600],["2023-09-12",149.5,149.6,147.62,149.27,2424800],["2023-09-13",149.42,152.4,149.05,151.16,5953700],["2023-09-14",152.01,154.69,151.8,153.64,6336900],["2023-09-15",152.78,154.7,151.93,152.12,8868300],["2023-09-18",153.08,153.97,152.1,153.94,2967600],["2023-09-19",153.89,154.64,151.6,153.49,3509700],["2023-09-20",154.06,154.88,153.37,153.61,2744800],["2023-09-21",153.68,154.85,152.66,153.43,3660300],["2023-09-22",153.9,153.9,152.52,152.74,3049200],["2023-09-25",152.44,154.74,151.66,154.65,3740000],["2023-09-26",154.4,154.6,153.33,153.91,3936300],["2023-09-27",153.84,154.0,151.61,153.13,3621300],["2023-09-28",153.64,153.83,151.37,152.25,3697400],["2023-09-29",152.46,152.53,148.83,149.06,5581600],["2023-10-02",148.47,148.86,146.72,148.25,3827800],["2023-10-03",147.83,147.99,145.35,147.43,4580900],["2023-10-04",146.57,148.08,146.31,147.69,3159600],["2023-10-05",147.93,149.53,147.09,147.45,3599500],["2023-10-06",146.49,149.33,146.12,148.24,5370100],["2023-10-09",148.27,149.75,147.16,149.11,2903300],["2023-10-10",149.39,149.56,148.04,148.89,3729000],["2023-10-11",149.13,150.4,148.77,149.34,3189800],["2023-10-12",148.13,148.6,147.01,148.3,4554400],["2023-10-13",148.95,149.66,147.34,147.96,4304700],["2023-10-16",148.22,149.5,146.92,147.23,3704400],["2023-10-17",147.33,149.66,147.15,149.18,5372400],["2023-10-18",149.27,149.61,148.34,149.28,4910500],["2023-10-19",148.55,148.55,143.33,145.52,6147100],["2023-10-20",145.28,147.51,145.28,146.23,4223800],["2023-10-23",146.16,146.42,144.2,144.73,3903300],["2023-10-24",145.15,146.97,145.1,146.31,3362900],["2023-10-25",146.11,146.9,144.82,145.26,5461500],["2023-10-26",144.86,145.95,144.23,145.2,5569400],["2023-10-27",138.77,143.0,136.03,138.93,9427200],["2023-10-30",140.67,145.71,140.67,141.89,9258500],["2023-10-31",142.09,142.22,139.68,141.18,10394000],["2023-11-01",141.86,143.71,141.75,142.47,4207800],["2023-11-02",141.31,143.77,140.51,143.26,4066800],["2023-11-03",143.95,143.95,140.89,141.42,5414500],["2023-11-06",141.89,142.37,140.98,141.2,4377000],["2023-11-07",141.52,142.18,140.57,142.16,5024400],["2023-11-08",143.44,143.89,141.92,142.03,5299100],["2023-11-09",141.0,141.6,135.85,138.04,14970300],["2023-11-10",138.65,139.36,136.4,138.59,4586400],["2023-11-13",138.59,139.16,137.43,138.64,4454700],["2023-11-14",138.93,140.1,137.96,138.06,4509200],["2023-11-15",138.25,138.25,136.3,137.6,6473200],["2023-11-16",138.28,138.82,137.05,138.28,5257000],["2023-11-17",138.36,138.88,137.38,138.3,4332300],["2023-11-20",137.53,138.69,137.14,138.31,4490000],["2023-11-21",138.73,139.36,137.83,138.73,4690800],["2023-11-22",139.06,139.84,138.33,138.47,3428500],["2023-11-24",140.0,140.08,138.46,138.67,1636500],["2023-11-27",138.7,139.38,137.79,139.09,5529400],["2023-11-28",139.05,139.66,137.92,138.08,5347200],["2023-11-29",138.02,139.09,137.65,138.5,3996500],["2023-11-30",138.01,142.7,138.01,142.39,9297400],["2023-12-01",142.54,144.1,142.28,143.41,4903400],["2023-12-04",143.41,145.49,143.27,144.15,4845300],["2023-12-05",144.11,145.08,142.66,144.57,3961700],["2023-12-06",144.79,147.07,144.73,146.38,4978800],["2023-12-07",147.64,148.38,145.2,147.97,7225100],["2023-12-08",148.07,150.07,148.0,149.28,5695200],["2023-12-11",150.67,152.71,150.64,151.24,6343500],["2023-12-12",151.73,153.59,150.17,153.24,5882200],["2023-12-13",152.98,154.77,152.73,154.3,8104500],["2023-12-14",154.36,155.16,152.76,154.88,7869600],["2023-12-15",154.74,155.89,153.11,154.04,15203000],["2023-12-18",153.0,154.35,151.75,153.42,5379600],["2023-12-19",153.59,154.48,152.45,153.6,5476700],["2023-12-20",153.99,154.21,151.54,151.69,4716400],["2023-12-21",152.05,152.91,151.29,152.59,4036100],["2023-12-22",153.29,155.46,153.09,154.94,3373400],["2023-12-26",154.25,155.28,154.13,154.62,2073400],["2023-12-27",154.05,154.97,153.72,154.88,3747400],["2023-12-28",155.25,155.63,154.54,154.75,2601200],["2023-12-29",154.54,155.21,154.41,154.97,3712000],["2024-01-02",154.9,160.14,154.77,159.82,8059900],["2024-01-03",160.59,161.75,159.84,160.46,5301400],["2024-01-04",160.31,162.29,159.43,161.46,8332200],["2024-01-05",161.33,163.03,160.61,162.14,5607600],["2024-01-08",162.18,162.77,159.78,161.43,6001600],["2024-01-09",161.43,163.47,160.84,162.31,4454000],["2024-01-10",162.27,165.08,161.88,164.89,6609900],["2024-01-11",164.25,165.12,163.09,163.78,4591500],["2024-01-12",162.75,163.3,162.18,162.4,4971400],["2024-01-16",161.98,162.3,161.02,161.48,4747700],["2024-01-17",161.75,162.95,161.52,162.04,4423100],["2024-01-18",161.16,163.66,161.0,163.3,5074300],["2024-01-19",163.91,164.87,162.6,164.77,5863000],["2024-01-22",164.44,165.45,163.76,165.39,4864000],["2024-01-23",164.45,167.53,164.06,167.5,5784700],["2024-01-24",167.77,167.95,164.06,164.22,5422200],["2024-01-25",164.0,165.21,163.2,165.13,4465800],["2024-01-26",165.27,165.86,163.5,164.4,4654300],["2024-01-29",165.85,166.76,163.68,163.91,4704100],["2024-01-30",164.22,164.98,163.26,164.92,3819600],["2024-01-31",165.75,165.86,163.95,164.4,4993900],["2024-02-01",163.7,167.68,162.67,167.59,5584400],["2024-02-02",169.42,172.85,165.23,168.67,7870400],["2024-02-05",169.84,173.13,168.45,171.26,6486700],["2024-02-06",171.65,173.96,169.77,173.29,7037400],["2024-02-07",174.01,175.56,173.32,175.01,6409100],["2024-02-08",174.35,175.91,174.3,174.79,5709100],["2024-02-09",175.07,175.4,173.05,174.08,3502700],["2024-02-12",173.54,174.76,172.23,173.07,3477100],["2024-02-13",174.46,175.2,171.97,173.29,5480400],["2024-02-14",173.06,174.86,172.68,174.42,4348500],["2024-02-15",174.02,176.74,173.81,176.59,5276200],["2024-02-16",176.89,178.92,176.07,177.49,6689900],["2024-02-20",175.83,178.68,175.52,175.75,5484100],["2024-02-21",176.29,176.63,173.5,175.14,3818500],["2024-02-22",174.78,177.34,173.14,176.75,4852300],["2024-02-23",177.26,178.91,177.01,178.09,3941800],["2024-02-26",178.84,179.79,178.0,178.81,4327400],["2024-02-27",178.77,179.53,176.98,178.99,3888500],["2024-02-28",179.85,179.89,176.89,178.0,4331300],["2024-02-29",177.87,178.02,175.39,176.05,7485700],["2024-03-01",176.05,179.19,175.75,178.91,4028700],["2024-03-04",178.35,179.98,176.28,177.05,4723600],["2024-03-05",177.79,179.59,177.79,179.16,5309800],["2024-03-06",178.4,182.16,178.1,181.06,6047100],["2024-03-07",182.19,182.42,179.54,180.57,6125200],["2024-03-08",179.74,182.14,178.68,178.85,6195600],["2024-03-11",178.41,181.26,178.24,179.63,5134800],["2024-03-12",179.72,182.89,179.69,180.92,5391100],["2024-03-13",182.5,182.51,179.42,179.86,5987900],["2024-03-14",180.16,182.04,178.66,181.2,6999400],["2024-03-15",179.84,180.58,177.54,177.88,20957800],["2024-03-18",179.01,179.88,177.57,178.49,8569000],["2024-03-19",178.19,179.93,178.19,179.66,7625600],["2024-03-20",179.22,179.23,175.73,176.27,7326600],["2024-03-21",176.81,177.74,175.88,177.5,5743600],["2024-03-22",177.23,178.99,176.78,178.45,4084400],["2024-03-25",179.0,179.2,178.13,178.53,4366400],["2024-03-26",179.23,179.77,178.38,179.19,4392400],["2024-03-27",179.8,180.58,178.81,180.35,5073500],["2024-03-28",181.0,182.3,180.3,182.1,5418700],["2024-04-01",181.88,181.9,179.24,180.76,3502100],["2024-04-02",179.39,181.03,178.51,180.69,4523800],["2024-04-03",180.72,181.6,176.6,177.33,5893000],["2024-04-04",177.65,177.7,167.45,167.9,10539000],["2024-04-05",168.0,171.04,167.29,170.0,7030100],["2024-04-08",169.21,171.97,168.4,169.8,4745000],["2024-04-09",169.73,170.55,167.4,170.14,5933200],["2024-04-10",168.59,169.96,167.36,169.03,3231700],["2024-04-11",169.2,169.37,167.23,167.52,3307000],["2024-04-12",164.45,164.45,160.0,162.28,7029400],["2024-04-15",164.52,164.7,161.5,161.67,5433700],["2024-04-16",162.18,163.74,162.08,162.54,4881300],["2024-04-17",164.15,164.74,163.23,164.25,4792200],["2024-04-18",164.96,167.44,164.43,164.66,4480100],["2024-04-19",165.02,166.6,163.25,166.41,5532400],["2024-04-22",167.68,169.59,166.92,167.89,5580700],["2024-04-23",168.59,170.37,168.22,169.54,4084100],["2024-04-24",168.52,169.11,166.74,167.8,4074700],["2024-04-25",167.66,169.29,165.57,167.29,5503700],["2024-04-26",167.09,167.46,157.65,159.62,10721700],["2024-04-29",159.59,161.55,158.56,161.52,6219000],["2024-04-30",161.27,163.05,159.69,162.64,5484800],["2024-05-01",162.09,163.69,161.14,161.72,5176400],["2024-05-02",162.17,162.44,158.12,160.81,5904300],["2024-05-03",161.16,164.25,160.74,163.79,5849900],["2024-05-06",164.41,164.63,161.0,162.73,5834600],["2024-05-07",163.36,163.99,161.89,162.55,5301700],["2024-05-08",162.14,162.9,159.87,160.45,5906700],["2024-05-09",160.81,161.32,160.02,160.4,3570000],["2024-05-10",160.71,161.44,160.35,160.75,3509500],["2024-05-13",161.28,162.57,160.8,161.28,3505900],["2024-05-14",161.65,162.25,159.72,161.59,4025000],["2024-05-15",162.31,164.42,161.87,163.79,5261300],["2024-05-16",163.45,164.93,162.18,164.35,4642000],["2024-05-17",165.39,166.49,164.49,166.42,5152200],["2024-05-20",166.01,166.42,164.41,164.56,3058700],["2024-05-21",165.37,165.71,162.5,162.93,3645200],["2024-05-22",161.57,161.94,159.18,159.61,6904900],["2024-05-23",159.03,160.04,157.76,158.26,5672900],["2024-05-24",158.36,158.78,156.36,157.06,3691700],["2024-05-28",156.35,156.35,153.95,155.34,5533500],["2024-05-29",154.89,156.38,153.68,154.79,4254500],["2024-05-30",154.65,156.43,153.58,156.31,4311100],["2024-05-31",156.65,161.64,156.2,161.24,15664400],["2024-06-03",160.0,163.19,158.83,160.19,4467800],["2024-06-04",160.19,162.81,159.77,162.14,4215500],["2024-06-05",162.9,165.98,162.16,165.44,5100500],["2024-06-06",165.49,168.88,164.35,168.57,5186700],["2024-06-07",169.0,170.34,167.79,169.42,3781700],["2024-06-10",169.0,170.75,167.69,170.46,4247500],["2024-06-11",170.25,170.64,167.42,167.7,3790200],["2024-06-12",167.88,168.54,165.03,166.09,4725600],["2024-06-13",166.0,166.9,165.0,166.56,3690800],["2024-06-14",166.47,169.24,166.0,168.59,4377600],["2024-06-17",168.4,170.4,167.36,169.68,4076000],["2024-06-18",170.44,173.01,169.87,171.36,4250900],["2024-06-20",171.18,172.81,170.02,172.13,5847500],["2024-06-21",172.7,172.93,169.59,170.39,12228100],["2024-06-24",171.13,173.41,170.7,172.74,6249900],["2024-06-25",172.1,173.41,170.62,170.75,4844600],["2024-06-26",170.29,172.35,170.15,171.15,5576100],["2024-06-27",171.29,171.56,167.75,168.99,5382000],["2024-06-28",169.99,171.82,169.05,171.52,24463400],["2024-07-01",171.27,173.88,169.54,170.37,5194500],["2024-07-02",168.63,168.63,165.45,165.96,5965500],["2024-07-03",166.09,167.1,163.52,163.84,3527600],["2024-07-05",164.72,167.31,163.63,167.25,5978300],["2024-07-08",166.54,167.72,165.62,166.52,3500200],["2024-07-09",167.02,168.53,164.86,168.05,4224600],["2024-07-10",167.45,168.45,166.11,168.14,3887800],["2024-07-11",167.52,170.35,167.35,169.91,3689500],["2024-07-12",170.63,171.63,169.9,170.28,4133500],["2024-07-15",168.91,170.37,167.42,168.03,2395100],["2024-07-16",168.6,169.85,167.26,169.2,3829500],["2024-07-17",169.51,175.74,169.51,175.27,6983200],["2024-07-18",174.45,176.68,170.72,171.14,5957800],["2024-07-19",173.67,173.85,171.22,172.32,4293600],["2024-07-22",173.32,174.73,172.0,173.61,4066900],["2024-07-23",173.32,174.59,172.77,173.15,2933800],["2024-07-24",173.2,176.6,172.95,176.21,6117700],["2024-07-25",177.0,186.11,171.8,182.17,9442200],["2024-07-26",183.45,186.85,182.11,185.16,6948800],["2024-07-29",184.04,186.13,180.53,181.94,5458500],["2024-07-30",183.59,187.71,182.6,186.78,6032200],["2024-07-31",186.39,187.5,183.45,185.32,6473900],["2024-08-01",187.77,190.97,186.77,189.71,6595500],["2024-08-02",190.98,193.91,186.46,189.29,6303900],["2024-08-05",187.45,189.29,183.04,184.36,6459300],["2024-08-06",185.43,187.82,183.08,185.71,4273200],["2024-08-07",187.9,189.59,185.98,187.51,6351000],["2024-08-08",186.92,190.71,186.92,190.4,5744600],["2024-08-09",190.78,191.01,188.1,189.93,3206500],["2024-08-12",190.08,190.57,187.7,190.18,4808300],["2024-08-13",190.56,191.94,189.38,191.23,3477300],["2024-08-14",191.0,193.35,190.47,193.0,4153400],["2024-08-15",194.49,194.99,191.29,193.4,4719900],["2024-08-16",193.88,194.25,192.27,193.9,3674900],["2024-08-19",193.4,197.18,193.35,196.87,4309300],["2024-08-20",197.12,197.48,194.13,196.15,3631800],["2024-08-21",196.44,197.34,195.67,196.53,4250400],["2024-08-22",197.01,197.54,195.35,196.37,3676700],["2024-08-23",197.25,197.98,196.23,197.55,4720300],["2024-08-26",197.56,197.97,196.07,197.44,4182300],["2024-08-27",197.99,198.3,195.18,195.92,2504500],["2024-08-28",195.52,196.23,194.03,195.4,3910200],["2024-08-29",196.0,196.44,193.85,195.18,4538300],["2024-08-30",195.25,196.5,194.17,196.31,3820800],["2024-09-03",196.14,199.95,196.1,197.69,4872400],["2024-09-04",198.68,199.88,196.44,197.01,4214300],["2024-09-05",196.96,197.13,192.16,192.86,5902800],["2024-09-06",193.47,194.74,192.83,193.4,4312600],["2024-09-09",194.97,196.61,193.94,196.42,3606900],["2024-09-10",196.12,199.47,192.91,199.35,6333300],["2024-09-11",197.68,197.68,193.42,194.59,4909300],["2024-09-12",194.78,195.07,191.27,194.02,4165200],["2024-09-13",193.86,194.59,191.81,194.21,2718100],["2024-09-16",195.82,196.16,194.46,195.73,3235700],["2024-09-17",194.8,196.08,191.82,193.45,3534100],["2024-09-18",193.13,195.58,191.78,192.94,3236800],["2024-09-19",193.43,194.16,191.96,193.62,3929300],["2024-09-20",193.0,193.82,192.13,193.47,11661200],["2024-09-23",193.7,194.3,192.2,193.83,3178000],["2024-09-24",192.95,195.21,191.59,193.51,4286500],["2024-09-25",194.0,194.57,190.96,191.26,5589300],["2024-09-26",190.1,192.87,189.62,191.9,6215700],["2024-09-27",192.6,196.13,190.27,194.79,4891900],["2024-09-30",194.85,197.62,194.37,197.48,4550200],["2024-10-01",197.65,198.97,196.42,196.96,3924600],["2024-10-02",195.66,197.0,194.45,196.82,2946900],["2024-10-03",196.87,197.05,194.74,195.45,3453800],["2024-10-04",195.1,195.64,193.05,194.29,4749700],["2024-10-07",194.42,195.09,192.84,193.61,5033800],["2024-10-08",194.34,195.0,192.25,193.01,4419000],["2024-10-09",192.85,194.89,191.95,194.75,4478900],["2024-10-10",194.54,194.82,193.28,194.35,3562500],["2024-10-11",195.0,195.24,193.58,194.19,2973000],["2024-10-14",194.24,196.34,193.66,195.65,3623900],["2024-10-15",194.73,196.25,191.22,191.86,6553500],["2024-10-16",190.45,191.04,188.73,190.46,5576000],["2024-10-17",190.54,191.62,188.46,188.57,4419000],["2024-10-18",188.97,189.69,188.16,188.86,5607900],["2024-10-21",188.71,189.38,185.89,186.54,4496500],["2024-10-22",186.32,189.1,186.23,188.76,4210400],["2024-10-23",188.7,189.27,187.5,187.88,4266700],["2024-10-24",188.43,190.47,188.17,189.65,6741800],["2024-10-25",189.68,189.88,187.17,187.85,4017400],["2024-10-28",188.09,190.14,187.52,189.68,5383700],["2024-10-29",190.49,191.16,188.52,189.45,6131500],["2024-10-30",191.62,202.35,188.55,201.5,10396400],["2024-10-31",201.97,207.32,201.42,203.87,8829300],["2024-11-01",204.37,204.73,202.32,203.55,4493900],["2024-11-04",203.79,204.24,200.22,200.47,3531800],["2024-11-05",200.49,202.42,198.35,201.68,5109300],["2024-11-06",205.79,206.15,200.85,201.2,7194800],["2024-11-07",201.95,202.32,199.22,200.51,4520200],["2024-11-08",201.16,201.89,199.48,199.5,4596900],["2024-11-11",178.57,178.57,172.7,174.43,20760300],["2024-11-12",176.01,176.63,171.03,171.09,10557000],["2024-11-13",171.67,172.64,169.65,170.35,8483500],["2024-11-14",170.0,171.62,168.59,169.63,8442500],["2024-11-15",169.63,169.63,164.72,164.99,11265400],["2024-11-18",165.62,166.74,164.8,166.28,8336900],["2024-11-19",165.27,167.1,163.81,166.57,5246000],["2024-11-20",166.91,167.91,165.65,167.76,7135600],["2024-11-21",168.59,172.46,166.92,171.73,6847700],["2024-11-22",174.34,178.86,173.5,176.95,11328600],["2024-11-25",177.02,180.19,176.75,177.06,12465000],["2024-11-26",177.09,181.65,176.67,181.14,6947500],["2024-11-27",181.14,184.24,180.89,183.08,5271500],["2024-11-29",183.14,183.54,182.5,182.93,2710700],["2024-12-02",182.28,182.7,178.86,181.77,3936600],["2024-12-03",182.28,183.51,181.48,181.5,4107600],["2024-12-04",180.1,180.45,175.91,176.46,6125500],["2024-12-05",174.98,176.72,173.53,176.17,5444200],["2024-12-06",176.0,176.74,174.16,176.19,4839600],["2024-12-09",175.59,178.13,174.38,176.57,4394500],["2024-12-10",175.53,176.92,173.83,175.67,4089600],["2024-12-11",175.96,176.0,173.84,174.37,9492200],["2024-12-12",174.91,175.91,171.99,173.19,4999500],["2024-12-13",173.25,174.92,172.39,173.37,5471600],["2024-12-16",171.67,173.34,170.53,171.63,8157900],["2024-12-17",170.58,176.5,170.21,175.38,7664700],["2024-12-18",176.03,176.5,172.82,173.02,5471600],["2024-12-19",172.93,173.88,170.34,171.52,6110500],["2024-12-20",171.79,176.8,170.66,175.58,18950900],["2024-12-23",175.29,178.65,174.63,178.39,6945600],["2024-12-24",178.41,180.17,177.84,180.0,2692800],["2024-12-26",179.02,180.35,178.63,179.2,2759300],["2024-12-27",177.92,179.66,177.29,178.01,2745400],["2024-12-30",177.02,177.34,175.51,176.2,3405700],["2024-12-31",176.35,177.84,175.92,177.7,3326400],["2025-01-02",178.66,179.78,177.9,179.44,4092000],["2025-01-03",179.66,181.57,178.8,181.22,4380200],["2025-01-06",180.78,181.98,179.26,180.1,6302100],["2025-01-07",179.63,182.17,178.39,179.53,5905200],["2025-01-08",179.2,179.24,176.18,178.5,4488500],["2025-01-10",176.86,177.54,173.33,175.17,5372200],["2025-01-13",175.16,177.98,174.34,176.74,4734100],["2025-01-14",176.61,176.78,174.09,175.55,4779100],["2025-01-15",173.52,174.46,168.72,171.35,8048700],["2025-01-16",171.45,173.96,170.52,173.7,5236000],["2025-01-17",172.88,173.99,171.27,171.56,7852500],["2025-01-21",172.16,175.66,171.22,172.61,7548500],["2025-01-22",170.3,170.87,168.06,169.2,9465000],["2025-01-23",170.46,170.69,168.48,170.67,7116200],["2025-01-24",169.32,171.11,169.25,170.3,5584900],["2025-01-27",172.66,177.45,172.59,176.9,6985200],["2025-01-28",176.8,177.16,173.73,174.81,5603700],["2025-01-29",174.5,176.92,174.3,175.26,3748300],["2025-01-30",176.01,176.12,173.98,175.65,5209200],["2025-01-31",187.3,191.77,183.67,183.9,11926500],["2025-02-03",183.18,191.66,182.15,190.14,9830000],["2025-02-04",187.63,191.15,187.05,189.95,7377800],["2025-02-05",190.52,193.38,189.92,191.75,6449600],["2025-02-06",191.9,194.49,190.56,192.97,4586400],["2025-02-07",193.16,193.86,190.44,190.6,3805900],["2025-02-10",191.46,191.46,189.09,190.34,3685700],["2025-02-11",189.8,191.93,188.26,191.83,3977000],["2025-02-12",190.5,194.37,190.39,193.0,4525000],["2025-02-13",194.28,194.28,191.43,193.45,4108900],["2025-02-14",193.95,195.18,192.78,192.87,3976900],["2025-02-18",192.0,197.02,190.67,196.25,6065500],["2025-02-19",196.79,198.11,196.01,197.35,4888700],["2025-02-20",198.0,201.36,196.83,200.88,5067000],["2025-02-21",200.32,203.98,200.02,202.08,5889400],["2025-02-24",201.83,205.5,201.28,204.08,6305000],["2025-02-25",205.18,206.01,202.35,204.14,7746800],["2025-02-26",203.59,203.83,201.43,203.01,4766700],["2025-02-27",203.06,206.8,202.25,205.02,5696900],["2025-02-28",205.12,209.6,204.41,209.03,13136400],["2025-03-03",209.98,212.3,208.91,211.48,7016400],["2025-03-04",214.47,215.66,207.67,207.76,7554000],["2025-03-05",207.07,212.18,206.0,211.54,5752800],["2025-03-06",211.45,211.98,208.5,210.75,4346000],["2025-03-07",211.11,214.99,209.0,214.29,6806100],["2025-03-10",209.99,218.66,209.2,216.66,8604000],["2025-03-11",216.66,216.66,212.41,213.59,7144500],["2025-03-12",212.0,213.87,209.31,212.06,6139800],["2025-03-13",212.0,213.8,210.68,211.55,5559500],["2025-03-14",209.78,212.82,208.29,211.77,4511600],["2025-03-17",212.22,215.5,209.52,214.47,5075400],["2025-03-18",214.47,215.18,212.27,213.85,5088200],["2025-03-19",214.03,214.5,210.78,212.25,5412900],["2025-03-20",213.01,213.42,211.11,211.96,5836100],["2025-03-21",211.73,212.88,208.74,210.01,16657700],["2025-03-24",209.39,211.02,207.5,209.17,7393800],["2025-03-25",209.22,209.26,199.38,201.34,10089100],["2025-03-26",203.12,203.12,196.49,201.3,6742900],["2025-03-27",202.02,203.68,201.3,202.72,4995300],["2025-03-28",202.73,206.02,201.59,205.29,6478100],["2025-03-31",204.43,210.81,204.43,209.52,11093700],["2025-04-01",210.52,212.15,205.6,206.27,7853200],["2025-04-02",207.22,207.22,200.34,205.19,9262800],["2025-04-03",210.3,210.69,201.24,201.64,7593100],["2025-04-04",200.0,200.0,186.17,186.96,13505200],["2025-04-07",181.03,188.2,176.28,186.55,12581100],["2025-04-08",187.6,188.39,172.32,175.67,12517100],["2025-04-09",168.3,180.6,164.39,179.84,18977800],["2025-04-10",177.75,178.0,164.97,174.2,13970000],["2025-04-11",173.81,176.97,169.33,175.05,9047700],["2025-04-14",177.44,180.19,176.2,179.1,7164400],["2025-04-15",177.7,180.5,176.31,176.8,8078500],["2025-04-16",176.53,176.85,169.75,171.68,9459300],["2025-04-17",172.57,175.2,171.91,172.99,8998100],["2025-04-21",173.47,174.17,168.54,170.16,7364600],["2025-04-22",171.08,174.66,170.91,173.78,6191900],["2025-04-23",175.0,178.15,174.4,177.05,7119700],["2025-04-24",177.61,181.49,176.11,180.37,8789400],["2025-04-25",187.12,188.7,179.99,186.06,10482100],["2025-04-28",188.0,193.12,187.64,192.34,10408000],["2025-04-29",192.59,195.54,190.58,193.51,6671400],["2025-04-30",194.49,195.78,191.01,195.1,8400700],["2025-05-01",192.88,195.82,189.8,193.34,5823600],["2025-05-02",195.17,198.98,194.63,198.47,6424800],["2025-05-05",198.47,198.5,195.03,196.07,5121500],["2025-05-06",195.5,195.82,185.74,187.15,9392000],["2025-05-07",188.17,190.18,186.75,188.09,5771700],["2025-05-08",184.13,186.66,181.64,185.58,8816700],["2025-05-09",185.75,189.77,184.23,184.6,7806100],["2025-05-12",180.0,192.69,180.0,190.07,12792700],["2025-05-13",189.03,189.76,185.41,188.0,7523800],["2025-05-14",186.52,187.65,176.6,177.44,12212000],["2025-05-15",178.02,182.11,176.57,181.68,12073300],["2025-05-16",181.3,184.07,180.52,184.02,6152800],["2025-05-19",184.22,185.8,182.51,185.71,5216700],["2025-05-20",184.86,186.0,183.64,184.85,5505100],["2025-05-21",183.93,184.81,181.54,181.8,5140900],["2025-05-22",181.41,183.56,180.25,182.54,4689200],["2025-05-23",182.37,184.12,181.72,183.26,4027000],["2025-05-27",184.27,185.99,183.9,185.72,5726700],["2025-05-28",185.35,186.1,182.37,183.09,4787800],["2025-05-29",183.46,186.75,182.69,185.62,4925900],["2025-05-30",185.0,186.69,183.01,186.11,11609000],["2025-06-02",185.73,186.99,183.16,186.99,4435600],["2025-06-03",186.9,188.73,184.82,187.25,5335600],["2025-06-04",188.41,190.18,187.27,187.34,4382200],["2025-06-05",187.5,188.6,185.05,187.47,4417900],["2025-06-06",188.49,190.49,188.3,189.83,3607800],["2025-06-09",190.51,191.79,189.01,189.16,4661500],["2025-06-10",189.04,191.88,188.8,189.5,4087500],["2025-06-11",189.34,192.72,189.06,191.5,3908000],["2025-06-12",192.2,193.59,187.41,192.42,5781400],["2025-06-13",191.56,193.47,190.29,191.08,4965700],["2025-06-16",190.9,191.66,188.93,190.86,4203900],["2025-06-17",189.16,190.61,185.03,185.48,4733900],["2025-06-18",185.25,187.12,183.7,185.49,3573200],["2025-06-20",186.09,187.1,184.16,185.3,12158100],["2025-06-23",184.49,185.8,182.3,183.76,5157900],["2025-06-24",184.52,186.14,183.19,185.55,4074400],["2025-06-25",185.3,187.09,184.64,185.39,4471100],["2025-06-26",186.53,188.99,185.79,186.79,5734000],["2025-06-27",187.9,188.0,181.73,182.31,29264700],["2025-06-30",182.43,186.25,181.75,185.62,6482600],["2025-07-01",185.01,191.76,184.39,189.99,5937600],["2025-07-02",189.7,192.59,189.53,190.75,4658200],["2025-07-03",191.15,191.47,188.87,189.28,3706200],["2025-07-07",189.44,191.39,186.83,187.63,11049100],["2025-07-08",186.79,193.0,186.67,189.77,7106900],["2025-07-09",188.5,191.09,188.32,190.62,5594100],["2025-07-10",190.5,197.5,189.56,195.0,6049400],["2025-07-11",193.89,194.0,191.16,192.45,4991000],["2025-07-14",191.72,192.67,190.04,191.52,4072800],["2025-07-15",190.21,190.67,185.01,186.39,6729200],["2025-07-16",186.92,191.39,186.5,190.58,6202600],["2025-07-17",189.0,192.12,188.26,191.4,4853100],["2025-07-18",191.51,192.34,188.57,189.26,5332000],["2025-07-21",189.62,189.9,184.63,184.85,4954800],["2025-07-22",184.94,188.2,184.9,187.11,4432100],["2025-07-23",187.05,190.8,186.77,190.55,4344500],["2025-07-24",190.76,192.24,189.99,190.83,3462700],["2025-07-25",191.4,191.4,188.53,190.28,3786800],["2025-07-28",191.21,191.21,187.64,188.52,3776900],["2025-07-29",189.15,192.49,187.86,191.22,6715500],["2025-07-30",191.77,192.7,188.01,189.31,5008400],["2025-07-31",197.06,198.83,187.62,189.02,10347900],["2025-08-01",189.92,197.06,189.79,195.22,8082000],["2025-08-04",194.81,197.37,193.72,197.19,4217500],["2025-08-05",197.55,199.89,196.48,198.55,4153400],["2025-08-06",197.23,198.05,194.67,196.3,4057200],["2025-08-07",197.05,199.83,196.5,198.86,4683300],["2025-08-08",199.08,200.33,197.14,198.05,4101700],["2025-08-11",198.18,199.43,196.89,198.64,6067800],["2025-08-12",198.09,200.02,197.05,198.64,3049800],["2025-08-13",199.76,201.72,199.21,201.47,3558500],["2025-08-14",201.8,205.06,200.86,204.68,4635400],["2025-08-15",205.91,206.84,204.32,206.69,4430900],["2025-08-18",206.6,208.34,205.96,206.57,6083500],["2025-08-19",206.53,207.8,205.1,206.19,3975500],["2025-08-20",206.65,211.69,206.65,209.15,5782100],["2025-08-21",209.14,212.45,208.87,209.5,5323900],["2025-08-22",210.84,211.47,207.12,210.6,5516900],["2025-08-25",210.3,211.3,207.05,207.55,2796200],["2025-08-26",207.52,208.58,206.57,208.36,3702900],["2025-08-27",208.82,210.42,207.81,208.06,3459100],["2025-08-28",207.65,208.01,205.49,207.92,4523100],["2025-08-29",208.0,211.0,207.9,210.4,4264700],["2025-09-02",210.14,212.16,208.99,211.92,4335500],["2025-09-03",212.42,213.42,211.48,211.86,3973500],["2025-09-04",212.25,214.19,211.66,213.0,3531600],["2025-09-05",212.55,214.34,211.0,212.56,4465400],["2025-09-08",210.99,212.0,207.61,209.79,5525500],["2025-09-09",209.53,210.72,209.12,210.42,3097100],["2025-09-10",210.23,212.27,208.44,211.64,4520600],["2025-09-11",220.35,221.77,216.75,220.22,7647700],["2025-09-12",219.12,220.38,218.23,218.34,4418800],["2025-09-15",219.6,219.6,214.31,217.61,5162100],["2025-09-16",218.33,218.71,215.84,216.26,4251000],["2025-09-17",219.1,221.55,217.3,220.81,5258400],["2025-09-18",221.07,222.07,219.92,221.99,4445600],["2025-09-19",222.42,223.49,221.59,222.47,14415100],["2025-09-22",222.46,225.16,221.43,222.59,5990700],["2025-09-23",222.01,224.4,221.93,222.61,4629900],["2025-09-24",222.0,222.24,218.54,219.99,5074500],["2025-09-25",220.1,222.26,218.03,218.54,6666000],["2025-09-26",220.63,221.48,217.67,220.61,4185600],["2025-09-29",220.75,223.24,219.79,223.16,4958400],["2025-09-30",223.06,232.35,222.57,231.54,9187300],["2025-10-01",233.64,244.81,232.0,244.38,12243100],["2025-10-02",240.89,242.67,234.52,236.56,8107700],["2025-10-03",236.9,238.84,233.71,233.91,6547300],["2025-10-06",231.71,232.95,227.92,230.19,11940300],["2025-10-07",231.29,234.08,227.59,232.83,4901000],["2025-10-08",231.48,233.0,229.68,231.24,5412800],["2025-10-09",233.27,233.79,230.62,230.69,4607600],["2025-10-10",231.51,234.68,230.5,230.5,6156900],["2025-10-13",230.0,233.81,229.22,230.3,5411900],["2025-10-14",228.07,230.65,227.51,229.13,5527600],["2025-10-15",227.2,228.95,225.32,226.22,5459400],["2025-10-16",226.22,228.11,225.46,226.87,4737500],["2025-10-17",227.52,230.71,226.81,229.57,7150000],["2025-10-20",231.0,232.26,230.0,232.06,5246700],["2025-10-21",232.15,232.81,229.83,231.39,3298100],["2025-10-22",231.67,232.16,228.43,228.68,3523500],["2025-10-23",228.99,229.86,227.25,228.25,5818000],["2025-10-24",228.78,229.04,226.25,227.99,3554700],["2025-10-27",227.95,228.6,227.12,228.03,2784400],["2025-10-28",227.0,228.4,224.31,227.54,3724200],["2025-10-29",227.62,228.0,224.04,225.14,5469300],["2025-10-30",227.05,229.65,226.41,228.2,5020700],["2025-10-31",223.0,223.87,216.0,218.04,10825300],["2025-11-03",216.68,219.0,211.69,211.96,8874300],["2025-11-04",212.37,217.08,212.37,215.89,6184000],["2025-11-05",215.74,217.43,212.6,216.77,4928200],["2025-11-06",215.89,219.68,215.65,219.04,6615300],["2025-11-07",219.31,220.99,217.09,219.16,4647900],["2025-11-10",217.0,219.86,216.15,218.71,4530800],["2025-11-11",219.0,225.42,219.0,225.17,4802400],["2025-11-12",225.4,234.0,225.29,233.23,8583200],["2025-11-13",233.74,239.29,232.16,232.29,7968500],["2025-11-14",233.61,235.0,230.32,232.36,5461500],["2025-11-17",233.26,235.35,229.23,234.0,5023100],["2025-11-18",235.0,237.19,232.11,233.87,6232600],["2025-11-19",233.54,238.15,230.36,232.91,7618400],["2025-11-20",233.26,234.95,228.0,229.45,4283600],["2025-11-21",230.55,238.01,230.14,236.28,8017600],["2025-11-24",236.0,237.62,228.48,229.51,10225900],["2025-11-25",230.32,234.08,230.31,231.8,7134100],["2025-11-26",232.04,232.48,226.64,227.66,5920800],["2025-11-28",226.85,228.09,225.51,227.7,2655600],["2025-12-01",227.19,229.49,223.98,225.11,5208300],["2025-12-02",224.82,226.63,223.11,224.37,5096700],["2025-12-03",224.84,230.79,224.52,230.24,4872900],["2025-12-04",230.11,230.94,227.59,228.71,3732900],["2025-12-05",228.93,229.25,225.05,226.08,3985200],["2025-12-08",226.08,226.12,222.39,223.12,4006100],["2025-12-09",223.89,224.82,220.23,222.99,4267900],["2025-12-10",225.0,225.98,221.0,225.18,8735200],["2025-12-11",225.54,225.96,222.24,223.98,4170600],["2025-12-12",223.69,223.82,221.1,223.32,5467600],["2025-12-15",224.24,228.3,223.56,227.45,5971900],["2025-12-16",226.41,226.84,221.91,223.67,6405900],["2025-12-17",223.88,226.41,222.86,224.31,5243400],["2025-12-18",224.0,226.26,222.79,222.82,4760400],["2025-12-19",222.95,229.47,222.35,226.82,18968800],["2025-12-22",226.11,228.65,224.25,227.91,4828100],["2025-12-23",228.22,230.79,227.91,228.79,3612100],["2025-12-24",229.46,230.8,228.98,229.89,1744900],["2025-12-26",229.82,230.61,228.68,229.98,1593900],["2025-12-29",230.15,232.02,229.74,230.84,3803000],["2025-12-30",230.77,231.21,228.62,229.74,2348000],["2025-12-31",229.74,230.25,228.43,228.49,3196900],["2026-01-02",228.74,230.74,225.71,229.31,3336800],["2026-01-05",227.0,227.24,217.86,220.18,9341300],["2026-01-06",219.75,224.2,219.55,223.93,9151700],["2026-01-07",225.24,237.04,224.74,233.42,10285400],["2026-01-08",231.13,231.54,223.12,224.13,9365900],["2026-01-09",223.75,225.12,219.0,220.08,6714200],["2026-01-12",221.19,222.49,218.39,220.04,6546100],["2026-01-13",219.53,220.75,215.85,220.75,4872600],["2026-01-14",221.0,223.34,217.0,221.89,8426400],["2026-01-15",222.52,223.03,215.83,216.75,6954200],["2026-01-16",215.61,217.35,213.88,214.35,8649700],["2026-01-20",211.7,214.04,209.96,214.04,8251400],["2026-01-21",212.47,218.0,211.57,216.15,10727100],["2026-01-22",216.28,219.05,214.76,218.11,5650900],["2026-01-23",217.26,219.82,215.88,219.26,5816400],["2026-01-26",219.11,221.48,218.5,220.77,6553400],["2026-01-27",220.88,226.86,220.65,223.93,5747400],["2026-01-28",223.6,224.03,216.7,218.67,5215800],["2026-01-29",218.0,224.14,218.0,220.43,7834000],["2026-01-30",220.51,224.02,219.56,223.01,6622200],["2026-02-02",224.85,229.79,224.42,225.64,5413000],["2026-02-03",223.95,228.7,223.64,225.66,8158500],["2026-02-04",209.78,220.85,204.27,217.11,15319700],["2026-02-05",216.9,219.87,214.04,219.02,10794000],["2026-02-06",218.75,225.82,218.5,223.43,6067100],["2026-02-09",223.42,223.96,220.12,223.26,6767700],["2026-02-10",223.75,225.81,221.94,222.44,6044500],["2026-02-11",222.27,224.15,218.05,220.89,8072400],["2026-02-12",221.57,229.05,220.91,227.5,8712000],["2026-02-13",228.42,234.74,228.0,231.5,8252200],["2026-02-17",232.66,235.25,231.19,232.86,7336400],["2026-02-18",234.0,234.0,226.07,228.72,5495100],["2026-02-19",228.97,229.37,223.02,224.35,5410800],["2026-02-20",225.04,226.69,223.11,224.81,6830300],["2026-02-23",225.82,231.43,225.79,229.48,5463200],["2026-02-24",229.0,230.76,227.67,228.44,4880800],["2026-02-25",229.71,232.55,226.48,226.92,5410900],["2026-02-26",227.59,227.78,221.13,224.69,5331300],["2026-02-27",225.1,232.27,225.06,232.08,8018100],["2026-03-02",233.66,235.66,231.9,234.26,7438800],["2026-03-03",233.36,235.71,230.24,233.86,6595700],["2026-03-04",233.56,237.11,232.08,236.19,5380800],["2026-03-05",233.42,234.8,228.0,232.35,9423100],["2026-03-06",230.36,231.6,226.8,230.11,6139600],["2026-03-09",229.97,230.68,223.23,227.45,7915800],["2026-03-10",227.66,231.27,226.16,227.01,6466800],["2026-03-11",226.05,229.29,225.3,227.68,5299200],["2026-03-12",225.12,227.81,223.57,225.37,7607000],["2026-03-13",226.89,228.62,219.44,219.68,5676100],["2026-03-16",221.09,224.37,220.32,221.45,3991800],["2026-03-17",222.04,223.28,219.76,219.76,4405700],["2026-03-18",218.5,219.0,207.6,208.34,8597000],["2026-03-19",208.37,210.43,204.3,206.23,7006800],["2026-03-20",206.27,207.78,203.06,205.07,27982400],["2026-03-23",207.36,208.62,203.22,204.93,7419900],["2026-03-24",203.04,206.01,201.8,205.2,6990500],["2026-03-25",206.86,209.68,205.86,207.18,6000100],["2026-03-26",207.19,211.45,205.76,211.12,4576300],["2026-03-27",211.42,213.49,209.12,209.4,5654000],["2026-03-30",212.26,213.94,210.78,213.12,7491200],["2026-03-31",215.06,219.17,214.85,217.49,8311700],["2026-04-01",218.37,220.45,213.75,214.98,5702800],["2026-04-02",213.99,214.56,207.71,208.84,5151100],["2026-04-06",207.04,209.0,205.3,206.69,4929100],["2026-04-07",206.23,206.49,201.66,206.37,8801600],["2026-04-08",206.26,212.22,204.56,211.59,5477500],["2026-04-09",209.48,213.51,208.74,212.4,4477800],["2026-04-10",213.55,214.1,207.75,207.94,4633200],["2026-04-13",206.43,208.08,203.01,206.47,7532500],["2026-04-14",204.8,210.42,204.06,210.26,6199400],["2026-04-15",208.99,209.82,205.55,208.42,5952100],["2026-04-16",207.78,209.66,206.52,208.99,5075400],["2026-04-17",209.66,212.35,207.82,208.38,8986600],["2026-04-20",207.94,208.33,202.84,203.71,5774300],["2026-04-21",204.01,206.2,200.92,205.12,7772100],["2026-04-22",205.17,205.99,199.81,200.5,7646200],["2026-04-23",201.05,202.76,200.41,200.95,7461100],["2026-04-24",198.93,200.25,197.14,198.71,7605800],["2026-04-27",198.0,201.42,196.23,197.38,7467600],["2026-04-28",198.67,199.18,196.44,197.69,6313100],["2026-04-29",192.0,205.83,190.75,203.89,10406300],["2026-04-30",209.0,214.87,208.17,211.32,10319200],["2026-05-01",211.0,211.0,205.57,206.6,6343100],["2026-05-04",205.71,208.34,204.87,208.16,4579300],["2026-05-05",208.97,209.52,205.83,206.11,4490500],["2026-05-06",206.11,207.01,203.56,205.03,7290000],["2026-05-07",204.92,207.0,202.03,202.71,6681100],["2026-05-08",201.92,202.4,200.02,201.55,4915400],["2026-05-11",202.01,205.38,202.01,202.78,4931700],["2026-05-12",204.59,211.32,203.51,207.86,7044100],["2026-05-13",206.86,209.53,204.3,208.5,5705700],["2026-05-14",209.5,213.51,208.35,210.77,5006500],["2026-05-15",213.1,214.92,209.02,210.39,5385000],["2026-05-18",210.37,211.36,207.68,209.41,5069000],["2026-05-19",209.9,215.8,208.73,213.76,7220300],["2026-05-20",213.36,214.5,211.5,212.3,5129000],["2026-05-21",210.95,215.64,209.5,214.5,3813800],["2026-05-22",217.0,220.01,215.7,215.7,5406100],["2026-05-26",215.92,217.05,211.91,213.12,4706700],["2026-05-27",213.12,215.94,211.36,215.4,4640100],["2026-05-28",215.9,219.38,215.9,218.63,5189300],["2026-05-29",219.02,219.6,214.9,217.72,7618500],["2026-06-01",215.26,216.5,211.51,212.93,4858400],["2026-06-02",211.01,216.57,208.99,215.4,5861800],["2026-06-03",214.8,219.54,213.73,217.13,5667500],["2026-06-04",222.5,224.99,219.84,224.94,6782000],["2026-06-05",227.37,230.47,226.0,227.23,6248900],["2026-06-08",226.75,228.58,221.17,223.07,4915600],["2026-06-09",224.8,227.14,221.72,225.42,4257500],["2026-06-10",226.93,227.14,224.12,224.95,4147300],["2026-06-11",226.01,227.55,224.04,224.77,4569000],["2026-06-12",227.5,228.4,224.32,227.73,4086500],["2026-06-15",226.0,226.5,220.0,221.59,5261900],["2026-06-16",223.31,223.5,219.15,222.47,5945500],["2026-06-17",222.4,222.84,218.83,221.23,5624200],["2026-06-18",221.37,222.35,215.37,216.49,9646100],["2026-06-22",221.94,232.32,221.94,230.01,9912800],["2026-06-23",232.97,235.31,231.3,234.76,7365600],["2026-06-24",236.35,237.36,232.85,234.89,7311000],["2026-06-25",233.66,244.61,233.66,243.14,10278100],["2026-06-26",245.26,253.35,244.66,253.35,52635100],["2026-06-29",253.05,255.99,249.2,254.31,9760500],["2026-06-30",255.0,255.5,250.1,251.64,6999700],["2026-07-01",250.75,251.8,247.56,251.06,6988000],["2026-07-02",252.3,261.64,250.51,261.07,7113400],["2026-07-06",259.92,260.92,253.6,254.76,8580200],["2026-07-07",257.21,260.35,254.27,254.65,8238300],["2026-07-08",253.25,255.82,250.7,252.74,7578700],["2026-07-09",251.2,254.86,247.99,249.91,5526000],["2026-07-10",251.01,251.66,245.05,248.08,5780700],["2026-07-13",248.37,249.74,244.61,248.0,4156400],["2026-07-14",245.99,246.42,243.19,244.78,5246800],["2026-07-15",243.32,247.75,243.07,244.11,6389000],["2026-07-16",244.75,254.54,243.5,254.39,6555500],["2026-07-17",257.0,260.96,254.29,254.49,6872400],["2026-07-20",253.1,256.15,252.68,253.38,4332400],["2026-07-21",253.7,257.06,252.6,256.1,4819300],["2026-07-22",257.81,257.81,252.25,253.3,4953200],["2026-07-23",253.98,258.38,253.1,256.92,4622700],["2026-07-24",258.54,260.22,256.77,259.36,4195000],["2026-07-27",259.0,262.1,256.78,256.91,5404400],["2026-07-28",262.83,266.92,261.45,263.2,7058400],["2026-07-29",264.21,267.47,262.76,263.3,5562300],["2026-07-30",258.38,259.89,253.51,257.41,6403400],["2026-07-31",252.54,255.52,247.0,250.94,7258200],["2026-08-03",251.45,256.2,244.44,245.1,7435600],["2026-08-04",246.74,246.91,242.39,243.8,8028800],["2026-08-05",247.0,249.38,243.76,246.2,5193700],["2026-08-06",249.04,249.95,241.2,243.87,4570200],["2026-08-07",243.62,246.76,241.95,246.04,4930700],["2026-08-10",245.65,248.01,244.03,247.97,4209500],["2026-08-11",248.14,250.77,247.18,250.09,4485200],["2026-08-12",245.98,250.09,245.52,248.76,3780500],["2026-08-13",252.94,255.3,249.35,250.82,4370400],["2026-08-14",250.6,250.61,247.68,249.46,4195000],["2026-08-17",249.49,251.49,248.31,250.33,4648600],["2026-08-18",253.93,259.18,252.41,258.92,5010200],["2026-08-19",261.51,266.97,259.55,265.97,5536000],["2026-08-20",265.69,265.93,260.48,261.83,5228900],["2026-08-21",260.7,266.84,260.1,264.96,5157200],["2026-08-24",263.99,266.04,262.07,264.52,3883600],["2026-08-25",264.5,266.91,263.03,265.79,3671000],["2026-08-26",264.6,265.0,260.31,262.9,3305100],["2026-08-27",260.81,262.5,257.25,258.15,4761900],["2026-08-28",258.67,259.0,255.08,255.48,3224400],["2026-08-31",254.17,258.24,252.33,256.42,4315000],["2026-09-01",260.99,262.27,257.79,259.99,3866100],["2026-09-02",262.7,262.97,257.7,261.72,4225200],["2026-09-03",264.0,264.25,257.14,260.21,2878400],["2026-09-04",257.96,258.91,255.58,256.46,4728800]];
+const ABBV_MA5 = [null,null,null,null,108.16,107.65,107.14,107.3,107.51,107.29,107.43,107.15,107.01,106.88,107.14,107.18,107.67,107.77,108.17,108.37,108.81,108.9,109.5,109.92,110.24,110.06,109.9,109.51,109.14,108.55,108.33,108.31,108.28,108.24,108.45,108.86,108.86,109.04,110.15,111.41,112.82,114.65,116.13,116.63,116.88,116.7,116.53,116.45,116.4,116.56,116.72,116.84,116.93,116.78,116.55,117.04,117.3,117.19,117.32,117.24,116.65,116.29,116.76,117.65,118.9,120.09,121.55,122.87,123.9,125.06,126.73,128.26,129.07,129.94,130.47,130.83,131.1,132.07,132.78,133.86,134.64,135.1,135.3,135.45,135.56,135.42,135.31,135.51,135.87,136.15,135.81,136.01,136.09,135.73,134.88,134.57,133.83,133.09,132.9,133.49,134.67,135.62,136.4,137.28,138.23,138.78,139.91,141.21,142.12,142.52,142.79,142.89,143.14,143.67,144.12,144.53,145.04,145.44,145.32,146.23,146.98,147.41,147.97,149.0,149.2,149.54,149.43,149.28,149.03,148.73,149.26,151.01,152.45,154.34,156.36,157.95,158.78,159.25,159.59,160.02,160.4,160.84,161.9,162.27,162.54,162.52,162.77,163.8,166.04,168.49,170.08,170.86,168.87,166.67,163.55,160.86,158.73,158.65,157.18,156.57,156.54,156.72,156.28,154.66,152.97,151.66,150.45,149.62,150.81,151.43,151.93,152.0,152.43,152.56,153.46,154.0,154.09,153.58,153.08,151.59,150.46,150.37,150.14,149.93,149.8,149.18,148.14,147.46,146.77,147.12,147.77,147.5,146.71,145.29,142.98,140.75,139.5,138.51,139.32,141.31,143.58,146.22,149.19,151.0,152.31,153.05,153.35,153.5,153.51,153.08,153.02,152.91,152.61,152.54,152.23,152.38,151.65,151.1,150.21,149.67,148.64,148.77,149.0,149.69,150.09,149.1,147.1,145.0,143.01,140.85,139.75,139.78,139.75,139.7,140.33,141.24,141.63,142.09,142.19,142.03,141.88,141.49,140.79,140.08,139.69,138.59,137.66,136.97,136.28,136.1,136.09,136.47,137.1,138.31,138.9,140.1,140.28,140.45,140.85,141.38,141.46,142.11,142.26,142.36,142.16,141.87,141.86,142.72,142.66,140.89,140.31,140.37,140.11,139.63,140.54,140.54,140.44,139.77,140.3,141.13,142.35,142.97,143.6,143.6,144.43,145.72,146.77,148.64,150.76,150.87,149.97,149.39,147.79,145.97,145.51,145.85,146.17,146.79,147.85,148.83,149.55,150.46,151.31,151.79,152.76,153.83,155.18,156.69,158.18,158.87,159.09,159.36,159.81,160.62,161.72,162.83,163.67,164.54,164.42,164.7,164.91,164.8,164.23,163.71,162.94,162.1,161.57,161.61,162.13,162.43,162.76,162.83,162.5,162.35,162.49,162.75,163.54,163.55,163.01,161.7,159.45,156.86,155.09,153.0,151.31,150.79,149.78,148.75,148.47,148.2,147.54,146.96,146.97,146.74,146.22,146.01,145.88,145.36,144.96,145.73,147.1,148.85,150.34,151.63,151.79,151.64,151.3,150.91,151.12,151.75,152.35,152.73,153.65,154.11,154.78,154.98,154.78,153.65,152.24,150.97,150.31,150.49,151.38,152.97,153.88,154.71,155.29,155.22,155.22,155.98,156.26,156.56,157.42,157.95,158.22,158.79,159.1,159.66,160.38,160.77,160.96,161.47,161.85,161.86,161.84,161.48,161.25,161.06,161.23,161.81,162.87,162.99,160.41,158.15,156.08,153.42,150.91,150.61,149.99,148.74,147.78,147.22,147.06,146.89,146.72,146.01,145.39,144.76,144.36,144.02,143.86,143.42,142.46,140.95,139.26,138.35,136.8,136.45,136.31,136.11,135.82,136.66,136.92,137.1,137.67,137.62,137.27,137.36,137.38,137.09,137.32,137.33,136.59,135.55,134.68,133.84,133.6,133.62,134.62,135.57,136.02,135.97,136.09,135.56,134.83,134.93,135.0,135.2,135.74,137.46,139.0,140.67,141.68,142.53,143.86,145.28,146.56,147.94,149.44,149.48,148.86,149.01,149.22,149.5,149.98,150.87,151.26,151.76,151.91,151.63,151.22,150.8,150.02,149.13,148.45,147.76,147.21,147.08,147.33,147.4,147.7,147.43,147.04,147.16,147.57,147.74,148.37,149.48,150.43,151.05,152.03,152.87,153.36,153.32,153.44,153.58,153.67,153.57,153.34,152.6,151.32,150.02,148.94,147.98,147.81,147.98,148.28,148.61,148.78,148.72,148.34,148.4,148.39,147.83,147.49,146.99,146.41,145.61,145.55,144.09,143.52,142.49,141.93,141.55,142.04,141.91,142.1,142.01,140.97,140.4,139.89,139.07,138.19,138.23,138.18,138.11,138.24,138.42,138.5,138.65,138.61,138.56,139.35,140.29,141.31,142.6,144.18,145.3,146.47,147.89,149.62,151.21,152.59,153.54,153.98,154.05,153.53,153.07,153.25,153.49,153.74,154.36,154.83,155.81,156.98,158.29,159.77,161.06,161.56,162.45,162.91,162.96,162.97,162.92,162.6,162.8,163.4,164.6,165.04,165.4,165.33,165.03,164.52,164.55,165.04,165.9,167.37,169.04,171.16,172.6,173.69,174.05,174.05,173.93,174.29,174.97,175.51,175.88,176.34,176.64,176.91,177.56,178.13,177.99,178.15,177.8,177.83,178.45,179.35,179.34,179.85,180.21,179.97,180.09,179.9,179.67,179.42,178.7,177.96,178.07,178.08,177.99,178.8,179.72,180.19,180.62,180.25,177.76,175.34,173.14,171.03,169.37,169.3,167.75,166.13,164.61,163.65,163.08,163.91,165.15,166.55,167.26,167.79,166.43,165.15,163.77,162.56,161.26,162.1,162.34,162.32,162.07,161.98,161.38,161.09,160.89,161.56,162.35,163.49,164.14,164.41,163.57,162.36,160.48,158.64,157.01,156.35,156.95,157.57,158.93,161.06,163.52,165.15,167.21,168.32,168.45,168.05,167.88,167.72,168.46,169.66,170.43,171.26,171.47,171.43,170.8,171.03,170.56,169.6,168.14,167.79,166.79,166.32,166.76,167.97,168.58,168.88,169.11,170.54,170.78,171.19,172.31,173.1,173.29,175.49,178.06,179.73,182.45,184.27,185.78,186.61,187.09,186.88,187.32,187.45,187.58,188.75,189.85,190.95,191.55,192.34,193.68,194.66,195.37,195.96,196.69,196.81,196.76,196.54,196.3,196.05,196.1,196.32,195.81,195.45,195.48,195.81,195.32,195.56,195.72,195.58,194.4,194.07,193.99,193.84,193.46,193.47,193.14,192.79,193.06,193.79,194.48,195.59,196.3,196.2,195.43,194.64,194.22,194.0,193.98,194.39,194.16,193.3,192.15,191.08,189.26,188.64,188.12,188.34,188.14,188.76,188.9,191.63,194.47,197.61,199.77,202.21,202.15,201.48,200.67,195.46,189.35,183.18,177.0,170.1,168.47,167.56,167.05,167.47,169.86,172.01,174.93,177.99,180.23,181.2,182.08,181.15,179.77,178.42,177.38,176.21,175.79,175.2,174.63,173.65,173.59,173.32,172.98,173.43,174.78,175.7,176.94,178.24,178.36,178.22,178.11,178.51,178.93,179.6,179.76,178.9,178.01,177.1,175.46,174.5,173.78,172.95,171.68,171.55,170.87,171.94,172.38,173.59,174.58,177.3,179.95,182.98,186.28,189.74,191.08,191.12,191.5,191.75,191.84,192.3,193.48,194.58,196.16,197.89,200.13,201.71,202.84,203.67,205.06,206.54,207.26,208.97,210.11,211.16,212.2,213.37,213.47,213.63,213.13,212.69,212.74,212.78,212.86,212.51,211.45,208.95,206.76,204.91,203.96,204.03,205.02,205.8,205.58,201.92,197.32,191.2,186.13,180.64,178.26,176.77,177.0,175.37,175.12,174.15,173.08,173.13,174.87,177.48,181.92,185.87,189.48,192.07,194.55,195.3,194.03,192.62,191.07,188.3,187.1,187.27,185.14,184.36,184.24,183.37,182.74,183.61,183.78,183.63,183.63,183.28,184.05,184.76,185.51,185.81,186.66,187.03,187.78,188.21,188.66,189.49,190.48,190.73,191.07,190.27,189.07,187.64,186.18,185.12,185.1,185.36,184.76,185.13,186.02,187.09,187.59,188.65,189.48,189.61,190.46,191.09,191.87,191.2,191.19,190.47,189.83,188.5,188.64,188.63,188.52,188.72,189.46,190.28,190.03,189.67,190.66,192.39,193.86,195.26,197.22,197.79,198.08,198.1,199.13,200.3,202.02,203.61,205.12,206.66,207.62,208.4,208.6,209.03,208.81,208.5,208.46,209.33,210.03,211.02,211.95,211.83,211.53,211.48,212.93,214.08,215.65,216.81,218.65,219.0,219.83,220.82,222.09,221.93,221.24,220.87,220.98,222.77,227.65,231.25,233.91,235.32,235.57,232.95,231.77,231.09,231.11,230.37,229.37,228.6,228.42,228.77,229.22,229.71,229.99,229.67,228.87,228.1,227.39,227.38,225.39,222.18,219.85,218.17,216.34,216.56,217.91,219.77,223.06,225.71,228.35,231.41,233.15,233.09,232.52,233.3,232.4,231.99,230.94,230.59,228.36,227.33,227.02,227.23,226.9,226.5,226.23,225.22,224.27,223.72,224.58,224.72,224.55,224.31,225.01,225.11,226.13,227.25,228.68,229.48,229.85,229.79,229.67,227.71,226.33,227.07,226.19,224.35,224.32,223.68,221.38,219.9,218.76,217.56,216.64,215.88,216.38,217.67,219.64,220.15,220.61,221.36,222.34,222.68,222.37,222.09,222.17,221.7,221.05,221.81,223.5,225.12,227.04,228.29,228.99,228.45,228.04,227.16,226.8,226.87,228.32,229.28,230.36,232.22,233.75,233.35,231.99,230.62,228.92,227.52,225.44,224.24,222.79,218.92,215.09,212.17,208.87,205.95,205.72,206.7,207.57,209.2,211.66,213.22,212.77,212.22,210.87,209.69,209.18,209.0,208.95,209.73,209.1,208.42,208.5,207.95,206.92,205.34,203.73,201.8,200.53,199.05,199.72,201.8,203.38,205.53,207.22,207.44,205.72,204.71,203.64,203.99,204.68,206.29,208.06,209.39,210.57,211.33,212.07,213.13,213.88,214.2,215.47,216.11,215.56,216.02,216.36,217.62,219.53,221.55,223.56,225.12,225.09,225.19,224.89,224.3,223.56,221.9,222.36,224.99,227.48,231.86,239.23,244.09,247.47,250.7,254.29,254.57,254.64,254.86,254.63,252.03,250.68,248.7,246.98,247.87,249.15,250.23,252.49,254.33,254.84,255.81,256.52,257.94,259.94,260.04,258.35,255.99,252.11,248.69,245.98,245.0,245.58,246.83,247.35,248.74,249.42,249.89,251.66,255.1,257.3,260.4,263.24,264.61,264.0,263.26,261.37,259.75,258.59,258.35,258.76,258.96];
+const ABBV_MA20 = [null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,107.74,107.77,107.72,107.9,108.12,108.26,108.37,108.41,108.45,108.53,108.58,108.59,108.69,108.76,108.87,108.91,109.01,108.99,109.08,109.36,109.66,110.02,110.43,110.74,111.04,111.32,111.68,112.09,112.47,112.85,113.33,113.77,114.22,114.64,114.99,115.35,115.82,116.33,116.67,116.78,116.81,116.78,116.74,116.83,117.04,117.31,117.62,118.0,118.44,118.91,119.44,120.13,120.85,121.47,122.2,122.92,123.58,124.3,125.19,126.07,127.07,128.07,129.0,129.83,130.52,131.24,131.9,132.44,132.99,133.51,134.01,134.17,134.38,134.74,134.96,135.11,135.11,135.06,135.0,134.99,135.02,135.12,135.19,135.27,135.44,135.69,135.96,136.34,136.7,137.01,137.28,137.7,138.06,138.46,138.99,139.59,140.19,140.86,141.55,142.1,142.78,143.27,143.81,144.44,145.03,145.52,145.96,146.19,146.46,146.75,147.07,147.58,148.22,148.78,149.42,150.13,150.93,151.66,152.24,152.99,153.58,154.29,155.01,155.72,156.31,156.91,157.54,158.35,159.35,160.56,161.85,162.74,163.31,163.46,163.64,163.65,163.47,163.3,163.31,163.04,162.79,162.5,162.27,161.9,161.14,160.4,159.78,159.19,158.35,157.33,156.13,155.25,154.48,154.24,153.8,153.61,153.53,153.32,152.98,152.78,152.37,152.01,151.73,151.44,151.6,151.57,151.39,151.15,150.9,150.59,150.5,150.35,150.03,149.47,148.77,147.88,147.04,146.38,145.7,145.33,145.3,145.32,145.34,145.47,145.59,145.93,146.29,146.64,146.98,147.28,147.42,147.6,147.99,148.46,149.09,149.73,150.51,151.03,151.6,151.81,151.82,151.78,151.67,151.56,151.49,151.27,150.79,150.11,149.43,148.86,148.21,147.47,146.82,146.21,145.65,145.24,144.69,144.32,143.96,143.65,143.33,143.0,142.5,141.91,141.25,140.73,140.37,140.14,139.9,139.56,139.54,139.45,139.31,139.24,139.22,139.18,139.17,138.98,138.83,138.88,139.02,139.06,139.13,139.2,139.45,139.64,139.88,140.18,140.63,141.05,140.83,140.94,141.16,141.39,141.38,141.24,141.05,141.19,141.22,141.24,141.18,141.27,141.41,141.55,141.55,141.75,142.23,142.64,143.03,143.57,144.24,144.64,144.89,144.95,145.16,145.48,145.97,146.32,146.7,147.05,147.41,147.77,148.19,148.63,149.09,149.49,149.8,150.3,150.64,150.95,151.49,152.08,152.79,153.65,154.61,155.54,156.32,157.17,158.09,158.75,159.51,160.16,160.75,161.32,161.73,162.06,162.23,162.35,162.55,162.72,162.95,163.15,163.22,163.22,163.15,163.14,163.13,163.19,162.97,162.8,162.39,161.76,161.2,160.69,160.12,159.48,158.94,158.25,157.47,156.71,155.93,155.13,154.28,153.59,152.8,151.86,150.95,149.87,149.04,148.29,147.87,147.86,147.87,147.85,147.95,147.99,148.07,148.25,148.4,148.61,148.88,149.28,149.69,150.06,150.45,151.01,151.52,151.91,152.14,152.27,152.32,152.32,152.32,152.4,152.61,152.84,153.09,153.32,153.47,153.64,153.9,154.06,154.28,154.42,154.59,154.76,155.02,155.36,155.92,156.63,157.21,157.68,158.11,158.54,158.85,159.2,159.37,159.59,160.0,160.35,160.66,161.03,161.2,160.75,160.41,160.12,159.68,159.16,158.48,157.81,157.12,156.39,155.59,154.79,154.07,153.34,152.52,151.63,150.71,149.85,148.89,147.77,146.74,146.22,145.55,144.68,144.0,143.21,142.69,142.13,141.53,141.01,140.57,140.15,139.68,139.27,138.91,138.54,138.3,137.93,137.53,137.28,137.02,136.83,136.58,136.39,136.15,136.22,136.12,136.16,136.25,136.2,136.04,135.91,135.78,135.54,135.53,135.48,135.37,135.37,135.63,135.95,136.31,136.65,137.11,137.93,138.81,139.55,140.23,140.82,141.41,142.02,142.81,143.51,144.3,145.19,146.0,146.87,147.65,148.34,148.74,149.06,149.41,149.74,150.0,149.88,149.68,149.57,149.52,149.47,149.36,149.39,149.18,148.97,148.88,148.76,148.6,148.45,148.41,148.51,148.62,148.81,148.97,149.24,149.56,149.86,150.26,150.59,150.86,151.06,151.16,151.17,151.23,151.34,151.26,151.22,151.23,151.21,151.12,150.85,150.64,150.31,150.09,149.88,149.48,149.16,148.66,148.28,147.89,147.53,147.03,146.71,146.4,146.13,145.93,145.58,145.19,144.85,144.49,143.97,143.51,143.08,142.52,141.94,141.57,141.18,140.86,140.48,140.14,139.81,139.82,139.63,139.5,139.49,139.5,139.63,139.8,140.01,140.31,140.87,141.51,142.24,143.05,143.91,144.7,145.46,146.22,146.87,147.57,148.39,149.16,150.0,150.82,151.45,152.27,153.08,153.93,154.71,155.39,156.04,156.72,157.25,157.65,157.98,158.38,158.88,159.44,160.12,160.87,161.33,161.86,162.33,162.79,163.29,163.52,163.87,164.23,164.69,165.28,165.92,166.41,166.93,167.46,168.05,168.67,169.33,169.97,170.49,170.87,171.5,172.15,172.87,173.62,174.27,174.86,175.42,175.84,176.24,176.62,176.9,177.11,177.38,177.78,178.1,178.44,178.51,178.56,178.75,178.81,178.85,178.87,178.85,178.86,178.98,179.28,179.37,179.56,179.46,178.81,178.28,177.83,177.35,176.76,176.14,175.19,174.38,173.59,172.81,172.23,171.68,171.15,170.7,170.13,169.48,168.36,167.39,166.49,165.71,165.36,165.05,164.69,164.31,163.88,163.53,163.45,163.43,163.38,163.36,163.35,163.35,163.18,162.85,162.44,161.99,161.86,161.55,161.16,160.89,160.91,160.73,160.7,160.84,161.25,161.7,162.19,162.51,162.73,162.87,163.08,163.25,163.59,164.05,164.59,165.31,165.99,166.78,167.5,168.26,168.71,169.0,169.09,169.18,169.07,169.0,168.89,169.0,169.21,169.28,169.31,169.59,169.58,169.59,169.75,169.77,170.05,170.6,171.41,171.93,172.75,173.71,175.01,176.11,177.0,177.88,178.85,179.88,180.86,181.97,183.07,183.96,185.07,186.15,187.31,188.46,189.48,190.19,190.81,191.58,192.04,192.54,192.82,193.17,193.83,194.4,194.67,194.82,195.14,195.6,195.77,195.82,195.86,195.95,195.78,195.62,195.47,195.33,195.14,194.95,194.71,194.54,194.52,194.58,194.54,194.53,194.66,194.7,194.56,194.25,194.25,194.27,194.27,194.27,194.19,194.06,193.81,193.58,193.22,192.98,192.81,192.7,192.35,191.96,191.58,191.82,192.24,192.7,193.05,193.48,193.8,194.11,194.37,193.31,192.28,191.27,190.32,189.13,188.12,187.01,186.0,185.1,184.56,183.93,183.51,182.59,181.55,180.46,179.51,178.25,177.0,175.78,174.63,174.69,174.86,175.0,175.19,175.52,175.97,176.3,176.48,176.68,176.75,176.9,176.8,176.55,176.21,176.01,175.9,176.14,176.34,176.5,176.6,176.58,176.69,176.81,176.71,176.81,176.62,176.6,176.49,176.24,175.84,175.68,175.46,175.33,175.3,175.61,176.14,176.58,177.16,177.83,178.44,179.2,179.95,180.82,181.93,182.89,184.12,185.36,186.94,188.51,190.2,191.56,192.97,194.46,196.13,197.51,198.39,199.47,200.42,201.49,202.79,203.95,204.96,205.89,206.81,207.89,208.77,209.51,210.07,210.46,210.72,210.58,210.49,210.38,210.19,210.09,210.02,209.7,209.24,207.88,206.37,204.48,202.87,201.0,199.16,197.39,195.54,193.51,191.56,189.57,187.8,186.59,185.54,184.71,184.06,183.26,182.7,182.11,181.95,182.41,182.44,183.06,183.34,183.86,184.62,185.06,185.09,185.59,186.14,186.92,187.47,187.71,187.82,187.68,187.35,186.83,186.35,185.99,185.42,184.98,184.99,184.96,185.17,185.4,185.37,185.54,186.29,186.76,187.1,187.09,187.13,187.3,187.36,187.48,187.46,187.64,187.48,187.45,187.6,187.78,187.88,187.88,187.88,187.95,188.23,188.28,188.23,188.0,187.98,188.28,188.47,188.45,188.61,188.86,189.13,189.31,189.62,189.9,189.87,189.78,190.08,190.55,190.99,191.28,191.47,191.75,192.11,192.72,193.26,193.93,194.8,195.89,196.84,197.77,198.7,199.72,200.67,201.53,202.46,203.41,204.17,204.91,205.57,206.41,207.09,207.68,208.27,208.92,209.85,210.54,211.08,211.57,212.3,212.94,213.59,214.19,214.94,215.52,216.05,216.68,217.32,218.3,219.93,221.1,222.17,223.19,224.31,225.29,225.82,226.42,227.06,227.7,227.97,228.22,228.57,229.04,229.48,229.92,230.4,230.77,231.02,230.82,229.85,229.44,228.64,227.73,226.88,226.16,225.58,225.01,224.43,224.23,224.58,224.86,224.99,225.09,225.22,225.43,225.49,225.9,225.98,226.19,226.31,226.29,226.64,227.26,227.98,228.58,228.93,229.13,229.34,229.34,228.88,228.43,228.19,227.67,227.19,226.69,226.56,226.14,226.1,226.01,226.12,226.28,226.51,226.72,226.67,226.24,226.14,226.65,226.71,226.45,226.26,226.13,225.85,225.5,225.01,224.57,224.03,223.54,223.07,222.61,222.31,221.7,221.23,220.96,220.78,221.05,220.71,219.99,219.95,220.11,220.23,220.24,220.52,221.26,222.18,222.92,223.33,223.66,224.17,224.56,224.71,225.01,225.59,226.15,226.56,227.09,227.85,228.41,228.61,228.8,229.06,229.28,228.89,228.39,227.73,226.71,225.81,224.82,223.59,222.43,221.44,220.77,219.63,218.57,217.76,216.7,215.52,214.35,213.3,212.52,211.76,210.89,210.23,209.67,209.1,209.13,209.24,209.17,209.18,208.95,208.64,208.02,207.42,206.64,205.96,205.78,205.67,205.74,205.73,205.4,204.92,204.6,204.41,204.29,204.3,204.39,204.49,204.77,205.2,205.79,206.47,207.32,208.11,208.99,209.73,210.05,210.37,210.73,211.28,212.28,213.5,214.58,215.71,216.56,217.38,218.22,218.78,219.44,219.81,220.02,220.8,221.75,222.84,224.22,225.96,227.79,229.73,231.51,233.71,235.2,236.57,238.05,239.28,240.43,241.59,242.45,243.57,245.17,246.83,248.68,249.98,250.91,252.01,252.82,253.0,253.44,254.03,254.34,253.84,253.35,252.81,252.48,252.18,252.08,252.08,252.34,252.58,252.4,252.15,251.99,252.13,252.77,253.01,253.29,253.67,253.8,253.78,253.82,254.05,254.61,255.42,256.2,257.02,257.54];
+const ABBV_MA60 = [null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,111.41,111.52,111.63,111.82,112.07,112.3,112.56,112.83,113.12,113.43,113.78,114.16,114.59,114.96,115.35,115.72,116.14,116.54,116.98,117.4,117.85,118.29,118.72,119.13,119.53,119.96,120.4,120.84,121.3,121.76,122.26,122.69,123.15,123.62,124.05,124.46,124.83,125.23,125.62,125.95,126.3,126.66,126.98,127.31,127.67,128.08,128.5,128.93,129.37,129.81,130.24,130.67,131.1,131.56,132.05,132.54,132.96,133.41,133.91,134.38,134.96,135.49,136.0,136.51,137.0,137.48,137.94,138.32,138.71,139.09,139.45,139.82,140.22,140.66,141.12,141.61,142.08,142.53,142.93,143.36,143.79,144.23,144.67,145.14,145.59,146.04,146.48,146.96,147.5,148.11,148.74,149.34,149.86,150.23,150.69,151.12,151.53,151.94,152.36,152.71,153.05,153.35,153.7,154.02,154.16,154.28,154.43,154.58,154.72,154.88,155.02,155.19,155.34,155.5,155.62,155.8,155.98,156.09,156.17,156.27,156.24,156.27,156.34,156.35,156.35,156.29,156.24,156.23,156.2,156.16,156.16,156.11,155.94,155.72,155.4,155.05,154.68,154.33,154.0,153.72,153.49,153.28,153.11,152.94,152.78,152.63,152.49,152.33,152.08,151.73,151.35,151.07,150.83,150.72,150.55,150.41,150.36,150.24,150.1,149.97,149.83,149.7,149.58,149.49,149.56,149.59,149.49,149.3,149.1,148.91,148.71,148.47,148.28,148.05,147.84,147.61,147.41,147.24,147.09,146.93,146.82,146.7,146.5,146.31,146.11,145.98,145.81,145.63,145.44,145.24,145.06,144.84,144.71,144.64,144.65,144.72,144.79,144.78,144.8,144.78,144.72,144.61,144.43,144.22,144.06,143.88,143.68,143.48,143.32,143.16,142.86,142.62,142.43,142.28,142.08,141.89,141.63,141.5,141.34,141.26,141.18,141.11,141.01,140.89,140.75,140.7,140.83,140.99,141.19,141.39,141.54,141.68,141.79,141.86,141.92,141.97,142.06,142.16,142.25,142.39,142.54,142.7,142.91,143.13,143.36,143.62,143.97,144.37,144.77,145.19,145.52,145.89,146.28,146.66,147.05,147.42,147.78,148.23,148.67,149.01,149.37,149.74,150.12,150.5,150.79,151.1,151.42,151.76,152.07,152.41,152.89,153.29,153.63,153.94,154.31,154.72,155.14,155.56,155.92,156.2,156.44,156.57,156.72,156.88,156.98,157.01,156.99,156.97,156.89,156.79,156.79,156.79,156.77,156.82,156.86,156.85,156.8,156.74,156.7,156.62,156.59,156.6,156.61,156.62,156.6,156.51,156.41,156.28,156.14,156.01,155.92,155.85,155.73,155.62,155.47,155.34,155.2,154.99,154.72,154.46,154.2,153.98,153.8,153.65,153.56,153.44,153.36,153.27,153.11,152.98,152.9,152.82,152.75,152.69,152.62,152.55,152.49,152.38,152.37,152.4,152.47,152.62,152.77,152.93,153.14,153.34,153.51,153.72,153.96,154.2,154.48,154.79,155.06,155.08,155.15,155.3,155.41,155.48,155.51,155.57,155.55,155.46,155.34,155.24,155.18,155.13,154.99,154.85,154.73,154.61,154.48,154.29,154.07,153.8,153.52,153.19,152.9,152.58,152.36,152.19,151.95,151.69,151.42,151.16,150.87,150.6,150.27,149.92,149.67,149.38,149.03,148.69,148.32,147.93,147.51,147.06,146.61,146.19,145.76,145.37,144.96,144.53,144.07,143.62,143.17,142.71,142.32,141.88,141.46,141.05,140.68,140.33,140.02,139.9,139.75,139.67,139.65,139.66,139.68,139.7,139.73,139.74,139.81,139.86,139.92,140.0,140.15,140.3,140.44,140.55,140.63,140.76,140.91,141.07,141.23,141.4,141.55,141.78,141.96,142.15,142.34,142.54,142.68,142.8,142.99,143.16,143.38,143.6,143.81,144.07,144.33,144.6,144.9,145.21,145.55,145.89,146.25,146.57,146.87,147.11,147.31,147.52,147.74,147.94,148.15,148.39,148.61,148.85,149.06,149.24,149.33,149.39,149.49,149.62,149.68,149.63,149.53,149.48,149.42,149.35,149.18,149.09,148.93,148.82,148.69,148.52,148.34,148.17,148.0,147.78,147.59,147.4,147.19,147.02,146.87,146.73,146.59,146.45,146.3,146.13,146.0,145.83,145.71,145.65,145.56,145.48,145.41,145.36,145.31,145.23,145.22,145.21,145.22,145.24,145.25,145.26,145.25,145.21,145.2,145.24,145.34,145.45,145.57,145.69,145.9,146.1,146.31,146.53,146.73,146.96,147.24,147.52,147.74,147.94,148.22,148.5,148.84,149.16,149.53,149.84,150.28,150.66,151.03,151.41,151.76,152.2,152.65,153.14,153.66,154.28,154.88,155.47,156.05,156.65,157.25,157.89,158.54,159.16,159.77,160.41,161.06,161.73,162.41,163.0,163.55,164.13,164.67,165.21,165.76,166.29,166.75,167.19,167.63,168.05,168.5,168.91,169.32,169.79,170.18,170.56,170.96,171.35,171.76,172.18,172.55,172.89,173.21,173.46,173.57,173.7,173.78,173.89,174.0,174.1,174.1,174.08,174.04,174.02,173.97,174.01,174.05,174.14,174.2,174.24,174.16,174.06,173.96,173.8,173.6,173.41,173.21,173.02,172.81,172.59,172.36,172.11,171.84,171.64,171.46,171.29,171.07,170.8,170.48,170.15,169.83,169.44,169.07,168.69,168.36,168.02,167.74,167.5,167.3,167.12,166.94,166.77,166.57,166.35,166.22,166.09,165.97,165.87,165.72,165.59,165.4,165.24,165.05,164.95,164.99,164.93,164.83,164.78,164.74,164.75,164.84,164.98,165.11,165.17,165.25,165.4,165.45,165.5,165.59,165.69,165.97,166.31,166.69,167.02,167.46,167.81,168.26,168.71,169.11,169.53,169.98,170.46,170.93,171.37,171.82,172.27,172.75,173.26,173.88,174.51,175.17,175.86,176.57,177.25,177.83,178.42,178.97,179.48,179.97,180.43,180.8,181.23,181.74,182.28,182.72,183.12,183.5,183.9,184.28,184.62,185.0,185.37,185.78,186.15,186.5,186.93,187.45,187.95,188.46,188.94,189.39,189.8,190.19,190.6,191.03,191.35,191.73,192.12,192.43,192.71,192.92,193.03,193.05,193.17,193.19,193.26,193.23,193.23,193.32,193.58,193.85,194.07,194.25,194.44,194.61,194.73,194.83,194.51,194.08,193.65,193.2,192.68,192.16,191.64,191.17,190.78,190.48,190.15,189.88,189.65,189.48,189.29,189.04,188.66,188.35,188.05,187.76,187.42,187.11,186.78,186.44,186.08,185.77,185.43,185.1,184.83,184.55,184.26,183.97,183.65,183.33,183.05,182.82,182.62,182.38,182.13,181.87,181.53,181.28,181.03,180.74,180.49,180.24,179.97,179.66,179.34,179.05,178.84,178.59,178.15,177.68,177.36,177.18,176.99,176.83,176.71,176.56,176.82,177.17,177.55,177.94,178.41,178.91,179.42,179.97,180.48,180.93,181.38,181.75,182.11,182.55,183.04,183.48,184.06,184.64,185.28,185.94,186.58,187.2,187.84,188.48,189.2,189.84,190.49,191.17,191.74,192.25,192.61,192.98,193.39,193.87,194.4,194.85,195.25,195.61,195.73,195.87,195.88,195.93,195.91,195.97,196.06,196.14,196.13,196.19,196.18,196.24,196.24,196.34,196.52,196.79,196.95,197.04,197.09,197.21,197.26,197.2,197.16,197.06,196.92,196.86,196.78,196.47,196.21,195.93,195.65,195.33,194.96,194.62,194.26,193.87,193.39,193.03,192.6,192.21,191.75,191.27,190.83,190.46,190.09,189.72,189.33,188.98,188.62,188.27,187.86,187.47,187.2,186.91,186.62,186.29,185.91,185.51,185.19,184.99,185.05,185.1,185.3,185.47,185.74,186.07,186.29,186.54,186.78,187.08,187.43,187.69,187.82,187.93,188.01,187.98,187.93,187.82,187.78,187.63,187.51,187.65,187.8,188.01,188.21,188.36,188.52,188.88,189.16,189.45,189.77,190.13,190.54,190.94,191.37,191.77,192.22,192.59,192.96,193.31,193.66,194.04,194.45,194.82,195.21,195.6,195.9,196.2,196.54,197.03,197.58,198.12,198.63,199.25,199.86,200.48,201.07,201.74,202.32,202.79,203.29,203.85,204.59,205.5,206.26,206.91,207.54,208.23,208.98,209.64,210.3,210.98,211.72,212.37,212.98,213.62,214.32,215.03,215.66,216.31,216.95,217.5,218.01,218.45,218.98,219.3,219.53,219.82,220.12,220.42,220.66,220.86,221.17,221.62,222.0,222.39,222.78,223.21,223.62,223.98,224.45,224.77,225.1,225.37,225.61,225.82,226.06,226.39,226.68,226.78,226.85,226.94,227.09,227.15,227.17,227.25,227.27,227.3,227.34,227.48,227.6,227.7,227.67,227.43,227.34,227.27,227.24,227.18,226.99,226.88,226.93,226.83,226.68,226.57,226.47,226.34,226.09,225.8,225.56,225.36,225.19,225.05,224.94,224.91,224.76,224.8,224.98,225.14,225.29,225.26,225.26,225.34,225.3,225.12,224.93,224.85,224.81,224.79,224.72,224.64,224.45,224.45,224.39,224.38,224.33,224.45,224.61,224.67,224.79,224.9,225.02,225.09,225.12,225.18,225.22,225.09,225.05,224.97,224.73,224.39,224.01,223.61,223.2,222.82,222.49,222.15,221.9,221.7,221.61,221.36,220.92,220.62,220.48,220.35,220.14,219.88,219.77,219.67,219.59,219.46,219.22,218.98,218.65,218.26,217.93,217.55,217.12,216.76,216.52,216.35,216.17,215.88,215.57,215.25,214.92,214.51,214.12,213.71,213.41,213.18,212.92,212.66,212.39,212.18,212.03,211.72,211.4,211.15,210.84,210.52,210.27,210.1,210.07,210.06,210.02,210.12,210.18,210.26,210.58,210.84,211.13,211.4,211.59,211.97,212.36,212.79,213.29,213.89,214.54,215.25,215.99,216.91,217.62,218.33,219.08,219.8,220.43,221.09,221.69,222.28,223.13,223.95,224.83,225.75,226.66,227.65,228.68,229.56,230.43,231.37,232.19,232.94,233.61,234.29,235.04,235.72,236.36,237.02,237.67,238.31,239.0,239.6,240.23,240.97,241.81,242.62,243.45,244.21,245.01,245.85,246.56,247.2,247.72,248.27,248.91,249.49,250.02];
+const ABBV_MA120 = [null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,123.18,123.5,123.81,124.17,124.53,124.89,125.25,125.58,125.92,126.26,126.62,126.99,127.4,127.81,128.24,128.67,129.11,129.53,129.95,130.38,130.82,131.26,131.7,132.14,132.56,133.0,133.44,133.9,134.4,134.93,135.5,136.02,136.51,136.93,137.37,137.79,138.18,138.58,138.99,139.33,139.67,140.0,140.34,140.66,140.91,141.18,141.46,141.75,142.05,142.35,142.63,142.93,143.22,143.53,143.84,144.17,144.47,144.75,145.04,145.33,145.6,145.88,146.17,146.43,146.67,146.89,147.09,147.28,147.46,147.62,147.81,147.97,148.08,148.19,148.26,148.33,148.38,148.43,148.46,148.54,148.64,148.75,148.89,149.04,149.18,149.34,149.49,149.64,149.79,149.92,150.04,150.2,150.35,150.48,150.62,150.77,150.95,151.09,151.23,151.34,151.44,151.53,151.64,151.75,151.86,151.93,151.96,151.94,151.91,151.9,151.86,151.83,151.81,151.77,151.73,151.71,151.69,151.67,151.63,151.6,151.53,151.48,151.42,151.33,151.23,151.14,151.03,150.93,150.82,150.7,150.61,150.48,150.32,150.18,150.03,149.88,149.73,149.55,149.4,149.25,149.1,148.94,148.77,148.58,148.42,148.26,148.08,147.9,147.7,147.45,147.11,146.84,146.63,146.5,146.32,146.15,146.0,145.87,145.72,145.61,145.5,145.41,145.3,145.19,145.15,145.15,145.16,145.14,145.15,145.15,145.12,145.08,145.03,144.95,144.88,144.79,144.74,144.7,144.67,144.66,144.68,144.7,144.71,144.72,144.74,144.8,144.89,145.0,145.1,145.21,145.29,145.36,145.5,145.65,145.85,146.07,146.28,146.5,146.73,146.9,147.04,147.17,147.28,147.36,147.43,147.49,147.55,147.62,147.7,147.79,147.88,147.96,148.03,148.11,148.19,148.3,148.39,148.53,148.63,148.73,148.81,148.84,148.87,148.88,148.87,148.86,148.91,148.98,149.04,149.09,149.16,149.23,149.28,149.34,149.39,149.41,149.43,149.45,149.47,149.5,149.56,149.65,149.76,149.87,149.98,150.07,150.19,150.33,150.45,150.6,150.72,150.87,151.01,151.14,151.26,151.38,151.49,151.61,151.69,151.73,151.78,151.86,151.96,152.07,152.18,152.27,152.39,152.52,152.59,152.7,152.9,153.06,153.19,153.32,153.46,153.63,153.82,153.97,154.14,154.3,154.45,154.59,154.74,154.9,155.06,155.18,155.25,155.34,155.42,155.5,155.63,155.79,155.91,155.95,156.0,156.07,156.1,156.11,156.11,156.09,156.07,156.03,155.97,155.93,155.89,155.82,155.7,155.57,155.43,155.31,155.2,155.07,154.9,154.71,154.49,154.26,154.05,153.78,153.54,153.32,153.07,152.84,152.61,152.4,152.21,152.02,151.82,151.6,151.39,151.18,150.96,150.76,150.53,150.31,150.06,149.8,149.55,149.29,149.07,148.88,148.72,148.58,148.42,148.27,148.16,148.03,147.92,147.8,147.71,147.62,147.58,147.56,147.54,147.49,147.45,147.48,147.53,147.57,147.6,147.64,147.64,147.6,147.57,147.55,147.55,147.56,147.57,147.57,147.58,147.58,147.56,147.52,147.49,147.43,147.37,147.29,147.22,147.18,147.16,147.17,147.15,147.11,147.05,146.98,146.93,146.88,146.82,146.76,146.74,146.73,146.68,146.65,146.61,146.57,146.53,146.48,146.43,146.38,146.32,146.24,146.14,146.03,145.9,145.78,145.66,145.55,145.47,145.36,145.26,145.14,145.01,144.86,144.76,144.76,144.71,144.65,144.59,144.57,144.55,144.53,144.46,144.42,144.37,144.34,144.3,144.26,144.24,144.23,144.22,144.16,144.11,144.08,144.05,144.04,144.05,144.07,144.07,144.11,144.13,144.14,144.17,144.19,144.19,144.23,144.27,144.32,144.39,144.48,144.56,144.65,144.77,144.91,145.06,145.22,145.4,145.58,145.75,145.89,146.03,146.18,146.32,146.49,146.65,146.82,147.02,147.25,147.46,147.69,147.89,148.1,148.29,148.46,148.62,148.78,148.95,149.07,149.18,149.32,149.47,149.6,149.73,149.87,149.98,150.11,150.23,150.36,150.5,150.66,150.83,151.03,151.23,151.43,151.62,151.83,152.06,152.31,152.57,152.8,153.03,153.27,153.53,153.78,154.06,154.33,154.55,154.8,155.04,155.29,155.54,155.76,155.98,156.2,156.43,156.64,156.88,157.08,157.28,157.5,157.69,157.9,158.15,158.4,158.66,158.94,159.22,159.5,159.76,160.0,160.15,160.33,160.51,160.7,160.87,161.02,161.16,161.29,161.44,161.59,161.75,161.93,162.17,162.4,162.62,162.83,162.96,163.13,163.31,163.47,163.63,163.84,164.04,164.24,164.43,164.62,164.81,165.0,165.19,165.4,165.62,165.85,166.06,166.27,166.44,166.58,166.69,166.78,166.87,166.95,167.06,167.15,167.24,167.34,167.46,167.58,167.72,167.84,167.94,168.07,168.2,168.32,168.46,168.61,168.74,168.89,168.98,169.07,169.13,169.21,169.28,169.31,169.3,169.33,169.37,169.42,169.47,169.53,169.57,169.6,169.61,169.7,169.75,169.82,169.9,169.97,170.07,170.19,170.32,170.41,170.53,170.61,170.74,170.86,170.96,171.06,171.17,171.28,171.39,171.51,171.64,171.78,171.91,172.03,172.18,172.33,172.5,172.65,172.82,172.97,173.09,173.22,173.35,173.49,173.63,173.78,173.87,174.0,174.15,174.32,174.47,174.61,174.74,174.88,175.0,175.11,175.2,175.31,175.42,175.55,175.75,175.93,176.14,176.36,176.6,176.84,177.12,177.39,177.65,177.89,178.14,178.37,178.59,178.81,179.01,179.2,179.44,179.67,179.87,180.1,180.32,180.54,180.75,180.97,181.21,181.56,181.92,182.27,182.59,182.91,183.21,183.5,183.79,183.89,183.98,184.08,184.19,184.27,184.36,184.45,184.5,184.6,184.72,184.82,184.92,185.04,185.14,185.26,185.39,185.47,185.53,185.59,185.63,185.66,185.69,185.7,185.72,185.72,185.78,185.79,185.8,185.88,186.0,186.11,186.21,186.3,186.36,186.43,186.5,186.61,186.7,186.74,186.8,186.82,186.85,186.87,186.83,186.76,186.65,186.57,186.42,186.3,186.14,186.04,185.96,185.87,185.77,185.72,185.72,185.72,185.72,185.72,185.7,185.67,185.62,185.6,185.57,185.54,185.53,185.53,185.57,185.63,185.7,185.77,185.81,185.88,186.01,186.16,186.26,186.36,186.5,186.66,186.85,187.0,187.16,187.31,187.46,187.64,187.8,187.96,188.13,188.28,188.4,188.44,188.47,188.52,188.6,188.73,188.83,188.94,188.99,188.93,188.87,188.7,188.6,188.47,188.35,188.27,188.19,188.05,187.92,187.76,187.65,187.54,187.46,187.34,187.24,187.16,187.11,187.04,187.02,186.98,186.88,186.99,187.11,187.23,187.4,187.59,187.69,187.81,187.95,188.07,188.13,188.17,188.18,188.18,188.21,188.22,188.25,188.33,188.42,188.51,188.6,188.7,188.83,188.96,189.1,189.26,189.41,189.56,189.72,189.8,189.86,189.9,189.94,190.01,190.08,190.16,190.18,190.22,190.3,190.39,190.48,190.59,190.7,190.82,191.02,191.18,191.34,191.46,191.63,191.81,191.97,192.03,192.13,192.26,192.39,192.44,192.43,192.44,192.42,192.39,192.42,192.48,192.54,192.56,192.61,192.65,192.67,192.68,192.69,192.71,192.73,192.75,192.78,192.81,192.82,192.81,192.81,192.78,192.76,192.71,192.65,192.64,192.64,192.65,192.66,192.62,192.59,192.58,192.65,192.72,192.79,192.92,193.08,193.24,193.38,193.49,193.63,193.75,193.89,194.17,194.48,194.94,195.48,196.0,196.49,196.92,197.38,197.88,198.36,198.86,199.33,199.77,200.15,200.49,200.8,201.12,201.42,201.72,201.97,202.23,202.57,202.9,203.23,203.6,203.83,204.03,204.35,204.64,204.93,205.21,205.49,205.86,206.28,206.69,207.08,207.5,207.9,208.29,208.65,209.05,209.41,209.78,210.09,210.41,210.71,210.98,211.3,211.61,211.9,212.22,212.53,212.86,213.2,213.51,213.86,214.17,214.52,214.83,215.14,215.45,215.78,216.13,216.46,216.8,217.09,217.39,217.7,217.99,218.26,218.61,218.9,219.2,219.47,219.72,219.98,220.2,220.42,220.61,220.83,221.07,221.27,221.47,221.68,221.87,222.05,222.26,222.48,222.71,222.84,222.96,223.1,223.24,223.37,223.47,223.62,223.79,224.0,224.17,224.31,224.45,224.61,224.75,224.87,224.97,225.13,225.34,225.53,225.74,225.84,225.94,226.02,226.11,226.16,226.19,226.17,226.16,226.14,226.04,225.94,225.81,225.65,225.44,225.13,224.91,224.71,224.57,224.44,224.3,224.12,223.92,223.72,223.58,223.46,223.3,223.11,222.93,222.74,222.57,222.41,222.21,222.02,221.79,221.59,221.34,221.17,221.05,220.95,220.91,220.8,220.71,220.61,220.44,220.18,219.93,219.68,219.46,219.25,219.07,218.91,218.69,218.55,218.39,218.28,218.18,218.08,218.01,217.91,217.82,217.71,217.64,217.6,217.59,217.62,217.62,217.6,217.61,217.62,217.66,217.61,217.57,217.51,217.39,217.39,217.43,217.47,217.59,217.79,218.08,218.31,218.45,218.76,219.05,219.34,219.61,219.84,220.1,220.38,220.64,220.87,221.17,221.47,221.74,222.01,222.29,222.6,222.9,223.16,223.48,223.86,224.18,224.41,224.59,224.77,224.98,225.12,225.24,225.36,225.54,225.75,225.96,226.13,226.31,226.58,226.92,227.17,227.43,227.68,227.93,228.18,228.42,228.65,228.89,229.16,229.47,229.8,230.1];
+
+const ABBV_BACKTEST = [{"checkpoint_date":"2023-11-06","quarter_end":"2023-09-30","ttm_eps":3.67,"trailing_sample_size":501,"per_low":20.19,"per_high":33.32,"band_width_ratio":1.65,"predicted_low":74.08,"predicted_high":122.3,"realized_per_high":48.36,"realized_per_low":37.49,"realized_price_high":177.49,"realized_price_low":137.6,"period_end_date":"2024-02-16","is_open":false,"zone":"breached_top"},{"checkpoint_date":"2024-02-20","quarter_end":"2023-12-31","ttm_eps":2.72,"trailing_sample_size":500,"per_low":20.83,"per_high":44.9,"band_width_ratio":2.16,"predicted_low":56.66,"predicted_high":122.12,"realized_per_high":66.95,"realized_per_low":58.68,"realized_price_high":182.1,"realized_price_low":159.62,"period_end_date":"2024-05-02","is_open":false,"zone":"breached_top"},{"checkpoint_date":"2024-05-03","quarter_end":"2024-03-31","ttm_eps":3.36,"trailing_sample_size":503,"per_low":21.6,"per_high":65.47,"band_width_ratio":3.03,"predicted_low":72.58,"predicted_high":219.99,"realized_per_high":56.46,"realized_per_low":46.07,"realized_price_high":189.71,"realized_price_low":154.79,"period_end_date":"2024-08-06","is_open":false,"zone":"full_hit"},{"checkpoint_date":"2024-08-07","quarter_end":"2024-06-30","ttm_eps":2.99,"trailing_sample_size":502,"per_low":23.83,"per_high":64.61,"band_width_ratio":2.71,"predicted_low":71.26,"predicted_high":193.2,"realized_per_high":68.18,"realized_per_low":62.39,"realized_price_high":203.87,"realized_price_low":186.54,"period_end_date":"2024-11-01","is_open":false,"zone":"breached_top"},{"checkpoint_date":"2024-11-04","quarter_end":"2024-09-30","ttm_eps":2.87,"trailing_sample_size":501,"per_low":30.38,"per_high":65.74,"band_width_ratio":2.16,"predicted_low":87.18,"predicted_high":188.67,"realized_per_high":70.27,"realized_per_low":57.49,"realized_price_high":201.68,"realized_price_low":164.99,"period_end_date":"2025-02-13","is_open":false,"zone":"breached_top"},{"checkpoint_date":"2025-02-14","quarter_end":"2024-12-31","ttm_eps":2.39,"trailing_sample_size":502,"per_low":33.32,"per_high":66.18,"band_width_ratio":1.99,"predicted_low":79.65,"predicted_high":158.18,"realized_per_high":90.65,"realized_per_low":71.2,"realized_price_high":216.66,"realized_price_low":170.16,"period_end_date":"2025-05-08","is_open":false,"zone":"breached_top"},{"checkpoint_date":"2025-05-09","quarter_end":"2025-03-31","ttm_eps":2.34,"trailing_sample_size":502,"per_low":44.15,"per_high":85.85,"band_width_ratio":1.94,"predicted_low":103.32,"predicted_high":200.9,"realized_per_high":83.43,"realized_per_low":75.83,"realized_price_high":195.22,"realized_price_low":177.44,"period_end_date":"2025-08-01","is_open":false,"zone":"full_hit"},{"checkpoint_date":"2025-08-04","quarter_end":"2025-06-30","ttm_eps":2.09,"trailing_sample_size":500,"per_low":49.39,"per_high":84.24,"band_width_ratio":1.71,"predicted_low":103.23,"predicted_high":176.07,"realized_per_high":116.93,"realized_per_low":93.92,"realized_price_high":244.38,"realized_price_low":196.3,"period_end_date":"2025-11-03","is_open":false,"zone":"breached_top"},{"checkpoint_date":"2025-11-04","quarter_end":"2025-09-30","ttm_eps":1.31,"trailing_sample_size":500,"per_low":59.34,"per_high":109.09,"band_width_ratio":1.84,"predicted_low":77.73,"predicted_high":142.9,"realized_per_high":180.37,"realized_per_low":163.39,"realized_price_high":236.28,"realized_price_low":214.04,"period_end_date":"2026-02-19","is_open":false,"zone":"breached_top"},{"checkpoint_date":"2026-02-20","quarter_end":"2025-12-31","ttm_eps":2.36,"trailing_sample_size":502,"per_low":62.52,"per_high":174.59,"band_width_ratio":2.79,"predicted_low":147.55,"predicted_high":412.03,"realized_per_high":100.08,"realized_per_low":83.64,"realized_price_high":236.19,"realized_price_low":197.38,"period_end_date":"2026-05-07","is_open":false,"zone":"full_hit"},{"checkpoint_date":"2026-05-08","quarter_end":"2026-03-31","ttm_eps":2.03,"trailing_sample_size":501,"per_low":65.43,"per_high":173.15,"band_width_ratio":2.65,"predicted_low":132.83,"predicted_high":351.48,"realized_per_high":129.7,"realized_per_low":99.29,"realized_price_high":263.3,"realized_price_low":201.55,"period_end_date":"2026-07-31","is_open":false,"zone":"full_hit"},{"checkpoint_date":"2026-08-03","quarter_end":"2026-06-30","ttm_eps":3.54,"trailing_sample_size":499,"per_low":78.89,"per_high":170.98,"band_width_ratio":2.17,"predicted_low":279.27,"predicted_high":605.26,"realized_per_high":75.13,"realized_per_low":68.87,"realized_price_high":265.97,"realized_price_low":243.8,"period_end_date":"2026-09-04","is_open":true,"zone":"breached_bottom"}];
+
+(function(){
+  const svgCandle = document.getElementById('abbvCandleSvg');
+  const svgVol = document.getElementById('abbvVolumeSvg');
+  const toggle = document.getElementById('abbvRangeToggle');
+  const maToggle = document.getElementById('abbvMaToggle');
+  const headerTitle = document.getElementById('techHeaderTitle');
+  const headerReturn = document.getElementById('techHeaderReturn');
+  const rangeSummary = document.getElementById('techRangeSummary');
+  if(!svgCandle || !svgVol || !toggle) return;
+  const RANGES = {'1M':21,'6M':126,'1Y':252,'3Y':756,'5Y':Infinity};
+  const RANGE_LABELS = {'1M':'1개월','6M':'6개월','1Y':'1년','3Y':'3년','5Y':'5년'};
+  const NS = 'http://www.w3.org/2000/svg';
+  const UP='#2ecc71', DOWN='#e74c3c';
+  const maColors = {ma5:'#ff6b9d', ma20:'#9b59b6', ma60:'#f0c040', ma120:'#22d3ee'};
+  const maState = {ma5:true, ma20:true, ma60:true, ma120:true, pricelabels:true, backtest:false};
+  let currentRange = '1Y';
+  const backtestSummaryEl = document.getElementById('abbvBacktestSummary');
+
+  function updateHeader(rangeKey, data, prevClose){
+    const base = prevClose != null ? prevClose : data[0][4];
+    const last = data[data.length-1][4];
+    const retPct = ((last/base - 1) * 100).toFixed(1);
+    const sign = retPct >= 0 ? '+' : '';
+    const dateFrom = data[0][0].slice(0,7).replace('-','.');
+    const dateTo = data[data.length-1][0].slice(0,7).replace('-','.');
+    headerTitle.childNodes[0].textContent = `기술적 분석 — 일봉 캔들스틱 (${dateFrom} ~ ${dateTo}) · ${RANGE_LABELS[rangeKey]} 수익률 `;
+    headerReturn.textContent = `${sign}${retPct}%`;
+    headerReturn.style.color = retPct >= 0 ? 'var(--green)' : 'var(--red)';
+
+    const highs = data.map(d=>d[2]), lows = data.map(d=>d[3]);
+    const periodHigh = Math.max(...highs), periodLow = Math.min(...lows);
+    const highDate = data[highs.indexOf(periodHigh)][0].slice(0,7).replace('-','.');
+    const lowDate = data[lows.indexOf(periodLow)][0].slice(0,7).replace('-','.');
+    rangeSummary.textContent = `${RANGE_LABELS[rangeKey]} 최저 $${periodLow.toFixed(2)} (${lowDate}) → ${RANGE_LABELS[rangeKey]} 최고 $${periodHigh.toFixed(2)} (${highDate}) → 현재 $${last.toFixed(2)}`;
+  }
+
+  function draw(rangeKey){
+    currentRange = rangeKey;
+    const n = RANGES[rangeKey];
+    const data = ABBV_DAILY.slice(-n);
+    const startIdx = ABBV_DAILY.length - data.length;
+    const prevClose = startIdx > 0 ? ABBV_DAILY[startIdx - 1][4] : null;
+    const ma5 = ABBV_MA5.slice(-n), ma20 = ABBV_MA20.slice(-n), ma60 = ABBV_MA60.slice(-n), ma120 = ABBV_MA120.slice(-n);
+    updateHeader(rangeKey, data, prevClose);
+    while(svgCandle.firstChild) svgCandle.removeChild(svgCandle.firstChild);
+    while(svgVol.firstChild) svgVol.removeChild(svgVol.firstChild);
+
+    const W=720,H=240,pL=45,pR=12,pT=10,pB=20;
+    const cW=W-pL-pR,cH=H-pT-pB;
+    const highs=data.map(d=>d[2]), lows=data.map(d=>d[3]);
+    const dataDates = data.map(d=>d[0]);
+    function idxForDate(dateStr){
+      let lo=0, hi=dataDates.length-1;
+      if(dateStr<=dataDates[0]) return 0;
+      if(dateStr>=dataDates[hi]) return hi;
+      while(lo<hi){ const mid=(lo+hi)>>1; if(dataDates[mid]<dateStr) lo=mid+1; else hi=mid; }
+      return lo;
+    }
+    const visibleCheckpoints = maState.backtest ? ABBV_BACKTEST.filter(cp=>{
+      const cpEnd = cp.period_end_date || dataDates[dataDates.length-1];
+      return cpEnd >= dataDates[0] && cp.checkpoint_date <= dataDates[dataDates.length-1];
+    }) : [];
+    const backtestVals = visibleCheckpoints.flatMap(cp=>[cp.predicted_low, cp.predicted_high]);
+    const maVals=[...ma5,...ma20,...ma60,...ma120,...backtestVals].filter(v=>v!=null);
+    const mx=Math.max(...highs,...maVals), mn=Math.min(...lows,...maVals);
+    const pad=(mx-mn)*0.06 || mx*0.02;
+    const top=mx+pad, bot=mn-pad, rng=(top-bot)||1;
+    const py = v => pT + cH*(1-(v-bot)/rng);
+    const colW = cW/data.length;
+    const bodyW = Math.max(colW*0.62, 0.4);
+
+    const ZONE_FILL = {
+      full_hit: 'rgba(46,204,113,0.16)', breached_top: 'rgba(231,76,60,0.16)',
+      breached_bottom: 'rgba(231,76,60,0.16)', breached_both: 'rgba(231,76,60,0.24)',
+      pending: 'rgba(240,192,64,0.14)',
+    };
+    const ZONE_BORDER = {
+      full_hit: '#2ecc71', breached_top: '#e74c3c', breached_bottom: '#e74c3c',
+      breached_both: '#e74c3c', pending: '#f0c040',
+    };
+    function checkpointX(cp){
+      const x0 = pL + idxForDate(cp.checkpoint_date)*colW;
+      const endDateForX = cp.period_end_date || dataDates[dataDates.length-1];
+      const x1 = pL + (idxForDate(endDateForX)+1)*colW;
+      return [Math.max(x0,pL), Math.min(x1,W-pR)];
+    }
+    visibleCheckpoints.forEach(cp=>{
+      const [x0,x1] = checkpointX(cp);
+      const yTop = py(cp.predicted_high), yBot = py(cp.predicted_low);
+      const rect = document.createElementNS(NS,'rect');
+      rect.setAttribute('x', x0); rect.setAttribute('y', yTop);
+      rect.setAttribute('width', Math.max(x1-x0,0)); rect.setAttribute('height', Math.max(yBot-yTop,0));
+      rect.setAttribute('fill', cp.is_open ? ZONE_FILL.pending : ZONE_FILL[cp.zone]);
+      svgCandle.appendChild(rect);
+    });
+
+    for(let i=0;i<=3;i++){
+      const v = bot + rng*i/3;
+      const y = py(v);
+      const l=document.createElementNS(NS,'line');
+      l.setAttribute('x1',pL);l.setAttribute('x2',W-pR);l.setAttribute('y1',y);l.setAttribute('y2',y);
+      l.setAttribute('stroke','rgba(255,255,255,.08)');l.setAttribute('stroke-width','1');
+      svgCandle.appendChild(l);
+      const t=document.createElementNS(NS,'text');
+      t.setAttribute('x',pL-4);t.setAttribute('y',y+3);t.setAttribute('text-anchor','end');
+      t.setAttribute('font-size','9');t.setAttribute('fill','rgba(154,160,184,.8)');
+      t.textContent='$'+v.toFixed(0);
+      svgCandle.appendChild(t);
+    }
+
+    data.forEach((d,i)=>{
+      const [,o,h,l,c] = d;
+      const cx = pL + (i+0.5)*colW;
+      const up = c >= o;
+      const col = up ? UP : DOWN;
+      const wick=document.createElementNS(NS,'line');
+      wick.setAttribute('x1',cx);wick.setAttribute('x2',cx);
+      wick.setAttribute('y1',py(h));wick.setAttribute('y2',py(l));
+      wick.setAttribute('stroke',col);wick.setAttribute('stroke-width', Math.max(colW*0.12,0.4));
+      svgCandle.appendChild(wick);
+      const yTop = py(Math.max(o,c));
+      const yBot = py(Math.min(o,c));
+      const rect=document.createElementNS(NS,'rect');
+      rect.setAttribute('x', cx - bodyW/2);
+      rect.setAttribute('y', yTop);
+      rect.setAttribute('width', bodyW);
+      rect.setAttribute('height', Math.max(yBot-yTop, 0.6));
+      rect.setAttribute('fill', col);
+      svgCandle.appendChild(rect);
+    });
+
+    const drawMaLine = (vals, color) => {
+      let seg = [];
+      const flush = () => {
+        if (seg.length > 1) {
+          const pl = document.createElementNS(NS,'polyline');
+          pl.setAttribute('points', seg.join(' '));
+          pl.setAttribute('fill','none'); pl.setAttribute('stroke',color);
+          pl.setAttribute('stroke-width','1.4'); pl.setAttribute('opacity','0.95');
+          pl.setAttribute('stroke-linejoin','round'); pl.setAttribute('stroke-linecap','round');
+          svgCandle.appendChild(pl);
+        }
+        seg = [];
+      };
+      vals.forEach((v,i) => {
+        if (v == null) { flush(); return; }
+        seg.push(`${pL+(i+0.5)*colW},${py(v)}`);
+      });
+      flush();
+    };
+    if (maState.ma5) drawMaLine(ma5, maColors.ma5);
+    if (maState.ma20) drawMaLine(ma20, maColors.ma20);
+    if (maState.ma60) drawMaLine(ma60, maColors.ma60);
+    if (maState.ma120) drawMaLine(ma120, maColors.ma120);
+
+    visibleCheckpoints.forEach(cp=>{
+      const [x0,x1] = checkpointX(cp);
+      const borderColor = cp.is_open ? ZONE_BORDER.pending : ZONE_BORDER[cp.zone];
+      [cp.predicted_high, cp.predicted_low].forEach(v=>{
+        const y = py(v);
+        const line = document.createElementNS(NS,'line');
+        line.setAttribute('x1',x0); line.setAttribute('x2',x1);
+        line.setAttribute('y1',y); line.setAttribute('y2',y);
+        line.setAttribute('stroke', borderColor); line.setAttribute('stroke-width','1');
+        line.setAttribute('stroke-dasharray', cp.is_open ? '2,2' : '4,2');
+        line.setAttribute('opacity','0.85');
+        svgCandle.appendChild(line);
+      });
+    });
+
+    if (maState.pricelabels) {
+    const closeIdx = data.length-1;
+    const closeVal = data[closeIdx][4];
+    const periodHigh = Math.max(...highs);
+    const periodLow = Math.min(...lows);
+    const highIdx = highs.indexOf(periodHigh);
+    const lowIdx = lows.indexOf(periodLow);
+    const markers = [
+      {idx: highIdx, v: periodHigh, color: UP, label:'최고', side:'above'},
+      {idx: lowIdx, v: periodLow, color: DOWN, label:'최저', side:'below'},
+      {idx: closeIdx, v: closeVal, color:'#60a5fa', label:'종가', side:'left'}
+    ];
+    markers.forEach(m=>{
+      const cx = pL + (m.idx+0.5)*colW;
+      const cy = py(m.v);
+      const dot=document.createElementNS(NS,'circle');
+      dot.setAttribute('cx',cx);dot.setAttribute('cy',cy);dot.setAttribute('r','3.5');
+      dot.setAttribute('fill',m.color);dot.setAttribute('stroke','#0f1117');dot.setAttribute('stroke-width','1.5');
+      svgCandle.appendChild(dot);
+
+      const labelText = `${m.label} $${m.v.toFixed(2)}`;
+      const labelW = labelText.length*5.2+6;
+      let tx, ty, anchor;
+      if (m.side === 'left') {
+        anchor = 'end'; tx = cx-7; ty = cy+3;
+      } else if (m.side === 'above') {
+        ty = cy-9;
+        if (cx < pL+cW*0.15) { anchor='start'; tx=cx+7; }
+        else if (cx > W-pR-cW*0.15) { anchor='end'; tx=cx-7; }
+        else { anchor='middle'; tx=cx; }
+      } else {
+        ty = cy+16;
+        if (cx < pL+cW*0.15) { anchor='start'; tx=cx+7; }
+        else if (cx > W-pR-cW*0.15) { anchor='end'; tx=cx-7; }
+        else { anchor='middle'; tx=cx; }
+      }
+      const bgX = anchor==='end' ? tx-labelW : anchor==='middle' ? tx-labelW/2 : tx;
+      const bg=document.createElementNS(NS,'rect');
+      bg.setAttribute('x', bgX);bg.setAttribute('y', ty-8);
+      bg.setAttribute('width', labelW);bg.setAttribute('height', 12);
+      bg.setAttribute('fill','rgba(15,17,23,0.85)');bg.setAttribute('rx','2');
+      svgCandle.appendChild(bg);
+      const t=document.createElementNS(NS,'text');
+      t.setAttribute('x', tx);t.setAttribute('y', ty+2);
+      t.setAttribute('text-anchor',anchor);t.setAttribute('font-size','9');
+      t.setAttribute('font-weight','700');t.setAttribute('fill', m.color);
+      t.textContent = labelText;
+      svgCandle.appendChild(t);
+    });
+    }
+
+    const labelCount = 5;
+    for(let i=0;i<labelCount;i++){
+      const idx = Math.round(i*(data.length-1)/((labelCount-1)||1));
+      const cx = pL + (idx+0.5)*colW;
+      const t=document.createElementNS(NS,'text');
+      t.setAttribute('x', Math.min(Math.max(cx,pL+10), W-20));
+      t.setAttribute('y', H-4);
+      t.setAttribute('text-anchor','middle');t.setAttribute('font-size','9');
+      t.setAttribute('fill','rgba(154,160,184,.8)');
+      t.textContent = data[idx][0].slice(2).replace(/-/g,'.');
+      svgCandle.appendChild(t);
+    }
+
+    if (backtestSummaryEl) {
+      const resolved = visibleCheckpoints.filter(cp=>!cp.is_open);
+      if (maState.backtest && resolved.length) {
+        const hit = resolved.filter(cp=>cp.zone==='full_hit').length;
+        const top = resolved.filter(cp=>cp.zone==='breached_top').length;
+        const bot = resolved.filter(cp=>cp.zone==='breached_bottom').length;
+        const both = resolved.filter(cp=>cp.zone==='breached_both').length;
+        backtestSummaryEl.style.display = 'block';
+        backtestSummaryEl.innerHTML = `<strong style="color:#f0c040;">예상밴드 백테스트</strong> — 체크포인트 ${resolved.length}개 중 `
+          + `<strong style="color:#2ecc71;">적중 ${hit}개</strong> · <strong style="color:#e74c3c;">상단 이탈 ${top}개</strong> · <strong style="color:#e74c3c;">하단 이탈 ${bot}개</strong>`
+          + (both ? ` · 양쪽 이탈 ${both}개 ` : ' ')
+          + `(과거 시점 재무제표만 사용, 미래 정보 미사용, 노란 점선은 진행 중).`
+          + ` <span style="color:#f0c040;">⚠ 상단 이탈이 유독 많은 것은 밴드 방법론의 결함이 아니라, Skyrizi·Rinvoq 고성장에 대한 시장의 재평가가 과거 트레일링 PER 분포가 예상한 것보다 훨씬 빠르게 진행됐다는 뜻으로 해석하는 것이 정확하다 — 정적 PER 밴드가 구조적 성장 재평가를 따라잡지 못한 사례다.</span>`;
+      } else {
+        backtestSummaryEl.style.display = 'none';
+      }
+    }
+
+    const VW=720,VH=70,vpT=6,vpB=4;
+    const vcH=VH-vpT-vpB;
+    const maxV = Math.max(...data.map(d=>d[5]));
+    data.forEach((d,i)=>{
+      const [,o,,,c,v] = d;
+      const cx = pL + (i+0.5)*colW;
+      const up = c >= o;
+      const col = up ? 'rgba(46,204,113,0.55)' : 'rgba(231,76,60,0.55)';
+      const h = (v/maxV)*vcH;
+      const rect=document.createElementNS(NS,'rect');
+      rect.setAttribute('x', cx - bodyW/2);
+      rect.setAttribute('y', vpT + (vcH-h));
+      rect.setAttribute('width', bodyW);
+      rect.setAttribute('height', Math.max(h,0.6));
+      rect.setAttribute('fill', col);
+      svgVol.appendChild(rect);
+    });
+  }
+
+  toggle.querySelectorAll('.range-btn').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      toggle.querySelectorAll('.range-btn').forEach(b=>b.classList.remove('active'));
+      btn.classList.add('active');
+      draw(btn.dataset.range);
+    });
+  });
+
+  if (maToggle) {
+    document.querySelectorAll('.ma-toggle-btn').forEach(btn=>{
+      btn.addEventListener('click', ()=>{
+        const key = btn.dataset.ma;
+        maState[key] = !maState[key];
+        btn.classList.toggle('ma-off', !maState[key]);
+        draw(currentRange);
+      });
+    });
+  }
+
+  draw('1Y');
+})();
+
+
+// ══════ shared: collapsible toggle (#fund/#invest) ══════
+function toggleCollapsible(header) {
+  const body = header.nextElementSibling;
+  const hintText = header.querySelector('.toggle-hint-text');
+  const expandedLabel = '상세 숨기기';
+  const collapsedLabel = '상세 보기';
+  const collapsing = !header.classList.contains('collapsed');
+  if (collapsing) {
+    body.style.maxHeight = body.scrollHeight + 'px';
+    requestAnimationFrame(() => {
+      header.classList.add('collapsed');
+      body.classList.add('collapsed');
+      header.setAttribute('aria-expanded', 'false');
+      body.setAttribute('aria-hidden', 'true');
+      if (hintText) hintText.textContent = collapsedLabel;
+    });
+  } else {
+    header.classList.remove('collapsed');
+    body.classList.remove('collapsed');
+    body.style.maxHeight = body.scrollHeight + 'px';
+    header.setAttribute('aria-expanded', 'true');
+    body.setAttribute('aria-hidden', 'false');
+    if (hintText) hintText.textContent = expandedLabel;
+    body.addEventListener('transitionend', function clear() {
+      if (!header.classList.contains('collapsed')) body.style.maxHeight = 'none';
+      body.removeEventListener('transitionend', clear);
+    });
+  }
+}
+
+
+// ─── 분기 매출/영업이익/OPM 차트 ───
+function renderFundChart() {
+  const ctx = document.getElementById('abbvRevChart');
+  if (!ctx) return;
+  const revenue=[14.46,15.10,13.34,15.42,15.78,16.62,15.00,16.99];
+  const opinc=[3.83,-1.49,3.73,4.89,1.90,4.54,3.99,6.43];
+  const opm=[26.5,-9.9,28.0,31.7,12.1,27.3,26.6,37.9];
+  const y2min=-20, y2max=40;
+  new Chart(ctx,{
+    data:{
+      labels:["Q3'24","Q4'24","Q1'25","Q2'25","Q3'25","Q4'25","Q1'26","Q2'26"],
+      datasets:[
+        {type:'bar',label:'매출($B)',data:revenue,backgroundColor:'rgba(47,111,237,0.55)',borderColor:'#2f6fed',borderWidth:1,borderRadius:4,yAxisID:'y'},
+        {type:'bar',label:'영업이익($B)',data:opinc,backgroundColor:'rgba(46,204,113,0.5)',borderColor:'#2ecc71',borderWidth:1,borderRadius:4,yAxisID:'y'},
+        {type:'line',label:'OPM(%)',data:opm,borderColor:'#f0c040',backgroundColor:'rgba(240,192,64,.1)',tension:.35,pointRadius:4,borderWidth:2.5,fill:false,yAxisID:'y2'}
+      ]
+    },
+    options:{
+      responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{labels:{color:'#9aa0b8',font:{size:11}}}},
+      scales:{
+        x:{grid:{color:'rgba(255,255,255,0.05)'},ticks:{color:'#9aa0b8',font:{size:10},maxRotation:30}},
+        y:{position:'left',grid:{color:'rgba(255,255,255,0.05)'},ticks:{color:'#9aa0b8',font:{size:10},callback:v=>'$'+v+'B'}},
+        y2:{position:'right',min:y2min,max:y2max,grid:{display:false},ticks:{color:'#f0c040',font:{size:10},callback:v=>v+'%'}}
+      }
+    }
+  });
+}
+
+// ─── 매출 구성 도넛 차트 (제품군 5개 항목) ───
+function renderSegmentChart() {
+  const ctx = document.getElementById('segmentPieChart');
+  if (!ctx) return;
+  const total = 16990;
+  new Chart(ctx,{
+    type:'doughnut',
+    data:{
+      labels:['Immunology','Neuroscience','Oncology','Aesthetics','기타'],
+      datasets:[{
+        data:[8786, 3228, 1650, 1282, 2044],
+        backgroundColor:['#2f6fed','#3498db','#9b59b6','#f0c040','#5c6282'],
+        borderColor:'#1a1d27',
+        borderWidth:2
+      }]
+    },
+    options:{
+      responsive:true,maintainAspectRatio:false,
+      cutout:'62%',
+      plugins:{
+        legend:{display:false},
+        tooltip:{callbacks:{label:ctx=>{
+          const pct=(ctx.raw/total*100).toFixed(1);
+          return `${ctx.label}: $${(ctx.raw/1000).toFixed(2)}B (${pct}%)`;
+        }}}
+      }
+    }
+  });
+}
+
+// ══════ #valuation ══════
+const MULTIPLE_DATA = {
+  per: {
+    title: 'PER 비교 — Merck(MRK)·Pfizer(PFE)',
+    unit: 'PER', max: 32, orclValue: 23.60,
+    calcLine: 'PER = 주가($256.46) ÷ TTM Adjusted EPS($10.87) = 23.60x (GAAP TTM EPS $3.54 기준으로는 72.45x로 왜곡)',
+    verdict: 'ABBV Adjusted PER 23.60x는 앵커(MRK Forward PE 17.33x·PFE Forward PE 10.27x 평균 기반 적정 21x) 대비 소폭 높다 — 5개 지표 중 상대적으로 무난한 쪽',
+    verdictCaveat: 'MRK·PFE는 GAAP TTM PER 자체가 각각 118x·37x로 자체 왜곡돼 있어 컨센서스 기준 Forward PE로 비교했다 — trailing-adjusted(ABBV)와 forward-consensus(피어)라는 기준 차이가 있어 완전한 동일 기준 비교는 아니라는 점을 감안해야 한다',
+    anchor: { value: '21x', formula: 'MRK·PFE Forward PE 평균(약 13.8x)에 ABBV의 우수한 성장(Immunology +15.1%) 프리미엄을 반영해 설정', cross: 'MRK·PFE는 이번에 새로 조사(stockanalysis.com, 2026-09-04/06 기준)' },
+    secondary: { label: 'GAAP PER (참고, 비교 제외)', caveat: 'GAAP TTM EPS $3.54 기준 PER 72.45x는 반복되는 인수 관련 무형자산상각·IPR&D충당금·조건부대가 재측정으로 왜곡돼 있어 피어 비교에 사용하지 않았다' },
+    peers: [
+      { name:'MRK(Fwd)', value:17.33, status:'anchor' },
+      { name:'PFE(Fwd)', value:10.27, status:'anchor' }
+    ]
+  },
+  pbr: {
+    title: 'PBR — 산출 불가',
+    unit: 'PBR', max: 10, orclValue: 0,
+    calcLine: 'PBR = 주가($256.46) ÷ BPS(자기자본 -$5.94B ÷ 17.67억주 = 음수) — 분모가 음수라 배수 자체를 계산할 수 없음',
+    verdict: '자기자본이 마이너스라 PBR을 계산할 수 없다 — 5개 지표 중 유일하게 종합판단(가중치 0)에서 제외',
+    verdictCaveat: '수십 년간의 공격적 자사주매입(자기주식 -$10.6B)과 2020년 Allergan 인수 이후 누적된 결손(-$17.3B)이 만든 구조적 결과다 — 수익성 문제가 아니며, 이자보상배율 6.38x가 보여주듯 상환능력 자체는 건전하다',
+    anchor: { value: '해당 없음', formula: '자기자본이 음수인 구간에서는 앵커 산출 자체가 무의미', cross: null },
+    secondary: null,
+    peers: []
+  },
+  psr: {
+    title: 'PSR 비교 — Merck(MRK)·Pfizer(PFE)',
+    unit: 'PSR', max: 14, orclValue: 7.04,
+    calcLine: 'PSR = 시가총액($453.2B) ÷ TTM매출($64.39B) = 7.04x',
+    verdict: 'ABBV PSR 7.04x는 앵커(MRK 5.57x·PFE 2.55x 평균 기반 적정 6x) 대비 소폭 높다 — PER과 함께 상대적으로 무난한 쪽',
+    verdictCaveat: 'MRK·PFE 대비 ABBV의 매출 성장률(+10%대)이 뚜렷이 높아, 소폭의 프리미엄은 성장률 차이로 상당 부분 설명된다',
+    anchor: { value: '6x', formula: 'MRK 5.57x·PFE 2.55x 평균(4.06x)에 ABBV의 매출 성장 프리미엄을 반영해 설정', cross: null },
+    secondary: null,
+    peers: [
+      { name:'MRK', value:5.57, status:'anchor' },
+      { name:'PFE', value:2.55, status:'anchor' }
+    ]
+  },
+  pcr: {
+    title: 'PCR 비교 — Merck(MRK)·Pfizer(PFE), P/OCF 기준',
+    unit: 'P/OCF', max: 30, orclValue: 23.23,
+    calcLine: 'PCR(P/OCF) = 시가총액($453.2B) ÷ TTM OCF($19.51B) = 23.23x',
+    verdict: 'ABBV P/OCF 23.23x는 앵커(MRK 18.58x·PFE 12.10x 평균 기반 적정 17x) 대비 뚜렷하게 높다 — 5개 지표 중 프리미엄이 가장 큰 축',
+    verdictCaveat: 'ABBV의 현금창출력(OCF마진 30%대) 자체는 견조하지만, 배수로 보면 MRK·PFE보다 시장이 더 비싸게 쳐주고 있다는 뜻이다 — Skyrizi·Rinvoq 성장 지속에 대한 신뢰가 이 프리미엄의 근거',
+    anchor: { value: '17x', formula: 'MRK 18.58x·PFE 12.10x 평균(15.34x)에 소폭의 성장 프리미엄을 반영해 설정', cross: null },
+    secondary: null,
+    peers: [
+      { name:'MRK', value:18.58, status:'anchor' },
+      { name:'PFE', value:12.10, status:'anchor' }
+    ]
+  },
+  evebitda: {
+    title: 'EV/EBITDA 비교 — Merck(MRK)·Pfizer(PFE)',
+    unit: 'EV/EBITDA', max: 28, orclValue: 20.89,
+    calcLine: 'EV/EBITDA = EV($517.4B, 시총 $453.2B+총차입금 $70.8B−현금 $6.6B) ÷ EBITDA($24.77B, 영업이익 $16.87B+D&A $7.90B) = 20.89x',
+    verdict: 'ABBV EV/EBITDA 20.89x는 앵커(MRK 14.47x·PFE 8.43x 평균 기반 적정 16x) 대비 뚜렷하게 높다 — PCR과 함께 프리미엄이 큰 축',
+    verdictCaveat: '높은 총차입금(EV 계산에서 불리)에도 불구하고 배수가 피어보다 높다는 것은, 영업이익·EBITDA 성장에 대한 시장의 기대가 그만큼 크다는 뜻이다',
+    anchor: { value: '16x', formula: 'MRK 14.47x·PFE 8.43x 평균(11.45x)에 성장 프리미엄을 반영해 설정', cross: null },
+    secondary: null,
+    peers: [
+      { name:'MRK', value:14.47, status:'anchor' },
+      { name:'PFE', value:8.43, status:'anchor' }
+    ]
+  }
+};
+
+let multipleChart = null;
+function renderMultipleChart(key) {
+  const d = MULTIPLE_DATA[key];
+  const ctx = document.getElementById('multipleChart');
+  if (!ctx || !d) return;
+  if (multipleChart) multipleChart.destroy();
+  if (key === 'pbr') {
+    multipleChart = new Chart(ctx,{
+      type:'bar',
+      data:{ labels:['ABBV'], datasets:[{ label:'PBR', data:[0], backgroundColor:['rgba(154,160,184,0.18)'], borderColor:['#5c6282'], borderWidth:1, borderRadius:5, minBarLength:6 }] },
+      options:{
+        responsive:true,maintainAspectRatio:false,
+        plugins:{legend:{display:false},tooltip:{callbacks:{label:()=>'자기자본 마이너스로 PBR 산출 불가'}}},
+        scales:{
+          x:{grid:{display:false},ticks:{color:'#9aa0b8',font:{size:10.5}}},
+          y:{max:d.max,grid:{color:'rgba(255,255,255,0.05)'},ticks:{color:'#9aa0b8',font:{size:10},callback:v=>v+'x'}}
+        }
+      }
+    });
+    return;
+  }
+  const labels = ['ABBV', ...d.peers.map(p=> p.status==='excluded' ? `${p.name}(제외)` : p.name)];
+  const data = [d.orclValue, ...d.peers.map(p=>p.value)];
+  const bg = [ '#6fa3ff', ...d.peers.map(p=> p.status==='excluded' ? 'rgba(231,76,60,0.18)' : 'rgba(154,160,184,0.35)') ];
+  const bd = [ '#2f6fed', ...d.peers.map(p=> p.status==='excluded' ? '#c0392b' : '#5c6282') ];
+  multipleChart = new Chart(ctx,{
+    type:'bar',
+    data:{ labels, datasets:[{ label:d.unit, data, backgroundColor:bg, borderColor:bd, borderWidth:1, borderRadius:5, minBarLength:6 }] },
+    options:{
+      responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=> ctx.raw===0 ? `${d.unit} 데이터 없음(비교 불가)` : `${d.unit} ${ctx.raw}x`}}},
+      scales:{
+        x:{grid:{display:false},ticks:{color:'#9aa0b8',font:{size:10.5}}},
+        y:{max:d.max,grid:{color:'rgba(255,255,255,0.05)'},ticks:{color:'#9aa0b8',font:{size:10},callback:v=>v+'x'}}
+      }
+    }
+  });
+}
+
+let currentMultipleKey = 'per';
+function selectMultiple(key) {
+  const d = MULTIPLE_DATA[key];
+  if (!d) return;
+  currentMultipleKey = key;
+  document.querySelectorAll('.val-item[data-metric]').forEach(el => el.classList.toggle('selected', el.dataset.metric === key));
+  document.getElementById('multipleCompareTitle').textContent = d.title;
+
+  document.getElementById('verdictLine').textContent = d.verdict;
+  document.getElementById('verdictCaveat').innerHTML = '<span class="caveat-icon">!</span><span>' + d.verdictCaveat + '</span>';
+
+  document.getElementById('anchorCalc').textContent = d.calcLine;
+  document.getElementById('anchorFormula').textContent = d.anchor.formula;
+  const crossEl = document.getElementById('anchorCross');
+  if (d.anchor.cross) { crossEl.textContent = d.anchor.cross; crossEl.style.display = ''; }
+  else { crossEl.style.display = 'none'; }
+
+  const secRow = document.getElementById('secondaryRow');
+  if (d.secondary) {
+    document.getElementById('secondaryLabel').textContent = d.secondary.label;
+    document.getElementById('secondaryCaveat').textContent = d.secondary.caveat;
+    secRow.style.display = '';
+  } else {
+    secRow.style.display = 'none';
+  }
+
+  renderMultipleChart(key);
+}
+
+const charts = {};
+
+function renderCharts(sectionId) {
+  setTimeout(() => {
+    if (sectionId === 'fund' && document.getElementById('abbvRevChart')) {
+      if (!charts['fundRev']) { renderFundChart(); charts['fundRev'] = true; }
+      if (!charts['fundSegment']) { renderSegmentChart(); charts['fundSegment'] = true; }
+    }
+    if (sectionId === 'valuation' && document.getElementById('multipleChart') && !charts['multiple']) { selectMultiple(currentMultipleKey); charts['multiple'] = true; }
+  }, 50);
+}
+
+function showSection(id, btn) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+  renderCharts(id);
+}
+
+</script>
+</body>
+</html>
