@@ -918,8 +918,19 @@ const KO_BACKTEST = [{"checkpoint_date":"2023-10-24","quarter_end":"2023-09-29",
       const cpEnd = cp.period_end_date || dataDates[dataDates.length-1];
       return cpEnd >= dataDates[0] && cp.checkpoint_date <= dataDates[dataDates.length-1];
     }) : [];
-    const backtestVals = visibleCheckpoints.flatMap(cp=>[cp.predicted_low, cp.predicted_high]);
-    const maVals=[...ma5,...ma20,...ma60,...ma120,...backtestVals].filter(v=>v!=null);
+    const priceVals=[...ma5,...ma20,...ma60,...ma120].filter(v=>v!=null);
+    const priceMx = Math.max(...highs,...priceVals), priceMn = Math.min(...lows,...priceVals);
+    const priceSpan = (priceMx-priceMn) || priceMx*0.1;
+    const BACKTEST_CAP = 1.5;
+    const capHi = priceMx + priceSpan*BACKTEST_CAP, capLo = priceMn - priceSpan*BACKTEST_CAP;
+    const clipBand = v => Math.max(capLo, Math.min(capHi, v));
+    visibleCheckpoints.forEach(cp=>{
+      cp._drawLow = clipBand(cp.predicted_low);
+      cp._drawHigh = clipBand(cp.predicted_high);
+      cp._clipped = cp._drawLow !== cp.predicted_low || cp._drawHigh !== cp.predicted_high;
+    });
+    const backtestVals = visibleCheckpoints.flatMap(cp=>[cp._drawLow, cp._drawHigh]);
+    const maVals=[...priceVals,...backtestVals];
     const mx=Math.max(...highs,...maVals), mn=Math.min(...lows,...maVals);
     const pad=(mx-mn)*0.06 || mx*0.02;
     const top=mx+pad, bot=mn-pad, rng=(top-bot)||1;
@@ -944,11 +955,16 @@ const KO_BACKTEST = [{"checkpoint_date":"2023-10-24","quarter_end":"2023-09-29",
     }
     visibleCheckpoints.forEach(cp=>{
       const [x0,x1] = checkpointX(cp);
-      const yTop = py(cp.predicted_high), yBot = py(cp.predicted_low);
+      const yTop = py(cp._drawHigh), yBot = py(cp._drawLow);
       const rect = document.createElementNS(NS,'rect');
       rect.setAttribute('x', x0); rect.setAttribute('y', yTop);
       rect.setAttribute('width', Math.max(x1-x0,0)); rect.setAttribute('height', Math.max(yBot-yTop,0));
       rect.setAttribute('fill', cp.is_open ? ZONE_FILL.pending : ZONE_FILL[cp.zone]);
+      if (cp._clipped) {
+        const title = document.createElementNS(NS,'title');
+        title.textContent = `실제 예상밴드 $${cp.predicted_low.toFixed(2)}~$${cp.predicted_high.toFixed(2)} (차트 범위를 크게 벗어나 잘라서 표시)`;
+        rect.appendChild(title);
+      }
       svgCandle.appendChild(rect);
     });
 
@@ -1014,7 +1030,7 @@ const KO_BACKTEST = [{"checkpoint_date":"2023-10-24","quarter_end":"2023-09-29",
     visibleCheckpoints.forEach(cp=>{
       const [x0,x1] = checkpointX(cp);
       const borderColor = cp.is_open ? ZONE_BORDER.pending : ZONE_BORDER[cp.zone];
-      [cp.predicted_high, cp.predicted_low].forEach(v=>{
+      [cp._drawHigh, cp._drawLow].forEach(v=>{
         const y = py(v);
         const line = document.createElementNS(NS,'line');
         line.setAttribute('x1',x0); line.setAttribute('x2',x1);

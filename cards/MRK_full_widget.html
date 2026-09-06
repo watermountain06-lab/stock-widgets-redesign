@@ -929,8 +929,19 @@ const MRK_BACKTEST = [{"checkpoint_date":"2023-11-03","quarter_end":"2023-09-30"
       const cpEnd = cp.period_end_date || dataDates[dataDates.length-1];
       return cpEnd >= dataDates[0] && cp.checkpoint_date <= dataDates[dataDates.length-1];
     }) : [];
-    const backtestVals = visibleCheckpoints.flatMap(cp=>[cp.predicted_low, cp.predicted_high]);
-    const maVals=[...ma5,...ma20,...ma60,...ma120,...backtestVals].filter(v=>v!=null);
+    const priceVals=[...ma5,...ma20,...ma60,...ma120].filter(v=>v!=null);
+    const priceMx = Math.max(...highs,...priceVals), priceMn = Math.min(...lows,...priceVals);
+    const priceSpan = (priceMx-priceMn) || priceMx*0.1;
+    const BACKTEST_CAP = 1.5;
+    const capHi = priceMx + priceSpan*BACKTEST_CAP, capLo = priceMn - priceSpan*BACKTEST_CAP;
+    const clipBand = v => Math.max(capLo, Math.min(capHi, v));
+    visibleCheckpoints.forEach(cp=>{
+      cp._drawLow = clipBand(cp.predicted_low);
+      cp._drawHigh = clipBand(cp.predicted_high);
+      cp._clipped = cp._drawLow !== cp.predicted_low || cp._drawHigh !== cp.predicted_high;
+    });
+    const backtestVals = visibleCheckpoints.flatMap(cp=>[cp._drawLow, cp._drawHigh]);
+    const maVals=[...priceVals,...backtestVals];
     const mx=Math.max(...highs,...maVals), mn=Math.min(...lows,...maVals);
     const pad=(mx-mn)*0.06 || mx*0.02;
     const top=mx+pad, bot=mn-pad, rng=(top-bot)||1;
@@ -955,11 +966,16 @@ const MRK_BACKTEST = [{"checkpoint_date":"2023-11-03","quarter_end":"2023-09-30"
     }
     visibleCheckpoints.forEach(cp=>{
       const [x0,x1] = checkpointX(cp);
-      const yTop = py(cp.predicted_high), yBot = py(cp.predicted_low);
+      const yTop = py(cp._drawHigh), yBot = py(cp._drawLow);
       const rect = document.createElementNS(NS,'rect');
       rect.setAttribute('x', x0); rect.setAttribute('y', yTop);
       rect.setAttribute('width', Math.max(x1-x0,0)); rect.setAttribute('height', Math.max(yBot-yTop,0));
       rect.setAttribute('fill', cp.is_open ? ZONE_FILL.pending : ZONE_FILL[cp.zone]);
+      if (cp._clipped) {
+        const title = document.createElementNS(NS,'title');
+        title.textContent = `실제 예상밴드 $${cp.predicted_low.toFixed(2)}~$${cp.predicted_high.toFixed(2)} (차트 범위를 크게 벗어나 잘라서 표시)`;
+        rect.appendChild(title);
+      }
       svgCandle.appendChild(rect);
     });
 
@@ -1025,7 +1041,7 @@ const MRK_BACKTEST = [{"checkpoint_date":"2023-11-03","quarter_end":"2023-09-30"
     visibleCheckpoints.forEach(cp=>{
       const [x0,x1] = checkpointX(cp);
       const borderColor = cp.is_open ? ZONE_BORDER.pending : ZONE_BORDER[cp.zone];
-      [cp.predicted_high, cp.predicted_low].forEach(v=>{
+      [cp._drawHigh, cp._drawLow].forEach(v=>{
         const y = py(v);
         const line = document.createElementNS(NS,'line');
         line.setAttribute('x1',x0); line.setAttribute('x2',x1);
@@ -1113,7 +1129,8 @@ const MRK_BACKTEST = [{"checkpoint_date":"2023-11-03","quarter_end":"2023-09-30"
           + `<strong style="color:#2ecc71;">적중 ${hit}개</strong> · <strong style="color:#e74c3c;">상단 이탈 ${top}개</strong> · <strong style="color:#e74c3c;">하단 이탈 ${bot}개</strong>`
           + (both ? ` · 양쪽 이탈 ${both}개 ` : ' ')
           + `(과거 시점 재무제표만 사용, 미래 정보 미사용, 노란 점선은 진행 중). `
-          + `<strong style="color:#e74c3c;">참고</strong> — MRK는 대형 인수(2023년 Prometheus, 2026년 Cidara·Terns)마다 비현금성 IPR&amp;D 상각으로 TTM GAAP EPS가 반복적으로 0에 가깝게 눌리는 이력이 있어, 이 자기참조 밴드가 해당 시기 체크포인트에서 비정상적으로 넓거나 좁게 나온다 — 밴드 폭 자체가 이례적으로 크면(중앙값 대비) 신뢰도가 낮다는 신호로 읽을 것.`;
+          + `<strong style="color:#e74c3c;">참고</strong> — MRK는 대형 인수(2023년 Prometheus, 2026년 Cidara·Terns)마다 비현금성 IPR&amp;D 상각으로 TTM GAAP EPS가 반복적으로 0에 가깝게 눌리는 이력이 있어, 이 자기참조 밴드가 해당 시기 체크포인트에서 비정상적으로 넓거나 좁게 나온다 — 밴드 폭 자체가 이례적으로 크면(중앙값 대비) 신뢰도가 낮다는 신호로 읽을 것.`
+          + (visibleCheckpoints.some(cp=>cp._clipped) ? ` 일부 체크포인트는 예상밴드가 차트 범위를 크게 벗어나 잘라서 표시했다(박스에 마우스를 올리면 실제 범위 확인 가능).` : '');
       } else {
         backtestSummaryEl.style.display = 'none';
       }
