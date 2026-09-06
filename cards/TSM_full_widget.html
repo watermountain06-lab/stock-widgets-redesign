@@ -465,11 +465,11 @@
 
 <!-- NAV -->
 <div class="nav">
-  <button class="nav-btn active" onclick="showSection('tech')">📈 기술적 분석</button>
-  <button class="nav-btn" onclick="showSection('fund')">📊 기본적 분석</button>
-  <button class="nav-btn" onclick="showSection('valuation')">⚖️ 밸류에이션</button>
-  <button class="nav-btn" onclick="showSection('news')">📰 시계열 뉴스</button>
-  <button class="nav-btn" onclick="showSection('invest')">🎯 투자 포인트</button>
+  <button class="nav-btn active" onclick="showSection('tech', this)">📈 기술적 분석</button>
+  <button class="nav-btn" onclick="showSection('fund', this)">📊 기본적 분석</button>
+  <button class="nav-btn" onclick="showSection('valuation', this)">⚖️ 밸류에이션</button>
+  <button class="nav-btn" onclick="showSection('news', this)">📰 시계열 뉴스</button>
+  <button class="nav-btn" onclick="showSection('invest', this)">🎯 투자 포인트</button>
 </div>
 <div id="tech" class="section active">
   <div class="section-title" id="techHeaderTitle">기술적 분석 — 일봉 캔들스틱 (2021.08 ~ 2026.08) · 1년 수익률 <span id="techHeaderReturn">--</span></div>
@@ -1705,11 +1705,11 @@ function renderCharts(sectionId) {
   }, 50);
 }
 
-function showSection(id) {
+function showSection(id, btn) {
   document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
   document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
   document.getElementById(id).classList.add('active');
-  event.target.classList.add('active');
+  if (btn) btn.classList.add('active');
   renderCharts(id);
 }
 
