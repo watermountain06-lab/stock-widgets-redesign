@@ -1275,7 +1275,7 @@ const XOM_BACKTEST = [{"checkpoint_date": "2023-10-31", "predicted_low": 71.68, 
           + `<strong style="color:#2ecc71;">적중 ${hit}개</strong> · <strong style="color:#e74c3c;">상단 이탈 ${top}개</strong> · <strong style="color:#e74c3c;">하단 이탈 ${bot}개</strong>`
           + (both ? ` · 양쪽 이탈 ${both}개` : '')
           + `(과거 시점 재무제표만 사용, 미래 정보 미사용, 노란 점선은 진행 중).`
-          + ` <span style="color:#f0c040;">⚠ 상단 이탈이 압도적으로 많다는 것은 실제 주가가 XOM 자체의 과거 트레일링 PER 분포가 예상한 범위를 꾸준히 웃돌아왔다는 뜻이다 — 2023년 이후 지속적인 상향 재평가 추세를 보여주는 것으로, 예측 실패라기보다 이 정적 밴드 방법론이 새로운 밸류에이션 레벨을 따라잡지 못하는 구조적 한계로 해석하는 게 정확하다(TSM·ASML과 같은 패턴). EPS가 마이너스로 떨어진 구간이 이 2년 트레일링 표본 안에 없어 --exclude-per-window는 적용하지 않았다.</span>`;
+          + ` <span style="color:#f0c040;">⚠ 상단 이탈이 압도적으로 많다는 것은 실제 주가가 XOM 자체의 과거 트레일링 PER 분포가 예상한 범위를 꾸준히 웃돌아왔다는 뜻이다 — 2023년 이후 지속적인 상향 재평가 추세를 보여주는 것으로, 예측 실패라기보다 이 정적 밴드 방법론이 새로운 밸류에이션 레벨을 따라잡지 못하는 구조적 한계로 해석하는 게 정확하다(TSM·ASML과 같은 패턴). 음수 EPS 구간(2021년 11월~2022년 2월)은 스크립트가 PER 표본에서 자동 제외하며, 그 외 0에 근접한 EPS 분기가 없어 --exclude-per-window는 적용하지 않았다.</span>`;
       } else {
         backtestSummaryEl.style.display = 'none';
       }
