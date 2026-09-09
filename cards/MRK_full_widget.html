@@ -966,7 +966,12 @@ const MRK_BACKTEST = [{"checkpoint_date":"2023-11-03","quarter_end":"2023-09-30"
     }
     visibleCheckpoints.forEach(cp=>{
       const [x0,x1] = checkpointX(cp);
-      const yTop = py(cp._drawHigh), yBot = py(cp._drawLow);
+      let yTop = py(cp._drawHigh), yBot = py(cp._drawLow);
+      if (cp._clipped && (yBot-yTop) < 3) {
+        const mid = (yTop+yBot)/2;
+        yTop = Math.min(Math.max(mid-1.5, pT), pT+cH-3);
+        yBot = yTop+3;
+      }
       const rect = document.createElementNS(NS,'rect');
       rect.setAttribute('x', x0); rect.setAttribute('y', yTop);
       rect.setAttribute('width', Math.max(x1-x0,0)); rect.setAttribute('height', Math.max(yBot-yTop,0));

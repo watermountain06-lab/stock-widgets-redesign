@@ -315,7 +315,7 @@
     <span style="font-size:11px;font-weight:700;padding:4px 10px;border-radius:999px;background:rgba(46,204,113,0.15);color:var(--green);">Q2 매출 +6.7%·EPS +17%·FY26 가이던스 상향</span>
     <span style="font-size:11px;font-weight:700;padding:4px 10px;border-radius:999px;background:rgba(231,76,60,0.15);color:var(--red);">IRS 이전가격 소송 항소심 $6.0B 걸림</span>
   </div>
-  <div style="font-size:17px;font-weight:800;color:var(--text);margin-bottom:12px;">원액·브랜드 중심 자산경량 모델이 견조한 성장과 가이던스 상향을 이어가고 있지만, PBR·PCR·EV/EBITDA가 피어 대비 큰 폭 프리미엄에 거래되며 고평가 영역에 있다 — 여기에 BodyArmor 상표권 반복 손상과 IRS 이전가격 소송 항소심이라는 두 미해결 리스크가 겹쳐 있다.</div>
+  <div style="font-size:17px;font-weight:800;color:var(--text);margin-bottom:12px;">원액·브랜드 중심 자산경량 모델이 견조한 성장과 2026년 가이던스 상향을 이끌어냈지만, PBR·PCR·EV/EBITDA가 피어 대비 큰 폭 프리미엄에 거래되며 고평가 영역에 있다 — 여기에 BodyArmor 상표권 반복 손상과 IRS 이전가격 소송 항소심이라는 두 미해결 리스크가 겹쳐 있다.</div>
   <div style="display:flex;flex-direction:column;gap:8px;">
     <div style="font-size:12px;color:var(--text2);line-height:1.5;"><strong style="color:var(--accent2);">01</strong>&nbsp; Q2 2026 매출 $13.38B(+6.7%)·영업이익 $4.67B(+9.2%)·EPS $1.03(+17%), 2026년 유기매출 성장률 가이던스를 기존 4~5%에서 약 5%로, 비교가능 EPS 성장률을 6~7%에서 7~8%로 상향했다(상세 #fund).</div>
     <div style="font-size:12px;color:var(--text2);line-height:1.5;"><strong style="color:var(--accent2);">02</strong>&nbsp; PER 26.46x는 피어(PEP·KDP) 평균 대비 +3.8%로 거의 같지만, PBR 10.48x(+104%)·PCR 23.19x(+47%)·EV/EBITDA 25.56x(+82%)는 뚜렷한 프리미엄이고 PSR 7.56x(+264%)는 원액 중심 사업모델의 구조적 차이가 대부분이다(상세 #valuation).</div>
@@ -955,7 +955,12 @@ const KO_BACKTEST = [{"checkpoint_date":"2023-10-24","quarter_end":"2023-09-29",
     }
     visibleCheckpoints.forEach(cp=>{
       const [x0,x1] = checkpointX(cp);
-      const yTop = py(cp._drawHigh), yBot = py(cp._drawLow);
+      let yTop = py(cp._drawHigh), yBot = py(cp._drawLow);
+      if (cp._clipped && (yBot-yTop) < 3) {
+        const mid = (yTop+yBot)/2;
+        yTop = Math.min(Math.max(mid-1.5, pT), pT+cH-3);
+        yBot = yTop+3;
+      }
       const rect = document.createElementNS(NS,'rect');
       rect.setAttribute('x', x0); rect.setAttribute('y', yTop);
       rect.setAttribute('width', Math.max(x1-x0,0)); rect.setAttribute('height', Math.max(yBot-yTop,0));
