@@ -1,0 +1,68 @@
+{
+  "ticker": "MRK",
+  "financialsAsOf": "2025-12-31",
+  "valuation": {
+    "combinedStage": 2.7,
+    "axisPoints": 19.0,
+    "axisPointsRaw": 18.974999999999998
+  },
+  "health": {
+    "dataQuality": {},
+    "currentRatio": {
+      "value": 153.6,
+      "points": 3
+    },
+    "quickRatio": {
+      "value": 130.1,
+      "points": 3
+    },
+    "debtDependency": {
+      "value": 36.0,
+      "points": 2
+    },
+    "interestCoverage": {
+      "value": 16.5,
+      "points": 4
+    },
+    "debtToEquity": {
+      "value": 160.2,
+      "points": 2
+    },
+    "operatingIncomeEstimated": true,
+    "axisPoints": 18.5,
+    "axisPointsRaw": 18.48,
+    "ratiosUsed": 5
+  },
+  "growthProfit": {
+    "dataQuality": {},
+    "revenueCagr": {
+      "value": 3.1,
+      "points": 2
+    },
+    "opIncomeCagr": {
+      "value": 8.8,
+      "points": 3
+    },
+    "opMargin": {
+      "value": 34.5,
+      "points": 4
+    },
+    "netMargin": {
+      "value": 28.1,
+      "points": 5
+    },
+    "operatingIncomeEstimated": true,
+    "axisPoints": 23.8,
+    "axisPointsRaw": 23.799999999999997,
+    "metricsUsed": 4
+  },
+  "totalScore": 61.3,
+  "grade": "양호",
+  "axesUsed": 3,
+  "coverageStatus": "full",
+  "dataStatus": {
+    "coverageStatus": "full",
+    "operatingIncomeEstimated": true,
+    "negativeEquity": false
+  }
+}

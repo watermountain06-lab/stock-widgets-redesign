@@ -1,0 +1,66 @@
+{
+  "ticker": "KO",
+  "financialsAsOf": "2025-12-31",
+  "valuation": {
+    "combinedStage": 3.2,
+    "axisPoints": 14.8,
+    "axisPointsRaw": 14.849999999999998
+  },
+  "health": {
+    "dataQuality": {},
+    "currentRatio": {
+      "value": 145.9,
+      "points": 2
+    },
+    "quickRatio": {
+      "value": 125.1,
+      "points": 3
+    },
+    "debtDependency": {
+      "value": 35.8,
+      "points": 2
+    },
+    "interestCoverage": {
+      "value": 8.3,
+      "points": 3
+    },
+    "debtToEquity": {
+      "value": 225.8,
+      "points": 1
+    },
+    "axisPoints": 14.5,
+    "axisPointsRaw": 14.52,
+    "ratiosUsed": 5
+  },
+  "growthProfit": {
+    "dataQuality": {},
+    "revenueCagr": {
+      "value": 3.7,
+      "points": 2
+    },
+    "opIncomeCagr": {
+      "value": 8.0,
+      "points": 3
+    },
+    "opMargin": {
+      "value": 28.7,
+      "points": 4
+    },
+    "netMargin": {
+      "value": 27.3,
+      "points": 5
+    },
+    "axisPoints": 23.8,
+    "axisPointsRaw": 23.799999999999997,
+    "metricsUsed": 4
+  },
+  "totalScore": 53.2,
+  "grade": "보통",
+  "axesUsed": 3,
+  "coverageStatus": "full",
+  "dataStatus": {
+    "coverageStatus": "full",
+    "operatingIncomeEstimated": false,
+    "negativeEquity": false
+  }
+}

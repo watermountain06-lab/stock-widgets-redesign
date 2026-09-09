@@ -1,0 +1,66 @@
+{
+  "ticker": "MU",
+  "financialsAsOf": "2025-08-28",
+  "valuation": {
+    "combinedStage": 3.4,
+    "axisPoints": 13.2,
+    "axisPointsRaw": 13.200000000000001
+  },
+  "health": {
+    "dataQuality": {},
+    "currentRatio": {
+      "value": 251.8,
+      "points": 4
+    },
+    "quickRatio": {
+      "value": 178.9,
+      "points": 4
+    },
+    "debtDependency": {
+      "value": 14.6,
+      "points": 4
+    },
+    "interestCoverage": {
+      "value": 20.5,
+      "points": 4
+    },
+    "debtToEquity": {
+      "value": 52.9,
+      "points": 3
+    },
+    "axisPoints": 25.1,
+    "axisPointsRaw": 25.080000000000002,
+    "ratiosUsed": 5
+  },
+  "growthProfit": {
+    "dataQuality": {},
+    "revenueCagr": {
+      "value": 6.7,
+      "points": 3
+    },
+    "opIncomeCagr": {
+      "value": 0.2,
+      "points": 2
+    },
+    "opMargin": {
+      "value": 26.1,
+      "points": 4
+    },
+    "netMargin": {
+      "value": 22.8,
+      "points": 4
+    },
+    "axisPoints": 22.1,
+    "axisPointsRaw": 22.1,
+    "metricsUsed": 4
+  },
+  "totalScore": 60.4,
+  "grade": "양호",
+  "axesUsed": 3,
+  "coverageStatus": "full",
+  "dataStatus": {
+    "coverageStatus": "full",
+    "operatingIncomeEstimated": false,
+    "negativeEquity": false
+  }
+}

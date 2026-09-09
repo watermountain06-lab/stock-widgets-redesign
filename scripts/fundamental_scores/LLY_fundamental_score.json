@@ -1,0 +1,68 @@
+{
+  "ticker": "LLY",
+  "financialsAsOf": "2025-12-31",
+  "valuation": {
+    "combinedStage": 2.3,
+    "axisPoints": 22.3,
+    "axisPointsRaw": 22.275000000000002
+  },
+  "health": {
+    "dataQuality": {},
+    "currentRatio": {
+      "value": 157.9,
+      "points": 3
+    },
+    "quickRatio": {
+      "value": 118.9,
+      "points": 3
+    },
+    "debtDependency": {
+      "value": 37.8,
+      "points": 2
+    },
+    "interestCoverage": {
+      "value": 29.7,
+      "points": 4
+    },
+    "debtToEquity": {
+      "value": 323.9,
+      "points": 1
+    },
+    "operatingIncomeEstimated": true,
+    "axisPoints": 17.2,
+    "axisPointsRaw": 17.16,
+    "ratiosUsed": 5
+  },
+  "growthProfit": {
+    "dataQuality": {},
+    "revenueCagr": {
+      "value": 31.7,
+      "points": 5
+    },
+    "opIncomeCagr": {
+      "value": 55.1,
+      "points": 5
+    },
+    "opMargin": {
+      "value": 40.9,
+      "points": 5
+    },
+    "netMargin": {
+      "value": 31.7,
+      "points": 5
+    },
+    "operatingIncomeEstimated": true,
+    "axisPoints": 34.0,
+    "axisPointsRaw": 34.0,
+    "metricsUsed": 4
+  },
+  "totalScore": 73.4,
+  "grade": "양호",
+  "axesUsed": 3,
+  "coverageStatus": "full",
+  "dataStatus": {
+    "coverageStatus": "full",
+    "operatingIncomeEstimated": true,
+    "negativeEquity": false
+  }
+}

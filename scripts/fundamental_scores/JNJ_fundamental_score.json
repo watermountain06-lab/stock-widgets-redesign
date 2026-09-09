@@ -1,0 +1,64 @@
+{
+  "ticker": "JNJ",
+  "financialsAsOf": "2025-12-28",
+  "valuation": {
+    "combinedStage": 3.9,
+    "axisPoints": 9.1,
+    "axisPointsRaw": 9.075000000000001
+  },
+  "health": {
+    "dataQuality": {
+      "interestCoverage": "missing (해당 연도 이자비용 결측 - 다른 연도엔 태그 존재)"
+    },
+    "currentRatio": {
+      "value": 102.8,
+      "points": 2
+    },
+    "quickRatio": {
+      "value": 76.5,
+      "points": 2
+    },
+    "debtDependency": {
+      "value": 24.1,
+      "points": 3
+    },
+    "debtToEquity": {
+      "value": 144.3,
+      "points": 2
+    },
+    "axisPoints": 14.8,
+    "axisPointsRaw": 14.85,
+    "ratiosUsed": 4
+  },
+  "growthProfit": {
+    "dataQuality": {},
+    "revenueCagr": {
+      "value": 5.6,
+      "points": 3
+    },
+    "opIncomeCagr": {
+      "value": 16.2,
+      "points": 3
+    },
+    "opMargin": {
+      "value": 22.9,
+      "points": 3
+    },
+    "netMargin": {
+      "value": 28.5,
+      "points": 5
+    },
+    "axisPoints": 23.8,
+    "axisPointsRaw": 23.799999999999997,
+    "metricsUsed": 4
+  },
+  "totalScore": 47.7,
+  "grade": "보통",
+  "axesUsed": 3,
+  "coverageStatus": "full",
+  "dataStatus": {
+    "coverageStatus": "full",
+    "operatingIncomeEstimated": false,
+    "negativeEquity": false
+  }
+}

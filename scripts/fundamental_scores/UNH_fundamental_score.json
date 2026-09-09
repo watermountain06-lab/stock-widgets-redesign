@@ -1,0 +1,66 @@
+{
+  "ticker": "UNH",
+  "financialsAsOf": "2025-12-31",
+  "valuation": {
+    "combinedStage": 1.9,
+    "axisPoints": 25.6,
+    "axisPointsRaw": 25.575
+  },
+  "health": {
+    "dataQuality": {},
+    "currentRatio": {
+      "value": 78.8,
+      "points": 1
+    },
+    "quickRatio": {
+      "value": 76.0,
+      "points": 2
+    },
+    "debtDependency": {
+      "value": 25.3,
+      "points": 3
+    },
+    "interestCoverage": {
+      "value": 4.7,
+      "points": 3
+    },
+    "debtToEquity": {
+      "value": 207.7,
+      "points": 1
+    },
+    "axisPoints": 13.2,
+    "axisPointsRaw": 13.200000000000001,
+    "ratiosUsed": 5
+  },
+  "growthProfit": {
+    "dataQuality": {},
+    "revenueCagr": {
+      "value": 11.3,
+      "points": 3
+    },
+    "opIncomeCagr": {
+      "value": -12.6,
+      "points": 1
+    },
+    "opMargin": {
+      "value": 4.2,
+      "points": 1
+    },
+    "netMargin": {
+      "value": 2.7,
+      "points": 1
+    },
+    "axisPoints": 10.2,
+    "axisPointsRaw": 10.2,
+    "metricsUsed": 4
+  },
+  "totalScore": 49.0,
+  "grade": "보통",
+  "axesUsed": 3,
+  "coverageStatus": "full",
+  "dataStatus": {
+    "coverageStatus": "full",
+    "operatingIncomeEstimated": false,
+    "negativeEquity": false
+  }
+}

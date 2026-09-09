@@ -1,0 +1,66 @@
+{
+  "ticker": "META",
+  "financialsAsOf": "2025-12-31",
+  "valuation": {
+    "combinedStage": 2.8,
+    "axisPoints": 18.2,
+    "axisPointsRaw": 18.150000000000002
+  },
+  "health": {
+    "dataQuality": {},
+    "currentRatio": {
+      "value": 259.9,
+      "points": 4
+    },
+    "quickRatio": {
+      "value": 259.9,
+      "points": 5
+    },
+    "debtDependency": {
+      "value": 16.0,
+      "points": 3
+    },
+    "interestCoverage": {
+      "value": 76.4,
+      "points": 5
+    },
+    "debtToEquity": {
+      "value": 68.5,
+      "points": 3
+    },
+    "axisPoints": 26.4,
+    "axisPointsRaw": 26.400000000000002,
+    "ratiosUsed": 5
+  },
+  "growthProfit": {
+    "dataQuality": {},
+    "revenueCagr": {
+      "value": 19.9,
+      "points": 4
+    },
+    "opIncomeCagr": {
+      "value": 42.2,
+      "points": 5
+    },
+    "opMargin": {
+      "value": 41.4,
+      "points": 5
+    },
+    "netMargin": {
+      "value": 30.1,
+      "points": 5
+    },
+    "axisPoints": 32.3,
+    "axisPointsRaw": 32.3,
+    "metricsUsed": 4
+  },
+  "totalScore": 76.8,
+  "grade": "양호",
+  "axesUsed": 3,
+  "coverageStatus": "full",
+  "dataStatus": {
+    "coverageStatus": "full",
+    "operatingIncomeEstimated": false,
+    "negativeEquity": false
+  }
+}

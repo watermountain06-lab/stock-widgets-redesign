@@ -1,0 +1,47 @@
+{
+  "ticker": "MSFT",
+  "asOf": "2026-08-27",
+  "close": 499.13,
+  "modelVersion": "1.0.0",
+  "modelFrozenDate": "2026-08-18",
+  "disclaimer": "가격/거래량 데이터로 계산한 규칙 기반 기술 상태 요약이며, 투자 권고나 미래 수익률 예측이 아닙니다.",
+  "insufficientHistory": false,
+  "momentumUnavailable": false,
+  "trendStructure": {
+    "score": 10,
+    "max": 40,
+    "conditions": {
+      "close>ma150_and_close>ma200": true,
+      "ma150>ma200": false,
+      "ma200>ma200_21d_ago": false,
+      "ma50>ma150_and_ma50>ma200": false
+    }
+  },
+  "momentum": {
+    "score": 20,
+    "max": 40,
+    "weightedRocPct": 12.55
+  },
+  "position52w": {
+    "score": 20,
+    "max": 20,
+    "riseFromLowPct": 42.94,
+    "drawdownFromHighPct": 9.86,
+    "high52w": 553.72,
+    "low52w": 349.2
+  },
+  "priceStructureScore": {
+    "score": 30,
+    "max": 60,
+    "note": "추세구조+52주위치 개념적 상위그룹(v1, 상관 0.82로 별도 배점 재검토는 v2)"
+  },
+  "rawScore": 50,
+  "rawGrade": "혼조",
+  "displayGrade": "혼조",
+  "riskFlags": [],
+  "riskFlagsShown": [],
+  "atr": {
+    "pctNow": 1.95,
+    "percentileVsOwnHistory": 32.1
+  }
+}

@@ -1,0 +1,64 @@
+{
+  "ticker": "RTX",
+  "financialsAsOf": "2025-12-31",
+  "valuation": {
+    "combinedStage": 4.2,
+    "axisPoints": 6.6,
+    "axisPointsRaw": 6.599999999999999
+  },
+  "health": {
+    "dataQuality": {
+      "interestCoverage": "missing (해당 연도 이자비용 결측 - 다른 연도엔 태그 존재)"
+    },
+    "currentRatio": {
+      "value": 102.6,
+      "points": 2
+    },
+    "quickRatio": {
+      "value": 79.9,
+      "points": 2
+    },
+    "debtDependency": {
+      "value": 24.1,
+      "points": 3
+    },
+    "debtToEquity": {
+      "value": 159.3,
+      "points": 2
+    },
+    "axisPoints": 14.8,
+    "axisPointsRaw": 14.85,
+    "ratiosUsed": 4
+  },
+  "growthProfit": {
+    "dataQuality": {},
+    "revenueCagr": {
+      "value": 9.7,
+      "points": 3
+    },
+    "opIncomeCagr": {
+      "value": 19.1,
+      "points": 4
+    },
+    "opMargin": {
+      "value": 10.5,
+      "points": 2
+    },
+    "netMargin": {
+      "value": 7.6,
+      "points": 2
+    },
+    "axisPoints": 18.7,
+    "axisPointsRaw": 18.700000000000003,
+    "metricsUsed": 4
+  },
+  "totalScore": 40.1,
+  "grade": "보통",
+  "axesUsed": 3,
+  "coverageStatus": "full",
+  "dataStatus": {
+    "coverageStatus": "full",
+    "operatingIncomeEstimated": false,
+    "negativeEquity": false
+  }
+}

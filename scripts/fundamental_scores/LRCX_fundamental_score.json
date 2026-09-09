@@ -1,0 +1,66 @@
+{
+  "ticker": "LRCX",
+  "financialsAsOf": "2026-06-28",
+  "valuation": {
+    "combinedStage": 3.8,
+    "axisPoints": 9.9,
+    "axisPointsRaw": 9.900000000000002
+  },
+  "health": {
+    "dataQuality": {},
+    "currentRatio": {
+      "value": 262.9,
+      "points": 4
+    },
+    "quickRatio": {
+      "value": 190.9,
+      "points": 4
+    },
+    "debtDependency": {
+      "value": 15.8,
+      "points": 3
+    },
+    "interestCoverage": {
+      "value": 52.3,
+      "points": 5
+    },
+    "debtToEquity": {
+      "value": 88.7,
+      "points": 3
+    },
+    "axisPoints": 25.1,
+    "axisPointsRaw": 25.080000000000002,
+    "ratiosUsed": 5
+  },
+  "growthProfit": {
+    "dataQuality": {},
+    "revenueCagr": {
+      "value": 10.0,
+      "points": 3
+    },
+    "opIncomeCagr": {
+      "value": 16.5,
+      "points": 3
+    },
+    "opMargin": {
+      "value": 35.3,
+      "points": 5
+    },
+    "netMargin": {
+      "value": 31.3,
+      "points": 5
+    },
+    "axisPoints": 27.2,
+    "axisPointsRaw": 27.200000000000003,
+    "metricsUsed": 4
+  },
+  "totalScore": 62.2,
+  "grade": "양호",
+  "axesUsed": 3,
+  "coverageStatus": "full",
+  "dataStatus": {
+    "coverageStatus": "full",
+    "operatingIncomeEstimated": false,
+    "negativeEquity": false
+  }
+}

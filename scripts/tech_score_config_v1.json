@@ -1,0 +1,61 @@
+{
+  "version": "1.0.0",
+  "frozen_date": "2026-08-18",
+  "review_after": "2027-08-18",
+  "notes": "가격구조(추세40+위치20) + 절대모멘텀40의 2축 v1. 상대모멘텀(SPY 비율차감)은 47종목x48개월 검증에서 순위상관 0.999로 무효과 확인되어 폐기(2026-08-18). 추세x위치 상관 0.82(국면무관)는 확인됐으나 '괴리의 예측력'은 최초 검증 설계 오류로 직접 검증되지 않았었음 - 2026-08-18 Tier1 재검증(44개월x47종목, 월별횡단면 IC, panel_trend_position_ic.py) 완료: ΔIC(=IC_추세-IC_위치)가 20일/60일 모두 음수(52주위치가 추세구조보다 순위예측력이 더 강함) - 방향은 두 horizon에서 일관되고 월제외 민감도에도 견고하나, 60일 부호일관성 40.9%로 사전등록한 Tier2 진입기준(<40% 또는 >60%)을 근소하게 미충족, 20일은 부트스트랩CI가 0을 포함해 유의성 약함. 결론: 가중치 분리(Tier2) 보류, v1.0.0 산식/가중치 유지. 카드 UI에는 추세구조/52주위치를 별도 박스로 표시(해석용, 계산은 동일).",
+  "min_history_days": 273,
+  "trend_structure": {
+    "ma_short": 50,
+    "ma_mid": 150,
+    "ma_long": 200,
+    "slope_lookback_days": 21,
+    "points_per_condition": 10,
+    "max_points": 40
+  },
+  "momentum": {
+    "periods_days": [63, 126, 189, 252],
+    "weights": [0.4, 0.2, 0.2, 0.2],
+    "note": "relative(vs SPY) variant dropped in v1 - see notes",
+    "buckets": [
+      {"upper_exclusive": -10, "points": 0},
+      {"upper_exclusive": 5,   "points": 10},
+      {"upper_exclusive": 20,  "points": 20},
+      {"upper_exclusive": 40,  "points": 30},
+      {"upper_exclusive": null, "points": 40}
+    ],
+    "max_points": 40
+  },
+  "position_52w": {
+    "window_days": 252,
+    "rise_from_low_bands": [
+      {"upper_exclusive": 15, "points": 0},
+      {"upper_exclusive": 30, "points": 5},
+      {"upper_exclusive": null, "points": 10}
+    ],
+    "drawdown_from_high_bands": [
+      {"upper_exclusive": 15, "points": 10},
+      {"upper_exclusive": 25, "points": 5},
+      {"upper_exclusive": null, "points": 0}
+    ],
+    "max_points": 20
+  },
+  "risk_flags": {
+    "priority_order": ["장기추세이탈", "고점대비큰조정", "변동성급증(자체이력대비)", "단기추세이탈"],
+    "max_shown_on_card": 2,
+    "big_drawdown_from_high_pct": 25,
+    "volatility_atr_percentile_threshold": 90,
+    "atr_period": 14,
+    "atr_history_window": 252
+  },
+  "raw_grade_cuts": {
+    "강한": 85,
+    "긍정적": 60,
+    "혼조": 35,
+    "약한": 0
+  },
+  "display_hysteresis": {
+    "enabled": true,
+    "gap_points": 10,
+    "note": "48개월 패널 시뮬레이션: gap=0(경계그대로) 월간등급변화 30.8% -> gap=10 24.1% -> gap=20 16.8%. gap=10을 v1 기본값으로 채택(반응성과 안정성 절충, 20은 과도한 지연 우려)."
+  }
+}

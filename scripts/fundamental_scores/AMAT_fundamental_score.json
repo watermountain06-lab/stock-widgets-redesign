@@ -1,0 +1,66 @@
+{
+  "ticker": "AMAT",
+  "financialsAsOf": "2025-10-26",
+  "valuation": {
+    "combinedStage": 3.4,
+    "axisPoints": 13.2,
+    "axisPointsRaw": 13.200000000000001
+  },
+  "health": {
+    "dataQuality": {},
+    "currentRatio": {
+      "value": 261.0,
+      "points": 4
+    },
+    "quickRatio": {
+      "value": 187.1,
+      "points": 4
+    },
+    "debtDependency": {
+      "value": 18.1,
+      "points": 3
+    },
+    "interestCoverage": {
+      "value": 30.8,
+      "points": 5
+    },
+    "debtToEquity": {
+      "value": 77.8,
+      "points": 3
+    },
+    "axisPoints": 25.1,
+    "axisPointsRaw": 25.080000000000002,
+    "ratiosUsed": 5
+  },
+  "growthProfit": {
+    "dataQuality": {},
+    "revenueCagr": {
+      "value": 3.2,
+      "points": 2
+    },
+    "opIncomeCagr": {
+      "value": 2.1,
+      "points": 2
+    },
+    "opMargin": {
+      "value": 29.2,
+      "points": 4
+    },
+    "netMargin": {
+      "value": 24.7,
+      "points": 4
+    },
+    "axisPoints": 20.4,
+    "axisPointsRaw": 20.4,
+    "metricsUsed": 4
+  },
+  "totalScore": 58.7,
+  "grade": "보통",
+  "axesUsed": 3,
+  "coverageStatus": "full",
+  "dataStatus": {
+    "coverageStatus": "full",
+    "operatingIncomeEstimated": false,
+    "negativeEquity": false
+  }
+}

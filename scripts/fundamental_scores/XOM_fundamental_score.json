@@ -1,0 +1,68 @@
+{
+  "ticker": "XOM",
+  "financialsAsOf": "2025-12-31",
+  "valuation": {
+    "combinedStage": 3.8,
+    "axisPoints": 9.9,
+    "axisPointsRaw": 9.900000000000002
+  },
+  "health": {
+    "dataQuality": {},
+    "currentRatio": {
+      "value": 115.3,
+      "points": 2
+    },
+    "quickRatio": {
+      "value": 115.3,
+      "points": 3
+    },
+    "debtDependency": {
+      "value": 7.2,
+      "points": 4
+    },
+    "interestCoverage": {
+      "value": 69.4,
+      "points": 5
+    },
+    "debtToEquity": {
+      "value": 70.3,
+      "points": 3
+    },
+    "operatingIncomeEstimated": true,
+    "axisPoints": 22.4,
+    "axisPointsRaw": 22.44,
+    "ratiosUsed": 5
+  },
+  "growthProfit": {
+    "dataQuality": {},
+    "revenueCagr": {
+      "value": -7.0,
+      "points": 1
+    },
+    "opIncomeCagr": {
+      "value": -18.9,
+      "points": 1
+    },
+    "opMargin": {
+      "value": 12.6,
+      "points": 2
+    },
+    "netMargin": {
+      "value": 8.7,
+      "points": 3
+    },
+    "operatingIncomeEstimated": true,
+    "axisPoints": 11.9,
+    "axisPointsRaw": 11.899999999999999,
+    "metricsUsed": 4
+  },
+  "totalScore": 44.2,
+  "grade": "보통",
+  "axesUsed": 3,
+  "coverageStatus": "full",
+  "dataStatus": {
+    "coverageStatus": "full",
+    "operatingIncomeEstimated": true,
+    "negativeEquity": false
+  }
+}

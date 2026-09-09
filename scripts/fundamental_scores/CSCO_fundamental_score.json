@@ -1,0 +1,66 @@
+{
+  "ticker": "CSCO",
+  "financialsAsOf": "2025-07-26",
+  "valuation": {
+    "combinedStage": 3.4,
+    "axisPoints": 13.2,
+    "axisPointsRaw": 13.200000000000001
+  },
+  "health": {
+    "dataQuality": {},
+    "currentRatio": {
+      "value": 99.8,
+      "points": 1
+    },
+    "quickRatio": {
+      "value": 90.8,
+      "points": 2
+    },
+    "debtDependency": {
+      "value": 23.0,
+      "points": 3
+    },
+    "interestCoverage": {
+      "value": 7.4,
+      "points": 3
+    },
+    "debtToEquity": {
+      "value": 161.1,
+      "points": 2
+    },
+    "axisPoints": 14.5,
+    "axisPointsRaw": 14.52,
+    "ratiosUsed": 5
+  },
+  "growthProfit": {
+    "dataQuality": {},
+    "revenueCagr": {
+      "value": 3.2,
+      "points": 2
+    },
+    "opIncomeCagr": {
+      "value": -5.6,
+      "points": 1
+    },
+    "opMargin": {
+      "value": 20.8,
+      "points": 3
+    },
+    "netMargin": {
+      "value": 18.0,
+      "points": 4
+    },
+    "axisPoints": 17.0,
+    "axisPointsRaw": 17.0,
+    "metricsUsed": 4
+  },
+  "totalScore": 44.7,
+  "grade": "보통",
+  "axesUsed": 3,
+  "coverageStatus": "full",
+  "dataStatus": {
+    "coverageStatus": "full",
+    "operatingIncomeEstimated": false,
+    "negativeEquity": false
+  }
+}

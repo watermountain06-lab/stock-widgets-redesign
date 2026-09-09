@@ -1,0 +1,66 @@
+{
+  "ticker": "WMT",
+  "financialsAsOf": "2026-01-31",
+  "valuation": {
+    "combinedStage": 3.4,
+    "axisPoints": 13.2,
+    "axisPointsRaw": 13.200000000000001
+  },
+  "health": {
+    "dataQuality": {},
+    "currentRatio": {
+      "value": 79.0,
+      "points": 1
+    },
+    "quickRatio": {
+      "value": 24.2,
+      "points": 1
+    },
+    "debtDependency": {
+      "value": 14.5,
+      "points": 4
+    },
+    "interestCoverage": {
+      "value": 12.9,
+      "points": 4
+    },
+    "debtToEquity": {
+      "value": 185.8,
+      "points": 2
+    },
+    "axisPoints": 15.8,
+    "axisPointsRaw": 15.84,
+    "ratiosUsed": 5
+  },
+  "growthProfit": {
+    "dataQuality": {},
+    "revenueCagr": {
+      "value": 5.3,
+      "points": 3
+    },
+    "opIncomeCagr": {
+      "value": 13.4,
+      "points": 3
+    },
+    "opMargin": {
+      "value": 4.2,
+      "points": 1
+    },
+    "netMargin": {
+      "value": 3.1,
+      "points": 2
+    },
+    "axisPoints": 15.3,
+    "axisPointsRaw": 15.3,
+    "metricsUsed": 4
+  },
+  "totalScore": 44.3,
+  "grade": "보통",
+  "axesUsed": 3,
+  "coverageStatus": "full",
+  "dataStatus": {
+    "coverageStatus": "full",
+    "operatingIncomeEstimated": false,
+    "negativeEquity": false
+  }
+}

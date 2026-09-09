@@ -1,0 +1,10 @@
+{
+  "ticker": "DELL",
+  "asOf": "2026-09-08",
+  "close": 533.88,
+  "modelVersion": "1.0.0",
+  "modelFrozenDate": "2026-08-18",
+  "status": "candidate detection rule (research), not a validated trading strategy",
+  "entryBasisNote": "신호는 신호일 종가 기준으로 판정됨; 실전 최초 진입 가능 시점은 다음 거래일 시가(과거 검증: 갭 평균+0.26%, 결론을 바꿀 수준은 아님)",
+  "activeBreakout": null
+}

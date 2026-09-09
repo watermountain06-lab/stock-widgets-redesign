@@ -1,0 +1,65 @@
+{
+  "ticker": "PLTR",
+  "financialsAsOf": "2025-12-31",
+  "valuation": {
+    "combinedStage": 3.2,
+    "axisPoints": 14.8,
+    "axisPointsRaw": 14.849999999999998
+  },
+  "health": {
+    "dataQuality": {
+      "interestCoverage": "missing (해당 연도 이자비용 결측 - 다른 연도엔 태그 존재)"
+    },
+    "currentRatio": {
+      "value": 711.0,
+      "points": 5
+    },
+    "quickRatio": {
+      "value": 711.0,
+      "points": 5
+    },
+    "debtDependency": {
+      "value": 0.0,
+      "points": 5
+    },
+    "debtToEquity": {
+      "value": 19.1,
+      "points": 5
+    },
+    "axisPoints": 33.0,
+    "axisPointsRaw": 33.0,
+    "ratiosUsed": 4
+  },
+  "growthProfit": {
+    "dataQuality": {},
+    "revenueCagr": {
+      "value": 32.9,
+      "points": 5
+    },
+    "opIncomeCagr": {
+      "value": null,
+      "points": 4,
+      "note": "적자(또는 0)에서 흑자로 전환 - CAGR 수치화 불가, 흑자전환으로 4점 처리"
+    },
+    "opMargin": {
+      "value": 31.6,
+      "points": 4
+    },
+    "netMargin": {
+      "value": 36.3,
+      "points": 5
+    },
+    "axisPoints": 30.6,
+    "axisPointsRaw": 30.6,
+    "metricsUsed": 4
+  },
+  "totalScore": 78.5,
+  "grade": "양호",
+  "axesUsed": 3,
+  "coverageStatus": "full",
+  "dataStatus": {
+    "coverageStatus": "full",
+    "operatingIncomeEstimated": false,
+    "negativeEquity": false
+  }
+}

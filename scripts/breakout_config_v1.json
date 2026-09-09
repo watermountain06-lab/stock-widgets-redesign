@@ -1,0 +1,54 @@
+{
+  "version": "1.0.0",
+  "frozen_date": "2026-08-18",
+  "review_after": "2027-08-18",
+  "status": "candidate detection rule (research), not a validated trading strategy",
+  "spec_summary": "단순형 돌파: 종가가 직전 60거래일 고가(당일 제외) 대비 +0.5% 이상 & 당일 거래량이 직전 50거래일 평균(당일 제외) 대비 1.5배 이상. dedup 20거래일. VCP 필터는 coverage 부족(45종목x5년 384건 중 confirmed 1건)으로 판정 유보 — 성과지표로 인용 금지, 구현 sanity-check 표본으로만 사용.",
+  "simple_breakout": {
+    "pivot_window_days": 60,
+    "confirm_margin": 0.005,
+    "volume_avg_window_days": 50,
+    "volume_ratio_min": 1.50,
+    "volume_ratio_strong": 2.00,
+    "new_52w_high_window_days": 252,
+    "new_52w_high_margin": 0.995,
+    "dedup_gap_days": 10,
+    "badge_max_hold_days": 5,
+    "badge_early_exit_close_below_pivot_pct": 0.02,
+    "badge_early_exit_consecutive_days_below_pivot": 2
+  },
+  "vcp_filter": {
+    "status": "coverage insufficient - deferred, not rejected",
+    "note": "45종목x5년(384건 단순형 돌파) 백테스트에서 VCP확인 1건/후보 5건만 나옴. 진단 결과 ZigZag 스윙탐지 자체(84%에서 leg>=2 검출)는 정상, 병목은 후단 depth/거래량 조건(대형주 워치리스트의 조정폭 중앙값 7.8%가 VCP 스펙의 '첫조정 대비 마지막조정 60%이하' 조건과 안 맞음). 향후 재설계 시 이 47종목 데이터로 임계값을 다시 조정하면 데이터 스누핑 — 별도 변동성 정규화(조정폭/ATR%) 리서치 필요.",
+    "swing_min_pct": 0.03,
+    "swing_atr_mult": 1.25,
+    "min_contractions_confirmed": 3,
+    "min_contractions_candidate": 2,
+    "base_length_min_days": 25,
+    "base_length_max_days": 65
+  },
+  "backtest_evidence": {
+    "sample": "45종목(SKHY/SPCX 이력부족 제외) x 5년(2021-08~2026-08), 이벤트기반 (48개월 월말패널과 별개)",
+    "n_events": 384,
+    "excess_return_vs_spy": {
+      "20d": {"mean_pct": 2.13, "median_pct": 1.20, "cluster_bootstrap_ci_95": [0.88, 3.48]},
+      "60d": {"mean_pct": 5.62, "median_pct": 3.35, "cluster_bootstrap_ci_95": [3.18, 8.20]}
+    },
+    "success_rate_20d_mfe_ge_5pct": {"point_pct": 61.1, "cluster_bootstrap_ci_95": [53.5, 67.6],
+      "definition_note": "경로의존적 정의(20일 내 최고가가 진입가 대비 +5% 이상 도달한 적 있는지) — 실제 진입/청산 수익률이나 매매전략 승률이 아님"},
+    "structural_false_breakout_rate": {"point_pct": 33.9, "cluster_bootstrap_ci_95": [28.8, 39.0]},
+    "regime_dependence": {
+      "note": "상승장에서 이벤트 발생률이 횡보장의 약 1.6배(종목-거래일당 만분율 100.11 vs 62.17)인 반면, 20일 초과수익률은 횡보장이 상승장의 5배 이상(+4.66% vs +0.83%) — 상승장에서는 돌파가 흔해서 정보량이 옅어지는 패턴과 일관되나, 인과관계까지 검증된 것은 아님(연관관계로만 기록)"
+    },
+    "entry_timing_check": {
+      "note": "백테스트는 '신호일 종가' 진입 기준. 실제 실행 가능한 최초 진입은 다음 거래일 시가. 신호일종가->다음날시가 갭 378건 평균+0.26%/중앙값+0.08%/표준편차1.82%로 작고 대칭적이라 결론을 뒤집을 정도는 아니지만, 이 신호는 '신호일 종가 기준' 성과이지 '다음날 시가 진입' 실전 성과가 아님을 명시."
+    },
+    "not_yet_verified": [
+      "실행규칙(구체적 손절/익절/보유기간/포지션사이징) 기준 매매전략 성과",
+      "거래비용/슬리피지 반영 기대값",
+      "초기구간/후기구간 시간안정성(5년을 반으로 나눈 재현확인)",
+      "종목간 동시다발 시장충격을 반영한 이원군집(종목x날짜) 검증 — 현재는 종목단위 군집만 반영",
+      "45종목 고정 워치리스트를 벗어난 일반화(생존편향 있는 표본, 미국주식 전체로 확장 불가)"
+    ]
+  }
+}

@@ -1,0 +1,66 @@
+{
+  "ticker": "GOOGL",
+  "financialsAsOf": "2025-12-31",
+  "valuation": {
+    "combinedStage": 3.4,
+    "axisPoints": 13.2,
+    "axisPointsRaw": 13.200000000000001
+  },
+  "health": {
+    "dataQuality": {},
+    "currentRatio": {
+      "value": 200.5,
+      "points": 4
+    },
+    "quickRatio": {
+      "value": 200.5,
+      "points": 4
+    },
+    "debtDependency": {
+      "value": 8.2,
+      "points": 4
+    },
+    "interestCoverage": {
+      "value": 175.3,
+      "points": 5
+    },
+    "debtToEquity": {
+      "value": 43.3,
+      "points": 4
+    },
+    "axisPoints": 27.7,
+    "axisPointsRaw": 27.72,
+    "ratiosUsed": 5
+  },
+  "growthProfit": {
+    "dataQuality": {},
+    "revenueCagr": {
+      "value": 14.5,
+      "points": 4
+    },
+    "opIncomeCagr": {
+      "value": 19.9,
+      "points": 4
+    },
+    "opMargin": {
+      "value": 32.0,
+      "points": 4
+    },
+    "netMargin": {
+      "value": 32.8,
+      "points": 5
+    },
+    "axisPoints": 28.9,
+    "axisPointsRaw": 28.9,
+    "metricsUsed": 4
+  },
+  "totalScore": 69.8,
+  "grade": "양호",
+  "axesUsed": 3,
+  "coverageStatus": "full",
+  "dataStatus": {
+    "coverageStatus": "full",
+    "operatingIncomeEstimated": false,
+    "negativeEquity": false
+  }
+}

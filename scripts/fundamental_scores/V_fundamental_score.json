@@ -1,0 +1,66 @@
+{
+  "ticker": "V",
+  "financialsAsOf": "2025-09-30",
+  "valuation": {
+    "combinedStage": 2.0,
+    "axisPoints": 24.8,
+    "axisPointsRaw": 24.75
+  },
+  "health": {
+    "dataQuality": {},
+    "currentRatio": {
+      "value": 107.8,
+      "points": 2
+    },
+    "quickRatio": {
+      "value": 107.8,
+      "points": 3
+    },
+    "debtDependency": {
+      "value": 25.3,
+      "points": 3
+    },
+    "interestCoverage": {
+      "value": 40.7,
+      "points": 5
+    },
+    "debtToEquity": {
+      "value": 162.8,
+      "points": 2
+    },
+    "axisPoints": 19.8,
+    "axisPointsRaw": 19.8,
+    "ratiosUsed": 5
+  },
+  "growthProfit": {
+    "dataQuality": {},
+    "revenueCagr": {
+      "value": 10.9,
+      "points": 3
+    },
+    "opIncomeCagr": {
+      "value": 8.4,
+      "points": 3
+    },
+    "opMargin": {
+      "value": 60.0,
+      "points": 5
+    },
+    "netMargin": {
+      "value": 50.1,
+      "points": 5
+    },
+    "axisPoints": 27.2,
+    "axisPointsRaw": 27.200000000000003,
+    "metricsUsed": 4
+  },
+  "totalScore": 71.8,
+  "grade": "양호",
+  "axesUsed": 3,
+  "coverageStatus": "full",
+  "dataStatus": {
+    "coverageStatus": "full",
+    "operatingIncomeEstimated": false,
+    "negativeEquity": false
+  }
+}

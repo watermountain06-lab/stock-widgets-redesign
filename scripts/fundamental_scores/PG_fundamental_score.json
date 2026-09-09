@@ -1,0 +1,66 @@
+{
+  "ticker": "PG",
+  "financialsAsOf": "2026-06-30",
+  "valuation": {
+    "combinedStage": 2.0,
+    "axisPoints": 24.8,
+    "axisPointsRaw": 24.75
+  },
+  "health": {
+    "dataQuality": {},
+    "currentRatio": {
+      "value": 67.7,
+      "points": 1
+    },
+    "quickRatio": {
+      "value": 46.6,
+      "points": 1
+    },
+    "debtDependency": {
+      "value": 27.0,
+      "points": 3
+    },
+    "interestCoverage": {
+      "value": 22.5,
+      "points": 4
+    },
+    "debtToEquity": {
+      "value": 133.0,
+      "points": 2
+    },
+    "axisPoints": 14.5,
+    "axisPointsRaw": 14.52,
+    "ratiosUsed": 5
+  },
+  "growthProfit": {
+    "dataQuality": {},
+    "revenueCagr": {
+      "value": 2.0,
+      "points": 2
+    },
+    "opIncomeCagr": {
+      "value": 2.9,
+      "points": 2
+    },
+    "opMargin": {
+      "value": 22.7,
+      "points": 3
+    },
+    "netMargin": {
+      "value": 18.1,
+      "points": 4
+    },
+    "axisPoints": 18.7,
+    "axisPointsRaw": 18.700000000000003,
+    "metricsUsed": 4
+  },
+  "totalScore": 58.0,
+  "grade": "보통",
+  "axesUsed": 3,
+  "coverageStatus": "full",
+  "dataStatus": {
+    "coverageStatus": "full",
+    "operatingIncomeEstimated": false,
+    "negativeEquity": false
+  }
+}

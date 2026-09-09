@@ -1,0 +1,67 @@
+{
+  "ticker": "CAT",
+  "financialsAsOf": "2025-12-31",
+  "valuation": {
+    "combinedStage": 3.8,
+    "axisPoints": 9.9,
+    "axisPointsRaw": 9.900000000000002
+  },
+  "health": {
+    "dataQuality": {},
+    "currentRatio": {
+      "value": 143.6,
+      "points": 2
+    },
+    "quickRatio": {
+      "value": 94.0,
+      "points": 2
+    },
+    "debtDependency": {
+      "value": 36.7,
+      "points": 2
+    },
+    "interestCoverage": {
+      "value": null,
+      "points": 5,
+      "note": "이자비용 태그 자체 없음(사실상 무차입) + 영업이익 흑자"
+    },
+    "debtToEquity": {
+      "value": 362.4,
+      "points": 1
+    },
+    "axisPoints": 15.8,
+    "axisPointsRaw": 15.84,
+    "ratiosUsed": 5
+  },
+  "growthProfit": {
+    "dataQuality": {},
+    "revenueCagr": {
+      "value": 4.4,
+      "points": 2
+    },
+    "opIncomeCagr": {
+      "value": 12.2,
+      "points": 3
+    },
+    "opMargin": {
+      "value": 16.5,
+      "points": 3
+    },
+    "netMargin": {
+      "value": 13.1,
+      "points": 3
+    },
+    "axisPoints": 18.7,
+    "axisPointsRaw": 18.700000000000003,
+    "metricsUsed": 4
+  },
+  "totalScore": 44.4,
+  "grade": "보통",
+  "axesUsed": 3,
+  "coverageStatus": "full",
+  "dataStatus": {
+    "coverageStatus": "full",
+    "operatingIncomeEstimated": false,
+    "negativeEquity": false
+  }
+}

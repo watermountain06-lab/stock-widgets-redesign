@@ -1,0 +1,66 @@
+{
+  "ticker": "TSM",
+  "financialsAsOf": "2024-12-31",
+  "valuation": {
+    "combinedStage": 2.8,
+    "axisPoints": 18.2,
+    "axisPointsRaw": 18.150000000000002
+  },
+  "health": {
+    "dataQuality": {},
+    "currentRatio": {
+      "value": 236.0,
+      "points": 4
+    },
+    "quickRatio": {
+      "value": 214.0,
+      "points": 4
+    },
+    "debtDependency": {
+      "value": 16.1,
+      "points": 3
+    },
+    "interestCoverage": {
+      "value": 126.0,
+      "points": 5
+    },
+    "debtToEquity": {
+      "value": 56.8,
+      "points": 3
+    },
+    "axisPoints": 25.1,
+    "axisPointsRaw": 25.080000000000002,
+    "ratiosUsed": 5
+  },
+  "growthProfit": {
+    "dataQuality": {},
+    "revenueCagr": {
+      "value": 15.5,
+      "points": 4
+    },
+    "opIncomeCagr": {
+      "value": 19.8,
+      "points": 4
+    },
+    "opMargin": {
+      "value": 45.7,
+      "points": 5
+    },
+    "netMargin": {
+      "value": 40.0,
+      "points": 5
+    },
+    "axisPoints": 30.6,
+    "axisPointsRaw": 30.6,
+    "metricsUsed": 4
+  },
+  "totalScore": 73.8,
+  "grade": "양호",
+  "axesUsed": 3,
+  "coverageStatus": "full",
+  "dataStatus": {
+    "coverageStatus": "full",
+    "operatingIncomeEstimated": false,
+    "negativeEquity": false
+  }
+}

@@ -1,0 +1,66 @@
+{
+  "ticker": "NVDA",
+  "financialsAsOf": "2026-01-25",
+  "valuation": {
+    "combinedStage": 2.5,
+    "axisPoints": 20.6,
+    "axisPointsRaw": 20.625
+  },
+  "health": {
+    "dataQuality": {},
+    "currentRatio": {
+      "value": 390.5,
+      "points": 5
+    },
+    "quickRatio": {
+      "value": 324.0,
+      "points": 5
+    },
+    "debtDependency": {
+      "value": 4.1,
+      "points": 5
+    },
+    "interestCoverage": {
+      "value": 503.4,
+      "points": 5
+    },
+    "debtToEquity": {
+      "value": 31.5,
+      "points": 4
+    },
+    "axisPoints": 31.7,
+    "axisPointsRaw": 31.68,
+    "ratiosUsed": 5
+  },
+  "growthProfit": {
+    "dataQuality": {},
+    "revenueCagr": {
+      "value": 100.5,
+      "points": 5
+    },
+    "opIncomeCagr": {
+      "value": 214.9,
+      "points": 5
+    },
+    "opMargin": {
+      "value": 60.4,
+      "points": 5
+    },
+    "netMargin": {
+      "value": 55.6,
+      "points": 5
+    },
+    "axisPoints": 34.0,
+    "axisPointsRaw": 34.0,
+    "metricsUsed": 4
+  },
+  "totalScore": 86.3,
+  "grade": "우수",
+  "axesUsed": 3,
+  "coverageStatus": "full",
+  "dataStatus": {
+    "coverageStatus": "full",
+    "operatingIncomeEstimated": false,
+    "negativeEquity": false
+  }
+}

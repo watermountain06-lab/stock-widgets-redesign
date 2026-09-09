@@ -1,0 +1,66 @@
+{
+  "ticker": "ADBE",
+  "financialsAsOf": "2025-11-28",
+  "valuation": {
+    "combinedStage": 1.8,
+    "axisPoints": 26.4,
+    "axisPointsRaw": 26.4
+  },
+  "health": {
+    "dataQuality": {},
+    "currentRatio": {
+      "value": 99.6,
+      "points": 1
+    },
+    "quickRatio": {
+      "value": 99.6,
+      "points": 2
+    },
+    "debtDependency": {
+      "value": 21.1,
+      "points": 3
+    },
+    "interestCoverage": {
+      "value": 33.1,
+      "points": 5
+    },
+    "debtToEquity": {
+      "value": 153.8,
+      "points": 2
+    },
+    "axisPoints": 17.2,
+    "axisPointsRaw": 17.16,
+    "ratiosUsed": 5
+  },
+  "growthProfit": {
+    "dataQuality": {},
+    "revenueCagr": {
+      "value": 10.6,
+      "points": 3
+    },
+    "opIncomeCagr": {
+      "value": 12.6,
+      "points": 3
+    },
+    "opMargin": {
+      "value": 36.6,
+      "points": 5
+    },
+    "netMargin": {
+      "value": 30.0,
+      "points": 5
+    },
+    "axisPoints": 27.2,
+    "axisPointsRaw": 27.200000000000003,
+    "metricsUsed": 4
+  },
+  "totalScore": 70.8,
+  "grade": "양호",
+  "axesUsed": 3,
+  "coverageStatus": "full",
+  "dataStatus": {
+    "coverageStatus": "full",
+    "operatingIncomeEstimated": false,
+    "negativeEquity": false
+  }
+}

@@ -1,0 +1,158 @@
+{
+  "version": "1.0.0",
+  "frozen_date": "2026-08-25",
+  "review_after": "2027-08-25",
+  "notes": "3축(밸류에이션/재무건전성/성장·수익성) 동일가중 33/33/34. 서술적 스냅샷 지표로 설계 - 기술점수(가격구조60+모멘텀40, 47종목x5년 백테스트)와 달리 향후 수익률 상관을 검증하거나 주장하지 않음 - 40종목 실측 새니티체크(분포 확인, 이상치 점검)와 Codex 텍스트모드 리뷰 2라운드로 동결. ROE는 자본구조(레버리지)를 이미 반영하는 재무건전성 축과 중복되는 정보라서 제외 - OPM·순이익률만 사용. 재무건전성 5개 비율은 서로 독립이 아니라 유동성(유동비율·당좌비율)/레버리지(차입금의존도·부채비율)/상환능력(이자보상배율) 3개 그룹으로 묶여 실질 가중치는 40/40/20에 가까움(Codex 1라운드 지적, 의도된 구성으로 유지 - 5개 독립신호라고 오해하지 말 것). 은행(BAC/JPM/MS)은 v1에서 완전 제외 - 유동/당좌/차입금의존도/영업이익 개념 자체가 일반기업과 구조적으로 다름(2026-08-25 확정). LLY/MRK/XOM은 SEC XBRL에 operatingIncome 태그가 비어있어 pretaxIncome+interestExpense로 근사(operatingIncomeEstimated:true로 표시, 매칭되는 연도만 사용해 CAGR 일관성 유지). Codex 2라운드에서 결측/0 혼동(이자비용·차입금 태그 결측을 0으로 오인), 재무제표 항목 간 결산일 불일치, 반올림된 축점수로 등급 판정하던 문제, 커버리지 게이트에 밸류에이션 축 누락을 지적받아 전부 수정 후 동결. BRK.B(지주회사, 분류형 대차대조표 없음)는 은행처럼 완전 제외하진 않았지만 재무건전성 1/5만 남아 coverageStatus:partial로 정직하게 표시됨 - v2에서 재검토 대상.",
+  "bank_exclude_tickers": ["BAC", "JPM", "MS"],
+  "axis_weights": { "valuation": 33, "health": 33, "growth_profit": 34 },
+  "coverage_gate": {
+    "note": "Codex 1라운드 권고 - 결측 항목이 많은데도 나머지 항목만으로 평균내면 만점을 받을 수 있어(예: 4개 중 2개만 쓰고 그 2개가 5점이면 축 만점), 데이터 부족을 완전한 정보처럼 보이게 함. 이 기준(밸류에이션 축 존재 + 재무건전성 4/5 + 성장수익성 3/4) 미달이면 coverageStatus:\"partial\"로 표시 - grade/totalScore 자체는 그대로 계산해서 유지하되(부분 정보라도 참고값은 있는 게 나음), 홈페이지 표시 단계에서 partial 종목을 정식 등급과 구분해서 보여줄지는 UI 설계 시점에 결정.",
+    "min_health_ratios": 4,
+    "max_health_ratios": 5,
+    "min_growth_profit_metrics": 3,
+    "max_growth_profit_metrics": 4
+  },
+
+  "valuation": {
+    "source": "compute_valuation_score.py 결과(valuation_signals.json)의 per.stage/pbr.stage/targetPrice.stage를 동일 가중(0.6/0.4)로 재평균 - 최종 combinedStage는 반올림되어 해상도가 떨어지므로 반올림 전 연속값을 직접 재계산",
+    "weight_per_pbr": 0.6,
+    "weight_target": 0.4,
+    "stage_to_points": "points = 33 * (5 - stage) / 4  (stage 1=저평가 -> 33점, stage 5=고평가 -> 0점)"
+  },
+
+  "health": {
+    "max_raw_points": 25,
+    "scale_to_axis": 1.32,
+    "ratios": {
+      "currentRatio": {
+        "label": "유동비율",
+        "unit": "%",
+        "formula": "currentAssets / currentLiabilities * 100",
+        "higher_is_better": true,
+        "buckets": [
+          {"upper_exclusive": 100, "points": 1},
+          {"upper_exclusive": 150, "points": 2},
+          {"upper_exclusive": 200, "points": 3},
+          {"upper_exclusive": 300, "points": 4},
+          {"upper_exclusive": null, "points": 5}
+        ]
+      },
+      "quickRatio": {
+        "label": "당좌비율",
+        "unit": "%",
+        "formula": "(currentAssets - inventory) / currentLiabilities * 100",
+        "higher_is_better": true,
+        "buckets": [
+          {"upper_exclusive": 50, "points": 1},
+          {"upper_exclusive": 100, "points": 2},
+          {"upper_exclusive": 150, "points": 3},
+          {"upper_exclusive": 250, "points": 4},
+          {"upper_exclusive": null, "points": 5}
+        ]
+      },
+      "debtDependency": {
+        "label": "차입금의존도",
+        "unit": "%",
+        "formula": "(shortTermDebt + longTermDebt) / assets * 100",
+        "higher_is_better": false,
+        "buckets": [
+          {"upper_exclusive": 5, "points": 5},
+          {"upper_exclusive": 15, "points": 4},
+          {"upper_exclusive": 30, "points": 3},
+          {"upper_exclusive": 50, "points": 2},
+          {"upper_exclusive": null, "points": 1}
+        ]
+      },
+      "interestCoverage": {
+        "label": "이자보상배율",
+        "unit": "x",
+        "formula": "operatingIncome / interestExpense. 영업이익<=0이면 무조건 1점(이자비용 유무 무관). 이자비용=0이고 영업이익>0이면 5점(사실상 무차입).",
+        "higher_is_better": true,
+        "note": "40종목 실측 분포 확인 후 재조정(2026-08-25, Codex 1라운드) - 원래 상한(20x)에서 56%가 최고구간에 몰려 변별력이 떨어져 30x로 상향. 그래도 46%가 최고구간(우량 메가캡이 많은 표본 특성상 우측꼬리가 김) - v2에서 로그스케일 등 재검토 여지 있음.",
+        "buckets": [
+          {"upper_exclusive": 1, "points": 1},
+          {"upper_exclusive": 4, "points": 2},
+          {"upper_exclusive": 10, "points": 3},
+          {"upper_exclusive": 30, "points": 4},
+          {"upper_exclusive": null, "points": 5}
+        ]
+      },
+      "debtToEquity": {
+        "label": "부채비율",
+        "unit": "%",
+        "formula": "totalLiabilities / equityAttributableToParent * 100",
+        "higher_is_better": false,
+        "buckets": [
+          {"upper_exclusive": 25, "points": 5},
+          {"upper_exclusive": 50, "points": 4},
+          {"upper_exclusive": 100, "points": 3},
+          {"upper_exclusive": 200, "points": 2},
+          {"upper_exclusive": null, "points": 1}
+        ]
+      }
+    }
+  },
+
+  "growth_profit": {
+    "max_raw_points": 20,
+    "scale_to_axis": 1.7,
+    "cagr_lookback_years_target": 3,
+    "metrics": {
+      "revenueCagr": {
+        "label": "매출 CAGR",
+        "unit": "%",
+        "higher_is_better": true,
+        "buckets": [
+          {"upper_exclusive": 0, "points": 1},
+          {"upper_exclusive": 5, "points": 2},
+          {"upper_exclusive": 12, "points": 3},
+          {"upper_exclusive": 25, "points": 4},
+          {"upper_exclusive": null, "points": 5}
+        ]
+      },
+      "opIncomeCagr": {
+        "label": "영업이익 CAGR",
+        "unit": "%",
+        "higher_is_better": true,
+        "buckets": [
+          {"upper_exclusive": 0, "points": 1},
+          {"upper_exclusive": 8, "points": 2},
+          {"upper_exclusive": 18, "points": 3},
+          {"upper_exclusive": 35, "points": 4},
+          {"upper_exclusive": null, "points": 5}
+        ]
+      },
+      "opMargin": {
+        "label": "영업이익률(OPM)",
+        "unit": "%",
+        "higher_is_better": true,
+        "buckets": [
+          {"upper_exclusive": 5, "points": 1},
+          {"upper_exclusive": 15, "points": 2},
+          {"upper_exclusive": 25, "points": 3},
+          {"upper_exclusive": 35, "points": 4},
+          {"upper_exclusive": null, "points": 5}
+        ]
+      },
+      "netMargin": {
+        "label": "순이익률",
+        "unit": "%",
+        "higher_is_better": true,
+        "buckets": [
+          {"upper_exclusive": 3, "points": 1},
+          {"upper_exclusive": 8, "points": 2},
+          {"upper_exclusive": 15, "points": 3},
+          {"upper_exclusive": 25, "points": 4},
+          {"upper_exclusive": null, "points": 5}
+        ]
+      }
+    }
+  },
+
+  "grade_cuts": {
+    "우수": 80,
+    "양호": 60,
+    "보통": 40,
+    "미흡": 0
+  }
+}

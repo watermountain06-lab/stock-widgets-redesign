@@ -1,0 +1,11 @@
+{
+  "ticker": "SKHY",
+  "asOf": "2026-09-04",
+  "close": 169.86,
+  "modelVersion": "1.0.0",
+  "modelFrozenDate": "2026-08-18",
+  "disclaimer": "가격/거래량 데이터로 계산한 규칙 기반 기술 상태 요약이며, 투자 권고나 미래 수익률 예측이 아닙니다.",
+  "insufficientHistory": true,
+  "nBars": 41,
+  "requiredBars": 273
+}

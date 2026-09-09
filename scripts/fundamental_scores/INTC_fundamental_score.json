@@ -1,0 +1,68 @@
+{
+  "ticker": "INTC",
+  "financialsAsOf": "2025-12-27",
+  "valuation": {
+    "combinedStage": 3.8,
+    "axisPoints": 9.9,
+    "axisPointsRaw": 9.900000000000002
+  },
+  "health": {
+    "dataQuality": {},
+    "currentRatio": {
+      "value": 201.7,
+      "points": 4
+    },
+    "quickRatio": {
+      "value": 164.9,
+      "points": 4
+    },
+    "debtDependency": {
+      "value": 22.0,
+      "points": 3
+    },
+    "interestCoverage": {
+      "value": -2.0,
+      "points": 1,
+      "note": "영업이익 적자(또는 0) - 무조건 1점"
+    },
+    "debtToEquity": {
+      "value": 85.0,
+      "points": 3
+    },
+    "axisPoints": 19.8,
+    "axisPointsRaw": 19.8,
+    "ratiosUsed": 5
+  },
+  "growthProfit": {
+    "dataQuality": {},
+    "revenueCagr": {
+      "value": -5.7,
+      "points": 1
+    },
+    "opIncomeCagr": {
+      "value": null,
+      "points": 1,
+      "note": "흑자에서 적자(또는 0)로 전환 - 1점 처리"
+    },
+    "opMargin": {
+      "value": -4.2,
+      "points": 1
+    },
+    "netMargin": {
+      "value": -0.5,
+      "points": 1
+    },
+    "axisPoints": 6.8,
+    "axisPointsRaw": 6.800000000000001,
+    "metricsUsed": 4
+  },
+  "totalScore": 36.5,
+  "grade": "미흡",
+  "axesUsed": 3,
+  "coverageStatus": "full",
+  "dataStatus": {
+    "coverageStatus": "full",
+    "operatingIncomeEstimated": false,
+    "negativeEquity": false
+  }
+}

@@ -1,0 +1,66 @@
+{
+  "ticker": "MSFT",
+  "financialsAsOf": "2026-06-30",
+  "valuation": {
+    "combinedStage": 1.7,
+    "axisPoints": 27.2,
+    "axisPointsRaw": 27.224999999999998
+  },
+  "health": {
+    "dataQuality": {},
+    "currentRatio": {
+      "value": 123.0,
+      "points": 2
+    },
+    "quickRatio": {
+      "value": 122.2,
+      "points": 3
+    },
+    "debtDependency": {
+      "value": 5.3,
+      "points": 4
+    },
+    "interestCoverage": {
+      "value": 50.9,
+      "points": 5
+    },
+    "debtToEquity": {
+      "value": 71.4,
+      "points": 3
+    },
+    "axisPoints": 22.4,
+    "axisPointsRaw": 22.44,
+    "ratiosUsed": 5
+  },
+  "growthProfit": {
+    "dataQuality": {},
+    "revenueCagr": {
+      "value": 16.1,
+      "points": 4
+    },
+    "opIncomeCagr": {
+      "value": 20.6,
+      "points": 4
+    },
+    "opMargin": {
+      "value": 46.8,
+      "points": 5
+    },
+    "netMargin": {
+      "value": 40.3,
+      "points": 5
+    },
+    "axisPoints": 30.6,
+    "axisPointsRaw": 30.6,
+    "metricsUsed": 4
+  },
+  "totalScore": 80.3,
+  "grade": "우수",
+  "axesUsed": 3,
+  "coverageStatus": "full",
+  "dataStatus": {
+    "coverageStatus": "full",
+    "operatingIncomeEstimated": false,
+    "negativeEquity": false
+  }
+}

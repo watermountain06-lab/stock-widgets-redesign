@@ -1,0 +1,66 @@
+{
+  "ticker": "HD",
+  "financialsAsOf": "2026-02-01",
+  "valuation": {
+    "combinedStage": 2.0,
+    "axisPoints": 24.8,
+    "axisPointsRaw": 24.75
+  },
+  "health": {
+    "dataQuality": {},
+    "currentRatio": {
+      "value": 106.1,
+      "points": 2
+    },
+    "quickRatio": {
+      "value": 26.4,
+      "points": 1
+    },
+    "debtDependency": {
+      "value": 48.0,
+      "points": 2
+    },
+    "interestCoverage": {
+      "value": 8.7,
+      "points": 3
+    },
+    "debtToEquity": {
+      "value": 720.2,
+      "points": 1
+    },
+    "axisPoints": 11.9,
+    "axisPointsRaw": 11.879999999999999,
+    "ratiosUsed": 5
+  },
+  "growthProfit": {
+    "dataQuality": {},
+    "revenueCagr": {
+      "value": 1.5,
+      "points": 2
+    },
+    "opIncomeCagr": {
+      "value": -4.6,
+      "points": 1
+    },
+    "opMargin": {
+      "value": 12.7,
+      "points": 2
+    },
+    "netMargin": {
+      "value": 8.6,
+      "points": 3
+    },
+    "axisPoints": 13.6,
+    "axisPointsRaw": 13.600000000000001,
+    "metricsUsed": 4
+  },
+  "totalScore": 50.2,
+  "grade": "보통",
+  "axesUsed": 3,
+  "coverageStatus": "full",
+  "dataStatus": {
+    "coverageStatus": "full",
+    "operatingIncomeEstimated": false,
+    "negativeEquity": false
+  }
+}

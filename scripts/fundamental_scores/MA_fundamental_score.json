@@ -1,0 +1,66 @@
+{
+  "ticker": "MA",
+  "financialsAsOf": "2025-12-31",
+  "valuation": {
+    "combinedStage": 1.6,
+    "axisPoints": 28.1,
+    "axisPointsRaw": 28.05
+  },
+  "health": {
+    "dataQuality": {},
+    "currentRatio": {
+      "value": 103.5,
+      "points": 2
+    },
+    "quickRatio": {
+      "value": 103.5,
+      "points": 3
+    },
+    "debtDependency": {
+      "value": 35.1,
+      "points": 2
+    },
+    "interestCoverage": {
+      "value": 26.2,
+      "points": 4
+    },
+    "debtToEquity": {
+      "value": 599.9,
+      "points": 1
+    },
+    "axisPoints": 15.8,
+    "axisPointsRaw": 15.84,
+    "ratiosUsed": 5
+  },
+  "growthProfit": {
+    "dataQuality": {},
+    "revenueCagr": {
+      "value": 13.8,
+      "points": 4
+    },
+    "opIncomeCagr": {
+      "value": 15.5,
+      "points": 3
+    },
+    "opMargin": {
+      "value": 57.6,
+      "points": 5
+    },
+    "netMargin": {
+      "value": 9.5,
+      "points": 3
+    },
+    "axisPoints": 25.5,
+    "axisPointsRaw": 25.5,
+    "metricsUsed": 4
+  },
+  "totalScore": 69.4,
+  "grade": "양호",
+  "axesUsed": 3,
+  "coverageStatus": "full",
+  "dataStatus": {
+    "coverageStatus": "full",
+    "operatingIncomeEstimated": false,
+    "negativeEquity": false
+  }
+}
