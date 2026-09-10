@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>오늘의 종목 — [사이트명]</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;800&display=swap">
+  <link rel="stylesheet" href="today.css?v=500-linear-5">
+  <link rel="stylesheet" href="header.css?v=1">
+</head>
+<body>
+  <header class="site-header"><div class="header-inner"><a class="brand" href="index.html">◧ [사이트명]</a><span class="brand-note">공시로 읽는 기업의 흐름<br>하루씩, 한 종목씩</span><nav aria-label="주 메뉴"><a href="index.html">Home</a><a href="today.html" aria-current="page">Today</a></nav></div></header>
+  <aside class="date-rail" aria-label="날짜별 종목"><span class="eyebrow">ARCHIVE / 날짜</span><div id="dates"></div><p>레이아웃 미리보기<br>실시간 시세가 아닙니다.</p></aside>
+  <main>
+    <div class="day-heading"><h1><span>◆</span> <span id="day-title"></span></h1><span class="demo">예시 데이터</span></div>
+    <div class="stage"><button type="button" id="preview-previous" class="side-previous" aria-label="이전 종목 카드 보기"></button><button type="button" id="preview-next" class="next-preview" aria-label="다음 종목 카드 보기"><span>UP NEXT →</span><strong id="preview-title"></strong><span>다음 기업의 이야기를 살펴보세요.</span><span class="preview-lines" aria-hidden="true"></span></button><article id="story" class="story" aria-label="선택한 종목"></article></div>
+    <nav class="pager" aria-label="종목 카드 탐색"><button id="previous" aria-label="이전 종목">← 이전</button><div id="dots"></div><button id="next" aria-label="다음 종목">다음 →</button></nav>
+    <p class="position" id="position" aria-live="polite"></p>
+  </main>
+  <footer><strong>◧ [사이트명]</strong><p>기업의 숫자와 사업을 함께 읽습니다.</p><small>시세·날짜는 화면 시연용 예시입니다. 최신 공시와 실시간 시세 연동 전입니다.</small><a href="index.html">전체 종목 보기 ↗</a></footer>
+  <script src="today.js?v=500-linear-5"></script>
+</body>
+</html>

@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>[사이트명] — 미국 거래소 상장 주식 분석</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;800&display=swap">
 <style>
   :root{
     --bg:#f7f5ef; --panel:#ffffff; --border:#e6e2d3; --border2:#eeebe0;
@@ -45,25 +45,24 @@
   .star-cell{display:flex;justify-content:center;}
   .empty-state{padding:56px 20px;text-align:center;font-size:13px;color:var(--text3);}
 </style>
+<link rel="stylesheet" href="styles.css?v=home-slide-1">
+<link rel="stylesheet" href="header.css?v=1">
 </head>
 <body>
 
 <div style="min-height:100vh;background:var(--bg);display:flex;flex-direction:column;">
 
-  <!-- 1. 브랜딩 바 -->
-  <div style="border-bottom:1px solid var(--border);">
-    <div class="wrap" style="padding:26px 40px 22px;">
-      <div style="display:flex;align-items:baseline;gap:14px;">
-        <span style="font-size:20px;font-weight:700;color:var(--text);letter-spacing:-0.01em;">[사이트명]</span>
-        <span style="font-size:13px;color:var(--text2);">미국 거래소 상장 주식(ADR 포함)을 공시 원문 기준으로 정리합니다</span>
-      </div>
-    </div>
-  </div>
+  <header class="site-header"><div class="header-inner"><a class="brand" href="index.html">◧ [사이트명]</a><span class="brand-note">공시로 읽는 기업의 흐름<br>하루씩, 한 종목씩</span><nav aria-label="주 메뉴"><a href="index.html" aria-current="page">Home</a><a href="today.html">Today</a></nav></div></header>
 
+  <section class="home-feature" aria-label="오늘의 종목 미리보기">
+    <p class="feature-kicker">DAILY BRIEF · 예시 데이터</p><h1>기업의 숫자, <span>이야기가 되다.</span></h1><p class="feature-intro">가격의 움직임부터 기업의 사업까지.<br>오늘 살펴볼 종목을 한 장씩 읽어보세요.</p>
+    <div class="feature-label"><strong>◆ 오늘의 종목</strong><a href="today.html">Today에서 자세히 보기 ↗</a></div>
+    <div class="feature-stage"><button id="feature-prev" class="feature-side feature-left" aria-label="이전 카드"></button><article id="feature-card"></article><button id="feature-next" class="feature-side feature-right" aria-label="다음 카드"></button></div><p id="feature-position" aria-live="polite"></p>
+  </section>
   <!-- 1.5 매크로 지표 스트립 (아래 숫자·날짜 전부 목업 값, 실데이터 연동 전) -->
   <div style="border-bottom:1px solid var(--border);background:var(--panel);">
     <div class="wrap">
-      <div class="box-w" style="display:grid;grid-template-columns:repeat(6,1fr);padding:14px 0;text-align:center;">
+      <div class="box-w macro-grid" style="display:grid;grid-template-columns:repeat(6,1fr);padding:14px 0;text-align:center;">
         <div style="padding-right:16px;">
           <div style="font-size:11px;color:var(--text3);margin-bottom:4px;">S&amp;P 500</div>
           <div class="num" style="font-size:15px;font-weight:700;">6,449.15</div>
@@ -101,7 +100,7 @@
   <!-- 2. 스탯 카드 4개 (전부 목업 값) -->
   <div>
     <div class="wrap" style="padding:24px 40px 0;">
-      <div class="box-w" style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;">
+      <div class="box-w stats-grid" style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;">
         <div class="stat-card">
           <div class="stat-label">5% 이상 상승</div>
           <div><span class="stat-value num" style="color:var(--up);">11</span><span class="stat-unit">개</span></div>
@@ -132,14 +131,14 @@
           <button class="tab-btn" data-view="attract">매력도별 <span class="tab-pill">준비중</span></button>
           <button class="tab-btn" data-view="change">등락률별</button>
         </div>
-        <div style="display:flex;align-items:center;gap:14px;">
+        <div class="toolbar-tools" style="display:flex;align-items:center;gap:14px;">
           <label style="display:flex;align-items:center;gap:7px;font-size:12.5px;color:var(--text2);">
-            <span style="width:14px;height:14px;border:1.5px solid var(--border);border-radius:4px;display:inline-block;"></span>
+            <input id="favorites-only" type="checkbox">
             즐겨찾기만 보기
           </label>
-          <div style="display:flex;align-items:center;gap:8px;padding:8px 14px;border:1px solid var(--border);border-radius:999px;background:var(--panel);">
+          <div class="search-box" style="display:flex;align-items:center;gap:8px;padding:8px 14px;border:1px solid var(--border);border-radius:999px;background:var(--panel);">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#9c9a8c" stroke-width="2"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-            <span style="font-size:12.5px;color:var(--text3);">티커나 종목명으로 찾기 (예: NVDA, 엔비디아)</span>
+            <input id="stock-search" type="search" aria-label="티커나 종목명으로 찾기" placeholder="티커나 종목명으로 찾기">
           </div>
         </div>
       </div>
@@ -150,7 +149,7 @@
   <div style="flex:1;display:flex;">
     <div class="wrap" style="flex:1;padding:6px 40px 44px;">
       <div class="box-w" style="font-size:11.5px;color:var(--text3);margin-bottom:14px;">
-        ETF&middot;ETN 제외, 재무 수치는 SEC 공시 대조&middot; 현재가&middot;등락률은 별도 시세 기준(공시 대조 대상 아님)
+        <strong style="color:var(--accent)">미리보기 · 예시 데이터</strong><br>ETF&middot;ETN 제외, 재무 수치는 SEC 공시 대조&middot; 현재가&middot;등락률은 별도 시세 기준(공시 대조 대상 아님)
       </div>
       <div class="box-w num" style="font-size:12.5px;color:var(--text2);margin-bottom:14px;">분석 대상 <span id="ticker-count" style="color:var(--text);font-weight:700;">5</span>개 종목</div>
 
@@ -197,112 +196,65 @@
     return '<span class="num" style="font-size:14px;font-weight:700;color:'+color+';">'+sign+Math.abs(c).toFixed(2)+'%</span>';
   }
 
-  function nameCell(d){
-    return '<div style="display:flex;align-items:center;gap:12px;overflow:hidden;">'
-      + '<div class="logo-box"><img src="logos/'+d.ticker.toLowerCase()+'.png" alt="" loading="lazy"></div>'
-      + '<div style="font-size:14px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">'+d.ticker+' <span style="font-weight:400;color:var(--text2);font-size:12.5px;">'+d.name+'</span></div>'
-      + '</div>';
-  }
 
-  function emptyState(){
-    return '<div class="empty-state">표시할 종목이 없습니다</div>';
-  }
-
-  function renderRank(){
-    if(DATA.length===0) return emptyState();
-    var cols = '56px 300px 130px 1fr 110px 100px 44px';
-    var head = '<div class="head-grid" style="grid-template-columns:'+cols+';max-width:900px;">'
-      + '<div class="head-cell">순위</div><div class="head-cell">종목</div><div class="head-cell">업종</div><div></div>'
-      + '<div class="head-cell num" style="text-align:right;">현재가</div><div class="head-cell num" style="text-align:right;">등락률</div><div></div></div>';
-    var rows = DATA.map(function(d){
-      return '<div class="row-grid" data-href="'+d.href+'" style="grid-template-columns:'+cols+';max-width:900px;">'
-        + '<div class="num" style="font-size:13.5px;color:var(--text2);font-weight:600;">'+d.rank+'</div>'
-        + nameCell(d)
-        + '<div><span class="tag">'+d.sector+'</span></div>'
-        + '<div></div>'
-        + '<div class="num" style="font-size:14.5px;font-weight:700;text-align:right;">'+d.price+'</div>'
-        + '<div style="text-align:right;">'+changeCell(d.change)+'</div>'
-        + '<div class="star-cell">'+STAR+'</div></div>';
-    }).join('');
-    return head + rows;
-  }
-
-  function renderSector(){
-    if(DATA.length===0) return emptyState();
-    var cols = '300px 1fr 120px 100px 44px';
-    var bySector = {};
-    var order = [];
-    DATA.forEach(function(d){
-      if(!bySector[d.sector]){ bySector[d.sector]=[]; order.push(d.sector); }
-      bySector[d.sector].push(d);
-    });
-    var out = '';
-    order.forEach(function(sec){
-      out += '<div class="sector-head">'+sec+' <span style="font-weight:400;color:var(--text3);">'+bySector[sec].length+'</span></div>';
-      out += bySector[sec].map(function(d){
-        return '<div class="row-grid" data-href="'+d.href+'" style="grid-template-columns:'+cols+';max-width:900px;">'
-          + nameCell(d)
-          + '<div></div>'
-          + '<div class="num" style="font-size:14.5px;font-weight:700;text-align:right;">'+d.price+'</div>'
-          + '<div style="text-align:right;">'+changeCell(d.change)+'</div>'
-          + '<div class="star-cell">'+STAR+'</div></div>';
-      }).join('');
-    });
-    return out;
-  }
-
-  function renderChange(){
-    if(DATA.length===0) return emptyState();
-    var cols = '56px 300px 130px 110px 100px 120px 44px';
-    var sorted = DATA.slice().sort(function(a,b){ return b.change - a.change; });
-    var head = '<div class="head-grid" style="grid-template-columns:'+cols+';max-width:900px;">'
-      + '<div class="head-cell">순위</div><div class="head-cell">종목명</div><div class="head-cell">업종</div>'
-      + '<div class="head-cell num" style="text-align:right;">현재가</div><div class="head-cell num" style="text-align:right;">등락률</div>'
-      + '<div class="head-cell num" style="text-align:right;">시가총액</div><div></div></div>';
-    var rows = sorted.map(function(d,i){
-      return '<div class="row-grid" data-href="'+d.href+'" style="grid-template-columns:'+cols+';max-width:900px;">'
-        + '<div class="num" style="font-size:13.5px;color:var(--text2);font-weight:600;">'+(i+1)+'</div>'
-        + nameCell(d)
-        + '<div><span class="tag">'+d.sector+'</span></div>'
-        + '<div class="num" style="font-size:14.5px;font-weight:700;text-align:right;">'+d.price+'</div>'
-        + '<div style="text-align:right;">'+changeCell(d.change)+'</div>'
-        + '<div class="num" style="font-size:13.5px;color:var(--text2);text-align:right;">'+d.marketCap+'</div>'
-        + '<div class="star-cell">'+STAR+'</div></div>';
-    }).join('');
-    return head + rows;
-  }
-
-  function renderAttract(){
-    return '<div style="padding:64px 20px;text-align:center;">'
-      + '<div style="font-size:14px;font-weight:700;color:var(--text);margin-bottom:8px;">매력도별 보기는 준비 중입니다</div>'
-      + '<div style="font-size:12.5px;color:var(--text3);">종목별 기본 점수 산출이 끝나는 대로 제공됩니다</div>'
-      + '</div>';
-  }
-
-  var RENDER = { rank: renderRank, sector: renderSector, change: renderChange, attract: renderAttract };
-
+  var favorites = new Set();
+  try { favorites = new Set(JSON.parse(localStorage.getItem('stock-favorites') || '[]')); } catch(e) {}
+  var view = 'rank';
   var panel = document.getElementById('data-panel');
   var tabs = document.querySelectorAll('.tab-btn');
-
-  function bindRowClicks(){
-    panel.querySelectorAll('.row-grid[data-href]').forEach(function(row){
-      row.addEventListener('click', function(){
-        window.location.href = row.getAttribute('data-href');
-      });
-    });
+  function card(d, i) {
+    return '<article class="stock-card"><div class="card-top"><span class="rank-label">'+(view === 'change' ? '등락률 ' + (i+1) : '시가총액 ' + d.rank)+'위</span>'
+      + '<button class="favorite" data-ticker="'+d.ticker+'" aria-label="'+d.ticker+' 즐겨찾기" aria-pressed="'+favorites.has(d.ticker)+'">'+STAR+'</button></div>'
+      + '<a class="stock-title" href="'+d.href+'"><span class="logo-box"><img src="logos/'+d.ticker.toLowerCase()+'.png" alt="" loading="lazy"></span><span><strong>'+d.ticker+'</strong><small>'+d.name+'</small></span></a>'
+      + '<div class="stock-sector"><span class="tag">'+d.sector+'</span></div>'
+      + '<div class="price-line"><span class="price num">'+d.price+'</span>'+changeCell(d.change)+'</div>'
+      + '<div class="card-bottom"><span>시가총액 <b class="num">'+d.marketCap+'</b></span><span>분석 보기 ↗</span></div></article>';
   }
-
-  function setView(view){
-    panel.innerHTML = RENDER[view]();
-    tabs.forEach(function(t){ t.classList.toggle('active', t.getAttribute('data-view') === view); });
-    bindRowClicks();
+  function render() {
+    var query = document.getElementById('stock-search').value.trim().toLowerCase();
+    var data = DATA.filter(function(d){return (d.ticker+' '+d.name).toLowerCase().includes(query) && (!document.getElementById('favorites-only').checked || favorites.has(d.ticker));});
+    document.getElementById('ticker-count').textContent = data.length;
+    tabs.forEach(function(t){var active=t.dataset.view===view;t.classList.toggle('active',active);t.setAttribute('aria-pressed',String(active));});
+    if(view==='attract'){panel.innerHTML='<div class="empty-state">매력도별 보기는 준비 중입니다</div>';return;}
+    if(view==='change') data.sort(function(a,b){return b.change-a.change;});
+    if(view==='sector') {
+      var groups={};data.forEach(function(d){(groups[d.sector] || (groups[d.sector]=[])).push(d);});
+      panel.innerHTML=Object.keys(groups).map(function(sec){return '<div class="sector-head">'+sec+' · '+groups[sec].length+'</div>'+groups[sec].map(card).join('');}).join('');
+    } else panel.innerHTML=data.map(card).join('');
+    if(!data.length) panel.innerHTML='<div class="empty-state">표시할 종목이 없습니다</div>';
   }
-
-  tabs.forEach(function(t){
-    t.addEventListener('click', function(){ setView(t.getAttribute('data-view')); });
+  panel.addEventListener('click',function(e){
+    var button=e.target.closest('.favorite');if(!button)return;
+    var ticker=button.dataset.ticker;
+    if(favorites.has(ticker))favorites.delete(ticker);else favorites.add(ticker);
+    try{localStorage.setItem('stock-favorites',JSON.stringify(Array.from(favorites)));}catch(e){}
+    button.setAttribute('aria-pressed',String(favorites.has(ticker)));
+    if(document.getElementById('favorites-only').checked) render();
   });
-
-  setView('rank');
+  tabs.forEach(function(t){t.addEventListener('click',function(){view=t.dataset.view;render();});});
+  document.getElementById('stock-search').addEventListener('input',render);
+  document.getElementById('favorites-only').addEventListener('change',render);
+  render();
+  var featureIndex=0,featureAnimations=[];
+  var featureCard=document.getElementById('feature-card');
+  function featureMarkup(d){return '<span class="tag">'+d.sector+'</span><div class="feature-company"><img src="logos/'+d.ticker.toLowerCase()+'.png" alt=""><div><small>'+d.ticker+'</small><h2>'+d.name+'</h2></div></div><p>기업의 가격과 사업을 함께 살펴보세요.</p><div class="price-line"><strong class="price">'+d.price+'</strong>'+changeCell(d.change)+'</div><div class="card-bottom">시가총액 <strong>'+d.marketCap+'</strong></div>';}
+  function renderFeature(){
+    var d=DATA[featureIndex];featureCard.innerHTML=featureMarkup(d)+'<a class="feature-open" href="today.html#0-'+d.ticker+'">오늘의 종목 읽기 ↗</a>';
+    ['prev','next'].forEach(function(key){var i=featureIndex+(key==='next'?1:-1),el=document.getElementById('feature-'+key);el.hidden=i<0||i>=6;el.innerHTML=el.hidden?'':featureMarkup(DATA[i]);});
+    document.getElementById('feature-position').textContent=(featureIndex+1)+' / 6';
+  }
+  function slideFeature(step){
+    var next=featureIndex+step;if(next<0||next>=6)return;
+    featureAnimations.forEach(function(a){a.cancel();});document.querySelectorAll('.feature-outgoing').forEach(function(el){el.remove();});
+    var old=featureCard.cloneNode(true);old.removeAttribute('id');old.classList.add('feature-outgoing');old.inert=true;old.setAttribute('aria-hidden','true');
+    var distance=featureCard.getBoundingClientRect().width+24;
+    featureIndex=next;renderFeature();document.querySelector('.feature-stage').append(old);
+    var timing={duration:500,easing:'linear',fill:'both'};
+    var exit=old.animate([{transform:'translateX(0)',opacity:1},{transform:'translateX('+(-step*distance)+'px) scale(.9)',opacity:0}],timing);
+    var enter=featureCard.animate([{transform:'translateX('+(step*distance)+'px) scale(.9)',opacity:.3},{transform:'translateX(0)',opacity:1}],timing);
+    featureAnimations=[exit,enter];Promise.all(featureAnimations.map(function(a){return a.finished;})).then(function(){old.remove();exit.cancel();enter.cancel();}).catch(function(){});
+  }
+  document.getElementById('feature-prev').addEventListener('click',function(){slideFeature(-1);});document.getElementById('feature-next').addEventListener('click',function(){slideFeature(1);});renderFeature();
 })();
 </script>
 

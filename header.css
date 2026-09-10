@@ -1,0 +1,10 @@
+.site-header{height:66px;flex-shrink:0;background:#ffffffbc;border-bottom:1px solid #fff;position:relative;z-index:2;font-family:'Noto Sans KR',sans-serif;line-height:1.8;color:#20202a}
+.site-header .header-inner{max-width:760px;margin:auto;height:100%;display:flex;align-items:center;gap:20px;padding:0 24px}
+.site-header a{color:inherit;text-decoration:none}
+.site-header .brand{font-size:20px;font-weight:800;white-space:nowrap}
+.site-header .brand-note{font-size:10px;line-height:1.5;color:#777783;border-left:1px solid #e5e3ec;padding-left:16px}
+.site-header nav{margin-left:auto;display:flex;gap:26px;height:100%;align-items:center;font-size:14px}
+.site-header nav a{position:relative}
+.site-header nav a[aria-current]:after{content:'';height:2px;background:linear-gradient(90deg,#6851cd,#ca4089);position:absolute;bottom:-15px;left:0;right:0}
+.site-header a:focus-visible{outline:3px solid #6851cd;outline-offset:4px}
+@media(max-width:600px){.site-header .header-inner{padding:0 18px;gap:12px}.site-header .brand{font-size:17px}.site-header .brand-note{display:none}.site-header nav{gap:20px;font-size:12px}}
