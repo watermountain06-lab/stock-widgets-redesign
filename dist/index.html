@@ -169,6 +169,7 @@
 </div>
 
 <script src="stock-data.js?v=1"></script>
+<script src="reading.js?v=resume-only"></script>
 <script src="navigation.js?v=drag-2"></script>
 <script>
 (function(){
@@ -227,7 +228,9 @@
   document.getElementById('favorites-only').addEventListener('change',render);
   window.addEventListener('quotes-updated',()=>{render();renderFeature();});
   render();
-  var featureIndex=0,featureAnimations=[];
+  var savedReading=Reading.load('home');
+  var featureIndex=DATA.slice(0,6).findIndex(d=>d.ticker===savedReading.ticker);if(featureIndex<0)featureIndex=0;
+  var featureAnimations=[],saveHomeReading=()=>{};
   var featureCard=document.getElementById('feature-card');
   function featureMarkup(d){return '<span class="tag">'+d.sector+'</span><div class="feature-company"><img src="logos/'+d.ticker.toLowerCase()+'.png" alt=""><div><small>'+d.ticker+'</small><h2>'+d.name+'</h2></div></div><p>기업의 가격과 사업을 함께 살펴보세요.</p><small>'+ (d.quoteAsOf?'Twelve Data · '+d.quoteAsOf:'시세: 예시 · 기준일 미확인')+'</small><div class="price-line"><strong class="price">'+d.price+'</strong>'+changeCell(d.change)+'</div><div class="card-bottom">시가총액 <strong>'+d.marketCap+'</strong></div>';}
   function renderFeature(){
@@ -240,7 +243,7 @@
     featureAnimations.forEach(function(a){a.cancel();});document.querySelectorAll('.feature-outgoing').forEach(function(el){el.remove();});
     var old=featureCard.cloneNode(true);old.removeAttribute('id');old.classList.add('feature-outgoing');old.inert=true;old.setAttribute('aria-hidden','true');
     var distance=featureCard.getBoundingClientRect().width+24;
-    featureIndex=next;renderFeature();document.querySelector('.feature-stage').append(old);
+    featureIndex=next;renderFeature();saveHomeReading();document.querySelector('.feature-stage').append(old);
     var timing={duration:300,easing:'linear',fill:'both'};
     var exit=old.animate([{transform:'translateX(0)',opacity:1},{transform:'translateX('+(-step*distance)+'px) scale(.9)',opacity:0}],timing);
     var enter=featureCard.animate([{transform:'translateX('+(step*distance)+'px) scale(.9)',opacity:.3},{transform:'translateX(0)',opacity:1}],timing);
@@ -248,6 +251,7 @@
   }
   document.getElementById('feature-prev').addEventListener('click',function(){slideFeature(-1);});document.getElementById('feature-next').addEventListener('click',function(){slideFeature(1);});renderFeature();
   bindCardNavigation(document.querySelector(".feature-stage"),slideFeature);
+  saveHomeReading=Reading.bind('home',()=>({ticker:DATA[featureIndex].ticker}),savedReading.y);
 })();
 </script>
 

@@ -1,6 +1,9 @@
 const stocks=window.StockData.stocks;
 const days=window.StockData.days;
 let day=0,index=0;
+const savedReading=Reading.load("today");
+const explicitCard=Boolean(location.hash);
+let saveReading=()=>{};
 const story=document.getElementById('story');
 function moveDay(n){day=n;index=0;render();writeLocation();}
 function preview(d){return '<span>'+d.sector+'</span><strong>'+d.name+'</strong><span>'+d.ticker+'</span><strong>'+d.price+'</strong><span class="preview-lines" aria-hidden="true"></span>';}
@@ -58,14 +61,19 @@ function moveCard(step){
 ['next','preview-next'].forEach(id=>document.getElementById(id).addEventListener('click',()=>moveCard(1)));
 render();
 
-function writeLocation(){const hash='#'+day+'-'+days[day].tickers[index];if(location.hash!==hash)history.pushState(null,'',hash);}
+function writeLocation(){const hash='#'+day+'-'+days[day].tickers[index];if(location.hash!==hash)history.pushState(null,'',hash);saveReading();}
 function readLocation(){
  const match=location.hash.match(/^#(\d+)-([A-Z]+)$/);
  const n=match?Number(match[1]):0;const i=match?days[n]?.tickers.indexOf(match[2]):0;
  day=i>=0?n:0;index=i>=0?i:0;render();
  if(i===undefined || i<0)history.replaceState(null,'','#0-'+days[0].tickers[0]);
 }
-window.addEventListener('popstate',readLocation);window.addEventListener('hashchange',readLocation);readLocation();
+window.addEventListener('popstate',()=>{readLocation();saveReading();});window.addEventListener('hashchange',()=>{readLocation();saveReading();});
+if(!explicitCard && Number.isInteger(savedReading.day) && days[savedReading.day]?.tickers.includes(savedReading.ticker)){
+ history.replaceState(null,'','#'+savedReading.day+'-'+savedReading.ticker);
+}
+readLocation();
+saveReading=Reading.bind('today',()=>({day,ticker:days[day].tickers[index]}),!explicitCard?savedReading.y:undefined);
 bindCardNavigation(document.querySelector('.stage'),moveCard);
 
 window.addEventListener('quotes-updated',render);
