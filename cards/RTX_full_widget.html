@@ -278,7 +278,7 @@
   <div class="back-bar-right">
     <a class="back-bar-nav" href="WFC_full_widget.html">◀ WFC</a>
     <span class="back-bar-current">RTX · 시총 47위</span>
-    <span class="back-bar-nav disabled">다음 ▶</span>
+    <a class="back-bar-nav" href="SNDK_full_widget.html">다음 SNDK ▶</a>
   </div>
 </div>
 
@@ -961,7 +961,7 @@ const RTX_BACKTEST = [{"checkpoint_date":"2023-10-24","period_end_date":"2024-02
     const maVals=[...priceVals,...backtestVals];
     const mx=Math.max(...highs,...maVals), mn=Math.min(...lows,...maVals);
     const pad=(mx-mn)*0.06 || mx*0.02;
-    const top=mx+pad, bot=mn-pad, rng=(top-bot)||1;
+    const top=mx+pad, bot=Math.max(0, mn-pad), rng=(top-bot)||1;
     const py = v => pT + cH*(1-(v-bot)/rng);
     const colW = cW/data.length;
     const bodyW = Math.max(colW*0.62, 0.4);

@@ -1,0 +1,1487 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SNDK 종합 분석 위젯</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<style>
+
+  /* HEADER */
+  .header { background: linear-gradient(135deg, #2b0100 0%, #0f1117 40%, #1a1d27 100%); border-bottom: 2px solid var(--accent3); padding: 28px 32px 24px; position: relative; overflow: hidden; max-width: 1100px; margin: 0 auto; }
+  .box-key { background: rgba(225,6,0,0.1); border: 1px solid var(--accent3); border-radius: 10px; padding: 12px 16px; max-width: 1100px; margin: 0 auto 16px; }
+  .header::before { content: ''; position: absolute; top: -60px; right: -60px; width: 240px; height: 240px; background: radial-gradient(circle, rgba(225,6,0,0.14) 0%, transparent 70%); pointer-events: none; }
+  .header-top { display: flex; align-items: flex-start; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
+  .ticker-block { display: flex; align-items: center; gap: 16px; }
+  .ticker-badge { background: linear-gradient(135deg, var(--accent3), var(--accent)); color: #2b0100; font-size: 13px; font-weight: 800; padding: 5px 12px; border-radius: 6px; letter-spacing: 1px; }
+  .company-name { font-size: 22px; font-weight: 700; color: var(--text); }
+  .company-sub { font-size: 12px; color: var(--text3); margin-top: 2px; }
+  .price-block { text-align: right; }
+  .price-main { font-size: 32px; font-weight: 800; color: var(--accent2); letter-spacing: -1px; }
+  .price-change { font-size: 13px; color: var(--red); font-weight: 600; }
+  .header-meta { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 16px; margin-top: 16px; }
+  .meta-item { display: flex; flex-direction: column; }
+  .meta-label { font-size: 11px; color: var(--text3); text-transform: uppercase; letter-spacing: 0.8px; }
+  .meta-value { font-size: 14px; font-weight: 600; color: var(--text2); margin-top: 2px; }
+  .meta-value.highlight { color: var(--accent2); }
+
+  /* NAV */
+  .nav { display: flex; justify-content: space-between; gap: 4px; padding: 12px 32px; background: var(--bg2); border-bottom: 1px solid var(--border); overflow-x: auto; scrollbar-width: none; max-width: 1100px; margin: 0 auto; }
+  .nav::-webkit-scrollbar { display: none; }
+  .nav-btn { background: none; border: none; color: var(--text3); font-size: 12px; font-weight: 600; padding: 7px 14px; border-radius: 20px; cursor: pointer; white-space: nowrap; transition: all 0.2s; letter-spacing: 0.3px; }
+  .nav-btn:hover { color: var(--text); background: var(--bg3); }
+  .nav-btn.active { background: var(--accent3); color: var(--accent2); }
+
+  /* SECTIONS */
+  .section { display: none; padding: 28px 32px; max-width: 1100px; margin: 0 auto; }
+  .section.active { display: block; }
+
+/* ══════ shared ══════ */
+  :root {
+    --bg: #0f1117; --bg2: #1a1d27; --bg3: #22263a; --border: #2e3347;
+    --text: #e8eaf0; --text2: #9aa0b8; --text3: #5c6282;
+    --accent: #e10600; --accent2: #ff433e; --accent3: #8a0400;
+    --ma5: #ff6b9d; --ma20: #9b59b6; --ma60: #f0c040; --ma120: #22d3ee;
+    --green: #2ecc71; --red: #e74c3c; --gold: #f0c040; --blue: #3498db;
+    --event-major: #38bdf8; --event-neutral: #f1c40f;
+    --bull: #D85A30; --bear: #185FA5;
+    --radius: 10px; --shadow: 0 4px 20px rgba(0,0,0,0.4);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', -apple-system, sans-serif; font-size: 14px; line-height: 1.6; }
+  .page { max-width: 1100px; margin: 0 auto; padding: 28px 32px; }
+
+  .section-title { font-size: 16px; font-weight: 700; color: var(--accent2); margin-bottom: 20px; padding-bottom: 10px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 8px; }
+  .section-title::before { content: ''; width: 4px; height: 18px; background: var(--accent); border-radius: 2px; display: inline-block; }
+
+  .card { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius); padding: 18px 20px; margin-bottom: 16px; }
+  .card-title { font-size: 11px; color: var(--text3); text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 12px; font-weight: 600; }
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+  .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+
+  .chart-wrap { position: relative; }
+  .chart-wrap canvas { max-width: 100%; }
+
+  .ma-row { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid var(--border); }
+  .ma-row:last-child { border-bottom: none; }
+  .ma-dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; margin-right: 8px; }
+  .ma-name { display: flex; align-items: center; font-size: 13px; color: var(--text2); }
+  .ma-val { font-size: 13px; font-weight: 600; }
+  .ma-status { font-size: 11px; padding: 3px 8px; border-radius: 12px; font-weight: 600; }
+  .status-above { background: rgba(46,204,113,0.15); color: var(--green); }
+  .status-below { background: rgba(231,76,60,0.15); color: var(--red); }
+
+  .zone-list { display: flex; flex-direction: column; gap: 8px; margin-top: 4px; }
+  .zone-item { display: flex; justify-content: space-between; align-items: center; padding: 8px 12px; background: var(--bg3); border-radius: 6px; }
+  .zone-label { font-size: 12px; color: var(--text2); }
+  .zone-val { font-size: 13px; font-weight: 700; color: var(--accent2); }
+  .zone-tag { font-size: 10px; padding: 2px 8px; border-radius: 10px; font-weight: 600; }
+  .tag-support { background: rgba(46,204,113,0.15); color: var(--green); }
+  .tag-resist { background: rgba(231,76,60,0.15); color: var(--red); }
+  .tag-current { background: rgba(240,192,64,0.15); color: var(--gold); }
+  .tag-record { background: rgba(52,152,219,0.18); color: var(--blue); }
+
+  .range-toggle { display: flex; gap: 6px; flex-wrap: wrap; }
+  .range-btn { background: var(--bg3); border: 1px solid var(--border); color: var(--text3); font-size: 11px; font-weight: 700; padding: 4px 11px; border-radius: 999px; cursor: pointer; transition: all .15s; }
+  .range-btn:hover { color: var(--text); border-color: var(--text2); }
+  .range-btn.active { background: rgba(225,6,0,0.18); color: var(--accent2); border-color: var(--accent); }
+  .ma-toggle-btn { background: var(--bg3); border: 1px solid; font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: 999px; cursor: pointer; opacity: 1; transition: opacity .15s; }
+  .ma-toggle-btn.ma-off { opacity: 0.35; }
+  .price-chart-container { margin-bottom: 16px; }
+
+  /* SCORECARD */
+  .scorecard { background: linear-gradient(135deg, var(--bg2) 0%, #171a26 100%); border: 1px solid var(--border); border-radius: var(--radius); padding: 22px 24px; margin-bottom: 20px; }
+  .scorecard-top { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 12px; margin-bottom: 14px; }
+  .scorecard-score { display: flex; align-items: baseline; gap: 4px; }
+  .scorecard-score .num { font-size: 40px; font-weight: 800; color: var(--accent2); line-height: 1; }
+  .scorecard-score .denom { font-size: 16px; color: var(--text3); font-weight: 600; }
+  .scorecard-grade { font-size: 12px; font-weight: 700; padding: 6px 14px; border-radius: 999px; background: rgba(46,204,113,0.15); color: var(--green); white-space: nowrap; }
+  .scorecard-grade.grade-strong { background: rgba(46,204,113,0.18); color: var(--green); }
+  .scorecard-grade.grade-positive { background: rgba(225,6,0,0.15); color: var(--accent2); }
+  .scorecard-grade.grade-mixed { background: rgba(240,192,64,0.18); color: var(--gold); }
+  .scorecard-grade.grade-weak { background: rgba(231,76,60,0.15); color: var(--red); }
+  .scorecard-bar { height: 6px; background: var(--bg3); border-radius: 999px; overflow: hidden; margin-bottom: 6px; }
+  .scorecard-bar-fill { height: 100%; background: linear-gradient(90deg, var(--accent3), var(--accent2)); border-radius: 999px; }
+  .scorecard-subtitle { font-size: 11.5px; color: var(--text3); margin-bottom: 18px; }
+  .scorecard-subscores { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-bottom: 10px; }
+  .subscore-box { background: var(--bg3); border-radius: 8px; padding: 12px 14px; }
+  .subscore-box .subscore-label { font-size: 11px; color: var(--text2); margin-bottom: 6px; display: flex; justify-content: space-between; }
+  .subscore-box .subscore-val { font-size: 20px; font-weight: 700; color: var(--text); }
+  .subscore-box .subscore-max { font-size: 12px; color: var(--text3); font-weight: 500; }
+  .subscore-bar { height: 4px; background: var(--bg); border-radius: 999px; overflow: hidden; margin-top: 8px; }
+  .subscore-bar-fill { height: 100%; background: var(--accent2); border-radius: 999px; }
+  .subscore-desc { font-size: 10.5px; color: var(--text3); margin-top: 8px; }
+  .subscores-note { font-size: 10.5px; color: var(--text3); margin-bottom: 16px; line-height: 1.5; }
+  .scorecard-flags { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 14px; }
+  .risk-flag { font-size: 11px; font-weight: 700; padding: 4px 11px; border-radius: 999px; background: rgba(240,192,64,0.15); color: var(--gold); position: relative; cursor: help; }
+  .risk-flag[data-tooltip]::after { content: attr(data-tooltip); position: absolute; bottom: calc(100% + 8px); left: 50%; transform: translateX(-50%); width: max-content; max-width: 260px; background: #05060a; color: var(--text2); font-size: 11px; font-weight: 500; line-height: 1.5; padding: 8px 10px; border-radius: 8px; border: 1px solid var(--border); box-shadow: var(--shadow); opacity: 0; visibility: hidden; transition: opacity 0.15s ease; pointer-events: none; z-index: 20; text-align: left; white-space: normal; }
+  .risk-flag[data-tooltip]::before { content: ''; position: absolute; bottom: 100%; left: 50%; transform: translateX(-50%); border: 5px solid transparent; border-top-color: #05060a; opacity: 0; visibility: hidden; transition: opacity 0.15s ease; z-index: 20; }
+  .risk-flag[data-tooltip]:hover::after, .risk-flag[data-tooltip]:hover::before { opacity: 1; visibility: visible; }
+  .scorecard-noflags { font-size: 11.5px; color: var(--text3); margin-bottom: 14px; }
+  .opportunity-badge { font-size: 11px; font-weight: 700; padding: 4px 11px; border-radius: 999px; background: rgba(52,152,219,0.18); color: var(--blue); }
+  .scorecard-verdict { display: flex; flex-direction: column; align-items: flex-end; gap: 6px; }
+  .scorecard-noOpp-inline { font-size: 10.5px; color: var(--text3); white-space: nowrap; }
+  .scorecard-evidence { list-style: none; display: flex; flex-direction: column; gap: 7px; margin-bottom: 14px; }
+  .scorecard-evidence li { font-size: 12.5px; color: var(--text2); padding-left: 16px; position: relative; }
+  .scorecard-evidence li::before { content: '●'; position: absolute; left: 0; color: var(--accent2); font-size: 8px; top: 5px; }
+  .scorecard-footer { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; padding-top: 12px; border-top: 1px dashed var(--border); font-size: 10.5px; color: var(--text3); }
+  .scorecard-disclaimer { font-size: 10.5px; color: var(--text3); font-style: italic; }
+
+  .detail-toggle { cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 8px; user-select: none; font-size: 12.5px; color: var(--text2); font-weight: 600; padding: 10px 2px 6px; border-top: 1px dashed var(--bg3); margin-top: 2px; }
+  .detail-toggle:hover { color: var(--text); }
+  .detail-toggle .toggle-hint { display: flex; align-items: center; gap: 6px; background: rgba(225,6,0,0.12); border: 1px solid rgba(225,6,0,0.35); border-radius: 999px; padding: 5px 11px; flex-shrink: 0; transition: background 0.2s ease, border-color 0.2s ease; }
+  .detail-toggle:hover .toggle-hint { background: rgba(225,6,0,0.22); border-color: rgba(225,6,0,0.5); }
+  .detail-toggle .toggle-hint-text { font-size: 10.5px; font-weight: 700; color: var(--accent2); white-space: nowrap; }
+  .detail-toggle .chevron { font-size: 11px; color: var(--accent2); transition: transform 0.25s ease; flex-shrink: 0; }
+  .detail-toggle.collapsed .chevron { transform: rotate(-90deg); }
+  .collapsible-body { overflow: hidden; opacity: 1; transition: max-height 0.3s ease, opacity 0.2s ease, margin-top 0.2s ease; }
+  .collapsible-body.collapsed { max-height: 0 !important; opacity: 0; margin-top: 0 !important; }
+
+  .stat-box { background: var(--bg3); border: 1px solid var(--border); border-radius: 8px; padding: 14px 16px; }
+  .stat-label { font-size: 11px; color: var(--text3); text-transform: uppercase; letter-spacing: 0.8px; }
+  .stat-value { font-size: 22px; font-weight: 700; color: var(--text); margin: 4px 0 2px; }
+  .stat-sub { font-size: 11px; color: var(--text3); }
+  .stat-value.up { color: var(--green); }
+  .stat-value.down { color: var(--red); }
+  .stat-value.gold { color: var(--accent2); }
+
+  .yoy-footnote { font-size: 11px; color: var(--text3); margin-top: 10px; }
+  .yoy-footnote a { color: var(--accent2); text-decoration: none; }
+
+  .fy-note { background: rgba(225,6,0,0.07); border: 1px solid var(--accent3); border-radius: 8px; padding: 10px 14px; margin-bottom: 14px; font-size: 12px; color: var(--text2); }
+
+  .section-label { font-size: 13px; color: var(--text); font-weight: 700; margin-bottom: 10px; display:flex; align-items:center; gap:6px; }
+  .section-label .dot { width:6px; height:6px; border-radius:50%; background:var(--accent2); }
+  .diag-summary { display:flex; align-items:center; gap:12px; background: linear-gradient(90deg, rgba(240,192,64,0.14), rgba(240,192,64,0.03)); border:1px solid rgba(240,192,64,0.3); border-radius:8px; padding:12px 16px; margin-bottom:14px; }
+  .diag-summary .icon { font-size:24px; }
+  .diag-summary .title { font-size:14px; font-weight:800; color:var(--gold); }
+  .diag-summary .sub { font-size:12px; color:var(--text2); margin-top:2px; line-height:1.4; }
+  .diag-summary.ok { background: linear-gradient(90deg, rgba(46,204,113,0.14), rgba(46,204,113,0.03)); border-color: rgba(46,204,113,0.3); }
+  .diag-summary.ok .title { color: var(--green); }
+  .diag-list { display:flex; flex-direction:column; gap:6px; margin-bottom: 22px; }
+  .diag-row { display:flex; align-items:center; justify-content:space-between; background:var(--bg3); border-radius:8px; padding:10px 14px; }
+  .diag-left { display:flex; align-items:baseline; gap:10px; flex-wrap:wrap; }
+  .diag-label { font-size:13px; color:var(--text); font-weight:600; min-width:96px; }
+  .diag-value { font-size:15px; font-weight:700; color:var(--text); }
+  .diag-note { font-size:11.5px; color:var(--text2); }
+  .diag-badge { font-size:11px; font-weight:700; padding:4px 10px; border-radius:999px; display:flex; align-items:center; gap:4px; white-space:nowrap; }
+  .diag-badge.safe { background:rgba(46,204,113,0.16); color:var(--green); }
+  .diag-badge.info { background:rgba(154,160,184,0.14); color:var(--text2); }
+  .diag-badge.watch { background:rgba(240,192,64,0.16); color:var(--gold); }
+  .diag-badge.warn { background:rgba(231,76,60,0.16); color:var(--red); }
+
+  .activity-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 12px; }
+  .act-card { background: var(--bg3); border-radius: 8px; padding: 12px 14px; display:flex; align-items:center; gap:12px; }
+  .act-icon { font-size: 19px; width:34px; height:34px; display:flex; align-items:center; justify-content:center; background:rgba(225,6,0,0.1); border-radius:8px; flex-shrink:0; }
+  .act-label { font-size: 11.5px; color: var(--text2); font-weight:600; margin-bottom:2px; }
+  .act-value { font-size: 15px; font-weight: 700; color: var(--text); }
+  .act-sub { font-size: 11px; color: var(--text2); margin-top:1px; }
+
+  /* VALUATION METER */
+  .val-item { margin-bottom: 18px; padding: 8px; margin-left: -8px; margin-right: -8px; border-radius: 8px; border: 1px solid transparent; transition: background 0.15s ease, border-color 0.15s ease; cursor: pointer; }
+  .val-item:last-child { margin-bottom: 0; }
+  .val-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+  .val-item:hover { background: rgba(255,255,255,0.03); }
+  .val-item.selected { background: rgba(225,6,0,0.08); border-color: rgba(225,6,0,0.35); }
+  .val-name { position: relative; font-size: 13px; font-weight: 600; color: var(--text); }
+  .val-item.selected .val-name::after { content: '▸ 비교 보기'; font-size: 9.5px; font-weight: 600; color: var(--accent2); margin-left: 8px; vertical-align: middle; }
+  .val-number { font-size: 14px; font-weight: 700; color: var(--accent2); }
+  .val-track { height: 8px; background: var(--bg3); border-radius: 4px; position: relative; overflow: hidden; }
+  .val-fill { height: 100%; border-radius: 4px; transition: width 0.8s ease; }
+  .val-labels { display: flex; justify-content: space-between; margin-top: 4px; }
+  .val-low { font-size: 10px; color: var(--green); }
+  .val-mid { font-size: 10px; color: var(--accent2); text-align: center; }
+  .val-high { font-size: 10px; color: var(--red); }
+  .stage-badge { font-size: 13px; padding: 2px 10px; border-radius: 12px; font-weight: 700; }
+  .stage-1 { background: rgba(46,204,113,0.2); color: #2ecc71; }
+  .stage-2 { background: rgba(39,174,96,0.2); color: #27ae60; }
+  .stage-3 { background: rgba(240,192,64,0.2); color: var(--gold); }
+  .stage-4 { background: rgba(231,126,35,0.2); color: #e67e22; }
+  .stage-5 { background: rgba(231,76,60,0.2); color: var(--red); }
+
+  .verdict-line { font-size:15px; font-weight:700; color:var(--text); line-height:1.45; margin-top:14px; }
+  .verdict-caveat { font-size:11px; color:var(--text3); margin-top:5px; line-height:1.5; display:flex; align-items:flex-start; gap:6px; }
+  .caveat-icon { display:inline-flex; align-items:center; justify-content:center; width:14px; height:14px; border-radius:50%; background:var(--gold); color:#0f1117; font-size:10px; font-weight:800; flex-shrink:0; margin-top:1.5px; }
+  .anchor-card { margin-top:14px; background:var(--bg3); border-radius:8px; padding:12px 14px; }
+  .anchor-card-label { font-size:10.5px; color:var(--text3); text-transform:uppercase; letter-spacing:0.6px; margin-bottom:8px; }
+  .anchor-card-formula { font-family:'SF Mono',Menlo,Consolas,monospace; font-size:12.5px; font-weight:500; color:var(--text2); line-height:1.5; padding:2px 0 2px 10px; border-left:2px solid var(--text3); }
+  .anchor-card-formula + .anchor-card-formula { margin-top:6px; }
+  .anchor-card-cross { font-size:11px; color:var(--text3); margin-top:10px; padding-top:8px; border-top:1px dashed rgba(255,255,255,0.06); line-height:1.5; }
+  .secondary-row { margin-top:10px; background:rgba(52,152,219,0.08); border:1px solid rgba(52,152,219,0.25); border-radius:8px; padding:10px 12px; }
+  .secondary-row-label { font-size:11.5px; font-weight:700; color:var(--blue); }
+  .secondary-row-caveat { font-size:10.5px; color:var(--text3); margin-top:4px; line-height:1.5; }
+
+  .verdict-summary-head { font-size:14px; font-weight:800; color:var(--text); }
+  .verdict-summary-head .tag { font-size:11.5px; font-weight:700; color:var(--green); margin-left:4px; }
+  .verdict-summary-head .tag.mixed { color:var(--gold); }
+  .verdict-summary-head .tag.negative { color:var(--red); }
+  .verdict-summary-body { font-size:12.5px; color:var(--text2); line-height:1.7; margin-top:10px; }
+  .verdict-summary-risk { margin-top:12px; background:rgba(240,192,64,0.08); border:1px solid rgba(240,192,64,0.25); border-radius:8px; padding:10px 12px; font-size:11.5px; color:var(--text2); line-height:1.6; }
+  .verdict-summary-counter { margin-top:12px; background:rgba(240,192,64,0.08); border:1px solid rgba(240,192,64,0.25); border-radius:8px; padding:10px 12px; font-size:11.5px; color:var(--text2); line-height:1.6; }
+  .verdict-summary-next { margin-top:10px; background:rgba(52,152,219,0.08); border:1px solid rgba(52,152,219,0.25); border-radius:8px; padding:10px 12px; font-size:11.5px; color:var(--text2); line-height:1.6; }
+
+  /* TIMELINE */
+  .timeline { position: relative; padding-left: 24px; }
+  .timeline::before { content: ''; position: absolute; left: 8px; top: 0; bottom: 0; width: 2px; background: var(--border); }
+  .tl-item { position: relative; margin-bottom: 20px; }
+  .tl-item:last-child { margin-bottom: 0; }
+  .tl-dot { position: absolute; left: -20px; top: 4px; width: 10px; height: 10px; border-radius: 50%; background: var(--event-major); border: 2px solid var(--bg); }
+  .tl-dot.red { background: var(--red); }
+  .tl-dot.green { background: var(--green); }
+  .tl-dot.blue { background: var(--blue); }
+  .tl-dot.neutral { background: var(--event-neutral); }
+  .tl-date { font-size: 10px; color: var(--accent); font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; }
+  .tl-title { font-size: 13px; font-weight: 600; color: var(--text); margin: 3px 0; }
+  .tl-desc { font-size: 12px; color: var(--text2); line-height: 1.5; }
+  .tl-source { display: inline-flex; align-items: center; gap: 4px; margin-top: 6px; font-size: 11px; font-weight: 600; color: var(--accent2); text-decoration: none; }
+  .tl-source:hover { text-decoration: underline; }
+  .tl-reaction { display:inline-block; margin-left:8px; font-size:10px; font-weight:700; padding:2px 7px; border-radius:999px; }
+  .tl-reaction.up { background:rgba(46,204,113,0.15); color:var(--green); }
+  .tl-reaction.down { background:rgba(231,76,60,0.15); color:var(--red); }
+  .tl-reaction.flat { background:rgba(154,160,184,0.15); color:var(--text3); }
+
+  /* BULL/BEAR */
+  .bull-bear { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .bb-box { background: var(--bg3); border-radius: var(--radius); padding: 16px; }
+  .bb-title { font-size: 13px; font-weight: 700; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+  .bb-bull { color: var(--bull); }
+  .bb-bear { color: var(--bear); }
+  .bb-item { display: flex; gap: 8px; margin-bottom: 10px; font-size: 12px; color: var(--text2); line-height: 1.5; }
+  .bb-icon { flex-shrink: 0; margin-top: 2px; }
+
+  @media (max-width: 640px) {
+    .page { padding: 20px 16px; }
+    .grid-3, .grid-4 { grid-template-columns: 1fr 1fr; }
+    .scorecard-subscores { grid-template-columns: 1fr; }
+    .activity-grid { grid-template-columns: 1fr; }
+    .grid-2 { grid-template-columns: 1fr; }
+    .bull-bear { grid-template-columns: 1fr; }
+  }
+
+  body { padding-top: 46px; }
+  .back-bar { position: fixed; top: 0; left: 0; right: 0; height: 46px; background: rgba(10,11,17,0.92); backdrop-filter: blur(8px); border-bottom: 1px solid var(--border); z-index: 1000; display: flex; align-items: center; justify-content: space-between; padding: 0 20px; }
+  .back-bar-left { display: flex; align-items: center; gap: 8px; text-decoration: none; }
+  .back-bar-logo { width: 20px; height: 20px; border-radius: 5px; background: var(--accent2); flex-shrink: 0; }
+  .back-bar-left span { color: var(--text2); font-size: 12.5px; font-weight: 600; transition: color 0.2s; }
+  .back-bar-left:hover span { color: var(--accent2); }
+  .back-bar-right { display: flex; align-items: center; gap: 16px; font-size: 12px; }
+  .back-bar-nav { color: var(--text2); text-decoration: none; font-weight: 600; transition: color 0.2s; }
+  .back-bar-nav:hover { color: var(--accent2); }
+  .back-bar-nav.disabled { color: var(--text3); pointer-events: none; opacity: 0.5; }
+  .back-bar-current { color: var(--text); font-weight: 700; padding: 4px 10px; background: var(--bg3); border-radius: 6px; white-space: nowrap; }
+</style>
+</head>
+<body>
+<div class="back-bar">
+  <a class="back-bar-left" href="../index.html"><span class="back-bar-logo"></span><span>[사이트명] · 전체 종목 목록</span></a>
+  <div class="back-bar-right">
+    <a class="back-bar-nav" href="RTX_full_widget.html">◀ RTX</a>
+    <span class="back-bar-current">SNDK · 시총 48위</span>
+    <a class="back-bar-nav" href="GEV_full_widget.html">다음 GEV ▶</a>
+  </div>
+</div>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="header-top">
+    <div class="ticker-block">
+      <div>
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:4px;">
+          <span class="ticker-badge">SNDK</span>
+          <span style="font-size:11px;color:var(--accent2);font-weight:600;">NASDAQ · 반도체 — NAND 플래시 메모리</span>
+        </div>
+        <div class="company-name">Sandisk Corporation</div>
+        <div class="company-sub">2025년 2월 Western Digital에서 분사해 독립 상장한 NAND 플래시 메모리 기업(FY2026 매출 $20.25B) · 소비자용 저장장치와 데이터센터 SSD가 주력 · Kioxia와 공동 운영하는 일본 7개 팹(Flash Ventures)에서 웨이퍼 대부분을 조달 · CEO David Goeckeler · 미국 상장기업 시총 48위 · <strong style="color:var(--accent2);">회계연도가 7월 초에 끝나 FY2026은 2026년 7월 3일까지다 — 직전 FY2025가 순손실 $16.4억이었기 때문에, 아래 모든 트레일링 지표는 적자에서 사상 최대 흑자로 뒤집힌 단 한 해만을 담고 있다</strong></div>
+      </div>
+    </div>
+    <div class="price-block">
+      <div class="price-main">$1,764.17</div>
+      <div class="price-change" style="color:var(--green);">▲ +1.51% (2026.09.09 기준)</div>
+      <div style="font-size:11px;color:var(--text3);margin-top:2px;">52주 최저 $69.57 (2025.09.09) · 최고 $2,354.39 (2026.06.22)</div>
+    </div>
+  </div>
+  <div class="header-meta">
+    <div class="meta-item"><span class="meta-label">시가총액</span><span class="meta-value highlight">약 $258.3B</span></div>
+    <div class="meta-item"><span class="meta-label">섹터</span><span class="meta-value">반도체 — NAND 플래시 메모리</span></div>
+    <div class="meta-item"><span class="meta-label">FY2026 매출</span><span class="meta-value">$20.25B (2026.7.3 종료 · YoY +175%)</span></div>
+    <div class="meta-item"><span class="meta-label">PER (TTM GAAP)</span><span class="meta-value highlight">23.92x</span></div>
+    <div class="meta-item"><span class="meta-label">배당</span><span class="meta-value">없음 (FY26 자사주매입 $4.52B)</span></div>
+  </div>
+</div>
+<div class="box-key">
+  <div style="font-size:13px;font-weight:700;color:var(--accent2);display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:10px;">
+    <span style="display:flex;align-items:center;gap:6px;"><span style="width:4px;height:14px;background:var(--accent2);border-radius:2px;display:inline-block;"></span>핵심 투자 논리 <span style="color:var(--gold);font-weight:600;">(적정~고평가)</span></span>
+    <span style="font-size:11px;font-weight:700;padding:4px 10px;border-radius:999px;background:rgba(46,204,113,0.15);color:var(--green);">FY26 매출 +175%·영업이익률 61.2%</span>
+    <span style="font-size:11px;font-weight:700;padding:4px 10px;border-radius:999px;background:rgba(231,76,60,0.15);color:var(--red);">PBR 16.4x · MU 5년 최고치 바로 아래</span>
+  </div>
+  <div style="font-size:17px;font-weight:800;color:var(--text);margin-bottom:12px;">적자에서 1년 만에 EPS $73.76으로 뒤집힌 NAND 사이클 정점이라 트레일링 PER 23.9x는 싸 보이지만, 같은 이익을 3년 평균으로 눌러 계산하면 89.9x가 되므로 종합판정은 적정~고평가다.</div>
+  <div style="display:flex;flex-direction:column;gap:8px;">
+    <div style="font-size:12px;color:var(--text2);line-height:1.5;"><strong style="color:var(--accent2);">01</strong>&nbsp; FY2026 매출 $20.25B(+175%)·영업이익 $12.39B·GAAP 희석 EPS $73.76으로, 직전 FY2025의 -$11.32에서 한 해 만에 뒤집혔다(상세 #fund).</div>
+    <div style="font-size:12px;color:var(--text2);line-height:1.5;"><strong style="color:var(--accent2);">02</strong>&nbsp; 5개 지표 중 PER·PCR은 분모가 1년 새 부호까지 바뀌어 평가를 보류했고, 남은 PBR·PSR·EV/EBITDA 가중평균 3.40/5단계를 조정 없이 그대로 썼다(상세 #valuation).</div>
+    <div style="font-size:12px;color:var(--text2);line-height:1.5;"><strong style="color:var(--accent2);">03</strong>&nbsp; 기술점수 90/100(우수) — 장기 정배열이 온전하고 1년 수익률이 +2,402%지만, 6월 고점 $2,354.39 대비로는 아직 -25.1% 지점이다(상세 #tech).</div>
+    <div style="font-size:12px;color:var(--text2);line-height:1.5;"><strong style="color:var(--accent2);">04</strong>&nbsp; 상장 1년 7개월이라 자체 배수 밴드를 만들 수 없어 Micron의 5년 실측 분포를 밴드로 빌려 왔고, 그 기준에서 PBR 16.4x는 MU의 5년 최고치 18.85x 바로 아래다(상세 #valuation).</div>
+  </div>
+</div>
+
+<!-- NAV -->
+<div class="nav">
+  <button class="nav-btn active" onclick="showSection('tech', this)">📈 기술적 분석</button>
+  <button class="nav-btn" onclick="showSection('fund', this)">📊 기본적 분석</button>
+  <button class="nav-btn" onclick="showSection('valuation', this)">⚖️ 밸류에이션</button>
+  <button class="nav-btn" onclick="showSection('news', this)">📰 시계열 뉴스</button>
+  <button class="nav-btn" onclick="showSection('invest', this)">🎯 투자 포인트</button>
+</div>
+
+<div id="tech" class="section active">
+  <div class="section-title" id="techHeaderTitle">기술적 분석 — 일봉 캔들스틱 (2025.09 ~ 2026.09) · 1년 수익률 <span id="techHeaderReturn">+2402.4%</span></div>
+
+  <div class="price-chart-container">
+    <div style="margin-bottom:10px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
+      <div class="range-toggle" id="sndkRangeToggle">
+        <button class="range-btn" data-range="1M">1개월</button>
+        <button class="range-btn" data-range="6M">6개월</button>
+        <button class="range-btn active" data-range="1Y">1년</button>
+        <button class="range-btn" data-range="3Y">3년</button>
+        <button class="range-btn" data-range="5Y">5년</button>
+      </div>
+      <div id="sndkMaToggle" style="display:flex;gap:8px;flex-wrap:wrap;">
+        <button class="ma-toggle-btn ma-off" data-ma="backtest" style="color:#f0c040;border-color:#f0c040;">◆ 예상밴드 백테스트</button>
+      </div>
+    </div>
+    <div id="sndkBacktestSummary" style="display:none;font-size:11px;color:var(--text2);margin-bottom:8px;padding:8px 10px;background:var(--bg3);border-radius:6px;line-height:1.6;"></div>
+    <svg id="sndkCandleSvg" viewBox="0 0 720 240" width="100%" style="display:block;background:var(--bg3);border-radius:8px 8px 0 0;padding:4px;" role="img" aria-label="SNDK 일봉 캔들스틱 차트"></svg>
+    <svg id="sndkVolumeSvg" viewBox="0 0 720 70" width="100%" style="display:block;background:var(--bg3);border-radius:0 0 8px 8px;padding:0 4px 4px;" role="img" aria-label="SNDK 거래량 차트"></svg>
+    <div style="margin-top:10px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
+      <div style="font-size:11px;color:var(--text3);" id="techRangeSummary">1년 최저 $69.57 (2025.09) → 1년 최고 $2354.39 (2026.06) → 현재 $1764.17</div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;">
+        <button class="ma-toggle-btn" data-ma="ma5" style="color:var(--ma5);border-color:var(--ma5);">● MA5</button>
+        <button class="ma-toggle-btn" data-ma="ma20" style="color:var(--ma20);border-color:var(--ma20);">● MA20</button>
+        <button class="ma-toggle-btn" data-ma="ma60" style="color:var(--ma60);border-color:var(--ma60);">● MA60</button>
+        <button class="ma-toggle-btn" data-ma="ma120" style="color:var(--ma120);border-color:var(--ma120);">● MA120</button>
+        <button class="ma-toggle-btn" data-ma="pricelabels" style="color:var(--text2);border-color:var(--text2);margin-left:4px;">◆ 가격라벨</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="scorecard">
+    <div class="scorecard-top">
+      <div>
+        <div class="scorecard-score"><span class="num">90</span><span class="denom">/100</span></div>
+      </div>
+      <div class="scorecard-verdict">
+        <div class="scorecard-grade grade-strong">기술적 분석 우수</div>
+        <div class="scorecard-noOpp-inline">🎯 돌파 신호 없음</div>
+      </div>
+    </div>
+    <div class="scorecard-bar"><div class="scorecard-bar-fill" style="width:90%;"></div></div>
+    <div class="scorecard-subtitle">가격·거래량 기반 기술 상태 점수 (모델 v1.0.0 · 2026-09-09 기준) · 투자 권고 아님</div>
+
+    <div class="scorecard-subscores">
+      <div class="subscore-box">
+        <div class="subscore-label"><span>추세구조</span><span class="subscore-max">40/40</span></div>
+        <div class="subscore-val">40</div>
+        <div class="subscore-bar"><div class="subscore-bar-fill" style="width:100%;"></div></div>
+        <div class="subscore-desc">MA50/150/200 배열 조건 4개 모두 충족</div>
+      </div>
+      <div class="subscore-box">
+        <div class="subscore-label"><span>절대모멘텀</span><span class="subscore-max">40/40</span></div>
+        <div class="subscore-val">40</div>
+        <div class="subscore-bar"><div class="subscore-bar-fill" style="width:100%;"></div></div>
+        <div class="subscore-desc">최근 3개월~1년 가중 수익률 +654.8%</div>
+      </div>
+      <div class="subscore-box">
+        <div class="subscore-label"><span>52주위치</span><span class="subscore-max">10/20</span></div>
+        <div class="subscore-val">10</div>
+        <div class="subscore-bar"><div class="subscore-bar-fill" style="width:50%;"></div></div>
+        <div class="subscore-desc">저점 대비 +2435.8%, 고점 대비 -25.1%</div>
+      </div>
+    </div>
+    <div class="subscores-note">추세구조·절대모멘텀·52주위치는 참고용으로 나눠 보여드리는 구성요소이며, 각각을 독립적인 매매 신호로 해석하지 마세요. 최종 점수는 지금처럼 세 구성요소를 합산한 방식 그대로입니다.</div>
+
+    <div class="scorecard-flags">
+      <span class="risk-flag" data-tooltip="현재가가 52주 최고가보다 20% 이상 낮은 상태입니다. 추세는 살아 있지만 고점에서 이미 큰 폭으로 되밀렸음을 의미합니다.">⚠️ 고점대비큰조정</span>
+      <span class="risk-flag" data-tooltip="2025년 2월 상장이라 가격 이력이 394거래일뿐입니다. MA200·ATR 백분위 등 장기 지표는 계산은 되지만 한 번의 상승 사이클만 담고 있어 해석에 주의가 필요합니다.">⚠️ 가격이력 1년7개월</span>
+    </div>
+
+    <div class="detail-toggle collapsed" onclick="toggleCollapsible(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleCollapsible(this);}" role="button" tabindex="0" aria-expanded="false">
+      <span>상세 근거 보기</span>
+      <span class="toggle-hint"><span class="toggle-hint-text">상세 보기</span><span class="chevron">▾</span></span>
+    </div>
+    <div class="collapsible-body collapsed">
+    <ul class="scorecard-evidence">
+      <li>중장기 정배열 조건 4가지가 모두 충족돼 추세구조는 40점 만점이다 — ① 현재가($1,764.17)가 MA150($1,251.47)·MA200($1,019.02)을 모두 상회 ② MA150이 MA200보다 높음 ③ MA200이 21거래일 전($877.69)보다 상승 중 ④ MA50($1,537.47)이 MA150·MA200을 모두 상회.</li>
+      <li>최근 3개월~1년 가중 모멘텀 +654.8%로 40점 만점이다 — 1년 수익률이 +2,402.4%(2025.9.8 종가 $70.50 대비)로, 이 점수 구간의 상한을 크게 넘어선다.</li>
+      <li>52주위치만 20점 중 10점이다 — 저점(2025.09.09, $69.57) 대비 +2,435.8%지만 고점(2026.06.22, $2,354.39) 대비 -25.1%라, 고점 근접 조건을 채우지 못했다.</li>
+      <li>4개 이동평균선이 모두 현재가 아래에 있다 — MA5 $1,670.11(-5.3%)·MA60 $1,629.07(-7.7%)·MA20 $1,579.45(-10.5%)·MA120 $1,409.14(-20.1%). 다만 이 간격은 지지선이 두텁다는 뜻이 아니라 주가가 1년 만에 24배가 되면서 이평선이 따라오지 못한 결과에 가깝다 — MA200은 현재가보다 42% 아래에 있어 지지선으로 쓸 수 있는 수준이 아니다.</li>
+      <li>ATR은 5.45%로 자체 이력의 4.0백분위다 — 하루 5% 넘게 움직이는 것이 이 종목 기준으로는 오히려 조용한 편이라는 뜻이다. 실제로 최근 1년 사이 6월 25일 +21.97%, 7월 30일 +25.99%, 6월 23일 -13.64%, 7월 28일 -14.25%가 모두 나왔다.</li>
+      <li>백분위·MA200 같은 장기 지표는 2025년 2월 상장 이후 394거래일만 담고 있고, 그 구간이 통째로 한 번의 상승 사이클이다 — 하락 사이클을 겪은 적이 없는 표본이라는 점을 감안해서 읽어야 한다.</li>
+    </ul>
+    </div>
+
+    <div class="scorecard-footer">
+      <span>기준일 2026-09-09</span>
+      <span class="scorecard-disclaimer">가격/거래량 데이터로 계산한 규칙 기반 기술 상태 요약이며, 투자 권고나 미래 수익률 예측이 아닙니다.</span>
+    </div>
+  </div>
+
+  <div class="grid-2">
+    <div class="card" style="margin-bottom:0;">
+      <div class="card-title">핵심 가격대</div>
+      <div class="zone-list">
+        <div class="zone-item"><span class="zone-label">52주 최고</span><div style="display:flex;align-items:center;gap:8px;"><span class="zone-val" style="color:var(--red);">$2,354.39</span><span class="zone-tag tag-resist">2026.06.22 · 저항선</span></div></div>
+        <div class="zone-item"><span class="zone-label">현재가</span><div style="display:flex;align-items:center;gap:8px;"><span class="zone-val" style="color:var(--gold);">$1,764.17</span><span class="zone-tag tag-current">현재</span></div></div>
+        <div class="zone-item"><span class="zone-label">MA 지지 밀집</span><div style="display:flex;align-items:center;gap:8px;"><span class="zone-val" style="color:var(--green);">$1,579.45~1,670.11</span><span class="zone-tag tag-support">MA20·MA60·MA5 · 지지선</span></div></div>
+        <div class="zone-item"><span class="zone-label">7월 급락 저점</span><div style="display:flex;align-items:center;gap:8px;"><span class="zone-val" style="color:var(--green);">$998.19</span><span class="zone-tag tag-support">2026.07.29 · 강지지</span></div></div>
+        <div class="zone-item"><span class="zone-label">52주 최저</span><div style="display:flex;align-items:center;gap:8px;"><span class="zone-val" style="color:var(--blue);">$69.57</span><span class="zone-tag tag-record">2025.09.09 · 재평가 직전 기준점</span></div></div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-bottom:0;">
+      <div class="card-title">이동평균선 현황</div>
+      <div class="ma-row"><span class="ma-name"><span class="ma-dot" style="background:var(--ma5)"></span>MA5 (단기)</span><div style="display:flex;align-items:center;gap:10px;"><span class="ma-val">$1,670.11</span><span class="ma-status status-above">현재가 상회</span></div></div>
+      <div class="ma-row"><span class="ma-name"><span class="ma-dot" style="background:var(--ma20)"></span>MA20 (중단기)</span><div style="display:flex;align-items:center;gap:10px;"><span class="ma-val">$1,579.45</span><span class="ma-status status-above">현재가 상회</span></div></div>
+      <div class="ma-row"><span class="ma-name"><span class="ma-dot" style="background:var(--ma60)"></span>MA60 (중기)</span><div style="display:flex;align-items:center;gap:10px;"><span class="ma-val">$1,629.07</span><span class="ma-status status-above">현재가 상회</span></div></div>
+      <div class="ma-row"><span class="ma-name"><span class="ma-dot" style="background:var(--ma120)"></span>MA120 (장기)</span><div style="display:flex;align-items:center;gap:10px;"><span class="ma-val">$1,409.14</span><span class="ma-status status-above">현재가 상회</span></div></div>
+      <div style="margin-top:12px;padding:10px;background:var(--bg3);border-radius:6px;font-size:11.5px;color:var(--text2);">4개 이평선 모두 현재가가 상회하고 있고, 점수 산정에 쓰이는 MA50($1,537.47)&gt;MA150($1,251.47)&gt;MA200($1,019.02)도 정배열이다. 다만 이평선 간격이 넓은 것을 지지선이 두텁다는 뜻으로 읽으면 안 된다 — 주가가 1년 만에 24배가 되면서 이평선이 따라붙지 못한 결과라, MA120은 현재가보다 20% 아래, MA200은 42% 아래에 있다. 실질적인 근접 지지대는 MA20~MA5가 몰려 있는 $1,579~1,670 구간이다.</div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:16px;">
+    <div class="card-title">예상밴드 백테스트 — <span style="color:var(--gold);font-weight:600;">SNDK는 아직 계산되지 않는다</span></div>
+    <div style="font-size:11.5px;color:var(--text2);line-height:1.7;">다른 종목 카드의 차트에는 과거 실적 발표일마다 그 시점 정보만으로 예상 PER 밴드를 만들어 실제 주가와 대조한 백테스트 오버레이가 얹혀 있다. SNDK는 이 계산이 성립하지 않아 오버레이가 비어 있으며, 버튼을 눌러도 표시되는 체크포인트가 없다. 이유는 두 가지이고 둘 다 데이터의 한계다 — ① 밴드를 만들려면 체크포인트 직전 2년치 일별 PER 분포가 필요한데 SNDK의 가격 이력 자체가 2025년 2월 13일부터라 아직 2년이 안 된다. ② PER은 트레일링 EPS가 플러스인 날에만 정의되는데, SNDK의 트레일링 EPS는 2026년 5월 1일에야 처음 플러스로 돌아섰고 그 이후 <strong style="color:var(--accent2);">90거래일</strong>밖에 쌓이지 않아 최소 표본 100일에 미달한다. 두 조건을 함께 만족하는 첫 시점은 <strong style="color:var(--accent2);">2027년 4~5월 예상 FY2027 3분기 공시</strong>이며, 그때 이 카드에 오버레이가 채워진다. 빈 밴드를 임의로 좁혀 그리는 대신 비워 둔 이유다.</div>
+  </div>
+
+</div>
+
+<div id="fund" class="section">
+  <div class="section-title">기본적 분석 — 분기 재무제표 (SEC 10-Q/10-K, US GAAP 연결재무제표)</div>
+
+  <div class="fy-note">SNDK 회계연도는 달력연도와 다르다 — <strong>FY2026은 2025년 6월 28일~2026년 7월 3일</strong>이고, 아래 분기 라벨은 모두 회계 분기다(예: Q1'26은 2025년 7~9월). 각 연도 Q4는 SEC에 별도 분기로 공시되지 않아 <strong>연간 총계에서 9개월 누계를 뺀 값</strong>을 썼고, 회사가 8월 5일 실적발표에서 직접 공시한 Q4 수치(매출 $8,965M·영업이익 $7,037M·순이익 $6,903M·희석 EPS $43.97)와 전부 일치하는 것을 확인했다. 다만 Q4 EPS만은 역산값이 아니라 회사 공시치 $43.97을 쓴다 — 연간 $73.76에서 10-Q가 공시한 9개월 누계 $29.42를 빼면 $44.34가 나오는데, 가중평균 희석주식수가 1년 새 1.45억주에서 1.57억주로 늘어 EPS에서는 이 차감이 정확히 맞지 않기 때문이다(분기 EPS 세 개를 더한 $28.93도 9개월 공시치 $29.42와 다르다).</div>
+
+  <div class="card">
+    <div class="card-title">분기 매출 / 영업이익 / 영업이익률 (FY2025 Q1 ~ FY2026 Q4)</div>
+    <div class="chart-wrap" style="height:260px;">
+      <canvas id="sndkRevChart"></canvas>
+    </div>
+    <div style="font-size:11px;color:var(--text3);margin-top:10px;">SEC 10-Q/10-K 8개 분기 직접 확인. 이 카드가 이 종목에서 가장 중요한 그림이다 — 영업이익률이 8개 분기 만에 -111.0%(FY25 Q3, 영업권 손상 $1,830M 포함)에서 +78.5%(FY26 Q4)까지 189%p 움직였고, 매출은 $1.70B에서 $8.97B로 5.3배가 됐다. 손상을 제외하더라도 FY25 Q3 영업이익률은 -3.0%로, 불과 다섯 분기 전까지 이 회사는 본업에서 적자였다. NAND 가격 사이클이 이익을 이 정도로 증폭시킨다는 뜻이고, 뒤집힐 때도 같은 방향으로 작동한다.</div>
+  </div>
+
+  <div class="grid-4">
+    <div class="stat-box">
+      <div class="stat-label">FCF (FY2026)</div>
+      <div class="stat-value up">$11.49B</div>
+      <div class="stat-sub">OCF $11.67B − Capex $0.18B · FCF마진 56.8%</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-label">Capex (FY2026)</div>
+      <div class="stat-value">$0.18B</div>
+      <div class="stat-sub">매출의 0.9% · R&amp;D는 별도로 $1.33B(6.6%)</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-label">OCF (FY2026)</div>
+      <div class="stat-value up">$11.67B</div>
+      <div class="stat-sub">OCF 마진 57.6% · 직전 FY2025는 $0.08B</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-label">다음 실적</div>
+      <div class="stat-value gold">2026.11.05(예상)</div>
+      <div class="stat-sub">Q1 FY2027 · 회사 가이던스 매출 $10.30~10.80B</div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:16px;">
+    <div class="card-title">재무 건전성 — 안정성·활동성 (2026.07.03 기준)</div>
+
+    <div class="section-label"><span class="dot"></span>안정성 — 단기 지급능력·차입 의존도</div>
+    <div class="diag-summary">
+      <div class="icon">✅</div>
+      <div>
+        <div class="title">종합 진단: 차입금을 1년 만에 전액 상환해 총차입금이 $0이다</div>
+        <div class="sub">FY2026 중 $1,900M을 상환해 2026년 4월 3일자로 장·단기 차입금이 모두 0이 됐고, 기말 현금은 $4,762M이라 순현금 상태다. 자기자본 $15,736M 중 영업권은 $4,994M이므로 유형자기자본도 $10,742M로 넉넉하다 — 이 회사의 재무 리스크는 대차대조표가 아니라 손익계산서 쪽, 즉 NAND 가격에 있다</div>
+      </div>
+    </div>
+
+    <div class="detail-toggle collapsed" onclick="toggleCollapsible(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleCollapsible(this);}" role="button" tabindex="0" aria-expanded="false">
+      <span>안정성 상세 — 개별 비율 5개</span>
+      <span class="toggle-hint"><span class="toggle-hint-text">상세 보기</span><span class="chevron">▾</span></span>
+    </div>
+    <div class="collapsible-body collapsed">
+    <div class="diag-list">
+      <div class="diag-row">
+        <div class="diag-left"><span class="diag-label">유동비율</span><span class="diag-value">229.0%</span><span class="diag-note">유동자산 $12,780M÷유동부채 $5,581M · 1년 전(356.4%)보다 낮아진 것은 이익 급증에 따른 미지급법인세 등 유동부채가 $1,427M→$5,581M로 늘었기 때문이다</span></div>
+        <div class="diag-badge safe">✅ 안전</div>
+      </div>
+      <div class="diag-row">
+        <div class="diag-left"><span class="diag-label">당좌비율</span><span class="diag-value">180.6%</span><span class="diag-note">(유동자산−재고 $2,698M)÷유동부채</span></div>
+        <div class="diag-badge safe">✅ 안전</div>
+      </div>
+      <div class="diag-row">
+        <div class="diag-left"><span class="diag-label">차입금의존도</span><span class="diag-value">0.0%</span><span class="diag-note">기준 30%↓ 안전 · 총차입금 $0(장기 $0+유동성장기부채 $0) · 1년 전에는 $1,849M이었다</span></div>
+        <div class="diag-badge safe">✅ 안전</div>
+      </div>
+      <div class="diag-row">
+        <div class="diag-left"><span class="diag-label">이자보상배율</span><span class="diag-value">해당 없음</span><span class="diag-note">차입금이 0이라 비율 자체가 성립하지 않는다 · TTM 영업이익 $12,389M</span></div>
+        <div class="diag-badge safe">✅ 안전</div>
+      </div>
+      <div class="diag-row">
+        <div class="diag-left"><span class="diag-label">자기자본비율</span><span class="diag-value">69.9%</span><span class="diag-note">자기자본 $15,736M÷총자산 $22,507M · 자기자본은 1년 새 $9,216M에서 71% 늘었고, 증가분은 거의 전액 이번 사이클의 유보이익이다</span></div>
+        <div class="diag-badge safe">✅ 안전</div>
+      </div>
+    </div>
+    </div>
+
+    <div class="section-label" style="margin-top:14px;"><span class="dot" style="background:var(--blue);"></span>활동성 — 재고소진·회수 속도 (FY2026 실적 ÷ 기말잔액 기준)</div>
+    <div class="diag-summary">
+      <div class="icon">🔄</div>
+      <div>
+        <div class="title">종합 진단: 재고가 원가 기준 170일치로 두껍지만, 84.6% 마진에서는 다르게 읽힌다</div>
+        <div class="sub">재고자산회전기간 170.5일 + 매출채권회수기간 84.9일이다. 매출이 1년 새 2.75배가 됐으므로 연간 누계를 분모로 쓰면 매출채권 회수기간은 실제보다 길게 나오고, Q4 실적을 연율화하면 47.9일로 줄어든다. 반면 재고는 같은 방식으로 다시 계산해도 178.0일로 오히려 더 길어진다 — 재고 부담은 분모 착시가 아니라 실제다. 다만 Q4 매출총이익률이 84.6%라 원가 $2,698M의 재고는 현재 가격 기준으로 $17B 이상의 매출로 전환되는 물량이다. 매입채무는 회사가 별도 XBRL 태그로 공시하지 않아 현금전환주기(CCC)는 계산하지 않았다</div>
+      </div>
+    </div>
+
+    <div class="detail-toggle collapsed" onclick="toggleCollapsible(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleCollapsible(this);}" role="button" tabindex="0" aria-expanded="false">
+      <span>활동성 상세 — 개별 비율</span>
+      <span class="toggle-hint"><span class="toggle-hint-text">상세 보기</span><span class="chevron">▾</span></span>
+    </div>
+    <div class="collapsible-body collapsed">
+    <div class="activity-grid">
+      <div class="act-card">
+        <div class="act-icon">💳</div>
+        <div><div class="act-label">매출채권 회전율·회전기간</div><div class="act-value">4.30회</div><div class="act-sub">84.9일 만에 현금화 · FY26 매출 $20,248M÷매출채권 $4,708M</div></div>
+      </div>
+      <div class="act-card">
+        <div class="act-icon">📦</div>
+        <div><div class="act-label">재고자산 회전율·회전기간</div><div class="act-value">2.14회</div><div class="act-sub">170.5일 재고 보유 · FY26 매출원가 $5,776M÷재고 $2,698M</div></div>
+      </div>
+      <div class="act-card">
+        <div class="act-icon">📈</div>
+        <div><div class="act-label">Q4 연율화 재계산</div><div class="act-value">47.9 / 178.0일</div><div class="act-sub">매출채권 / 재고 · Q4 매출·매출원가를 4배해 분모로 쓴 값</div></div>
+      </div>
+      <div class="act-card">
+        <div class="act-icon">🚫</div>
+        <div><div class="act-label">현금전환주기(CCC)</div><div class="act-value">산출 불가</div><div class="act-sub">매입채무를 별도 항목으로 공시하지 않아 지급기간을 뺄 수 없다</div></div>
+      </div>
+    </div>
+    </div>
+
+    <div style="margin-top:14px;font-size:11.5px;color:var(--text2);line-height:1.6;">FY2026 매출총이익률 71.5%는 이 회사의 정상 수준이 아니다 — FY2025는 30.1%, FY2024는 마이너스 영업이익 구간이었고, 분기로 보면 Q1'26 29.8% → Q2'26 50.9% → Q3'26 78.4% → Q4'26 84.6%로 한 해 만에 55%p가 올라왔다. 회사는 Q4 매출 증가분의 3분의 2가 물량이 아니라 <strong>가격</strong>에서 나왔다고 직접 밝혔다. 한 가지 더 짚어둘 것은 FY2026 순이익 $11,433M 안에 영업외 항목인 <strong style="color:var(--accent2);">Nanya 지분 미실현 평가이익 $807M</strong>이 들어 있다는 점이다 — 영업이익 아래에 있어 위 차트의 영업이익률에는 영향이 없지만 순이익과 EPS는 끌어올린다(상세 #valuation). 감가상각비가 FY2026 $149M(영업이익의 1.2%)에 불과한 것도 이 회사만의 구조다 — 웨이퍼 생산 팹을 직접 보유하지 않고 Kioxia와의 합작사 Flash Ventures(일본 7개 팹)에서 조달하기 때문에, 팹의 감가상각은 SNDK 손익계산서의 감가상각비가 아니라 매입 웨이퍼 원가에 녹아 들어간다.</div>
+  </div>
+
+  <div class="grid-2">
+    <div class="card" style="margin-bottom:0;">
+      <div class="card-title">매출 구성 — 전방시장별 (FY2026 Q4, 총 $8,965M)</div>
+      <div style="display:flex;align-items:center;justify-content:center;gap:20px;">
+        <div class="chart-wrap" style="height:170px;width:170px;flex-shrink:0;">
+          <canvas id="segmentPieChart"></canvas>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:9px;">
+          <div style="display:flex;align-items:center;gap:7px;font-size:11px;color:var(--text2);white-space:nowrap;"><span style="width:8px;height:8px;border-radius:50%;background:#e10600;display:inline-block;flex-shrink:0;"></span>Edge (클라이언트 SSD·모바일) <strong style="color:var(--text);">$5,432M · 60.6%</strong></div>
+          <div style="display:flex;align-items:center;gap:7px;font-size:11px;color:var(--text2);white-space:nowrap;"><span style="width:8px;height:8px;border-radius:50%;background:#ff433e;display:inline-block;flex-shrink:0;"></span>Datacenter (기업용 SSD) <strong style="color:var(--text);">$2,977M · 33.2%</strong></div>
+          <div style="display:flex;align-items:center;gap:7px;font-size:11px;color:var(--text2);white-space:nowrap;"><span style="width:8px;height:8px;border-radius:50%;background:#8a0400;display:inline-block;flex-shrink:0;"></span>Consumer (메모리카드·USB) <strong style="color:var(--text);">$556M · 6.2%</strong></div>
+          <div style="font-size:10.5px;color:var(--text3);line-height:1.55;margin-top:2px;">전년 동기 대비<br>Datacenter <strong style="color:var(--green);">$213M→$2,977M</strong> · Edge <strong style="color:var(--green);">+392%</strong> · Consumer <strong style="color:var(--red);">-5%</strong></div>
+          <div style="font-size:10.5px;color:var(--text3);line-height:1.55;">FY2026 연간<br>Datacenter <strong style="color:var(--text2);">$5,153M(+437%)</strong> · Edge <strong style="color:var(--text2);">$12,160M(+195%)</strong> · Consumer <strong style="color:var(--text2);">$2,935M(+29%)</strong></div>
+        </div>
+      </div>
+      <div style="margin-top:14px;font-size:11.5px;color:var(--text2);line-height:1.6;">1년 전 Datacenter는 분기 $213M짜리 사업이었고 지금은 $2,977M이다 — 배수로는 가장 빠르게 큰 부문이고 매출 비중도 FY25 13.1%에서 FY26 25.4%로 두 배가 됐다. 다만 절대 증가액으로는 Edge가 더 크다(FY26 증가분 $12,893M 중 Edge +$8,033M·62%, Datacenter +$4,193M·33%) — 성장의 성격을 바꾼 것은 Datacenter지만 매출의 몸통은 여전히 Edge다. 반대로 Consumer는 Q4 기준 전년 동기 대비 -5%($585M→$556M)로 유일하게 역성장했는데(연간으로는 +29%), 회사가 FY2026 실적 호조의 원인을 "고부가 고객 쪽으로의 믹스 이동과 가격 상승"이라고 직접 적은 것과 같은 방향이다 — 부족한 NAND를 마진이 높은 쪽에 먼저 배정하면 Consumer가 먼저 줄어든다. Capex가 매출의 0.9%뿐인 것도 여기서 나온다 — 팹 증설 부담을 Flash Ventures 합작 구조가 대신 지기 때문에, 같은 사이클에서 Micron처럼 대규모 투자를 앞세우는 회사와는 현금흐름 모양 자체가 다르다.</div>
+    </div>
+
+    <div class="card" style="margin-bottom:0;">
+      <div class="card-title">자본배분 · 주주환원 (FY2026 · 2025.6.28~2026.7.3)</div>
+      <div class="zone-list">
+        <div class="zone-item">
+          <span class="zone-label">배당</span>
+          <span class="zone-val" style="color:var(--red);">$0</span>
+        </div>
+        <div class="zone-item">
+          <span class="zone-label">자사주매입</span>
+          <span class="zone-val">$4.52B</span>
+        </div>
+        <div class="zone-item">
+          <span class="zone-label">합계 주주환원</span>
+          <span class="zone-val">$4.52B</span>
+        </div>
+        <div class="zone-item">
+          <span class="zone-label">잔여 자사주매입 한도</span>
+          <span class="zone-val">$15.5B</span>
+        </div>
+        <div class="zone-item">
+          <span class="zone-label">2026년 8월 한도 증액</span>
+          <span class="zone-val">+$14.0B 추가 승인</span>
+        </div>
+      </div>
+      <div style="margin-top:10px;font-size:11px;color:var(--text3);">배당은 분사 이후 한 번도 지급한 적이 없고(SEC XBRL에 배당 관련 태그 자체가 없다), 주주환원은 전액 자사주매입이다. FY2026 매입액 $4,524M은 현금흐름표에서 직접 확인했다. 8월 5일 이사회가 $14B을 추가 승인해 잔여 한도가 $15.5B이 됐는데, 이는 FY2026 FCF($11.49B)의 1.35배이자 시가총액의 6.0%에 해당한다. 별도로 FY2026 중 차입금 $1,900M을 전액 상환했다 — 주주환원은 아니지만 같은 현금에서 나갔다.</div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:16px;">
+    <div class="card-title">다음 실적 체크포인트 <span style="color:var(--gold);font-weight:600;">2026년 11월 5일(예상) · Q1 FY2027</span></div>
+    <div style="font-size:12px;color:var(--text2);line-height:1.8;">
+      <div style="margin-bottom:8px;"><strong style="color:var(--accent2);">①</strong> 가이던스 매출 $10.30~10.80B을 실제로 채우는지 — 중간값 $10.55B은 직전 분기 대비 +18%이고, FY2026 연간 매출의 52%를 한 분기에 내겠다는 뜻이다.</div>
+      <div style="margin-bottom:8px;"><strong style="color:var(--accent2);">②</strong> 매출총이익률 가이던스 83.0~84.9%가 유지되는지 — Q4 84.6%에서 사실상 횡보 전망이라, 이 구간이 깨지는 첫 분기가 가격 사이클의 변곡점 신호가 된다.</div>
+      <div style="margin-bottom:8px;"><strong style="color:var(--accent2);">③</strong> Datacenter가 $2,977M에서 더 늘어나는지 — 매출 비중을 1년 만에 두 배로 끌어올린 부문이고, 회사는 8월 5일 실적발표에서 신규 고객 NBM 3건과 기존 NBM 확대 2건을 더했다고 밝혔다.</div>
+      <div><strong style="color:var(--accent2);">④</strong> 잔여 $15.5B 자사주 한도를 실제로 얼마나 집행하는지 — 사이클 정점 이익으로 정점 주가에서 자사주를 사는 것이 되지 않으려면 집행 속도와 가격대가 중요하다.</div>
+    </div>
+  </div>
+</div>
+
+<div id="valuation" class="section">
+  <div class="section-title">밸류에이션 (Valuation Multiples) — 현재가 $1,764.17 · Micron(MU)·Western Digital(WDC)·Seagate(STX) 피어 기준</div>
+  <div style="font-size:10.5px;color:var(--text3);margin:-4px 0 12px;">※ 이 탭에서 가장 먼저 알아야 할 것은 <strong>SNDK 자체 배수 밴드를 만들 수 없다</strong>는 사실이다. 2025년 2월 상장이라 가격 이력이 394거래일이고, PER이 정의되는(트레일링 EPS 플러스) 날은 2026년 5월 1일 이후 90일뿐이다. 게다가 그 90일 안에서도 8월 17일 FY2026 10-K 제출로 트레일링 EPS가 $28.76에서 $73.76으로 계단식으로 바뀌어, 같은 기간 PER이 81.19x에서 20.08x로 떨어진 것의 대부분은 시장 재평가가 아니라 분모 교체 탓이다. 그래서 PER·PSR의 밴드를 자체 이력에서 뽑지 않고, 5년 이상 한 사이클을 온전히 통과한 <strong>Micron의 5년 일별 실측 분포</strong>에서 빌려 왔다. 피어 4사 배수는 모두 2026년 9월 9일 종가와 각사 최신 10-K/10-Q(SNDK·WDC·STX 2026.7.3, MU 2026.5.28 기준)에서 새로 계산했으며, 이 저장소의 기존 MU·SKHY 카드에 적혀 있는 값은 다른 날짜·다른 주가 기준이라 재사용하지 않았다. SK하이닉스(SKHY)는 K-IFRS 국내 공시라 같은 SEC 기준으로 맞출 수 없어 차트에서 뺐다.</div>
+
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title">멀티플 5단계 평가</div>
+      <div style="font-size:10.5px;color:var(--text3);line-height:1.5;margin-bottom:14px;">※ 5개 중 <strong>PER·PCR 두 개는 평가를 보류</strong>했다 — 분모가 1년 사이에 부호까지 바뀌었기 때문이다(EPS -$11.32→$73.76, OCF $84M→$11,671M). 남은 셋 중 PBR·PSR은 <strong>MU 5년 일별 실측 분포</strong>를 밴드로 써서 가중치 1.0, EV/EBITDA는 자체·장기 분포를 복원할 수 없어 <strong>피어 현재값 범위</strong>를 밴드로 썼고 그 밴드 자체가 모두 사이클 정점이라 가중치 0.5다.</div>
+
+      <div class="val-item" data-metric="per" onclick="selectMultiple('per')">
+        <div class="val-header"><span class="val-name">PER (TTM GAAP)</span><div style="display:flex;align-items:center;gap:8px;"><span class="val-number">23.92x</span><span class="stage-badge" style="background:rgba(154,160,184,0.16);color:var(--text2);">평가 보류</span></div></div>
+        <div class="val-track"><div class="val-fill" style="width:100%;background:repeating-linear-gradient(45deg,var(--text3),var(--text3) 6px,transparent 6px,transparent 12px);opacity:0.4;"></div></div>
+        <div class="val-labels"><span class="val-low">선행 8.24x</span><span class="val-mid">기준을 바꾸면 8~90x — 5단계 평가 제외</span><span class="val-high">정규화 89.9x</span></div>
+      </div>
+
+      <div class="val-item" data-metric="pbr" onclick="selectMultiple('pbr')">
+        <div class="val-header"><span class="val-name">PBR</span><div style="display:flex;align-items:center;gap:8px;"><span class="val-number">16.42x</span><span class="stage-badge stage-5">5단계 매우높음</span></div></div>
+        <div class="val-track"><div class="val-fill" style="width:85.6%;background:linear-gradient(90deg,#e67e22,#e74c3c);"></div></div>
+        <div class="val-labels"><span class="val-low">저 1x</span><span class="val-mid">MU 5년 중앙값 2.19x</span><span class="val-high">고 19x</span></div>
+      </div>
+
+      <div class="val-item" data-metric="psr" onclick="selectMultiple('psr')">
+        <div class="val-header"><span class="val-name">PSR</span><div style="display:flex;align-items:center;gap:8px;"><span class="val-number">12.76x</span><span class="stage-badge stage-3">3단계 중간</span></div></div>
+        <div class="val-track"><div class="val-fill" style="width:50.0%;background:linear-gradient(90deg,#f0c040,#e6a020);"></div></div>
+        <div class="val-labels"><span class="val-low">저 1.5x</span><span class="val-mid">MU 5년 중앙값 4.02x</span><span class="val-high">고 24x</span></div>
+      </div>
+
+      <div class="val-item" data-metric="pcr" onclick="selectMultiple('pcr')">
+        <div class="val-header"><span class="val-name">PCR (P/OCF)</span><div style="display:flex;align-items:center;gap:8px;"><span class="val-number">22.13x</span><span class="stage-badge" style="background:rgba(154,160,184,0.16);color:var(--text2);">평가 보류</span></div></div>
+        <div class="val-track"><div class="val-fill" style="width:100%;background:repeating-linear-gradient(45deg,var(--text3),var(--text3) 6px,transparent 6px,transparent 12px);opacity:0.4;"></div></div>
+        <div class="val-labels"><span class="val-low">MU 22.57x</span><span class="val-mid">참고용 — 5단계 평가 제외</span><span class="val-high">STX 54.65x</span></div>
+      </div>
+
+      <div class="val-item" data-metric="evebitda" onclick="selectMultiple('evebitda')">
+        <div class="val-header"><span class="val-name">EV/EBITDA (TTM)</span><div style="display:flex;align-items:center;gap:8px;"><span class="val-number">20.22x</span><span class="stage-badge stage-1">1단계 매우낮음</span></div></div>
+        <div class="val-track"><div class="val-fill" style="width:13.6%;background:linear-gradient(90deg,#2ecc71,#27ae60);"></div></div>
+        <div class="val-labels"><span class="val-low">저 16x</span><span class="val-mid">피어 3사 평균 33.0x</span><span class="val-high">고 47x</span></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span id="multipleCompareTitle">PER 비교 — MU·WDC·STX</span></div>
+      <div class="chart-wrap" style="height:230px;">
+        <canvas id="multipleChart"></canvas>
+      </div>
+
+      <div class="verdict-line" id="verdictLine"></div>
+      <div class="verdict-caveat" id="verdictCaveat"></div>
+
+      <div class="anchor-card">
+        <div class="anchor-card-label">계산 · 적정 기준</div>
+        <div class="anchor-card-formula" id="anchorCalc"></div>
+        <div class="anchor-card-formula" id="anchorFormula"></div>
+        <div class="anchor-card-cross" id="anchorCross"></div>
+      </div>
+
+      <div class="secondary-row" id="secondaryRow" style="display:none;">
+        <div class="secondary-row-label" id="secondaryLabel"></div>
+        <div class="secondary-row-caveat" id="secondaryCaveat"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">이익 기준을 무엇으로 잡느냐에 따라 PER이 8배에서 90배까지 벌어진다</div>
+    <div class="grid-3">
+      <div class="stat-box">
+        <div class="stat-label">선행 — FY2027 컨센서스</div>
+        <div class="stat-value up" style="font-size:20px;">8.24x</div>
+        <div class="stat-sub">EPS $214.10(애널리스트 19명) · 이번 사이클이 한 해 더 간다는 가정</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-label">트레일링 — FY2026 실적</div>
+        <div class="stat-value gold" style="font-size:20px;">23.92x</div>
+        <div class="stat-sub">GAAP 희석 EPS $73.76 · 사상 최대 이익을 낸 단 한 해 기준 · Nanya 지분 평가이익 $807M(주당 세전 $5.21) 포함</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-label">정규화 — FY24~26 3년 평균</div>
+        <div class="stat-value" style="color:var(--red);font-size:20px;">89.9x</div>
+        <div class="stat-sub">평균 순이익 $3,040M ÷ 1.55억주 = EPS $19.61</div>
+      </div>
+    </div>
+    <div style="margin-top:12px;font-size:11.5px;color:var(--text2);line-height:1.6;">세 숫자 모두 같은 주가 $1,764.17에서 나온다. 차이는 오직 분모를 어느 해로 잡느냐이며, 이것이 메모리 사이클 종목의 트레일링 배수를 그대로 믿으면 안 되는 이유다 — 정점 이익으로 나눈 PER은 사이클이 좋을수록 낮아지고, 그 낮은 숫자가 매수 근거처럼 보인다. 반대 방향의 함정도 있다: 정규화 89.9x가 이 회사의 정당한 배수라고 단정하려면 FY2024~2025의 적자가 SNDK의 평상시 모습이라고 봐야 하는데, 그 두 해는 분사 전후의 NAND 불황기였고 지금은 Datacenter 매출이 그때의 5배가 넘는다. 어느 한 숫자로 결론 내리기보다, <strong style="color:var(--accent2);">시장이 8.24x만 지불한다는 것은 FY2027 컨센서스 이익의 지속 가능성에 큰 할인을 적용하고 있다는 뜻</strong>이라는 쪽으로 읽는 편이 정확하다 — 컨센서스가 틀렸다고 보는 것인지, 맞더라도 그 다음 해에 꺾인다고 보는 것인지까지는 배수만으로 구분되지 않는다.</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">종합 밸류에이션</div>
+    <div class="verdict-summary-head">종합 판단 <span class="tag mixed">적정~고평가 — PER·PCR을 뺀 3개 지표 가중평균 3.40/5단계, 조정 없음</span></div>
+    <div class="verdict-summary-body">가중평균 3.40/5단계는 적정~고평가 구간이고, 카드 본문의 결론(고평가)과 한 칸 차이라 기계적 판정을 조정하지 않았다. 평균 안쪽은 크게 갈린다 — PBR 16.42x는 MU가 5년 통틀어 기록한 최고치(18.85x) 바로 아래인 5단계인 반면, EV/EBITDA 20.22x는 피어 3사 중 가장 낮은 1단계다. 두 결론이 부딪히는 지점이 이 종목의 핵심이다.</div>
+    <div class="verdict-summary-risk">⚠️ SNDK는 팹을 합작사가 보유해 감가상각비가 영업이익의 1.2%뿐이다 — EBITDA가 부풀지 않아 배수가 높게 나오기 쉬운 조건인데도 피어 중 두 번째로 낮다.</div>
+  </div>
+</div>
+
+<div id="news" class="section">
+  <div class="section-title">시계열 주요 뉴스 (2025.09 ~ 2026.09)</div>
+
+  <div class="card">
+    <div class="card-title">종합 해석</div>
+    <div class="verdict-summary-head">지배적 내러티브 · 주가를 움직인 것은 개별 실적이 아니라 NAND 가격 사이클에 대한 기대와 공포였다<span class="tag mixed">1년 +2,402%인데 6월 고점 대비 -25.1%</span></div>
+    <div class="verdict-summary-body">네 번의 실적발표 중 세 번은 다음 날 +6.9~15.3%가 붙었지만, 사상 최대였던 8월 5일 Q4에는 오히려 -6.8%가 빠졌다. 반대로 회사가 아무것도 발표하지 않은 6월 25일~7월 29일에 -56.5%가 났고, 9월 4일에는 엔비디아의 다른 회사 인수 뉴스에 +11.9%가 붙었다. 실적이 좋아질수록 시장은 정점이 언제냐를 묻기 시작했다는 뜻이다.</div>
+    <div class="verdict-summary-counter">⚠️ 반대 신호 — 애널리스트 24명 컨센서스는 Buy, 평균 목표가 $2,125(+20.5%)다. 다만 목표가 범위가 $1,000~$3,600으로 3.6배 벌어져 있다.</div>
+    <div class="verdict-summary-next">🔍 다음 확인 포인트 — 11월 5일(예상) Q1 FY2027에서 매출총이익률 가이던스 83.0~84.9%가 지켜지는지.</div>
+  </div>
+
+  <div style="display:flex;gap:14px;flex-wrap:wrap;margin-bottom:16px;font-size:11px;color:var(--text2);">
+    <span style="display:flex;align-items:center;gap:5px;"><span style="width:10px;height:10px;border-radius:50%;background:var(--event-major);display:inline-block;"></span>초대형 이벤트</span>
+    <span style="display:flex;align-items:center;gap:5px;"><span style="width:10px;height:10px;border-radius:50%;background:var(--green);display:inline-block;"></span>긍정</span>
+    <span style="display:flex;align-items:center;gap:5px;"><span style="width:10px;height:10px;border-radius:50%;background:var(--red);display:inline-block;"></span>부정</span>
+    <span style="display:flex;align-items:center;gap:5px;"><span style="width:10px;height:10px;border-radius:50%;background:var(--event-neutral);display:inline-block;"></span>중립</span>
+  </div>
+
+  <div class="card">
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-dot green"></div>
+        <div class="tl-date">2026년 9월 4일 — 엔비디아 인수 소식에 메모리 업종 동반 급등<span class="tl-reaction up">+11.90%(9/3→9/4 종가)</span></div>
+        <div class="tl-title">엔비디아가 Hugging Face를 $12.9B에 인수한다는 소식에 NAND 수요 기대가 붙어 하루 만에 +11.9% 올랐다</div>
+        <div class="tl-desc">같은 날 Dell 최고운영책임자가 AI 서버 병목으로 DRAM과 NAND를 지목한 발언도 겹쳤다.</div>
+        <a class="tl-source" href="https://www.fool.com/investing/2026/09/04/why-sandisk-stock-rallied-today/" target="_blank" rel="noopener">관련 뉴스 보기 (The Motley Fool) →</a>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot blue"></div>
+        <div class="tl-date">2026년 8월 13일 — 첫 투자자의 날, 장기 재무모델 제시<span class="tl-reaction up">+13.67%(8/12→8/13 종가)</span></div>
+        <div class="tl-title">FY2028~2030 Non-GAAP 매출총이익률 약 80%·영업이익률 약 75%를 유지하겠다는 장기 모델을 처음 내놨다</div>
+        <div class="tl-desc">NAND 시장이 2026년 $300B, 2027년 $500B를 넘고 공급은 2028년까지 빡빡할 것으로 전망했다.</div>
+        <a class="tl-source" href="https://investor.sandisk.com/news-releases/news-release-details/sandisk-details-growth-strategy-and-long-term-financial-model" target="_blank" rel="noopener">원문 보기 (Sandisk 보도자료) →</a>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot red"></div>
+        <div class="tl-date">2026년 8월 5일(장마감 후) 발표 — Q4 FY2026 실적, 사상 최대인데 하락<span class="tl-reaction down">-6.81%(8/5→8/6 종가)</span></div>
+        <div class="tl-title">매출 $8.97B(+372% YoY)·GAAP EPS $43.97로 분기 사상 최대였지만 다음 날 주가는 -6.8% 빠졌다</div>
+        <div class="tl-desc">자사주 한도 $14B 추가 승인과 Q1 가이던스 $10.3~10.8B에도 정점 논란이 앞섰다.</div>
+        <a class="tl-source" href="https://www.sec.gov/Archives/edgar/data/2023554/000162828026053346/sndkq4-26ex991xpressrelease.htm" target="_blank" rel="noopener">원문 보기 (SEC 8-K 보도자료) →</a>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot red"></div>
+        <div class="tl-date">2026년 6월 25일~7월 29일 — 한 달여 만에 반토막<span class="tl-reaction down">-56.49%(6/25→7/29 종가)</span></div>
+        <div class="tl-title">종가 최고 $2,335.00에서 $1,015.89까지 밀려 7월 S&amp;P500에서 가장 많이 빠진 종목이 됐다</div>
+        <div class="tl-desc">한국 반도체주 급락과 NAND 가격 우려가 겹쳤고, 7월 30일 하루에만 +25.99%를 되돌렸다.</div>
+        <a class="tl-source" href="https://seekingalpha.com/news/4619851-sandisk-drops-again-its-third-consecutive-double-digit-percentage-slide" target="_blank" rel="noopener">관련 뉴스 보기 (Seeking Alpha) →</a>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot green"></div>
+        <div class="tl-date">2026년 4월 30일(장마감 후) 발표 — Q3 FY2026 실적, 가이던스 대폭 상회<span class="tl-reaction up">+8.25%(4/30→5/1 종가)</span></div>
+        <div class="tl-title">매출 $5.95B로 가이던스 $4.4~4.8B를 크게 넘겼고 Datacenter가 전분기 대비 +233% 늘었다</div>
+        <div class="tl-desc">회사는 이 분기를 고부가 시장으로 이동하는 근본적 변곡점이라고 표현했다.</div>
+        <a class="tl-source" href="https://www.sec.gov/Archives/edgar/data/2023554/000162828026028879/sndkq3-26ex991xpressrelease.htm" target="_blank" rel="noopener">원문 보기 (SEC 8-K 보도자료) →</a>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot green"></div>
+        <div class="tl-date">2026년 1월 29일(장마감 후) 발표 — Q2 FY2026 실적과 Kioxia 합작 연장<span class="tl-reaction up">+6.85%(1/29→1/30 종가)</span></div>
+        <div class="tl-title">매출 $3.03B·GAAP EPS $5.15로 흑자 폭이 커졌고 Datacenter 매출이 전분기 대비 +64%였다</div>
+        <div class="tl-desc">같은 날 Kioxia와 요카이치 공장 합작 계약을 2034년까지 연장한다고 함께 발표했다.</div>
+        <a class="tl-source" href="https://investor.sandisk.com/news-releases/news-release-details/sandisk-reports-fiscal-second-quarter-2026-financial-results" target="_blank" rel="noopener">원문 보기 (Sandisk 보도자료) →</a>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot green"></div>
+        <div class="tl-date">2025년 11월 6일(장마감 후) 발표 — Q1 FY2026 실적, 흑자 전환<span class="tl-reaction up">+15.31%(11/6→11/7 종가)</span></div>
+        <div class="tl-title">매출 $2.31B·GAAP EPS $0.75로 두 분기 연속 적자 뒤 흑자로 돌아섰고 다음 날 +15.3% 올랐다</div>
+        <div class="tl-desc">Datacenter 매출이 전분기 대비 +26% 늘고 하이퍼스케일러 두 곳이 인증 단계에 들어갔다.</div>
+        <a class="tl-source" href="https://www.sec.gov/Archives/edgar/data/2023554/000162828025050180/sndkq1fy26ex991-pressrelea.htm" target="_blank" rel="noopener">원문 보기 (SEC 8-K 보도자료) →</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="invest" class="section">
+  <div class="section-title">2026년 핵심 투자 포인트</div>
+
+  <div class="bull-bear">
+    <div class="bb-box">
+      <div class="bb-title bb-bull">🐂 Bull 요인</div>
+      <div class="bb-item"><span class="bb-icon" style="color:var(--bull);">▲</span><span><strong>사상 최대 실적:</strong> FY2026 매출 $20.25B(+175%)·영업이익률 61.2%다(#fund).</span></div>
+      <div class="bb-item"><span class="bb-icon" style="color:var(--bull);">▲</span><span><strong>차입금 전액 상환:</strong> FY26 중 $1.9B을 갚아 순현금 $4.76B 상태다(#fund).</span></div>
+      <div class="bb-item"><span class="bb-icon" style="color:var(--bull);">▲</span><span><strong>Datacenter 급성장:</strong> 분기 매출이 1년 만에 $213M에서 $2,977M이 됐다(#fund).</span></div>
+      <div class="bb-item"><span class="bb-icon" style="color:var(--bull);">▲</span><span><strong>자사주 한도 $15.5B:</strong> 시가총액의 6.0%이자 FY26 FCF의 1.35배다(#fund).</span></div>
+      <div class="bb-item"><span class="bb-icon" style="color:var(--bull);">▲</span><span><strong>선행 PER 8.24x:</strong> FY2027 컨센서스 EPS $214.10 기준이다(#valuation).</span></div>
+    </div>
+    <div class="bb-box">
+      <div class="bb-title bb-bear">🐻 Bear 요인</div>
+      <div class="bb-item"><span class="bb-icon" style="color:var(--bear);">▼</span><span><strong>정규화 PER 89.9x:</strong> 3년 평균 이익으로 나누면 배수가 3.8배로 뛴다(#valuation).</span></div>
+      <div class="bb-item"><span class="bb-icon" style="color:var(--bear);">▼</span><span><strong>PBR 16.42x:</strong> MU가 5년간 기록한 최고치 18.85x 바로 아래다(#valuation).</span></div>
+      <div class="bb-item"><span class="bb-icon" style="color:var(--bear);">▼</span><span><strong>성장의 3분의 2가 가격:</strong> 회사가 Q4 매출 증가분의 2/3이 가격이라고 밝혔다(#fund).</span></div>
+      <div class="bb-item"><span class="bb-icon" style="color:var(--bear);">▼</span><span><strong>순이익 속 평가이익:</strong> 3년 처분제한 Nanya 지분의 미실현 평가익 $807M이 들어 있다(#valuation).</span></div>
+      <div class="bb-item"><span class="bb-icon" style="color:var(--bear);">▼</span><span><strong>목표가 3.6배 분산:</strong> 애널리스트 24명 목표가가 $1,000~$3,600이다(하단).</span></div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:16px;">
+    <div class="card-title">목표가 밴드 — 시나리오별 공정가치 vs 현재가 · 애널리스트 목표가</div>
+    <div style="position:relative;height:70px;margin:28px 6px 6px;">
+      <div style="position:absolute;top:28px;left:0;right:0;height:10px;border-radius:5px;overflow:hidden;display:flex;">
+        <div style="width:20.6%;height:100%;background:rgba(46,204,113,0.45);"></div>
+        <div style="width:4.0%;height:100%;background:var(--bg3);"></div>
+        <div style="width:38.5%;height:100%;background:rgba(240,192,64,0.5);"></div>
+        <div style="width:4.0%;height:100%;background:var(--bg3);"></div>
+        <div style="width:32.8%;height:100%;background:rgba(231,76,60,0.45);"></div>
+      </div>
+      <div style="position:absolute;top:10px;left:50.4%;width:2px;height:28px;background:var(--gold);border-radius:1px;"></div>
+      <div style="position:absolute;top:-6px;left:50.4%;transform:translateX(-50%);font-size:11px;font-weight:800;color:var(--gold);white-space:nowrap;">현재 $1,764.17</div>
+      <div style="position:absolute;top:22px;left:72.0%;width:2px;height:24px;background:var(--red);border-radius:1px;"></div>
+      <div style="position:absolute;top:48px;left:72.0%;transform:translateX(-50%);font-size:10px;font-weight:700;color:var(--red);white-space:nowrap;">▲ 목표 $2,125(+20.5%)</div>
+    </div>
+    <div style="display:flex;justify-content:space-between;font-size:10.5px;color:var(--text3);margin-top:4px;">
+      <span style="color:var(--green);">Bear $815.7~1,238.1 (PBR 7.59~11.52x)</span>
+      <span>Base $1,238.1~2,025.9 (PBR 11.52~18.85x)</span>
+      <span style="color:var(--red);">Bull $2,025.9~2,697.5 (PBR 18.85~25.10x)</span>
+    </div>
+
+    <div class="detail-toggle collapsed" onclick="toggleCollapsible(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleCollapsible(this);}" role="button" tabindex="0" aria-expanded="false" aria-controls="investScenarioDetailBody">
+      <span>시나리오 근거·투자의견 분포</span>
+      <span class="toggle-hint"><span class="toggle-hint-text">상세 보기</span><span class="chevron">▾</span></span>
+    </div>
+    <div id="investScenarioDetailBody" class="collapsible-body collapsed" aria-hidden="true">
+      <div style="display:flex;flex-direction:column;gap:8px;margin-top:10px;font-size:11.5px;color:var(--text2);line-height:1.6;">
+        <div style="font-size:11px;color:var(--text3);">세 구간 모두 <strong>PBR</strong> 하나에 현재 BPS $107.47을 곱해 만든 정적 밴드다. #valuation에서 가중치 1.0인 지표는 PBR과 PSR 둘인데 사다리를 PBR로 세운 이유는 두 가지다 — 이번 사이클에서 자기자본은 1년간 +71%($9,216M→$15,736M) 움직인 반면 매출은 +175%로 훨씬 크게 흔들려 분모로서 더 안정적이고, 눈금으로 쓸 실측 극단값(MU 5년 최고 18.85x, SNDK 자체 최고 25.10x)이 PBR 쪽에 실제로 관측돼 있어 시나리오마다 근거 있는 가격을 붙일 수 있기 때문이다. PER을 쓰지 않은 이유는 #valuation에 적은 것과 같다 — 트레일링 EPS가 1년 사이 부호까지 바뀌어 어느 배수를 곱해도 근거가 되지 않는다. 사다리의 눈금은 SNDK 자체 이력이 아니라 MU가 5년간 실제로 기록한 PBR 분포(90퍼센타일 7.59x · 현재 11.52x · 최고 18.85x)와, SNDK 자신이 6월 25일에 기록한 자체 최고 PBR 25.10x에서 가져왔다.</div>
+        <div><strong style="color:var(--green);">Bear $815.7~1,238.1</strong> — PBR이 MU의 5년 90퍼센타일(7.59x)에서 MU 현재값(11.52x)까지 내려오는 경우. NAND 가격이 꺾여 SNDK가 더 이상 업계 평균 이상의 프리미엄을 인정받지 못하는 시나리오이며, 하단 $815.7은 7월 29일 저점 $1,015.89보다도 20% 낮다.</div>
+        <div><strong style="color:var(--text);">Base $1,238.1~2,025.9</strong> — PBR이 MU 현재값과 MU 5년 최고치 사이에 머무는 경우. 현재가($1,764.17, PBR 16.42x)가 이 구간의 아래에서 66.8% 지점에 들어온다.</div>
+        <div><strong style="color:var(--red);">Bull $2,025.9~2,697.5</strong> — PBR이 MU의 5년 최고치를 넘어 SNDK 자신이 6월에 기록한 25.10x까지 되돌아가는 경우. 상단 $2,697.5는 6월 25일 종가 최고 $2,335.00보다 15.5% 높은데, 그 사이 자기자본이 $13,777M에서 $15,736M로 늘었기 때문이다.</div>
+        <div style="font-size:11px;color:var(--text3);">애널리스트 평균 목표가 $2,125는 Base 밴드 상단($2,025.9)을 4.9% 웃돌아 Bull 구간에 들어간다 — 즉 컨센서스는 SNDK가 MU의 5년 최고 PBR을 넘어서는 것을 전제로 하고 있다. 컨센서스가 트레일링 자산가치가 아니라 FY2027 예상 이익(EPS $214.10)을 기준으로 삼기 때문이며, 그 기준이면 목표가의 배수는 9.9x로 오히려 낮아진다.</div>
+      </div>
+      <div style="margin-top:14px;padding-top:12px;border-top:1px solid var(--border);">
+        <div style="font-size:11px;color:var(--text3);margin-bottom:8px;">애널리스트 24명 컨센서스(StockAnalysis.com, 2026-09-10): Buy, 평균 목표가 $2,125(+20.5%), 최고 $3,600·최저 $1,000. 세부 분포는 Strong Buy 16명·Buy 4명·Hold 3명·Sell 1명이다. 교차검증(WebSearch, S&amp;P Global 집계)에서도 인원 24명·컨센서스 Buy·평균 목표가 $2,125·목표가 범위 $1,000~$3,600으로 동일하게 나왔다. 최고와 최저가 3.6배 벌어져 있다는 점 자체가, 사이클의 어느 지점에 있는지에 대해 전문가들도 합의하지 못하고 있다는 신호다.</div>
+        <div style="height:8px;border-radius:4px;overflow:hidden;display:flex;margin-top:8px;">
+          <div style="width:83.3%;height:100%;background:var(--green);"></div>
+          <div style="width:12.5%;height:100%;background:#f0c040;"></div>
+          <div style="width:4.2%;height:100%;background:var(--red);"></div>
+        </div>
+        <div style="display:flex;justify-content:space-between;font-size:10.5px;margin-top:6px;">
+          <span style="color:var(--green);">매수 20명</span>
+          <span style="color:#f0c040;">보유 3명</span>
+          <span style="color:var(--red);">매도 1명</span>
+        </div>
+        <div class="yoy-footnote" style="margin-top:8px;">출처: <a href="https://stockanalysis.com/stocks/sndk/forecast/" target="_blank" rel="noopener">StockAnalysis.com SNDK →</a></div>
+      </div>
+    </div>
+    <div style="margin-top:10px;font-size:11px;color:var(--text3);">현재가 $1,764.17은 Base 구간($1,238.1~2,025.9)의 아래에서 66.8% 지점에 있다 — 6월 고점 $2,335.00은 Bull 구간 안쪽이었고 7월 저점 $1,015.89는 Bear 구간 안쪽이었으니, 최근 1년 사이에 이 밴드를 위아래로 한 번씩 모두 통과했다.</div>
+  </div>
+
+  <div class="card" style="margin-top:16px;">
+    <div class="card-title">4개 분석 종합 — 한눈에 보기</div>
+    <div class="zone-list">
+      <div class="zone-item"><span class="zone-label">📈 기술적 분석</span><span class="zone-val" style="color:var(--green);">기술점수 90/100 우수 — 4개 이평선 모두 상회, 다만 6월 고점 대비 -25.1%</span></div>
+      <div class="zone-item"><span class="zone-label">📊 기본적 분석</span><span class="zone-val" style="color:var(--green);">FY26 매출 +175%·영업이익률 61.2%, 차입금 $0·순현금 $4.76B</span></div>
+      <div class="zone-item"><span class="zone-label">⚖️ 밸류에이션</span><span class="zone-val" style="color:var(--gold);">적정~고평가 — PER·PCR은 평가 보류, PBR은 MU 5년 최고치 바로 아래</span></div>
+      <div class="zone-item"><span class="zone-label">📰 시계열 뉴스</span><span class="zone-val" style="color:var(--gold);">1년 +2,402%인데 사상 최대 실적 발표 다음 날엔 -6.8%</span></div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:16px;">
+    <div class="card-title">투자의견 요약</div>
+    <div class="grid-3">
+      <div class="stat-box">
+        <div class="stat-label">투자의견</div>
+        <div class="stat-value" style="color:var(--accent2);font-size:19px;">Buy</div>
+        <div class="stat-sub">애널리스트 24명 컨센서스(StockAnalysis.com)</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-label">평균 목표주가</div>
+        <div class="stat-value gold" style="font-size:19px;">$2,125</div>
+        <div class="stat-sub">+20.5% · 범위 $1,000~$3,600</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-label">다음 실적</div>
+        <div class="stat-value gold" style="font-size:19px;">2026.11.05(예상)</div>
+        <div class="stat-sub">Q1 FY2027</div>
+      </div>
+    </div>
+    <div class="stat-box" style="margin-top:12px;">
+      <div class="stat-label">결론</div>
+      <div style="display:flex;flex-direction:column;gap:6px;margin-top:6px;">
+        <div style="font-size:13px;color:var(--text);line-height:1.6;"><strong style="color:var(--accent2);">1.</strong>&nbsp; 사업 자체는 흠잡을 곳이 적다 — 매출이 1년 만에 2.75배, 영업이익률이 61.2%, 차입금은 $0이고 자사주 한도만 $15.5B이 남아 있는데,</div>
+        <div style="font-size:13px;color:var(--text);line-height:1.6;"><strong style="color:var(--accent2);">2.</strong>&nbsp; 그 숫자 전부가 NAND 가격이 만든 단 한 해의 결과라, 트레일링 PER 23.9x가 싸다는 판단은 이 이익 수준이 유지된다는 가정 위에서만 성립한다 — 이 가정이 맞는지는 11월 5일 Q1 FY2027의 매출총이익률 가이던스 83.0~84.9%가 지켜지는지에서 처음 확인된다.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="disclaimer" style="max-width:1100px;margin:0 auto;padding:0 32px 32px;font-size:11px;color:var(--text3);line-height:1.6;">
+  ⚠️ 본 위젯은 차트, 분기 재무제표, SEC 공시, 공개 뉴스를 기반으로 작성된 정보 제공 목적의 분석 자료입니다. 투자 권고 또는 매매 추천이 아니며, 모든 투자 결정은 본인의 판단과 책임 하에 이루어져야 합니다. 과거 실적이 미래 수익을 보장하지 않습니다.
+</div>
+<script>
+const SNDK_DAILY = [["2025-02-13",35.06,44.0,34.99,36.0,369100],["2025-02-14",37.0,38.25,35.51,36.65,242700],["2025-02-18",40.53,47.15,39.0,47.15,444500],["2025-02-19",46.51,48.5,45.5,46.0,220700],["2025-02-20",48.98,49.49,46.71,48.26,446200],["2025-02-21",48.99,50.69,48.0,50.37,1252100],["2025-02-24",52.0,53.0,46.21,48.6,33848500],["2025-02-25",48.3,55.01,47.81,48.16,8198900],["2025-02-26",46.15,49.91,45.3,46.58,8389000],["2025-02-27",46.04,47.87,41.58,45.16,9676100],["2025-02-28",45.23,48.7,43.75,46.85,7713800],["2025-03-03",48.49,50.88,47.6,50.31,4813000],["2025-03-04",46.69,50.1,45.1,48.69,6074700],["2025-03-05",47.6,49.4,46.5,48.47,5071800],["2025-03-06",47.41,49.06,45.24,46.5,4157300],["2025-03-07",49.2,51.13,47.16,51.0,7825500],["2025-03-10",50.49,53.67,49.55,53.0,5223800],["2025-03-11",51.84,53.19,49.82,52.16,3153400],["2025-03-12",53.0,53.1,50.38,50.44,2177500],["2025-03-13",50.0,50.87,47.86,48.44,3547400],["2025-03-14",49.43,54.94,49.43,54.82,4847600],["2025-03-17",54.8,58.36,54.74,55.65,2930700],["2025-03-18",55.14,57.89,54.57,56.42,2587300],["2025-03-19",56.3,57.6,55.67,56.33,2520700],["2025-03-20",56.51,57.17,54.92,56.21,2701900],["2025-03-21",55.1,55.45,51.92,53.96,6372200],["2025-03-24",54.61,55.69,51.84,52.99,3562800],["2025-03-25",52.13,53.18,51.76,52.2,3079000],["2025-03-26",53.53,53.7,51.98,52.62,1242400],["2025-03-27",51.95,54.24,51.71,52.88,1618100],["2025-03-28",52.21,52.89,48.46,48.97,3987300],["2025-03-31",47.41,48.4,47.02,47.61,2113400],["2025-04-01",47.55,49.36,46.58,48.11,2115600],["2025-04-02",46.92,48.71,46.51,47.67,1725300],["2025-04-03",44.8,44.8,37.55,38.26,7372000],["2025-04-04",35.72,35.87,28.36,30.11,11428600],["2025-04-07",29.22,32.98,27.89,31.48,6238600],["2025-04-08",33.0,35.84,31.66,32.35,5979600],["2025-04-09",31.92,39.65,31.26,36.58,5601600],["2025-04-10",34.6,35.03,30.51,31.08,4153400],["2025-04-11",30.56,32.05,28.27,31.97,4856000],["2025-04-14",33.75,36.17,32.48,33.55,4102300],["2025-04-15",33.3,34.56,32.89,33.23,1936800],["2025-04-16",32.3,33.12,30.75,32.03,2321000],["2025-04-17",31.75,32.66,30.39,31.29,2057200],["2025-04-21",31.07,31.07,28.94,29.81,2579400],["2025-04-22",30.26,31.12,29.32,29.62,2883700],["2025-04-23",31.99,32.78,30.2,30.36,2750200],["2025-04-24",30.81,32.98,30.31,32.29,2590500],["2025-04-25",32.26,33.37,31.6,32.85,1322100],["2025-04-28",32.63,33.0,31.66,32.27,1421000],["2025-04-29",31.39,33.04,31.39,32.94,1385900],["2025-04-30",31.84,32.47,31.01,32.11,2322100],["2025-05-01",32.48,34.19,32.48,32.59,1910200],["2025-05-02",33.11,35.41,33.05,34.4,2193700],["2025-05-05",33.83,35.23,33.53,34.61,1993800],["2025-05-06",34.02,34.43,33.46,33.83,1707600],["2025-05-07",34.0,35.56,33.38,34.97,3640000],["2025-05-08",34.97,37.76,33.13,36.66,4969000],["2025-05-09",37.96,38.79,37.28,37.74,2039200],["2025-05-12",41.14,42.24,40.0,41.27,5374400],["2025-05-13",41.85,43.8,41.3,42.0,2186700],["2025-05-14",42.0,43.43,41.01,41.93,1828400],["2025-05-15",41.17,41.86,39.75,40.54,1930800],["2025-05-16",40.52,41.0,39.92,40.44,2132500],["2025-05-19",39.33,39.5,38.53,38.78,1765400],["2025-05-20",38.78,41.11,38.45,40.18,1756400],["2025-05-21",40.04,40.48,38.35,38.6,1816200],["2025-05-22",38.4,39.28,37.77,37.84,1764900],["2025-05-23",36.25,37.57,35.79,37.28,1232900],["2025-05-27",37.94,38.62,37.5,38.18,1411000],["2025-05-28",38.4,38.91,37.8,38.58,1055800],["2025-05-29",39.04,39.22,37.69,38.6,1501900],["2025-05-30",38.19,38.45,36.68,37.69,5499600],["2025-06-02",37.54,37.88,36.21,37.33,1621000],["2025-06-03",37.45,39.24,36.87,38.64,1294000],["2025-06-04",38.64,40.27,38.35,39.82,1860500],["2025-06-05",39.38,40.45,37.33,39.12,5456000],["2025-06-06",39.73,40.15,38.53,39.15,10955500],["2025-06-09",40.27,42.24,39.55,41.82,10990300],["2025-06-10",41.79,42.66,40.75,41.59,4056300],["2025-06-11",42.38,43.23,39.89,40.23,3891800],["2025-06-12",39.67,41.83,39.44,41.3,2052000],["2025-06-13",41.0,42.83,40.78,42.5,2755900],["2025-06-16",43.37,44.85,42.56,44.21,2901800],["2025-06-17",44.23,44.56,43.53,44.09,2914900],["2025-06-18",45.0,47.43,44.86,46.62,3351400],["2025-06-20",46.98,48.21,44.76,46.58,4762700],["2025-06-23",46.36,48.25,45.8,46.95,1791600],["2025-06-24",47.18,48.75,46.71,47.34,1740600],["2025-06-25",47.34,48.16,47.05,47.25,2357900],["2025-06-26",49.6,49.82,47.07,47.44,3449600],["2025-06-27",47.23,47.74,46.19,47.15,3624000],["2025-06-30",47.23,47.34,45.33,45.35,3034600],["2025-07-01",45.7,45.92,44.3,44.96,2893400],["2025-07-02",44.52,46.24,44.17,46.21,3509400],["2025-07-03",46.1,47.32,45.89,46.41,1441600],["2025-07-07",47.14,47.24,45.09,45.22,2446100],["2025-07-08",46.12,47.25,45.61,46.17,2347200],["2025-07-09",46.12,47.09,45.99,46.2,1575100],["2025-07-10",47.37,47.75,46.62,46.95,1734300],["2025-07-11",46.29,47.42,45.83,46.09,1242000],["2025-07-14",44.63,44.85,41.46,42.48,5486900],["2025-07-15",42.8,43.45,42.51,42.72,2398200],["2025-07-16",42.76,42.96,40.3,41.36,2338400],["2025-07-17",41.4,42.26,41.04,41.52,2290100],["2025-07-18",41.54,42.28,40.84,42.19,1678600],["2025-07-21",41.73,42.28,40.55,41.61,2174200],["2025-07-22",41.51,41.98,40.89,41.36,1846700],["2025-07-23",41.06,43.65,41.06,43.0,2220800],["2025-07-24",43.08,43.5,42.03,42.06,1347100],["2025-07-25",42.48,42.6,41.5,42.48,869200],["2025-07-28",43.08,43.24,41.57,41.89,851300],["2025-07-29",42.26,43.19,41.68,42.93,1202600],["2025-07-30",42.07,43.47,42.07,43.39,1334800],["2025-07-31",43.73,44.62,42.24,42.92,1849200],["2025-08-01",42.18,42.22,40.1,41.33,1661800],["2025-08-04",42.11,42.54,41.6,42.51,1540000],["2025-08-05",42.53,43.4,41.37,41.93,1422900],["2025-08-06",42.72,43.0,41.62,42.1,1553800],["2025-08-07",42.0,42.35,40.53,40.69,2207200],["2025-08-08",41.41,44.85,41.0,44.34,3516500],["2025-08-11",45.7,46.35,43.17,43.37,3095000],["2025-08-12",45.21,47.86,45.0,46.83,3204500],["2025-08-13",47.02,48.46,46.8,47.01,2348500],["2025-08-14",46.43,47.26,46.08,46.68,3549300],["2025-08-15",43.06,46.13,42.82,44.54,7519200],["2025-08-18",44.25,45.87,44.25,45.52,2541700],["2025-08-19",46.23,46.5,44.26,44.58,2372900],["2025-08-20",44.86,45.0,43.2,44.4,1526800],["2025-08-21",43.87,45.6,43.56,45.5,1802300],["2025-08-22",46.11,47.19,45.63,46.37,2208300],["2025-08-25",46.36,46.88,46.01,46.78,1318100],["2025-08-26",46.75,48.21,46.75,47.35,2577800],["2025-08-27",47.4,49.08,47.4,48.44,2145100],["2025-08-28",48.56,51.23,48.56,50.87,2919400],["2025-08-29",51.15,52.94,50.82,52.47,4228000],["2025-09-02",51.01,51.7,50.07,51.07,2023400],["2025-09-03",51.92,53.22,50.65,53.01,1689700],["2025-09-04",55.67,62.65,55.55,62.5,10189000],["2025-09-05",65.52,68.67,63.74,68.55,9050000],["2025-09-08",68.65,71.0,67.86,70.5,5869100],["2025-09-09",70.26,71.4,69.57,70.51,3364300],["2025-09-10",72.42,74.49,72.03,73.92,4053000],["2025-09-11",82.3,85.89,81.38,84.3,10167400],["2025-09-12",85.31,86.96,82.28,86.13,5641700],["2025-09-15",85.3,92.06,85.12,90.09,8981300],["2025-09-16",90.31,93.13,89.56,91.55,6292100],["2025-09-17",90.78,94.81,90.22,93.97,7031000],["2025-09-18",97.3,102.93,96.86,98.87,9441900],["2025-09-19",98.0,102.99,96.71,102.21,6459900],["2025-09-22",105.76,108.8,101.59,102.92,7692200],["2025-09-23",105.0,110.21,104.7,106.4,7835000],["2025-09-24",103.56,107.72,96.63,99.83,12409300],["2025-09-25",96.26,100.45,93.54,94.29,10569300],["2025-09-26",96.0,99.65,94.39,97.12,6418000],["2025-09-29",104.25,114.0,103.35,113.5,12435400],["2025-09-30",114.1,120.74,112.11,112.2,11414800],["2025-10-01",113.06,123.85,112.0,121.12,12237400],["2025-10-02",128.69,132.29,123.26,124.14,9453400],["2025-10-03",128.29,137.05,126.7,128.41,10193700],["2025-10-06",133.6,134.79,119.29,121.17,9963900],["2025-10-07",125.2,125.2,115.68,120.95,6594600],["2025-10-08",121.5,132.28,120.2,131.88,7173400],["2025-10-09",127.0,131.6,126.12,129.68,3561500],["2025-10-10",131.46,132.0,116.17,116.91,7860200],["2025-10-13",129.74,135.91,124.05,134.61,8297300],["2025-10-14",123.59,130.48,120.96,127.29,7078600],["2025-10-15",134.75,144.55,130.5,144.3,8971100],["2025-10-16",146.0,149.09,141.7,144.27,6289600],["2025-10-17",139.22,150.82,136.29,140.16,8279800],["2025-10-20",145.98,152.63,145.5,148.04,6626100],["2025-10-21",145.8,150.16,142.76,149.29,4177900],["2025-10-22",149.1,157.4,144.82,146.95,7516800],["2025-10-23",146.99,167.95,146.0,167.05,9011400],["2025-10-24",174.4,187.36,173.5,186.16,10653100],["2025-10-27",191.5,191.85,173.72,176.49,11235500],["2025-10-28",175.49,178.82,164.56,175.53,9140800],["2025-10-29",186.67,205.64,181.51,204.36,9365000],["2025-10-30",192.02,204.92,191.09,195.82,7341500],["2025-10-31",203.5,209.77,189.58,199.33,6920700],["2025-11-03",210.85,213.4,189.1,207.01,10626000],["2025-11-04",188.13,202.98,185.0,194.57,9800800],["2025-11-05",201.88,218.94,201.87,216.5,10336300],["2025-11-06",212.0,226.5,205.18,207.69,10402700],["2025-11-07",208.42,240.0,203.4,239.48,20552100],["2025-11-10",247.0,270.91,247.0,267.95,15276400],["2025-11-11",262.29,275.87,255.87,271.58,12180900],["2025-11-12",271.58,284.76,267.05,283.1,13730300],["2025-11-13",268.0,271.84,234.13,243.57,23274900],["2025-11-14",236.0,270.49,235.05,254.16,19464400],["2025-11-17",253.4,282.8,253.0,265.88,14211500],["2025-11-18",257.15,260.63,229.11,244.93,16433900],["2025-11-19",251.11,256.98,233.79,245.96,12005800],["2025-11-20",252.17,254.6,192.62,195.96,26590900],["2025-11-21",205.37,205.5,183.0,200.27,20061000],["2025-11-24",206.05,228.18,205.13,226.96,13798900],["2025-11-25",228.4,229.07,209.0,220.5,14680600],["2025-11-26",226.0,228.0,205.4,215.04,43000900],["2025-11-28",225.25,237.77,211.73,223.28,13367500],["2025-12-01",211.84,215.3,205.24,210.17,10280900],["2025-12-02",211.75,217.0,192.8,205.35,11095800],["2025-12-03",196.7,199.18,187.7,194.38,9868200],["2025-12-04",192.32,214.99,189.68,213.31,12166500],["2025-12-05",212.4,229.45,211.25,228.47,8451300],["2025-12-08",235.66,238.86,215.6,225.47,8710000],["2025-12-09",222.27,224.33,213.5,219.46,6299000],["2025-12-10",218.0,234.17,215.2,232.86,6090400],["2025-12-11",230.0,244.19,217.67,241.61,7622500],["2025-12-12",232.11,236.0,204.8,206.18,12083200],["2025-12-15",214.45,217.0,200.34,201.87,6265000],["2025-12-16",201.13,210.5,199.5,209.31,6638400],["2025-12-17",215.99,221.99,205.52,206.83,8232300],["2025-12-18",222.74,231.0,214.0,219.46,9924100],["2025-12-19",222.29,243.71,221.0,237.61,10925000],["2025-12-22",249.65,252.0,226.6,241.05,8663400],["2025-12-23",238.42,245.5,234.0,244.9,5305700],["2025-12-24",244.9,261.37,244.5,250.08,5642600],["2025-12-26",259.6,261.5,245.1,250.05,5553700],["2025-12-29",241.55,250.0,236.01,244.25,5706200],["2025-12-30",245.87,247.48,236.52,240.22,6617000],["2025-12-31",241.41,241.9,235.24,237.38,4180400],["2026-01-02",244.35,275.8,244.0,275.24,11104300],["2026-01-05",284.22,285.0,266.33,274.08,9812600],["2026-01-06",288.74,352.0,288.5,349.63,24249700],["2026-01-07",340.88,354.93,331.23,353.56,14886100],["2026-01-08",360.73,360.98,310.78,334.54,21404400],["2026-01-09",341.6,384.0,334.54,377.41,19353200],["2026-01-12",373.97,395.16,373.97,389.27,14603900],["2026-01-13",393.2,398.0,379.41,389.81,10818600],["2026-01-14",390.0,401.2,377.0,387.81,10862500],["2026-01-15",398.83,423.35,398.61,409.24,14146600],["2026-01-16",425.59,432.02,399.7,413.62,15703000],["2026-01-20",412.17,457.37,412.17,453.12,17872400],["2026-01-21",463.05,501.95,448.53,501.29,21365000],["2026-01-22",501.29,509.5,467.56,503.44,20607500],["2026-01-23",503.44,506.3,463.01,473.83,21061100],["2026-01-26",476.48,494.7,454.33,470.8,13435200],["2026-01-27",481.01,503.0,471.15,481.43,14015600],["2026-01-28",500.1,531.46,499.15,527.63,16486300],["2026-01-29",535.85,546.75,507.24,539.3,23010300],["2026-01-30",651.23,676.69,533.0,576.25,40932100],["2026-02-02",588.81,674.0,584.1,665.24,28765800],["2026-02-03",694.06,725.0,646.2,695.51,31213200],["2026-02-04",654.0,662.79,582.0,584.55,29007600],["2026-02-05",563.75,619.41,562.1,576.2,27725500],["2026-02-06",614.5,615.36,575.5,597.95,21327300],["2026-02-09",592.16,603.98,551.51,583.4,15290700],["2026-02-10",573.88,582.28,540.14,541.64,15904000],["2026-02-11",578.5,612.8,575.0,599.34,20472700],["2026-02-12",640.55,668.0,615.62,630.29,23321100],["2026-02-13",610.53,661.5,586.37,626.56,23640400],["2026-02-17",612.0,628.65,588.95,590.59,19143200],["2026-02-18",582.49,616.98,574.5,600.4,25097600],["2026-02-19",597.33,634.48,590.1,621.09,19601600],["2026-02-20",616.0,650.29,615.65,649.97,17001000],["2026-02-23",659.59,691.54,644.38,666.49,18569400],["2026-02-24",682.5,684.09,612.92,638.52,30408300],["2026-02-25",644.3,661.2,624.43,632.38,18561500],["2026-02-26",645.74,659.86,607.0,651.9,23672700],["2026-02-27",627.08,661.2,621.27,635.36,18208200],["2026-03-02",618.65,648.8,597.6,619.08,17519900],["2026-03-03",581.64,593.16,557.09,565.41,20533500],["2026-03-04",586.84,607.48,576.3,599.06,15614300],["2026-03-05",594.39,603.53,559.1,565.59,15433600],["2026-03-06",548.25,570.9,526.63,527.33,16108900],["2026-03-09",517.0,589.51,517.0,588.73,21205500],["2026-03-10",599.23,636.58,595.56,618.89,18133200],["2026-03-11",625.95,655.68,618.8,655.43,15815800],["2026-03-12",647.0,651.99,612.21,618.82,17284100],["2026-03-13",630.75,671.67,623.06,661.62,18806900],["2026-03-16",687.52,720.0,687.43,703.63,19406300],["2026-03-17",716.0,721.37,695.12,720.17,14782100],["2026-03-18",730.02,761.52,715.5,753.69,20663100],["2026-03-19",707.15,776.0,692.0,772.09,21266400],["2026-03-20",772.7,777.6,698.35,709.71,23508600],["2026-03-23",716.0,748.78,678.84,702.49,22925100],["2026-03-24",693.69,711.3,680.19,702.48,14536300],["2026-03-25",651.0,687.22,638.0,677.86,20618700],["2026-03-26",654.0,659.66,602.03,603.17,19023800],["2026-03-27",599.75,638.52,599.37,615.83,16684200],["2026-03-30",642.12,651.0,558.58,572.5,20501200],["2026-03-31",588.01,636.32,578.42,635.34,20685000],["2026-04-01",652.29,710.85,645.1,692.73,22322700],["2026-04-02",642.09,707.31,641.0,701.59,17443900],["2026-04-06",720.34,736.0,711.0,724.63,12773700],["2026-04-07",715.7,738.01,687.68,710.8,14406500],["2026-04-08",784.0,807.99,758.19,780.9,16898900],["2026-04-09",817.08,855.0,805.0,851.57,17233600],["2026-04-10",873.95,873.95,835.28,851.77,13343800],["2026-04-13",867.09,953.41,866.95,952.5,20234400],["2026-04-14",964.02,965.0,902.0,944.46,19821500],["2026-04-15",929.86,937.99,873.93,891.72,16269600],["2026-04-16",896.62,929.5,892.51,919.47,13851900],["2026-04-17",920.84,930.5,886.0,920.99,25655700],["2026-04-20",930.97,951.47,900.37,913.02,11303500],["2026-04-21",927.85,938.78,899.2,903.49,10245900],["2026-04-22",922.01,981.06,895.74,979.07,15497400],["2026-04-23",948.54,978.88,926.11,932.43,12272600],["2026-04-24",954.56,1002.09,947.0,989.9,11642800],["2026-04-27",1019.65,1070.66,1008.88,1070.2,13005000],["2026-04-28",1027.6,1054.22,980.28,1002.35,14119000],["2026-04-29",1070.6,1103.0,1060.0,1064.21,11350200],["2026-04-30",1112.43,1115.0,1076.05,1096.51,15088300],["2026-05-01",1059.02,1189.24,1048.0,1187.0,23126800],["2026-05-04",1222.18,1275.11,1205.0,1255.86,17853000],["2026-05-05",1289.01,1418.88,1286.13,1406.32,20668200],["2026-05-06",1437.4,1439.7,1337.56,1409.98,21114100],["2026-05-07",1379.42,1400.99,1292.57,1339.96,16243300],["2026-05-08",1394.37,1564.0,1391.12,1562.34,20567600],["2026-05-11",1586.25,1600.0,1514.47,1547.56,16516800],["2026-05-12",1492.0,1508.32,1367.0,1452.02,17138500],["2026-05-13",1512.48,1513.57,1404.86,1447.23,11618700],["2026-05-14",1394.4,1453.77,1362.0,1382.72,11213600],["2026-05-15",1321.0,1426.38,1315.75,1407.61,14011300],["2026-05-18",1431.67,1440.0,1277.33,1333.01,13904400],["2026-05-19",1289.75,1392.86,1278.11,1383.29,13309300],["2026-05-20",1437.98,1444.0,1366.98,1392.56,9141200],["2026-05-21",1377.47,1546.09,1377.47,1542.24,13746100],["2026-05-22",1520.71,1528.0,1473.52,1478.69,9657100],["2026-05-26",1535.21,1641.74,1520.0,1589.55,12919700],["2026-05-27",1645.99,1658.77,1528.28,1589.94,10394200],["2026-05-28",1596.31,1697.96,1560.18,1641.64,10004100],["2026-05-29",1682.0,1708.82,1641.08,1694.98,8751100],["2026-06-01",1731.15,1804.0,1686.16,1761.43,9681700],["2026-06-02",1750.06,1772.4,1708.8,1716.36,7093300],["2026-06-03",1736.0,1861.0,1708.88,1831.5,11884700],["2026-06-04",1741.31,1825.9,1725.08,1759.68,10518500],["2026-06-05",1678.88,1682.0,1514.36,1559.32,13289000],["2026-06-08",1634.0,1694.99,1602.0,1642.0,8189300],["2026-06-09",1700.5,1803.0,1536.0,1646.54,16221600],["2026-06-10",1624.38,1764.65,1590.0,1643.23,10362000],["2026-06-11",1672.26,1895.0,1665.0,1881.51,13759400],["2026-06-12",1890.98,2021.65,1865.11,1980.1,11926100],["2026-06-15",2101.12,2119.9,2021.11,2107.86,9156400],["2026-06-16",2134.2,2167.33,1980.18,1991.55,9588500],["2026-06-17",2074.59,2074.59,1938.0,1958.8,9182500],["2026-06-18",2044.74,2191.69,2029.0,2184.75,12178300],["2026-06-22",2293.31,2354.39,2251.28,2273.73,9977600],["2026-06-23",2007.7,2060.0,1949.96,1963.6,12868300],["2026-06-24",1987.53,2021.5,1861.01,1914.46,10421300],["2026-06-25",2238.3,2348.0,2092.08,2335.0,15030200],["2026-06-26",2170.0,2256.11,2063.04,2090.71,16867100],["2026-06-29",2090.71,2090.71,1895.0,2050.39,11251000],["2026-06-30",2109.73,2280.8,2070.0,2273.73,11454300],["2026-07-01",2085.17,2129.98,2002.05,2032.22,11056500],["2026-07-02",2043.8,2052.54,1693.0,1745.0,17259300],["2026-07-06",1828.68,1837.77,1713.2,1744.43,9164200],["2026-07-07",1619.28,1638.88,1485.02,1617.7,14530800],["2026-07-08",1591.8,1734.69,1590.0,1727.18,12048600],["2026-07-09",1835.61,1952.59,1801.0,1858.27,13359300],["2026-07-10",1778.98,1946.83,1773.0,1915.92,11022700],["2026-07-13",1792.86,1800.0,1646.17,1673.97,13900700],["2026-07-14",1807.0,1812.54,1711.47,1757.82,9630900],["2026-07-15",1717.29,1729.5,1478.5,1615.0,19082600],["2026-07-16",1527.49,1551.63,1390.04,1411.08,17449900],["2026-07-17",1365.2,1501.2,1325.03,1354.82,19810900],["2026-07-20",1408.78,1454.99,1375.61,1390.95,12572000],["2026-07-21",1511.67,1595.64,1489.65,1589.4,14295900],["2026-07-22",1526.0,1628.4,1516.01,1599.27,10539100],["2026-07-23",1567.6,1696.37,1558.61,1610.33,12756900],["2026-07-24",1551.17,1573.09,1411.5,1436.56,14081100],["2026-07-27",1462.99,1462.99,1222.01,1278.23,21275600],["2026-07-28",1173.6,1188.0,1050.72,1096.1,26627200],["2026-07-29",1119.33,1124.8,998.19,1015.89,24491100],["2026-07-30",1135.01,1285.48,1124.0,1279.96,24398700],["2026-07-31",1383.69,1404.99,1187.26,1214.83,21176600],["2026-08-03",1159.84,1316.45,1121.27,1288.03,14759300],["2026-08-04",1358.21,1446.62,1340.0,1427.62,14685300],["2026-08-05",1398.77,1441.76,1345.0,1350.5,16369800],["2026-08-06",1173.26,1324.0,1163.09,1258.58,19161700],["2026-08-07",1309.3,1309.53,1184.37,1212.21,13953700],["2026-08-10",1203.41,1278.76,1194.01,1237.92,10870900],["2026-08-11",1260.56,1287.04,1242.06,1271.05,9412800],["2026-08-12",1358.22,1389.28,1308.53,1344.29,12054700],["2026-08-13",1339.83,1580.88,1331.58,1528.11,22094400],["2026-08-14",1646.93,1667.19,1565.0,1641.11,21000300],["2026-08-17",1700.74,1827.99,1698.0,1786.85,18037600],["2026-08-18",1677.54,1724.99,1600.2,1625.78,18650700],["2026-08-19",1682.41,1699.0,1542.0,1568.87,16280200],["2026-08-20",1569.0,1631.4,1554.0,1600.62,11459600],["2026-08-21",1604.81,1614.06,1570.01,1596.08,7576500],["2026-08-24",1494.09,1517.0,1416.56,1493.12,14032400],["2026-08-25",1533.69,1564.99,1467.01,1480.77,9032300],["2026-08-26",1455.57,1511.77,1450.05,1499.37,8968600],["2026-08-27",1549.42,1557.89,1456.0,1484.95,8854300],["2026-08-28",1448.0,1517.75,1435.61,1484.98,8141400],["2026-08-31",1486.4,1572.69,1449.5,1566.7,23378800],["2026-09-01",1526.01,1609.6,1513.0,1536.87,11729800],["2026-09-02",1531.62,1587.86,1509.24,1553.4,8939600],["2026-09-03",1544.55,1576.8,1511.0,1554.99,8688900],["2026-09-04",1586.0,1740.0,1581.0,1740.0,16557000],["2026-09-08",1769.43,1807.38,1733.78,1737.99,11199700],["2026-09-09",1751.3,1807.22,1728.02,1764.17,9542000]];
+const SNDK_MA5 = [null,null,null,null,42.812,45.686,48.076,48.278,48.394,47.774,47.07,47.412,47.518,47.896,48.164,48.994,49.532,50.226,50.62,51.008,51.772,52.302,53.154,54.332,55.886,55.714,55.182,54.338,53.596,52.93,51.932,50.856,50.038,49.048,46.124,42.352,39.126,35.974,33.756,32.32,32.692,33.106,33.282,32.372,32.414,31.982,31.196,30.622,30.674,30.986,31.478,32.142,32.492,32.552,32.862,33.33,33.508,34.08,34.894,35.562,36.894,38.528,39.92,40.696,41.236,40.738,40.374,39.708,39.168,38.536,38.416,38.096,38.096,38.066,38.076,38.168,38.416,38.52,38.812,39.71,40.3,40.382,40.818,41.488,41.966,42.466,43.744,44.8,45.69,46.316,46.948,47.112,47.226,46.906,46.43,46.222,46.016,45.63,45.794,46.042,46.19,46.126,45.578,44.888,43.92,42.834,42.054,41.88,41.608,41.936,42.044,42.102,42.158,42.472,42.55,42.722,42.492,42.616,42.416,42.158,41.712,42.314,42.486,43.466,44.448,45.646,45.686,46.116,45.666,45.144,44.908,45.274,45.526,46.08,46.888,47.962,49.182,50.04,51.172,53.984,57.52,61.126,65.014,69.196,73.556,77.072,80.99,85.198,89.208,92.122,95.338,97.904,100.874,102.046,101.13,100.112,102.228,103.388,107.646,113.616,119.874,121.408,123.158,125.31,126.418,124.118,126.806,128.074,130.558,133.476,138.126,140.812,145.212,145.742,150.298,159.498,165.188,170.436,181.918,187.672,190.306,196.41,200.218,202.646,205.02,213.05,225.238,240.64,253.96,261.136,264.072,263.658,258.328,250.9,241.378,230.6,222.816,217.93,211.746,217.21,219.19,214.868,209.644,209.298,210.336,213.396,216.218,223.914,229.574,225.116,220.396,218.366,213.16,208.73,215.016,222.852,229.97,238.62,244.738,246.066,245.9,244.396,249.428,254.234,275.31,297.978,317.41,337.844,360.882,368.918,375.768,390.708,397.95,410.72,433.016,456.142,469.06,480.496,486.158,491.426,498.598,519.082,557.97,600.786,612.17,619.55,623.89,607.522,576.748,579.706,590.524,596.246,597.684,609.436,613.786,617.722,625.708,635.294,641.69,647.852,644.93,635.448,620.826,614.162,596.9,575.294,569.224,579.92,591.194,601.84,628.698,651.678,671.934,691.586,722.24,731.858,731.63,728.092,712.926,679.142,660.366,634.368,620.94,623.914,643.598,665.358,693.018,722.13,753.898,783.934,829.508,876.24,898.404,911.984,925.828,917.932,909.738,927.208,929.8,943.582,975.018,994.79,1011.818,1044.634,1084.054,1121.186,1201.98,1271.134,1319.824,1394.892,1453.232,1462.372,1469.822,1478.374,1447.428,1404.518,1390.772,1379.838,1411.742,1425.958,1477.266,1518.596,1568.412,1598.96,1655.508,1680.87,1729.182,1752.79,1725.658,1701.772,1687.808,1650.154,1674.52,1758.676,1851.848,1920.85,1983.964,2044.612,2103.338,2074.486,2059.068,2134.308,2115.5,2070.832,2132.858,2156.41,2038.41,1969.154,1882.616,1773.306,1738.516,1772.7,1758.608,1786.632,1764.196,1674.758,1562.538,1505.934,1472.25,1469.104,1508.954,1525.302,1502.758,1404.098,1287.422,1221.348,1177.002,1178.962,1245.266,1312.188,1307.912,1307.388,1297.366,1266.052,1264.81,1318.716,1404.496,1514.282,1585.228,1630.144,1644.646,1635.64,1576.894,1547.892,1533.992,1510.858,1488.638,1503.354,1514.574,1525.38,1539.388,1590.392,1624.65,1670.11];
+const SNDK_MA20 = [null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,47.4395,48.3805,49.3305,49.794,50.3105,50.708,50.8875,51.107,51.309,51.611,51.997,52.103,51.968,51.939,51.899,51.487,50.4425,49.3665,48.376,47.683,46.815,45.6725,44.5675,43.408,42.193,40.947,39.7395,38.571,37.479,36.4625,35.461,34.626,33.8925,33.0925,32.3385,32.1455,32.3705,32.488,32.619,32.623,32.956,33.421,33.8435,34.2785,34.704,35.1615,35.61,36.138,36.55,36.8275,37.049,37.3445,37.6265,37.951,38.206,38.3525,38.554,38.8535,39.061,39.1855,39.3895,39.4055,39.317,39.2855,39.3835,39.572,39.8375,40.1595,40.5585,41.014,41.517,41.9705,42.4135,42.841,43.224,43.6055,43.984,44.3135,44.6185,44.9695,45.1885,45.4565,45.7495,45.8085,45.8195,45.677,45.5485,45.327,45.0785,44.799,44.582,44.3225,44.0745,43.8115,43.6905,43.612,43.4475,43.1935,43.058,42.846,42.641,42.328,42.2405,42.285,42.4905,42.773,43.031,43.1485,43.344,43.505,43.575,43.747,43.9415,44.186,44.407,44.6595,45.057,45.614,46.042,46.596,47.616,49.009,50.317,51.674,53.0285,54.893,56.8655,59.143,61.4445,63.914,66.6375,69.473,72.3005,75.2815,77.9055,80.198,82.5105,85.562,88.6185,92.024,95.106,98.099,100.6325,103.1545,106.0525,108.3215,109.8605,112.0865,113.8735,116.39,118.66,120.5575,122.8135,124.958,127.314,130.952,135.404,138.5535,141.72,145.882,149.466,153.012,157.304,160.985,165.216,169.1165,175.245,181.912,189.1265,196.0665,201.0315,206.7315,212.6235,217.4055,222.356,223.8015,224.507,227.0305,229.279,229.813,231.186,231.728,231.645,231.6355,231.476,232.515,231.8145,229.39,227.454,225.3795,223.51,220.8955,218.067,216.162,214.837,216.9195,218.9585,219.8555,221.3345,223.085,224.1335,225.636,227.2375,231.2805,234.319,240.377,246.7815,252.5355,259.763,267.146,276.3275,285.6245,295.621,305.9605,317.6435,330.8275,343.947,355.3935,366.4295,377.9985,392.1675,407.1215,424.065,443.565,464.6365,476.3825,487.5145,500.685,510.9845,518.603,529.0795,541.2035,552.0695,560.918,568.282,574.272,581.5985,591.2315,599.6175,607.165,613.3785,618.1815,620.323,615.3315,610.509,609.561,607.1175,606.6565,608.431,614.1205,615.0945,616.661,620.5145,626.9935,634.658,642.208,645.195,646.995,650.193,652.467,650.0305,649.054,646.725,650.2215,654.905,661.705,671.57,677.6735,685.774,695.581,707.2285,721.7725,733.814,742.3915,750.6805,758.1255,768.291,778.341,792.1705,804.899,824.2355,846.954,868.4465,889.89,910.079,934.3495,960.911,995.687,1027.141,1051.5605,1087.089,1116.842,1142.22,1169.9955,1193.158,1217.489,1238.4885,1262.4785,1283.153,1313.6435,1338.083,1364.0505,1393.43,1422.3015,1452.225,1480.9465,1503.9715,1525.2305,1542.7155,1553.6835,1557.6665,1562.6155,1572.176,1593.89,1623.759,1658.7715,1691.6985,1720.474,1760.0835,1796.658,1820.9035,1837.149,1874.402,1896.8555,1914.626,1940.241,1956.034,1951.709,1950.9465,1953.8655,1958.1245,1968.711,1982.3455,1971.9685,1960.8545,1936.2115,1907.188,1876.989,1837.299,1803.0825,1784.866,1769.6595,1724.7375,1684.1135,1636.399,1573.507,1535.894,1509.3855,1486.5655,1477.0615,1458.2275,1428.243,1393.0575,1371.255,1346.9165,1333.381,1339.2325,1353.547,1373.342,1375.161,1373.641,1373.1555,1381.1315,1391.876,1411.1095,1435.2835,1445.533,1459.0405,1472.974,1478.4365,1488.5815,1503.402,1529.7915,1554.795,1579.451];
+const SNDK_MA60 = [null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,42.4035,42.4913,42.5805,42.4935,42.4025,42.2722,42.079,41.9387,41.7793,41.6337,41.5023,41.3578,41.1623,40.9942,40.8145,40.6617,40.4557,40.236,40.0187,39.8305,39.7202,39.4997,39.2427,38.9907,38.7602,38.5602,38.3957,38.2895,38.1958,38.1013,38.009,37.9803,37.9775,37.9615,37.9228,38.0345,38.3028,38.5517,38.7662,38.926,39.178,39.4277,39.6367,39.7908,39.969,40.1368,40.332,40.5415,40.729,40.8802,41.0493,41.2125,41.3715,41.5345,41.7068,41.8567,41.9952,42.1202,42.2458,42.3337,42.4063,42.3967,42.4357,42.4597,42.5645,42.674,42.8057,42.8783,42.9937,43.106,43.2247,43.3467,43.4765,43.6128,43.7738,43.959,44.1628,44.3737,44.5728,44.8038,45.1485,45.5978,46.1023,46.5892,47.1128,47.781,48.4817,49.2062,49.9557,50.7393,51.5982,52.5142,53.4388,54.4263,55.3343,56.1565,57.005,58.1232,59.2395,60.4887,61.7877,63.1453,64.3967,65.7045,67.1905,68.6625,69.919,71.4593,72.8873,74.603,76.2908,77.9258,79.6852,81.4752,83.2088,85.2698,87.6572,89.9098,92.1268,94.834,97.396,100.04,102.7512,105.2712,108.099,110.777,113.9903,117.7138,121.4815,125.4568,128.7763,132.254,135.9125,139.215,142.5252,144.9838,147.4738,150.382,153.2058,155.9063,158.586,160.9463,163.1938,165.2583,167.5815,169.9843,172.3067,174.4628,176.818,179.2787,181.0672,182.7282,184.5013,186.1752,188.169,190.5577,192.9565,195.1465,197.4445,199.5933,201.5952,203.4587,205.3955,207.967,210.337,214.0028,217.947,221.2792,225.4478,229.5307,233.623,237.7505,242.1038,246.5093,251.6122,257.1828,262.4708,267.4265,272.3477,276.9655,282.4957,288.1618,294.3158,302.1603,310.1438,316.4248,322.0368,327.5368,332.7338,337.0428,342.9723,349.2412,355.2525,361.0135,366.9208,374.0063,381.5013,388.8268,395.7938,402.7495,409.8932,416.9797,423.8752,430.059,436.4882,442.1068,447.1378,453.2923,459.7262,466.6232,473.5005,481.163,489.4017,497.9573,506.8612,515.7692,523.5802,531.2067,538.7467,545.8768,551.8588,558.119,563.7043,569.706,576.6835,582.5495,588.734,595.005,601.7298,609.4348,617.1342,626.5457,635.466,643.4343,651.2068,658.2018,665.0282,672.1892,680.6603,688.177,695.8815,704.7298,711.8315,718.481,725.1643,735.2052,746.5328,760.0057,773.782,787.0873,803.1373,818.4252,832.1828,846.4602,859.4988,872.6075,883.9915,895.9382,908.5055,923.6698,937.4497,953.3528,969.5338,987.471,1005.7363,1025.667,1045.4842,1066.197,1085.2102,1100.275,1117.328,1133.7433,1149.4033,1168.759,1189.1992,1211.462,1232.826,1253.7645,1278.469,1305.0668,1327.7407,1349.3845,1378.7595,1403.0157,1425.6433,1451.8457,1473.6388,1490.8755,1506.9343,1519.7032,1534.2933,1549.3895,1565.5805,1578.618,1592.5905,1604.1573,1612.4583,1619.9805,1626.8452,1637.7947,1647.9508,1656.953,1664.1898,1667.7568,1667.75,1664.8982,1665.2998,1662.1083,1660.0758,1661.5368,1658.0062,1653.1898,1649.193,1645.7045,1643.8433,1642.788,1646.0397,1650.3367,1656.9082,1658.3005,1659.8035,1659.988,1660.0903,1657.615,1654.0448,1649.6772,1645.8203,1640.045,1636.8287,1636.4545,1634.9778,1633.452,1635.0648,1632.6728,1629.074];
+const SNDK_MA120 = [null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,42.4049,42.444,42.5081,42.4766,42.4835,42.4731,42.4423,42.4085,42.3865,42.3698,42.3635,42.3522,42.3194,42.3035,42.2942,42.3103,42.3092,42.3048,42.2957,42.3172,42.4343,42.5488,42.6725,42.7899,42.9365,43.1706,43.4387,43.7478,44.0757,44.4203,44.8036,45.2473,45.7082,46.1939,46.6286,47.0955,47.6539,48.3374,49.0028,49.7073,50.4828,51.2865,52.0167,52.7477,53.5797,54.3997,55.1255,56.0004,56.8082,57.7416,58.6701,59.5692,60.5283,61.5048,62.4578,63.5633,64.8262,66.015,67.1863,68.5838,69.9012,71.2183,72.5934,73.8654,75.3317,76.7255,78.398,80.2961,82.2376,84.2814,86.0005,87.8003,89.6945,91.4139,93.1495,94.4714,95.8183,97.3778,98.8893,100.3551,101.8672,103.2721,104.6481,105.9237,107.3472,108.8827,110.3942,111.8345,113.3868,115.009,116.3327,117.6212,118.9701,120.3008,121.7517,123.3571,124.9808,126.6348,128.342,130.041,131.6914,133.302,134.8961,136.8358,138.7638,141.3327,143.933,146.3693,149.1676,152.0668,154.9569,157.8382,160.8945,163.9922,167.4105,171.2263,175.064,178.6682,182.2373,185.8998,189.9458,194.1009,198.5335,203.7157,209.1214,213.6009,218.0136,222.6253,227.1077,231.2498,235.8743,240.7476,245.5825,250.1142,254.723,259.4951,264.4876,269.6044,274.4998,279.3279,284.2396,288.963,293.5345,297.6587,302.0348,306.0456,309.7222,313.8776,318.2721,322.9509,327.2838,331.9456,336.9515,342.0662,347.5151,353.1634,358.2683,363.1766,368.0956,372.7351,376.727,380.7888,384.5499,388.8365,393.5103,398.2762,403.3405,408.1421,413.5888,419.4828,425.3786,432.1481,438.7849,444.9718,451.4095,457.6923,463.7495,469.8078,476.504,482.5713,489.1886,496.4458,503.0737,510.3207,517.6541,525.815,534.2848,543.7713,553.2579,562.0651,573.0548,583.8332,593.7177,603.7368,613.2098,623.3069,632.7464,642.3825,652.1497,663.2097,673.6714,685.1662,696.7045,708.765,721.1123,733.8869,746.311,759.7447,772.4682,783.4491,795.4143,807.4532,819.4025,833.3582,848.0302,863.6156,878.2031,892.4856,908.6078,925.4718,939.7998,953.7518,971.2319,986.3608,1001.1634,1017.1976,1031.1864,1042.9403,1054.3321,1064.569,1075.7137,1087.9676,1100.5232,1111.0262,1121.8987,1131.1796,1138.7432,1146.0848,1153.7527,1162.9858,1171.9162,1180.8414,1188.0107,1193.1189,1196.4572,1200.0517,1205.9163,1211.057,1216.9289,1224.3121,1230.5717,1235.8075,1240.6879,1246.0823,1251.6711,1257.6978,1265.0156,1273.1374,1282.7068,1290.9852,1298.6266,1306.6704,1314.8121,1322.543,1329.8906,1337.6721,1345.6522,1353.121,1361.0194,1368.3647,1376.1529,1383.5977,1392.2341,1400.7159,1409.1366];
+const SNDK_BACKTEST = [];
+
+(function(){
+  const svgCandle = document.getElementById('sndkCandleSvg');
+  const svgVol = document.getElementById('sndkVolumeSvg');
+  const backtestSummaryEl = document.getElementById('sndkBacktestSummary');
+  const toggle = document.getElementById('sndkRangeToggle');
+  const headerTitle = document.getElementById('techHeaderTitle');
+  const headerReturn = document.getElementById('techHeaderReturn');
+  const rangeSummary = document.getElementById('techRangeSummary');
+  if(!svgCandle || !svgVol || !toggle) return;
+  const RANGES = {'1M':21,'6M':126,'1Y':252,'3Y':756,'5Y':Infinity};
+  const RANGE_LABELS = {'1M':'1개월','6M':'6개월','1Y':'1년','3Y':'3년','5Y':'5년'};
+  const NS = 'http://www.w3.org/2000/svg';
+  const UP='#2ecc71', DOWN='#e74c3c';
+  const maColors = {ma5:'#ff6b9d', ma20:'#9b59b6', ma60:'#f0c040', ma120:'#22d3ee'};
+  const maState = {ma5:true, ma20:true, ma60:true, ma120:true, pricelabels:true, backtest:false};
+  let currentRange = '1Y';
+
+  function updateHeader(rangeKey, data, prevClose){
+    const base = prevClose != null ? prevClose : data[0][4];
+    const last = data[data.length-1][4];
+    const retPct = ((last/base - 1) * 100).toFixed(1);
+    const sign = retPct >= 0 ? '+' : '';
+    const dateFrom = data[0][0].slice(0,7).replace('-','.');
+    const dateTo = data[data.length-1][0].slice(0,7).replace('-','.');
+    headerTitle.childNodes[0].textContent = `기술적 분석 — 일봉 캔들스틱 (${dateFrom} ~ ${dateTo}) · ${RANGE_LABELS[rangeKey]} 수익률 `;
+    headerReturn.textContent = `${sign}${retPct}%`;
+    headerReturn.style.color = retPct >= 0 ? 'var(--green)' : 'var(--red)';
+
+    const highs = data.map(d=>d[2]), lows = data.map(d=>d[3]);
+    const periodHigh = Math.max(...highs), periodLow = Math.min(...lows);
+    const highDate = data[highs.indexOf(periodHigh)][0].slice(0,7).replace('-','.');
+    const lowDate = data[lows.indexOf(periodLow)][0].slice(0,7).replace('-','.');
+    rangeSummary.textContent = `${RANGE_LABELS[rangeKey]} 최저 $${periodLow.toFixed(2)} (${lowDate}) → ${RANGE_LABELS[rangeKey]} 최고 $${periodHigh.toFixed(2)} (${highDate}) → 현재 $${last.toFixed(2)}`;
+  }
+
+  function draw(rangeKey){
+    currentRange = rangeKey;
+    const n = RANGES[rangeKey];
+    const data = SNDK_DAILY.slice(-n);
+    const startIdx = SNDK_DAILY.length - data.length;
+    const prevClose = startIdx > 0 ? SNDK_DAILY[startIdx - 1][4] : null;
+    const ma5 = SNDK_MA5.slice(-n), ma20 = SNDK_MA20.slice(-n), ma60 = SNDK_MA60.slice(-n), ma120 = SNDK_MA120.slice(-n);
+    updateHeader(rangeKey, data, prevClose);
+    while(svgCandle.firstChild) svgCandle.removeChild(svgCandle.firstChild);
+    while(svgVol.firstChild) svgVol.removeChild(svgVol.firstChild);
+
+    const W=720,H=240,pL=45,pR=12,pT=10,pB=20;
+    const cW=W-pL-pR,cH=H-pT-pB;
+    const highs=data.map(d=>d[2]), lows=data.map(d=>d[3]);
+    const dataDates = data.map(d=>d[0]);
+    function idxForDate(dateStr){
+      let lo=0, hi=dataDates.length-1;
+      if(dateStr<=dataDates[0]) return 0;
+      if(dateStr>=dataDates[hi]) return hi;
+      while(lo<hi){ const mid=(lo+hi)>>1; if(dataDates[mid]<dateStr) lo=mid+1; else hi=mid; }
+      return lo;
+    }
+    const visibleCheckpoints = maState.backtest ? SNDK_BACKTEST.filter(cp=>{
+      const cpEnd = cp.period_end_date || dataDates[dataDates.length-1];
+      return cpEnd >= dataDates[0] && cp.checkpoint_date <= dataDates[dataDates.length-1];
+    }) : [];
+    const priceVals=[...ma5,...ma20,...ma60,...ma120].filter(v=>v!=null);
+    const priceMx = Math.max(...highs,...priceVals), priceMn = Math.min(...lows,...priceVals);
+    const priceSpan = (priceMx-priceMn) || priceMx*0.1;
+    const BACKTEST_CAP = 1.5;
+    const capHi = priceMx + priceSpan*BACKTEST_CAP, capLo = priceMn - priceSpan*BACKTEST_CAP;
+    const clipBand = v => Math.max(capLo, Math.min(capHi, v));
+    visibleCheckpoints.forEach(cp=>{
+      cp._drawLow = clipBand(cp.predicted_low);
+      cp._drawHigh = clipBand(cp.predicted_high);
+      cp._clipped = cp._drawLow !== cp.predicted_low || cp._drawHigh !== cp.predicted_high;
+    });
+    const backtestVals = visibleCheckpoints.flatMap(cp=>[cp._drawLow, cp._drawHigh]);
+    const maVals=[...priceVals,...backtestVals];
+    const mx=Math.max(...highs,...maVals), mn=Math.min(...lows,...maVals);
+    const pad=(mx-mn)*0.06 || mx*0.02;
+    // Clamp the y-axis floor at 0: prices cannot be negative, but the plain `mn-pad`
+    // floor goes below zero once a ticker's 1Y high/low ratio is extreme enough (SNDK's
+    // is ~34x, which printed a "$-96" axis label). Found on SNDK 2026-09-10 and rolled
+    // out to every card the same day, so this line is now shared boilerplate, not a
+    // divergence. It does not touch the backtest band clipping above (that keys off
+    // priceMn/priceMx, not bot).
+    const top=mx+pad, bot=Math.max(0, mn-pad), rng=(top-bot)||1;
+    const py = v => pT + cH*(1-(v-bot)/rng);
+    const colW = cW/data.length;
+    const bodyW = Math.max(colW*0.62, 0.4);
+
+    const ZONE_FILL = {
+      full_hit: 'rgba(46,204,113,0.16)', breached_top: 'rgba(231,76,60,0.16)',
+      breached_bottom: 'rgba(231,76,60,0.16)', breached_both: 'rgba(231,76,60,0.24)',
+      pending: 'rgba(240,192,64,0.14)',
+    };
+    const ZONE_BORDER = {
+      full_hit: '#2ecc71', breached_top: '#e74c3c', breached_bottom: '#e74c3c',
+      breached_both: '#e74c3c', pending: '#f0c040',
+    };
+    function checkpointX(cp){
+      const x0 = pL + idxForDate(cp.checkpoint_date)*colW;
+      const endDateForX = cp.period_end_date || dataDates[dataDates.length-1];
+      const x1 = pL + (idxForDate(endDateForX)+1)*colW;
+      return [Math.max(x0,pL), Math.min(x1,W-pR)];
+    }
+    visibleCheckpoints.forEach(cp=>{
+      const [x0,x1] = checkpointX(cp);
+      let yTop = py(cp._drawHigh), yBot = py(cp._drawLow);
+      if (cp._clipped && (yBot-yTop) < 3) {
+        const mid = (yTop+yBot)/2;
+        yTop = Math.min(Math.max(mid-1.5, pT), pT+cH-3);
+        yBot = yTop+3;
+      }
+      const rect = document.createElementNS(NS,'rect');
+      rect.setAttribute('x', x0); rect.setAttribute('y', yTop);
+      rect.setAttribute('width', Math.max(x1-x0,0)); rect.setAttribute('height', Math.max(yBot-yTop,0));
+      rect.setAttribute('fill', cp.is_open ? ZONE_FILL.pending : ZONE_FILL[cp.zone]);
+      if (cp._clipped) {
+        const title = document.createElementNS(NS,'title');
+        title.textContent = `실제 예상밴드 $${cp.predicted_low.toFixed(2)}~$${cp.predicted_high.toFixed(2)} (차트 범위를 크게 벗어나 잘라서 표시)`;
+        rect.appendChild(title);
+      }
+      svgCandle.appendChild(rect);
+    });
+
+    for(let i=0;i<=3;i++){
+      const v = bot + rng*i/3;
+      const y = py(v);
+      const l=document.createElementNS(NS,'line');
+      l.setAttribute('x1',pL);l.setAttribute('x2',W-pR);l.setAttribute('y1',y);l.setAttribute('y2',y);
+      l.setAttribute('stroke','rgba(255,255,255,.08)');l.setAttribute('stroke-width','1');
+      svgCandle.appendChild(l);
+      const t=document.createElementNS(NS,'text');
+      t.setAttribute('x',pL-4);t.setAttribute('y',y+3);t.setAttribute('text-anchor','end');
+      t.setAttribute('font-size','9');t.setAttribute('fill','rgba(154,160,184,.8)');
+      t.textContent='$'+v.toFixed(0);
+      svgCandle.appendChild(t);
+    }
+
+    data.forEach((d,i)=>{
+      const [,o,h,l,c] = d;
+      const cx = pL + (i+0.5)*colW;
+      const up = c >= o;
+      const col = up ? UP : DOWN;
+      const wick=document.createElementNS(NS,'line');
+      wick.setAttribute('x1',cx);wick.setAttribute('x2',cx);
+      wick.setAttribute('y1',py(h));wick.setAttribute('y2',py(l));
+      wick.setAttribute('stroke',col);wick.setAttribute('stroke-width', Math.max(colW*0.12,0.4));
+      svgCandle.appendChild(wick);
+      const yTop = py(Math.max(o,c));
+      const yBot = py(Math.min(o,c));
+      const rect=document.createElementNS(NS,'rect');
+      rect.setAttribute('x', cx - bodyW/2);
+      rect.setAttribute('y', yTop);
+      rect.setAttribute('width', bodyW);
+      rect.setAttribute('height', Math.max(yBot-yTop, 0.6));
+      rect.setAttribute('fill', col);
+      svgCandle.appendChild(rect);
+    });
+
+    const drawMaLine = (vals, color) => {
+      let seg = [];
+      const flush = () => {
+        if (seg.length > 1) {
+          const pl = document.createElementNS(NS,'polyline');
+          pl.setAttribute('points', seg.join(' '));
+          pl.setAttribute('fill','none'); pl.setAttribute('stroke',color);
+          pl.setAttribute('stroke-width','1.4'); pl.setAttribute('opacity','0.95');
+          pl.setAttribute('stroke-linejoin','round'); pl.setAttribute('stroke-linecap','round');
+          svgCandle.appendChild(pl);
+        }
+        seg = [];
+      };
+      vals.forEach((v,i) => {
+        if (v == null) { flush(); return; }
+        seg.push(`${pL+(i+0.5)*colW},${py(v)}`);
+      });
+      flush();
+    };
+    if (maState.ma5) drawMaLine(ma5, maColors.ma5);
+    if (maState.ma20) drawMaLine(ma20, maColors.ma20);
+    if (maState.ma60) drawMaLine(ma60, maColors.ma60);
+    if (maState.ma120) drawMaLine(ma120, maColors.ma120);
+
+    visibleCheckpoints.forEach(cp=>{
+      const [x0,x1] = checkpointX(cp);
+      const borderColor = cp.is_open ? ZONE_BORDER.pending : ZONE_BORDER[cp.zone];
+      [cp._drawHigh, cp._drawLow].forEach(v=>{
+        const y = py(v);
+        const line = document.createElementNS(NS,'line');
+        line.setAttribute('x1',x0); line.setAttribute('x2',x1);
+        line.setAttribute('y1',y); line.setAttribute('y2',y);
+        line.setAttribute('stroke', borderColor); line.setAttribute('stroke-width','1');
+        line.setAttribute('stroke-dasharray', cp.is_open ? '2,2' : '4,2');
+        line.setAttribute('opacity','0.85');
+        svgCandle.appendChild(line);
+      });
+    });
+
+    if (maState.pricelabels) {
+    const closeIdx = data.length-1;
+    const closeVal = data[closeIdx][4];
+    const periodHigh = Math.max(...highs);
+    const periodLow = Math.min(...lows);
+    const highIdx = highs.indexOf(periodHigh);
+    const lowIdx = lows.indexOf(periodLow);
+    const markers = [
+      {idx: highIdx, v: periodHigh, color: UP, label:'최고', side:'above'},
+      {idx: lowIdx, v: periodLow, color: DOWN, label:'최저', side:'below'},
+      {idx: closeIdx, v: closeVal, color:'#60a5fa', label:'종가', side:'left'}
+    ];
+    markers.forEach(m=>{
+      const cx = pL + (m.idx+0.5)*colW;
+      const cy = py(m.v);
+      const dot=document.createElementNS(NS,'circle');
+      dot.setAttribute('cx',cx);dot.setAttribute('cy',cy);dot.setAttribute('r','3.5');
+      dot.setAttribute('fill',m.color);dot.setAttribute('stroke','#0f1117');dot.setAttribute('stroke-width','1.5');
+      svgCandle.appendChild(dot);
+
+      const labelText = `${m.label} $${m.v.toFixed(2)}`;
+      const labelW = labelText.length*5.2+6;
+      let tx, ty, anchor;
+      if (m.side === 'left') {
+        anchor = 'end'; tx = cx-7; ty = cy+3;
+      } else if (m.side === 'above') {
+        ty = cy-9;
+        if (cx < pL+cW*0.15) { anchor='start'; tx=cx+7; }
+        else if (cx > W-pR-cW*0.15) { anchor='end'; tx=cx-7; }
+        else { anchor='middle'; tx=cx; }
+      } else {
+        ty = cy+16;
+        if (cx < pL+cW*0.15) { anchor='start'; tx=cx+7; }
+        else if (cx > W-pR-cW*0.15) { anchor='end'; tx=cx-7; }
+        else { anchor='middle'; tx=cx; }
+      }
+      const bgX = anchor==='end' ? tx-labelW : anchor==='middle' ? tx-labelW/2 : tx;
+      const bg=document.createElementNS(NS,'rect');
+      bg.setAttribute('x', bgX);bg.setAttribute('y', ty-8);
+      bg.setAttribute('width', labelW);bg.setAttribute('height', 12);
+      bg.setAttribute('fill','rgba(15,17,23,0.85)');bg.setAttribute('rx','2');
+      svgCandle.appendChild(bg);
+      const t=document.createElementNS(NS,'text');
+      t.setAttribute('x', tx);t.setAttribute('y', ty+2);
+      t.setAttribute('text-anchor',anchor);t.setAttribute('font-size','9');
+      t.setAttribute('font-weight','700');t.setAttribute('fill', m.color);
+      t.textContent = labelText;
+      svgCandle.appendChild(t);
+    });
+    }
+
+    const labelCount = 5;
+    for(let i=0;i<labelCount;i++){
+      const idx = Math.round(i*(data.length-1)/((labelCount-1)||1));
+      const cx = pL + (idx+0.5)*colW;
+      const t=document.createElementNS(NS,'text');
+      t.setAttribute('x', Math.min(Math.max(cx,pL+10), W-20));
+      t.setAttribute('y', H-4);
+      t.setAttribute('text-anchor','middle');t.setAttribute('font-size','9');
+      t.setAttribute('fill','rgba(154,160,184,.8)');
+      t.textContent = data[idx][0].slice(2).replace(/-/g,'.');
+      svgCandle.appendChild(t);
+    }
+
+    if (backtestSummaryEl) {
+      const resolved = visibleCheckpoints.filter(cp=>!cp.is_open);
+      if (maState.backtest && resolved.length) {
+        const hit = resolved.filter(cp=>cp.zone==='full_hit').length;
+        const top = resolved.filter(cp=>cp.zone==='breached_top').length;
+        const bot = resolved.filter(cp=>cp.zone==='breached_bottom').length;
+        const both = resolved.filter(cp=>cp.zone==='breached_both').length;
+        backtestSummaryEl.style.display = 'block';
+        backtestSummaryEl.innerHTML = `<strong style="color:#f0c040;">예상밴드 백테스트</strong> — 체크포인트 ${resolved.length}개 중 `
+          + `<strong style="color:#2ecc71;">적중 ${hit}개</strong> · <strong style="color:#e74c3c;">상단 이탈 ${top}개</strong> · <strong style="color:#e74c3c;">하단 이탈 ${bot}개</strong>`
+          + (both ? ` · 양쪽 이탈 ${both}개 ` : ' ')
+          + `(과거 시점 재무제표만 사용, 미래 정보 미사용, 노란 점선은 진행 중).`
+          + (visibleCheckpoints.some(cp=>cp._clipped) ? ` 일부 체크포인트는 예상밴드가 차트 범위를 크게 벗어나 잘라서 표시했다(박스에 마우스를 올리면 실제 범위 확인 가능).` : '');
+      } else if (maState.backtest) {
+        // SNDK-only: SNDK_BACKTEST is empty by design (0 checkpoints computable -- see the
+        // "예상밴드 백테스트" card below the chart). Explain instead of silently doing nothing.
+        backtestSummaryEl.style.display = 'block';
+        backtestSummaryEl.innerHTML = '<strong style="color:#f0c040;">예상밴드 백테스트</strong> — SNDK는 아직 체크포인트가 0개다. '
+          + '밴드 계산에는 체크포인트 직전 2년치 일별 PER 분포가 필요한데, 가격 이력이 2025년 2월 13일부터이고 '
+          + '트레일링 EPS가 플러스인 날도 2026년 5월 1일 이후 90거래일뿐이라(최소 표본 100일 미달) 두 조건을 모두 채우지 못한다. '
+          + '최초 계산 가능 시점은 2027년 4~5월 예상 FY2027 3분기 공시다. 아래 카드에 자세히 적어 두었다.';
+      } else {
+        backtestSummaryEl.style.display = 'none';
+      }
+    }
+
+    const VW=720,VH=70,vpT=6,vpB=4;
+    const vcH=VH-vpT-vpB;
+    const maxV = Math.max(...data.map(d=>d[5]));
+    data.forEach((d,i)=>{
+      const [,o,,,c,v] = d;
+      const cx = pL + (i+0.5)*colW;
+      const up = c >= o;
+      const col = up ? 'rgba(46,204,113,0.55)' : 'rgba(231,76,60,0.55)';
+      const h = (v/maxV)*vcH;
+      const rect=document.createElementNS(NS,'rect');
+      rect.setAttribute('x', cx - bodyW/2);
+      rect.setAttribute('y', vpT + (vcH-h));
+      rect.setAttribute('width', bodyW);
+      rect.setAttribute('height', Math.max(h,0.6));
+      rect.setAttribute('fill', col);
+      svgVol.appendChild(rect);
+    });
+  }
+
+  toggle.querySelectorAll('.range-btn').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      toggle.querySelectorAll('.range-btn').forEach(b=>b.classList.remove('active'));
+      btn.classList.add('active');
+      draw(btn.dataset.range);
+    });
+  });
+
+  document.querySelectorAll('.ma-toggle-btn').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      const key = btn.dataset.ma;
+      maState[key] = !maState[key];
+      btn.classList.toggle('ma-off', !maState[key]);
+      draw(currentRange);
+    });
+  });
+
+  draw('1Y');
+})();
+
+
+// ══════ shared: collapsible toggle (#fund/#invest) ══════
+function toggleCollapsible(header) {
+  const body = header.nextElementSibling;
+  const hintText = header.querySelector('.toggle-hint-text');
+  const expandedLabel = '상세 숨기기';
+  const collapsedLabel = '상세 보기';
+  const collapsing = !header.classList.contains('collapsed');
+  if (collapsing) {
+    body.style.maxHeight = body.scrollHeight + 'px';
+    requestAnimationFrame(() => {
+      header.classList.add('collapsed');
+      body.classList.add('collapsed');
+      header.setAttribute('aria-expanded', 'false');
+      body.setAttribute('aria-hidden', 'true');
+      if (hintText) hintText.textContent = collapsedLabel;
+    });
+  } else {
+    header.classList.remove('collapsed');
+    body.classList.remove('collapsed');
+    body.style.maxHeight = body.scrollHeight + 'px';
+    header.setAttribute('aria-expanded', 'true');
+    body.setAttribute('aria-hidden', 'false');
+    if (hintText) hintText.textContent = expandedLabel;
+    body.addEventListener('transitionend', function clear() {
+      if (!header.classList.contains('collapsed')) body.style.maxHeight = 'none';
+      body.removeEventListener('transitionend', clear);
+    });
+  }
+}
+
+
+// ─── 분기 매출/영업이익/영업이익률 차트 ───
+function renderFundChart() {
+  const ctx = document.getElementById('sndkRevChart');
+  if (!ctx) return;
+  const revenue=[1.883,1.876,1.695,1.901,2.308,3.025,5.950,8.965];
+  const opinc=[0.291,0.195,-1.881,0.018,0.176,1.065,4.111,7.037];
+  const opm=[15.5,10.4,-111.0,0.9,7.6,35.2,69.1,78.5];
+  const y2min=-120, y2max=90;
+  new Chart(ctx,{
+    data:{
+      labels:["Q1'25","Q2'25","Q3'25","Q4'25","Q1'26","Q2'26","Q3'26","Q4'26"],
+      datasets:[
+        {type:'bar',label:'매출($B)',data:revenue,backgroundColor:'rgba(225,6,0,0.55)',borderColor:'#ff433e',borderWidth:1,borderRadius:4,yAxisID:'y'},
+        {type:'bar',label:'영업이익($B)',data:opinc,backgroundColor:'rgba(52,152,219,0.5)',borderColor:'#3498db',borderWidth:1,borderRadius:4,yAxisID:'y'},
+        {type:'line',label:'영업이익률(%)',data:opm,borderColor:'#f0c040',backgroundColor:'rgba(240,192,64,.1)',tension:.35,pointRadius:4,borderWidth:2.5,fill:false,yAxisID:'y2'}
+      ]
+    },
+    options:{
+      responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{labels:{color:'#9aa0b8',font:{size:11}}}},
+      scales:{
+        x:{grid:{color:'rgba(255,255,255,0.05)'},ticks:{color:'#9aa0b8',font:{size:10},maxRotation:30}},
+        y:{position:'left',grid:{color:'rgba(255,255,255,0.05)'},ticks:{color:'#9aa0b8',font:{size:10},callback:v=>'$'+v+'B'}},
+        y2:{position:'right',min:y2min,max:y2max,grid:{display:false},ticks:{color:'#f0c040',font:{size:10},callback:v=>v+'%'}}
+      }
+    }
+  });
+}
+
+// ─── 매출 구성 도넛 차트 (전방시장별, Q4 FY2026) ───
+function renderSegmentChart() {
+  const ctx = document.getElementById('segmentPieChart');
+  if (!ctx) return;
+  const total = 8965;
+  new Chart(ctx,{
+    type:'doughnut',
+    data:{
+      labels:['Edge (클라이언트 SSD·모바일)','Datacenter (기업용 SSD)','Consumer (메모리카드·USB)'],
+      datasets:[{
+        data:[5432, 2977, 556],
+        backgroundColor:['#e10600','#ff433e','#8a0400'],
+        borderColor:'#1a1d27',
+        borderWidth:2
+      }]
+    },
+    options:{
+      responsive:true,maintainAspectRatio:false,
+      cutout:'62%',
+      plugins:{
+        legend:{display:false},
+        tooltip:{callbacks:{label:ctx=>{
+          const pct=(ctx.raw/total*100).toFixed(1);
+          return `${ctx.label}: $${(ctx.raw/1000).toFixed(2)}B (${pct}%)`;
+        }}}
+      }
+    }
+  });
+}
+
+// ══════ #valuation ══════
+const MULTIPLE_DATA = {
+  per: {
+    title: 'PER 비교 — MU·WDC·STX (5단계 평가 제외)',
+    unit: 'PER', max: 70, sndkValue: 23.92,
+    calcLine: 'PER = 주가($1,764.17) ÷ FY2026 GAAP 희석 EPS($73.76, 10-K 연간 공시치) = 23.92x · 분기 EPS(0.75+5.15+23.03+43.97=72.90)는 분기마다 가중평균 주식수가 달라 연간치와 합이 맞지 않으므로 연간 공시치를 그대로 썼다',
+    verdict: 'SNDK PER 23.92x는 같은 메모리 사이클 정점에 있는 MU(23.23x)와 사실상 같고 WDC(19.86x)보다 조금 높은데, 넷이 전부 정점 이익으로 나눈 값이라 이 비교만으로 싸다·비싸다를 말할 수 없다',
+    verdictCaveat: '분모 $73.76은 직전 회계연도의 -$11.32에서 한 해 만에 뒤집힌 숫자다. 같은 주가를 FY2024~2026 3년 평균 순이익($3,040M, EPS $19.61)으로 나누면 PER은 89.9x가 되고, 애널리스트 19명의 FY2027 컨센서스 EPS $214.10으로 나누면 8.24x가 된다 — 기준을 바꾸는 것만으로 11배가 벌어지는 지표를 5단계 밴드에 올리는 것은 의미가 없어 평가를 보류했다. STX(63.74x)가 유독 높은 것도 같은 이유의 반대편이다: Seagate는 HDD 사이클이 늦게 돌아 트레일링 EPS($13.90)가 아직 따라오지 않았다.',
+    anchor: { value: 'N/A', formula: '5단계 평가에서 제외 — 트레일링 EPS가 1년 사이 부호까지 바뀌어(-$11.32→$73.76) 대표성 있는 이익 수준이 존재하지 않는다. 대신 선행 8.24x / 트레일링 23.92x / 정규화 89.9x 세 기준을 아래 카드에 나란히 제시했다.', cross: 'FY2027 컨센서스 EPS $214.10·선행 PER 7.90x는 StockAnalysis.com이 게시한 값이며, 본 계산의 8.24x와 다른 것은 그쪽이 9월 10일 장중가 $1,691.64를 쓰기 때문이다' },
+    secondary: {
+      label: '참고: FY2026 순이익에는 Nanya 지분 미실현 평가이익 $807M(주당 세전 $5.21 상당)이 반영돼 있다',
+      caveat: 'GAAP EPS $73.76이 회사 Non-GAAP EPS $70.88보다 오히려 높다(차이 $2.88). 조정 항목은 여럿이지만 부호를 뒤집은 것은 하나다 — 2026년 4월 8일 SNDK는 대만 증시 상장 DRAM 기업 Nanya Technology의 사모 증자에 $970M을 넣었고, 7월 3일 그 지분의 공정가치가 $1,777M이 되면서 차액 $807M을 미실현 평가이익으로 손익계산서에 반영했다(10-K 주석). 주식보상비용 $232M 등 나머지 조정이 모두 비용 방향인데 이 한 항목이 그보다 커서 GAAP이 더 높아졌다. 영업 실적과 분리해서 봐야 하는 이유는 세 가지다 — 미실현이라 현금이 들어오지 않았고, 대만 법상 3년 의무보호예수로 그 기간에는 원칙적으로 처분이 제한되며(제한적 예외는 있다), DRAM 종목이라 본업과 같은 메모리 업황에 노출돼 함께 움직일 가능성이 크다(이 부분은 공시 사실이 아니라 해석이다). 배수 조정은 회사 Non-GAAP 기준(EPS $70.88)의 <strong>24.89x</strong>를 쓰는 편이 안전하다 — $807M은 세전 금액이라 세후 EPS에서 그대로 뺄 수 없기 때문이며, 함께 잡힌 이연법인세부채 $172M을 관련 세금으로 보면 세후 효과는 약 $635M·주당 $4.10, 조정 PER은 약 25.32x가 된다. 영업외 항목이라 영업이익은 영향이 없어 EV/EBITDA는 그대로이고, 자기자본은 같은 세후 $635M만큼 부풀어 있지만 이를 빼도 PBR은 17.11x로 5단계 판정이 바뀌지 않는다.'
+    },
+    peers: [
+      { name:'MU', value:23.23, status:'anchor' },
+      { name:'WDC', value:19.86, status:'anchor' },
+      { name:'STX', value:63.74, status:'anchor' }
+    ]
+  },
+  pbr: {
+    title: 'PBR 비교 — MU·WDC (STX 제외)',
+    unit: 'PBR', max: 22, sndkValue: 16.42,
+    calcLine: 'PBR = 주가($1,764.17) ÷ BPS($107.47 = 자기자본 $15,736M ÷ 발행주식 1억4,641만9,001주) = 16.42x',
+    verdict: 'SNDK PBR 16.42x는 MU(11.52x)보다 43% 높고 WDC(19.62x)보다 조금 낮지만, 이 지표에서 중요한 것은 피어 비교가 아니라 MU가 지난 5년 내내 1.09~18.85x 사이에서 움직였다는 사실이다',
+    verdictCaveat: 'PBR에 가중치 1.0을 준 이유는 자기자본이 이익·현금흐름보다 훨씬 천천히 움직이기 때문이다 — SNDK 자기자본은 1년 새 $9,216M에서 $15,736M로 71% 늘었는데, 같은 기간 순이익은 -$1,641M에서 +$11,433M로 부호까지 바뀌었다. 다만 그 71% 증가분이 거의 전액 이번 사이클의 유보이익이라, 분모 역시 정점 쪽으로 부풀어 있고 그만큼 PBR을 실제보다 낮게 보이게 한다. STX는 2025년 6월 자기자본이 -$4.53억이었다가 1년 만에 $21.67억이 된 탓에 PBR이 92.66x로 나와 비교 대상이 되지 않아 뺐다.',
+    anchor: { value: '2.19x (MU 5년 중앙값)', formula: 'MU 2021.9.10~2026.9.9 일별 PBR 1,254일 실측: 최저 1.09x(2022.12.28) · 중앙값 2.19x · 90퍼센타일 7.59x · 최고 18.85x(2026.6.22). 밴드 [1x, 19x]는 이 실측 범위를 바깥으로 반올림한 것이다.', cross: '2026년을 빼고 2021.9~2025.12만 보면 MU의 PBR은 1.09~5.63x, 중앙값 2.03x였다 — SNDK의 16.42x는 그 4년 3개월간 미국 최대 메모리 기업이 기록한 최고치의 2.9배다' },
+    secondary: {
+      label: '참고: 영업권을 뺀 유형자기자본 기준 P/TB 24.04x',
+      caveat: '자기자본 $15,736M에서 영업권 $4,994M을 빼면 유형자기자본은 $10,742M(주당 $73.37)이고, 이 기준 배수는 24.04x다. 영업권을 빼도 유형자기자본이 넉넉히 플러스라 PBR을 평가에서 뺄 이유는 없지만, 실물 자산 대비로 보면 배수가 한 단계 더 올라간다.'
+    },
+    peers: [
+      { name:'MU', value:11.52, status:'anchor' },
+      { name:'WDC', value:19.62, status:'anchor' },
+      { name:'STX', value:0, status:'excluded' }
+    ]
+  },
+  psr: {
+    title: 'PSR 비교 — MU·WDC·STX',
+    unit: 'PSR', max: 26, sndkValue: 12.76,
+    calcLine: 'PSR = 시가총액($258.31B = 1억4,642만주 × $1,764.17) ÷ FY2026 매출($20,248M) = 12.76x',
+    verdict: 'SNDK PSR 12.76x는 MU(12.86x)와 거의 같고 WDC(13.46x)·STX(16.46x)보다 낮아 피어 넷 중 가장 낮지만, MU의 5년 실측 분포에 올려놓으면 중앙값 4.02x의 3배가 넘는 자리다',
+    verdictCaveat: 'PBR과 같은 이유로 가중치 1.0이다 — 매출은 이익만큼 급격히 흔들리지 않는다. 그래도 분모가 정점인 것은 마찬가지여서, FY2024~2026 3년 평균 매출($11,422M)로 다시 계산하면 PSR은 22.6x로 올라간다. 밴드 [1.5x, 24x] 안에서 50.0% 지점이고, 반올림 없이 MU 실측 범위(1.66~23.51x)에 그대로 올려도 50.8% 지점이라 결론은 같다 — MU가 5년간 오간 PSR 범위의 거의 한가운데에 SNDK가 있다.',
+    anchor: { value: '4.02x (MU 5년 중앙값)', formula: 'MU 2021.9.10~2026.9.9 일별 PSR 1,254일 실측: 최저 1.66x(2022.9.26) · 중앙값 4.02x · 90퍼센타일 10.18x · 최고 23.51x(2026.6.22). 밴드 [1.5x, 24x]는 이 실측 범위를 바깥으로 반올림한 것이다.', cross: 'MU의 시점별 TTM 매출은 SEC XBRL 분기 매출 30개(2019년 이후)를 직접 합산해 각 분기의 실제 공시일 기준으로 계단 처리했다 — 미래 정보가 섞이지 않은 값이다' },
+    secondary: null,
+    peers: [
+      { name:'MU', value:12.86, status:'anchor' },
+      { name:'WDC', value:13.46, status:'anchor' },
+      { name:'STX', value:16.46, status:'anchor' }
+    ]
+  },
+  pcr: {
+    title: 'PCR(P/OCF) 비교 — MU·WDC·STX (5단계 평가 제외)',
+    unit: 'PCR', max: 60, sndkValue: 22.13,
+    calcLine: 'PCR = 시가총액($258.31B) ÷ FY2026 영업활동현금흐름($11,671M) = 22.13x',
+    verdict: 'SNDK PCR 22.13x는 MU(22.57x)와 사실상 같고 WDC(44.26x)·STX(54.65x)의 절반 수준이지만, 분모가 1년 전 $84M에서 139배가 된 숫자라 배수로서의 의미가 없다',
+    verdictCaveat: 'PER을 보류한 것과 정확히 같은 이유다 — FY2025 영업활동현금흐름은 $84M이었고 FY2026은 $11,671M이다. 지표를 계산할 수는 있지만 어떤 밴드에 올려도 해석이 성립하지 않아 가중치 0으로 뺐다. WDC·STX의 배수가 높은 것은 반대로 이들의 현금흐름이 아직 손익을 따라오지 못했기 때문이며, 셋 다 같은 사이클의 서로 다른 위상에 있다는 사실만 보여준다.',
+    anchor: { value: 'N/A', formula: '5단계 평가에서 제외 — 분모인 영업활동현금흐름이 1년 사이 $84M에서 $11,671M로 139배가 되어, 어떤 밴드도 이 변화를 흡수하지 못한다.', cross: null },
+    secondary: null,
+    peers: [
+      { name:'MU', value:22.57, status:'anchor' },
+      { name:'WDC', value:44.26, status:'anchor' },
+      { name:'STX', value:54.65, status:'anchor' }
+    ]
+  },
+  evebitda: {
+    title: 'EV/EBITDA 비교 — MU·WDC·STX',
+    unit: 'EV/EBITDA', max: 50, sndkValue: 20.22,
+    calcLine: 'EV/EBITDA = EV($253,546M = 시총 $258,308M − 현금 $4,762M + 차입금 $0) ÷ EBITDA($12,538M = 영업이익 $12,389M + 감가상각비 $149M) = 20.22x',
+    verdict: 'SNDK EV/EBITDA 20.22x는 MU(16.78x)보다 높고 WDC(35.91x)·STX(46.37x)보다는 크게 낮아 피어 밴드 [16x, 47x] 안에서 아래에서 13.6% 지점에 있다',
+    verdictCaveat: '이 지표가 낮게 보이는 것을 저평가로 읽으면 안 된다. SNDK의 감가상각비는 FY2026 $149M으로 영업이익의 1.2%에 불과한데(MU는 15.2%), 웨이퍼 팹을 직접 보유하지 않고 Kioxia와의 합작사 Flash Ventures에서 조달하기 때문이다 — 즉 다른 회사의 EBITDA는 감가상각비를 되더해 부풀어 오르지만 SNDK의 EBITDA는 사실상 영업이익 그대로다(EV/EBIT 20.47x). 자본집약적 피어와 나란히 놓으면 SNDK가 구조적으로 비싸 보이는 쪽으로 기울고, 그런데도 밴드 하단에 있다는 점은 진짜 신호다. 다만 밴드 자체가 네 회사 모두의 정점 EBITDA로 만들어져 있어 가중치는 0.5로 낮췄다.',
+    anchor: { value: '33.0x (피어 3사 평균)', formula: '피어 3사 평균: (MU 16.78x + WDC 35.91x + STX 46.37x) ÷ 3 = 33.02x · 각사 EV는 2026.9.9 종가 시총에서 최신 10-K/10-Q의 현금을 빼고 차입금을 더해 계산했다', cross: 'SNDK는 FY2026 중 차입금 $1,900M을 전액 상환해 2026.7.3 기준 총차입금이 $0이므로, EV는 시총에서 현금만 뺀 값이다' },
+    secondary: null,
+    peers: [
+      { name:'MU', value:16.78, status:'anchor' },
+      { name:'WDC', value:35.91, status:'anchor' },
+      { name:'STX', value:46.37, status:'anchor' }
+    ]
+  }
+};
+
+let multipleChart = null;
+function renderMultipleChart(key) {
+  const d = MULTIPLE_DATA[key];
+  const ctx = document.getElementById('multipleChart');
+  if (!ctx || !d) return;
+  if (multipleChart) multipleChart.destroy();
+  const labels = ['SNDK', ...d.peers.map(p=> p.status==='excluded' ? `${p.name}` : p.name)];
+  const data = [d.sndkValue, ...d.peers.map(p=>p.value)];
+  const bg = [ '#ff433e', ...d.peers.map(p=> p.status==='excluded' ? 'rgba(154,160,184,0.18)' : 'rgba(46,204,113,0.35)') ];
+  const bd = [ '#e10600', ...d.peers.map(p=> p.status==='excluded' ? '#5c6282' : '#27ae60') ];
+  multipleChart = new Chart(ctx,{
+    type:'bar',
+    data:{ labels, datasets:[{ label:d.unit, data, backgroundColor:bg, borderColor:bd, borderWidth:1, borderRadius:5, minBarLength:6 }] },
+    options:{
+      responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=> ctx.raw===0 ? `${d.unit} 데이터 없음(비교 불가)` : `${d.unit} ${ctx.raw}x`}}},
+      scales:{
+        x:{grid:{display:false},ticks:{color:'#9aa0b8',font:{size:10.5}}},
+        y:{max:d.max,grid:{color:'rgba(255,255,255,0.05)'},ticks:{color:'#9aa0b8',font:{size:10},callback:v=>v+'x'}}
+      }
+    }
+  });
+}
+
+let currentMultipleKey = 'per';
+function selectMultiple(key) {
+  const d = MULTIPLE_DATA[key];
+  if (!d) return;
+  currentMultipleKey = key;
+  document.querySelectorAll('.val-item[data-metric]').forEach(el => el.classList.toggle('selected', el.dataset.metric === key));
+  document.getElementById('multipleCompareTitle').textContent = d.title;
+
+  document.getElementById('verdictLine').textContent = d.verdict;
+  document.getElementById('verdictCaveat').innerHTML = '<span class="caveat-icon">!</span><span>' + d.verdictCaveat + '</span>';
+
+  document.getElementById('anchorCalc').textContent = d.calcLine;
+  document.getElementById('anchorFormula').textContent = d.anchor.formula;
+  const crossEl = document.getElementById('anchorCross');
+  if (d.anchor.cross) { crossEl.textContent = d.anchor.cross; crossEl.style.display = ''; }
+  else { crossEl.style.display = 'none'; }
+
+  const secRow = document.getElementById('secondaryRow');
+  if (d.secondary) {
+    document.getElementById('secondaryLabel').textContent = d.secondary.label;
+    document.getElementById('secondaryCaveat').textContent = d.secondary.caveat;
+    secRow.style.display = '';
+  } else {
+    secRow.style.display = 'none';
+  }
+
+  renderMultipleChart(key);
+}
+
+const charts = {};
+
+function renderCharts(sectionId) {
+  setTimeout(() => {
+    if (sectionId === 'fund' && document.getElementById('sndkRevChart')) {
+      if (!charts['fundRev']) { renderFundChart(); charts['fundRev'] = true; }
+      if (!charts['fundSegment']) { renderSegmentChart(); charts['fundSegment'] = true; }
+    }
+    if (sectionId === 'valuation' && document.getElementById('multipleChart') && !charts['multiple']) { selectMultiple(currentMultipleKey); charts['multiple'] = true; }
+  }, 50);
+}
+
+function showSection(id, btn) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  if (btn) btn.classList.add('active');
+  renderCharts(id);
+}
+</script>
+</body>
+</html>

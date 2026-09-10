@@ -944,7 +944,7 @@ const MRK_BACKTEST = [{"checkpoint_date":"2023-11-03","quarter_end":"2023-09-30"
     const maVals=[...priceVals,...backtestVals];
     const mx=Math.max(...highs,...maVals), mn=Math.min(...lows,...maVals);
     const pad=(mx-mn)*0.06 || mx*0.02;
-    const top=mx+pad, bot=mn-pad, rng=(top-bot)||1;
+    const top=mx+pad, bot=Math.max(0, mn-pad), rng=(top-bot)||1;
     const py = v => pT + cH*(1-(v-bot)/rng);
     const colW = cW/data.length;
     const bodyW = Math.max(colW*0.62, 0.4);

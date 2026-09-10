@@ -264,7 +264,7 @@
 </style>
 <body>
 <div class="back-bar">
-  <a class="back-bar-left" href="index.html"><span class="back-bar-logo"></span><span>[사이트명] · 전체 종목 목록</span></a>
+  <a class="back-bar-left" href="../index.html"><span class="back-bar-logo"></span><span>[사이트명] · 전체 종목 목록</span></a>
   <div class="back-bar-right">
     <a class="back-bar-nav" href="MA_full_widget.html">◀ MA</a>
     <span class="back-bar-current">INTC · 시총 23위</span>
@@ -975,7 +975,7 @@ const INTC_MA120 = [null,null,null,null,null,null,null,null,null,null,null,null,
     const maVals=[...ma5,...ma20,...ma60,...ma120,...backtestVals].filter(v=>v!=null);
     const mx=Math.max(...highs,...maVals), mn=Math.min(...lows,...maVals);
     const pad=(mx-mn)*0.06 || mx*0.02;
-    const top=mx+pad, bot=mn-pad, rng=(top-bot)||1;
+    const top=mx+pad, bot=Math.max(0, mn-pad), rng=(top-bot)||1;
     const py = v => pT + cH*(1-(v-bot)/rng);
     const colW = cW/data.length;
     const bodyW = Math.max(colW*0.62, 0.4);
