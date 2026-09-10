@@ -47,6 +47,7 @@
 </style>
 <link rel="stylesheet" href="styles.css?v=home-slide-1">
 <link rel="stylesheet" href="header.css?v=1">
+<script src="data-status.js?v=1" defer></script>
 </head>
 <body>
 
@@ -167,26 +168,15 @@
 
 </div>
 
+<script src="stock-data.js?v=1"></script>
+<script src="navigation.js?v=1"></script>
 <script>
 (function(){
   var STAR = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#c9c5b3" stroke-width="1.6"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>';
 
   // 목업 데이터 — 아래 DATA(가격/등락률/시가총액)와 매크로 지표·스탯카드 숫자(11/7/9/6)·날짜는
   // 전부 레이아웃 시연용 예시 값이며 실제 계산된 수치가 아님. href만 실제 카드 페이지로 연결됨.
-  var DATA = [
-    {rank:1, ticker:'NVDA', name:'엔비디아', sector:'반도체',            price:'$228.45', change:1.80,  marketCap:'$5.55T', href:'cards/NVDA_full_widget.html'},
-    {rank:2, ticker:'AAPL', name:'애플',      sector:'하드웨어',          price:'$325.13', change:2.61,  marketCap:'$4.76T', href:'cards/AAPL_full_widget.html'},
-    {rank:3, ticker:'GOOGL',name:'알파벳',    sector:'인터넷&middot;플랫폼',   price:'$335.02', change:-1.28, marketCap:'$4.10T', href:'cards/GOOGL_full_widget.html'},
-    {rank:4, ticker:'MSFT', name:'마이크로소프트', sector:'소프트웨어',   price:'$501.02', change:-1.24, marketCap:'$3.72T', href:'cards/MSFT_full_widget.html'},
-    {rank:5, ticker:'AMZN', name:'아마존',    sector:'이커머스&middot;클라우드', price:'$256.36', change:-1.51, marketCap:'$2.76T', href:'cards/AMZN_full_widget.html'},
-    {rank:6, ticker:'TSM',  name:'TSMC',     sector:'반도체&middot;파운드리',  price:'$424.15', change:1.55,  marketCap:'$2.20T', href:'cards/TSM_full_widget.html'},
-    {rank:7, ticker:'SPCX', name:'스페이스X', sector:'우주항공&middot;위성통신&middot;AI', price:'$147.76', change:5.01, marketCap:'$1.95T', href:'cards/SPCX_full_widget.html'},
-    {rank:8, ticker:'AVGO', name:'브로드컴',   sector:'반도체&middot;인프라SW', price:'$367.24', change:-0.66, marketCap:'$1.79T', href:'cards/AVGO_full_widget.html'},
-    {rank:9, ticker:'META', name:'메타 플랫폼스', sector:'SNS 광고&middot;AI', price:'$571.10', change:-0.90, marketCap:'$1.47T', href:'cards/META_full_widget.html'},
-    {rank:10, ticker:'TSLA', name:'테슬라',    sector:'EV&middot;자율주행',    price:'$367.95', change:5.51,  marketCap:'$1.45T', href:'cards/TSLA_full_widget.html'},
-    {rank:11, ticker:'BRKB', name:'버크셔 해서웨이', sector:'금융&middot;복합기업', price:'$508.13', change:0.57, marketCap:'$1.09T', href:'cards/BRKB_full_widget.html'},
-    {rank:12, ticker:'MU', name:'마이크론 테크놀로지', sector:'반도체&middot;메모리', price:'$958.16', change:0.22, marketCap:'$1.08T', href:'cards/MU_full_widget.html'}
-  ];
+  var DATA = window.StockData.stocks;
 
   document.getElementById('ticker-count').textContent = DATA.length;
 
@@ -208,6 +198,7 @@
       + '<a class="stock-title" href="'+d.href+'"><span class="logo-box"><img src="logos/'+d.ticker.toLowerCase()+'.png" alt="" loading="lazy"></span><span><strong>'+d.ticker+'</strong><small>'+d.name+'</small></span></a>'
       + '<div class="stock-sector"><span class="tag">'+d.sector+'</span></div>'
       + '<div class="price-line"><span class="price num">'+d.price+'</span>'+changeCell(d.change)+'</div>'
+      + '<small>'+ (d.quoteAsOf ? 'Twelve Data · '+d.quoteAsOf : '시세: 예시 · 기준일 미확인')+'</small>'
       + '<div class="card-bottom"><span>시가총액 <b class="num">'+d.marketCap+'</b></span><span>분석 보기 ↗</span></div></article>';
   }
   function render() {
@@ -234,10 +225,11 @@
   tabs.forEach(function(t){t.addEventListener('click',function(){view=t.dataset.view;render();});});
   document.getElementById('stock-search').addEventListener('input',render);
   document.getElementById('favorites-only').addEventListener('change',render);
+  window.addEventListener('quotes-updated',()=>{render();renderFeature();});
   render();
   var featureIndex=0,featureAnimations=[];
   var featureCard=document.getElementById('feature-card');
-  function featureMarkup(d){return '<span class="tag">'+d.sector+'</span><div class="feature-company"><img src="logos/'+d.ticker.toLowerCase()+'.png" alt=""><div><small>'+d.ticker+'</small><h2>'+d.name+'</h2></div></div><p>기업의 가격과 사업을 함께 살펴보세요.</p><div class="price-line"><strong class="price">'+d.price+'</strong>'+changeCell(d.change)+'</div><div class="card-bottom">시가총액 <strong>'+d.marketCap+'</strong></div>';}
+  function featureMarkup(d){return '<span class="tag">'+d.sector+'</span><div class="feature-company"><img src="logos/'+d.ticker.toLowerCase()+'.png" alt=""><div><small>'+d.ticker+'</small><h2>'+d.name+'</h2></div></div><p>기업의 가격과 사업을 함께 살펴보세요.</p><small>'+ (d.quoteAsOf?'Twelve Data · '+d.quoteAsOf:'시세: 예시 · 기준일 미확인')+'</small><div class="price-line"><strong class="price">'+d.price+'</strong>'+changeCell(d.change)+'</div><div class="card-bottom">시가총액 <strong>'+d.marketCap+'</strong></div>';}
   function renderFeature(){
     var d=DATA[featureIndex];featureCard.innerHTML=featureMarkup(d)+'<a class="feature-open" href="today.html#0-'+d.ticker+'">오늘의 종목 읽기 ↗</a>';
     ['prev','next'].forEach(function(key){var i=featureIndex+(key==='next'?1:-1),el=document.getElementById('feature-'+key);el.hidden=i<0||i>=6;el.innerHTML=el.hidden?'':featureMarkup(DATA[i]);});
@@ -249,12 +241,13 @@
     var old=featureCard.cloneNode(true);old.removeAttribute('id');old.classList.add('feature-outgoing');old.inert=true;old.setAttribute('aria-hidden','true');
     var distance=featureCard.getBoundingClientRect().width+24;
     featureIndex=next;renderFeature();document.querySelector('.feature-stage').append(old);
-    var timing={duration:500,easing:'linear',fill:'both'};
+    var timing={duration:300,easing:'linear',fill:'both'};
     var exit=old.animate([{transform:'translateX(0)',opacity:1},{transform:'translateX('+(-step*distance)+'px) scale(.9)',opacity:0}],timing);
     var enter=featureCard.animate([{transform:'translateX('+(step*distance)+'px) scale(.9)',opacity:.3},{transform:'translateX(0)',opacity:1}],timing);
     featureAnimations=[exit,enter];Promise.all(featureAnimations.map(function(a){return a.finished;})).then(function(){old.remove();exit.cancel();enter.cancel();}).catch(function(){});
   }
   document.getElementById('feature-prev').addEventListener('click',function(){slideFeature(-1);});document.getElementById('feature-next').addEventListener('click',function(){slideFeature(1);});renderFeature();
+  bindCardNavigation(document.querySelector(".feature-stage"),slideFeature);
 })();
 </script>
 
