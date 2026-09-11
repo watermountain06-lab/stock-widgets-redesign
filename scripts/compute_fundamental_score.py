@@ -32,7 +32,8 @@ Design decisions from the 2026-08-25 Codex review round (see project memory):
 Inputs:
   --financials  a fetch_financials.py --years 5 output (this repo's own copy,
                 fetched into scripts/fundamental_data/)
-  --valuation   data/valuation_signals.json from the live stock-widgets repo
+  --valuation   scripts/valuation_signals.json (frozen 2026-08-18 snapshot copied from the
+                retired old stock-widgets repo; regenerate with compute_valuation_score.py)
                 (has per.stage/pbr.stage/targetPrice.stage per ticker)
   --config      fundamental_score_config_v1.json
 
@@ -433,7 +434,7 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("ticker")
     ap.add_argument("--financials", required=True)
-    ap.add_argument("--valuation", required=True, help="live repo's data/valuation_signals.json")
+    ap.add_argument("--valuation", required=True, help="scripts/valuation_signals.json (frozen 2026-08-18 snapshot)")
     ap.add_argument("--config", required=True)
     ap.add_argument("--out", default=None)
     args = ap.parse_args()
