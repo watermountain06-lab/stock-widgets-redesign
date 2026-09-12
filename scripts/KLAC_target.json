@@ -1,0 +1,11 @@
+{
+  "ticker": "KLAC",
+  "currentPrice": 180.64,
+  "targetHighPrice": 325.0,
+  "targetLowPrice": 175.0,
+  "targetMeanPrice": 233.76923,
+  "targetMedianPrice": 234.0,
+  "recommendationKey": "buy",
+  "recommendationMean": 1.86207,
+  "numberOfAnalystOpinions": 26
+}
