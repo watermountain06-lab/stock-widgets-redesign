@@ -1,6 +1,17 @@
 import re,sys,html
+from pathlib import Path
 t=sys.argv[1]
-s=open(f"{t}_full_widget.html",encoding='utf-8').read()
+# Cards moved to cards/ after this script was written, so resolving the file
+# relative to the current directory silently depended on where you stood -
+# the playbook says to run this from the repo root, and that stopped working
+# without any error that said so. Look in both places, and accept a path.
+_repo=Path(__file__).resolve().parents[1]
+_cands=[Path(t), _repo/"cards"/f"{t}_full_widget.html", _repo/f"{t}_full_widget.html",
+        Path(f"{t}_full_widget.html")]
+_f=next((c for c in _cands if c.is_file()), None)
+if _f is None:
+    sys.exit(f"no card found for {t!r} - looked in {_repo/'cards'} and the current directory")
+s=_f.read_text(encoding='utf-8')
 def txt(x): return re.sub(r'\s+',' ',html.unescape(re.sub(r'<[^>]+>','',x))).strip()
 z=re.search(r'<div class="zone-list">(.*?)\n      </div>',s,re.S)
 print(f"  핵심가격대 rows: {len(re.findall(r'zone-item',z.group(1))) if z else 'n/a'}  (limit 5)")
