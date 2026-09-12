@@ -278,7 +278,7 @@
   <div class="back-bar-right">
     <a class="back-bar-nav" href="TXN_full_widget.html">◀ TXN</a>
     <span class="back-bar-current">KLAC · 시총 52위</span>
-    <span class="back-bar-nav disabled">다음 ▶</span>
+    <a class="back-bar-nav" href="C_full_widget.html">다음 C ▶</a>
   </div>
 </div>
 
@@ -309,7 +309,7 @@
     <div class="meta-item"><span class="meta-label">순부채</span><span class="meta-value">$0.99B (배당수익률 0.51%)</span></div>
   </div>
 </div>
-<div class="asof-line" style="max-width:1100px;margin:10px auto 12px;padding:0 16px;box-sizing:border-box;font-size:11px;color:var(--text3);line-height:1.5;">가격·기술지표: 2026.09.11 종가 기준 갱신 · 분석 문장·밸류에이션: 2026.09.11 기준 · 시가총액: SEC 공시 주식수 기준</div>
+<div class="asof-line" style="max-width:1100px;margin:10px auto 12px;padding:0 16px;box-sizing:border-box;font-size:11px;color:var(--text3);line-height:1.5;">가격·기술지표·배수: 2026.09.11 종가 기준 갱신 · 분석 문장·재무·앵커: 2026.09.11 기준 · 시가총액: SEC 공시 주식수 기준</div>
 <div class="box-key">
   <div style="font-size:13px;font-weight:700;color:var(--accent2);display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:10px;">
     <span style="display:flex;align-items:center;gap:6px;"><span style="width:4px;height:14px;background:var(--accent2);border-radius:2px;display:inline-block;"></span>핵심 투자 논리 <span style="color:var(--gold);font-weight:600;">(고평가~적정)</span></span>
@@ -683,7 +683,7 @@
 
   <div class="card">
     <div class="card-title">종합 밸류에이션</div>
-    <div class="verdict-summary-head">종합 판단 <span class="tag mixed">고평가~적정 — 5개 지표 가중평균 3.44/5단계, 세 지표는 피어와 사실상 동일</span></div>
+    <div class="verdict-summary-head">종합 판단 <span class="summary-asof" style="font-size:11px;font-weight:400;color:var(--text3);">(2026.09.11 분석 기준)</span> <span class="tag mixed">고평가~적정 — 5개 지표 가중평균 3.44/5단계, 세 지표는 피어와 사실상 동일</span></div>
     <div class="verdict-summary-body">PER +4.8%·PCR +3.2%·EV/EBITDA −5.8%로 세 지표는 AMAT·LRCX 평균과 사실상 같은 자리에 있고, 프리미엄을 만드는 것은 PSR +20.9%와 PBR +63.3% 둘뿐이다. 그중 PBR은 가중치를 절반으로 낮춰 반영했기 때문에 가중평균이 3.44단계에 머물렀고, 판정도 고평가에서 한 칸 내려온 고평가~적정이 됐다.</div>
     <div class="verdict-summary-risk">⚠️ 피어 대비 판정일 뿐 절대 수준은 별개다 — KLAC 자체 2년 트레일링 PER 밴드는 2023년 10월 15~21x에서 지금 30~64x까지 벌어졌고, 앵커 3사가 함께 재평가된 상태라 "피어와 같다"가 "싸다"는 뜻은 아니다.</div>
   </div>
@@ -1281,8 +1281,8 @@ const MULTIPLE_DATA = {
   per: {
     title: 'PER 비교 — AMAT·LRCX',
     unit: 'PER', max: 60, klacValue: 49.36,
-    calcLine: 'PER = 주가($180.64) ÷ TTM GAAP 희석 EPS($3.66, FY2026 10-K 연간 보고치) = 49.36x — StockAnalysis.com 게시값 49.36x와 정확히 일치',
-    verdict: 'KLAC PER 49.36x는 앵커(AMAT 40.8x·LRCX 53.41x 평균 47.1x) 대비 +4.8% — 5개 지표 중 격차가 두 번째로 작다',
+    calcLine: '(분석일 2026.09.11 기준 계산) PER = 주가($180.64) ÷ TTM GAAP 희석 EPS($3.66, FY2026 10-K 연간 보고치) = 49.36x — StockAnalysis.com 게시값 49.36x와 정확히 일치',
+    verdict: 'KLAC PER 49.36x는 앵커(AMAT 40.8x·LRCX 53.41x 평균 47.1x, 2026.09.11 기준) 대비 +4.8% — 5개 지표 중 격차가 두 번째로 작다',
     verdictCaveat: 'FY2026 GAAP 희석 EPS $3.66과 비GAAP $3.76의 차이가 2.7%에 그쳐 조정 PER을 따로 만들지 않았다. 다만 세 회사 모두 AI·WFE 재평가를 거친 뒤라, 앵커와 같다는 것이 절대적으로 싸다는 뜻은 아니다.',
     anchor: { value: '47.1x', formula: '평균(AMAT 40.8x, LRCX 53.41x) = 47.11x → 47.1x', cross: 'StockAnalysis.com의 자체 계산 PER(49.36x, 2026-09-11)이 SEC 10-K 기준 자체 계산과 소수점까지 일치 — 데이터 신뢰도 교차검증 완료' },
     secondary: null,
@@ -1295,7 +1295,7 @@ const MULTIPLE_DATA = {
     title: 'PBR 비교 — AMAT·LRCX',
     unit: 'PBR', max: 45, klacValue: 37.17,
     calcLine: 'PBR = 주가($180.64) ÷ BPS($4.860 = 자기자본 $6.350B ÷ 13.065억주) = 37.17x',
-    verdict: 'KLAC PBR 37.17x는 앵커(AMAT 14.64x·LRCX 30.87x 평균 22.8x) 대비 +63.3% — 5개 지표 중 격차가 압도적으로 크다',
+    verdict: 'KLAC PBR 37.17x는 앵커(AMAT 14.64x·LRCX 30.87x 평균 22.8x, 2026.09.11 기준) 대비 +63.3% — 5개 지표 중 격차가 압도적으로 크다',
     verdictCaveat: '분모인 자기자본이 작아서 생긴 격차다. KLAC은 FY2026 한 해에만 $2.29B을 자사주매입에 썼고 잔여 한도도 $9.74B이 남아 있어, 이익이 쌓이는 속도보다 자기자본이 깎이는 속도가 빠르다 — AMAT은 반대로 자기자본이 꾸준히 늘어왔다. 자산이 고평가됐다는 신호가 아니라 자본정책 차이라서, 이 지표만 가중치 0.5로 낮춰 반영했다.',
     anchor: { value: '22.8x', formula: '평균(AMAT 14.64x, LRCX 30.87x) = 22.76x → 22.8x', cross: null },
     secondary: null,
@@ -1308,7 +1308,7 @@ const MULTIPLE_DATA = {
     title: 'PSR 비교 — AMAT·LRCX',
     unit: 'PSR', max: 22, klacValue: 17.38,
     calcLine: 'PSR = 시가총액($236.0B) ÷ FY2026 매출($13.58B) = 17.38x',
-    verdict: 'KLAC PSR 17.38x는 앵커(AMAT 12.17x·LRCX 16.57x 평균 14.4x) 대비 +20.9% — PBR 다음으로 큰 프리미엄',
+    verdict: 'KLAC PSR 17.38x는 앵커(AMAT 12.17x·LRCX 16.57x 평균 14.4x, 2026.09.11 기준) 대비 +20.9% — PBR 다음으로 큰 프리미엄',
     verdictCaveat: 'PSR 격차는 수익성 차이로 상당 부분 설명된다 — KLAC의 FY2026 영업이익률은 41.7%로 AMAT(Q3 FY26 33.7%)보다 8%p 높다. 같은 매출 $1당 더 많은 이익을 남기는 만큼 매출 배수가 높게 매겨지는 것은 구조적이며, 그래서 가중치를 낮추지 않고 1.0 그대로 반영했다.',
     anchor: { value: '14.4x', formula: '평균(AMAT 12.17x, LRCX 16.57x) = 14.37x → 14.4x', cross: null },
     secondary: null,
@@ -1321,7 +1321,7 @@ const MULTIPLE_DATA = {
     title: 'PCR(P/OCF) 비교 — AMAT·LRCX',
     unit: 'PCR', max: 75, klacValue: 56.97,
     calcLine: 'PCR(P/OCF) = 시가총액($236.0B) ÷ FY2026 영업현금흐름($4.143B) = 56.97x',
-    verdict: 'KLAC PCR(P/OCF) 56.97x는 앵커(AMAT 44.69x·LRCX 65.72x 평균 55.2x) 대비 +3.2% — 5개 지표 중 격차가 가장 작다',
+    verdict: 'KLAC PCR(P/OCF) 56.97x는 앵커(AMAT 44.69x·LRCX 65.72x 평균 55.2x, 2026.09.11 기준) 대비 +3.2% — 5개 지표 중 격차가 가장 작다',
     verdictCaveat: 'KLAC의 OCF는 FY2025 $4.082B에서 FY2026 $4.143B으로 1.5% 느는 데 그쳤다 — 순이익이 18.9% 늘어난 것과 대비되는데, 매출채권이 27.6% 급증하며 현금화가 늦어진 영향이다(상세 #fund). 이익 대비 현금흐름 배수라는 점에서 PER보다 높게 나오는 구조다.',
     anchor: { value: '55.2x', formula: '평균(AMAT 44.69x, LRCX 65.72x) = 55.21x → 55.2x', cross: null },
     secondary: null,
@@ -1334,7 +1334,7 @@ const MULTIPLE_DATA = {
     title: 'EV/EBITDA 비교 — AMAT·LRCX',
     unit: 'EV/EBITDA', max: 50, klacValue: 39.14,
     calcLine: 'EV/EBITDA = EV($237.0B = 시가총액 $236.0B + 차입금 $5.89B − 현금 $1.65B − 유가증권 $3.25B) ÷ EBITDA TTM($6.055B = 영업이익 $5.661B + D&A $0.394B) = 39.14x',
-    verdict: 'KLAC EV/EBITDA 39.14x는 앵커(AMAT 38.76x·LRCX 44.33x 평균 41.5x) 대비 −5.8% — 5개 지표 중 유일하게 앵커를 밑돈다',
+    verdict: 'KLAC EV/EBITDA 39.14x는 앵커(AMAT 38.76x·LRCX 44.33x 평균 41.5x, 2026.09.11 기준) 대비 −5.8% — 5개 지표 중 유일하게 앵커를 밑돈다',
     verdictCaveat: 'D&A가 영업이익의 7.0%에 불과해 EBITDA가 영업이익과 거의 같다 — 이 지표는 사실상 EV/영업이익이며, PER과 독립적인 근거가 되지 못한다. 앵커를 밑도는 것은 순부채가 $0.99B으로 작아 EV가 시가총액보다 0.4%만 크기 때문이기도 하다.',
     anchor: { value: '41.5x', formula: '평균(AMAT 38.76x, LRCX 44.33x) = 41.55x → 41.5x', cross: null },
     secondary: null,

@@ -309,7 +309,7 @@
     <div class="meta-item"><span class="meta-label">순부채</span><span class="meta-value">$7.05B (배당수익률 2.1%)</span></div>
   </div>
 </div>
-<div class="asof-line" style="max-width:1100px;margin:10px auto 12px;padding:0 16px;box-sizing:border-box;font-size:11px;color:var(--text3);line-height:1.5;">가격·기술지표: 2026.09.11 종가 기준 갱신 · 분석 문장·밸류에이션: 2026.09.11 기준 · 시가총액: SEC 공시 주식수 기준</div>
+<div class="asof-line" style="max-width:1100px;margin:10px auto 12px;padding:0 16px;box-sizing:border-box;font-size:11px;color:var(--text3);line-height:1.5;">가격·기술지표·배수: 2026.09.11 종가 기준 갱신 · 분석 문장·재무·앵커: 2026.09.11 기준 · 시가총액: SEC 공시 주식수 기준</div>
 <div class="box-key">
   <div style="font-size:13px;font-weight:700;color:var(--accent2);display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:10px;">
     <span style="display:flex;align-items:center;gap:6px;"><span style="width:4px;height:14px;background:var(--accent2);border-radius:2px;display:inline-block;"></span>핵심 투자 논리 <span style="color:var(--red);font-weight:600;">(고평가)</span></span>
@@ -643,7 +643,7 @@
 
       <div class="val-item" data-metric="psr" onclick="selectMultiple('psr')">
         <div class="val-header"><span class="val-name">PSR</span><div style="display:flex;align-items:center;gap:8px;"><span class="val-number">12.61x</span><span class="stage-badge stage-4">4단계 높음</span></div></div>
-        <div class="val-track"><div class="val-fill" style="width:74.0%;background:linear-gradient(90deg,#e67e22,#e74c3c);"></div></div>
+        <div class="val-track"><div class="val-fill" style="width:73.9%;background:linear-gradient(90deg,#e67e22,#e74c3c);"></div></div>
         <div class="val-labels"><span class="val-low">저 3x</span><span class="val-mid">적정 8.9x</span><span class="val-high">고 16x</span></div>
       </div>
 
@@ -685,7 +685,7 @@
 
   <div class="card">
     <div class="card-title">종합 밸류에이션</div>
-    <div class="verdict-summary-head">종합 판단 <span class="tag negative">고평가 — 5개 지표 가중평균 3.9/5단계, 할인 구간이 하나도 없음</span></div>
+    <div class="verdict-summary-head">종합 판단 <span class="summary-asof" style="font-size:11px;font-weight:400;color:var(--text3);">(2026.09.11 분석 기준)</span> <span class="tag negative">고평가 — 5개 지표 가중평균 3.9/5단계, 할인 구간이 하나도 없음</span></div>
     <div class="verdict-summary-body">5개 지표가 모두 ADI·NXPI 평균을 웃돈다 — PCR +8.5%, PER +25.3%, EV/EBITDA +30.8%, PSR +42.1%, PBR +154.5%다. PER 40.8x는 ADI(45.0x)보다는 낮지만 NXPI(20.2x)의 두 배라, 두 앵커 중 비싼 쪽에 붙어 있다. 한 지표도 앵커 아래로 내려가지 않는다는 점이 판정을 고평가로 밀었다.</div>
     <div class="verdict-summary-risk">⚠️ 배수만 반영한 판정이다 — 백테스트에서 판정이 끝난 11개 체크포인트 중 10개가 실현 PER이 예상 밴드 상단을 넘었다(그중 1개는 하단도 함께 이탈). 밴드가 이 회사를 계속 낮게 잡아온 과거 사실이지 앞으로의 보장은 아니다.</div>
   </div>
@@ -1300,7 +1300,7 @@ const MULTIPLE_DATA = {
     title: 'PER 비교 — ADI·NXPI (AVGO 참고, MCHP 비교불가)',
     unit: 'PER', max: 55, txnValue: 40.84,
     calcLine: 'PER = 주가($268.70) ÷ TTM GAAP 희석 EPS($6.58) = 40.84x — TTM EPS는 FY2025 $5.45에서 2025 상반기 $2.69를 빼고 2026 상반기 $3.82를 더해 구했으며, StockAnalysis.com 게시치 $6.58과 일치한다',
-    verdict: 'TXN PER 40.84x는 앵커(ADI 44.98x·NXPI 20.19x 평균 32.6x) 대비 +25.3%',
+    verdict: 'TXN PER 40.84x는 앵커(ADI 44.98x·NXPI 20.19x 평균 32.6x, 2026.09.11 기준) 대비 +25.3%',
     verdictCaveat: '앵커 두 곳이 2.2배 벌어져 있어(ADI 44.98x vs NXPI 20.19x) 평균 32.6x는 어느 쪽도 대표하지 못한다 — ADI는 데이터센터 수요로 재평가받아 TXN보다 비싸고, NXPI는 자동차 수요 부진으로 TXN의 절반이다. TXN 자체 2년 트레일링 PER 밴드(일별 종가÷시점별 TTM EPS의 지수가중 10~90퍼센타일, 2026.07.24 체크포인트 기준 32.0~52.0x)에서는 아래에서 44% 지점, 즉 중간 언저리에 있다. MCHP는 TTM EPS $0.68로 실적 저점이라 PER이 109x까지 튀어 비교 대상에서 제외했다.',
     anchor: { value: '32.6x', formula: '평균(ADI 44.98x, NXPI 20.19x) = 32.59x — 두 회사 모두 2026.09.11 종가와 최신 TTM 희석 EPS(ADI $8.42, NXPI $11.72) 기준', cross: 'StockAnalysis.com 게시 TXN PER도 40.82x로, 반올림 차이를 빼면 같은 값이다' },
     secondary: null,
@@ -1315,7 +1315,7 @@ const MULTIPLE_DATA = {
     title: 'PBR 비교 — ADI·NXPI (AVGO·MCHP 참고)',
     unit: 'PBR', max: 20, txnValue: 13.63,
     calcLine: 'PBR = 주가($268.70) ÷ BPS($19.72 = 자기자본 $18,007M ÷ 발행주식 9.1325억주) = 13.63x',
-    verdict: 'TXN PBR 13.63x는 앵커(ADI 5.47x·NXPI 5.24x 평균 5.4x) 대비 +154.5% — 5개 지표 중 격차가 압도적으로 크다',
+    verdict: 'TXN PBR 13.63x는 앵커(ADI 5.47x·NXPI 5.24x 평균 5.4x, 2026.09.11 기준) 대비 +152.4% — 5개 지표 중 격차가 압도적으로 크다',
     verdictCaveat: '이 격차는 밸류에이션이 아니라 장부가가 깎인 방식의 차이다 — TXN 재무상태표의 자기주식(treasury stock)은 취득원가 $41,941M(8.28억주)으로, 남아 있는 자기자본 $18.0B의 2.3배다. 수십 년간 사들인 자사주가 자본에서 그대로 차감되기 때문이며, 이 금액을 되돌리면 PBR은 4.09x로 앵커보다 오히려 낮아진다. 반대로 ADI는 Maxim·Linear 인수로 쌓인 영업권이 자본을 키워 PBR이 낮게 나온다(TXN 영업권은 $4.33B으로 총자산의 12%에 불과). 구조적 왜곡이라 가중치를 0.5로 낮췄다.',
     anchor: { value: '5.4x', formula: '평균(ADI 5.47x, NXPI 5.24x) = 5.36x — 2026.09.11 종가와 각사 BPS(ADI $69.24, NXPI $45.19) 기준', cross: null },
     secondary: null,
@@ -1330,7 +1330,7 @@ const MULTIPLE_DATA = {
     title: 'PSR 비교 — ADI·NXPI (AVGO·MCHP 참고)',
     unit: 'PSR', max: 20, txnValue: 12.61,
     calcLine: 'PSR = 시가총액($245.39B = 9.1325억주 × $268.70) ÷ TTM 매출($19.453B) = 12.61x',
-    verdict: 'TXN PSR 12.61x는 앵커(ADI 13.22x·NXPI 4.53x 평균 8.9x) 대비 +42.1%',
+    verdict: 'TXN PSR 12.61x는 앵커(ADI 13.22x·NXPI 4.53x 평균 8.9x, 2026.09.11 기준) 대비 +41.7%',
     verdictCaveat: '앵커 평균을 웃돌지만 ADI 하나만 놓고 보면 오히려 낮다. 마진 차이가 일부를 설명한다 — TXN의 TTM 순이익률은 31.1%로 ADI 29.4%보다 높고 NXPI 22.4%보다 훨씬 높아, 같은 매출 $1이 만드는 이익이 다르면 매출 기준 배수도 벌어진다. 다만 앵커 평균 대비 마진 우위(+20%)보다 배수 프리미엄(+42%)이 커서 마진만으로 설명되지는 않는다 — 왜곡이라기보다 실제 프리미엄이라 가중치는 1.0으로 뒀다.',
     anchor: { value: '8.9x', formula: '평균(ADI 13.22x, NXPI 4.53x) = 8.88x — ADI TTM 매출 $13.88B, NXPI TTM 매출 $13.19B 기준', cross: null },
     secondary: null,
@@ -1345,7 +1345,7 @@ const MULTIPLE_DATA = {
     title: 'PCR(P/OCF) 비교 — ADI·NXPI (AVGO·MCHP 참고)',
     unit: 'PCR', max: 45, txnValue: 28.31,
     calcLine: 'PCR(P/OCF) = 시가총액($245.39B) ÷ TTM 영업활동현금흐름($8.667B) = 28.31x',
-    verdict: 'TXN PCR 28.31x는 앵커(ADI 33.10x·NXPI 19.07x 평균 26.1x) 대비 +8.5% — 5개 지표 중 프리미엄이 가장 작다',
+    verdict: 'TXN PCR 28.31x는 앵커(ADI 33.10x·NXPI 19.07x 평균 26.1x, 2026.09.11 기준) 대비 +8.5% — 5개 지표 중 프리미엄이 가장 작다',
     verdictCaveat: '5개 중 유일하게 앵커 평균에 거의 붙어 있고 ADI보다는 낮다. TXN의 TTM 영업현금흐름 $8.667B은 순이익 $6.052B의 1.43배인데, 그 차이의 대부분이 감가상각 $2.12B이다 — 자체 팹을 돌리는 IDM이라 이익보다 현금흐름이 구조적으로 크게 잡히고, 그만큼 현금흐름 기준 배수는 이익 기준보다 싸 보인다. Capex $3.31B을 빼면 FCF는 $5.36B이라 P/FCF는 45.8x로 다시 올라간다(상세 #fund).',
     anchor: { value: '26.1x', formula: '평균(ADI 33.10x, NXPI 19.07x) = 26.09x — 2026.09.11 종가와 각사 TTM 영업현금흐름 기준', cross: null },
     secondary: null,
@@ -1360,7 +1360,7 @@ const MULTIPLE_DATA = {
     title: 'EV/EBITDA 비교 — ADI·NXPI (AVGO·MCHP 참고)',
     unit: 'EV/EBITDA', max: 36, txnValue: 26.69,
     calcLine: 'EV/EBITDA = EV($252.44B = 시가총액 $245.39B + 총차입금 $14.05B − 현금·단기투자 $7.00B) ÷ TTM EBITDA($9.458B = 영업이익 $7.254B + 감가상각 $2.122B + 자본화소프트웨어상각 $0.082B) = 26.69x',
-    verdict: 'TXN EV/EBITDA 26.69x는 앵커(ADI 27.50x·NXPI 13.30x 평균 20.4x) 대비 +30.8%',
+    verdict: 'TXN EV/EBITDA 26.69x는 앵커(ADI 27.50x·NXPI 13.30x 평균 20.4x, 2026.09.11 기준) 대비 +30.8%',
     verdictCaveat: 'EBITDA가 되돌려 더하는 D&amp;A의 비중이 세 회사 모두 달라서(TXN 영업이익의 30.4%, ADI 39.8%, NXPI 16.8%) 이 지표가 왜곡됐는지 직접 확인했다 — 상각 전이 아닌 영업이익으로 바꿔 EV/EBIT으로 계산하면 TXN 34.80x·앵커 평균 27.00x로 프리미엄이 +30.8%에서 +28.9%가 되어 사실상 그대로다. 결론이 바뀌지 않으므로 가중치는 1.0으로 뒀다.',
     anchor: { value: '20.4x', formula: '평균(ADI 27.50x, NXPI 13.30x) = 20.40x — ADI EV $190.38B÷EBITDA $6.92B, NXPI EV $67.42B÷EBITDA $5.07B', cross: 'StockAnalysis.com 게시 TXN EV/EBITDA는 26.52x다 — 그쪽 TTM 영업이익이 $7.40B으로 SEC 공시 합산치 $7.254B보다 커서 생기는 차이이며, 여기서는 10-Q·10-K 수치를 직접 더한 값을 썼다' },
     secondary: null,
