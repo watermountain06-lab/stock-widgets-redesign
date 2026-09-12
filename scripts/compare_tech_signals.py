@@ -48,6 +48,8 @@ import sys
 from datetime import date
 from pathlib import Path
 
+import random
+
 import numpy as np
 from scipy.stats import spearmanr
 
@@ -61,6 +63,10 @@ from compute_pullback_signal import score_at                # noqa: E402
 from compute_valuation_ic import moving_block_bootstrap_ci, HORIZON_MONTHS  # noqa: E402
 
 HORIZONS = {"20d": 20, "60d": 60, "6m": 126, "12m": 252}
+# Non-overlapping segments of the same span, so a later segment can be checked for an
+# independent effect rather than re-counting the first move.
+INCREMENTS = ["inc_0_20d", "inc_20_60d", "inc_60_126d", "inc_126_252d"]
+IMPULSE_GAIN_THRESHOLD = 20.0
 BLOCK_MONTHS = {"20d": 1, "60d": 3, "6m": 6, "12m": 12}
 # Variants declared in advance; all are reported.
 PULLBACK_VARIANTS = [("window", "fib"), ("window", "source"), ("zigzag", "fib")]
@@ -144,6 +150,19 @@ def build_panel(price_dir, spy_path, config, limit=None):
                     if se is not None:
                         row["fwd_" + name] = (bars[i + h]["c"] / bars[i]["c"] - 1) - \
                                              (spy_close[se] / spy_close[si] - 1)
+            # Non-overlapping increments as well as the cumulative windows. A cumulative
+            # excess return that grows with the horizon is not by itself evidence of
+            # continuing drift -- the same early move stays inside every longer window.
+            # Only a later segment that is independently positive shows the effect
+            # persists (Codex round 2).
+            for name, (h0, h1) in {"0_20d": (0, 20), "20_60d": (20, 60),
+                                   "60_126d": (60, 126), "126_252d": (126, 252)}.items():
+                if i + h1 < len(bars):
+                    s0 = spy_idx.get(bars[i + h0]["date"])
+                    s1 = spy_idx.get(bars[i + h1]["date"])
+                    if s0 is not None and s1 is not None:
+                        row["inc_" + name] = (bars[i + h1]["c"] / bars[i + h0]["c"] - 1) - \
+                                             (spy_close[s1] / spy_close[s0] - 1)
             rows.append(row)
     return rows
 
@@ -226,6 +245,113 @@ def conditional_double_sort(rows, base_field, test_field, horizon, n_tercile=3):
     return res
 
 
+def paired_delta_ic(rows, field_a, field_b, horizon, subset=None, min_month_n=20):
+    """IC(field_a) - IC(field_b) computed on the SAME rows in the SAME month, then the
+    mean of that monthly difference series with a moving-block bootstrap.
+
+    This is the statistic that actually answers "which signal is better". Observing that
+    one signal's CI excludes zero while the other's does not is not a comparison between
+    them (Codex round 2); the difference has to be tested directly, and pairing it within
+    the month removes the common market move that both signals sit in."""
+    fwd = "fwd_" + horizon
+    by_month = {}
+    for r in rows:
+        if fwd in r and field_a in r and field_b in r and (subset is None or r["ticker"] in subset):
+            by_month.setdefault(r["date"][:7], []).append(r)
+    diffs = []
+    for ym in sorted(by_month):
+        m = by_month[ym]
+        if len(m) < min_month_n:
+            continue
+        ia, _ = spearmanr([r[field_a] for r in m], [r[fwd] for r in m])
+        ib, _ = spearmanr([r[field_b] for r in m], [r[fwd] for r in m])
+        if ia == ia and ib == ib:
+            diffs.append(float(ia - ib))
+    blk = BLOCK_MONTHS[horizon]
+    ci = moving_block_bootstrap_ci(diffs, blk) if len(diffs) >= blk else None
+    return {"mean_delta_ic": round(float(np.mean(diffs)), 4) if diffs else None,
+            "delta_ic_95ci": [round(ci[0], 4), round(ci[1], 4)] if ci else None,
+            "months": len(diffs),
+            "months_a_ahead": sum(1 for d in diffs if d > 0)}
+
+
+def gate_contrast(rows, gate_field, gain_field, horizon, stratify=True, boot=4000, seed=42):
+    """Gate-pass minus same-month gate-FAIL, both drawn from the eligible universe
+    (impulse gain >= the gate's own threshold), bootstrapped on the DIFFERENCE.
+
+    The gate's mandatory conditions include an impulse gain threshold, so a gate-vs-whole-
+    universe comparison mostly measures that momentum condition. Restricting the control
+    to names that cleared the same gain threshold and then failed the four pullback-
+    specific conditions isolates what those four conditions contribute. stratify=True
+    additionally pairs within impulse-gain quintiles, because clearing 21% and clearing
+    100% are very different momentum exposures (Codex round 2)."""
+    by_month = {}
+    fwd = "fwd_" + horizon
+    for r in rows:
+        if fwd in r and r.get(gain_field, 0.0) >= IMPULSE_GAIN_THRESHOLD:
+            by_month.setdefault(r["date"][:7], []).append(r)
+    per_ticker, n_pass, n_fail = {}, 0, 0
+    for ym in sorted(by_month):
+        month = by_month[ym]
+        groups = [month]
+        if stratify:
+            ordered = sorted(month, key=lambda r: r[gain_field])
+            k = max(1, len(ordered) // 5)
+            groups = [ordered[j * k:(j + 1) * k] if j < 4 else ordered[4 * k:] for j in range(5)]
+        for g in groups:
+            passed = [r for r in g if r.get(gate_field) == 1.0]
+            failed = [r for r in g if r.get(gate_field) != 1.0]
+            if not passed or not failed:
+                continue
+            base = float(np.mean([r[fwd] for r in failed]))
+            for r in passed:
+                per_ticker.setdefault(r["ticker"], []).append(r[fwd] - base)
+                n_pass += 1
+            n_fail += len(failed)
+    if not per_ticker:
+        return None
+    keys = sorted(per_ticker)
+    rng = random.Random(seed)
+    means = []
+    for _ in range(boot):
+        draw = []
+        for _ in range(len(keys)):
+            draw.extend(per_ticker[keys[rng.randrange(len(keys))]])
+        means.append(sum(draw) / len(draw))
+    lo, hi = np.percentile(means, [2.5, 97.5])
+    return {"difference": round(float(np.mean([v for vs in per_ticker.values() for v in vs])), 4),
+            "difference_95ci": [round(float(lo), 4), round(float(hi), 4)],
+            "n_pass": n_pass, "n_fail": n_fail, "stratified_by_impulse_gain": stratify}
+
+
+def event_vs_month(rows, gate_field, value_field, boot=4000, seed=42):
+    """Mean of (event value - same-month universe mean), ticker-cluster bootstrapped."""
+    by_month = {}
+    for r in rows:
+        if value_field in r:
+            by_month.setdefault(r["date"][:7], []).append(r)
+    per_ticker = {}
+    for ym, month in by_month.items():
+        mu = float(np.mean([r[value_field] for r in month]))
+        for r in month:
+            if r.get(gate_field) == 1.0:
+                per_ticker.setdefault(r["ticker"], []).append(r[value_field] - mu)
+    if not per_ticker:
+        return None
+    keys = sorted(per_ticker)
+    rng = random.Random(seed)
+    means = []
+    for _ in range(boot):
+        draw = []
+        for _ in range(len(keys)):
+            draw.extend(per_ticker[keys[rng.randrange(len(keys))]])
+        means.append(sum(draw) / len(draw))
+    lo, hi = np.percentile(means, [2.5, 97.5])
+    return {"mean_excess_vs_month": round(float(np.mean([v for vs in per_ticker.values() for v in vs])), 4),
+            "95ci": [round(float(lo), 4), round(float(hi), 4)],
+            "n": sum(len(v) for v in per_ticker.values())}
+
+
 def realized_5y_return(price_dir):
     """Per-ticker realised return over the whole file, used only for the survivorship
     bound below -- never as a signal."""
@@ -284,24 +410,57 @@ def main():
            conditional_double_sort(rows, "pb_total_window_fib", "v1_total", h)}
         for h in ["60d", "12m"]
     }
+    # --- the statistic that answers "which is better" (Codex round 2) ---
+    result["paired_delta_ic_v1_minus_pullback"] = {
+        b: {h: paired_delta_ic(rows, "v1_total", b, h) for h in HORIZONS}
+        for b in ["pb_total_window_fib", "pb_total_zigzag_fib", "pb_total_window_source"]}
+
+    # --- what the four pullback-specific conditions add over the gain threshold alone ---
+    result["gate_contrast_vs_eligible_failures"] = {
+        ("stratified" if st else "unstratified"): {
+            h: gate_contrast(rows, "pb_gate_window_fib", "pb_impulse_gain_window_fib", h, st)
+            for h in HORIZONS}
+        for st in (True, False)}
+
+    # --- is the gate edge continuing drift, or one early move carried by every window? ---
+    result["gate_incremental_windows"] = {
+        k: event_vs_month(rows, "pb_gate_window_fib", k) for k in INCREMENTS}
+
     result["verdict"] = (
-        "통제 유니버스 492종목·22,121 (종목,월) 표본에서 기술 상태 점수 v1이 모든 기간에서 "
-        "눌림목 점수를 이긴다. v1 FM IC는 60일 +0.051 / 6개월 +0.112 / 12개월 +0.109으로 "
-        "신뢰구간이 0을 배제하고, 눌림목 총점은 20일 −0.009 / 60일 +0.018 / 6개월 +0.011 / "
-        "12개월 +0.020으로 어느 기간에서도 0과 구별되지 않는다. 눌림목의 본진인 20~60일에서도 "
-        "0이므로 '기간 선택이 불공정했다'로는 설명되지 않는다. 부수적으로, 손으로 고르지 않은 "
-        "유니버스에서 v1을 처음 재채점한 결과 두 절반이 모두 살아남았다(가격구조 12개월 +0.090, "
-        "모멘텀 +0.111). 눌림목을 분해하면 셋업 40점은 약한 양(12개월 +0.075)이고 진입 타이밍 "
-        "60점은 유의하게 음(−0.048)이어서 서로 상쇄된다. 셋업이 일하는 이유는 필수조건인 "
-        "'임펄스 상승률 ≥20%'가 모멘텀의 약한 대용이기 때문이고, 진입 점수가 역방향인 이유는 "
-        "지지선 근접·깊은 되돌림·낮은 RSI에 높은 점수를 줘서 더 많이 빠진 종목을 고르기 "
-        "때문이다. 합치는 문제: v1 상위 3분위 안에서 눌림목 총점이 60일 +2.73%의 추가 스프레드를 "
-        "내고 세 변형 모두 같은 부호로 재현되지만(12개월은 zigzag에서 부호가 뒤집혀 사전선언 "
-        "기준 미달), 같은 자리에서 v1 자신의 연속 ROC가 +7.23%, 임펄스 상승률이 +6.69%로 더 "
-        "크게 기여한다. 즉 눌림목이 더하는 것은 v1에 없는 정보가 아니라 v1이 모멘텀을 40점 "
-        "구간으로 뭉개며 버린 해상도이며, 그 해상도는 눌림목을 붙이는 것보다 모멘텀의 구간화를 "
-        "푸는 쪽이 더 잘 회복한다. 결론: 눌림목 도입 근거 없음, v1 유지, v2 후보는 "
-        "'모멘텀 구간화 완화'(탐색적 결과이므로 사전선언 후 별도 검정 필요).")
+        "무엇을 물었나: #tech 탭의 기술 상태 점수 v1(가격구조60+절대모멘텀40)과 눌림목매매식 "
+        "점수 중 어느 쪽이 나은가, 합칠 가치가 있는가. 무엇으로 답했나: 현 S&P500 구성종목 "
+        "492개를 2022-11~2026-07 45개월 월말마다 채점한 22,121개 (종목,월) 패널에서 월별 "
+        "횡단면 IC와 같은 달 기준선 대비 이벤트 초과수익으로 비교했다. "
+        "[1] 어느 쪽이 나은가 — 짝지은 ΔIC = IC(v1) − IC(눌림목)을 같은 달 같은 종목에서 "
+        "직접 검정하면 6개월 +0.101, 12개월 +0.089이고 두 기간 모두 신뢰구간이 0을 배제하며 "
+        "임펄스 정의 세 변형에서 부호가 같다. 20일·60일은 0과 구별되지 않는다. 한쪽만 "
+        "유의하다는 사실로는 비교가 성립하지 않으므로 이 차이 검정이 근거다. "
+        "[2] 게이트 — 눌림목 게이트는 같은 달 유니버스 대비 60일 +1.67%, 12개월 +11.27%의 "
+        "초과수익을 보이고, 중첩 없는 증분 구간(20~60일 +1.13%, 60~126일 +3.59%, "
+        "126~252일 +4.93%)에서도 각각 양수라 초기 한 번의 움직임이 긴 창에 계속 포함된 "
+        "결과는 아니다. 그러나 게이트 필수조건에 임펄스 상승률 ≥20%가 있고, 같은 조건을 "
+        "통과했지만 나머지 네 개 눌림목 조건에서 탈락한 종목과 직접 대조하면 차이가 12개월 "
+        "+0.28%p(임펄스 상승률 5분위 내 짝지어도 +3.58%p)이며 신뢰구간이 0을 크게 포함한다. "
+        "게이트의 우위는 그 안의 모멘텀 조건으로 대부분 설명되고, 나머지 네 조건의 추가효과는 "
+        "점추정이 작으나 '0이다'라고 확정할 검정력도 없다. "
+        "[3] 진입 타이밍 60점 — 전체 표본에서 6개월 −0.029, 12개월 −0.034의 음의 연관이고 "
+        "게이트 통과 표본 안에서는 0 부근이다(24~28개월, 검정력 낮음). 양의 순위예측력은 "
+        "어느 쪽에서도 발견되지 않았다. "
+        "[4] 합칠까 — v1 상위 3분위 안에서 눌림목이 추가 스프레드를 내지만, 같은 자리에서 "
+        "v1 자신의 연속 ROC가 2~4배 크게 기여한다. 눌림목이 더하는 것은 v1이 모멘텀을 40점 "
+        "구간으로 뭉개며 버린 해상도로 보인다. "
+        "제품 결정: 눌림목 점수를 추가할 근거가 없으므로 추가하지 않는다. 이것은 '눌림목이 "
+        "무가치함이 입증됐다'가 아니라 '추가를 정당화할 증거가 없다'이다. "
+        "확인적 결론이 아닌 이유: (a) 유니버스가 현재 S&P500 구성종목을 과거로 소급한 생존자 "
+        "표본이다. 5년 실현수익 상위 10% 제외는 사후 결과변수로 자른 민감도 분석일 뿐 생존편향 "
+        "보정이 아니며, 그 표본에서 ΔIC는 12개월 +0.045만 남고 6개월은 0을 포함한다. "
+        "(b) signal×horizon×variant 조합이 80개를 넘어 표시된 유의성은 모두 다중비교 보정 전 "
+        "'명목상'이다. (c) 12개월 수익률이 크게 중첩된 33개월 표본이라 블록 부트스트랩 "
+        "신뢰구간이 불안정하다. (d) 2022-11 이후 한 국면이며 신호×국면 상호작용은 상대 순위도 "
+        "뒤집을 수 있다. (e) 검정 대상은 원 눌림목 체계가 아니라 공개 출력에서 재구성한 "
+        "미국시장용 축약 proxy다(위험감점·수급10·돌파10 제외, 임펄스 탐지는 자체 정의, 일부 "
+        "진입 항목은 거친 대용치). v2 후보 '모멘텀 구간화 완화'는 이 데이터를 보고 나온 "
+        "탐색적 아이디어이므로 사전등록 후 독립 구간에서 확인해야 한다.")
 
     # --- gate-conditional efficacy (Codex round 1) ---
     # pb_total ranks every name including the ones the rule would refuse to trade, so a

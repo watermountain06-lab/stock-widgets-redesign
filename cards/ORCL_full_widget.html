@@ -1347,12 +1347,22 @@ function renderMultipleChart(key) {
   const ctx = document.getElementById('multipleChart');
   if (!ctx || !d) return;
   if (multipleChart) multipleChart.destroy();
+    // Self identity and colour are derived, never hardcoded — copying a card
+    // used to carry the template ticker's name and brand colour into the new
+    // card's own bar, and renaming the MULTIPLE_DATA key never reached labels[0].
+    const selfKey = Object.keys(d).find(function (k) { return /Value$/.test(k); });
+    const _bbc = document.querySelector('.back-bar-current');
+    const selfLabel = (_bbc ? _bbc.textContent.split('\u00b7')[0].trim() : '')
+      || (selfKey ? selfKey.replace(/Value$/, '').toUpperCase() : '');
+    const _cs = getComputedStyle(document.documentElement);
+    const selfBd = _cs.getPropertyValue('--accent').trim();
+    const selfBg = _cs.getPropertyValue('--accent2').trim();
   if (key === 'pcr') {
     const labels = ['ORCL (P/OCF)'];
     const data = [14.30];
     multipleChart = new Chart(ctx,{
       type:'bar',
-      data:{ labels, datasets:[{ label:'P/OCF', data, backgroundColor:['#ffb37b'], borderColor:['#ff8c42'], borderWidth:1, borderRadius:5, minBarLength:6 }] },
+      data:{ labels, datasets:[{ label:'P/OCF', data, backgroundColor:[selfBg], borderColor:[selfBd], borderWidth:1, borderRadius:5, minBarLength:6 }] },
       options:{
         responsive:true,maintainAspectRatio:false,
         plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>`P/OCF ${ctx.raw}x (피어는 P/FCF 기준이라 직접비교 생략)`}}},
@@ -1364,10 +1374,10 @@ function renderMultipleChart(key) {
     });
     return;
   }
-  const labels = ['ORCL', ...d.peers.map(p=> p.status==='excluded' ? `${p.name}(제외)` : p.name)];
-  const data = [d.orclValue, ...d.peers.map(p=>p.value)];
-  const bg = [ '#de8e83', ...d.peers.map(p=> p.status==='excluded' ? 'rgba(231,76,60,0.18)' : 'rgba(154,160,184,0.35)') ];
-  const bd = [ '#c74634', ...d.peers.map(p=> p.status==='excluded' ? '#c0392b' : '#5c6282') ];
+  const labels = [selfLabel, ...d.peers.map(p=> p.status==='excluded' ? `${p.name}(제외)` : p.name)];
+  const data = [d[selfKey], ...d.peers.map(p=>p.value)];
+  const bg = [ selfBg, ...d.peers.map(p=> p.status==='excluded' ? 'rgba(231,76,60,0.18)' : 'rgba(154,160,184,0.35)') ];
+  const bd = [ selfBd, ...d.peers.map(p=> p.status==='excluded' ? '#c0392b' : '#5c6282') ];
   multipleChart = new Chart(ctx,{
     type:'bar',
     data:{ labels, datasets:[{ label:d.unit, data, backgroundColor:bg, borderColor:bd, borderWidth:1, borderRadius:5, minBarLength:6 }] },

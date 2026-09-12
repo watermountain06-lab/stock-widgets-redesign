@@ -1716,10 +1716,20 @@ function renderMultipleChart(key) {
   const ctx = document.getElementById('multipleChart');
   if (!ctx || !d) return;
   if (multipleChart) multipleChart.destroy();
-  const labels = ['GOOGL', ...d.peers.map(p=> p.status==='excluded' ? `${p.name}(제외)` : p.name)];
-  const data = [d.googlValue, ...d.peers.map(p=>p.value)];
-  const bg = [ '#a2c3fa', ...d.peers.map(p=> p.status==='excluded' ? 'rgba(231,76,60,0.18)' : 'rgba(154,160,184,0.35)') ];
-  const bd = [ '#4285f4', ...d.peers.map(p=> p.status==='excluded' ? '#c0392b' : '#5c6282') ];
+    // Self identity and colour are derived, never hardcoded — copying a card
+    // used to carry the template ticker's name and brand colour into the new
+    // card's own bar, and renaming the MULTIPLE_DATA key never reached labels[0].
+    const selfKey = Object.keys(d).find(function (k) { return /Value$/.test(k); });
+    const _bbc = document.querySelector('.back-bar-current');
+    const selfLabel = (_bbc ? _bbc.textContent.split('\u00b7')[0].trim() : '')
+      || (selfKey ? selfKey.replace(/Value$/, '').toUpperCase() : '');
+    const _cs = getComputedStyle(document.documentElement);
+    const selfBd = _cs.getPropertyValue('--accent').trim();
+    const selfBg = _cs.getPropertyValue('--accent2').trim();
+  const labels = [selfLabel, ...d.peers.map(p=> p.status==='excluded' ? `${p.name}(제외)` : p.name)];
+  const data = [d[selfKey], ...d.peers.map(p=>p.value)];
+  const bg = [ selfBg, ...d.peers.map(p=> p.status==='excluded' ? 'rgba(231,76,60,0.18)' : 'rgba(154,160,184,0.35)') ];
+  const bd = [ selfBd, ...d.peers.map(p=> p.status==='excluded' ? '#c0392b' : '#5c6282') ];
   multipleChart = new Chart(ctx,{
     type:'bar',
     data:{ labels, datasets:[{ label:d.unit, data, backgroundColor:bg, borderColor:bd, borderWidth:1, borderRadius:5, minBarLength:6 }] },
