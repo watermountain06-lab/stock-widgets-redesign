@@ -1,0 +1,52 @@
+{
+  "label": "S&P500 control (not hand-picked)",
+  "tickers": 492,
+  "events": 3403,
+  "unconditional_observations": 577692,
+  "metrics": {
+    "ex20": {
+      "event_mean": 0.00408,
+      "unconditional_mean": 0.00043,
+      "same_day_universe_mean": 0.00129,
+      "event_minus_same_day": 0.00279,
+      "cluster_bootstrap_95ci": [
+        -0.00111,
+        0.00679
+      ],
+      "n_events": 3339
+    },
+    "ex60": {
+      "event_mean": 0.00817,
+      "unconditional_mean": 0.00014,
+      "same_day_universe_mean": -0.00277,
+      "event_minus_same_day": 0.01094,
+      "cluster_bootstrap_95ci": [
+        0.00198,
+        0.02048
+      ],
+      "n_events": 3226
+    },
+    "hit20": {
+      "event_mean": 0.51102,
+      "unconditional_mean": 0.53835,
+      "same_day_universe_mean": 0.51494,
+      "event_minus_same_day": -0.00392,
+      "cluster_bootstrap_95ci": [
+        -0.02409,
+        0.01622
+      ],
+      "n_events": 3403
+    },
+    "hit60": {
+      "event_mean": 0.48261,
+      "unconditional_mean": 0.51188,
+      "same_day_universe_mean": 0.47925,
+      "event_minus_same_day": 0.00336,
+      "cluster_bootstrap_95ci": [
+        -0.01923,
+        0.02591
+      ],
+      "n_events": 3278
+    }
+  }
+}

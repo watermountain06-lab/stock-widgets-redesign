@@ -27,6 +27,10 @@ because PER is computed only on dates that have a price bar. Verify the output w
 single-day-move scan before trusting it: at the 2026-09-12 run, 4 of 467 tickers had a
 move above 45% (MRNA, ECHO, GL, APP), which compute_valuation_ic_v4.py excludes by name.
 
+Bars are full OHLCV. The valuation test reads only the close, but the breakout backtest
+needs highs, lows and volume, and this universe is meant to be reused by whichever signal
+is being graded next.
+
 EPS: same point-in-time construction as fetch_eps_history.py -- us-gaap
 EarningsPerShareDiluted from EDGAR, split-corrected per entry using that entry's OWN filed
 date, then deduped by (start, end) keeping the EARLIEST filed row so each TTM figure is
@@ -73,11 +77,16 @@ def fetch_prices_and_splits(ticker):
     quote = chart["indicators"]["quote"][0]
     bars = []
     for i, ts in enumerate(chart["timestamp"]):
-        close = quote["close"][i]
-        if close is None:
+        o, h, l, c, v = (quote["open"][i], quote["high"][i], quote["low"][i],
+                         quote["close"][i], quote["volume"][i])
+        if None in (o, h, l, c, v):
             continue
+        # Full OHLCV, not just the close: the valuation test only reads "c", but the
+        # breakout backtest needs highs, lows and volume, and this universe exists to be
+        # reused by whichever signal is being graded next.
         bars.append({"date": datetime.fromtimestamp(ts, tz=timezone.utc).astimezone().strftime("%Y-%m-%d"),
-                     "c": round(close, 4)})
+                     "o": round(o, 4), "h": round(h, 4), "l": round(l, 4),
+                     "c": round(c, 4), "v": int(v)})
     splits = [
         {"date": datetime.fromtimestamp(s["date"], tz=timezone.utc).astimezone().strftime("%Y-%m-%d"),
          "ratio": s["numerator"] / s["denominator"]}

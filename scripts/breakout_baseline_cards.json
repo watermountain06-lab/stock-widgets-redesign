@@ -1,0 +1,52 @@
+{
+  "label": "cards (hand-picked)",
+  "tickers": 57,
+  "events": 490,
+  "unconditional_observations": 65465,
+  "metrics": {
+    "ex20": {
+      "event_mean": 0.02714,
+      "unconditional_mean": 0.01154,
+      "same_day_universe_mean": 0.01301,
+      "event_minus_same_day": 0.01413,
+      "cluster_bootstrap_95ci": [
+        -0.00253,
+        0.03494
+      ],
+      "n_events": 484
+    },
+    "ex60": {
+      "event_mean": 0.08133,
+      "unconditional_mean": 0.03836,
+      "same_day_universe_mean": 0.0403,
+      "event_minus_same_day": 0.04103,
+      "cluster_bootstrap_95ci": [
+        0.00281,
+        0.09582
+      ],
+      "n_events": 459
+    },
+    "hit20": {
+      "event_mean": 0.60204,
+      "unconditional_mean": 0.5795,
+      "same_day_universe_mean": 0.5651,
+      "event_minus_same_day": 0.03694,
+      "cluster_bootstrap_95ci": [
+        -0.01651,
+        0.09005
+      ],
+      "n_events": 490
+    },
+    "hit60": {
+      "event_mean": 0.60768,
+      "unconditional_mean": 0.57876,
+      "same_day_universe_mean": 0.56322,
+      "event_minus_same_day": 0.04445,
+      "cluster_bootstrap_95ci": [
+        -0.01068,
+        0.09708
+      ],
+      "n_events": 469
+    }
+  }
+}
