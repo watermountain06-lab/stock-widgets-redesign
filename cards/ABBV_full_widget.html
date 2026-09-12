@@ -1352,8 +1352,8 @@ function renderMultipleChart(key) {
   }
   const labels = ['ABBV', ...d.peers.map(p=> p.status==='excluded' ? `${p.name}(제외)` : p.name)];
   const data = [d.orclValue, ...d.peers.map(p=>p.value)];
-  const bg = [ '#6fa3ff', ...d.peers.map(p=> p.status==='excluded' ? 'rgba(231,76,60,0.18)' : 'rgba(154,160,184,0.35)') ];
-  const bd = [ '#2f6fed', ...d.peers.map(p=> p.status==='excluded' ? '#c0392b' : '#5c6282') ];
+  const bg = [ '#2d5599', ...d.peers.map(p=> p.status==='excluded' ? 'rgba(231,76,60,0.18)' : 'rgba(154,160,184,0.35)') ];
+  const bd = [ '#16294a', ...d.peers.map(p=> p.status==='excluded' ? '#c0392b' : '#5c6282') ];
   multipleChart = new Chart(ctx,{
     type:'bar',
     data:{ labels, datasets:[{ label:d.unit, data, backgroundColor:bg, borderColor:bd, borderWidth:1, borderRadius:5, minBarLength:6 }] },

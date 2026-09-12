@@ -1438,8 +1438,8 @@ function renderMultipleChart(key) {
   if (multipleChart) multipleChart.destroy();
   const labels = ['MA', ...d.peers.map(p=> p.status==='excluded' ? `${p.name}` : p.name)];
   const data = [d.jpmValue, ...d.peers.map(p=>p.value)];
-  const bg = [ '#ff8c42', ...d.peers.map(p=> p.status==='excluded' ? 'rgba(231,76,60,0.18)' : 'rgba(154,160,184,0.35)') ];
-  const bd = [ '#eb1626', ...d.peers.map(p=> p.status==='excluded' ? '#c0392b' : '#5c6282') ];
+  const bg = [ '#ff5266', ...d.peers.map(p=> p.status==='excluded' ? 'rgba(231,76,60,0.18)' : 'rgba(154,160,184,0.35)') ];
+  const bd = [ '#eb001b', ...d.peers.map(p=> p.status==='excluded' ? '#c0392b' : '#5c6282') ];
   multipleChart = new Chart(ctx,{
     type:'bar',
     data:{ labels, datasets:[{ label:d.unit, data, backgroundColor:bg, borderColor:bd, borderWidth:1, borderRadius:5, minBarLength:6 }] },
