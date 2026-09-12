@@ -1,0 +1,78 @@
+{
+  "ticker": "CRWD",
+  "financialsAsOf": "2026-01-31",
+  "valuationAsOf": "2026-09-11",
+  "valuation": {
+    "combinedStage": 2.0,
+    "axisPoints": 24.8,
+    "axisPointsRaw": 24.75,
+    "historicalMultipleCoverage": 0,
+    "targetPriceAvailable": true
+  },
+  "health": {
+    "dataQuality": {},
+    "currentRatio": {
+      "value": 177.3,
+      "points": 3
+    },
+    "quickRatio": {
+      "value": 177.3,
+      "points": 4
+    },
+    "debtDependency": {
+      "value": 6.7,
+      "points": 4
+    },
+    "interestCoverage": {
+      "value": -10.5,
+      "points": 1,
+      "note": "영업이익 적자(또는 0) - 무조건 1점"
+    },
+    "debtToEquity": {
+      "value": 149.4,
+      "points": 2
+    },
+    "axisPoints": 18.5,
+    "axisPointsRaw": 18.48,
+    "ratiosUsed": 5
+  },
+  "growthProfit": {
+    "dataQuality": {},
+    "revenueCagr": {
+      "value": 29.0,
+      "points": 5
+    },
+    "opIncomeCagr": {
+      "value": null,
+      "points": 1,
+      "note": "적자(또는 0) 지속 - CAGR 수치화 불가, 1점 처리"
+    },
+    "opMargin": {
+      "value": -6.1,
+      "points": 1
+    },
+    "netMargin": {
+      "value": -3.4,
+      "points": 1
+    },
+    "axisPoints": 13.6,
+    "axisPointsRaw": 13.600000000000001,
+    "metricsUsed": 4
+  },
+  "totalScore": 56.8,
+  "grade": "보통",
+  "axesUsed": 3,
+  "coverageStatus": "full",
+  "qualityFlags": [
+    "valuation_target_only"
+  ],
+  "financialsAgeMonths": 7.3,
+  "dataStatus": {
+    "coverageStatus": "full",
+    "qualityFlags": [
+      "valuation_target_only"
+    ],
+    "operatingIncomeEstimated": false,
+    "negativeEquity": false
+  }
+}

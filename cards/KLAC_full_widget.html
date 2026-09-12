@@ -12,11 +12,12 @@
   .box-key { background: rgba(0,167,225,0.1); border: 1px solid var(--accent3); border-radius: 10px; padding: 12px 16px; max-width: 1100px; margin: 0 auto 16px; }
   .header::before { content: ''; position: absolute; top: -60px; right: -60px; width: 240px; height: 240px; background: radial-gradient(circle, rgba(0,167,225,0.14) 0%, transparent 70%); pointer-events: none; }
   .header-top { display: flex; align-items: flex-start; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
-  .ticker-block { display: flex; align-items: center; gap: 16px; }
+  .ticker-block { display: flex; align-items: center; gap: 16px; flex: 1 1 320px; min-width: 0; }
+  .ticker-block > div { min-width: 0; }
   .ticker-badge { background: linear-gradient(135deg, var(--accent3), var(--accent)); color: #fff; font-size: 13px; font-weight: 800; padding: 5px 12px; border-radius: 6px; letter-spacing: 1px; }
   .company-name { font-size: 22px; font-weight: 700; color: var(--text); }
   .company-sub { font-size: 12px; color: var(--text3); margin-top: 2px; }
-  .price-block { text-align: right; }
+  .price-block { text-align: right; flex: 0 0 auto; margin-left: auto; }
   .price-main { font-size: 32px; font-weight: 800; color: var(--accent2); letter-spacing: -1px; }
   .price-change { font-size: 13px; color: var(--red); font-weight: 600; }
   .header-meta { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 16px; margin-top: 16px; }

@@ -1489,5 +1489,55 @@
     },
     "combinedStage": 2,
     "combinedLabel": "낮음"
+  },
+  "CRWD": {
+    "ticker": "CRWD",
+    "asOf": "2026-09-11",
+    "currentPrice": 206.74,
+    "dataQuality": {
+      "per": "missing (no positive EPS history, or fewer than 3 usable years)",
+      "pbr": "missing (no positive equity/shares history within date tolerance, or fewer than 3 matched years)",
+      "combined": "missing (neither PER nor PBR computable)"
+    },
+    "targetPrice": {
+      "mean": 232.69,
+      "high": 300.0,
+      "low": 119.0,
+      "upsidePct": 12.6,
+      "stage": 2,
+      "numAnalysts": 50,
+      "recommendationKey": "buy"
+    }
+  },
+  "VZ": {
+    "ticker": "VZ",
+    "asOf": "2026-09-11",
+    "currentPrice": 50.61,
+    "dataQuality": {},
+    "per": {
+      "current": 12.47,
+      "historicalAvg5y": 10.19,
+      "gapPct": 22.4,
+      "stage": 5,
+      "sampleYears": 5
+    },
+    "pbr": {
+      "current": 2.02,
+      "historicalAvg5y": 1.88,
+      "gapPct": 7.5,
+      "stage": 4,
+      "sampleYears": 5
+    },
+    "targetPrice": {
+      "mean": 51.58182,
+      "high": 71.0,
+      "low": 44.0,
+      "upsidePct": 1.9,
+      "stage": 3,
+      "numAnalysts": 22,
+      "recommendationKey": "buy"
+    },
+    "combinedStage": 4,
+    "combinedLabel": "높음"
   }
 }

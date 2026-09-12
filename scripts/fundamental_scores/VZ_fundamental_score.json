@@ -1,0 +1,72 @@
+{
+  "ticker": "VZ",
+  "financialsAsOf": "2025-12-31",
+  "valuationAsOf": "2026-09-11",
+  "valuation": {
+    "combinedStage": 3.9,
+    "axisPoints": 9.1,
+    "axisPointsRaw": 9.075000000000001,
+    "historicalMultipleCoverage": 2,
+    "targetPriceAvailable": true
+  },
+  "health": {
+    "dataQuality": {},
+    "currentRatio": {
+      "value": 91.3,
+      "points": 1
+    },
+    "quickRatio": {
+      "value": 87.4,
+      "points": 2
+    },
+    "debtDependency": {
+      "value": 26.8,
+      "points": 3
+    },
+    "interestCoverage": {
+      "value": 4.4,
+      "points": 3
+    },
+    "debtToEquity": {
+      "value": 282.3,
+      "points": 1
+    },
+    "axisPoints": 13.2,
+    "axisPointsRaw": 13.200000000000001,
+    "ratiosUsed": 5
+  },
+  "growthProfit": {
+    "dataQuality": {},
+    "revenueCagr": {
+      "value": 0.3,
+      "points": 2
+    },
+    "opIncomeCagr": {
+      "value": -1.3,
+      "points": 1
+    },
+    "opMargin": {
+      "value": 21.2,
+      "points": 3
+    },
+    "netMargin": {
+      "value": 12.4,
+      "points": 3
+    },
+    "axisPoints": 15.3,
+    "axisPointsRaw": 15.3,
+    "metricsUsed": 4
+  },
+  "totalScore": 37.6,
+  "grade": "미흡",
+  "axesUsed": 3,
+  "coverageStatus": "full",
+  "qualityFlags": [],
+  "financialsAgeMonths": 8.3,
+  "dataStatus": {
+    "coverageStatus": "full",
+    "qualityFlags": [],
+    "operatingIncomeEstimated": false,
+    "negativeEquity": false
+  }
+}

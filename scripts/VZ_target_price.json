@@ -1,0 +1,11 @@
+{
+  "ticker": "VZ",
+  "currentPrice": 50.61,
+  "targetHighPrice": 71.0,
+  "targetLowPrice": 44.0,
+  "targetMeanPrice": 51.58182,
+  "targetMedianPrice": 51.5,
+  "recommendationKey": "buy",
+  "recommendationMean": 2.36,
+  "numberOfAnalystOpinions": 22
+}
