@@ -1,65 +1,71 @@
 {
   "ticker": "CSCO",
-  "financialsAsOf": "2025-07-26",
+  "financialsAsOf": "2026-07-25",
+  "valuationAsOf": "2026-09-11",
   "valuation": {
     "combinedStage": 3.4,
     "axisPoints": 13.2,
-    "axisPointsRaw": 13.200000000000001
+    "axisPointsRaw": 13.200000000000001,
+    "historicalMultipleCoverage": 2,
+    "targetPriceAvailable": true
   },
   "health": {
     "dataQuality": {},
     "currentRatio": {
-      "value": 99.8,
+      "value": 93.1,
       "points": 1
     },
     "quickRatio": {
-      "value": 90.8,
+      "value": 79.4,
       "points": 2
     },
     "debtDependency": {
-      "value": 23.0,
+      "value": 22.8,
       "points": 3
     },
     "interestCoverage": {
-      "value": 7.4,
-      "points": 3
+      "value": 10.5,
+      "points": 4
     },
     "debtToEquity": {
-      "value": 161.1,
+      "value": 157.8,
       "points": 2
     },
-    "axisPoints": 14.5,
-    "axisPointsRaw": 14.52,
+    "axisPoints": 15.8,
+    "axisPointsRaw": 15.84,
     "ratiosUsed": 5
   },
   "growthProfit": {
     "dataQuality": {},
     "revenueCagr": {
-      "value": 3.2,
+      "value": 3.6,
       "points": 2
     },
     "opIncomeCagr": {
-      "value": -5.6,
-      "points": 1
+      "value": 0.7,
+      "points": 2
     },
     "opMargin": {
-      "value": 20.8,
+      "value": 24.3,
       "points": 3
     },
     "netMargin": {
-      "value": 18.0,
+      "value": 21.0,
       "points": 4
     },
-    "axisPoints": 17.0,
-    "axisPointsRaw": 17.0,
+    "axisPoints": 18.7,
+    "axisPointsRaw": 18.700000000000003,
     "metricsUsed": 4
   },
-  "totalScore": 44.7,
+  "totalScore": 47.7,
   "grade": "보통",
   "axesUsed": 3,
   "coverageStatus": "full",
+  "qualityFlags": [],
+  "financialsAgeMonths": 1.6,
   "dataStatus": {
     "coverageStatus": "full",
+    "qualityFlags": [],
     "operatingIncomeEstimated": false,
     "negativeEquity": false
   }

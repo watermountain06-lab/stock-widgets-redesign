@@ -1,10 +1,13 @@
 {
   "ticker": "PG",
   "financialsAsOf": "2026-06-30",
+  "valuationAsOf": "2026-09-11",
   "valuation": {
     "combinedStage": 2.0,
     "axisPoints": 24.8,
-    "axisPointsRaw": 24.75
+    "axisPointsRaw": 24.75,
+    "historicalMultipleCoverage": 2,
+    "targetPriceAvailable": true
   },
   "health": {
     "dataQuality": {},
@@ -58,8 +61,11 @@
   "grade": "보통",
   "axesUsed": 3,
   "coverageStatus": "full",
+  "qualityFlags": [],
+  "financialsAgeMonths": 2.4,
   "dataStatus": {
     "coverageStatus": "full",
+    "qualityFlags": [],
     "operatingIncomeEstimated": false,
     "negativeEquity": false
   }

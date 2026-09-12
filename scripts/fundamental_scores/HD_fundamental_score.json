@@ -1,10 +1,13 @@
 {
   "ticker": "HD",
   "financialsAsOf": "2026-02-01",
+  "valuationAsOf": "2026-09-11",
   "valuation": {
-    "combinedStage": 2.0,
-    "axisPoints": 24.8,
-    "axisPointsRaw": 24.75
+    "combinedStage": 1.3,
+    "axisPoints": 30.5,
+    "axisPointsRaw": 30.525000000000002,
+    "historicalMultipleCoverage": 2,
+    "targetPriceAvailable": true
   },
   "health": {
     "dataQuality": {},
@@ -54,12 +57,15 @@
     "axisPointsRaw": 13.600000000000001,
     "metricsUsed": 4
   },
-  "totalScore": 50.2,
+  "totalScore": 56.0,
   "grade": "보통",
   "axesUsed": 3,
   "coverageStatus": "full",
+  "qualityFlags": [],
+  "financialsAgeMonths": 7.3,
   "dataStatus": {
     "coverageStatus": "full",
+    "qualityFlags": [],
     "operatingIncomeEstimated": false,
     "negativeEquity": false
   }

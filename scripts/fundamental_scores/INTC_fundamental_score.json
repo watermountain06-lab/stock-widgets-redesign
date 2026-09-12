@@ -1,10 +1,13 @@
 {
   "ticker": "INTC",
   "financialsAsOf": "2025-12-27",
+  "valuationAsOf": "2026-09-11",
   "valuation": {
     "combinedStage": 3.8,
     "axisPoints": 9.9,
-    "axisPointsRaw": 9.900000000000002
+    "axisPointsRaw": 9.900000000000002,
+    "historicalMultipleCoverage": 1,
+    "targetPriceAvailable": true
   },
   "health": {
     "dataQuality": {},
@@ -60,8 +63,11 @@
   "grade": "미흡",
   "axesUsed": 3,
   "coverageStatus": "full",
+  "qualityFlags": [],
+  "financialsAgeMonths": 8.5,
   "dataStatus": {
     "coverageStatus": "full",
+    "qualityFlags": [],
     "operatingIncomeEstimated": false,
     "negativeEquity": false
   }

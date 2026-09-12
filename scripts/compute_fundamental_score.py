@@ -32,8 +32,8 @@ Design decisions from the 2026-08-25 Codex review round (see project memory):
 Inputs:
   --financials  a fetch_financials.py --years 5 output (this repo's own copy,
                 fetched into scripts/fundamental_data/)
-  --valuation   scripts/valuation_signals.json (frozen 2026-08-18 snapshot copied from the
-                retired old stock-widgets repo; regenerate with compute_valuation_score.py)
+  --valuation   scripts/valuation_signals.json (regenerate with compute_valuation_score.py;
+                each entry carries its own asOf, echoed into the output as valuationAsOf)
                 (has per.stage/pbr.stage/targetPrice.stage per ticker)
   --config      fundamental_score_config_v1.json
 
@@ -337,6 +337,45 @@ def compute_growth_profit_axis(fin, config, op_income_annual, op_income_estimate
     return out
 
 
+def SNAPSHOT_REF(config):
+    """The date financial freshness is measured against: the run's own snapshot."""
+    return config.get("snapshot_date")
+
+
+def age_months(as_of, ref):
+    if not as_of or not ref:
+        return None
+    a = date.fromisoformat(as_of)
+    r = date.fromisoformat(ref)
+    return round((r - a).days / 30.44, 1)
+
+
+def staleness_check(financials_as_of, ticker, config):
+    """v1.0.1 - flag financials too old to sit next to a same-day price.
+
+    The threshold is derived, not tuned to a ticker: an annual filer is
+    expected to report once every `annual_report_cycle_months` and needs
+    `filing_grace_months` to file and be collected, so anything older than
+    their sum is genuinely behind schedule rather than merely not-yet-updated.
+    A foreign private issuer gets `foreign_issuer_extra_months` on top because
+    the 20-F deadline is longer than a 10-K's. Sensitivity at 12/15/18 months
+    is recorded in the config note so the choice can be argued rather than
+    assumed.
+    """
+    st = config.get("staleness")
+    if not st:
+        return None
+    months = age_months(financials_as_of, SNAPSHOT_REF(config))
+    if months is None:
+        return None
+    limit = st["annual_report_cycle_months"] + st["filing_grace_months"]
+    if ticker in set(st.get("foreign_issuers", [])):
+        limit += st.get("foreign_issuer_extra_months", 0)
+    if months > limit:
+        return {"ageMonths": months, "limitMonths": limit}
+    return None
+
+
 def compute_valuation_axis(valuation_signal, config):
     if not valuation_signal:
         return {"axisPoints": None, "axisPointsRaw": None, "dataQuality": "no valuation_signals.json entry for this ticker"}
@@ -357,13 +396,28 @@ def compute_valuation_axis(valuation_signal, config):
         stages.append(valuation_signal["targetPrice"]["stage"])
         weights.append(config["valuation"]["weight_target"])
 
+    # v1.0.1 - report coverage by BLOCK, not by input count. The axis has two
+    # blocks that measure different things: the self-history block (PER/PBR,
+    # which the formula already collapses under one weight) and the street
+    # block (targetPrice). A missing self-history block does not degrade the
+    # axis, it changes what the axis measures - and because targetPrice is
+    # observed only in stages 1-3 across the universe while PER/PBR are modally
+    # stage 5, dropping the self-history block RAISES the score. See the config
+    # note; the arithmetic is unchanged here on purpose.
+    coverage = {
+        "historicalMultipleCoverage": sum(1 for k in ("per", "pbr") if k in valuation_signal),
+        "targetPriceAvailable": "targetPrice" in valuation_signal,
+    }
+
     if not stages:
-        return {"axisPoints": None, "axisPointsRaw": None, "dataQuality": "no per/pbr/targetPrice stage available"}
+        return {"axisPoints": None, "axisPointsRaw": None,
+                "dataQuality": "no per/pbr/targetPrice stage available", **coverage}
 
     total_weight = sum(weights)
     combined_stage = sum(s * w for s, w in zip(stages, weights)) / total_weight
     axis_points_raw = config["axis_weights"]["valuation"] * (5 - combined_stage) / 4
-    return {"combinedStage": round(combined_stage, 2), "axisPoints": round(axis_points_raw, 1), "axisPointsRaw": axis_points_raw}
+    return {"combinedStage": round(combined_stage, 2), "axisPoints": round(axis_points_raw, 1),
+            "axisPointsRaw": axis_points_raw, **coverage}
 
 
 def grade_from_score(score, cuts):
@@ -400,10 +454,35 @@ def compute_signal(ticker, fin, valuation_signal, config):
     valuation_ok = valuation.get("axisPoints") is not None
     health_ok = health.get("ratiosUsed", 0) >= gate["min_health_ratios"]
     growth_ok = growth_profit.get("metricsUsed", 0) >= gate["min_growth_profit_metrics"]
-    coverage_status = "full" if (valuation_ok and health_ok and growth_ok) else "partial"
 
     revenue_annual = [e for e in fin["revenue"]["annual"] if e.get("val") is not None]
     financials_as_of = max((e["end"] for e in revenue_annual), default=None)
+
+    # v1.0.1 - qualityFlags is deliberately SEPARATE from coverageStatus.
+    # coverageStatus stays exactly what the frozen v1.0.0 gate decided, so it
+    # remains comparable with earlier runs; these flags are additional data
+    # concerns the gate does not model (staleness is not a coverage question,
+    # and a target-only valuation axis passes the gate by design). A list, not
+    # one flag, because a ticker can be target-only AND stale at once - TSM is.
+    reasons = []
+    if not valuation_ok:
+        reasons.append("valuation_axis_missing")
+    elif valuation.get("historicalMultipleCoverage") == 0:
+        reasons.append("valuation_target_only")
+    if not health_ok:
+        reasons.append("health_ratios_below_gate")
+    if not growth_ok:
+        reasons.append("growth_metrics_below_gate")
+    if len(revenue_annual) < 3:
+        reasons.append("insufficient_annual_history")
+    if health.get("debtToEquity", {}).get("status") == "negative_equity":
+        reasons.append("negative_equity")
+
+    stale = staleness_check(financials_as_of, ticker, config)
+    if stale:
+        reasons.append("stale_financials")
+
+    coverage_status = "full" if (valuation_ok and health_ok and growth_ok) else "partial"
 
     # UI가 매번 health/growthProfit 안을 파고들지 않고 한 곳만 보고 데이터 상태를 표시할 수 있도록,
     # 세 가지 성격이 다른 신호(완전성/추정출처/실제재무위험)를 이름 붙여 그대로 노출.
@@ -411,6 +490,7 @@ def compute_signal(ticker, fin, valuation_signal, config):
     # 여기서는 성격을 보존한 채로 넘긴다.
     data_status = {
         "coverageStatus": coverage_status,
+        "qualityFlags": reasons,
         "operatingIncomeEstimated": bool(health.get("operatingIncomeEstimated") or growth_profit.get("operatingIncomeEstimated")),
         "negativeEquity": health.get("debtToEquity", {}).get("status") == "negative_equity",
     }
@@ -418,6 +498,11 @@ def compute_signal(ticker, fin, valuation_signal, config):
     result = {
         "ticker": ticker,
         "financialsAsOf": financials_as_of,
+        # the as-of date of the valuation signal this score was actually priced
+        # off, so nothing downstream has to hardcode it (it used to be a
+        # constant in preview's extract_tiers_scores.py and went stale silently
+        # the moment the signals were regenerated)
+        "valuationAsOf": (valuation_signal or {}).get("asOf"),
         "valuation": valuation,
         "health": health,
         "growthProfit": growth_profit,
@@ -425,6 +510,8 @@ def compute_signal(ticker, fin, valuation_signal, config):
         "grade": (grade_from_score(total_raw, config["grade_cuts"]) if total_raw is not None else None),
         "axesUsed": len(axis_points_raw),
         "coverageStatus": coverage_status,
+        "qualityFlags": reasons,
+        "financialsAgeMonths": age_months(financials_as_of, SNAPSHOT_REF(config)),
         "dataStatus": data_status,
     }
     return result
@@ -434,7 +521,7 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("ticker")
     ap.add_argument("--financials", required=True)
-    ap.add_argument("--valuation", required=True, help="scripts/valuation_signals.json (frozen 2026-08-18 snapshot)")
+    ap.add_argument("--valuation", required=True, help="scripts/valuation_signals.json")
     ap.add_argument("--config", required=True)
     ap.add_argument("--out", default=None)
     args = ap.parse_args()

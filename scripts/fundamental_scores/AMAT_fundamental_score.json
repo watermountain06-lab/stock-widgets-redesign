@@ -1,10 +1,13 @@
 {
   "ticker": "AMAT",
   "financialsAsOf": "2025-10-26",
+  "valuationAsOf": "2026-09-11",
   "valuation": {
     "combinedStage": 3.4,
     "axisPoints": 13.2,
-    "axisPointsRaw": 13.200000000000001
+    "axisPointsRaw": 13.200000000000001,
+    "historicalMultipleCoverage": 2,
+    "targetPriceAvailable": true
   },
   "health": {
     "dataQuality": {},
@@ -58,8 +61,11 @@
   "grade": "보통",
   "axesUsed": 3,
   "coverageStatus": "full",
+  "qualityFlags": [],
+  "financialsAgeMonths": 10.5,
   "dataStatus": {
     "coverageStatus": "full",
+    "qualityFlags": [],
     "operatingIncomeEstimated": false,
     "negativeEquity": false
   }

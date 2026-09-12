@@ -1,13 +1,18 @@
 {
   "ticker": "AVGO",
   "financialsAsOf": "2025-11-02",
+  "valuationAsOf": "2026-09-11",
   "valuation": {
-    "combinedStage": 2.5,
-    "axisPoints": 20.6,
-    "axisPointsRaw": 20.625
+    "combinedStage": 3.4,
+    "axisPoints": 13.2,
+    "axisPointsRaw": 13.200000000000001,
+    "historicalMultipleCoverage": 2,
+    "targetPriceAvailable": true
   },
   "health": {
-    "dataQuality": {},
+    "dataQuality": {
+      "interestCoverage": "missing (해당 연도 이자비용 결측 - 다른 연도엔 태그 존재)"
+    },
     "currentRatio": {
       "value": 170.5,
       "points": 3
@@ -17,20 +22,16 @@
       "points": 4
     },
     "debtDependency": {
-      "value": 39.2,
-      "points": 2
-    },
-    "interestCoverage": {
-      "value": 7.9,
+      "value": 24.9,
       "points": 3
     },
     "debtToEquity": {
       "value": 110.5,
       "points": 2
     },
-    "axisPoints": 18.5,
-    "axisPointsRaw": 18.48,
-    "ratiosUsed": 5
+    "axisPoints": 19.8,
+    "axisPointsRaw": 19.8,
+    "ratiosUsed": 4
   },
   "growthProfit": {
     "dataQuality": {},
@@ -47,19 +48,22 @@
       "points": 5
     },
     "netMargin": {
-      "value": 36.2,
-      "points": 5
+      "value": 9.2,
+      "points": 3
     },
-    "axisPoints": 30.6,
-    "axisPointsRaw": 30.6,
+    "axisPoints": 27.2,
+    "axisPointsRaw": 27.200000000000003,
     "metricsUsed": 4
   },
-  "totalScore": 69.7,
+  "totalScore": 60.2,
   "grade": "양호",
   "axesUsed": 3,
   "coverageStatus": "full",
+  "qualityFlags": [],
+  "financialsAgeMonths": 10.3,
   "dataStatus": {
     "coverageStatus": "full",
+    "qualityFlags": [],
     "operatingIncomeEstimated": false,
     "negativeEquity": false
   }

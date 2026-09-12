@@ -1,10 +1,13 @@
 {
   "ticker": "MSFT",
   "financialsAsOf": "2026-06-30",
+  "valuationAsOf": "2026-09-11",
   "valuation": {
-    "combinedStage": 1.7,
-    "axisPoints": 27.2,
-    "axisPointsRaw": 27.224999999999998
+    "combinedStage": 1.3,
+    "axisPoints": 30.5,
+    "axisPointsRaw": 30.525000000000002,
+    "historicalMultipleCoverage": 2,
+    "targetPriceAvailable": true
   },
   "health": {
     "dataQuality": {},
@@ -54,12 +57,15 @@
     "axisPointsRaw": 30.6,
     "metricsUsed": 4
   },
-  "totalScore": 80.3,
+  "totalScore": 83.6,
   "grade": "우수",
   "axesUsed": 3,
   "coverageStatus": "full",
+  "qualityFlags": [],
+  "financialsAgeMonths": 2.4,
   "dataStatus": {
     "coverageStatus": "full",
+    "qualityFlags": [],
     "operatingIncomeEstimated": false,
     "negativeEquity": false
   }

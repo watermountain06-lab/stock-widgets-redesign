@@ -1,10 +1,13 @@
 {
   "ticker": "META",
   "financialsAsOf": "2025-12-31",
+  "valuationAsOf": "2026-09-11",
   "valuation": {
-    "combinedStage": 2.8,
-    "axisPoints": 18.2,
-    "axisPointsRaw": 18.150000000000002
+    "combinedStage": 3.4,
+    "axisPoints": 13.2,
+    "axisPointsRaw": 13.200000000000001,
+    "historicalMultipleCoverage": 1,
+    "targetPriceAvailable": true
   },
   "health": {
     "dataQuality": {},
@@ -54,12 +57,15 @@
     "axisPointsRaw": 32.3,
     "metricsUsed": 4
   },
-  "totalScore": 76.8,
+  "totalScore": 71.9,
   "grade": "양호",
   "axesUsed": 3,
   "coverageStatus": "full",
+  "qualityFlags": [],
+  "financialsAgeMonths": 8.3,
   "dataStatus": {
     "coverageStatus": "full",
+    "qualityFlags": [],
     "operatingIncomeEstimated": false,
     "negativeEquity": false
   }

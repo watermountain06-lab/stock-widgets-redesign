@@ -1,10 +1,13 @@
 {
   "ticker": "NVDA",
   "financialsAsOf": "2026-01-25",
+  "valuationAsOf": "2026-09-11",
   "valuation": {
     "combinedStage": 2.5,
     "axisPoints": 20.6,
-    "axisPointsRaw": 20.625
+    "axisPointsRaw": 20.625,
+    "historicalMultipleCoverage": 2,
+    "targetPriceAvailable": true
   },
   "health": {
     "dataQuality": {},
@@ -58,8 +61,11 @@
   "grade": "우수",
   "axesUsed": 3,
   "coverageStatus": "full",
+  "qualityFlags": [],
+  "financialsAgeMonths": 7.5,
   "dataStatus": {
     "coverageStatus": "full",
+    "qualityFlags": [],
     "operatingIncomeEstimated": false,
     "negativeEquity": false
   }

@@ -1,10 +1,13 @@
 {
   "ticker": "NFLX",
   "financialsAsOf": "2025-12-31",
+  "valuationAsOf": "2026-09-11",
   "valuation": {
     "combinedStage": 3.1,
     "axisPoints": 15.7,
-    "axisPointsRaw": 15.675000000000002
+    "axisPointsRaw": 15.675000000000002,
+    "historicalMultipleCoverage": 2,
+    "targetPriceAvailable": true
   },
   "health": {
     "dataQuality": {},
@@ -58,8 +61,11 @@
   "grade": "양호",
   "axesUsed": 3,
   "coverageStatus": "full",
+  "qualityFlags": [],
+  "financialsAgeMonths": 8.3,
   "dataStatus": {
     "coverageStatus": "full",
+    "qualityFlags": [],
     "operatingIncomeEstimated": false,
     "negativeEquity": false
   }

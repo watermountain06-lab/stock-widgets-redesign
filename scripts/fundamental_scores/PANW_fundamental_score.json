@@ -1,68 +1,69 @@
 {
-  "ticker": "AMD",
-  "financialsAsOf": "2025-12-27",
+  "ticker": "PANW",
+  "financialsAsOf": "2026-07-31",
   "valuationAsOf": "2026-09-11",
   "valuation": {
-    "combinedStage": 3.4,
-    "axisPoints": 13.2,
-    "axisPointsRaw": 13.200000000000001,
+    "combinedStage": 2.2,
+    "axisPoints": 23.1,
+    "axisPointsRaw": 23.1,
     "historicalMultipleCoverage": 2,
     "targetPriceAvailable": true
   },
   "health": {
     "dataQuality": {},
     "currentRatio": {
-      "value": 285.0,
-      "points": 4
+      "value": 87.1,
+      "points": 1
     },
     "quickRatio": {
-      "value": 201.2,
-      "points": 4
+      "value": 85.9,
+      "points": 2
     },
     "debtDependency": {
-      "value": 4.2,
+      "value": 4.1,
       "points": 5
     },
     "interestCoverage": {
-      "value": 28.2,
-      "points": 4
+      "value": null,
+      "points": 5,
+      "note": "이자비용 0으로 명시 보고 + 영업이익 흑자"
     },
     "debtToEquity": {
-      "value": 22.1,
-      "points": 5
+      "value": 76.3,
+      "points": 3
     },
-    "axisPoints": 29.0,
-    "axisPointsRaw": 29.04,
+    "axisPoints": 21.1,
+    "axisPointsRaw": 21.12,
     "ratiosUsed": 5
   },
   "growthProfit": {
     "dataQuality": {},
     "revenueCagr": {
-      "value": 13.7,
+      "value": 18.5,
       "points": 4
     },
     "opIncomeCagr": {
-      "value": 43.1,
-      "points": 5
+      "value": 21.5,
+      "points": 4
     },
     "opMargin": {
-      "value": 10.7,
+      "value": 6.1,
       "points": 2
     },
     "netMargin": {
-      "value": 12.5,
-      "points": 3
+      "value": 2.7,
+      "points": 1
     },
-    "axisPoints": 23.8,
-    "axisPointsRaw": 23.799999999999997,
+    "axisPoints": 18.7,
+    "axisPointsRaw": 18.700000000000003,
     "metricsUsed": 4
   },
-  "totalScore": 66.0,
+  "totalScore": 62.9,
   "grade": "양호",
   "axesUsed": 3,
   "coverageStatus": "full",
   "qualityFlags": [],
-  "financialsAgeMonths": 8.5,
+  "financialsAgeMonths": 1.4,
   "dataStatus": {
     "coverageStatus": "full",
     "qualityFlags": [],

@@ -62,15 +62,15 @@
       }
     ],
     "latestQuarter": {
-      "start": "2026-02-02",
-      "end": "2026-05-03",
-      "val": 22187000000,
-      "accn": "0001730168-26-000054",
+      "start": "2026-05-04",
+      "end": "2026-08-02",
+      "val": 29591000000,
+      "accn": "0001730168-26-000080",
       "fy": 2026,
-      "fp": "Q2",
+      "fp": "Q3",
       "form": "10-Q",
-      "filed": "2026-06-09",
-      "frame": "CY2026Q1"
+      "filed": "2026-09-10",
+      "frame": "CY2026Q2"
     }
   },
   "costOfRevenue": {
@@ -133,15 +133,15 @@
       }
     ],
     "latestQuarter": {
-      "start": "2026-02-02",
-      "end": "2026-05-03",
-      "val": 6772000000,
-      "accn": "0001730168-26-000054",
+      "start": "2026-05-04",
+      "end": "2026-08-02",
+      "val": 9135000000,
+      "accn": "0001730168-26-000080",
       "fy": 2026,
-      "fp": "Q2",
+      "fp": "Q3",
       "form": "10-Q",
-      "filed": "2026-06-09",
-      "frame": "CY2026Q1"
+      "filed": "2026-09-10",
+      "frame": "CY2026Q2"
     }
   },
   "operatingIncome": {
@@ -204,15 +204,15 @@
       }
     ],
     "latestQuarter": {
-      "start": "2026-02-02",
-      "end": "2026-05-03",
-      "val": 10788000000,
-      "accn": "0001730168-26-000054",
+      "start": "2026-05-04",
+      "end": "2026-08-02",
+      "val": 15955000000,
+      "accn": "0001730168-26-000080",
       "fy": 2026,
-      "fp": "Q2",
+      "fp": "Q3",
       "form": "10-Q",
-      "filed": "2026-06-09",
-      "frame": "CY2026Q1"
+      "filed": "2026-09-10",
+      "frame": "CY2026Q2"
     }
   },
   "pretaxIncome": {
@@ -275,15 +275,15 @@
       }
     ],
     "latestQuarter": {
-      "start": "2026-02-02",
-      "end": "2026-05-03",
-      "val": 10130000000,
-      "accn": "0001730168-26-000054",
+      "start": "2026-05-04",
+      "end": "2026-08-02",
+      "val": 15275000000,
+      "accn": "0001730168-26-000080",
       "fy": 2026,
-      "fp": "Q2",
+      "fp": "Q3",
       "form": "10-Q",
-      "filed": "2026-06-09",
-      "frame": "CY2026Q1"
+      "filed": "2026-09-10",
+      "frame": "CY2026Q2"
     }
   },
   "netIncome": {
@@ -346,15 +346,15 @@
       }
     ],
     "latestQuarter": {
-      "start": "2026-02-02",
-      "end": "2026-05-03",
-      "val": 9310000000,
-      "accn": "0001730168-26-000054",
+      "start": "2026-05-04",
+      "end": "2026-08-02",
+      "val": 13088000000,
+      "accn": "0001730168-26-000080",
       "fy": 2026,
-      "fp": "Q2",
+      "fp": "Q3",
       "form": "10-Q",
-      "filed": "2026-06-09",
-      "frame": "CY2026Q1"
+      "filed": "2026-09-10",
+      "frame": "CY2026Q2"
     }
   },
   "netIncomeAttributableToParent": {
@@ -414,31 +414,18 @@
         "form": "10-K",
         "filed": "2024-12-20",
         "frame": "CY2024"
-      },
-      {
-        "start": "2024-11-04",
-        "end": "2025-11-02",
-        "val": 23126000000,
-        "accn": "0001730168-25-000121",
-        "fy": 2025,
-        "fp": "FY",
-        "form": "10-K",
-        "filed": "2025-12-18",
-        "frame": "CY2025",
-        "note": "NetIncomeLossAvailableToCommonStockholdersBasic not found for FY2025 in SEC companyconcept as of this fetch; used the ProfitLoss/netIncome tag's FY2025 value instead, since it matched NetIncomeLossAvailableToCommonStockholdersBasic exactly in FY2023 ($14,082M) and FY2024 ($5,895M) - AVGO has no material noncontrolling interest in recent years."
       }
     ],
     "latestQuarter": {
-      "start": "2026-02-02",
-      "end": "2026-05-03",
-      "val": 9310000000,
-      "accn": "0001730168-26-000054",
-      "fy": 2026,
-      "fp": "Q2",
+      "start": "2023-10-30",
+      "end": "2024-02-04",
+      "val": 1325000000,
+      "accn": "0001730168-24-000023",
+      "fy": 2024,
+      "fp": "Q1",
       "form": "10-Q",
-      "filed": "2026-06-09",
-      "frame": "CY2026Q1",
-      "note": "same substitution as above; matches the netIncome field's Q2 FY26 value ($9,310M)"
+      "filed": "2024-03-14",
+      "frame": "CY2023Q4"
     }
   },
   "interestExpense": {
@@ -498,30 +485,18 @@
         "form": "10-K",
         "filed": "2024-12-20",
         "frame": "CY2024"
-      },
-      {
-        "start": "2024-11-04",
-        "end": "2025-11-02",
-        "val": 3210000000,
-        "accn": "0001730168-25-000121",
-        "fy": 2025,
-        "fp": "FY",
-        "form": "10-K",
-        "filed": "2025-12-18",
-        "frame": "CY2025",
-        "note": "SEC XBRL companyconcept has no InterestExpense tag entry for FY2025 (annual) - FY2025 10-K apparently stopped discrete-tagging this line the same way. Value read directly from the 10-K's own income-statement text (avgo-20251102.htm, Non-Operating Income and Expenses section): 'Interest expense was $3,210 million and $3,953 million for fiscal years 2025 and 2024, respectively.'"
       }
     ],
     "latestQuarter": {
-      "start": "2026-02-02",
-      "end": "2026-05-03",
-      "val": 776000000,
-      "accn": "0001730168-26-000054",
+      "start": "2026-05-04",
+      "end": "2026-08-02",
+      "val": 778000000,
+      "accn": "0001730168-26-000080",
       "fy": 2026,
-      "fp": "Q2",
+      "fp": "Q3",
       "form": "10-Q",
-      "filed": "2026-06-09",
-      "frame": "CY2026Q1"
+      "filed": "2026-09-10",
+      "frame": "CY2026Q2"
     }
   },
   "epsBasic": {
@@ -584,15 +559,15 @@
       }
     ],
     "latestQuarter": {
-      "start": "2026-02-02",
-      "end": "2026-05-03",
-      "val": 1.96,
-      "accn": "0001730168-26-000054",
+      "start": "2026-05-04",
+      "end": "2026-08-02",
+      "val": 2.75,
+      "accn": "0001730168-26-000080",
       "fy": 2026,
-      "fp": "Q2",
+      "fp": "Q3",
       "form": "10-Q",
-      "filed": "2026-06-09",
-      "frame": "CY2026Q1"
+      "filed": "2026-09-10",
+      "frame": "CY2026Q2"
     }
   },
   "epsDiluted": {
@@ -655,15 +630,15 @@
       }
     ],
     "latestQuarter": {
-      "start": "2026-02-02",
-      "end": "2026-05-03",
-      "val": 1.91,
-      "accn": "0001730168-26-000054",
+      "start": "2026-05-04",
+      "end": "2026-08-02",
+      "val": 2.68,
+      "accn": "0001730168-26-000080",
       "fy": 2026,
-      "fp": "Q2",
+      "fp": "Q3",
       "form": "10-Q",
-      "filed": "2026-06-09",
-      "frame": "CY2026Q1"
+      "filed": "2026-09-10",
+      "frame": "CY2026Q2"
     }
   },
   "assets": {
@@ -720,14 +695,14 @@
       }
     ],
     "latestQuarter": {
-      "end": "2026-05-03",
-      "val": 179158000000,
-      "accn": "0001730168-26-000054",
+      "end": "2026-08-02",
+      "val": 188148000000,
+      "accn": "0001730168-26-000080",
       "fy": 2026,
-      "fp": "Q2",
+      "fp": "Q3",
       "form": "10-Q",
-      "filed": "2026-06-09",
-      "frame": "CY2026Q1I"
+      "filed": "2026-09-10",
+      "frame": "CY2026Q2I"
     }
   },
   "currentAssets": {
@@ -784,14 +759,14 @@
       }
     ],
     "latestQuarter": {
-      "end": "2026-05-03",
-      "val": 42213000000,
-      "accn": "0001730168-26-000054",
+      "end": "2026-08-02",
+      "val": 52173000000,
+      "accn": "0001730168-26-000080",
       "fy": 2026,
-      "fp": "Q2",
+      "fp": "Q3",
       "form": "10-Q",
-      "filed": "2026-06-09",
-      "frame": "CY2026Q1I"
+      "filed": "2026-09-10",
+      "frame": "CY2026Q2I"
     }
   },
   "currentLiabilities": {
@@ -848,14 +823,14 @@
       }
     ],
     "latestQuarter": {
-      "end": "2026-05-03",
-      "val": 18862000000,
-      "accn": "0001730168-26-000054",
+      "end": "2026-08-02",
+      "val": 20838000000,
+      "accn": "0001730168-26-000080",
       "fy": 2026,
-      "fp": "Q2",
+      "fp": "Q3",
       "form": "10-Q",
-      "filed": "2026-06-09",
-      "frame": "CY2026Q1I"
+      "filed": "2026-09-10",
+      "frame": "CY2026Q2I"
     }
   },
   "inventory": {
@@ -912,14 +887,14 @@
       }
     ],
     "latestQuarter": {
-      "end": "2026-05-03",
-      "val": 4328000000,
-      "accn": "0001730168-26-000054",
+      "end": "2026-08-02",
+      "val": 4523000000,
+      "accn": "0001730168-26-000080",
       "fy": 2026,
-      "fp": "Q2",
+      "fp": "Q3",
       "form": "10-Q",
-      "filed": "2026-06-09",
-      "frame": "CY2026Q1I"
+      "filed": "2026-09-10",
+      "frame": "CY2026Q2I"
     }
   },
   "accountsReceivable": {
@@ -976,14 +951,14 @@
       }
     ],
     "latestQuarter": {
-      "end": "2026-05-03",
-      "val": 10830000000,
-      "accn": "0001730168-26-000054",
+      "end": "2026-08-02",
+      "val": 13707000000,
+      "accn": "0001730168-26-000080",
       "fy": 2026,
-      "fp": "Q2",
+      "fp": "Q3",
       "form": "10-Q",
-      "filed": "2026-06-09",
-      "frame": "CY2026Q1I"
+      "filed": "2026-09-10",
+      "frame": "CY2026Q2I"
     }
   },
   "accountsPayable": {
@@ -1040,14 +1015,14 @@
       }
     ],
     "latestQuarter": {
-      "end": "2026-05-03",
-      "val": 2337000000,
-      "accn": "0001730168-26-000054",
+      "end": "2026-08-02",
+      "val": 4000000000,
+      "accn": "0001730168-26-000080",
       "fy": 2026,
-      "fp": "Q2",
+      "fp": "Q3",
       "form": "10-Q",
-      "filed": "2026-06-09",
-      "frame": "CY2026Q1I"
+      "filed": "2026-09-10",
+      "frame": "CY2026Q2I"
     }
   },
   "totalLiabilities": {
@@ -1104,14 +1079,14 @@
       }
     ],
     "latestQuarter": {
-      "end": "2026-05-03",
-      "val": 91467000000,
-      "accn": "0001730168-26-000054",
+      "end": "2026-08-02",
+      "val": 88458000000,
+      "accn": "0001730168-26-000080",
       "fy": 2026,
-      "fp": "Q2",
+      "fp": "Q3",
       "form": "10-Q",
-      "filed": "2026-06-09",
-      "frame": "CY2026Q1I"
+      "filed": "2026-09-10",
+      "frame": "CY2026Q2I"
     }
   },
   "shortTermDebt": {
@@ -1168,14 +1143,14 @@
       }
     ],
     "latestQuarter": {
-      "end": "2026-05-03",
+      "end": "2026-08-02",
       "val": 2252000000,
-      "accn": "0001730168-26-000054",
+      "accn": "0001730168-26-000080",
       "fy": 2026,
-      "fp": "Q2",
+      "fp": "Q3",
       "form": "10-Q",
-      "filed": "2026-06-09",
-      "frame": "CY2026Q1I"
+      "filed": "2026-09-10",
+      "frame": "CY2026Q2I"
     }
   },
   "longTermDebt": {
@@ -1228,57 +1203,17 @@
         "fp": "FY",
         "form": "10-K",
         "filed": "2021-12-17"
-      },
-      {
-        "end": "2022-10-30",
-        "val": 40815000000,
-        "accn": "0001730168-22-000118",
-        "fy": 2022,
-        "fp": "FY",
-        "form": "10-K",
-        "filed": "2022-12-16",
-        "note": "SEC XBRL has no LongTermDebtNoncurrent tag entry after FY2021 - derived as DebtInstrumentCarryingAmount (total debt principal, $41,218M) minus shortTermDebt ($403M) for this and all following years."
-      },
-      {
-        "end": "2023-10-29",
-        "val": 39252000000,
-        "accn": "0001730168-23-000096",
-        "fy": 2023,
-        "fp": "FY",
-        "form": "10-K",
-        "filed": "2023-12-14",
-        "note": "derived: DebtInstrumentCarryingAmount $40,815M - shortTermDebt $1,563M"
-      },
-      {
-        "end": "2024-11-03",
-        "val": 68602000000,
-        "accn": "0001730168-24-000139",
-        "fy": 2024,
-        "fp": "FY",
-        "form": "10-K",
-        "filed": "2024-12-20",
-        "note": "derived: DebtInstrumentCarryingAmount $69,847M - shortTermDebt $1,245M (VMware-deal bond issuance drove the jump)"
-      },
-      {
-        "end": "2025-11-02",
-        "val": 63968000000,
-        "accn": "0001730168-25-000121",
-        "fy": 2025,
-        "fp": "FY",
-        "form": "10-K",
-        "filed": "2025-12-18",
-        "note": "derived: DebtInstrumentCarryingAmount $67,120M - shortTermDebt $3,152M; cross-checked against the 10-K's own debt-note table ('Total debt principal outstanding $67,120' / 'Current portion of principal amount outstanding $3,152')"
       }
     ],
     "latestQuarter": {
-      "end": "2026-05-03",
-      "val": 62655000000,
-      "accn": "0001730168-26-000054",
+      "end": "2026-08-02",
+      "val": 57167000000,
+      "accn": "0001730168-26-000080",
       "fy": 2026,
-      "fp": "Q2",
+      "fp": "Q3",
       "form": "10-Q",
-      "filed": "2026-06-09",
-      "frame": "CY2026Q1I"
+      "filed": "2026-09-10",
+      "frame": "CY2026Q2I"
     }
   },
   "equityAttributableToParent": {
@@ -1334,14 +1269,14 @@
       }
     ],
     "latestQuarter": {
-      "end": "2026-05-03",
-      "val": 87691000000,
-      "accn": "0001730168-26-000054",
+      "end": "2026-08-02",
+      "val": 99690000000,
+      "accn": "0001730168-26-000080",
       "fy": 2026,
-      "fp": "Q2",
+      "fp": "Q3",
       "form": "10-Q",
-      "filed": "2026-06-09",
-      "frame": "CY2026Q1I"
+      "filed": "2026-09-10",
+      "frame": "CY2026Q2I"
     }
   },
   "cash": {
@@ -1398,14 +1333,14 @@
       }
     ],
     "latestQuarter": {
-      "end": "2026-05-03",
-      "val": 19628000000,
-      "accn": "0001730168-26-000054",
+      "end": "2026-08-02",
+      "val": 23975000000,
+      "accn": "0001730168-26-000080",
       "fy": 2026,
-      "fp": "Q2",
+      "fp": "Q3",
       "form": "10-Q",
-      "filed": "2026-06-09",
-      "frame": "CY2026Q1I"
+      "filed": "2026-09-10",
+      "frame": "CY2026Q2I"
     }
   },
   "dividendPerShare": {
@@ -1468,15 +1403,15 @@
       }
     ],
     "latestQuarter": {
-      "start": "2026-02-02",
-      "end": "2026-05-03",
+      "start": "2026-05-04",
+      "end": "2026-08-02",
       "val": 0.65,
-      "accn": "0001730168-26-000054",
+      "accn": "0001730168-26-000080",
       "fy": 2026,
-      "fp": "Q2",
+      "fp": "Q3",
       "form": "10-Q",
-      "filed": "2026-06-09",
-      "frame": "CY2026Q1"
+      "filed": "2026-09-10",
+      "frame": "CY2026Q2"
     }
   },
   "operatingCashFlow": {
@@ -1540,13 +1475,13 @@
     ],
     "latestQuarter": {
       "start": "2025-11-03",
-      "end": "2026-05-03",
-      "val": 18753000000,
-      "accn": "0001730168-26-000054",
+      "end": "2026-08-02",
+      "val": 32950000000,
+      "accn": "0001730168-26-000080",
       "fy": 2026,
-      "fp": "Q2",
+      "fp": "Q3",
       "form": "10-Q",
-      "filed": "2026-06-09"
+      "filed": "2026-09-10"
     }
   },
   "capex": {
@@ -1610,13 +1545,13 @@
     ],
     "latestQuarter": {
       "start": "2025-11-03",
-      "end": "2026-05-03",
-      "val": 481000000,
-      "accn": "0001730168-26-000054",
+      "end": "2026-08-02",
+      "val": 1013000000,
+      "accn": "0001730168-26-000080",
       "fy": 2026,
-      "fp": "Q2",
+      "fp": "Q3",
       "form": "10-Q",
-      "filed": "2026-06-09"
+      "filed": "2026-09-10"
     }
   },
   "sharesOutstanding": {
@@ -1674,14 +1609,14 @@
       }
     ],
     "latestQuarter": {
-      "end": "2026-05-29",
-      "val": 4757580198,
-      "accn": "0001730168-26-000054",
+      "end": "2026-08-28",
+      "val": 4773629865,
+      "accn": "0001730168-26-000080",
       "fy": 2026,
-      "fp": "Q2",
+      "fp": "Q3",
       "form": "10-Q",
-      "filed": "2026-06-09",
-      "frame": "CY2026Q2I"
+      "filed": "2026-09-10",
+      "frame": "CY2026Q3I"
     }
   }
 }

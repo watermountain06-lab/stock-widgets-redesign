@@ -1,27 +1,27 @@
 {
-  "ticker": "CAT",
+  "ticker": "GEV",
   "financialsAsOf": "2025-12-31",
   "valuationAsOf": "2026-09-11",
   "valuation": {
-    "combinedStage": 3.4,
-    "axisPoints": 13.2,
-    "axisPointsRaw": 13.200000000000001,
-    "historicalMultipleCoverage": 2,
+    "combinedStage": 1.0,
+    "axisPoints": 33.0,
+    "axisPointsRaw": 33.0,
+    "historicalMultipleCoverage": 0,
     "targetPriceAvailable": true
   },
   "health": {
     "dataQuality": {},
     "currentRatio": {
-      "value": 143.6,
-      "points": 2
+      "value": 98.2,
+      "points": 1
     },
     "quickRatio": {
-      "value": 94.0,
+      "value": 72.7,
       "points": 2
     },
     "debtDependency": {
-      "value": 36.7,
-      "points": 2
+      "value": 0.1,
+      "points": 5
     },
     "interestCoverage": {
       "value": null,
@@ -29,44 +29,49 @@
       "note": "이자비용 태그 자체 없음(사실상 무차입) + 영업이익 흑자"
     },
     "debtToEquity": {
-      "value": 362.4,
+      "value": 453.7,
       "points": 1
     },
-    "axisPoints": 15.8,
-    "axisPointsRaw": 15.84,
+    "axisPoints": 18.5,
+    "axisPointsRaw": 18.48,
     "ratiosUsed": 5
   },
   "growthProfit": {
     "dataQuality": {},
     "revenueCagr": {
-      "value": 4.4,
-      "points": 2
+      "value": 8.7,
+      "points": 3
     },
     "opIncomeCagr": {
-      "value": 12.2,
-      "points": 3
+      "value": null,
+      "points": 4,
+      "note": "적자(또는 0)에서 흑자로 전환 - CAGR 수치화 불가, 흑자전환으로 4점 처리"
     },
     "opMargin": {
-      "value": 16.5,
-      "points": 3
+      "value": 3.6,
+      "points": 1
     },
     "netMargin": {
-      "value": 13.1,
+      "value": 12.8,
       "points": 3
     },
     "axisPoints": 18.7,
     "axisPointsRaw": 18.700000000000003,
     "metricsUsed": 4
   },
-  "totalScore": 47.7,
-  "grade": "보통",
+  "totalScore": 70.2,
+  "grade": "양호",
   "axesUsed": 3,
   "coverageStatus": "full",
-  "qualityFlags": [],
+  "qualityFlags": [
+    "valuation_target_only"
+  ],
   "financialsAgeMonths": 8.3,
   "dataStatus": {
     "coverageStatus": "full",
-    "qualityFlags": [],
+    "qualityFlags": [
+      "valuation_target_only"
+    ],
     "operatingIncomeEstimated": false,
     "negativeEquity": false
   }

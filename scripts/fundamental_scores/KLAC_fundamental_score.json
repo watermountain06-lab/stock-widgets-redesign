@@ -1,6 +1,6 @@
 {
-  "ticker": "AMD",
-  "financialsAsOf": "2025-12-27",
+  "ticker": "KLAC",
+  "financialsAsOf": "2026-06-30",
   "valuationAsOf": "2026-09-11",
   "valuation": {
     "combinedStage": 3.4,
@@ -10,59 +10,57 @@
     "targetPriceAvailable": true
   },
   "health": {
-    "dataQuality": {},
+    "dataQuality": {
+      "interestCoverage": "missing (해당 연도 이자비용 결측 - 다른 연도엔 태그 존재)"
+    },
     "currentRatio": {
-      "value": 285.0,
+      "value": 287.6,
       "points": 4
     },
     "quickRatio": {
-      "value": 201.2,
+      "value": 202.9,
       "points": 4
     },
     "debtDependency": {
-      "value": 4.2,
-      "points": 5
-    },
-    "interestCoverage": {
-      "value": 28.2,
-      "points": 4
+      "value": 32.8,
+      "points": 2
     },
     "debtToEquity": {
-      "value": 22.1,
-      "points": 5
+      "value": 182.7,
+      "points": 2
     },
-    "axisPoints": 29.0,
-    "axisPointsRaw": 29.04,
-    "ratiosUsed": 5
+    "axisPoints": 19.8,
+    "axisPointsRaw": 19.8,
+    "ratiosUsed": 4
   },
   "growthProfit": {
     "dataQuality": {},
     "revenueCagr": {
-      "value": 13.7,
-      "points": 4
+      "value": 9.0,
+      "points": 3
     },
     "opIncomeCagr": {
-      "value": 43.1,
-      "points": 5
+      "value": -12.7,
+      "points": 1
     },
     "opMargin": {
-      "value": 10.7,
+      "value": 5.7,
       "points": 2
     },
     "netMargin": {
-      "value": 12.5,
-      "points": 3
+      "value": 35.6,
+      "points": 5
     },
-    "axisPoints": 23.8,
-    "axisPointsRaw": 23.799999999999997,
+    "axisPoints": 18.7,
+    "axisPointsRaw": 18.700000000000003,
     "metricsUsed": 4
   },
-  "totalScore": 66.0,
-  "grade": "양호",
+  "totalScore": 51.7,
+  "grade": "보통",
   "axesUsed": 3,
   "coverageStatus": "full",
   "qualityFlags": [],
-  "financialsAgeMonths": 8.5,
+  "financialsAgeMonths": 2.4,
   "dataStatus": {
     "coverageStatus": "full",
     "qualityFlags": [],

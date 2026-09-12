@@ -1,10 +1,13 @@
 {
   "ticker": "COST",
   "financialsAsOf": "2025-08-31",
+  "valuationAsOf": "2026-09-11",
   "valuation": {
-    "combinedStage": 3.2,
-    "axisPoints": 14.8,
-    "axisPointsRaw": 14.849999999999998
+    "combinedStage": 2.8,
+    "axisPoints": 18.2,
+    "axisPointsRaw": 18.150000000000002,
+    "historicalMultipleCoverage": 2,
+    "targetPriceAvailable": true
   },
   "health": {
     "dataQuality": {},
@@ -54,12 +57,15 @@
     "axisPointsRaw": 13.600000000000001,
     "metricsUsed": 4
   },
-  "totalScore": 48.2,
+  "totalScore": 51.6,
   "grade": "보통",
   "axesUsed": 3,
   "coverageStatus": "full",
+  "qualityFlags": [],
+  "financialsAgeMonths": 12.4,
   "dataStatus": {
     "coverageStatus": "full",
+    "qualityFlags": [],
     "operatingIncomeEstimated": false,
     "negativeEquity": false
   }

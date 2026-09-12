@@ -1,70 +1,71 @@
 {
-  "ticker": "V",
-  "financialsAsOf": "2025-09-30",
+  "ticker": "SNDK",
+  "financialsAsOf": "2026-07-03",
   "valuationAsOf": "2026-09-11",
   "valuation": {
-    "combinedStage": 2.0,
-    "axisPoints": 24.8,
-    "axisPointsRaw": 24.75,
+    "combinedStage": 1.0,
+    "axisPoints": 33.0,
+    "axisPointsRaw": 33.0,
     "historicalMultipleCoverage": 0,
     "targetPriceAvailable": true
   },
   "health": {
     "dataQuality": {},
     "currentRatio": {
-      "value": 107.8,
-      "points": 2
+      "value": 229.0,
+      "points": 4
     },
     "quickRatio": {
-      "value": 107.8,
-      "points": 3
+      "value": 180.6,
+      "points": 4
     },
     "debtDependency": {
-      "value": 25.3,
-      "points": 3
+      "value": 0.0,
+      "points": 5
     },
     "interestCoverage": {
-      "value": 40.7,
+      "value": 169.7,
       "points": 5
     },
     "debtToEquity": {
-      "value": 162.8,
-      "points": 2
+      "value": 43.0,
+      "points": 4
     },
-    "axisPoints": 19.8,
-    "axisPointsRaw": 19.8,
+    "axisPoints": 29.0,
+    "axisPointsRaw": 29.04,
     "ratiosUsed": 5
   },
   "growthProfit": {
     "dataQuality": {},
     "revenueCagr": {
-      "value": 10.9,
-      "points": 3
+      "value": 49.1,
+      "points": 5
     },
     "opIncomeCagr": {
-      "value": 8.4,
-      "points": 3
+      "value": null,
+      "points": 4,
+      "note": "적자(또는 0)에서 흑자로 전환 - CAGR 수치화 불가, 흑자전환으로 4점 처리"
     },
     "opMargin": {
-      "value": 60.0,
+      "value": 61.2,
       "points": 5
     },
     "netMargin": {
-      "value": 50.1,
+      "value": 56.5,
       "points": 5
     },
-    "axisPoints": 27.2,
-    "axisPointsRaw": 27.200000000000003,
+    "axisPoints": 32.3,
+    "axisPointsRaw": 32.3,
     "metricsUsed": 4
   },
-  "totalScore": 71.8,
-  "grade": "양호",
+  "totalScore": 94.3,
+  "grade": "우수",
   "axesUsed": 3,
   "coverageStatus": "full",
   "qualityFlags": [
     "valuation_target_only"
   ],
-  "financialsAgeMonths": 11.4,
+  "financialsAgeMonths": 2.3,
   "dataStatus": {
     "coverageStatus": "full",
     "qualityFlags": [

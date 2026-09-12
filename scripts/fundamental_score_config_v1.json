@@ -1,10 +1,25 @@
 {
-  "version": "1.0.0",
-  "frozen_date": "2026-08-25",
+  "version": "1.0.1",
   "review_after": "2027-08-25",
-  "notes": "3축(밸류에이션/재무건전성/성장·수익성) 동일가중 33/33/34. 서술적 스냅샷 지표로 설계 - 기술점수(가격구조60+모멘텀40, 47종목x5년 백테스트)와 달리 향후 수익률 상관을 검증하거나 주장하지 않음 - 40종목 실측 새니티체크(분포 확인, 이상치 점검)와 Codex 텍스트모드 리뷰 2라운드로 동결. ROE는 자본구조(레버리지)를 이미 반영하는 재무건전성 축과 중복되는 정보라서 제외 - OPM·순이익률만 사용. 재무건전성 5개 비율은 서로 독립이 아니라 유동성(유동비율·당좌비율)/레버리지(차입금의존도·부채비율)/상환능력(이자보상배율) 3개 그룹으로 묶여 실질 가중치는 40/40/20에 가까움(Codex 1라운드 지적, 의도된 구성으로 유지 - 5개 독립신호라고 오해하지 말 것). 은행(BAC/JPM/MS)은 v1에서 완전 제외 - 유동/당좌/차입금의존도/영업이익 개념 자체가 일반기업과 구조적으로 다름(2026-08-25 확정). LLY/MRK/XOM은 SEC XBRL에 operatingIncome 태그가 비어있어 pretaxIncome+interestExpense로 근사(operatingIncomeEstimated:true로 표시, 매칭되는 연도만 사용해 CAGR 일관성 유지). Codex 2라운드에서 결측/0 혼동(이자비용·차입금 태그 결측을 0으로 오인), 재무제표 항목 간 결산일 불일치, 반올림된 축점수로 등급 판정하던 문제, 커버리지 게이트에 밸류에이션 축 누락을 지적받아 전부 수정 후 동결. BRK.B(지주회사, 분류형 대차대조표 없음)는 은행처럼 완전 제외하진 않았지만 재무건전성 1/5만 남아 coverageStatus:partial로 정직하게 표시됨 - v2에서 재검토 대상.",
-  "bank_exclude_tickers": ["BAC", "JPM", "MS"],
-  "axis_weights": { "valuation": 33, "health": 33, "growth_profit": 34 },
+  "notes": "3축(밸류에이션/재무건전성/성장·수익성) 동일가중 33/33/34. 서술적 스냅샷 지표로 설계 - 기술점수(가격구조60+모멘텀40, 47종목x5년 백테스트)와 달리 향후 수익률 상관을 검증하거나 주장하지 않음 - 40종목 실측 새니티체크(분포 확인, 이상치 점검)와 Codex 텍스트모드 리뷰 2라운드로 동결. ROE는 자본구조(레버리지)를 이미 반영하는 재무건전성 축과 중복되는 정보라서 제외 - OPM·순이익률만 사용. 재무건전성 5개 비율은 서로 독립이 아니라 유동성(유동비율·당좌비율)/레버리지(차입금의존도·부채비율)/상환능력(이자보상배율) 3개 그룹으로 묶여 실질 가중치는 40/40/20에 가까움(Codex 1라운드 지적, 의도된 구성으로 유지 - 5개 독립신호라고 오해하지 말 것). 은행(BAC/JPM/MS)은 v1에서 완전 제외 - 유동/당좌/차입금의존도/영업이익 개념 자체가 일반기업과 구조적으로 다름(2026-08-25 확정). LLY/MRK/XOM은 SEC XBRL에 operatingIncome 태그가 비어있어 pretaxIncome+interestExpense로 근사(operatingIncomeEstimated:true로 표시, 매칭되는 연도만 사용해 CAGR 일관성 유지). Codex 2라운드에서 결측/0 혼동(이자비용·차입금 태그 결측을 0으로 오인), 재무제표 항목 간 결산일 불일치, 반올림된 축점수로 등급 판정하던 문제, 커버리지 게이트에 밸류에이션 축 누락을 지적받아 전부 수정 후 동결. BRK.B(지주회사, 분류형 대차대조표 없음)는 은행처럼 완전 제외하진 않았지만 재무건전성 1/5만 남아 coverageStatus:partial로 정직하게 표시됨 - v2에서 재검토 대상. WFC/GS는 2026-09-12에 bank_exclude_tickers로 합쳐졌다 - 두 종목은 원래 preview extract_tiers_scores.py의 EXTRA_BANKS에 하드코딩돼 있어 제외 목록이 두 곳으로 갈려 있었고, 재산출 시 한쪽만 반영되면 조용히 채점될 위험이 있었다. 제외 기준은 BAC/JPM/MS와 동일하다.",
+  "bank_exclude_tickers": [
+    "BAC",
+    "JPM",
+    "MS",
+    "WFC",
+    "GS"
+  ],
+  "unsupported_tickers": {
+    "SPCX": "상장 직후라 5년 이력이 없다 - 자기이력 대비 PER/PBR 5년 평균과 5년 CAGR이 정의되지 않는다",
+    "ASML": "IFRS 외국 발행인 - fetch_financials.py는 SEC companyfacts의 us-gaap/dei만 읽어 ifrs-full 태그를 가져오지 못한다",
+    "SKHY": "IFRS 외국 발행인 - fetch_financials.py는 SEC companyfacts의 us-gaap/dei만 읽어 ifrs-full 태그를 가져오지 못한다"
+  },
+  "unsupported_note": "채점 대상에서 제외되지만 은행과 사유가 다르다. 은행은 모델이 의도적으로 다루지 않기로 한 것이고, 이쪽은 현재 수집 도구가 데이터를 가져오지 못하는 것이다. TSM은 예외적으로 손으로 만든 ifrs-full 데이터셋(scripts/fundamental_data/TSM_financials.json, _sourceNote 참고)이 있어 채점되지만 그 파일은 fetch_financials.py로 갱신되지 않으며 FY2024에서 멈춰 있다 - 2026-09-12 재산출에서 무심코 덮어썼다가 git에서 복구했다.",
+  "axis_weights": {
+    "valuation": 33,
+    "health": 33,
+    "growth_profit": 34
+  },
   "coverage_gate": {
     "note": "Codex 1라운드 권고 - 결측 항목이 많은데도 나머지 항목만으로 평균내면 만점을 받을 수 있어(예: 4개 중 2개만 쓰고 그 2개가 5점이면 축 만점), 데이터 부족을 완전한 정보처럼 보이게 함. 이 기준(밸류에이션 축 존재 + 재무건전성 4/5 + 성장수익성 3/4) 미달이면 coverageStatus:\"partial\"로 표시 - grade/totalScore 자체는 그대로 계산해서 유지하되(부분 정보라도 참고값은 있는 게 나음), 홈페이지 표시 단계에서 partial 종목을 정식 등급과 구분해서 보여줄지는 UI 설계 시점에 결정.",
     "min_health_ratios": 4,
@@ -12,14 +27,29 @@
     "min_growth_profit_metrics": 3,
     "max_growth_profit_metrics": 4
   },
-
+  "staleness": {
+    "annual_report_cycle_months": 12,
+    "filing_grace_months": 3,
+    "foreign_issuer_extra_months": 1,
+    "foreign_issuers": [
+      "TSM"
+    ],
+    "note": "임계값은 종목에 맞춰 고른 값이 아니라 유도한 값이다. 연차 신고인은 12개월마다 보고하고 제출·수집에 3개월이 걸리므로 그 합(15개월)을 넘으면 '아직 갱신 안 됨'이 아니라 '일정에서 밀린 것'이다. 외국 발행인은 20-F 기한이 10-K보다 길어 1개월을 더 준다(16개월). 2026-09-11 스냅샷 민감도: 12개월이면 TSM·MU·COST·AAPL·V 5종목, 15개월이면 TSM만, 18개월이면 TSM만 걸린다. TSM은 20.3개월로 어떤 후보 임계값에서도 stale이다. 이 값은 연차 데이터 기준이며 분기/TTM 입력에는 훨씬 짧은 기준이 필요하다 - 현재 모델은 연차만 쓴다."
+  },
+  "comparability_flags": {
+    "flags": [
+      "valuation_target_only",
+      "stale_financials"
+    ],
+    "note": "이 플래그가 붙은 종목은 다른 종목과 같은 축으로 비교되지 않는다. 표시만 다르게 하는 것으로는 부족하고(배지를 달아도 같은 숫자 목록에 섞여 있으면 완전 비교로 읽힌다) 매력도 기본 순위에서 분리하거나 순위 번호를 유보해야 한다. coverageStatus와 별개인 이유: 동결된 v1.0.0 게이트는 이 둘을 모델링하지 않으며, 게이트 판정 자체는 이전 실행과의 비교 가능성을 위해 건드리지 않았다."
+  },
+  "v1_0_1_note": "2026-09-12 투명성 패치. 점수 산식은 건드리지 않았다 - total_raw는 게이트 판정보다 먼저 합산되므로 44개 종목 totalScore가 수학적으로 불변이다. 바뀐 것은 진단 정보뿐이다: 밸류에이션 축의 coverage를 이진이 아니라 블록 단위(historicalMultipleCoverage 0/1/2, targetPriceAvailable)로 기록하고, coverageReasons를 단일 플래그가 아닌 배열로 남기며(TSM은 valuation_target_only이면서 동시에 stale_financials다), financialsAgeMonths를 노출한다. 고치지 않고 남겨둔 결함을 명시한다: targetPrice stage는 44개 종목에서 1~3만 관측되고 4·5는 한 건도 없는 반면(1:30, 2:9, 3:5) PER/PBR의 최빈값은 5다(PER 38개 중 20개, PBR 34개 중 22개). 따라서 자기이력 블록이 결측이면 축 점수가 중립이 아니라 상향된다 - 목표가만 있는 5종목의 평균 밸류축은 29.7/33, 나머지 39종목은 16.6/33이다. 결측값에 중립 stage 3을 대입하면 SNDK가 1위→2위, TSM이 2위→6위로 내려가고, 관측 최빈값 5를 대입하면 각각 7위·11위가 된다. 즉 결측이 중립이 아니라 유리하게 작동한다. 이 패치는 그 사실을 보이게 할 뿐 산식을 고치지 않는다. 집계·보정 수정(목표가 stage 경계 재보정, 목표가를 밸류에이션에서 분리, 자기이력 블록 없으면 축 미산출 또는 coverage 비례 축소)은 v1.1 과제이며 우선순위가 높다.",
   "valuation": {
     "source": "compute_valuation_score.py 결과(valuation_signals.json)의 per.stage/pbr.stage/targetPrice.stage를 동일 가중(0.6/0.4)로 재평균 - 최종 combinedStage는 반올림되어 해상도가 떨어지므로 반올림 전 연속값을 직접 재계산",
     "weight_per_pbr": 0.6,
     "weight_target": 0.4,
     "stage_to_points": "points = 33 * (5 - stage) / 4  (stage 1=저평가 -> 33점, stage 5=고평가 -> 0점)"
   },
-
   "health": {
     "max_raw_points": 25,
     "scale_to_axis": 1.32,
@@ -30,11 +60,26 @@
         "formula": "currentAssets / currentLiabilities * 100",
         "higher_is_better": true,
         "buckets": [
-          {"upper_exclusive": 100, "points": 1},
-          {"upper_exclusive": 150, "points": 2},
-          {"upper_exclusive": 200, "points": 3},
-          {"upper_exclusive": 300, "points": 4},
-          {"upper_exclusive": null, "points": 5}
+          {
+            "upper_exclusive": 100,
+            "points": 1
+          },
+          {
+            "upper_exclusive": 150,
+            "points": 2
+          },
+          {
+            "upper_exclusive": 200,
+            "points": 3
+          },
+          {
+            "upper_exclusive": 300,
+            "points": 4
+          },
+          {
+            "upper_exclusive": null,
+            "points": 5
+          }
         ]
       },
       "quickRatio": {
@@ -43,11 +88,26 @@
         "formula": "(currentAssets - inventory) / currentLiabilities * 100",
         "higher_is_better": true,
         "buckets": [
-          {"upper_exclusive": 50, "points": 1},
-          {"upper_exclusive": 100, "points": 2},
-          {"upper_exclusive": 150, "points": 3},
-          {"upper_exclusive": 250, "points": 4},
-          {"upper_exclusive": null, "points": 5}
+          {
+            "upper_exclusive": 50,
+            "points": 1
+          },
+          {
+            "upper_exclusive": 100,
+            "points": 2
+          },
+          {
+            "upper_exclusive": 150,
+            "points": 3
+          },
+          {
+            "upper_exclusive": 250,
+            "points": 4
+          },
+          {
+            "upper_exclusive": null,
+            "points": 5
+          }
         ]
       },
       "debtDependency": {
@@ -56,11 +116,26 @@
         "formula": "(shortTermDebt + longTermDebt) / assets * 100",
         "higher_is_better": false,
         "buckets": [
-          {"upper_exclusive": 5, "points": 5},
-          {"upper_exclusive": 15, "points": 4},
-          {"upper_exclusive": 30, "points": 3},
-          {"upper_exclusive": 50, "points": 2},
-          {"upper_exclusive": null, "points": 1}
+          {
+            "upper_exclusive": 5,
+            "points": 5
+          },
+          {
+            "upper_exclusive": 15,
+            "points": 4
+          },
+          {
+            "upper_exclusive": 30,
+            "points": 3
+          },
+          {
+            "upper_exclusive": 50,
+            "points": 2
+          },
+          {
+            "upper_exclusive": null,
+            "points": 1
+          }
         ]
       },
       "interestCoverage": {
@@ -70,11 +145,26 @@
         "higher_is_better": true,
         "note": "40종목 실측 분포 확인 후 재조정(2026-08-25, Codex 1라운드) - 원래 상한(20x)에서 56%가 최고구간에 몰려 변별력이 떨어져 30x로 상향. 그래도 46%가 최고구간(우량 메가캡이 많은 표본 특성상 우측꼬리가 김) - v2에서 로그스케일 등 재검토 여지 있음.",
         "buckets": [
-          {"upper_exclusive": 1, "points": 1},
-          {"upper_exclusive": 4, "points": 2},
-          {"upper_exclusive": 10, "points": 3},
-          {"upper_exclusive": 30, "points": 4},
-          {"upper_exclusive": null, "points": 5}
+          {
+            "upper_exclusive": 1,
+            "points": 1
+          },
+          {
+            "upper_exclusive": 4,
+            "points": 2
+          },
+          {
+            "upper_exclusive": 10,
+            "points": 3
+          },
+          {
+            "upper_exclusive": 30,
+            "points": 4
+          },
+          {
+            "upper_exclusive": null,
+            "points": 5
+          }
         ]
       },
       "debtToEquity": {
@@ -83,16 +173,30 @@
         "formula": "totalLiabilities / equityAttributableToParent * 100",
         "higher_is_better": false,
         "buckets": [
-          {"upper_exclusive": 25, "points": 5},
-          {"upper_exclusive": 50, "points": 4},
-          {"upper_exclusive": 100, "points": 3},
-          {"upper_exclusive": 200, "points": 2},
-          {"upper_exclusive": null, "points": 1}
+          {
+            "upper_exclusive": 25,
+            "points": 5
+          },
+          {
+            "upper_exclusive": 50,
+            "points": 4
+          },
+          {
+            "upper_exclusive": 100,
+            "points": 3
+          },
+          {
+            "upper_exclusive": 200,
+            "points": 2
+          },
+          {
+            "upper_exclusive": null,
+            "points": 1
+          }
         ]
       }
     }
   },
-
   "growth_profit": {
     "max_raw_points": 20,
     "scale_to_axis": 1.7,
@@ -103,11 +207,26 @@
         "unit": "%",
         "higher_is_better": true,
         "buckets": [
-          {"upper_exclusive": 0, "points": 1},
-          {"upper_exclusive": 5, "points": 2},
-          {"upper_exclusive": 12, "points": 3},
-          {"upper_exclusive": 25, "points": 4},
-          {"upper_exclusive": null, "points": 5}
+          {
+            "upper_exclusive": 0,
+            "points": 1
+          },
+          {
+            "upper_exclusive": 5,
+            "points": 2
+          },
+          {
+            "upper_exclusive": 12,
+            "points": 3
+          },
+          {
+            "upper_exclusive": 25,
+            "points": 4
+          },
+          {
+            "upper_exclusive": null,
+            "points": 5
+          }
         ]
       },
       "opIncomeCagr": {
@@ -115,11 +234,26 @@
         "unit": "%",
         "higher_is_better": true,
         "buckets": [
-          {"upper_exclusive": 0, "points": 1},
-          {"upper_exclusive": 8, "points": 2},
-          {"upper_exclusive": 18, "points": 3},
-          {"upper_exclusive": 35, "points": 4},
-          {"upper_exclusive": null, "points": 5}
+          {
+            "upper_exclusive": 0,
+            "points": 1
+          },
+          {
+            "upper_exclusive": 8,
+            "points": 2
+          },
+          {
+            "upper_exclusive": 18,
+            "points": 3
+          },
+          {
+            "upper_exclusive": 35,
+            "points": 4
+          },
+          {
+            "upper_exclusive": null,
+            "points": 5
+          }
         ]
       },
       "opMargin": {
@@ -127,11 +261,26 @@
         "unit": "%",
         "higher_is_better": true,
         "buckets": [
-          {"upper_exclusive": 5, "points": 1},
-          {"upper_exclusive": 15, "points": 2},
-          {"upper_exclusive": 25, "points": 3},
-          {"upper_exclusive": 35, "points": 4},
-          {"upper_exclusive": null, "points": 5}
+          {
+            "upper_exclusive": 5,
+            "points": 1
+          },
+          {
+            "upper_exclusive": 15,
+            "points": 2
+          },
+          {
+            "upper_exclusive": 25,
+            "points": 3
+          },
+          {
+            "upper_exclusive": 35,
+            "points": 4
+          },
+          {
+            "upper_exclusive": null,
+            "points": 5
+          }
         ]
       },
       "netMargin": {
@@ -139,20 +288,37 @@
         "unit": "%",
         "higher_is_better": true,
         "buckets": [
-          {"upper_exclusive": 3, "points": 1},
-          {"upper_exclusive": 8, "points": 2},
-          {"upper_exclusive": 15, "points": 3},
-          {"upper_exclusive": 25, "points": 4},
-          {"upper_exclusive": null, "points": 5}
+          {
+            "upper_exclusive": 3,
+            "points": 1
+          },
+          {
+            "upper_exclusive": 8,
+            "points": 2
+          },
+          {
+            "upper_exclusive": 15,
+            "points": 3
+          },
+          {
+            "upper_exclusive": 25,
+            "points": 4
+          },
+          {
+            "upper_exclusive": null,
+            "points": 5
+          }
         ]
       }
     }
   },
-
   "grade_cuts": {
     "우수": 80,
     "양호": 60,
     "보통": 40,
     "미흡": 0
-  }
+  },
+  "formula_frozen_date": "2026-08-25",
+  "snapshot_date": "2026-09-11",
+  "snapshot_note": "formula_frozen_date is when the v1.0.0 formula was frozen and must not change on a data re-run. snapshot_date is when this scoring run's inputs were taken; re-running on fresh data updates snapshot_date only."
 }

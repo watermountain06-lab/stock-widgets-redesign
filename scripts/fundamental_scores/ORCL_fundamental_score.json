@@ -1,10 +1,13 @@
 {
   "ticker": "ORCL",
   "financialsAsOf": "2026-05-31",
+  "valuationAsOf": "2026-09-11",
   "valuation": {
     "combinedStage": 1.0,
     "axisPoints": 33.0,
-    "axisPointsRaw": 33.0
+    "axisPointsRaw": 33.0,
+    "historicalMultipleCoverage": 2,
+    "targetPriceAvailable": true
   },
   "health": {
     "dataQuality": {},
@@ -58,8 +61,11 @@
   "grade": "양호",
   "axesUsed": 3,
   "coverageStatus": "full",
+  "qualityFlags": [],
+  "financialsAgeMonths": 3.4,
   "dataStatus": {
     "coverageStatus": "full",
+    "qualityFlags": [],
     "operatingIncomeEstimated": false,
     "negativeEquity": false
   }

@@ -1,10 +1,13 @@
 {
   "ticker": "TSM",
   "financialsAsOf": "2024-12-31",
+  "valuationAsOf": "2026-09-11",
   "valuation": {
-    "combinedStage": 2.8,
-    "axisPoints": 18.2,
-    "axisPointsRaw": 18.150000000000002
+    "combinedStage": 1.0,
+    "axisPoints": 33.0,
+    "axisPointsRaw": 33.0,
+    "historicalMultipleCoverage": 0,
+    "targetPriceAvailable": true
   },
   "health": {
     "dataQuality": {},
@@ -54,12 +57,21 @@
     "axisPointsRaw": 30.6,
     "metricsUsed": 4
   },
-  "totalScore": 73.8,
-  "grade": "양호",
+  "totalScore": 88.7,
+  "grade": "우수",
   "axesUsed": 3,
   "coverageStatus": "full",
+  "qualityFlags": [
+    "valuation_target_only",
+    "stale_financials"
+  ],
+  "financialsAgeMonths": 20.3,
   "dataStatus": {
     "coverageStatus": "full",
+    "qualityFlags": [
+      "valuation_target_only",
+      "stale_financials"
+    ],
     "operatingIncomeEstimated": false,
     "negativeEquity": false
   }

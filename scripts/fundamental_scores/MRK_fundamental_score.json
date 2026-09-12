@@ -1,10 +1,13 @@
 {
   "ticker": "MRK",
   "financialsAsOf": "2025-12-31",
+  "valuationAsOf": "2026-09-11",
   "valuation": {
-    "combinedStage": 2.7,
-    "axisPoints": 19.0,
-    "axisPointsRaw": 18.974999999999998
+    "combinedStage": 2.3,
+    "axisPoints": 22.3,
+    "axisPointsRaw": 22.275000000000002,
+    "historicalMultipleCoverage": 2,
+    "targetPriceAvailable": true
   },
   "health": {
     "dataQuality": {},
@@ -56,12 +59,15 @@
     "axisPointsRaw": 23.799999999999997,
     "metricsUsed": 4
   },
-  "totalScore": 61.3,
+  "totalScore": 64.6,
   "grade": "양호",
   "axesUsed": 3,
   "coverageStatus": "full",
+  "qualityFlags": [],
+  "financialsAgeMonths": 8.3,
   "dataStatus": {
     "coverageStatus": "full",
+    "qualityFlags": [],
     "operatingIncomeEstimated": true,
     "negativeEquity": false
   }

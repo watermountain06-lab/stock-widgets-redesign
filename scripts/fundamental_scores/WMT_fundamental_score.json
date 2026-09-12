@@ -1,10 +1,13 @@
 {
   "ticker": "WMT",
   "financialsAsOf": "2026-01-31",
+  "valuationAsOf": "2026-09-11",
   "valuation": {
-    "combinedStage": 3.4,
-    "axisPoints": 13.2,
-    "axisPointsRaw": 13.200000000000001
+    "combinedStage": 3.1,
+    "axisPoints": 15.7,
+    "axisPointsRaw": 15.675000000000002,
+    "historicalMultipleCoverage": 2,
+    "targetPriceAvailable": true
   },
   "health": {
     "dataQuality": {},
@@ -54,12 +57,15 @@
     "axisPointsRaw": 15.3,
     "metricsUsed": 4
   },
-  "totalScore": 44.3,
+  "totalScore": 46.8,
   "grade": "보통",
   "axesUsed": 3,
   "coverageStatus": "full",
+  "qualityFlags": [],
+  "financialsAgeMonths": 7.3,
   "dataStatus": {
     "coverageStatus": "full",
+    "qualityFlags": [],
     "operatingIncomeEstimated": false,
     "negativeEquity": false
   }
