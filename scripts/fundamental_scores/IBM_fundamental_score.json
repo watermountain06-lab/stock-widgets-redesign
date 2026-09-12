@@ -1,0 +1,74 @@
+{
+  "ticker": "IBM",
+  "financialsAsOf": "2025-12-31",
+  "valuationAsOf": "2026-09-11",
+  "valuation": {
+    "combinedStage": 2.4,
+    "axisPoints": 21.4,
+    "axisPointsRaw": 21.449999999999996,
+    "historicalMultipleCoverage": 2,
+    "targetPriceAvailable": true
+  },
+  "health": {
+    "dataQuality": {},
+    "currentRatio": {
+      "value": 95.6,
+      "points": 1
+    },
+    "quickRatio": {
+      "value": 92.4,
+      "points": 2
+    },
+    "debtDependency": {
+      "value": 40.3,
+      "points": 2
+    },
+    "interestCoverage": {
+      "value": 6.3,
+      "points": 3
+    },
+    "debtToEquity": {
+      "value": 364.9,
+      "points": 1
+    },
+    "operatingIncomeEstimated": true,
+    "axisPoints": 11.9,
+    "axisPointsRaw": 11.879999999999999,
+    "ratiosUsed": 5
+  },
+  "growthProfit": {
+    "dataQuality": {},
+    "revenueCagr": {
+      "value": 3.7,
+      "points": 2
+    },
+    "opIncomeCagr": {
+      "value": 72.9,
+      "points": 5
+    },
+    "opMargin": {
+      "value": 18.2,
+      "points": 3
+    },
+    "netMargin": {
+      "value": 15.7,
+      "points": 4
+    },
+    "operatingIncomeEstimated": true,
+    "axisPoints": 23.8,
+    "axisPointsRaw": 23.799999999999997,
+    "metricsUsed": 4
+  },
+  "totalScore": 57.1,
+  "grade": "보통",
+  "axesUsed": 3,
+  "coverageStatus": "full",
+  "qualityFlags": [],
+  "financialsAgeMonths": 8.3,
+  "dataStatus": {
+    "coverageStatus": "full",
+    "qualityFlags": [],
+    "operatingIncomeEstimated": true,
+    "negativeEquity": false
+  }
+}

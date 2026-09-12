@@ -1427,5 +1427,67 @@
     },
     "combinedStage": 2,
     "combinedLabel": "낮음"
+  },
+  "IBM": {
+    "ticker": "IBM",
+    "asOf": "2026-09-11",
+    "currentPrice": 243.29,
+    "dataQuality": {},
+    "per": {
+      "current": 21.78,
+      "historicalAvg5y": 36.02,
+      "gapPct": -39.5,
+      "stage": 1,
+      "sampleYears": 5
+    },
+    "pbr": {
+      "current": 6.99,
+      "historicalAvg5y": 6.96,
+      "gapPct": 0.4,
+      "stage": 3,
+      "sampleYears": 5
+    },
+    "targetPrice": {
+      "mean": 245.34695,
+      "high": 350.0,
+      "low": 174.0,
+      "upsidePct": 0.8,
+      "stage": 3,
+      "numAnalysts": 23,
+      "recommendationKey": "buy"
+    },
+    "combinedStage": 2,
+    "combinedLabel": "낮음"
+  },
+  "LIN": {
+    "ticker": "LIN",
+    "asOf": "2026-09-11",
+    "currentPrice": 466.22,
+    "dataQuality": {},
+    "per": {
+      "current": 31.91,
+      "historicalAvg5y": 35.89,
+      "gapPct": -11.1,
+      "stage": 2,
+      "sampleYears": 5
+    },
+    "pbr": {
+      "current": 5.65,
+      "historicalAvg5y": 4.67,
+      "gapPct": 21.0,
+      "stage": 5,
+      "sampleYears": 5
+    },
+    "targetPrice": {
+      "mean": 544.4,
+      "high": 580.0,
+      "low": 400.0,
+      "upsidePct": 16.8,
+      "stage": 1,
+      "numAnalysts": 25,
+      "recommendationKey": "buy"
+    },
+    "combinedStage": 2,
+    "combinedLabel": "낮음"
   }
 }

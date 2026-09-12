@@ -1,0 +1,72 @@
+{
+  "ticker": "LIN",
+  "financialsAsOf": "2025-12-31",
+  "valuationAsOf": "2026-09-11",
+  "valuation": {
+    "combinedStage": 2.5,
+    "axisPoints": 20.6,
+    "axisPointsRaw": 20.625,
+    "historicalMultipleCoverage": 2,
+    "targetPriceAvailable": true
+  },
+  "health": {
+    "dataQuality": {},
+    "currentRatio": {
+      "value": 87.7,
+      "points": 1
+    },
+    "quickRatio": {
+      "value": 74.2,
+      "points": 2
+    },
+    "debtDependency": {
+      "value": 29.0,
+      "points": 3
+    },
+    "interestCoverage": {
+      "value": 35.0,
+      "points": 5
+    },
+    "debtToEquity": {
+      "value": 123.1,
+      "points": 2
+    },
+    "axisPoints": 17.2,
+    "axisPointsRaw": 17.16,
+    "ratiosUsed": 5
+  },
+  "growthProfit": {
+    "dataQuality": {},
+    "revenueCagr": {
+      "value": 0.6,
+      "points": 2
+    },
+    "opIncomeCagr": {
+      "value": 18.4,
+      "points": 4
+    },
+    "opMargin": {
+      "value": 26.3,
+      "points": 4
+    },
+    "netMargin": {
+      "value": 20.3,
+      "points": 4
+    },
+    "axisPoints": 23.8,
+    "axisPointsRaw": 23.799999999999997,
+    "metricsUsed": 4
+  },
+  "totalScore": 61.6,
+  "grade": "양호",
+  "axesUsed": 3,
+  "coverageStatus": "full",
+  "qualityFlags": [],
+  "financialsAgeMonths": 8.3,
+  "dataStatus": {
+    "coverageStatus": "full",
+    "qualityFlags": [],
+    "operatingIncomeEstimated": false,
+    "negativeEquity": false
+  }
+}

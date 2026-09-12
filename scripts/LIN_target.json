@@ -1,0 +1,11 @@
+{
+  "ticker": "LIN",
+  "currentPrice": 466.22,
+  "targetHighPrice": 580.0,
+  "targetLowPrice": 400.0,
+  "targetMeanPrice": 544.4,
+  "targetMedianPrice": 550.0,
+  "recommendationKey": "buy",
+  "recommendationMean": 1.67857,
+  "numberOfAnalystOpinions": 25
+}

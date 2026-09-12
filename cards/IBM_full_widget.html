@@ -278,7 +278,7 @@
   <div class="back-bar-right">
     <a class="back-bar-nav" href="C_full_widget.html">◀ C</a>
     <span class="back-bar-current">IBM · 시총 54위</span>
-    <span class="back-bar-nav disabled">다음 ▶</span>
+    <a class="back-bar-nav" href="AXP_full_widget.html">다음 AXP ▶</a>
   </div>
 </div>
 
@@ -1359,7 +1359,7 @@ const MULTIPLE_DATA = {
     unit: 'EV/EBITDA', max: 28, ibmValue: 16.17,
     calcLine: 'EV/EBITDA = EV($284.03B = 시총 $229.21B + 총차입금 $61.99B − 현금 $7.17B) ÷ EBITDA($17.57B = 세전이익 $10.44B + 이자비용 $1.93B + D&A $5.20B) = 16.17x',
     verdict: 'IBM EV/EBITDA 16.17x는 앵커(ORCL 18.58x·ACN 8.56x 평균 13.6x, 2026.09.11 기준) 대비 +19.2% — PER과 같은 방향의 프리미엄이다',
-    verdictCaveat: '서로 반대 방향의 왜곡이 둘 다 들어 있어 가중치를 0.5로 낮췄다. EV에 들어간 차입금 $61.99B 중 $13.05B은 10-Q가 따로 공시한 금융부문 차입금으로, 이자를 받는 고객 채권을 조달한 돈이다(제외하면 15.4x). 반대로 D&A $5.20B 중 $2.94B은 인수한 무형자산 상각이라, 이를 통째로 되더하는 EBITDA는 인수로 성장한 IBM을 유기적으로 성장한 피어보다 싸 보이게 만든다.',
+    verdictCaveat: '서로 반대 방향의 왜곡이 둘 다 들어 있어 가중치를 0.5로 낮췄다. EV에 들어간 차입금 $61.99B 중 $13.05B은 10-Q가 따로 공시한 금융부문 차입금으로, 이자를 받는 고객 채권을 조달한 돈이다(제외하면 15.4x). 반대로 D&A $5.20B 중 $2.94B은 인수한 무형자산 상각이라 EBITDA가 그만큼 부풀려진다 — 다만 앵커도 인수로 큰 쪽이어서(영업권 ORCL $62.3B·ACN $25.3B, IBM $74.6B) 피어 대비로는 상당 부분 상쇄되고, 가중치를 낮춘 주된 근거는 금융부문 차입금 쪽이다.',
     anchor: { value: '13.6x', formula: '평균(ORCL 18.58x, ACN 8.56x) = 13.57x → 13.6x', cross: null },
     secondary: null,
     peers: [

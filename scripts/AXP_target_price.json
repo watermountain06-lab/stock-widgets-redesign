@@ -1,0 +1,11 @@
+{
+  "ticker": "AXP",
+  "currentPrice": 324.69,
+  "targetHighPrice": 450.0,
+  "targetLowPrice": 315.0,
+  "targetMeanPrice": 375.9556,
+  "targetMedianPrice": 382.0,
+  "recommendationKey": "buy",
+  "recommendationMean": 2.3,
+  "numberOfAnalystOpinions": 25
+}

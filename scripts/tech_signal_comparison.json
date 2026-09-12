@@ -1,0 +1,3466 @@
+{
+  "universe": "sp500_5y",
+  "tickers": 492,
+  "rows": 22121,
+  "horizons": [
+    "20d",
+    "60d",
+    "6m",
+    "12m"
+  ],
+  "signals": {
+    "v1_total": {
+      "20d": {
+        "n": 21629,
+        "months": 44,
+        "pooled_ic": 0.011,
+        "pooled_p": 0.106,
+        "fm_ic": 0.0234,
+        "fm_ic_95ci": [
+          -0.0308,
+          0.0752
+        ],
+        "quintile_mean_excess": [
+          -0.0031,
+          -0.0006,
+          -0.0032,
+          -0.001,
+          0.0043
+        ],
+        "top_minus_bottom": 0.0074,
+        "top_minus_bottom_95ci": [
+          -0.0084,
+          0.0215
+        ],
+        "months_positive_spread": 30
+      },
+      "60d": {
+        "n": 20645,
+        "months": 42,
+        "pooled_ic": 0.0456,
+        "pooled_p": 5.35e-11,
+        "fm_ic": 0.0513,
+        "fm_ic_95ci": [
+          0.0114,
+          0.1123
+        ],
+        "quintile_mean_excess": [
+          -0.0154,
+          -0.0112,
+          -0.0114,
+          -0.002,
+          0.015
+        ],
+        "top_minus_bottom": 0.0304,
+        "top_minus_bottom_95ci": [
+          0.0066,
+          0.0628
+        ],
+        "months_positive_spread": 26
+      },
+      "6m": {
+        "n": 19169,
+        "months": 39,
+        "pooled_ic": 0.1245,
+        "pooled_p": 4.38e-67,
+        "fm_ic": 0.1118,
+        "fm_ic_95ci": [
+          0.0622,
+          0.172
+        ],
+        "quintile_mean_excess": [
+          -0.034,
+          -0.0353,
+          -0.0241,
+          -0.0083,
+          0.0537
+        ],
+        "top_minus_bottom": 0.0876,
+        "top_minus_bottom_95ci": [
+          0.0416,
+          0.1353
+        ],
+        "months_positive_spread": 31
+      },
+      "12m": {
+        "n": 16217,
+        "months": 33,
+        "pooled_ic": 0.1026,
+        "pooled_p": 3.58e-39,
+        "fm_ic": 0.1092,
+        "fm_ic_95ci": [
+          0.0926,
+          0.1943
+        ],
+        "quintile_mean_excess": [
+          -0.0289,
+          -0.0467,
+          -0.0372,
+          -0.0132,
+          0.1117
+        ],
+        "top_minus_bottom": 0.1407,
+        "top_minus_bottom_95ci": [
+          0.1211,
+          0.2532
+        ],
+        "months_positive_spread": 26
+      }
+    },
+    "v1_price_structure": {
+      "20d": {
+        "n": 21629,
+        "months": 44,
+        "pooled_ic": 0.0074,
+        "pooled_p": 0.279,
+        "fm_ic": 0.0201,
+        "fm_ic_95ci": [
+          -0.0302,
+          0.0694
+        ],
+        "quintile_mean_excess": [
+          -0.0041,
+          0.0004,
+          -0.0007,
+          0.0005,
+          0.0003
+        ],
+        "top_minus_bottom": 0.0044,
+        "top_minus_bottom_95ci": [
+          -0.0084,
+          0.0157
+        ],
+        "months_positive_spread": 24
+      },
+      "60d": {
+        "n": 20645,
+        "months": 42,
+        "pooled_ic": 0.0418,
+        "pooled_p": 1.86e-09,
+        "fm_ic": 0.0455,
+        "fm_ic_95ci": [
+          0.0098,
+          0.1014
+        ],
+        "quintile_mean_excess": [
+          -0.0176,
+          -0.0093,
+          -0.0022,
+          0.0034,
+          0.0009
+        ],
+        "top_minus_bottom": 0.0185,
+        "top_minus_bottom_95ci": [
+          0.0018,
+          0.0427
+        ],
+        "months_positive_spread": 26
+      },
+      "6m": {
+        "n": 19169,
+        "months": 39,
+        "pooled_ic": 0.113,
+        "pooled_p": 1.76e-55,
+        "fm_ic": 0.1001,
+        "fm_ic_95ci": [
+          0.0503,
+          0.1589
+        ],
+        "quintile_mean_excess": [
+          -0.0397,
+          -0.0297,
+          -0.008,
+          0.0147,
+          0.0154
+        ],
+        "top_minus_bottom": 0.0551,
+        "top_minus_bottom_95ci": [
+          0.0146,
+          0.0942
+        ],
+        "months_positive_spread": 31
+      },
+      "12m": {
+        "n": 16217,
+        "months": 33,
+        "pooled_ic": 0.0858,
+        "pooled_p": 6.71e-28,
+        "fm_ic": 0.0898,
+        "fm_ic_95ci": [
+          0.0643,
+          0.1732
+        ],
+        "quintile_mean_excess": [
+          -0.0406,
+          -0.0247,
+          -0.0015,
+          0.0365,
+          0.0176
+        ],
+        "top_minus_bottom": 0.0582,
+        "top_minus_bottom_95ci": [
+          0.0168,
+          0.1614
+        ],
+        "months_positive_spread": 24
+      }
+    },
+    "v1_momentum": {
+      "20d": {
+        "n": 21629,
+        "months": 44,
+        "pooled_ic": 0.0118,
+        "pooled_p": 0.0825,
+        "fm_ic": 0.0211,
+        "fm_ic_95ci": [
+          -0.032,
+          0.0717
+        ],
+        "quintile_mean_excess": [
+          -0.0011,
+          -0.0017,
+          -0.0048,
+          -0.0018,
+          0.0056
+        ],
+        "top_minus_bottom": 0.0067,
+        "top_minus_bottom_95ci": [
+          -0.0095,
+          0.0212
+        ],
+        "months_positive_spread": 26
+      },
+      "60d": {
+        "n": 20645,
+        "months": 42,
+        "pooled_ic": 0.0363,
+        "pooled_p": 1.84e-07,
+        "fm_ic": 0.0475,
+        "fm_ic_95ci": [
+          0.0046,
+          0.1088
+        ],
+        "quintile_mean_excess": [
+          -0.0118,
+          -0.0111,
+          -0.0154,
+          -0.007,
+          0.0201
+        ],
+        "top_minus_bottom": 0.0319,
+        "top_minus_bottom_95ci": [
+          0.0075,
+          0.064
+        ],
+        "months_positive_spread": 27
+      },
+      "6m": {
+        "n": 19169,
+        "months": 39,
+        "pooled_ic": 0.1174,
+        "pooled_p": 8.51e-60,
+        "fm_ic": 0.1078,
+        "fm_ic_95ci": [
+          0.0615,
+          0.1652
+        ],
+        "quintile_mean_excess": [
+          -0.0297,
+          -0.0333,
+          -0.035,
+          -0.0131,
+          0.0628
+        ],
+        "top_minus_bottom": 0.0926,
+        "top_minus_bottom_95ci": [
+          0.0472,
+          0.1442
+        ],
+        "months_positive_spread": 32
+      },
+      "12m": {
+        "n": 16217,
+        "months": 33,
+        "pooled_ic": 0.102,
+        "pooled_p": 8.59e-39,
+        "fm_ic": 0.1109,
+        "fm_ic_95ci": [
+          0.0997,
+          0.1921
+        ],
+        "quintile_mean_excess": [
+          -0.0328,
+          -0.0546,
+          -0.0497,
+          -0.0106,
+          0.1331
+        ],
+        "top_minus_bottom": 0.1659,
+        "top_minus_bottom_95ci": [
+          0.151,
+          0.2769
+        ],
+        "months_positive_spread": 27
+      }
+    },
+    "v1_trend": {
+      "20d": {
+        "n": 21629,
+        "months": 44,
+        "pooled_ic": 0.0036,
+        "pooled_p": 0.594,
+        "fm_ic": 0.0163,
+        "fm_ic_95ci": [
+          -0.0328,
+          0.0639
+        ],
+        "quintile_mean_excess": [
+          -0.0043,
+          0.0007,
+          0.0003,
+          -0.0003,
+          -0.0
+        ],
+        "top_minus_bottom": 0.0043,
+        "top_minus_bottom_95ci": [
+          -0.0073,
+          0.015
+        ],
+        "months_positive_spread": 25
+      },
+      "60d": {
+        "n": 20645,
+        "months": 42,
+        "pooled_ic": 0.0418,
+        "pooled_p": 1.89e-09,
+        "fm_ic": 0.045,
+        "fm_ic_95ci": [
+          0.0105,
+          0.0983
+        ],
+        "quintile_mean_excess": [
+          -0.0181,
+          -0.0105,
+          0.0013,
+          -0.0006,
+          0.003
+        ],
+        "top_minus_bottom": 0.0211,
+        "top_minus_bottom_95ci": [
+          0.0042,
+          0.0446
+        ],
+        "months_positive_spread": 25
+      },
+      "6m": {
+        "n": 19169,
+        "months": 39,
+        "pooled_ic": 0.1082,
+        "pooled_p": 4.97e-51,
+        "fm_ic": 0.0972,
+        "fm_ic_95ci": [
+          0.0479,
+          0.1562
+        ],
+        "quintile_mean_excess": [
+          -0.0387,
+          -0.0305,
+          -0.0047,
+          0.0104,
+          0.0161
+        ],
+        "top_minus_bottom": 0.0548,
+        "top_minus_bottom_95ci": [
+          0.014,
+          0.097
+        ],
+        "months_positive_spread": 29
+      },
+      "12m": {
+        "n": 16217,
+        "months": 33,
+        "pooled_ic": 0.0792,
+        "pooled_p": 5.63e-24,
+        "fm_ic": 0.0835,
+        "fm_ic_95ci": [
+          0.0595,
+          0.1666
+        ],
+        "quintile_mean_excess": [
+          -0.0374,
+          -0.0296,
+          0.0028,
+          0.0376,
+          0.0139
+        ],
+        "top_minus_bottom": 0.0513,
+        "top_minus_bottom_95ci": [
+          0.0162,
+          0.1617
+        ],
+        "months_positive_spread": 24
+      }
+    },
+    "v1_pos52w": {
+      "20d": {
+        "n": 21629,
+        "months": 44,
+        "pooled_ic": 0.011,
+        "pooled_p": 0.106,
+        "fm_ic": 0.0224,
+        "fm_ic_95ci": [
+          -0.0255,
+          0.067
+        ],
+        "quintile_mean_excess": [
+          -0.0037,
+          -0.0003,
+          -0.0002,
+          -0.0005,
+          0.001
+        ],
+        "top_minus_bottom": 0.0047,
+        "top_minus_bottom_95ci": [
+          -0.0065,
+          0.0146
+        ],
+        "months_positive_spread": 24
+      },
+      "60d": {
+        "n": 20645,
+        "months": 42,
+        "pooled_ic": 0.0336,
+        "pooled_p": 1.33e-06,
+        "fm_ic": 0.0412,
+        "fm_ic_95ci": [
+          0.0046,
+          0.0945
+        ],
+        "quintile_mean_excess": [
+          -0.018,
+          -0.0032,
+          -0.004,
+          -0.0019,
+          0.0022
+        ],
+        "top_minus_bottom": 0.0202,
+        "top_minus_bottom_95ci": [
+          0.0049,
+          0.041
+        ],
+        "months_positive_spread": 28
+      },
+      "6m": {
+        "n": 19169,
+        "months": 39,
+        "pooled_ic": 0.1021,
+        "pooled_p": 1.42e-45,
+        "fm_ic": 0.0895,
+        "fm_ic_95ci": [
+          0.0449,
+          0.1408
+        ],
+        "quintile_mean_excess": [
+          -0.0457,
+          -0.0071,
+          -0.0115,
+          0.0002,
+          0.0166
+        ],
+        "top_minus_bottom": 0.0622,
+        "top_minus_bottom_95ci": [
+          0.0268,
+          0.0961
+        ],
+        "months_positive_spread": 30
+      },
+      "12m": {
+        "n": 16217,
+        "months": 33,
+        "pooled_ic": 0.0776,
+        "pooled_p": 4.54e-23,
+        "fm_ic": 0.0807,
+        "fm_ic_95ci": [
+          0.058,
+          0.1524
+        ],
+        "quintile_mean_excess": [
+          -0.0501,
+          -0.0013,
+          0.0055,
+          0.0076,
+          0.0254
+        ],
+        "top_minus_bottom": 0.0754,
+        "top_minus_bottom_95ci": [
+          0.028,
+          0.1573
+        ],
+        "months_positive_spread": 25
+      }
+    },
+    "v1_roc_continuous": {
+      "20d": {
+        "n": 21629,
+        "months": 44,
+        "pooled_ic": 0.0109,
+        "pooled_p": 0.109,
+        "fm_ic": 0.0194,
+        "fm_ic_95ci": [
+          -0.0352,
+          0.0715
+        ],
+        "quintile_mean_excess": [
+          -0.0005,
+          -0.0031,
+          -0.0045,
+          -0.0013,
+          0.0057
+        ],
+        "top_minus_bottom": 0.0061,
+        "top_minus_bottom_95ci": [
+          -0.0107,
+          0.0211
+        ],
+        "months_positive_spread": 28
+      },
+      "60d": {
+        "n": 20645,
+        "months": 42,
+        "pooled_ic": 0.0344,
+        "pooled_p": 7.59e-07,
+        "fm_ic": 0.0452,
+        "fm_ic_95ci": [
+          -0.0001,
+          0.1093
+        ],
+        "quintile_mean_excess": [
+          -0.0088,
+          -0.0143,
+          -0.0166,
+          -0.0075,
+          0.0219
+        ],
+        "top_minus_bottom": 0.0307,
+        "top_minus_bottom_95ci": [
+          0.0035,
+          0.0654
+        ],
+        "months_positive_spread": 29
+      },
+      "6m": {
+        "n": 19169,
+        "months": 39,
+        "pooled_ic": 0.12,
+        "pooled_p": 1.89e-62,
+        "fm_ic": 0.1096,
+        "fm_ic_95ci": [
+          0.0604,
+          0.1704
+        ],
+        "quintile_mean_excess": [
+          -0.0265,
+          -0.038,
+          -0.0357,
+          -0.0174,
+          0.0693
+        ],
+        "top_minus_bottom": 0.0958,
+        "top_minus_bottom_95ci": [
+          0.0477,
+          0.1521
+        ],
+        "months_positive_spread": 33
+      },
+      "12m": {
+        "n": 16217,
+        "months": 33,
+        "pooled_ic": 0.1043,
+        "pooled_p": 1.96e-40,
+        "fm_ic": 0.1136,
+        "fm_ic_95ci": [
+          0.1007,
+          0.1963
+        ],
+        "quintile_mean_excess": [
+          -0.021,
+          -0.0533,
+          -0.0639,
+          -0.0276,
+          0.1508
+        ],
+        "top_minus_bottom": 0.1718,
+        "top_minus_bottom_95ci": [
+          0.1502,
+          0.2831
+        ],
+        "months_positive_spread": 28
+      }
+    },
+    "pb_total_window_fib": {
+      "20d": {
+        "n": 21629,
+        "months": 44,
+        "pooled_ic": -0.0278,
+        "pooled_p": 4.38e-05,
+        "fm_ic": -0.009,
+        "fm_ic_95ci": [
+          -0.0363,
+          0.0182
+        ],
+        "quintile_mean_excess": [
+          -0.0027,
+          0.0011,
+          -0.0005,
+          0.0009,
+          -0.0025
+        ],
+        "top_minus_bottom": 0.0002,
+        "top_minus_bottom_95ci": [
+          -0.0053,
+          0.0058
+        ],
+        "months_positive_spread": 21
+      },
+      "60d": {
+        "n": 20645,
+        "months": 42,
+        "pooled_ic": 0.0144,
+        "pooled_p": 0.0382,
+        "fm_ic": 0.0179,
+        "fm_ic_95ci": [
+          -0.0083,
+          0.0391
+        ],
+        "quintile_mean_excess": [
+          -0.0126,
+          -0.0051,
+          -0.0049,
+          -0.0026,
+          0.0004
+        ],
+        "top_minus_bottom": 0.013,
+        "top_minus_bottom_95ci": [
+          0.0026,
+          0.021
+        ],
+        "months_positive_spread": 24
+      },
+      "6m": {
+        "n": 19169,
+        "months": 39,
+        "pooled_ic": 0.004,
+        "pooled_p": 0.58,
+        "fm_ic": 0.011,
+        "fm_ic_95ci": [
+          -0.0124,
+          0.0283
+        ],
+        "quintile_mean_excess": [
+          -0.0191,
+          -0.0037,
+          -0.0135,
+          -0.0053,
+          -0.0055
+        ],
+        "top_minus_bottom": 0.0136,
+        "top_minus_bottom_95ci": [
+          -0.007,
+          0.0213
+        ],
+        "months_positive_spread": 22
+      },
+      "12m": {
+        "n": 16217,
+        "months": 33,
+        "pooled_ic": 0.0102,
+        "pooled_p": 0.196,
+        "fm_ic": 0.0203,
+        "fm_ic_95ci": [
+          -0.0156,
+          0.0284
+        ],
+        "quintile_mean_excess": [
+          -0.0167,
+          -0.0165,
+          -0.0061,
+          0.0163,
+          0.0101
+        ],
+        "top_minus_bottom": 0.0269,
+        "top_minus_bottom_95ci": [
+          0.011,
+          0.0554
+        ],
+        "months_positive_spread": 20
+      }
+    },
+    "pb_gate_window_fib": {
+      "20d": {
+        "n": 21629,
+        "months": 44,
+        "pooled_ic": 0.0063,
+        "pooled_p": 0.356,
+        "fm_ic": 0.0026,
+        "fm_ic_95ci": [
+          -0.0211,
+          0.0245
+        ],
+        "quintile_mean_excess": [
+          -0.0017,
+          -0.0006,
+          -0.0,
+          -0.0009,
+          -0.0004
+        ],
+        "top_minus_bottom": 0.0013,
+        "top_minus_bottom_95ci": [
+          -0.0023,
+          0.0049
+        ],
+        "months_positive_spread": 22
+      },
+      "60d": {
+        "n": 20645,
+        "months": 42,
+        "pooled_ic": -0.0012,
+        "pooled_p": 0.864,
+        "fm_ic": 0.0058,
+        "fm_ic_95ci": [
+          -0.0197,
+          0.0252
+        ],
+        "quintile_mean_excess": [
+          -0.0096,
+          -0.0023,
+          -0.0046,
+          -0.008,
+          -0.0003
+        ],
+        "top_minus_bottom": 0.0092,
+        "top_minus_bottom_95ci": [
+          -0.0014,
+          0.0179
+        ],
+        "months_positive_spread": 27
+      },
+      "6m": {
+        "n": 19169,
+        "months": 39,
+        "pooled_ic": 0.0174,
+        "pooled_p": 0.0163,
+        "fm_ic": 0.0215,
+        "fm_ic_95ci": [
+          -0.0029,
+          0.0365
+        ],
+        "quintile_mean_excess": [
+          -0.0189,
+          -0.0051,
+          -0.0112,
+          -0.0165,
+          0.0044
+        ],
+        "top_minus_bottom": 0.0233,
+        "top_minus_bottom_95ci": [
+          0.0074,
+          0.0339
+        ],
+        "months_positive_spread": 29
+      },
+      "12m": {
+        "n": 16217,
+        "months": 33,
+        "pooled_ic": 0.036,
+        "pooled_p": 4.6e-06,
+        "fm_ic": 0.0338,
+        "fm_ic_95ci": [
+          -0.0165,
+          0.0459
+        ],
+        "quintile_mean_excess": [
+          -0.0182,
+          -0.0013,
+          -0.0035,
+          -0.0229,
+          0.0327
+        ],
+        "top_minus_bottom": 0.051,
+        "top_minus_bottom_95ci": [
+          0.0276,
+          0.0651
+        ],
+        "months_positive_spread": 29
+      }
+    },
+    "pb_setup_window_fib": {
+      "20d": {
+        "n": 21629,
+        "months": 44,
+        "pooled_ic": 0.0071,
+        "pooled_p": 0.294,
+        "fm_ic": 0.0062,
+        "fm_ic_95ci": [
+          -0.0282,
+          0.0403
+        ],
+        "quintile_mean_excess": [
+          -0.003,
+          -0.0031,
+          -0.0008,
+          0.0024,
+          0.0009
+        ],
+        "top_minus_bottom": 0.004,
+        "top_minus_bottom_95ci": [
+          -0.0041,
+          0.0115
+        ],
+        "months_positive_spread": 24
+      },
+      "60d": {
+        "n": 20645,
+        "months": 42,
+        "pooled_ic": 0.0065,
+        "pooled_p": 0.347,
+        "fm_ic": 0.0208,
+        "fm_ic_95ci": [
+          -0.0191,
+          0.0539
+        ],
+        "quintile_mean_excess": [
+          -0.0143,
+          -0.0121,
+          -0.005,
+          0.0023,
+          0.0043
+        ],
+        "top_minus_bottom": 0.0186,
+        "top_minus_bottom_95ci": [
+          0.0018,
+          0.0343
+        ],
+        "months_positive_spread": 26
+      },
+      "6m": {
+        "n": 19169,
+        "months": 39,
+        "pooled_ic": 0.0424,
+        "pooled_p": 4.12e-09,
+        "fm_ic": 0.0598,
+        "fm_ic_95ci": [
+          0.0233,
+          0.0866
+        ],
+        "quintile_mean_excess": [
+          -0.0377,
+          -0.0308,
+          -0.0072,
+          0.0078,
+          0.0204
+        ],
+        "top_minus_bottom": 0.0581,
+        "top_minus_bottom_95ci": [
+          0.0348,
+          0.0708
+        ],
+        "months_positive_spread": 33
+      },
+      "12m": {
+        "n": 16217,
+        "months": 33,
+        "pooled_ic": 0.0623,
+        "pooled_p": 1.92e-15,
+        "fm_ic": 0.0779,
+        "fm_ic_95ci": [
+          0.0179,
+          0.0965
+        ],
+        "quintile_mean_excess": [
+          -0.0713,
+          -0.0366,
+          -0.0033,
+          0.0244,
+          0.0731
+        ],
+        "top_minus_bottom": 0.1444,
+        "top_minus_bottom_95ci": [
+          0.1013,
+          0.1624
+        ],
+        "months_positive_spread": 31
+      }
+    },
+    "pb_entry_window_fib": {
+      "20d": {
+        "n": 21629,
+        "months": 44,
+        "pooled_ic": -0.0456,
+        "pooled_p": 1.9e-11,
+        "fm_ic": -0.0193,
+        "fm_ic_95ci": [
+          -0.0463,
+          0.0091
+        ],
+        "quintile_mean_excess": [
+          -0.0004,
+          0.0009,
+          0.0005,
+          -0.001,
+          -0.0036
+        ],
+        "top_minus_bottom": -0.0032,
+        "top_minus_bottom_95ci": [
+          -0.01,
+          0.004
+        ],
+        "months_positive_spread": 17
+      },
+      "60d": {
+        "n": 20645,
+        "months": 42,
+        "pooled_ic": 0.0138,
+        "pooled_p": 0.0474,
+        "fm_ic": 0.0072,
+        "fm_ic_95ci": [
+          -0.028,
+          0.0333
+        ],
+        "quintile_mean_excess": [
+          -0.0042,
+          -0.0033,
+          -0.0063,
+          -0.004,
+          -0.0069
+        ],
+        "top_minus_bottom": -0.0026,
+        "top_minus_bottom_95ci": [
+          -0.0193,
+          0.0089
+        ],
+        "months_positive_spread": 20
+      },
+      "6m": {
+        "n": 19169,
+        "months": 39,
+        "pooled_ic": -0.0261,
+        "pooled_p": 0.000307,
+        "fm_ic": -0.0294,
+        "fm_ic_95ci": [
+          -0.0574,
+          -0.0074
+        ],
+        "quintile_mean_excess": [
+          0.0088,
+          0.003,
+          -0.014,
+          -0.0198,
+          -0.0249
+        ],
+        "top_minus_bottom": -0.0337,
+        "top_minus_bottom_95ci": [
+          -0.0646,
+          -0.0092
+        ],
+        "months_positive_spread": 15
+      },
+      "12m": {
+        "n": 16217,
+        "months": 33,
+        "pooled_ic": -0.034,
+        "pooled_p": 1.46e-05,
+        "fm_ic": -0.0337,
+        "fm_ic_95ci": [
+          -0.0524,
+          -0.023
+        ],
+        "quintile_mean_excess": [
+          0.0285,
+          0.0248,
+          -0.0113,
+          -0.0248,
+          -0.0294
+        ],
+        "top_minus_bottom": -0.0578,
+        "top_minus_bottom_95ci": [
+          -0.0757,
+          -0.0148
+        ],
+        "months_positive_spread": 11
+      }
+    },
+    "pb_impulse_gain_window_fib": {
+      "20d": {
+        "n": 21629,
+        "months": 44,
+        "pooled_ic": 0.0377,
+        "pooled_p": 2.94e-08,
+        "fm_ic": 0.0399,
+        "fm_ic_95ci": [
+          -0.0114,
+          0.0896
+        ],
+        "quintile_mean_excess": [
+          -0.0068,
+          -0.0037,
+          -0.0032,
+          -0.0005,
+          0.0104
+        ],
+        "top_minus_bottom": 0.0172,
+        "top_minus_bottom_95ci": [
+          0.0019,
+          0.0318
+        ],
+        "months_positive_spread": 29
+      },
+      "60d": {
+        "n": 20645,
+        "months": 42,
+        "pooled_ic": 0.0097,
+        "pooled_p": 0.165,
+        "fm_ic": 0.0473,
+        "fm_ic_95ci": [
+          -0.0161,
+          0.1097
+        ],
+        "quintile_mean_excess": [
+          -0.0185,
+          -0.0168,
+          -0.0108,
+          -0.0082,
+          0.0289
+        ],
+        "top_minus_bottom": 0.0474,
+        "top_minus_bottom_95ci": [
+          0.0156,
+          0.0797
+        ],
+        "months_positive_spread": 27
+      },
+      "6m": {
+        "n": 19169,
+        "months": 39,
+        "pooled_ic": 0.0739,
+        "pooled_p": 1.29e-24,
+        "fm_ic": 0.1122,
+        "fm_ic_95ci": [
+          0.043,
+          0.1618
+        ],
+        "quintile_mean_excess": [
+          -0.0482,
+          -0.0431,
+          -0.0259,
+          -0.0114,
+          0.0802
+        ],
+        "top_minus_bottom": 0.1285,
+        "top_minus_bottom_95ci": [
+          0.0629,
+          0.1773
+        ],
+        "months_positive_spread": 36
+      },
+      "12m": {
+        "n": 16217,
+        "months": 33,
+        "pooled_ic": 0.1046,
+        "pooled_p": 1.11e-40,
+        "fm_ic": 0.1408,
+        "fm_ic_95ci": [
+          0.0557,
+          0.1695
+        ],
+        "quintile_mean_excess": [
+          -0.0793,
+          -0.0846,
+          -0.0586,
+          0.0009,
+          0.2058
+        ],
+        "top_minus_bottom": 0.2851,
+        "top_minus_bottom_95ci": [
+          0.1477,
+          0.3142
+        ],
+        "months_positive_spread": 31
+      }
+    },
+    "pb_total_window_source": {
+      "20d": {
+        "n": 21629,
+        "months": 44,
+        "pooled_ic": -0.0316,
+        "pooled_p": 3.39e-06,
+        "fm_ic": -0.001,
+        "fm_ic_95ci": [
+          -0.0312,
+          0.0294
+        ],
+        "quintile_mean_excess": [
+          -0.0027,
+          -0.0009,
+          -0.0023,
+          0.0009,
+          0.0015
+        ],
+        "top_minus_bottom": 0.0042,
+        "top_minus_bottom_95ci": [
+          -0.0037,
+          0.0118
+        ],
+        "months_positive_spread": 23
+      },
+      "60d": {
+        "n": 20645,
+        "months": 42,
+        "pooled_ic": 0.0132,
+        "pooled_p": 0.0586,
+        "fm_ic": 0.0221,
+        "fm_ic_95ci": [
+          -0.0104,
+          0.0485
+        ],
+        "quintile_mean_excess": [
+          -0.0121,
+          -0.0079,
+          -0.0097,
+          -0.004,
+          0.0087
+        ],
+        "top_minus_bottom": 0.0208,
+        "top_minus_bottom_95ci": [
+          0.0035,
+          0.0344
+        ],
+        "months_positive_spread": 21
+      },
+      "6m": {
+        "n": 19169,
+        "months": 39,
+        "pooled_ic": 0.0048,
+        "pooled_p": 0.505,
+        "fm_ic": 0.0225,
+        "fm_ic_95ci": [
+          -0.0107,
+          0.0474
+        ],
+        "quintile_mean_excess": [
+          -0.0209,
+          -0.011,
+          -0.0176,
+          -0.0131,
+          0.0153
+        ],
+        "top_minus_bottom": 0.0362,
+        "top_minus_bottom_95ci": [
+          0.0124,
+          0.0463
+        ],
+        "months_positive_spread": 29
+      },
+      "12m": {
+        "n": 16217,
+        "months": 33,
+        "pooled_ic": 0.0178,
+        "pooled_p": 0.0237,
+        "fm_ic": 0.0369,
+        "fm_ic_95ci": [
+          -0.0149,
+          0.049
+        ],
+        "quintile_mean_excess": [
+          -0.0208,
+          -0.0257,
+          -0.0256,
+          -0.0147,
+          0.0731
+        ],
+        "top_minus_bottom": 0.0939,
+        "top_minus_bottom_95ci": [
+          0.0682,
+          0.1208
+        ],
+        "months_positive_spread": 29
+      }
+    },
+    "pb_gate_window_source": {
+      "20d": {
+        "n": 21629,
+        "months": 44,
+        "pooled_ic": -0.0113,
+        "pooled_p": 0.0962,
+        "fm_ic": -0.0159,
+        "fm_ic_95ci": [
+          -0.0417,
+          0.0101
+        ],
+        "quintile_mean_excess": [
+          -0.0013,
+          -0.0005,
+          -0.0004,
+          -0.0012,
+          -0.0002
+        ],
+        "top_minus_bottom": 0.0011,
+        "top_minus_bottom_95ci": [
+          -0.0029,
+          0.005
+        ],
+        "months_positive_spread": 20
+      },
+      "60d": {
+        "n": 20645,
+        "months": 42,
+        "pooled_ic": -0.0012,
+        "pooled_p": 0.866,
+        "fm_ic": 0.002,
+        "fm_ic_95ci": [
+          -0.0326,
+          0.0289
+        ],
+        "quintile_mean_excess": [
+          -0.0101,
+          -0.0044,
+          -0.0044,
+          -0.0082,
+          0.0023
+        ],
+        "top_minus_bottom": 0.0124,
+        "top_minus_bottom_95ci": [
+          0.0007,
+          0.0217
+        ],
+        "months_positive_spread": 26
+      },
+      "6m": {
+        "n": 19169,
+        "months": 39,
+        "pooled_ic": 0.028,
+        "pooled_p": 0.000106,
+        "fm_ic": 0.0306,
+        "fm_ic_95ci": [
+          0.009,
+          0.0494
+        ],
+        "quintile_mean_excess": [
+          -0.0226,
+          -0.0103,
+          -0.0103,
+          -0.0178,
+          0.0137
+        ],
+        "top_minus_bottom": 0.0362,
+        "top_minus_bottom_95ci": [
+          0.022,
+          0.0477
+        ],
+        "months_positive_spread": 30
+      },
+      "12m": {
+        "n": 16217,
+        "months": 33,
+        "pooled_ic": 0.0544,
+        "pooled_p": 4.06e-12,
+        "fm_ic": 0.049,
+        "fm_ic_95ci": [
+          0.0018,
+          0.0631
+        ],
+        "quintile_mean_excess": [
+          -0.0297,
+          -0.0148,
+          -0.0086,
+          -0.0238,
+          0.0633
+        ],
+        "top_minus_bottom": 0.093,
+        "top_minus_bottom_95ci": [
+          0.0496,
+          0.1039
+        ],
+        "months_positive_spread": 33
+      }
+    },
+    "pb_setup_window_source": {
+      "20d": {
+        "n": 21629,
+        "months": 44,
+        "pooled_ic": 0.0152,
+        "pooled_p": 0.0251,
+        "fm_ic": 0.0169,
+        "fm_ic_95ci": [
+          -0.0246,
+          0.0557
+        ],
+        "quintile_mean_excess": [
+          -0.0031,
+          -0.0054,
+          -0.0005,
+          0.002,
+          0.0033
+        ],
+        "top_minus_bottom": 0.0063,
+        "top_minus_bottom_95ci": [
+          -0.004,
+          0.0156
+        ],
+        "months_positive_spread": 27
+      },
+      "60d": {
+        "n": 20645,
+        "months": 42,
+        "pooled_ic": 0.0055,
+        "pooled_p": 0.432,
+        "fm_ic": 0.0264,
+        "fm_ic_95ci": [
+          -0.0249,
+          0.0724
+        ],
+        "quintile_mean_excess": [
+          -0.0134,
+          -0.0166,
+          -0.0069,
+          -0.0023,
+          0.0142
+        ],
+        "top_minus_bottom": 0.0276,
+        "top_minus_bottom_95ci": [
+          0.0054,
+          0.0486
+        ],
+        "months_positive_spread": 25
+      },
+      "6m": {
+        "n": 19169,
+        "months": 39,
+        "pooled_ic": 0.0509,
+        "pooled_p": 1.82e-12,
+        "fm_ic": 0.0768,
+        "fm_ic_95ci": [
+          0.0238,
+          0.1152
+        ],
+        "quintile_mean_excess": [
+          -0.0371,
+          -0.0334,
+          -0.0251,
+          -0.0004,
+          0.0481
+        ],
+        "top_minus_bottom": 0.0852,
+        "top_minus_bottom_95ci": [
+          0.0511,
+          0.1034
+        ],
+        "months_positive_spread": 34
+      },
+      "12m": {
+        "n": 16217,
+        "months": 33,
+        "pooled_ic": 0.0802,
+        "pooled_p": 1.48e-24,
+        "fm_ic": 0.102,
+        "fm_ic_95ci": [
+          0.025,
+          0.1274
+        ],
+        "quintile_mean_excess": [
+          -0.0711,
+          -0.0669,
+          -0.0182,
+          0.0154,
+          0.1263
+        ],
+        "top_minus_bottom": 0.1974,
+        "top_minus_bottom_95ci": [
+          0.1374,
+          0.224
+        ],
+        "months_positive_spread": 31
+      }
+    },
+    "pb_entry_window_source": {
+      "20d": {
+        "n": 21629,
+        "months": 44,
+        "pooled_ic": -0.0489,
+        "pooled_p": 6.38e-13,
+        "fm_ic": -0.017,
+        "fm_ic_95ci": [
+          -0.0438,
+          0.0125
+        ],
+        "quintile_mean_excess": [
+          -0.0004,
+          0.0016,
+          -0.0023,
+          0.0004,
+          -0.0028
+        ],
+        "top_minus_bottom": -0.0025,
+        "top_minus_bottom_95ci": [
+          -0.0091,
+          0.005
+        ],
+        "months_positive_spread": 17
+      },
+      "60d": {
+        "n": 20645,
+        "months": 42,
+        "pooled_ic": 0.0149,
+        "pooled_p": 0.0325,
+        "fm_ic": 0.0101,
+        "fm_ic_95ci": [
+          -0.0246,
+          0.0353
+        ],
+        "quintile_mean_excess": [
+          -0.0044,
+          -0.0046,
+          -0.0093,
+          -0.0031,
+          -0.0033
+        ],
+        "top_minus_bottom": 0.0011,
+        "top_minus_bottom_95ci": [
+          -0.0149,
+          0.012
+        ],
+        "months_positive_spread": 19
+      },
+      "6m": {
+        "n": 19169,
+        "months": 39,
+        "pooled_ic": -0.0255,
+        "pooled_p": 0.000405,
+        "fm_ic": -0.0253,
+        "fm_ic_95ci": [
+          -0.0533,
+          -0.004
+        ],
+        "quintile_mean_excess": [
+          0.0064,
+          0.0018,
+          -0.0187,
+          -0.0192,
+          -0.0172
+        ],
+        "top_minus_bottom": -0.0237,
+        "top_minus_bottom_95ci": [
+          -0.0538,
+          -0.0063
+        ],
+        "months_positive_spread": 14
+      },
+      "12m": {
+        "n": 16217,
+        "months": 33,
+        "pooled_ic": -0.0316,
+        "pooled_p": 5.82e-05,
+        "fm_ic": -0.0274,
+        "fm_ic_95ci": [
+          -0.0436,
+          -0.0214
+        ],
+        "quintile_mean_excess": [
+          0.0273,
+          0.016,
+          -0.0215,
+          -0.0244,
+          -0.0099
+        ],
+        "top_minus_bottom": -0.0372,
+        "top_minus_bottom_95ci": [
+          -0.0611,
+          -0.0014
+        ],
+        "months_positive_spread": 15
+      }
+    },
+    "pb_impulse_gain_window_source": {
+      "20d": {
+        "n": 21629,
+        "months": 44,
+        "pooled_ic": 0.0377,
+        "pooled_p": 2.94e-08,
+        "fm_ic": 0.0399,
+        "fm_ic_95ci": [
+          -0.0114,
+          0.0896
+        ],
+        "quintile_mean_excess": [
+          -0.0068,
+          -0.0037,
+          -0.0032,
+          -0.0005,
+          0.0104
+        ],
+        "top_minus_bottom": 0.0172,
+        "top_minus_bottom_95ci": [
+          0.0019,
+          0.0318
+        ],
+        "months_positive_spread": 29
+      },
+      "60d": {
+        "n": 20645,
+        "months": 42,
+        "pooled_ic": 0.0097,
+        "pooled_p": 0.165,
+        "fm_ic": 0.0473,
+        "fm_ic_95ci": [
+          -0.0161,
+          0.1097
+        ],
+        "quintile_mean_excess": [
+          -0.0185,
+          -0.0168,
+          -0.0108,
+          -0.0082,
+          0.0289
+        ],
+        "top_minus_bottom": 0.0474,
+        "top_minus_bottom_95ci": [
+          0.0156,
+          0.0797
+        ],
+        "months_positive_spread": 27
+      },
+      "6m": {
+        "n": 19169,
+        "months": 39,
+        "pooled_ic": 0.0739,
+        "pooled_p": 1.29e-24,
+        "fm_ic": 0.1122,
+        "fm_ic_95ci": [
+          0.043,
+          0.1618
+        ],
+        "quintile_mean_excess": [
+          -0.0482,
+          -0.0431,
+          -0.0259,
+          -0.0114,
+          0.0802
+        ],
+        "top_minus_bottom": 0.1285,
+        "top_minus_bottom_95ci": [
+          0.0629,
+          0.1773
+        ],
+        "months_positive_spread": 36
+      },
+      "12m": {
+        "n": 16217,
+        "months": 33,
+        "pooled_ic": 0.1046,
+        "pooled_p": 1.11e-40,
+        "fm_ic": 0.1408,
+        "fm_ic_95ci": [
+          0.0557,
+          0.1695
+        ],
+        "quintile_mean_excess": [
+          -0.0793,
+          -0.0846,
+          -0.0586,
+          0.0009,
+          0.2058
+        ],
+        "top_minus_bottom": 0.2851,
+        "top_minus_bottom_95ci": [
+          0.1477,
+          0.3142
+        ],
+        "months_positive_spread": 31
+      }
+    },
+    "pb_total_zigzag_fib": {
+      "20d": {
+        "n": 21629,
+        "months": 44,
+        "pooled_ic": -0.0097,
+        "pooled_p": 0.154,
+        "fm_ic": 0.0082,
+        "fm_ic_95ci": [
+          -0.0185,
+          0.0361
+        ],
+        "quintile_mean_excess": [
+          -0.0047,
+          0.001,
+          0.0014,
+          -0.0003,
+          -0.001
+        ],
+        "top_minus_bottom": 0.0037,
+        "top_minus_bottom_95ci": [
+          -0.0027,
+          0.0106
+        ],
+        "months_positive_spread": 25
+      },
+      "60d": {
+        "n": 20645,
+        "months": 42,
+        "pooled_ic": 0.0072,
+        "pooled_p": 0.304,
+        "fm_ic": 0.0164,
+        "fm_ic_95ci": [
+          -0.0069,
+          0.0357
+        ],
+        "quintile_mean_excess": [
+          -0.0115,
+          -0.0056,
+          -0.0033,
+          -0.0028,
+          -0.0017
+        ],
+        "top_minus_bottom": 0.0098,
+        "top_minus_bottom_95ci": [
+          0.0006,
+          0.0181
+        ],
+        "months_positive_spread": 23
+      },
+      "6m": {
+        "n": 19169,
+        "months": 39,
+        "pooled_ic": 0.0068,
+        "pooled_p": 0.346,
+        "fm_ic": 0.0142,
+        "fm_ic_95ci": [
+          0.0023,
+          0.0247
+        ],
+        "quintile_mean_excess": [
+          -0.0194,
+          -0.0066,
+          -0.0102,
+          -0.0028,
+          -0.008
+        ],
+        "top_minus_bottom": 0.0115,
+        "top_minus_bottom_95ci": [
+          -0.005,
+          0.0223
+        ],
+        "months_positive_spread": 24
+      },
+      "12m": {
+        "n": 16217,
+        "months": 33,
+        "pooled_ic": 0.0032,
+        "pooled_p": 0.687,
+        "fm_ic": 0.0094,
+        "fm_ic_95ci": [
+          -0.0055,
+          0.0168
+        ],
+        "quintile_mean_excess": [
+          -0.0088,
+          -0.0032,
+          -0.0103,
+          0.0154,
+          -0.0056
+        ],
+        "top_minus_bottom": 0.0032,
+        "top_minus_bottom_95ci": [
+          -0.0161,
+          0.0331
+        ],
+        "months_positive_spread": 19
+      }
+    },
+    "pb_gate_zigzag_fib": {
+      "20d": {
+        "n": 21629,
+        "months": 44,
+        "pooled_ic": 0.0048,
+        "pooled_p": 0.481,
+        "fm_ic": 0.006,
+        "fm_ic_95ci": [
+          -0.0167,
+          0.0284
+        ],
+        "quintile_mean_excess": [
+          -0.0025,
+          -0.0,
+          -0.0001,
+          -0.0014,
+          0.0003
+        ],
+        "top_minus_bottom": 0.0028,
+        "top_minus_bottom_95ci": [
+          -0.0009,
+          0.0065
+        ],
+        "months_positive_spread": 24
+      },
+      "60d": {
+        "n": 20645,
+        "months": 42,
+        "pooled_ic": 0.0204,
+        "pooled_p": 0.00338,
+        "fm_ic": 0.0181,
+        "fm_ic_95ci": [
+          -0.0092,
+          0.0414
+        ],
+        "quintile_mean_excess": [
+          -0.0102,
+          -0.0022,
+          -0.0047,
+          -0.0076,
+          -0.0002
+        ],
+        "top_minus_bottom": 0.01,
+        "top_minus_bottom_95ci": [
+          -0.0005,
+          0.0191
+        ],
+        "months_positive_spread": 25
+      },
+      "6m": {
+        "n": 19169,
+        "months": 39,
+        "pooled_ic": 0.0222,
+        "pooled_p": 0.00216,
+        "fm_ic": 0.0248,
+        "fm_ic_95ci": [
+          -0.0055,
+          0.045
+        ],
+        "quintile_mean_excess": [
+          -0.0208,
+          -0.0037,
+          -0.0081,
+          -0.0175,
+          0.0029
+        ],
+        "top_minus_bottom": 0.0236,
+        "top_minus_bottom_95ci": [
+          0.0055,
+          0.0359
+        ],
+        "months_positive_spread": 28
+      },
+      "12m": {
+        "n": 16217,
+        "months": 33,
+        "pooled_ic": 0.0392,
+        "pooled_p": 6.06e-07,
+        "fm_ic": 0.0366,
+        "fm_ic_95ci": [
+          -0.0192,
+          0.0555
+        ],
+        "quintile_mean_excess": [
+          -0.0276,
+          0.0026,
+          0.0053,
+          -0.0207,
+          0.0273
+        ],
+        "top_minus_bottom": 0.055,
+        "top_minus_bottom_95ci": [
+          0.0368,
+          0.0635
+        ],
+        "months_positive_spread": 31
+      }
+    },
+    "pb_setup_zigzag_fib": {
+      "20d": {
+        "n": 21629,
+        "months": 44,
+        "pooled_ic": 0.0138,
+        "pooled_p": 0.0421,
+        "fm_ic": 0.0204,
+        "fm_ic_95ci": [
+          -0.0117,
+          0.0542
+        ],
+        "quintile_mean_excess": [
+          -0.006,
+          -0.0012,
+          -0.0001,
+          0.0013,
+          0.0022
+        ],
+        "top_minus_bottom": 0.0082,
+        "top_minus_bottom_95ci": [
+          -0.0003,
+          0.0169
+        ],
+        "months_positive_spread": 26
+      },
+      "60d": {
+        "n": 20645,
+        "months": 42,
+        "pooled_ic": 0.0109,
+        "pooled_p": 0.117,
+        "fm_ic": 0.0198,
+        "fm_ic_95ci": [
+          -0.0111,
+          0.0487
+        ],
+        "quintile_mean_excess": [
+          -0.0133,
+          -0.008,
+          -0.0059,
+          -0.0008,
+          0.003
+        ],
+        "top_minus_bottom": 0.0164,
+        "top_minus_bottom_95ci": [
+          0.0034,
+          0.0284
+        ],
+        "months_positive_spread": 25
+      },
+      "6m": {
+        "n": 19169,
+        "months": 39,
+        "pooled_ic": 0.0315,
+        "pooled_p": 1.25e-05,
+        "fm_ic": 0.0428,
+        "fm_ic_95ci": [
+          0.0227,
+          0.056
+        ],
+        "quintile_mean_excess": [
+          -0.0258,
+          -0.0199,
+          -0.0162,
+          -0.005,
+          0.0194
+        ],
+        "top_minus_bottom": 0.0451,
+        "top_minus_bottom_95ci": [
+          0.0254,
+          0.0621
+        ],
+        "months_positive_spread": 31
+      },
+      "12m": {
+        "n": 16217,
+        "months": 33,
+        "pooled_ic": 0.0276,
+        "pooled_p": 0.000443,
+        "fm_ic": 0.0386,
+        "fm_ic_95ci": [
+          0.0072,
+          0.0519
+        ],
+        "quintile_mean_excess": [
+          -0.0236,
+          -0.0179,
+          -0.0224,
+          -0.0004,
+          0.0508
+        ],
+        "top_minus_bottom": 0.0744,
+        "top_minus_bottom_95ci": [
+          0.0554,
+          0.105
+        ],
+        "months_positive_spread": 26
+      }
+    },
+    "pb_entry_zigzag_fib": {
+      "20d": {
+        "n": 21629,
+        "months": 44,
+        "pooled_ic": -0.03,
+        "pooled_p": 1.04e-05,
+        "fm_ic": -0.0062,
+        "fm_ic_95ci": [
+          -0.0327,
+          0.0213
+        ],
+        "quintile_mean_excess": [
+          -0.0006,
+          0.001,
+          -0.002,
+          0.0012,
+          -0.0032
+        ],
+        "top_minus_bottom": -0.0026,
+        "top_minus_bottom_95ci": [
+          -0.0089,
+          0.004
+        ],
+        "months_positive_spread": 20
+      },
+      "60d": {
+        "n": 20645,
+        "months": 42,
+        "pooled_ic": 0.0013,
+        "pooled_p": 0.854,
+        "fm_ic": 0.0053,
+        "fm_ic_95ci": [
+          -0.0231,
+          0.0316
+        ],
+        "quintile_mean_excess": [
+          -0.0018,
+          -0.0034,
+          -0.0099,
+          -0.0015,
+          -0.008
+        ],
+        "top_minus_bottom": -0.0061,
+        "top_minus_bottom_95ci": [
+          -0.0214,
+          0.0058
+        ],
+        "months_positive_spread": 16
+      },
+      "6m": {
+        "n": 19169,
+        "months": 39,
+        "pooled_ic": -0.0193,
+        "pooled_p": 0.00767,
+        "fm_ic": -0.0166,
+        "fm_ic_95ci": [
+          -0.0348,
+          0.0046
+        ],
+        "quintile_mean_excess": [
+          0.0033,
+          -0.0029,
+          -0.0122,
+          -0.0048,
+          -0.03
+        ],
+        "top_minus_bottom": -0.0333,
+        "top_minus_bottom_95ci": [
+          -0.06,
+          -0.0087
+        ],
+        "months_positive_spread": 11
+      },
+      "12m": {
+        "n": 16217,
+        "months": 33,
+        "pooled_ic": -0.0239,
+        "pooled_p": 0.00235,
+        "fm_ic": -0.0227,
+        "fm_ic_95ci": [
+          -0.0308,
+          -0.0082
+        ],
+        "quintile_mean_excess": [
+          0.018,
+          0.0076,
+          -0.0041,
+          0.0108,
+          -0.0443
+        ],
+        "top_minus_bottom": -0.0624,
+        "top_minus_bottom_95ci": [
+          -0.0786,
+          -0.022
+        ],
+        "months_positive_spread": 12
+      }
+    },
+    "pb_impulse_gain_zigzag_fib": {
+      "20d": {
+        "n": 21629,
+        "months": 44,
+        "pooled_ic": 0.026,
+        "pooled_p": 0.000135,
+        "fm_ic": 0.0345,
+        "fm_ic_95ci": [
+          -0.0101,
+          0.0787
+        ],
+        "quintile_mean_excess": [
+          -0.0067,
+          -0.0039,
+          -0.0018,
+          -0.0024,
+          0.011
+        ],
+        "top_minus_bottom": 0.0177,
+        "top_minus_bottom_95ci": [
+          0.0047,
+          0.0304
+        ],
+        "months_positive_spread": 31
+      },
+      "60d": {
+        "n": 20645,
+        "months": 42,
+        "pooled_ic": 0.0449,
+        "pooled_p": 1.05e-10,
+        "fm_ic": 0.0585,
+        "fm_ic_95ci": [
+          0.0077,
+          0.1058
+        ],
+        "quintile_mean_excess": [
+          -0.0234,
+          -0.0161,
+          -0.012,
+          -0.0049,
+          0.0311
+        ],
+        "top_minus_bottom": 0.0546,
+        "top_minus_bottom_95ci": [
+          0.027,
+          0.0809
+        ],
+        "months_positive_spread": 31
+      },
+      "6m": {
+        "n": 19169,
+        "months": 39,
+        "pooled_ic": 0.059,
+        "pooled_p": 2.95e-16,
+        "fm_ic": 0.0858,
+        "fm_ic_95ci": [
+          0.0284,
+          0.1251
+        ],
+        "quintile_mean_excess": [
+          -0.0498,
+          -0.0322,
+          -0.0283,
+          -0.0135,
+          0.0754
+        ],
+        "top_minus_bottom": 0.1252,
+        "top_minus_bottom_95ci": [
+          0.0615,
+          0.1661
+        ],
+        "months_positive_spread": 35
+      },
+      "12m": {
+        "n": 16217,
+        "months": 33,
+        "pooled_ic": 0.0893,
+        "pooled_p": 4.54e-30,
+        "fm_ic": 0.1136,
+        "fm_ic_95ci": [
+          0.0357,
+          0.142
+        ],
+        "quintile_mean_excess": [
+          -0.0948,
+          -0.0511,
+          -0.0441,
+          -0.0078,
+          0.1824
+        ],
+        "top_minus_bottom": 0.2772,
+        "top_minus_bottom_95ci": [
+          0.1503,
+          0.3151
+        ],
+        "months_positive_spread": 32
+      }
+    }
+  },
+  "rank_corr_v1_vs_pullback": -0.1116,
+  "conditional_double_sort": {
+    "60d": {
+      "pb_total_window_fib_within_v1_tercile": {
+        "low": {
+          "months": 42,
+          "fm_ic": 0.0206,
+          "top_minus_bottom": 0.0098,
+          "top_minus_bottom_95ci": [
+            -0.0065,
+            0.0214
+          ]
+        },
+        "mid": {
+          "months": 42,
+          "fm_ic": 0.0064,
+          "top_minus_bottom": 0.0062,
+          "top_minus_bottom_95ci": [
+            -0.0053,
+            0.0168
+          ]
+        },
+        "high": {
+          "months": 42,
+          "fm_ic": 0.0402,
+          "top_minus_bottom": 0.0273,
+          "top_minus_bottom_95ci": [
+            0.0042,
+            0.0491
+          ]
+        }
+      },
+      "pb_total_zigzag_fib_within_v1_tercile": {
+        "low": {
+          "months": 42,
+          "fm_ic": 0.0155,
+          "top_minus_bottom": 0.0041,
+          "top_minus_bottom_95ci": [
+            -0.0077,
+            0.013
+          ]
+        },
+        "mid": {
+          "months": 42,
+          "fm_ic": 0.0011,
+          "top_minus_bottom": 0.0067,
+          "top_minus_bottom_95ci": [
+            -0.0088,
+            0.0215
+          ]
+        },
+        "high": {
+          "months": 42,
+          "fm_ic": 0.027,
+          "top_minus_bottom": 0.0199,
+          "top_minus_bottom_95ci": [
+            0.0042,
+            0.0364
+          ]
+        }
+      },
+      "pb_total_window_source_within_v1_tercile": {
+        "low": {
+          "months": 42,
+          "fm_ic": 0.0105,
+          "top_minus_bottom": 0.0131,
+          "top_minus_bottom_95ci": [
+            -0.0069,
+            0.0317
+          ]
+        },
+        "mid": {
+          "months": 42,
+          "fm_ic": 0.0207,
+          "top_minus_bottom": 0.0148,
+          "top_minus_bottom_95ci": [
+            0.003,
+            0.0264
+          ]
+        },
+        "high": {
+          "months": 42,
+          "fm_ic": 0.0368,
+          "top_minus_bottom": 0.0363,
+          "top_minus_bottom_95ci": [
+            0.0082,
+            0.0611
+          ]
+        }
+      },
+      "pb_setup_window_fib_within_v1_tercile": {
+        "low": {
+          "months": 42,
+          "fm_ic": 0.0297,
+          "top_minus_bottom": 0.0184,
+          "top_minus_bottom_95ci": [
+            0.0025,
+            0.0344
+          ]
+        },
+        "mid": {
+          "months": 42,
+          "fm_ic": -0.0049,
+          "top_minus_bottom": 0.0106,
+          "top_minus_bottom_95ci": [
+            -0.0055,
+            0.0256
+          ]
+        },
+        "high": {
+          "months": 42,
+          "fm_ic": 0.0073,
+          "top_minus_bottom": 0.0373,
+          "top_minus_bottom_95ci": [
+            0.0104,
+            0.0654
+          ]
+        }
+      },
+      "pb_entry_window_fib_within_v1_tercile": {
+        "low": {
+          "months": 42,
+          "fm_ic": 0.0101,
+          "top_minus_bottom": 0.0049,
+          "top_minus_bottom_95ci": [
+            -0.0147,
+            0.0199
+          ]
+        },
+        "mid": {
+          "months": 42,
+          "fm_ic": 0.0117,
+          "top_minus_bottom": 0.0059,
+          "top_minus_bottom_95ci": [
+            -0.0121,
+            0.0211
+          ]
+        },
+        "high": {
+          "months": 42,
+          "fm_ic": 0.0396,
+          "top_minus_bottom": 0.0136,
+          "top_minus_bottom_95ci": [
+            -0.0188,
+            0.039
+          ]
+        }
+      },
+      "v1_roc_continuous_within_v1_tercile": {
+        "low": {
+          "months": 42,
+          "fm_ic": -0.0074,
+          "top_minus_bottom": -0.0166,
+          "top_minus_bottom_95ci": [
+            -0.0527,
+            0.019
+          ]
+        },
+        "mid": {
+          "months": 42,
+          "fm_ic": 0.0147,
+          "top_minus_bottom": 0.0045,
+          "top_minus_bottom_95ci": [
+            -0.0134,
+            0.0216
+          ]
+        },
+        "high": {
+          "months": 42,
+          "fm_ic": 0.0614,
+          "top_minus_bottom": 0.0723,
+          "top_minus_bottom_95ci": [
+            0.0383,
+            0.1128
+          ]
+        }
+      },
+      "pb_impulse_gain_window_fib_within_v1_tercile": {
+        "low": {
+          "months": 42,
+          "fm_ic": 0.035,
+          "top_minus_bottom": 0.0264,
+          "top_minus_bottom_95ci": [
+            -0.0036,
+            0.0571
+          ]
+        },
+        "mid": {
+          "months": 42,
+          "fm_ic": 0.02,
+          "top_minus_bottom": 0.0232,
+          "top_minus_bottom_95ci": [
+            -0.0074,
+            0.0556
+          ]
+        },
+        "high": {
+          "months": 42,
+          "fm_ic": 0.0403,
+          "top_minus_bottom": 0.0669,
+          "top_minus_bottom_95ci": [
+            0.0249,
+            0.108
+          ]
+        }
+      },
+      "v1_within_pullback_tercile": {
+        "low": {
+          "months": 42,
+          "fm_ic": 0.04,
+          "top_minus_bottom": 0.018,
+          "top_minus_bottom_95ci": [
+            -0.0064,
+            0.0507
+          ]
+        },
+        "mid": {
+          "months": 42,
+          "fm_ic": 0.0561,
+          "top_minus_bottom": 0.0299,
+          "top_minus_bottom_95ci": [
+            0.0075,
+            0.0606
+          ]
+        },
+        "high": {
+          "months": 42,
+          "fm_ic": 0.0582,
+          "top_minus_bottom": 0.0454,
+          "top_minus_bottom_95ci": [
+            0.0178,
+            0.0844
+          ]
+        }
+      }
+    },
+    "12m": {
+      "pb_total_window_fib_within_v1_tercile": {
+        "low": {
+          "months": 33,
+          "fm_ic": 0.0389,
+          "top_minus_bottom": 0.0372,
+          "top_minus_bottom_95ci": [
+            -0.0144,
+            0.0612
+          ]
+        },
+        "mid": {
+          "months": 33,
+          "fm_ic": 0.0229,
+          "top_minus_bottom": -0.0101,
+          "top_minus_bottom_95ci": [
+            -0.0451,
+            0.0522
+          ]
+        },
+        "high": {
+          "months": 33,
+          "fm_ic": 0.0237,
+          "top_minus_bottom": 0.1087,
+          "top_minus_bottom_95ci": [
+            0.0646,
+            0.233
+          ]
+        }
+      },
+      "pb_total_zigzag_fib_within_v1_tercile": {
+        "low": {
+          "months": 33,
+          "fm_ic": 0.0237,
+          "top_minus_bottom": 0.0253,
+          "top_minus_bottom_95ci": [
+            -0.0164,
+            0.0367
+          ]
+        },
+        "mid": {
+          "months": 33,
+          "fm_ic": 0.007,
+          "top_minus_bottom": -0.0264,
+          "top_minus_bottom_95ci": [
+            -0.0521,
+            0.0376
+          ]
+        },
+        "high": {
+          "months": 33,
+          "fm_ic": 0.0049,
+          "top_minus_bottom": -0.0086,
+          "top_minus_bottom_95ci": [
+            -0.0225,
+            0.0687
+          ]
+        }
+      },
+      "pb_total_window_source_within_v1_tercile": {
+        "low": {
+          "months": 33,
+          "fm_ic": 0.0449,
+          "top_minus_bottom": 0.0868,
+          "top_minus_bottom_95ci": [
+            -0.0156,
+            0.1229
+          ]
+        },
+        "mid": {
+          "months": 33,
+          "fm_ic": 0.0398,
+          "top_minus_bottom": 0.0321,
+          "top_minus_bottom_95ci": [
+            -0.0031,
+            0.0872
+          ]
+        },
+        "high": {
+          "months": 33,
+          "fm_ic": 0.0377,
+          "top_minus_bottom": 0.1757,
+          "top_minus_bottom_95ci": [
+            0.1478,
+            0.275
+          ]
+        }
+      },
+      "pb_setup_window_fib_within_v1_tercile": {
+        "low": {
+          "months": 33,
+          "fm_ic": 0.0722,
+          "top_minus_bottom": 0.1038,
+          "top_minus_bottom_95ci": [
+            -0.0016,
+            0.1387
+          ]
+        },
+        "mid": {
+          "months": 33,
+          "fm_ic": 0.0342,
+          "top_minus_bottom": 0.0769,
+          "top_minus_bottom_95ci": [
+            0.0081,
+            0.0896
+          ]
+        },
+        "high": {
+          "months": 33,
+          "fm_ic": 0.0639,
+          "top_minus_bottom": 0.2476,
+          "top_minus_bottom_95ci": [
+            0.235,
+            0.3135
+          ]
+        }
+      },
+      "pb_entry_window_fib_within_v1_tercile": {
+        "low": {
+          "months": 33,
+          "fm_ic": -0.0021,
+          "top_minus_bottom": -0.0262,
+          "top_minus_bottom_95ci": [
+            -0.0703,
+            0.0315
+          ]
+        },
+        "mid": {
+          "months": 33,
+          "fm_ic": 0.0012,
+          "top_minus_bottom": -0.0492,
+          "top_minus_bottom_95ci": [
+            -0.0864,
+            0.0408
+          ]
+        },
+        "high": {
+          "months": 33,
+          "fm_ic": -0.0259,
+          "top_minus_bottom": -0.0005,
+          "top_minus_bottom_95ci": [
+            -0.0331,
+            0.1311
+          ]
+        }
+      },
+      "v1_roc_continuous_within_v1_tercile": {
+        "low": {
+          "months": 33,
+          "fm_ic": -0.0296,
+          "top_minus_bottom": -0.089,
+          "top_minus_bottom_95ci": [
+            -0.1072,
+            0.0436
+          ]
+        },
+        "mid": {
+          "months": 33,
+          "fm_ic": 0.0541,
+          "top_minus_bottom": 0.0921,
+          "top_minus_bottom_95ci": [
+            0.0301,
+            0.1125
+          ]
+        },
+        "high": {
+          "months": 33,
+          "fm_ic": 0.1824,
+          "top_minus_bottom": 0.4335,
+          "top_minus_bottom_95ci": [
+            0.4081,
+            0.5233
+          ]
+        }
+      },
+      "pb_impulse_gain_window_fib_within_v1_tercile": {
+        "low": {
+          "months": 33,
+          "fm_ic": 0.1116,
+          "top_minus_bottom": 0.1868,
+          "top_minus_bottom_95ci": [
+            -0.0073,
+            0.2342
+          ]
+        },
+        "mid": {
+          "months": 33,
+          "fm_ic": 0.0734,
+          "top_minus_bottom": 0.188,
+          "top_minus_bottom_95ci": [
+            0.0,
+            0.2222
+          ]
+        },
+        "high": {
+          "months": 33,
+          "fm_ic": 0.132,
+          "top_minus_bottom": 0.3822,
+          "top_minus_bottom_95ci": [
+            0.2729,
+            0.4248
+          ]
+        }
+      },
+      "v1_within_pullback_tercile": {
+        "low": {
+          "months": 33,
+          "fm_ic": 0.1261,
+          "top_minus_bottom": 0.1121,
+          "top_minus_bottom_95ci": [
+            0.0337,
+            0.2459
+          ]
+        },
+        "mid": {
+          "months": 33,
+          "fm_ic": 0.1195,
+          "top_minus_bottom": 0.1262,
+          "top_minus_bottom_95ci": [
+            0.1184,
+            0.1966
+          ]
+        },
+        "high": {
+          "months": 33,
+          "fm_ic": 0.0859,
+          "top_minus_bottom": 0.1957,
+          "top_minus_bottom_95ci": [
+            0.1826,
+            0.3828
+          ]
+        }
+      }
+    }
+  },
+  "verdict": "통제 유니버스 492종목·22,121 (종목,월) 표본에서 기술 상태 점수 v1이 모든 기간에서 눌림목 점수를 이긴다. v1 FM IC는 60일 +0.051 / 6개월 +0.112 / 12개월 +0.109으로 신뢰구간이 0을 배제하고, 눌림목 총점은 20일 −0.009 / 60일 +0.018 / 6개월 +0.011 / 12개월 +0.020으로 어느 기간에서도 0과 구별되지 않는다. 눌림목의 본진인 20~60일에서도 0이므로 '기간 선택이 불공정했다'로는 설명되지 않는다. 부수적으로, 손으로 고르지 않은 유니버스에서 v1을 처음 재채점한 결과 두 절반이 모두 살아남았다(가격구조 12개월 +0.090, 모멘텀 +0.111). 눌림목을 분해하면 셋업 40점은 약한 양(12개월 +0.075)이고 진입 타이밍 60점은 유의하게 음(−0.048)이어서 서로 상쇄된다. 셋업이 일하는 이유는 필수조건인 '임펄스 상승률 ≥20%'가 모멘텀의 약한 대용이기 때문이고, 진입 점수가 역방향인 이유는 지지선 근접·깊은 되돌림·낮은 RSI에 높은 점수를 줘서 더 많이 빠진 종목을 고르기 때문이다. 합치는 문제: v1 상위 3분위 안에서 눌림목 총점이 60일 +2.73%의 추가 스프레드를 내고 세 변형 모두 같은 부호로 재현되지만(12개월은 zigzag에서 부호가 뒤집혀 사전선언 기준 미달), 같은 자리에서 v1 자신의 연속 ROC가 +7.23%, 임펄스 상승률이 +6.69%로 더 크게 기여한다. 즉 눌림목이 더하는 것은 v1에 없는 정보가 아니라 v1이 모멘텀을 40점 구간으로 뭉개며 버린 해상도이며, 그 해상도는 눌림목을 붙이는 것보다 모멘텀의 구간화를 푸는 쪽이 더 잘 회복한다. 결론: 눌림목 도입 근거 없음, v1 유지, v2 후보는 '모멘텀 구간화 완화'(탐색적 결과이므로 사전선언 후 별도 검정 필요).",
+  "gate_conditional": {
+    "n_gated_rows": 1280,
+    "gated_share": 0.0579,
+    "months_covered": 45,
+    "within_gated": {
+      "pb_entry_window_fib": {
+        "20d": {
+          "n": 1224,
+          "months": 38,
+          "pooled_ic": -0.0019,
+          "pooled_p": 0.948,
+          "fm_ic": 0.0189,
+          "fm_ic_95ci": [
+            -0.0354,
+            0.0745
+          ],
+          "quintile_mean_excess": [
+            0.0003,
+            -0.0045,
+            0.0016,
+            0.0275,
+            -0.005
+          ],
+          "top_minus_bottom": -0.0052,
+          "top_minus_bottom_95ci": [
+            -0.0264,
+            0.0136
+          ],
+          "months_positive_spread": 18
+        },
+        "60d": {
+          "n": 1152,
+          "months": 36,
+          "pooled_ic": 0.0712,
+          "pooled_p": 0.0157,
+          "fm_ic": 0.0086,
+          "fm_ic_95ci": [
+            -0.0907,
+            0.0805
+          ],
+          "quintile_mean_excess": [
+            -0.0039,
+            0.0021,
+            0.001,
+            0.0666,
+            -0.0051
+          ],
+          "top_minus_bottom": -0.0012,
+          "top_minus_bottom_95ci": [
+            -0.0572,
+            0.0448
+          ],
+          "months_positive_spread": 18
+        },
+        "6m": {
+          "n": 1032,
+          "months": 33,
+          "pooled_ic": -0.0055,
+          "pooled_p": 0.859,
+          "fm_ic": 0.0079,
+          "fm_ic_95ci": [
+            -0.0614,
+            0.0697
+          ],
+          "quintile_mean_excess": [
+            0.0216,
+            0.0581,
+            -0.0012,
+            0.0839,
+            0.0185
+          ],
+          "top_minus_bottom": -0.0031,
+          "top_minus_bottom_95ci": [
+            -0.0639,
+            0.0598
+          ],
+          "months_positive_spread": 14
+        },
+        "12m": {
+          "n": 878,
+          "months": 28,
+          "pooled_ic": 0.0276,
+          "pooled_p": 0.413,
+          "fm_ic": 0.0202,
+          "fm_ic_95ci": [
+            -0.0357,
+            0.062
+          ],
+          "quintile_mean_excess": [
+            0.0751,
+            0.0902,
+            0.0019,
+            0.07,
+            0.153
+          ],
+          "top_minus_bottom": 0.078,
+          "top_minus_bottom_95ci": [
+            -0.076,
+            0.2309
+          ],
+          "months_positive_spread": 17
+        }
+      },
+      "pb_setup_window_fib": {
+        "20d": {
+          "n": 1224,
+          "months": 33,
+          "pooled_ic": -0.0248,
+          "pooled_p": 0.386,
+          "fm_ic": -0.0168,
+          "fm_ic_95ci": [
+            -0.0773,
+            0.0453
+          ],
+          "quintile_mean_excess": [
+            -0.0081,
+            0.0173,
+            -0.0089,
+            0.016,
+            -0.0002
+          ],
+          "top_minus_bottom": 0.0079,
+          "top_minus_bottom_95ci": [
+            -0.0126,
+            0.0286
+          ],
+          "months_positive_spread": 20
+        },
+        "60d": {
+          "n": 1152,
+          "months": 31,
+          "pooled_ic": -0.0282,
+          "pooled_p": 0.338,
+          "fm_ic": -0.0625,
+          "fm_ic_95ci": [
+            -0.1357,
+            0.0119
+          ],
+          "quintile_mean_excess": [
+            -0.0125,
+            0.0457,
+            -0.0157,
+            0.024,
+            -0.0009
+          ],
+          "top_minus_bottom": 0.0117,
+          "top_minus_bottom_95ci": [
+            -0.0202,
+            0.0417
+          ],
+          "months_positive_spread": 17
+        },
+        "6m": {
+          "n": 1032,
+          "months": 28,
+          "pooled_ic": 0.019,
+          "pooled_p": 0.543,
+          "fm_ic": 0.0055,
+          "fm_ic_95ci": [
+            -0.0634,
+            0.0999
+          ],
+          "quintile_mean_excess": [
+            -0.0265,
+            0.0298,
+            0.0005,
+            0.1306,
+            0.0261
+          ],
+          "top_minus_bottom": 0.0527,
+          "top_minus_bottom_95ci": [
+            -0.0025,
+            0.0948
+          ],
+          "months_positive_spread": 18
+        },
+        "12m": {
+          "n": 878,
+          "months": 24,
+          "pooled_ic": 0.0013,
+          "pooled_p": 0.969,
+          "fm_ic": -0.0045,
+          "fm_ic_95ci": [
+            -0.0529,
+            0.0191
+          ],
+          "quintile_mean_excess": [
+            0.001,
+            0.0981,
+            0.0433,
+            0.2482,
+            0.0743
+          ],
+          "top_minus_bottom": 0.0733,
+          "top_minus_bottom_95ci": [
+            0.0176,
+            0.1015
+          ],
+          "months_positive_spread": 15
+        }
+      },
+      "pb_total_window_fib": {
+        "20d": {
+          "n": 1224,
+          "months": 38,
+          "pooled_ic": -0.0049,
+          "pooled_p": 0.864,
+          "fm_ic": 0.016,
+          "fm_ic_95ci": [
+            -0.0404,
+            0.0749
+          ],
+          "quintile_mean_excess": [
+            -0.0011,
+            -0.0016,
+            0.0051,
+            0.0166,
+            -0.002
+          ],
+          "top_minus_bottom": -0.0009,
+          "top_minus_bottom_95ci": [
+            -0.0251,
+            0.0192
+          ],
+          "months_positive_spread": 21
+        },
+        "60d": {
+          "n": 1152,
+          "months": 36,
+          "pooled_ic": 0.0628,
+          "pooled_p": 0.0329,
+          "fm_ic": -0.0097,
+          "fm_ic_95ci": [
+            -0.1135,
+            0.067
+          ],
+          "quintile_mean_excess": [
+            0.0089,
+            -0.0078,
+            0.0174,
+            0.0429,
+            -0.0013
+          ],
+          "top_minus_bottom": -0.0101,
+          "top_minus_bottom_95ci": [
+            -0.0685,
+            0.0375
+          ],
+          "months_positive_spread": 17
+        },
+        "6m": {
+          "n": 1032,
+          "months": 33,
+          "pooled_ic": -0.0021,
+          "pooled_p": 0.946,
+          "fm_ic": 0.0113,
+          "fm_ic_95ci": [
+            -0.0626,
+            0.0764
+          ],
+          "quintile_mean_excess": [
+            0.0301,
+            0.0514,
+            0.0133,
+            0.0494,
+            0.0289
+          ],
+          "top_minus_bottom": -0.0012,
+          "top_minus_bottom_95ci": [
+            -0.0581,
+            0.0559
+          ],
+          "months_positive_spread": 14
+        },
+        "12m": {
+          "n": 878,
+          "months": 28,
+          "pooled_ic": 0.0227,
+          "pooled_p": 0.501,
+          "fm_ic": 0.0089,
+          "fm_ic_95ci": [
+            -0.0572,
+            0.0424
+          ],
+          "quintile_mean_excess": [
+            0.1158,
+            0.0635,
+            0.0472,
+            0.0328,
+            0.1456
+          ],
+          "top_minus_bottom": 0.0298,
+          "top_minus_bottom_95ci": [
+            -0.126,
+            0.1115
+          ],
+          "months_positive_spread": 14
+        }
+      }
+    },
+    "gated_vs_universe_mean_excess": {
+      "20d": {
+        "gated_mean": 0.0038,
+        "n": 1224,
+        "universe_mean": -0.0007,
+        "difference": 0.0046
+      },
+      "60d": {
+        "gated_mean": 0.0082,
+        "n": 1152,
+        "universe_mean": -0.0049,
+        "difference": 0.0131
+      },
+      "6m": {
+        "gated_mean": 0.0369,
+        "n": 1032,
+        "universe_mean": -0.0094,
+        "difference": 0.0463
+      },
+      "12m": {
+        "gated_mean": 0.1106,
+        "n": 878,
+        "universe_mean": -0.0025,
+        "difference": 0.1131
+      }
+    }
+  },
+  "survivorship_bound": {
+    "note": "top decile by realised 5y return removed",
+    "cutoff_5y_return": 2.1042,
+    "tickers_kept": 442,
+    "rows": 19875,
+    "signals": {
+      "v1_total": {
+        "20d": {
+          "n": 19433,
+          "months": 44,
+          "pooled_ic": -0.0101,
+          "pooled_p": 0.158,
+          "fm_ic": 0.0007,
+          "fm_ic_95ci": [
+            -0.0495,
+            0.0493
+          ],
+          "quintile_mean_excess": [
+            -0.0051,
+            -0.0018,
+            -0.0051,
+            -0.0041,
+            -0.0059
+          ],
+          "top_minus_bottom": -0.0008,
+          "top_minus_bottom_95ci": [
+            -0.013,
+            0.0099
+          ],
+          "months_positive_spread": 22
+        },
+        "60d": {
+          "n": 18549,
+          "months": 42,
+          "pooled_ic": 0.0123,
+          "pooled_p": 0.0949,
+          "fm_ic": 0.0162,
+          "fm_ic_95ci": [
+            -0.0162,
+            0.0691
+          ],
+          "quintile_mean_excess": [
+            -0.0206,
+            -0.0176,
+            -0.0194,
+            -0.0131,
+            -0.0176
+          ],
+          "top_minus_bottom": 0.0029,
+          "top_minus_bottom_95ci": [
+            -0.0116,
+            0.0268
+          ],
+          "months_positive_spread": 22
+        },
+        "6m": {
+          "n": 17223,
+          "months": 39,
+          "pooled_ic": 0.0866,
+          "pooled_p": 4.64e-30,
+          "fm_ic": 0.0655,
+          "fm_ic_95ci": [
+            0.0202,
+            0.1211
+          ],
+          "quintile_mean_excess": [
+            -0.0481,
+            -0.0501,
+            -0.0446,
+            -0.0342,
+            -0.0225
+          ],
+          "top_minus_bottom": 0.0256,
+          "top_minus_bottom_95ci": [
+            -0.0026,
+            0.0638
+          ],
+          "months_positive_spread": 25
+        },
+        "12m": {
+          "n": 14571,
+          "months": 33,
+          "pooled_ic": 0.0597,
+          "pooled_p": 5.49e-13,
+          "fm_ic": 0.0611,
+          "fm_ic_95ci": [
+            0.0474,
+            0.1428
+          ],
+          "quintile_mean_excess": [
+            -0.0733,
+            -0.0936,
+            -0.0999,
+            -0.0781,
+            -0.0297
+          ],
+          "top_minus_bottom": 0.0436,
+          "top_minus_bottom_95ci": [
+            0.0354,
+            0.1451
+          ],
+          "months_positive_spread": 22
+        }
+      },
+      "v1_momentum": {
+        "20d": {
+          "n": 19433,
+          "months": 44,
+          "pooled_ic": -0.009,
+          "pooled_p": 0.208,
+          "fm_ic": -0.0015,
+          "fm_ic_95ci": [
+            -0.0496,
+            0.0449
+          ],
+          "quintile_mean_excess": [
+            -0.003,
+            -0.0042,
+            -0.005,
+            -0.0061,
+            -0.0038
+          ],
+          "top_minus_bottom": -0.0008,
+          "top_minus_bottom_95ci": [
+            -0.0126,
+            0.0099
+          ],
+          "months_positive_spread": 21
+        },
+        "60d": {
+          "n": 18549,
+          "months": 42,
+          "pooled_ic": -0.002,
+          "pooled_p": 0.788,
+          "fm_ic": 0.0094,
+          "fm_ic_95ci": [
+            -0.0252,
+            0.063
+          ],
+          "quintile_mean_excess": [
+            -0.0178,
+            -0.0172,
+            -0.0214,
+            -0.0169,
+            -0.0148
+          ],
+          "top_minus_bottom": 0.003,
+          "top_minus_bottom_95ci": [
+            -0.0108,
+            0.0254
+          ],
+          "months_positive_spread": 23
+        },
+        "6m": {
+          "n": 17223,
+          "months": 39,
+          "pooled_ic": 0.0755,
+          "pooled_p": 3.37e-23,
+          "fm_ic": 0.0581,
+          "fm_ic_95ci": [
+            0.0164,
+            0.1132
+          ],
+          "quintile_mean_excess": [
+            -0.0459,
+            -0.047,
+            -0.0534,
+            -0.0336,
+            -0.0196
+          ],
+          "top_minus_bottom": 0.0263,
+          "top_minus_bottom_95ci": [
+            -0.0002,
+            0.0667
+          ],
+          "months_positive_spread": 26
+        },
+        "12m": {
+          "n": 14571,
+          "months": 33,
+          "pooled_ic": 0.0542,
+          "pooled_p": 5.92e-11,
+          "fm_ic": 0.058,
+          "fm_ic_95ci": [
+            0.0489,
+            0.1402
+          ],
+          "quintile_mean_excess": [
+            -0.0769,
+            -0.0926,
+            -0.104,
+            -0.075,
+            -0.026
+          ],
+          "top_minus_bottom": 0.051,
+          "top_minus_bottom_95ci": [
+            0.0451,
+            0.1651
+          ],
+          "months_positive_spread": 22
+        }
+      },
+      "v1_price_structure": {
+        "20d": {
+          "n": 19433,
+          "months": 44,
+          "pooled_ic": -0.0093,
+          "pooled_p": 0.195,
+          "fm_ic": 0.0021,
+          "fm_ic_95ci": [
+            -0.0481,
+            0.0491
+          ],
+          "quintile_mean_excess": [
+            -0.0055,
+            -0.0016,
+            -0.0043,
+            -0.0041,
+            -0.0065
+          ],
+          "top_minus_bottom": -0.001,
+          "top_minus_bottom_95ci": [
+            -0.0118,
+            0.0084
+          ],
+          "months_positive_spread": 22
+        },
+        "60d": {
+          "n": 18549,
+          "months": 42,
+          "pooled_ic": 0.0185,
+          "pooled_p": 0.0115,
+          "fm_ic": 0.0197,
+          "fm_ic_95ci": [
+            -0.0111,
+            0.0687
+          ],
+          "quintile_mean_excess": [
+            -0.0224,
+            -0.0161,
+            -0.0167,
+            -0.0129,
+            -0.02
+          ],
+          "top_minus_bottom": 0.0025,
+          "top_minus_bottom_95ci": [
+            -0.009,
+            0.0204
+          ],
+          "months_positive_spread": 25
+        },
+        "6m": {
+          "n": 17223,
+          "months": 39,
+          "pooled_ic": 0.0866,
+          "pooled_p": 4.73e-30,
+          "fm_ic": 0.0659,
+          "fm_ic_95ci": [
+            0.0211,
+            0.119
+          ],
+          "quintile_mean_excess": [
+            -0.0534,
+            -0.0446,
+            -0.0397,
+            -0.029,
+            -0.0325
+          ],
+          "top_minus_bottom": 0.021,
+          "top_minus_bottom_95ci": [
+            -0.0028,
+            0.0511
+          ],
+          "months_positive_spread": 25
+        },
+        "12m": {
+          "n": 14571,
+          "months": 33,
+          "pooled_ic": 0.0565,
+          "pooled_p": 9.05e-12,
+          "fm_ic": 0.0564,
+          "fm_ic_95ci": [
+            0.0409,
+            0.132
+          ],
+          "quintile_mean_excess": [
+            -0.0853,
+            -0.0753,
+            -0.0867,
+            -0.0667,
+            -0.06
+          ],
+          "top_minus_bottom": 0.0253,
+          "top_minus_bottom_95ci": [
+            0.0128,
+            0.0953
+          ],
+          "months_positive_spread": 22
+        }
+      },
+      "pb_total_window_fib": {
+        "20d": {
+          "n": 19433,
+          "months": 44,
+          "pooled_ic": -0.037,
+          "pooled_p": 2.41e-07,
+          "fm_ic": -0.0126,
+          "fm_ic_95ci": [
+            -0.0402,
+            0.0151
+          ],
+          "quintile_mean_excess": [
+            -0.0056,
+            -0.0033,
+            -0.0034,
+            -0.0031,
+            -0.0067
+          ],
+          "top_minus_bottom": -0.0011,
+          "top_minus_bottom_95ci": [
+            -0.0063,
+            0.0043
+          ],
+          "months_positive_spread": 23
+        },
+        "60d": {
+          "n": 18549,
+          "months": 42,
+          "pooled_ic": 0.0151,
+          "pooled_p": 0.04,
+          "fm_ic": 0.0151,
+          "fm_ic_95ci": [
+            -0.0112,
+            0.036
+          ],
+          "quintile_mean_excess": [
+            -0.0234,
+            -0.0198,
+            -0.0163,
+            -0.0149,
+            -0.0139
+          ],
+          "top_minus_bottom": 0.0095,
+          "top_minus_bottom_95ci": [
+            0.0008,
+            0.0163
+          ],
+          "months_positive_spread": 25
+        },
+        "6m": {
+          "n": 17223,
+          "months": 39,
+          "pooled_ic": 0.0008,
+          "pooled_p": 0.922,
+          "fm_ic": 0.0097,
+          "fm_ic_95ci": [
+            -0.0182,
+            0.0294
+          ],
+          "quintile_mean_excess": [
+            -0.0477,
+            -0.0425,
+            -0.0401,
+            -0.0331,
+            -0.0359
+          ],
+          "top_minus_bottom": 0.0118,
+          "top_minus_bottom_95ci": [
+            -0.0013,
+            0.018
+          ],
+          "months_positive_spread": 25
+        },
+        "12m": {
+          "n": 14571,
+          "months": 33,
+          "pooled_ic": 0.0018,
+          "pooled_p": 0.824,
+          "fm_ic": 0.0161,
+          "fm_ic_95ci": [
+            -0.0277,
+            0.0209
+          ],
+          "quintile_mean_excess": [
+            -0.0936,
+            -0.0844,
+            -0.0706,
+            -0.0568,
+            -0.0684
+          ],
+          "top_minus_bottom": 0.0252,
+          "top_minus_bottom_95ci": [
+            -0.0124,
+            0.0329
+          ],
+          "months_positive_spread": 20
+        }
+      },
+      "pb_setup_window_fib": {
+        "20d": {
+          "n": 19433,
+          "months": 44,
+          "pooled_ic": -0.0076,
+          "pooled_p": 0.287,
+          "fm_ic": -0.0064,
+          "fm_ic_95ci": [
+            -0.0396,
+            0.0275
+          ],
+          "quintile_mean_excess": [
+            -0.0045,
+            -0.0059,
+            -0.005,
+            -0.0015,
+            -0.0051
+          ],
+          "top_minus_bottom": -0.0006,
+          "top_minus_bottom_95ci": [
+            -0.0073,
+            0.0061
+          ],
+          "months_positive_spread": 22
+        },
+        "60d": {
+          "n": 18549,
+          "months": 42,
+          "pooled_ic": -0.0131,
+          "pooled_p": 0.0752,
+          "fm_ic": 0.0033,
+          "fm_ic_95ci": [
+            -0.0349,
+            0.0365
+          ],
+          "quintile_mean_excess": [
+            -0.0216,
+            -0.0216,
+            -0.0174,
+            -0.0116,
+            -0.0159
+          ],
+          "top_minus_bottom": 0.0057,
+          "top_minus_bottom_95ci": [
+            -0.0082,
+            0.0192
+          ],
+          "months_positive_spread": 25
+        },
+        "6m": {
+          "n": 17223,
+          "months": 39,
+          "pooled_ic": 0.015,
+          "pooled_p": 0.0484,
+          "fm_ic": 0.0345,
+          "fm_ic_95ci": [
+            -0.0052,
+            0.0649
+          ],
+          "quintile_mean_excess": [
+            -0.0549,
+            -0.0493,
+            -0.0427,
+            -0.0256,
+            -0.027
+          ],
+          "top_minus_bottom": 0.0279,
+          "top_minus_bottom_95ci": [
+            0.0121,
+            0.0385
+          ],
+          "months_positive_spread": 31
+        },
+        "12m": {
+          "n": 14571,
+          "months": 33,
+          "pooled_ic": 0.0288,
+          "pooled_p": 0.000511,
+          "fm_ic": 0.0481,
+          "fm_ic_95ci": [
+            -0.0154,
+            0.0634
+          ],
+          "quintile_mean_excess": [
+            -0.11,
+            -0.0952,
+            -0.0772,
+            -0.0528,
+            -0.0391
+          ],
+          "top_minus_bottom": 0.0708,
+          "top_minus_bottom_95ci": [
+            0.0272,
+            0.0824
+          ],
+          "months_positive_spread": 28
+        }
+      },
+      "pb_entry_window_fib": {
+        "20d": {
+          "n": 19433,
+          "months": 44,
+          "pooled_ic": -0.0481,
+          "pooled_p": 1.97e-11,
+          "fm_ic": -0.014,
+          "fm_ic_95ci": [
+            -0.0394,
+            0.0131
+          ],
+          "quintile_mean_excess": [
+            -0.0052,
+            -0.0036,
+            -0.0019,
+            -0.0048,
+            -0.0065
+          ],
+          "top_minus_bottom": -0.0014,
+          "top_minus_bottom_95ci": [
+            -0.0065,
+            0.0043
+          ],
+          "months_positive_spread": 17
+        },
+        "60d": {
+          "n": 18549,
+          "months": 42,
+          "pooled_ic": 0.0297,
+          "pooled_p": 5.36e-05,
+          "fm_ic": 0.0188,
+          "fm_ic_95ci": [
+            -0.0102,
+            0.0405
+          ],
+          "quintile_mean_excess": [
+            -0.0213,
+            -0.0199,
+            -0.0155,
+            -0.015,
+            -0.0165
+          ],
+          "top_minus_bottom": 0.0048,
+          "top_minus_bottom_95ci": [
+            -0.0058,
+            0.0127
+          ],
+          "months_positive_spread": 20
+        },
+        "6m": {
+          "n": 17223,
+          "months": 39,
+          "pooled_ic": -0.0083,
+          "pooled_p": 0.278,
+          "fm_ic": -0.0109,
+          "fm_ic_95ci": [
+            -0.0364,
+            0.0081
+          ],
+          "quintile_mean_excess": [
+            -0.0361,
+            -0.0393,
+            -0.0377,
+            -0.041,
+            -0.0449
+          ],
+          "top_minus_bottom": -0.0088,
+          "top_minus_bottom_95ci": [
+            -0.0257,
+            0.0057
+          ],
+          "months_positive_spread": 16
+        },
+        "12m": {
+          "n": 14571,
+          "months": 33,
+          "pooled_ic": -0.0176,
+          "pooled_p": 0.0337,
+          "fm_ic": -0.0156,
+          "fm_ic_95ci": [
+            -0.0354,
+            -0.0139
+          ],
+          "quintile_mean_excess": [
+            -0.0694,
+            -0.0655,
+            -0.08,
+            -0.0783,
+            -0.0805
+          ],
+          "top_minus_bottom": -0.0111,
+          "top_minus_bottom_95ci": [
+            -0.0274,
+            -0.0006
+          ],
+          "months_positive_spread": 17
+        }
+      }
+    }
+  }
+}
