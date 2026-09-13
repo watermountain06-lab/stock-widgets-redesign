@@ -27,7 +27,7 @@ function render(){
 
  document.getElementById('drag-hint').textContent=index===0?'← 카드를 왼쪽으로 드래그해 다음 종목 보기':index===list.length-1?'카드를 오른쪽으로 드래그해 이전 종목 보기 →':'↔ 카드를 좌우로 드래그해 종목 넘기기';
  document.getElementById('summary-context').textContent=days[day].label+' · '+d.ticker;
- renderWorkspace(d);
+ renderRelatedNews(d);
  document.getElementById('previous').disabled=index===0;document.getElementById('next').disabled=index===list.length-1;
  document.getElementById('dots').innerHTML=list.map((s,i)=>`<button class="dot" data-index="${i}" aria-label="${i+1}번째 종목 ${s.ticker}" aria-pressed="${i===index}"></button>`).join('');
  document.getElementById('position').textContent=`◆ ${String(index+1).padStart(2,'0')} / ${String(list.length).padStart(2,'0')} · ${d.ticker}`;
@@ -82,16 +82,7 @@ bindCardNavigation(document.querySelector('.stage'),moveCard);
 
 window.addEventListener('quotes-updated',render);
 
-function renderWorkspace(d){
- const key='today-work-'+days[day].label+'-'+d.ticker;
- let saved={};try{saved=JSON.parse(localStorage.getItem(key)||'{}')||{};if(typeof saved!=='object')saved={};}catch{}
- const tasks=document.getElementById('today-tasks');
- tasks.innerHTML=['실적과 공시 확인','가격 변동 배경 확인','토론할 질문 정리'].map((label,i)=>'<label><input type="checkbox" data-task="'+i+'">'+label+'</label>').join('');
- tasks.querySelectorAll('input').forEach((input,i)=>{input.checked=Boolean(saved[i]);input.addEventListener('change',()=>{saved[i]=input.checked;persist();});});
- const note=document.getElementById('discussion-note');note.value=typeof saved.note==='string'?saved.note:'';
- note.oninput=()=>{saved.note=note.value;persist();};
- document.getElementById('work-status').textContent='이 기기에 저장 · '+d.ticker;
- function persist(){try{localStorage.setItem(key,JSON.stringify(saved));document.getElementById('work-status').textContent='저장됨 · '+d.ticker;}catch{document.getElementById('work-status').textContent='저장할 수 없습니다. 브라우저 저장 설정을 확인하세요.';}}
+function renderRelatedNews(d){
  document.getElementById('news-google').href='https://news.google.com/search?q='+encodeURIComponent(d.ticker+' stock');
  document.getElementById('news-youtube').href='https://www.youtube.com/results?search_query='+encodeURIComponent(d.ticker+' stock news');
  document.getElementById('news-company').textContent=d.name+' 관련 소식';
@@ -100,3 +91,4 @@ function renderWorkspace(d){
 
 function refreshCalendar(){const now=new Date();document.getElementById('calendar-today').textContent=new Intl.DateTimeFormat('ko-KR',{dateStyle:'full'}).format(now);document.getElementById('calendar-today').dateTime=[now.getFullYear(),String(now.getMonth()+1).padStart(2,'0'),String(now.getDate()).padStart(2,'0')].join('-');}
 refreshCalendar();setInterval(refreshCalendar,60000);
+
