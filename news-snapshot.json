@@ -1,0 +1,246 @@
+{
+  "provider": "Google News RSS",
+  "updatedAt": "2026-09-13T01:57:36.4546700+00:00",
+  "stocks": {
+    "NVDA": [
+      {
+        "title": "엔비디아, 앤스로픽 IPO에 최대 100억달러 투자 협상 - 초이스스탁US",
+        "url": "https://news.google.com/rss/articles/CBMiZ0FVX3lxTE9XemxxYy10SjA2dy01SzFCaTVsZzhUZzNRUW5hSTc2ZGFuOXhONnZxdUtxejdSZlpwVlZVUlBDUENzWGt6ajk3R2lJa0tHWndfSmlrd1lwZHF5X25UTWhlUG9mUjdkLUE?oc=5",
+        "source": "초이스스탁US",
+        "publishedAt": "2026-09-12T18:00:00.0000000+00:00"
+      },
+      {
+        "title": "법무부, Nvidia의 Groq 인수 거래 반독점 우려로 조사 착수 - Investing.com 한국어",
+        "url": "https://news.google.com/rss/articles/CBMicEFVX3lxTE1qMGM3dEFwYVBXVDlOcE00M3FJZ0V2R3VzNEdKNTVZUlB1VGRVUVpBcElmUnRzNVJFdmNycG1oUUsySzNONGs5emExTlNOUFdvTTBGejM0QkszWDVaQThKT3RBUmhvR0lOV25WbC1zU1E?oc=5",
+        "source": "Investing.com 한국어",
+        "publishedAt": "2026-09-10T02:01:00.0000000+00:00"
+      },
+      {
+        "title": "엔비디아, 82% 포트폴리오에 담겼다···헤지펀드들은 다른 AI 주식에도 베팅 - Benzinga",
+        "url": "https://news.google.com/rss/articles/CBMivwJBVV95cUxObHRKa0xQUUw2QkFfVVRUQUhlTkNWYWdxXy01aUhId2RRb0FWRklDRV93NF91VE9Lc3FKSTFKaGlvTHlpX1JVSGluMWlVRzNiNnNQajZPTV8zX3pyV1RJWVBkb3hWM0FISmVRckxUb285WnV3S2xXMGJpQ1RkdFlmTW8xazZqSUFVejE5UE5QNlcycXBYYXhMeU8xeV9GSkhIV3BrTTJRenV4akhNN3dyc3hIQnA0LUlHbDBMZFhIcE5IVnBjSG9FbEdDTDRYbXhvV051b3Jub2V3di1vUEQ3OEE1d29FOHVBTVB2dW5kQ1B3WDhYNTBJOEtqQW5HaUF6WnQ5MkNEN0N5WGhROXNpVVJNbXBiSUJYUkw5M2NfRVFKN1Izak9rLVBBZ3I3Y0VSRk5yQlEtQ0l1QVVreG5j?oc=5",
+        "source": "Benzinga",
+        "publishedAt": "2026-09-11T03:22:19.0000000+00:00"
+      }
+    ],
+    "AAPL": [
+      {
+        "title": "Apple Stock’s Dividend Climbs to $0.27 as Payout Ratio Falls to a 13.55% Low. Here’s The Fuller Picture. - TIKR.com",
+        "url": "https://news.google.com/rss/articles/CBMixwFBVV95cUxQbExnY2Iwc2YtS2E3S1kxcl94eGw4dTl1X3ZvelZPX3o1LUg2WVJrZ21XSmlhRjYwWl9VSHlCWVZ4bWhpaDl6M0ltT1V0VUpWRzVSSE5NR1hzclBheFRMWVZPQ3dxeU02dUl0aEo2cmVreEpya1M4QXpjbHJLR2NrZHlUeU5oYTdGTUlodUcwWTgtUG5vR19NR1pCTVZZeHhDOWN1WVNoRC15NWY1YVFIam5YeEZDZVJsTHBNUUhBSHRKSHhrM0xR?oc=5",
+        "source": "TIKR.com",
+        "publishedAt": "2026-09-12T17:45:10.0000000+00:00"
+      },
+      {
+        "title": "오펜하이머, 아이폰 행사 후 애플 주식 ’수행’ 등급 재확인 - Investing.com 한국어",
+        "url": "https://news.google.com/rss/articles/CBMidEFVX3lxTFA2QUZPWlBmTzRvRGxLU3RaTDlkMnJHTHBVak1SNVZQR0dsai1iY1pReFZYQVZpTWViSUE3d045SW5SOUNuWVN2SGRCLWpabjVPWW5ZUl8zNklRaGVja3RUU2Q5ckFTVWlidnluMDk3cG5yNzhM?oc=5",
+        "source": "Investing.com 한국어",
+        "publishedAt": "2026-09-10T10:54:00.0000000+00:00"
+      },
+      {
+        "title": "애플 주가, 2026년 하반기 얼마까지 오를까? 2027·2030년 전망까지 총정리 - Mitrade",
+        "url": "https://news.google.com/rss/articles/CBMihAFBVV95cUxNVVQwQjVENkZHUjFVS2xkLTBRZHc1cTNrdkdjRkJLTzlSanhvM0NyLTFRZC14M1lQUkVjLXNvRVlSZ2ZQNG1kTGYwZnBRQUU2MDhtOERtbnYtMHZJck1NZ2JlNXYxc1FCeHl4cVhHU19DdC00N2VQVmVUekFBcXhYMW1JME4?oc=5",
+        "source": "Mitrade",
+        "publishedAt": "2026-09-09T07:00:00.0000000+00:00"
+      }
+    ],
+    "GOOGL": [
+      {
+        "title": "Google Commits $15 Billion to Massive Finland AI Hub - TIKR.com",
+        "url": "https://news.google.com/rss/articles/CBMiggFBVV95cUxQeE5tYWJxS2lIZUNqSGxVTXlDaE1XRHpOQzRaNVliVTZMbFhwb1ZmcFBLTzNJUnlvX1FjaWRtdE9GaGZWQ0ZqM01tVUh2am9sSjA4ZzhFMVFHbVFobFRMMnVSUHRETnB6MXcwTnB5aHlPSzBHNUpUdUg4N3dnSVZ2eEVB?oc=5",
+        "source": "TIKR.com",
+        "publishedAt": "2026-09-09T22:52:30.0000000+00:00"
+      },
+      {
+        "title": "Alphabet 실적이 매그니피센트 세븐에 대한 투자 열기 되살릴까? - Investing.com 한국어",
+        "url": "https://news.google.com/rss/articles/CBMicEFVX3lxTE5HNzNCZU1rZHN2OG9mbmpXdlI4OVZERTVJM003RnAzQm5qMDBhTkNDZWpzdFE0UmYxOEQwdW90TXVhT0dTNW02WThBZkw1WmJ2VmJ0NHVhajEtcUY0Sk5tbk5JLWNuSkxSRWVocGdHSWI?oc=5",
+        "source": "Investing.com 한국어",
+        "publishedAt": "2026-07-22T07:00:00.0000000+00:00"
+      },
+      {
+        "title": "Alphabet 시가총액 $5 Trillion 근접. Nvidia의 'Stock King' 왕좌가 곧 바뀔 것인가? Google이 Nvidia를 추월할 수 있을까? - TradingKey",
+        "url": "https://news.google.com/rss/articles/CBMitAFBVV95cUxNRU82MEI2TTZqc2x3MzMtMVh0MXpxcG0wcUw0WURkZk9zMldqZ1NUencxUTAyRUxOajRRY0VxanJWNWdGbVp2VE81RU5jby1leWVRMl94WXZVd0xKaUFjbHFpQ3B5TEdPRi1MbUxUSjJ6X2RqeEFFcE9JcmtsOVczVmliWWxtZGFERVdJUHZRNUVEcGdSVWp5b3psVWMxNlZ1ck1QVURwUW9mWkR1RVpyUGp1QUQ?oc=5",
+        "source": "TradingKey",
+        "publishedAt": "2026-05-11T07:00:00.0000000+00:00"
+      }
+    ],
+    "MSFT": [
+      {
+        "title": "Microsoft (MSFT), 투자자들이 지금 다시 주목하는 이유는? - simplywall.st",
+        "url": "https://news.google.com/rss/articles/CBMilgFBVV95cUxPdWNWSGR1bTNPUUFmMENnZGdXSXBOdHduR0c0N2k3LVZkbXVSMnZIUGUtb0RKN0dkN09IbEhJSGZ3enJGSHV6RGdHX2xiU19IYlJhREp5Z1FoelVhQjJ6M2E1ZzdwWUl3RHpLM3d2V2pqcm13ZnpJOTJyMGhIZ0doc1ZYY0taUWtYOE5kcXc5QWN6UFBHakHSAZYBQVVfeXFMT3VjVkhkdW0zT1FBZjBDZ2RnV0lwTnR3bkdHNDdpNy1WZG11UjJ2SFBlLW9ESjdHZDdPSGxISUhmd3pyRkh1ekRnR19sYlNfSGJSYURKeWdRaHpVYUIyejNhNWc3cFlJd0R6SzN3dldqanJtd2Z6STkycjBoSGdHaHNWWGNLWlFrWDhOZHF3OUFjelBQR2pB?oc=5",
+        "source": "simplywall.st",
+        "publishedAt": "2026-09-12T07:43:10.0000000+00:00"
+      },
+      {
+        "title": "마이크로소프트, AI 컴퓨팅 부족에 사업 기회 놓쳐···이제 컴퓨팅 파워 3배 확대 추진 - Benzinga",
+        "url": "https://news.google.com/rss/articles/CBMiwgJBVV95cUxNX0d5MDlDdmJiczFOMkkyUGRJd08zTWdsM29ISEpzS3RWSE9wbUdiLUJrOUZQRFV4aHptMGdXMjR5Mm8wVXk0TW5od2lBb0lfZHJrTlNvRkJ1MlgwWndIRG9MR0dUenE5ekhuUE9FYVg1TmtfaWJ2VTJQZlhzMGpPd3EzUmJySk5aZ1d5bTRJbUoxNE1JdDg0dlNBaTZiQ1RCSm9SOHp5TDhKRXFUUmJvX2dLT1pRbDU5MkVycEppWk9TVnVnS0lCS3kyZ2FtQ3huY3lhNjNXaVdQN0hJX1VJd054V29WbHdFNy1jUThVVTFYY3FqclJRVDdNRk13a2ZaOVZBbFQyZWNTS2VYdW1pN0thLVZETlpmazBrSkwxQ3QzaDZ0TW1zN013MUpuMW52S2pmb2lGbzJUWW93WWlLd0t3?oc=5",
+        "source": "Benzinga",
+        "publishedAt": "2026-09-12T02:03:12.0000000+00:00"
+      },
+      {
+        "title": "Microsoft Stock Jumped 15% After Q4 2026 Earnings. Here’s Where the Stock Could Go - TIKR.com",
+        "url": "https://news.google.com/rss/articles/CBMirAFBVV95cUxQT1JDbVcyN2tCR2hxd1JtWHMyN3FPbnBuamduSDRzZmVUbVNBZjdwWnpzaVRDUGZxMXBZZVBYMXRCdmdRMGFkVkpmYTlfUFlha2lZRTJWNGVCQ3A4eHNBaVJsZFJBb3VnY2owbUp1M1NCcGtkamwxZnpBNWJHSzZQWmh6YlZZZkJ2UHY0dl92My1KdXhlaHpPQ3E5N1VjZGdlX3FIVUFlc0swS1N1?oc=5",
+        "source": "TIKR.com",
+        "publishedAt": "2026-08-02T07:00:00.0000000+00:00"
+      }
+    ],
+    "AMZN": [
+      {
+        "title": "아마존 페이 인도, 여행자 보험으로 확장 모색…CEO 밝혀 - Investing.com 한국어",
+        "url": "https://news.google.com/rss/articles/CBMid0FVX3lxTE5lckRJOUJkaXdvV3FLYjBodlFwazBNVDg2cDdsbHFBMURlNnFxOUwzNUt0TGEyaE5NdkdtSHg0dzVTX1hJQl9Hbmc0VVFubGNsc3l2d1NYMlVRbE5EMEdtYkl1OHFfTXM3UEhGTVh2bmRDZVB3cTJr?oc=5",
+        "source": "Investing.com 한국어",
+        "publishedAt": "2026-09-11T12:26:00.0000000+00:00"
+      },
+      {
+        "title": "맞춤형 AI 칩 계약이 아마존 주가에 대한 전망을 바꿀까 - simplywall.st",
+        "url": "https://news.google.com/rss/articles/CBMijgFBVV95cUxPblBYSm1ORnhQOFRlbzRubDJFVnRyNlYwcGR6THR0bHZydEI4a0IzdHRIYnBfdThTMG9PblplZTF5VWdlRVJWS2pBTDluZ19IQ3FPejJsSHZnZDhRVlFzVE5xSzB5NDE1MWEzVE9Ja045TzZkbjJyVFd4bzFZV1dPaHJZaWNJd1E3Um13eUx30gGTAUFVX3lxTE90eld0cHFTV3hCaGgxNWo5ajhJN0VzYzRkRk9JV1NKM3hDdWM1UzJkY1dpMUhEWGRMbG9FWGhwV05lSEZVbGVPb3N4X0IwR3FKQkx5b204UW5WZE1TNTRCWXRaYkdPeHJORDFUN09oekNxMXc1YmxNN0h5am5UVG5zbk1TS0JtNTl0aWM2MDlFaTVDMA?oc=5",
+        "source": "simplywall.st",
+        "publishedAt": "2026-09-10T02:11:44.0000000+00:00"
+      },
+      {
+        "title": "퀄컴, 아마존과 80조원 차세대 AI칩 동맹…5.4조원 신주인수권도(종합) - 매일경제 마켓",
+        "url": "https://news.google.com/rss/articles/CBMiUkFVX3lxTE9sODhuQUZrOGNhWHJxQzF5VnM2Ykp2OXkwQlVaSWZrZ19nQWNjU0hUTVBpTXNnU25DVjBaZXp6OXpFVjExc19obVdLYUVDeXZ6d2c?oc=5",
+        "source": "매일경제 마켓",
+        "publishedAt": "2026-09-08T23:59:18.0000000+00:00"
+      }
+    ],
+    "TSM": [
+      {
+        "title": "TSMC Reports Record August Revenue Driven By Strong Global Demand For AI Chips - TIKR.com",
+        "url": "https://news.google.com/rss/articles/CBMiekFVX3lxTFBJRVo2TlNKRW03VC1qNzVvV25jQTJ4ZzkwclZ3UmVMUUJLcTBxUVk0MUJfbGR3cmFwTWdVM2g2YUpfbVVXOHdiWVNWMUcwWmhJZjExZHJxNWFfbEU1OEZ3RC1iRG5URExaLU9kbzFnVFI3MGZUU1pwNEJB?oc=5",
+        "source": "TIKR.com",
+        "publishedAt": "2026-09-11T04:14:44.0000000+00:00"
+      },
+      {
+        "title": "소프트뱅크, TSMC 71% 매각… 포트폴리오 재편 - 초이스스탁US",
+        "url": "https://news.google.com/rss/articles/CBMiYkFVX3lxTE5yVnBZbDctdW9VZG9fUlNmbW96YlRyQkxwbWRVcU1tTVlxNkZjZEN1S0QzbXJLbkQ3OTNwNFdWRURMNng4anVQamhIZGdhcTZoajVpel9aTTJOdFNzdU1XeU5B?oc=5",
+        "source": "초이스스탁US",
+        "publishedAt": "2026-08-17T07:00:00.0000000+00:00"
+      },
+      {
+        "title": "TSMC, 강력한 AI 수요에 힘입어 2분기 매출 36% 급증 - Investing.com 한국어",
+        "url": "https://news.google.com/rss/articles/CBMicEFVX3lxTFBPcXBYQUZ6a2hXTzNDd1kydkN1bTgxSVZHRjVOeGM5a2ZlYmZ4MXctRmstd3cyTXo0VWZMMGItRi1MTC1SQUdXWndrZmJRQ0pmeTdjY0h4dmFhLWVnTjhnMDFGNGFyM2VkQjE3bjVQYjg?oc=5",
+        "source": "Investing.com 한국어",
+        "publishedAt": "2026-07-13T07:00:00.0000000+00:00"
+      }
+    ],
+    "SPCX": [
+      {
+        "title": "SpaceX의 나스닥 100 비중, 이달 말 두 배 이상 확대 전망 - Investing.com 한국어",
+        "url": "https://news.google.com/rss/articles/CBMicEFVX3lxTFBCTnByNDd3NjNISzY4Y3pEQW90NUV3RXUxUmFqdkdnTGcxeHJvU2txRWRsT3VUakdvSEhlSGRJOFJ2eTY2Snlxc0FNWUJsYVplZUJUaWZ0bDRKU0NPbEtFWWlwUWw1dEtEaGJLWm16V2w?oc=5",
+        "source": "Investing.com 한국어",
+        "publishedAt": "2026-09-13T00:07:00.0000000+00:00"
+      },
+      {
+        "title": "스페이스X 주가, 상장 이후 최고치 대비 30% 하락: 향후 전망은? - TradingKey",
+        "url": "https://news.google.com/rss/articles/CBMiyAFBVV95cUxQa0dqMG9vX3ZOdWtTWVh1dmpJdFF0a3V2Z2xQYUZOVUFVQlZDNGtBb2l1Wm5jdGtuemEzUkRTY3F0MEZXSG02cm9kMGdEVVJYTno3MXFrV19oTlhrR0FsWGY0UGlNSS1zSl9tc2hvNmRrcVQ0X0dvUUhTeFVOZ1cwYVdJSjRKZ2FpSnhnaUtzdzJ5NlB0Nmo5S2hrdkNWdG5hZTg0QnJYeUhPVVVNcXgxVVFId1dQaGJVMTZTa2s5Yk15V2oyU2tyLQ?oc=5",
+        "source": "TradingKey",
+        "publishedAt": "2026-09-12T09:47:47.0000000+00:00"
+      },
+      {
+        "title": "[속보] SpaceX, 역사상 최대 규모 IPO 성공 - 데일리뉴스",
+        "url": "https://news.google.com/rss/articles/CBMi_AFBVV95cUxNX19iZmY4eUlOaUdHczBQVHp1TWVNVEFidGFlYjE2RXczY0ZHZ0s2UmNMY2NZajhIakZfQVZjNDNkVnE1aW1HYVJqRGxsVlJKbTlyOUxiLVh0M1ljbmszaUgzVkdiSWdWbXhaOUtPaGVzMnpTWVBWOF9oMG0xcHNlcUxNU3hIdHg5bWZsUlBOY2RMMWJ1aHZzY2VNdWgycG8xcnQwXy1tMlBCX3pQc0d1YVkwWkxDQUg1OXNkSUUyT1FVd21UTHdUbmZqWnNyNFFkVzRPYWNYNUx6UUhET2pBcWFfUWhvOHJuQ3Juc3g3SC0tOU9aZjk0UXA3RTE?oc=5",
+        "source": "데일리뉴스",
+        "publishedAt": "2026-09-08T16:49:48.0000000+00:00"
+      }
+    ],
+    "AVGO": [
+      {
+        "title": "Broadcom Stock Has Gone Nowhere in 2026 Despite Doubling AI Revenue. Here’s What Tan Said Next - TIKR.com",
+        "url": "https://news.google.com/rss/articles/CBMivgFBVV95cUxQN2NSNHc0MFJHNlI3MDU0cWNHRkllNnlfcjk4RVhaZnNMajZtQjhqS1Z4Q25xcXRZYXp3dFNIUWEzaUxsRXBPR0tTWjFBU3l0cDBaeVZTejVoTHlkX1ZJWkIzeWtPSl9BZ2txbVc3eWEtZlgyUW40QkFxMjhraXFZcmVFUmNVazV5X25id08zX29LWFdHTjJ0Z0plbVRKcjN3VTZFWFNyMXVsYnBPQko1dkxjMHB5UXg4dm1pelpn?oc=5",
+        "source": "TIKR.com",
+        "publishedAt": "2026-09-09T22:52:30.0000000+00:00"
+      },
+      {
+        "title": "US stock futures dip as Broadcom spurs chip losses, Iran jitters persist - Investing.com 한국어",
+        "url": "https://news.google.com/rss/articles/CBMicEFVX3lxTFBubDFPVDMwVWNTZlIyQ3hjN2JuVzB0UlBBNmluMERqaVFTSnB6UjI4SUkzb2ZaQlhNTUpoU2hPX3lCWC1jaUNITXVhRmtYSVg4eExOaFFlVkdSb25PS1hQa3pGSGhlcWhoc0duRTA2aUc?oc=5",
+        "source": "Investing.com 한국어",
+        "publishedAt": "2026-06-04T07:00:00.0000000+00:00"
+      },
+      {
+        "title": "Broadcom (AVGO) Q3 Earnings Preview: Why Hitting the $16 Billion AI Target May Not Be Enough - TOP1markets",
+        "url": "https://news.google.com/rss/articles/CBMie0FVX3lxTE1PTDNsYlR1R3F0azBkYzJIemhuM3FkLXZjc3A2czBMdGNob3Rlajk2aW8xN3FNazdBN0ZKQzM4MWl5WDN2UGl4V1BuT3puRUdPT2cyRWF3VmdwRWo1YTlibXN3ZmZwLVdNeHU3T1piNEhHN1U4QTV0Z0xUcw?oc=5",
+        "source": "TOP1markets",
+        "publishedAt": "2026-08-31T06:29:13.0000000+00:00"
+      }
+    ],
+    "META": [
+      {
+        "title": "Meta Stock Jumped 6.5% on the Muse Launch. The Street’s Targets Say There’s More Room. - TIKR.com",
+        "url": "https://news.google.com/rss/articles/CBMirwFBVV95cUxNRTN5WFp5NUlZU0tlQmJ6eG0wU2EtNjRUTzI5REw1RXFfUzJXZ0RYZy1DUTFNNkdoNzJYQlljd19sWWNGSGpMV1pMb2p6M0pIcFZkX3lBcUU5RUpMTC1oenFaM2FRaFJ2ekJwSk9DRXNDNnFIRHZWdWZoRUhnOVNYeTFBeHhaN01qdUNjT2hOWVBwaVliMUFZZHRXWnM4TlF3cjFkRjNWbzlIWEJPVlpR?oc=5",
+        "source": "TIKR.com",
+        "publishedAt": "2026-09-11T04:14:15.0000000+00:00"
+      },
+      {
+        "title": "Meta Platforms Inc (META) 주식 시작했습니다 상승 5.63%에 9월9일: 투자자가 알아야 할 정보 - TradingKey",
+        "url": "https://news.google.com/rss/articles/CBMijwFBVV95cUxNUG04UV9tYWZWMDU1TnhIaVpscGlHX281V1ZMbk1wZjZPZ3dHNkgtbGRBczQwYWNkZmE3bnM1RjVjVXd2bXlHd0xSMF82NVJITWRIeWJudjU4czl2SGU3bHZKTFlTY2hJVGtmTDN1OHlOVlpDZmVSb3EtamphR2xlZGRjRE55OWpsbHg0Wjc0Yw?oc=5",
+        "source": "TradingKey",
+        "publishedAt": "2026-09-09T13:48:10.0000000+00:00"
+      },
+      {
+        "title": "왜 오늘 메타 주식 급등하고 있나? - Investing.com 한국어",
+        "url": "https://news.google.com/rss/articles/CBMid0FVX3lxTE5iX1Y0QWh0eWM5c1JQdGR6MFBVU2ZfQXBUcHV5ZE80SV9ObzNlTHhaZjJKSnNxN2pYZkk0QTdURWVXUVg3NWdKeFFXSi1HZXItdWtic3R5ZW9HX21zMGo2UHRkZWVIUXM0Vk1acS1Meml4dV92UEN3?oc=5",
+        "source": "Investing.com 한국어",
+        "publishedAt": "2026-07-01T07:00:00.0000000+00:00"
+      }
+    ],
+    "TSLA": [
+      {
+        "title": "Kalshi, 테슬라·애플 주식 선물 출시 추진 – 블룸버그 - Investing.com 한국어",
+        "url": "https://news.google.com/rss/articles/CBMid0FVX3lxTE5mM2gyUXk0U1BUNHpHQUstQU5IcEJNbVZIeGg1d0Jrc1hsOFBKU1pwZkRpVzBJR1Q2TFVQV0tCRExJVEJpeWxVT3ZqNFFOeDBFQm9OcU4zT0JFaEdETHAwZDZqSm4taENjRUMtSHRmMjJpYzhHdFgw?oc=5",
+        "source": "Investing.com 한국어",
+        "publishedAt": "2026-09-11T20:25:00.0000000+00:00"
+      },
+      {
+        "title": "'조만장자' 머스크 자산, 대부분 스페이스X·테슬라 주식 - 초이스스탁US",
+        "url": "https://news.google.com/rss/articles/CBMiZ0FVX3lxTE9jYklOM2ZpWktWV2NoWHZIOFhIcDFybDR4RFNDdWRDQW43dWNkbUhSbjNjZ2V3QXI2QjNvcjFhYmdjX2UzZm1WWWRjZmRSR1BnNWE2Q09BeG1sX1NwTVpVc1oxM09UM28?oc=5",
+        "source": "초이스스탁US",
+        "publishedAt": "2026-09-09T14:27:49.0000000+00:00"
+      },
+      {
+        "title": "Tesla Stock Fell 6% After Its Cybercab Launch. Here’s Where TSLA Could Go in 2026 - TIKR.com",
+        "url": "https://news.google.com/rss/articles/CBMiqwFBVV95cUxNRno4Unk3d0VMRlpSWGxmOWZ6QkpQcXE2UmoxMExlNlRCZk5Ka19ka0xfU3RGYThFUWwyWDdUOUk2V2htX0pINDBHc1c3ZjZ1MHM0a0ZaYmZ3TFkydzBGSzNIZzJkYTBCcWFicTRLUDhQcEZxMlNrZ2dDVWZBQ2V0U3JPMHZlQ0FHbmljS3lfRmo2Q1RLZTR3QVl3UVhIeTUxdlhETkR6VFFLUkE?oc=5",
+        "source": "TIKR.com",
+        "publishedAt": "2026-09-11T02:25:32.0000000+00:00"
+      }
+    ],
+    "BRKB": [
+      {
+        "title": "버크셔 해서웨이(BRK.A) 주가는 오늘날에도 여전히 공정 가치보다 낮은 것으로 보인다 - simplywall.st",
+        "url": "https://news.google.com/rss/articles/CBMirgFBVV95cUxPbS1hVHNXZ01rQnJsV3Bzb0JVckxJTG9rWTZjclFoZnNfcENRLWFETU9WcnFGWXBlYTNsQ2RXMmI0OGpZbWZIQkN4VmlkSWlTQ2hicnVRNUxXZmpWcFJ4d0xHa0lEdUVFVWNVZ09ieWM3Tk9GVjZmWnN2MUNpVjBpYThFaW1BM2IwQmxTQ3BWS2x0ZURFdEx3bVdwSkhwcVNiZXBGRTV3N0owT09oWEHSAbMBQVVfeXFMTXhNZFpLeHZJcTgyWG95YkhQYmU4Q2xOVW1UQlp2cGVnRzU3cUZSUi15UDY1cmdoTkhNTFNKYUs3T1A5QS05enhyNWd3cVFUOFRwRzdYLU5KTHR5cWx3RFNINmk3TEFrRThUVjd4aE52Sm1FX2pZSWh0aV8ybFFtdWZjUENtRFFrWHBWZEVleXpIcnBvUzlyUnZ0dVdiN2p0bVQ4emdoRE5SaVpKeVdYQlRLaTg?oc=5",
+        "source": "simplywall.st",
+        "publishedAt": "2026-09-06T20:40:25.0000000+00:00"
+      },
+      {
+        "title": "Berkshire 이익 두 배, 주식 보유 급증; 45억 달러 자사주 매입 - Investing.com 한국어",
+        "url": "https://news.google.com/rss/articles/CBMicEFVX3lxTE5nQTVleHplRTh4ZWU5czExTzVOU1RoUzgyNkdKR241bVRUSW5PcDRNTExKeVN0b1VHekRRYWozeEpPelU3Y0RPXzJTRUZHUWJja1lxWDNJdm00U25BZUFWRHRnUDBwZ0dFVFFodkxBbmo?oc=5",
+        "source": "Investing.com 한국어",
+        "publishedAt": "2026-08-08T07:00:00.0000000+00:00"
+      },
+      {
+        "title": "Berkshire Hathaway of Warren Buffett buys 6 trillion won worth of shares in Google’s parent company - 경향신문",
+        "url": "https://news.google.com/rss/articles/CBMiXkFVX3lxTFA0WEZIN2lNdjRaa1YwbUtmM3kzMDJNeU1OM1ZzaVpZT29pSnd4Mnk1TUVJeGlXY1BJM2R5WGM2cXEzOEVMclFSOS1BM2pDYTl2MllxbS05OEYtYmRUQ3fSAV9BVV95cUxPTmVJTHVpLW9zeTRRaHEydjRodXRfbDk5WGp6VVY0bkRNUVowTmxfeGQxSzNZOEU5UENJUnRHOFFrMVliWlItVHVXcXpNV2doSTZpdmNJeXhGcUE2cTNtTQ?oc=5",
+        "source": "경향신문",
+        "publishedAt": "2025-11-15T08:00:00.0000000+00:00"
+      }
+    ],
+    "MU": [
+      {
+        "title": "Micron Technology Inc (MU) 주식 시작했습니다 하락 3.13%에 9월10일: 핵심 원인 공개 - TradingKey",
+        "url": "https://news.google.com/rss/articles/CBMijAFBVV95cUxPSGtEVk9ESEtfLUR5VVBTMG5ZT3VNQTcyMnZZR3NaVkFWQWx1X1dyVE5KOExjSnVtQzJCRXlJRElTZFY4SkUxaTFjTndvWmZXelMzRldIZG1NMlhlRVJSeXBVRWxrWDdfbGZzMFdnLU91RDFoRno2QUJkWFZRWHM5R1JuNnpSQUFRVjRsag?oc=5",
+        "source": "TradingKey",
+        "publishedAt": "2026-09-10T13:48:12.0000000+00:00"
+      },
+      {
+        "title": "마이크론 테크놀로지 MU 주가와 핵심 뉴스 | 리틀빗 - 데일리바이트(DAILY BYTE)",
+        "url": "https://news.google.com/rss/articles/CBMiaEFVX3lxTE1rTnlDX1FsZ0hmVEZiQWRPRkU0UlM4SkNPVnkwQkZIT09obFJOYXpwNmNGZy1RUkhjMVM0eW9CS0I3dlVJazdmYTVjMjJzb2FlZHRTVEhjS0RoZ0Z3bVp5Q29IT0FXV2Mz?oc=5",
+        "source": "데일리바이트(DAILY BYTE)",
+        "publishedAt": "2026-09-12T09:01:48.0000000+00:00"
+      },
+      {
+        "title": "AI 메모리 부족 현상이 마이크론(MU) 주식의 투자 매력에 변화를 주고 있는가? - simplywall.st",
+        "url": "https://news.google.com/rss/articles/CBMioAFBVV95cUxQTG5JZERDS21NeVBmLVJUU250dXdka0I4djBZaXZSMUNzMnQ2VlBfbHotMy1SZWdDbFl3dmdPb2R0STZlcEUtWGFMZThnUS1nbU0zUTBoYVhjSmVDbS1EazlYdDhEd3Nja3lud2ItZXptQzNMNlpMTG5nRUw1cWhGUm1xZEhicC14eFhRd3V6T09NNTRoVExYVDJOUk1saFl40gGmAUFVX3lxTE1POXVGbXpqaElWLW5EQ09UWEhSMFNpUjE2V3cwUEJzM05oNC11UTdkTGtERlk3SUgxYm43UFl1dnNqQ01QOWtfYXlvbEpXUTBCMXJQLV9DRWxWRzlENDhpdE1tVldnTzJualpQeVEzMmF4bzgtMldtWTg0am1RSFdNS3Fyb3JuVTBQRV9NRXBtTFV5QzlfR0t0YnViSWxBUEYtSzFsQmc?oc=5",
+        "source": "simplywall.st",
+        "publishedAt": "2026-09-10T06:29:25.0000000+00:00"
+      }
+    ]
+  }
+}
