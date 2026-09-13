@@ -1368,34 +1368,34 @@
   },
   "CRM": {
     "ticker": "CRM",
-    "asOf": "2026-08-14",
-    "currentPrice": 196.21,
+    "asOf": "2026-09-11",
+    "currentPrice": 247.72,
     "dataQuality": {},
     "per": {
-      "current": 25.16,
+      "current": 31.76,
       "historicalAvg5y": 220.98,
-      "gapPct": -88.6,
+      "gapPct": -85.6,
       "stage": 1,
       "sampleYears": 5
     },
     "pbr": {
-      "current": 3.06,
+      "current": 3.87,
       "historicalAvg5y": 4.02,
-      "gapPct": -23.9,
-      "stage": 1,
+      "gapPct": -3.7,
+      "stage": 3,
       "sampleYears": 5
     },
     "targetPrice": {
-      "mean": 242.4287,
+      "mean": 273.37314,
       "high": 475.0,
       "low": 160.0,
-      "upsidePct": 23.6,
-      "stage": 1,
+      "upsidePct": 10.4,
+      "stage": 2,
       "numAnalysts": 54,
       "recommendationKey": "buy"
     },
-    "combinedStage": 1,
-    "combinedLabel": "매우낮음"
+    "combinedStage": 2,
+    "combinedLabel": "낮음"
   },
   "ADBE": {
     "ticker": "ADBE",
@@ -1539,5 +1539,36 @@
     },
     "combinedStage": 4,
     "combinedLabel": "높음"
+  },
+  "AMGN": {
+    "ticker": "AMGN",
+    "asOf": "2026-09-11",
+    "currentPrice": 377.35,
+    "dataQuality": {},
+    "per": {
+      "current": 26.52,
+      "historicalAvg5y": 24.82,
+      "gapPct": 6.8,
+      "stage": 4,
+      "sampleYears": 5
+    },
+    "pbr": {
+      "current": 23.49,
+      "historicalAvg5y": 25.2,
+      "gapPct": -6.8,
+      "stage": 2,
+      "sampleYears": 5
+    },
+    "targetPrice": {
+      "mean": 388.0345,
+      "high": 457.0,
+      "low": 225.0,
+      "upsidePct": 2.8,
+      "stage": 3,
+      "numAnalysts": 29,
+      "recommendationKey": "hold"
+    },
+    "combinedStage": 3,
+    "combinedLabel": "적정"
   }
 }

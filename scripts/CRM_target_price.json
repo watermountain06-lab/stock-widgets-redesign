@@ -1,0 +1,11 @@
+{
+  "ticker": "CRM",
+  "currentPrice": 247.72,
+  "targetHighPrice": 475.0,
+  "targetLowPrice": 160.0,
+  "targetMeanPrice": 273.37314,
+  "targetMedianPrice": 273.0,
+  "recommendationKey": "buy",
+  "recommendationMean": 1.75,
+  "numberOfAnalystOpinions": 54
+}

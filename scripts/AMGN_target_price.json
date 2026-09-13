@@ -1,0 +1,11 @@
+{
+  "ticker": "AMGN",
+  "currentPrice": 377.35,
+  "targetHighPrice": 457.0,
+  "targetLowPrice": 225.0,
+  "targetMeanPrice": 388.0345,
+  "targetMedianPrice": 395.0,
+  "recommendationKey": "hold",
+  "recommendationMean": 2.58824,
+  "numberOfAnalystOpinions": 29
+}
