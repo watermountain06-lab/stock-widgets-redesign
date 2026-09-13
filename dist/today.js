@@ -23,7 +23,8 @@ function render(){
  prev.innerHTML=index>0?preview(list[index-1]):'';
  const next=document.getElementById('preview-next');next.hidden=index===list.length-1;
  if(index<list.length-1)next.innerHTML=preview(list[index+1]);
- story.innerHTML=`<span class="bookmark">${d.sector}</span><div class="stock-heading"><img src="logos/${d.ticker.toLowerCase()}.png" alt=""><div><small>TODAY'S COMPANY · ${d.ticker}</small><h2>${d.name}</h2></div></div><p class="intro">${d.name}의 숫자와 사업을 한 장에.<br>가격부터 업종, 상세 분석까지 차례로 살펴보세요.</p><div class="quote"><span class="price">${d.price}</span><span class="change ${d.change>=0?'up':'down'}">${d.change>=0?'+':'−'}${Math.abs(d.change).toFixed(2)}%</span></div><p class="caption">${d.quoteAsOf ? "Twelve Data · 시세 기준 "+d.quoteAsOf+" · 지연 시간 미확인" : "가격·등락률은 레이아웃 시연용 예시 값입니다."}</p><div class="metrics"><div class="metric"><span>시가총액</span><strong>${d.marketCap}</strong></div><div class="metric"><span>시가총액 순위</span><strong>${d.rank}위</strong></div><div class="metric"><span>티커</span><strong>${d.ticker}</strong></div></div><section class="section"><h3><span>01</span>기업 살펴보기</h3><p>이 종목은 ${d.sector} 업종으로 분류되어 있습니다. 사업 구조와 실적, 주요 이벤트는 종합 분석 페이지에서 확인할 수 있습니다.</p></section><section class="section"><h3><span>02</span>함께 살펴볼 종목</h3><p>오늘의 목록에서 다른 기업의 숫자도 비교해 보세요.</p><div class="comparison">${list.filter(s=>s.ticker!==d.ticker).slice(0,2).map(s=>`<a href="${s.href}"><small>${s.name}</small><strong>${s.ticker} ↗</strong><b>${s.price}</b></a>`).join('')}</div></section><section class="section"><h3><span>03</span>분석 이어 읽기</h3><a class="source-link" href="${d.href}">기업 개요 · 재무 · 기술적 분석<span>종합 분석 ↗</span></a><a class="source-link" href="index.html">전체 기업을 한눈에<span>종목 목록 ↗</span></a></section><details><summary>ⓘ 이 카드의 데이터 범위</summary><p>날짜별 목록과 시세는 디자인 확인을 위한 예시입니다. 실제 해당 날짜의 가격이나 추천 종목을 의미하지 않습니다. 시가총액 순위는 프로젝트에 포함된 예시 종목 기준입니다. 최신 공시 및 시세 검증은 별도로 필요합니다.</p></details><a class="full-link" href="${d.href}">${d.ticker} 상세 분석 보기 ↗</a>`;
+ story.innerHTML=`<div class="stock-heading"><img src="logos/${d.ticker.toLowerCase()}.png" alt=""><div><small>${d.ticker} · ${d.sector}</small><h2>${d.name}</h2></div><a class="analysis-link" href="${d.href}">분석 보기 ↗</a></div><div class="quote"><span class="price">${d.price}</span><span class="change ${d.change>=0?'up':'down'}">${d.change>=0?'+':'−'}${Math.abs(d.change).toFixed(2)}%</span><span class="compact-cap">시가총액 ${d.marketCap}</span></div><p class="caption">${d.quoteAsOf ? "Twelve Data · 시세 기준 "+d.quoteAsOf : "시세·시가총액은 예시 데이터입니다."}</p>`;
+ renderWorkspace(d);
  document.getElementById('previous').disabled=index===0;document.getElementById('next').disabled=index===list.length-1;
  document.getElementById('dots').innerHTML=list.map((s,i)=>`<button class="dot" data-index="${i}" aria-label="${i+1}번째 종목 ${s.ticker}" aria-pressed="${i===index}"></button>`).join('');
  document.getElementById('position').textContent=`◆ ${String(index+1).padStart(2,'0')} / ${String(list.length).padStart(2,'0')} · ${d.ticker}`;
@@ -77,3 +78,18 @@ saveReading=Reading.bind('today',()=>({day,ticker:days[day].tickers[index]}),!ex
 bindCardNavigation(document.querySelector('.stage'),moveCard);
 
 window.addEventListener('quotes-updated',render);
+
+function renderWorkspace(d){
+ const key='today-work-'+days[day].label+'-'+d.ticker;
+ let saved={};try{saved=JSON.parse(localStorage.getItem(key)||'{}')||{};if(typeof saved!=='object')saved={};}catch{}
+ const tasks=document.getElementById('today-tasks');
+ tasks.innerHTML=['실적과 공시 확인','가격 변동 배경 확인','토론할 질문 정리'].map((label,i)=>'<label><input type="checkbox" data-task="'+i+'">'+label+'</label>').join('');
+ tasks.querySelectorAll('input').forEach((input,i)=>{input.checked=Boolean(saved[i]);input.addEventListener('change',()=>{saved[i]=input.checked;persist();});});
+ const note=document.getElementById('discussion-note');note.value=typeof saved.note==='string'?saved.note:'';
+ note.oninput=()=>{saved.note=note.value;persist();};
+ document.getElementById('work-status').textContent='이 기기에 저장 · '+d.ticker;
+ function persist(){try{localStorage.setItem(key,JSON.stringify(saved));document.getElementById('work-status').textContent='저장됨 · '+d.ticker;}catch{document.getElementById('work-status').textContent='저장할 수 없습니다. 브라우저 저장 설정을 확인하세요.';}}
+ document.getElementById('news-google').href='https://news.google.com/search?q='+encodeURIComponent(d.ticker+' stock');
+ document.getElementById('news-youtube').href='https://www.youtube.com/results?search_query='+encodeURIComponent(d.ticker+' stock news');
+ document.getElementById('news-company').textContent=d.name+' 관련 소식';
+}

@@ -56,9 +56,7 @@
   <header class="site-header"><div class="header-inner"><a class="brand" href="index.html">◧ [사이트명]</a><span class="brand-note">공시로 읽는 기업의 흐름<br>하루씩, 한 종목씩</span><nav aria-label="주 메뉴"><a href="index.html" aria-current="page">Home</a><a href="today.html">Today</a></nav></div></header>
 
   <section class="home-feature" aria-label="오늘의 종목 미리보기">
-    <p class="feature-kicker">DAILY BRIEF · 예시 데이터</p><h1>기업의 숫자, <span>이야기가 되다.</span></h1><p class="feature-intro">가격의 움직임부터 기업의 사업까지.<br>오늘 살펴볼 종목을 한 장씩 읽어보세요.</p>
-    <div class="feature-label"><strong>◆ 오늘의 종목</strong><a href="today.html">Today에서 자세히 보기 ↗</a></div>
-    <div class="feature-stage"><button id="feature-prev" class="feature-side feature-left" aria-label="이전 카드"></button><article id="feature-card"></article><button id="feature-next" class="feature-side feature-right" aria-label="다음 카드"></button></div><p id="feature-position" aria-live="polite"></p>
+<p class="feature-kicker">DAILY BRIEF · 예시 데이터</p><h1>오늘, 살펴볼 기업.</h1><p class="feature-intro">움직임과 가치로 찾고, 핵심만 빠르게 확인하세요.</p><div class="feature-label"><strong>오늘의 종목</strong><a href="today.html">Today 열기 ↗</a></div><div id="discovery-tabs" class="discovery-tabs" aria-label="오늘의 종목 분류"></div><p id="discovery-note" class="feature-intro"></p><div id="discovery-grid"></div>
   </section>
   <!-- 1.5 매크로 지표 스트립 (아래 숫자·날짜 전부 목업 값, 실데이터 연동 전) -->
   <div style="border-bottom:1px solid var(--border);background:var(--panel);">
@@ -93,30 +91,6 @@
           <div style="font-size:11px;color:var(--text3);margin-bottom:4px;">물가상승률</div>
           <div class="num" style="font-size:15px;font-weight:700;">3.4%</div>
           <div style="font-size:11.5px;color:var(--text3);">2026.07</div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- 2. 스탯 카드 4개 (전부 목업 값) -->
-  <div>
-    <div class="wrap" style="padding:24px 40px 0;">
-      <div class="box-w stats-grid" style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;">
-        <div class="stat-card">
-          <div class="stat-label">5% 이상 상승</div>
-          <div><span class="stat-value num" style="color:var(--up);">11</span><span class="stat-unit">개</span></div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-label">5% 이상 하락</div>
-          <div><span class="stat-value num" style="color:var(--down);">7</span><span class="stat-unit">개</span></div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-label">저평가</div>
-          <div><span class="stat-value num" style="color:var(--green-soft);">9</span><span class="stat-unit">개</span></div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-label">초저평가</div>
-          <div><span class="stat-value num" style="color:var(--green-deep);">6</span><span class="stat-unit">개</span></div>
         </div>
       </div>
     </div>
@@ -170,7 +144,7 @@
 
 <script src="stock-data.js?v=1"></script>
 <script src="reading.js?v=resume-only"></script>
-<script src="navigation.js?v=drag-2"></script>
+<script src="navigation.js?v=drag-3"></script>
 <script>
 (function(){
   var STAR = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#c9c5b3" stroke-width="1.6"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>';
@@ -226,32 +200,19 @@
   tabs.forEach(function(t){t.addEventListener('click',function(){view=t.dataset.view;render();});});
   document.getElementById('stock-search').addEventListener('input',render);
   document.getElementById('favorites-only').addEventListener('change',render);
-  window.addEventListener('quotes-updated',()=>{render();renderFeature();});
+  window.addEventListener('quotes-updated',()=>{render();renderDiscovery();});
   render();
-  var savedReading=Reading.load('home');
-  var featureIndex=DATA.slice(0,6).findIndex(d=>d.ticker===savedReading.ticker);if(featureIndex<0)featureIndex=0;
-  var featureAnimations=[],saveHomeReading=()=>{};
-  var featureCard=document.getElementById('feature-card');
-  function featureMarkup(d){return '<span class="tag">'+d.sector+'</span><div class="feature-company"><img src="logos/'+d.ticker.toLowerCase()+'.png" alt=""><div><small>'+d.ticker+'</small><h2>'+d.name+'</h2></div></div><p>기업의 가격과 사업을 함께 살펴보세요.</p><small>'+ (d.quoteAsOf?'Twelve Data · '+d.quoteAsOf:'시세: 예시 · 기준일 미확인')+'</small><div class="price-line"><strong class="price">'+d.price+'</strong>'+changeCell(d.change)+'</div><div class="card-bottom">시가총액 <strong>'+d.marketCap+'</strong></div>';}
-  function renderFeature(){
-    var d=DATA[featureIndex];featureCard.innerHTML=featureMarkup(d)+'<a class="feature-open" href="today.html#0-'+d.ticker+'">오늘의 종목 읽기 ↗</a>';
-    ['prev','next'].forEach(function(key){var i=featureIndex+(key==='next'?1:-1),el=document.getElementById('feature-'+key);el.hidden=i<0||i>=6;el.innerHTML=el.hidden?'':featureMarkup(DATA[i]);});
-    document.getElementById('feature-position').textContent=(featureIndex+1)+' / 6';
+
+  var category='all';
+  var categories=[['all','전체'],['up','5% 이상 상승'],['down','5% 이상 하락'],['value','저평가'],['deep','초저평가']];
+  function selectedStocks(key){return DATA.filter(d=>d.ticker!=='SPCX' && (key==='all'||key==='up'&&d.change>=5||key==='down'&&d.change<=-5||key==='value'&&d.valuation==='undervalued'||key==='deep'&&d.valuation==='deep-value'));}
+  function renderDiscovery(){
+    document.getElementById('discovery-tabs').innerHTML=categories.map(([key,label])=>'<button data-category="'+key+'" aria-pressed="'+(key===category)+'">'+label+' <small>'+(key==='value'||key==='deep'?'준비 중':selectedStocks(key).length)+'</small></button>').join('');
+    document.getElementById('discovery-note').textContent=category==='value'||category==='deep'?'가치 평가 기준과 재무 데이터 연결 후 표시됩니다.':'등록 종목 기준 · 예시 시세 포함 · 최대 6개 표시 · 상장 미확인 종목 제외';
+    document.getElementById('discovery-grid').innerHTML=selectedStocks(category).slice(0,6).map(d=>'<a class="discovery-card" href="'+d.href+'"><img src="logos/'+d.ticker.toLowerCase()+'.png" alt=""><span><strong>'+d.ticker+'</strong><small>'+d.name+'</small></span><span class="discovery-quote"><strong>'+d.price+'</strong>'+changeCell(d.change)+'</span></a>').join('')||'<p class="empty-state">현재 조건에 해당하는 종목이 없습니다.</p>';
   }
-  function slideFeature(step){
-    var next=featureIndex+step;if(next<0||next>=6)return;
-    featureAnimations.forEach(function(a){a.cancel();});document.querySelectorAll('.feature-outgoing').forEach(function(el){el.remove();});
-    var old=featureCard.cloneNode(true);old.removeAttribute('id');old.classList.add('feature-outgoing');old.inert=true;old.setAttribute('aria-hidden','true');
-    var distance=featureCard.getBoundingClientRect().width+24;
-    featureIndex=next;renderFeature();saveHomeReading();document.querySelector('.feature-stage').append(old);
-    var timing={duration:300,easing:'linear',fill:'both'};
-    var exit=old.animate([{transform:'translateX(0)',opacity:1},{transform:'translateX('+(-step*distance)+'px) scale(.9)',opacity:0}],timing);
-    var enter=featureCard.animate([{transform:'translateX('+(step*distance)+'px) scale(.9)',opacity:.3},{transform:'translateX(0)',opacity:1}],timing);
-    featureAnimations=[exit,enter];Promise.all(featureAnimations.map(function(a){return a.finished;})).then(function(){old.remove();exit.cancel();enter.cancel();}).catch(function(){});
-  }
-  document.getElementById('feature-prev').addEventListener('click',function(){slideFeature(-1);});document.getElementById('feature-next').addEventListener('click',function(){slideFeature(1);});renderFeature();
-  bindCardNavigation(document.querySelector(".feature-stage"),slideFeature);
-  saveHomeReading=Reading.bind('home',()=>({ticker:DATA[featureIndex].ticker}),savedReading.y);
+  document.getElementById('discovery-tabs').addEventListener('click',e=>{const button=e.target.closest('[data-category]');if(button){category=button.dataset.category;renderDiscovery();}});
+  renderDiscovery();
 })();
 </script>
 
