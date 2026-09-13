@@ -143,7 +143,7 @@
 
 </div>
 
-<script src="stock-data.js?v=clean-labels-3"></script>
+<script src="stock-data.js?v=demo-value-1"></script>
 <script src="reading.js?v=resume-only"></script>
 <script src="navigation.js?v=local-20260913-2"></script>
 <script>
@@ -204,13 +204,13 @@
   var discoveryIndex=0, discoveryElapsed=0;
   const discoveryDuration=3500;
   var categories=[['up','5% 이상 상승'],['down','5% 이상 하락'],['value','저평가'],['deep','초저평가']];
-  function selectedStocks(key){return DATA.filter(d=>d.ticker!=='SPCX' && (key==='all'||key==='up'&&d.change>=5||key==='down'&&d.change<=-5||key==='value'&&d.valuation==='undervalued'||key==='deep'&&d.valuation==='deep-value'));}
+  function selectedStocks(key){return DATA.filter(d=>d.ticker!=='SPCX' && (key==='all'||key==='up'&&d.change>=5||key==='down'&&d.change<=-5||key==='value'&&(d.valuation==='undervalued'||d.demoValuation==='undervalued')||key==='deep'&&d.valuation==='deep-value'));}
   function renderDiscovery(){
     const list=selectedStocks(category);
     discoveryIndex=Math.min(discoveryIndex,Math.max(0,list.length-1));
     document.getElementById('discovery-position').textContent=list.length?`${discoveryIndex+1} / ${list.length} 종목`:'해당 종목 없음';
-    document.getElementById('discovery-tabs').innerHTML=categories.map(([key,label])=>'<button data-category="'+key+'" aria-pressed="'+(key===category)+'">'+label+' <small>'+(key==='value'||key==='deep'?'준비 중':selectedStocks(key).length)+'</small></button>').join('');
-    document.getElementById('discovery-note').textContent=category==='value'||category==='deep'?'가치 평가 기준과 재무 데이터 연결 후 표시됩니다.':'등록 종목 기준 · 종목을 모두 확인한 뒤 다음 분류로 이동';
+    document.getElementById('discovery-tabs').innerHTML=categories.map(([key,label])=>'<button data-category="'+key+'" aria-pressed="'+(key===category)+'">'+label+' <small>'+(key==='deep'?'준비 중':selectedStocks(key).length)+'</small></button>').join('');
+    document.getElementById('discovery-note').textContent=category==='value'?'예시 분류 · 화면 확인용 3종목이며 실제 저평가 판정이 아닙니다.':category==='deep'?'가치 평가 기준과 재무 데이터 연결 후 표시됩니다.':'등록 종목 기준 · 종목을 모두 확인한 뒤 다음 분류로 이동';
     document.getElementById('discovery-grid').innerHTML=list.slice(discoveryIndex,discoveryIndex+1).map(d=>'<a class="discovery-card" href="'+d.href+'"><img src="logos/'+d.ticker.toLowerCase()+'.png" alt=""><span><strong>'+d.ticker+'</strong><small>'+d.name+'</small></span><span class="discovery-quote"><strong>'+d.price+'</strong>'+changeCell(d.change)+'</span><small class="selection-reason">'+window.StockData.quoteLabel(d)+' '+'</small></a>').join('')||'<p class="empty-state">현재 조건에 해당하는 종목이 없습니다.</p>';
   }
   document.getElementById('discovery-tabs').addEventListener('click',e=>{const button=e.target.closest('[data-category]');if(button){category=button.dataset.category;discoveryIndex=0;discoveryElapsed=0;renderDiscovery();}});
@@ -245,6 +245,7 @@
 
 </body>
 </html>
+
 
 
 

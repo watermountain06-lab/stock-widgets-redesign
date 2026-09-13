@@ -24,3 +24,7 @@ window.StockData.selectionReason=function(d){
 };
 
 window.StockData.quoteLabel=function(d){return '';};
+
+// UI demonstration only; these are not verified valuation classifications.
+window.StockData.stocks.forEach(stock => { if (['GOOGL','BRKB','MSFT'].includes(stock.ticker)) stock.demoValuation = 'undervalued'; });
+
