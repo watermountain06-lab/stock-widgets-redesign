@@ -13,3 +13,14 @@ window.StockData={stocks:[
     {rank:11, ticker:'BRKB', name:'버크셔 해서웨이', sector:'금융&middot;복합기업', price:'$508.13', change:0.57, marketCap:'$1.09T', href:'cards/BRKB_full_widget.html'},
     {rank:12, ticker:'MU', name:'마이크론 테크놀로지', sector:'반도체&middot;메모리', price:'$958.16', change:0.22, marketCap:'$1.08T', href:'cards/MU_full_widget.html'}
   ],days:[{label:'9월 10일 (목)',full:'2026년 9월 10일 (목)',tickers:['NVDA','AAPL','GOOGL','MSFT','AMZN','TSM']},{label:'9월 9일 (수)',full:'2026년 9월 9일 (수)',tickers:['TSLA','SPCX','AVGO','META']},{label:'9월 8일 (화)',full:'2026년 9월 8일 (화)',tickers:['BRKB','MU']}],meta:{mode:'demo',source:'프로젝트 예시 데이터',asOf:null,updatedAt:null,delayMinutes:null}};
+
+// Explain the visible example selection without inventing valuation or news events.
+window.StockData.selectionReason=function(d){
+ if(d.ticker==='SPCX')return '예시 편성 · 상장 확인 전';
+ const basis=d.quoteAsOf?'저장 시세 기준':'예시 시세 기준';
+ if(d.change>=5)return '5% 이상 상승 · '+basis;
+ if(d.change<=-5)return '5% 이상 하락 · '+basis;
+ return '시가총액 '+d.rank+'위 · 등록 예시 종목 기준';
+};
+
+window.StockData.quoteLabel=function(d){return '';};

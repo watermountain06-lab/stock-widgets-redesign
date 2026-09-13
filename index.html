@@ -45,9 +45,9 @@
   .star-cell{display:flex;justify-content:center;}
   .empty-state{padding:56px 20px;text-align:center;font-size:13px;color:var(--text3);}
 </style>
-<link rel="stylesheet" href="styles.css?v=home-slide-1">
+<link rel="stylesheet" href="styles.css?v=restore-source-4">
 <link rel="stylesheet" href="header.css?v=1">
-<script src="data-status.js?v=1" defer></script>
+<script src="data-status.js?v=restore-source-4" defer></script>
 </head>
 <body>
 
@@ -56,8 +56,9 @@
   <header class="site-header"><div class="header-inner"><a class="brand" href="index.html">◧ [사이트명]</a><span class="brand-note">공시로 읽는 기업의 흐름<br>하루씩, 한 종목씩</span><nav aria-label="주 메뉴"><a href="index.html" aria-current="page">Home</a><a href="today.html">Today</a></nav></div></header>
 
   <section class="home-feature" aria-label="오늘의 종목 미리보기">
-<p class="feature-kicker">DAILY BRIEF · 예시 데이터</p><h1>오늘, 살펴볼 기업.</h1><p class="feature-intro">움직임과 가치로 찾고, 핵심만 빠르게 확인하세요.</p><div class="feature-label"><strong>오늘의 종목</strong><a href="today.html">Today 열기 ↗</a></div><div id="discovery-tabs" class="discovery-tabs" aria-label="오늘의 종목 분류"></div><p id="discovery-note" class="feature-intro"></p><div id="discovery-grid"></div>
+<p class="feature-kicker">DAILY BRIEF</p><h1>오늘, 살펴볼 기업.</h1><p class="feature-intro">움직임과 가치로 찾고, 핵심만 빠르게 확인하세요.</p><div class="feature-label"><strong>오늘의 종목</strong><a href="today.html">Today 열기 ↗</a></div><div id="discovery-tabs" class="discovery-tabs" aria-label="오늘의 종목 분류"></div><p id="discovery-note" class="feature-intro"></p><div id="discovery-grid"></div>
   </section>
+  <details class="market-demo"><summary>시장 지표 <span class="market-note">펼쳐보기</span></summary>
   <!-- 1.5 매크로 지표 스트립 (아래 숫자·날짜 전부 목업 값, 실데이터 연동 전) -->
   <div style="border-bottom:1px solid var(--border);background:var(--panel);">
     <div class="wrap">
@@ -96,6 +97,7 @@
     </div>
   </div>
 
+  </details>
   <!-- 3. 탭 + 검색 바 -->
   <div>
     <div class="wrap" style="padding:20px 40px 18px;">
@@ -124,7 +126,7 @@
   <div style="flex:1;display:flex;">
     <div class="wrap" style="flex:1;padding:6px 40px 44px;">
       <div class="box-w" style="font-size:11.5px;color:var(--text3);margin-bottom:14px;">
-        <strong style="color:var(--accent)">미리보기 · 예시 데이터</strong><br>ETF&middot;ETN 제외, 재무 수치는 SEC 공시 대조&middot; 현재가&middot;등락률은 별도 시세 기준(공시 대조 대상 아님)
+        ETF&middot;ETN 제외, 재무 수치는 SEC 공시 대조&middot; 현재가&middot;등락률은 별도 시세 기준(공시 대조 대상 아님)
       </div>
       <div class="box-w num" style="font-size:12.5px;color:var(--text2);margin-bottom:14px;">분석 대상 <span id="ticker-count" style="color:var(--text);font-weight:700;">5</span>개 종목</div>
 
@@ -142,9 +144,9 @@
 
 </div>
 
-<script src="stock-data.js?v=1"></script>
+<script src="stock-data.js?v=clean-labels-3"></script>
 <script src="reading.js?v=resume-only"></script>
-<script src="navigation.js?v=drag-3"></script>
+<script src="navigation.js?v=local-20260913-2"></script>
 <script>
 (function(){
   var STAR = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#c9c5b3" stroke-width="1.6"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>';
@@ -173,7 +175,7 @@
       + '<a class="stock-title" href="'+d.href+'"><span class="logo-box"><img src="logos/'+d.ticker.toLowerCase()+'.png" alt="" loading="lazy"></span><span><strong>'+d.ticker+'</strong><small>'+d.name+'</small></span></a>'
       + '<div class="stock-sector"><span class="tag">'+d.sector+'</span></div>'
       + '<div class="price-line"><span class="price num">'+d.price+'</span>'+changeCell(d.change)+'</div>'
-      + '<small>'+ (d.quoteAsOf ? 'Twelve Data · '+d.quoteAsOf : '시세: 예시 · 기준일 미확인')+'</small>'
+      + '<small>'+window.StockData.quoteLabel(d)+' '+ (d.quoteAsOf ? 'Twelve Data · '+d.quoteAsOf : '')+'</small>'
       + '<div class="card-bottom"><span>시가총액 <b class="num">'+d.marketCap+'</b></span><span>분석 보기 ↗</span></div></article>';
   }
   function render() {
@@ -208,8 +210,8 @@
   function selectedStocks(key){return DATA.filter(d=>d.ticker!=='SPCX' && (key==='all'||key==='up'&&d.change>=5||key==='down'&&d.change<=-5||key==='value'&&d.valuation==='undervalued'||key==='deep'&&d.valuation==='deep-value'));}
   function renderDiscovery(){
     document.getElementById('discovery-tabs').innerHTML=categories.map(([key,label])=>'<button data-category="'+key+'" aria-pressed="'+(key===category)+'">'+label+' <small>'+(key==='value'||key==='deep'?'준비 중':selectedStocks(key).length)+'</small></button>').join('');
-    document.getElementById('discovery-note').textContent=category==='value'||category==='deep'?'가치 평가 기준과 재무 데이터 연결 후 표시됩니다.':'등록 종목 기준 · 예시 시세 포함 · 최대 6개 표시 · 상장 미확인 종목 제외';
-    document.getElementById('discovery-grid').innerHTML=selectedStocks(category).slice(0,6).map(d=>'<a class="discovery-card" href="'+d.href+'"><img src="logos/'+d.ticker.toLowerCase()+'.png" alt=""><span><strong>'+d.ticker+'</strong><small>'+d.name+'</small></span><span class="discovery-quote"><strong>'+d.price+'</strong>'+changeCell(d.change)+'</span></a>').join('')||'<p class="empty-state">현재 조건에 해당하는 종목이 없습니다.</p>';
+    document.getElementById('discovery-note').textContent=category==='value'||category==='deep'?'가치 평가 기준과 재무 데이터 연결 후 표시됩니다.':'등록 종목 기준 · 최대 6개 표시';
+    document.getElementById('discovery-grid').innerHTML=selectedStocks(category).slice(0,6).map(d=>'<a class="discovery-card" href="'+d.href+'"><img src="logos/'+d.ticker.toLowerCase()+'.png" alt=""><span><strong>'+d.ticker+'</strong><small>'+d.name+'</small></span><span class="discovery-quote"><strong>'+d.price+'</strong>'+changeCell(d.change)+'</span><small class="selection-reason">'+window.StockData.quoteLabel(d)+' '+'</small></a>').join('')||'<p class="empty-state">현재 조건에 해당하는 종목이 없습니다.</p>';
   }
   document.getElementById('discovery-tabs').addEventListener('click',e=>{const button=e.target.closest('[data-category]');if(button){category=button.dataset.category;renderDiscovery();}});
   renderDiscovery();
