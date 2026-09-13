@@ -1,0 +1,11 @@
+{
+  "ticker": "TMO",
+  "currentPrice": 609.82,
+  "targetHighPrice": 750.0,
+  "targetLowPrice": 520.0,
+  "targetMeanPrice": 645.14813,
+  "targetMedianPrice": 650.0,
+  "recommendationKey": "buy",
+  "recommendationMean": 1.51724,
+  "numberOfAnalystOpinions": 27
+}

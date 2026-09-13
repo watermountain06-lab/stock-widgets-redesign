@@ -1,0 +1,26 @@
+{
+  "ticker": "MRVL",
+  "asOf": "2026-09-11",
+  "currentPrice": 236.1,
+  "dataQuality": {
+    "per": "missing (no positive EPS history, or fewer than 3 usable years)"
+  },
+  "pbr": {
+    "current": 14.43,
+    "historicalAvg5y": 4.41,
+    "gapPct": 227.2,
+    "stage": 5,
+    "sampleYears": 5
+  },
+  "targetPrice": {
+    "mean": 285.3031,
+    "high": 400.0,
+    "low": 143.0,
+    "upsidePct": 20.8,
+    "stage": 1,
+    "numAnalysts": 42,
+    "recommendationKey": "strong_buy"
+  },
+  "combinedStage": 3,
+  "combinedLabel": "적정"
+}

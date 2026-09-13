@@ -1,0 +1,11 @@
+{
+  "ticker": "MRVL",
+  "currentPrice": 236.1,
+  "targetHighPrice": 400.0,
+  "targetLowPrice": 143.0,
+  "targetMeanPrice": 285.3031,
+  "targetMedianPrice": 282.0,
+  "recommendationKey": "strong_buy",
+  "recommendationMean": 1.42222,
+  "numberOfAnalystOpinions": 42
+}
