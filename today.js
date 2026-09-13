@@ -26,6 +26,7 @@ function render(){
  story.innerHTML=`<div class="stock-heading"><img src="logos/${d.ticker.toLowerCase()}.png" alt=""><div><small>${d.ticker} · ${d.sector}</small><h2>${d.name}</h2></div><a class="analysis-link" href="${d.href}">분석 보기 ↗</a></div><div class="quote-origin">${window.StockData.quoteLabel(d)}</div><div class="quote"><span class="price">${d.price}</span><span class="change ${d.change>=0?'up':'down'}">${d.change>=0?'+':'−'}${Math.abs(d.change).toFixed(2)}%</span><span class="compact-cap">시가총액 ${d.marketCap}</span></div><p class="caption">${d.quoteAsOf ? "Twelve Data · 시세 기준 "+d.quoteAsOf : ""}</p>`;
 
  document.getElementById('drag-hint').textContent=index===0?'← 카드를 왼쪽으로 드래그해 다음 종목 보기':index===list.length-1?'카드를 오른쪽으로 드래그해 이전 종목 보기 →':'↔ 카드를 좌우로 드래그해 종목 넘기기';
+ document.getElementById('summary-context').textContent=days[day].label+' · '+d.ticker;
  renderWorkspace(d);
  document.getElementById('previous').disabled=index===0;document.getElementById('next').disabled=index===list.length-1;
  document.getElementById('dots').innerHTML=list.map((s,i)=>`<button class="dot" data-index="${i}" aria-label="${i+1}번째 종목 ${s.ticker}" aria-pressed="${i===index}"></button>`).join('');
@@ -96,3 +97,6 @@ function renderWorkspace(d){
  document.getElementById('news-company').textContent=d.name+' 관련 소식';
  window.renderNews(d.ticker);
 }
+
+function refreshCalendar(){const now=new Date();document.getElementById('calendar-today').textContent=new Intl.DateTimeFormat('ko-KR',{dateStyle:'full'}).format(now);document.getElementById('calendar-today').dateTime=[now.getFullYear(),String(now.getMonth()+1).padStart(2,'0'),String(now.getDate()).padStart(2,'0')].join('-');}
+refreshCalendar();setInterval(refreshCalendar,60000);

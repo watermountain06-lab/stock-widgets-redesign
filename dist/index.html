@@ -48,6 +48,7 @@
 <link rel="stylesheet" href="styles.css?v=restore-source-4">
 <link rel="stylesheet" href="header.css?v=1">
 <script src="data-status.js?v=restore-source-4" defer></script>
+<link rel="stylesheet" href="theme.css?v=1">
 </head>
 <body>
 
@@ -56,9 +57,9 @@
   <header class="site-header"><div class="header-inner"><a class="brand" href="index.html">◧ [사이트명]</a><span class="brand-note">공시로 읽는 기업의 흐름<br>하루씩, 한 종목씩</span><nav aria-label="주 메뉴"><a href="index.html" aria-current="page">Home</a><a href="today.html">Today</a></nav></div></header>
 
   <section class="home-feature" aria-label="오늘의 종목 미리보기">
-<p class="feature-kicker">DAILY BRIEF</p><h1>오늘, 살펴볼 기업.</h1><p class="feature-intro">움직임과 가치로 찾고, 핵심만 빠르게 확인하세요.</p><div class="feature-label"><strong>오늘의 종목</strong><a href="today.html">Today 열기 ↗</a></div><div id="discovery-tabs" class="discovery-tabs" aria-label="오늘의 종목 분류"></div><p id="discovery-note" class="feature-intro"></p><div id="discovery-grid"></div>
+<p class="feature-kicker">DAILY BRIEF</p><h1>오늘, 살펴볼 기업.</h1><p class="feature-intro">움직임과 가치로 찾고, 핵심만 빠르게 확인하세요.</p><div class="feature-label"><strong>오늘의 종목</strong><a href="today.html">Today 열기 ↗</a></div><button type="button" id="discovery-pause" aria-pressed="false">자동 전환 일시정지</button><div id="discovery-tabs" class="discovery-tabs" aria-label="오늘의 종목 분류"></div><p id="discovery-note" class="feature-intro"></p><div id="discovery-grid"></div>
   </section>
-  <details class="market-demo"><summary>시장 지표 <span class="market-note">펼쳐보기</span></summary>
+  <details class="market-demo" open><summary>시장 지표 <span class="market-note">예시 데이터</span></summary>
   <!-- 1.5 매크로 지표 스트립 (아래 숫자·날짜 전부 목업 값, 실데이터 연동 전) -->
   <div style="border-bottom:1px solid var(--border);background:var(--panel);">
     <div class="wrap">
@@ -183,12 +184,14 @@
     var data = DATA.filter(function(d){return (d.ticker+' '+d.name).toLowerCase().includes(query) && (!document.getElementById('favorites-only').checked || favorites.has(d.ticker));});
     document.getElementById('ticker-count').textContent = data.length;
     tabs.forEach(function(t){var active=t.dataset.view===view;t.classList.toggle('active',active);t.setAttribute('aria-pressed',String(active));});
-    if(view==='attract'){panel.innerHTML='<div class="empty-state">매력도별 보기는 준비 중입니다</div>';return;}
+    panel.classList.toggle('table-view',view!=='rank');
     if(view==='change') data.sort(function(a,b){return b.change-a.change;});
-    if(view==='sector') {
-      var groups={};data.forEach(function(d){(groups[d.sector] || (groups[d.sector]=[])).push(d);});
-      panel.innerHTML=Object.keys(groups).map(function(sec){return '<div class="sector-head">'+sec+' · '+groups[sec].length+'</div>'+groups[sec].map(card).join('');}).join('');
-    } else panel.innerHTML=data.map(card).join('');
+    if(view==='rank') panel.innerHTML=data.map(card).join('');
+    else {
+      if(view==='sector') data.sort((a,b)=>a.sector.localeCompare(b.sector,'ko')||a.rank-b.rank);
+      const changeRanks=new Map([...DATA].sort((a,b)=>b.change-a.change).map((d,i)=>[d.ticker,i+1]));
+      panel.innerHTML='<div class="stock-table-scroll"><table class="stock-table"><caption>'+({sector:'업종별 · 시가총액 순위',change:'등락률 순위 · 등록 종목 기준',attract:'매력도 평가 준비 중 · 시가총액 순위 참고'})[view]+'</caption><thead><tr><th scope="col">'+(view==='change'?'등락률 순위':'시가총액 순위')+'</th><th scope="col">종목</th><th scope="col">업종</th><th scope="col">주가</th><th scope="col">등락률</th><th scope="col">'+(view==='attract'?'매력도':'시가총액')+'</th><th scope="col">즐겨찾기</th></tr></thead><tbody>'+data.map(d=>'<tr><td>'+(view==='change'?changeRanks.get(d.ticker):d.rank)+'위</td><td><a href="'+d.href+'"><strong>'+d.ticker+'</strong><small>'+d.name+'</small></a></td><td>'+d.sector+'</td><td>'+d.price+'</td><td>'+changeCell(d.change)+'</td><td>'+(view==='attract'?'미평가':d.marketCap)+'</td><td><button class="favorite" data-ticker="'+d.ticker+'" aria-label="'+d.ticker+' 즐겨찾기" aria-pressed="'+favorites.has(d.ticker)+'">'+STAR+'</button></td></tr>').join('')+'</tbody></table></div>';
+    }
     if(!data.length) panel.innerHTML='<div class="empty-state">표시할 종목이 없습니다</div>';
   }
   panel.addEventListener('click',function(e){
@@ -205,8 +208,8 @@
   window.addEventListener('quotes-updated',()=>{render();renderDiscovery();});
   render();
 
-  var category='all';
-  var categories=[['all','전체'],['up','5% 이상 상승'],['down','5% 이상 하락'],['value','저평가'],['deep','초저평가']];
+  var category='up';
+  var categories=[['up','5% 이상 상승'],['down','5% 이상 하락'],['value','저평가'],['deep','초저평가']];
   function selectedStocks(key){return DATA.filter(d=>d.ticker!=='SPCX' && (key==='all'||key==='up'&&d.change>=5||key==='down'&&d.change<=-5||key==='value'&&d.valuation==='undervalued'||key==='deep'&&d.valuation==='deep-value'));}
   function renderDiscovery(){
     document.getElementById('discovery-tabs').innerHTML=categories.map(([key,label])=>'<button data-category="'+key+'" aria-pressed="'+(key===category)+'">'+label+' <small>'+(key==='value'||key==='deep'?'준비 중':selectedStocks(key).length)+'</small></button>').join('');
@@ -215,6 +218,18 @@
   }
   document.getElementById('discovery-tabs').addEventListener('click',e=>{const button=e.target.closest('[data-category]');if(button){category=button.dataset.category;renderDiscovery();}});
   renderDiscovery();
+  let discoveryPaused=false;
+  const feature=document.querySelector('.home-feature');
+  document.getElementById('discovery-pause').addEventListener('click',e=>{
+    discoveryPaused=!discoveryPaused;
+    e.currentTarget.setAttribute('aria-pressed',String(discoveryPaused));
+    e.currentTarget.textContent=discoveryPaused?'자동 전환 재생':'자동 전환 일시정지';
+  });
+  setInterval(()=>{
+    if(discoveryPaused||document.hidden||feature.matches(':hover')||feature.contains(document.activeElement))return;
+    category=categories[(categories.findIndex(c=>c[0]===category)+1)%categories.length][0];
+    renderDiscovery();
+  },5000);
 })();
 </script>
 
