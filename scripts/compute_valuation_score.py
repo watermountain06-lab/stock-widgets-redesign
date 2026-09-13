@@ -121,6 +121,15 @@ def pair_by_nearest_date(series_a, series_b, tolerance_days=120):
 MIN_HISTORY_YEARS = 3  # below this, a "5-year average" is more noise than signal
 
 
+def avg_key(series):
+    """The average is over however many fiscal years survived, and MIN_HISTORY_YEARS is 3.
+    Naming it historicalAvg5y regardless made a 4-sample average on STX read as five years
+    of history; only sampleYears, two lines below, said otherwise. So the 5y name is used
+    only when the sample really is five, and a short one gets a name that does not lie.
+    """
+    return "historicalAvg5y" if len(series) == 5 else "historicalAvg"
+
+
 def compute_signal(ticker, price_data, financials_data, target_data=None,
                     weight_component_a=0.6, weight_component_b=0.4):
     current_price = price_data["current"]
@@ -144,7 +153,7 @@ def compute_signal(ticker, price_data, financials_data, target_data=None,
             hist_avg_per = sum(m for _, m in per_series) / len(per_series)
             per_gap_pct = round((current_per - hist_avg_per) / hist_avg_per * 100, 1)
             result["per"] = {
-                "current": current_per, "historicalAvg5y": round(hist_avg_per, 2),
+                "current": current_per, avg_key(per_series): round(hist_avg_per, 2),
                 "gapPct": per_gap_pct, "stage": stage_from_gap_pct(per_gap_pct),
                 "sampleYears": len(per_series),
             }
@@ -160,7 +169,7 @@ def compute_signal(ticker, price_data, financials_data, target_data=None,
             hist_avg_pbr = sum(m for _, m in pbr_series) / len(pbr_series)
             pbr_gap_pct = round((current_pbr - hist_avg_pbr) / hist_avg_pbr * 100, 1)
             result["pbr"] = {
-                "current": current_pbr, "historicalAvg5y": round(hist_avg_pbr, 2),
+                "current": current_pbr, avg_key(pbr_series): round(hist_avg_pbr, 2),
                 "gapPct": pbr_gap_pct, "stage": stage_from_gap_pct(pbr_gap_pct),
                 "sampleYears": len(pbr_series),
             }
