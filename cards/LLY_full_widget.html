@@ -878,11 +878,53 @@
     </div>
   </div>
 
+  <div class="scorecard">
+    <div class="scorecard-top">
+      <div>
+        <div class="scorecard-score"><span class="num">79.2</span><span class="denom">/100</span></div>
+      </div>
+      <div class="scorecard-verdict">
+        <div><span class="scorecard-grade grade-positive">재무 기본점수 · 양호 구간</span></div>
+        <div class="scorecard-noOpp-inline">기술 80 · 평균 79.6</div>
+      </div>
+    </div>
+    <div class="scorecard-bar"><div class="scorecard-bar-fill" style="width:79.2%;"></div></div>
+    <div class="scorecard-subtitle">3축(밸류에이션·재무건전성·성장·수익성) 종합, 100점 만점 환산 · 모델 v1.0.1 산식 동결 2026-08-25</div>
+
+    <div class="scorecard-subscores">
+      <div class="subscore-box">
+        <div class="subscore-label"><span>밸류에이션</span><span class="subscore-max">28.1/33</span></div>
+        <div class="subscore-val">28.1</div>
+        <div class="subscore-bar"><div class="subscore-bar-fill" style="width:85.2%;"></div></div>
+        <div class="subscore-desc">PER 48.61x 1단계·PBR 39.66x 3단계·목표주가 1단계(애널리스트 29명 컨센서스 +18.2%) — 종합 1.6/5단계(낮을수록 저평가) <span style="color:var(--gold);font-weight:700;">낮음</span> <span style="color:var(--text3);">(2026-09-11 모델 스냅샷 기준)</span></div>
+      </div>
+      <div class="subscore-box">
+        <div class="subscore-label"><span>재무건전성</span><span class="subscore-max">17.2/33</span></div>
+        <div class="subscore-val">17.2</div>
+        <div class="subscore-bar"><div class="subscore-bar-fill" style="width:52.1%;"></div></div>
+        <div class="subscore-desc">유동비율 157.9%·당좌비율 118.9%·차입금의존도 37.8%·이자보상배율 29.70배·부채비율 323.9% — 5개 비율 합계 13/25점</div>
+      </div>
+      <div class="subscore-box">
+        <div class="subscore-label"><span>성장·수익성</span><span class="subscore-max">34/34</span></div>
+        <div class="subscore-val">34</div>
+        <div class="subscore-bar"><div class="subscore-bar-fill" style="width:100.0%;"></div></div>
+        <div class="subscore-desc">매출 CAGR 31.7%·영업이익 CAGR 55.1%·영업이익률(OPM) 40.9%·순이익률 31.7% — 4개 지표 합계 20/20점</div>
+      </div>
+    </div>
+
+    <div class="scorecard-noflags">ℹ️ 데이터 상태 · 주요 재무지표가 기준 커버리지를 충족합니다</div>
+
+    <div class="scorecard-footer">
+      <span>재무 데이터 기준일 2025-12-31 · 공시 후 8.3개월</span>
+      <span class="scorecard-disclaimer">서술적 스냅샷 지표 - 지금 저평가·재무건전성·성장성이 어느 수준인지 요약할 뿐이며, 향후 수익률과의 상관관계는 검증하지 않았습니다. 기술점수와의 단순평균도 순위·매수판단용이 아닙니다.</span>
+    </div>
+  </div>
+
   <div class="card">
     <div class="card-title">종합 밸류에이션</div>
     <div class="verdict-summary-head">종합 판단 <span class="summary-asof" style="font-size:11px;font-weight:400;color:var(--text3);">(2026.09.04 분석 기준)</span> <span class="tag negative">고평가 — PER은 적정, 나머지 4개 배수는 매우높음이나 압도적 성장률이 일부 설명</span></div>
     <div class="verdict-summary-body">GAAP TTM PER(38.4x)은 유일하게 왜곡되지 않은 피어 JNJ(32.3x) 대비 완만한 프리미엄으로 3단계(적정)다. 하지만 PBR(30.2x)·PSR(12.8x)·PCR(56.0x)·EV/EBITDA(29.8x)는 모두 ABBV·JNJ·MRK 피어 중앙값 대비 뚜렷한 프리미엄으로 5단계(매우높음)에 해당한다 — PBR은 중앙값의 약 3.6배로 가장 크고, PSR·PCR·EV/EBITDA는 약 1.8~2.2배 수준이다. <strong style="color:var(--text);">LLY의 TTM 매출성장률(+49.6%)이 세 피어(한 자릿수 성장)를 압도적으로 앞선다는 점이 배수 격차의 상당 부분을 설명하지만, 성장률 차이가 있다는 사실이 격차의 정확한 크기까지 정당화한다는 뜻은 아니다</strong> — 이 프로젝트가 TSM에서 이미 확인한 것과 같은 패턴이다: "프리미엄에 이유가 있다"와 "프리미엄의 크기가 정당하다"는 다른 주장이다.</div>
-    <div class="verdict-summary-risk">⚠️ PCR(P/FCF)은 제조 증설로 인한 Capex($9.9B TTM)·재고 급증이 FCF를 일시적으로 눌러 다섯 지표 중 신뢰도가 가장 낮은 참고치다 — 공급능력 확충이 끝나면 FCF는 구조적으로 개선될 여지가 크다. 이 프로젝트는 아직 별도의 재무 기본점수(compute_fundamental_score.py) 산출은 진행하지 않았다 — 이번 빌드의 명시적 범위 제한이다.</div>
+    <div class="verdict-summary-risk">⚠️ PCR(P/FCF)은 제조 증설로 인한 Capex($9.9B TTM)·재고 급증이 FCF를 일시적으로 눌러 다섯 지표 중 신뢰도가 가장 낮은 참고치다 — 공급능력 확충이 끝나면 FCF는 구조적으로 개선될 여지가 크다. 재무 기본점수는 아래 블록에 따로 있다 — 총점 79.2/100(양호 구간), 밸류에이션 축은 2026-09-11 스냅샷 기준 1.6/5단계다.</div>
   </div>
 </div>
 <div id="news" class="section">
