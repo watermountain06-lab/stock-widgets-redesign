@@ -1,5 +1,4 @@
 {
- "APH": true,
  "ARM": false,
  "AZN": false,
  "BABA": false,
@@ -11,5 +10,7 @@
  "SAN": false,
  "SAP": false,
  "SHEL": false,
- "TM": false
+ "TD": false,
+ "TM": false,
+ "TTE": false
 }

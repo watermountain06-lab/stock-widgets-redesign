@@ -1,0 +1,26 @@
+{
+  "ticker": "STX",
+  "asOf": "2026-09-11",
+  "currentPrice": 830.17,
+  "dataQuality": {
+    "pbr": "missing (no positive equity/shares history within date tolerance, or fewer than 3 matched years)"
+  },
+  "per": {
+    "current": 59.72,
+    "historicalAvg5y": 38.66,
+    "gapPct": 54.5,
+    "stage": 5,
+    "sampleYears": 4
+  },
+  "targetPrice": {
+    "mean": 1125.0,
+    "high": 1600.0,
+    "low": 700.0,
+    "upsidePct": 35.5,
+    "stage": 1,
+    "numAnalysts": 23,
+    "recommendationKey": "strong_buy"
+  },
+  "combinedStage": 3,
+  "combinedLabel": "적정"
+}

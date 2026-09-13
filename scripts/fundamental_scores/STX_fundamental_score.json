@@ -1,0 +1,73 @@
+{
+  "ticker": "STX",
+  "financialsAsOf": "2026-07-03",
+  "valuationAsOf": "2026-09-11",
+  "valuation": {
+    "combinedStage": 3.4,
+    "axisPoints": 13.2,
+    "axisPointsRaw": 13.200000000000001,
+    "historicalMultipleCoverage": 1,
+    "targetPriceAvailable": true
+  },
+  "health": {
+    "dataQuality": {},
+    "currentRatio": {
+      "value": 167.0,
+      "points": 3
+    },
+    "quickRatio": {
+      "value": 116.7,
+      "points": 3
+    },
+    "debtDependency": {
+      "value": 35.8,
+      "points": 2
+    },
+    "interestCoverage": {
+      "value": 14.4,
+      "points": 4
+    },
+    "debtToEquity": {
+      "value": 360.2,
+      "points": 1
+    },
+    "axisPoints": 17.2,
+    "axisPointsRaw": 17.16,
+    "ratiosUsed": 5
+  },
+  "growthProfit": {
+    "dataQuality": {},
+    "revenueCagr": {
+      "value": 18.1,
+      "points": 4
+    },
+    "opIncomeCagr": {
+      "value": null,
+      "points": 4,
+      "note": "적자(또는 0)에서 흑자로 전환 - CAGR 수치화 불가, 흑자전환으로 4점 처리"
+    },
+    "opMargin": {
+      "value": 33.6,
+      "points": 4
+    },
+    "netMargin": {
+      "value": 26.1,
+      "points": 5
+    },
+    "axisPoints": 28.9,
+    "axisPointsRaw": 28.9,
+    "metricsUsed": 4
+  },
+  "totalScore": 59.3,
+  "grade": "보통",
+  "axesUsed": 3,
+  "coverageStatus": "full",
+  "qualityFlags": [],
+  "financialsAgeMonths": 2.3,
+  "dataStatus": {
+    "coverageStatus": "full",
+    "qualityFlags": [],
+    "operatingIncomeEstimated": false,
+    "negativeEquity": false
+  }
+}
