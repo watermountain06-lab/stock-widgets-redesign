@@ -20,8 +20,11 @@ available from an unattended pipeline - see the project plan for why this is
 an intentional v1 scope cut, not an oversight.
 """
 import argparse
+import ast
 import json
+import re
 import sys
+from pathlib import Path
 
 
 def nearest_price_on_or_before(daily_bars, target_date):
@@ -195,6 +198,35 @@ def compute_signal(ticker, price_data, financials_data, target_data=None,
     return result
 
 
+def split_after_filing(ticker, financials):
+    """Refuse a ticker whose filed per-share history predates a split the price already reflects.
+
+    Amphenol split 2:1 on 2026-09-03; its most recent annual figures were filed 2026-02-11 and
+    have never been restated, so this script happily returned PER 25.13x against a true 50.3x.
+    There is no error and no warning - the price comes from one file and the EPS from another,
+    and neither knows a split happened between them. CrowdStrike is in the same position
+    (4:1 on 2026-07-02, annuals filed 2026-03-05) and escaped only because its EPS history was
+    rejected as unusable for an unrelated reason.
+    """
+    try:
+        src = (Path(__file__).resolve().parent / "fetch_eps_history.py").read_text(encoding="utf-8")
+        table = ast.literal_eval(re.search(r"KNOWN_SPLITS\s*=\s*\{.*?\n\}", src, re.S).group(0).split("=", 1)[1])
+    except Exception:
+        return None                      # no table to check against; stay out of the way
+    splits = table.get(ticker) or []
+    if not splits:
+        return None
+    filed = [x.get("filed") for x in (financials.get("revenue") or {}).get("annual", []) if x.get("filed")]
+    if not filed:
+        return None
+    latest = max(filed)
+    after = [s for s in splits if str(s[0]) > latest]
+    if not after:
+        return None
+    return (f"latest annual financials were filed {latest}, but a split is recorded after that: "
+            + ", ".join(f"{d} {r}:1" for d, r in after))
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("ticker")
@@ -202,6 +234,9 @@ def main():
     ap.add_argument("--financials", required=True, help="fetch_financials.py --years 5 output")
     ap.add_argument("--target", default=None, help="fetch_target_price.py output (optional)")
     ap.add_argument("--out", default=None)
+    ap.add_argument("--allow-split-gap", action="store_true",
+                    help="proceed even though a known split postdates the filed financials "
+                         "(use only when the financials passed in are already split-corrected)")
     args = ap.parse_args()
 
     with open(args.price) as f:
@@ -215,6 +250,15 @@ def main():
                 target_data = json.load(f)
         except FileNotFoundError:
             print(f"warning: {args.target} not found, proceeding without target price", file=sys.stderr)
+
+    stale = split_after_filing(args.ticker.upper(), financials_data)
+    if stale and not args.allow_split_gap:
+        sys.exit(f"{args.ticker.upper()}: {stale}\n"
+                 "The price is post-split and the filed per-share figures are not, so every\n"
+                 "historical multiple would be wrong by the split factor - silently, since\n"
+                 "nothing else in this path knows about splits. Correct the financials for the\n"
+                 "split and pass the corrected copy, or pass --allow-split-gap if you have\n"
+                 "already done so.")
 
     result = compute_signal(args.ticker.upper(), price_data, financials_data, target_data)
 

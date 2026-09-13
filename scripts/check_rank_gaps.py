@@ -45,8 +45,10 @@ SEC_UA = {"User-Agent": "stock-widgets research gptjhss@gmail.com"}
 BROWSER_UA = {"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
                             "AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0 Safari/537.36"}
 
-# Tickers the listing spells differently from the cards, and deliberate exclusions
-# that are not about filer type (see the project memory for why these two are out).
+# The listing spells some tickers differently from the cards. Everything else that is
+# "already built under another ticker" is caught by CIK, not by name - Alphabet alone is
+# registered with SEC under GOOGL, GOOG, GOOGM and GOOGN, and the listing surfaced the
+# last two as separate $4.1T companies until this check started deduping on CIK.
 ALIAS = {"BRK.B": "BRKB", "BRK-B": "BRKB"}
 NOT_US_EXCHANGE = {"2222.SR", "005930.KS"}
 
@@ -110,6 +112,7 @@ def main():
 
     data = json.loads(Path(args.data).read_text(encoding="utf-8"))
     built = {t["ticker"] for t in data["tickers"]}
+    built_ciks = {c for c in (cik_of(t) for t in built) if c}
     caps = {t["ticker"]: (t["price"]["close"] or 0) * (t["shares"].get("usEquivalent") or 0) / 1e9
             for t in data["tickers"]}
     floor = min(c for c in caps.values() if c)      # the smallest card already built
@@ -122,6 +125,8 @@ def main():
             break
         tk = ALIAS.get(row["ticker"], row["ticker"])
         if tk in built or tk in NOT_US_EXCHANGE:
+            continue
+        if cik_of(row["ticker"]) in built_ciks:      # another share class of a card we have
             continue
         checked += 1
         if checked > args.limit:
