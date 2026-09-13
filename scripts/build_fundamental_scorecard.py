@@ -191,8 +191,11 @@ def render_block(ticker, score, sig, config, tech, indent):
         note = (f'{indent}  <div class="scorecard-noflags">ℹ️ 데이터 상태 · '
                 f'주요 재무지표가 기준 커버리지를 충족합니다</div>')
 
+    # financialsAgeMonths counts from the fiscal period end, not from the filing date, so
+    # "공시 후" was wrong on every card - MRVL's FY ends 2026-01-31 but its 10-K was filed
+    # 2026-03-11, which is 6.0 months to the snapshot against the 7.3 this field holds.
     age = score.get("financialsAgeMonths")
-    age_txt = f" · 공시 후 {age:,.1f}개월" if age is not None else ""
+    age_txt = f" · 기준일로부터 {age:,.1f}개월 경과" if age is not None else ""
     return (
         f'{indent}<div class="scorecard">\n'
         f'{indent}  <div class="scorecard-top">\n'
