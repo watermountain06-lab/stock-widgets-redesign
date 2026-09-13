@@ -599,7 +599,7 @@
   <div class="grid-2">
     <div class="card">
       <div class="card-title">멀티플 5단계 평가</div>
-      <div style="font-size:10.5px;color:var(--text3);line-height:1.5;margin-bottom:14px;">※ 각 지표의 밴드는 피어 분포를 감싸도록 잡았고 적정 앵커는 피어에서 유도했다. 다섯 중 셋이 3단계(적정), PSR·PCR이 2단계(다소 낮음), PBR만 5단계다. <strong style="color:var(--text2);">가중평균 2.78/5단계 → 적정</strong>.</div>
+      <div style="font-size:10.5px;color:var(--text3);line-height:1.5;margin-bottom:14px;">※ 각 지표의 밴드는 피어 분포를 감싸도록 잡았고 적정 앵커는 피어에서 유도했다. PER·EV/EBITDA가 3단계(적정), PSR·PCR이 2단계(다소 낮음), PBR만 5단계다. <strong style="color:var(--text2);">가중평균 2.78/5단계 → 적정</strong>.</div>
 
       <div class="val-item" data-metric="per" onclick="selectMultiple('per')">
         <div class="val-header"><span class="val-name">PER (TTM 조정)</span><div style="display:flex;align-items:center;gap:8px;"><span class="val-number">27.11x</span><span class="stage-badge stage-3">3단계 적정</span></div></div>
@@ -1297,7 +1297,7 @@ const MULTIPLE_DATA = {
     title: 'PSR 비교 — JNJ · MRK · ABBV · PFE',
     unit: 'PSR', max: 10, amgnValue: 5.36,
     calcLine: 'PSR = 시가총액($204.01B) ÷ TTM 매출($38.10B = 25Q3 $9.557B + 25Q4 $9.866B + 26Q1 $8.618B + 26Q2 $10.054B) = 5.36x',
-    verdict: 'AMGN PSR 5.36x는 앵커(JNJ·MRK·ABBV 평균 기반 적정 6.3x, 2026.09.11 기준) 대비 -15% — PCR과 함께 가장 싼 쪽인 2단계다',
+    verdict: 'AMGN PSR 5.36x는 앵커(JNJ·MRK·ABBV 평균 기반 적정 6.3x, 2026.09.11 분석 시점 고정) 대비 -15% — PCR과 함께 가장 싼 쪽인 2단계다',
     verdictCaveat: '매출 성장률로는 설명되지 않는 할인이다. AMGN의 TTM 매출성장률 +9.1%는 JNJ·MRK보다 높은데도 매출배수는 셋 중 가장 낮다. 시장이 깎고 있는 것은 성장 속도가 아니라 그 매출의 구성 — Prolia·XGEVA·Otezla처럼 이미 감소 중인 제품이 2분기 매출의 28.3%를 차지하고, 그 감소가 언제 멈출지가 정해져 있지 않다는 점이다(상세 #fund).',
     anchor: { value: '6.3x', formula: 'JNJ 6.54x·MRK 5.33x·ABBV 7.06x 평균(6.31x) — 규모와 사업 구성이 가장 비슷한 세 곳', cross: 'PFE 2.48x는 매출이 줄고 있는 구간이라 앵커에서 제외하고 참고로만 표시했다.' },
     secondary: null,
@@ -1312,7 +1312,7 @@ const MULTIPLE_DATA = {
     title: 'PCR(P/OCF) 비교 — JNJ · MRK · ABBV · PFE',
     unit: 'P/OCF', max: 28, amgnValue: 16.35,
     calcLine: 'PCR(P/OCF) = 시가총액($204.01B) ÷ TTM 영업현금흐름($12.48B = FY2025 $9.958B − 25년 상반기 $3.671B + 26년 상반기 $6.191B) = 16.35x',
-    verdict: 'AMGN P/OCF 16.35x는 앵커(피어 4곳 평균 19x, 2026.09.11 기준) 대비 -14% — PSR과 함께 2단계다',
+    verdict: 'AMGN P/OCF 16.35x는 앵커(피어 4곳 평균 19x, 2026.09.11 분석 시점 고정) 대비 -14% — PSR과 함께 2단계다',
     verdictCaveat: 'Capex를 더 빼도 방향은 같다 — 잉여현금흐름 기준 P/FCF는 20.05x로 JNJ 28.77x·ABBV 24.95x·MRK 22.11x보다 낮고 PFE 14.38x보다 높다. Amgen은 Capex가 매출의 6.0%로 가벼운 편이라 영업현금흐름과 잉여현금흐름의 차이가 작다.',
     anchor: { value: '19x', formula: 'JNJ 23.18x·MRK 17.78x·ABBV 23.29x·PFE 11.79x 평균(19.01x)', cross: null },
     secondary: null,

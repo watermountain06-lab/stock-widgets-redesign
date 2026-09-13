@@ -627,7 +627,7 @@
 
 <div id="valuation" class="section">
   <div class="section-title">밸류에이션 (Valuation Multiples) — 현재가 $243.29 (2026.09.11 종가) · ORCL·ACN 피어 기준</div>
-  <div style="font-size:10.5px;color:var(--text3);margin:-4px 0 12px;">※ 앵커는 Oracle(ORCL)과 Accenture(ACN) 두 곳이고, Cisco(CSCO)는 참고로만 넣었다. IBM 매출은 소프트웨어 44%·컨설팅 31%·인프라 23%로 갈려 있어 한 종류의 피어로는 맞출 수 없다 — ORCL은 엔터프라이즈 SW+인프라를, ACN은 순수 IT 컨설팅을 대표하므로 두 곳의 평균을 앵커로 쓴다. ORCL·CSCO 배수는 이 저장소의 각 카드가 SEC 공시로 직접 계산한 값이고 ACN은 StockAnalysis.com에서 새로 조사했으며, <strong style="color:var(--text2);">기준일이 다르다(ORCL 2026.09.04 · CSCO 2026.09.06 · ACN·IBM 2026.09.11)</strong>. PER만 조정치를 쓰는 이유는 아래 PER 카드에 적었다.</div>
+  <div style="font-size:10.5px;color:var(--text3);margin:-4px 0 12px;">※ 앵커는 Oracle(ORCL)과 Accenture(ACN) 두 곳이고, Cisco(CSCO)는 참고로만 넣었다 — 단 PCR만 예외로 ACN·CSCO를 앵커로 쓴다(ORCL 카드가 P/OCF를 산출하지 않아서다, 상세는 PCR 카드). IBM 매출은 소프트웨어 44%·컨설팅 31%·인프라 23%로 갈려 있어 한 종류의 피어로는 맞출 수 없다 — ORCL은 엔터프라이즈 SW+인프라를, ACN은 순수 IT 컨설팅을 대표하므로 두 곳의 평균을 앵커로 쓴다. ORCL·CSCO 배수는 이 저장소의 각 카드가 SEC 공시로 직접 계산한 값이고 ACN은 StockAnalysis.com에서 새로 조사했으며, <strong style="color:var(--text2);">기준일이 다르다(ORCL 2026.09.04 · CSCO 2026.09.06 · ACN·IBM 2026.09.11)</strong>. PER만 조정치를 쓰는 이유는 아래 PER 카드에 적었다.</div>
 
   <div class="grid-2">
     <div class="card">
@@ -1304,7 +1304,7 @@ const MULTIPLE_DATA = {
     title: 'PER 비교 — ORCL·ACN (CSCO 참고)',
     unit: 'PER', max: 40, ibmValue: 25.31,
     calcLine: '조정 PER = 주가($243.29) ÷ 조정 TTM EPS($9.613 = TTM 세전이익 $10,439M × (1−12.52%) ÷ 희석주식수 9.500억주) = 25.31x',
-    verdict: 'IBM 조정 PER 25.31x는 앵커(ORCL 27.23x·ACN 14.71x 평균 21.0x, 2026.09.11 기준) 대비 +20.7% — 5개 지표 중 프리미엄이 가장 크다',
+    verdict: 'IBM 조정 PER 25.31x는 앵커(ORCL 27.23x·ACN 14.71x 평균 21.0x, 2026.09.11 분석 시점 고정) 대비 +20.7% — 5개 지표 중 프리미엄이 가장 크다',
     verdictCaveat: 'GAAP TTM EPS $11.29를 그대로 쓰면 PER은 21.55x로 더 싸 보이지만, 그 안에 세무조사 종결로 되돌아온 일회성 세금이 섞여 있다 — FY2025 법인세가 세전이익 $10,328M에 대해 −$242M(실효세율 −2.3%)이었고, 10-K 세율 조정표는 그중 −27%p를 tax contingencies 항목으로 명시한다. 그래서 세전이익에 정상 세율을 다시 입혀 조정했고, 12.52%는 IBM이 2026년 상반기에 실제로 보고한 실효세율이다(직전 정상 연도인 FY2023은 13.5%).',
     anchor: { value: '21.0x', formula: '평균(ORCL 27.23x, ACN 14.71x) = 20.97x → 21.0x', cross: 'ORCL은 이 저장소의 기존 검증치(2026-09-04 기준), ACN은 StockAnalysis.com 2026-09-11 기준 신규 조사. 주가 $243.29·시총 $229.21B·주식수 9.4213억주는 SEC 10-Q 표지 주식수와 StockAnalysis.com이 서로 일치한다.' },
     secondary: { label: 'GAAP TTM PER 21.55x (비교 부적합, 참고용)', caveat: 'TTM 희석 EPS $11.29 기준. 2025년 4분기 한 분기에만 −$1,435M의 세금 환입이 잡혀 있어 앵커와 직접 비교하지 않는다.' },
@@ -1318,7 +1318,7 @@ const MULTIPLE_DATA = {
     title: 'PBR 비교 — ORCL·ACN (CSCO 참고)',
     unit: 'PBR', max: 12, ibmValue: 6.65,
     calcLine: 'PBR = 주가($243.29) ÷ BPS($36.57 = 자기자본 $34,452M ÷ 9.4213억주) = 6.65x',
-    verdict: 'IBM PBR 6.65x는 앵커(ORCL 10.76x·ACN 3.53x 평균 7.1x, 2026.09.11 기준) 대비 −6.9% — 앵커 밴드의 거의 한가운데다',
+    verdict: 'IBM PBR 6.65x는 앵커(ORCL 10.76x·ACN 3.53x 평균 7.1x, 2026.09.11 분석 시점 고정) 대비 −6.9% — 앵커 밴드의 거의 한가운데다',
     verdictCaveat: '분모의 성격이 셋 다 다르다. IBM 자기자본 $34.45B 안에는 영업권만 $74.60B이 들어 있어 유형자기자본으로 따지면 크게 마이너스이고, 이는 Red Hat $34B·HashiCorp $6.4B·Confluent $11B을 현금으로 사들인 결과다. ORCL은 수십 년 자사주매입으로 자기자본이 눌려 PBR이 높고, ACN은 무차입에 가까운 구조라 낮다. 자산가치 비교로서 세 회사 모두 반쯤만 성립해 가중치를 0.5로 낮췄다.',
     anchor: { value: '7.1x', formula: '평균(ORCL 10.76x, ACN 3.53x) = 7.145x → 7.1x', cross: null },
     secondary: null,
@@ -1332,7 +1332,7 @@ const MULTIPLE_DATA = {
     title: 'PSR 비교 — ORCL·ACN (CSCO 참고)',
     unit: 'PSR', max: 8, ibmValue: 3.32,
     calcLine: 'PSR = 시가총액($229.21B) ÷ TTM 매출($69.10B) = 3.32x — 주당으로는 주가 $243.29 ÷ SPS $73.34',
-    verdict: 'IBM PSR 3.32x는 앵커(ORCL 6.79x·ACN 1.54x 평균 4.2x, 2026.09.11 기준) 대비 −20.3% — ACN보다는 두 배 비싸고 ORCL의 절반이다',
+    verdict: 'IBM PSR 3.32x는 앵커(ORCL 6.79x·ACN 1.54x 평균 4.2x, 2026.09.11 분석 시점 고정) 대비 −20.3% — ACN보다는 두 배 비싸고 ORCL의 절반이다',
     verdictCaveat: '매출 1달러의 질이 회사마다 다르다는 점이 이 지표에 그대로 나온다 — IBM 전사 매출총이익률은 58.2%이고, 그중 Software는 83.5%로 ORCL과 비슷한 반면 매출의 31%인 Consulting은 28.1%로 ACN과 같은 수준이다. ORCL과 ACN 사이에 놓이는 것이 구조적으로 맞는 위치다.',
     anchor: { value: '4.2x', formula: '평균(ORCL 6.79x, ACN 1.54x) = 4.165x → 4.2x', cross: null },
     secondary: null,
@@ -1346,7 +1346,7 @@ const MULTIPLE_DATA = {
     title: 'PCR(P/OCF) 비교 — ACN·CSCO',
     unit: 'PCR', max: 40, ibmValue: 15.40,
     calcLine: 'PCR = 시가총액($229.21B) ÷ TTM 영업현금흐름($14.888B) = 15.40x — 주당으로는 주가 $243.29 ÷ 주당 영업현금흐름 $15.80',
-    verdict: 'IBM PCR 15.40x는 앵커(ACN 8.54x·CSCO 33.72x 평균 21.1x, 2026.09.11 기준) 대비 −27.1% — 5개 지표 중 할인폭이 가장 크다',
+    verdict: 'IBM PCR 15.40x는 앵커(ACN 8.54x·CSCO 33.72x 평균 21.1x, 2026.09.11 분석 시점 고정) 대비 −27.1% — 5개 지표 중 할인폭이 가장 크다',
     verdictCaveat: 'ORCL 카드는 P/OCF를 산출하지 않아 앵커를 ACN·CSCO로 바꿨다. 또 IBM의 영업현금흐름에는 금융 자회사의 고객 채권 증감이 섞여 들어간다 — TTM 동안 이 채권이 $1.50B 늘며 영업현금흐름을 그만큼 깎았고, 회사 기준처럼 이를 제외하면 PCR은 14.0x로 더 낮아진다. 즉 여기 쓴 15.40x는 보수적인 쪽이다.',
     anchor: { value: '21.1x', formula: '평균(ACN 8.54x, CSCO 33.72x) = 21.13x → 21.1x', cross: null },
     secondary: null,
@@ -1359,7 +1359,7 @@ const MULTIPLE_DATA = {
     title: 'EV/EBITDA 비교 — ORCL·ACN (CSCO 참고)',
     unit: 'EV/EBITDA', max: 28, ibmValue: 16.17,
     calcLine: 'EV/EBITDA = EV($284.03B = 시총 $229.21B + 총차입금 $61.99B − 현금 $7.17B) ÷ EBITDA($17.57B = 세전이익 $10.44B + 이자비용 $1.93B + D&A $5.20B) = 16.17x',
-    verdict: 'IBM EV/EBITDA 16.17x는 앵커(ORCL 18.58x·ACN 8.56x 평균 13.6x, 2026.09.11 기준) 대비 +19.2% — PER과 같은 방향의 프리미엄이다',
+    verdict: 'IBM EV/EBITDA 16.17x는 앵커(ORCL 18.58x·ACN 8.56x 평균 13.6x, 2026.09.11 분석 시점 고정) 대비 +19.2% — PER과 같은 방향의 프리미엄이다',
     verdictCaveat: '서로 반대 방향의 왜곡이 둘 다 들어 있어 가중치를 0.5로 낮췄다. EV에 들어간 차입금 $61.99B 중 $13.05B은 10-Q가 따로 공시한 금융부문 차입금으로, 이자를 받는 고객 채권을 조달한 돈이다(제외하면 15.4x). 반대로 D&A $5.20B 중 $2.94B은 인수한 무형자산 상각이라 EBITDA가 그만큼 부풀려진다 — 다만 앵커도 인수로 큰 쪽이어서(영업권 ORCL $62.3B·ACN $25.3B, IBM $74.6B) 피어 대비로는 상당 부분 상쇄되고, 가중치를 낮춘 주된 근거는 금융부문 차입금 쪽이다.',
     anchor: { value: '13.6x', formula: '평균(ORCL 18.58x, ACN 8.56x) = 13.57x → 13.6x', cross: null },
     secondary: null,
