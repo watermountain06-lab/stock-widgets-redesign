@@ -1,0 +1,31 @@
+{
+  "ticker": "TMUS",
+  "asOf": "2026-09-11",
+  "currentPrice": 182.33,
+  "dataQuality": {},
+  "per": {
+    "current": 18.76,
+    "historicalAvg5y": 36.59,
+    "gapPct": -48.7,
+    "stage": 1,
+    "sampleYears": 5
+  },
+  "pbr": {
+    "current": 3.39,
+    "historicalAvg5y": 3.07,
+    "gapPct": 10.4,
+    "stage": 4,
+    "sampleYears": 5
+  },
+  "targetPrice": {
+    "mean": 243.375,
+    "high": 300.0,
+    "low": 169.0,
+    "upsidePct": 33.5,
+    "stage": 1,
+    "numAnalysts": 24,
+    "recommendationKey": "buy"
+  },
+  "combinedStage": 2,
+  "combinedLabel": "낮음"
+}

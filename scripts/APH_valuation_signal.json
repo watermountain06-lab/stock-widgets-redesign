@@ -1,0 +1,31 @@
+{
+  "ticker": "APH",
+  "asOf": "2026-09-11",
+  "currentPrice": 83.92,
+  "dataQuality": {},
+  "per": {
+    "current": 50.25,
+    "historicalAvg5y": 33.58,
+    "gapPct": 49.6,
+    "stage": 5,
+    "sampleYears": 5
+  },
+  "pbr": {
+    "current": 15.38,
+    "historicalAvg5y": 8.57,
+    "gapPct": 79.4,
+    "stage": 5,
+    "sampleYears": 5
+  },
+  "targetPrice": {
+    "mean": 99.26471,
+    "high": 115.0,
+    "low": 85.0,
+    "upsidePct": 18.3,
+    "stage": 1,
+    "numAnalysts": 17,
+    "recommendationKey": "strong_buy"
+  },
+  "combinedStage": 3,
+  "combinedLabel": "적정"
+}

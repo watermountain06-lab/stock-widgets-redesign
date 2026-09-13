@@ -1,0 +1,70 @@
+{
+  "ticker": "TMUS",
+  "financialsAsOf": "2025-12-31",
+  "valuationAsOf": "2026-09-11",
+  "valuation": {
+    "combinedStage": 1.9,
+    "axisPoints": 25.6,
+    "axisPointsRaw": 25.575,
+    "historicalMultipleCoverage": 2,
+    "targetPriceAvailable": true
+  },
+  "health": {
+    "dataQuality": {
+      "interestCoverage": "missing (해당 연도 이자비용 결측 - 다른 연도엔 태그 존재)"
+    },
+    "currentRatio": {
+      "value": 99.8,
+      "points": 1
+    },
+    "quickRatio": {
+      "value": 90.0,
+      "points": 2
+    },
+    "debtDependency": {
+      "value": 39.4,
+      "points": 2
+    },
+    "debtToEquity": {
+      "value": 270.3,
+      "points": 1
+    },
+    "axisPoints": 9.9,
+    "axisPointsRaw": 9.9,
+    "ratiosUsed": 4
+  },
+  "growthProfit": {
+    "dataQuality": {},
+    "revenueCagr": {
+      "value": 3.5,
+      "points": 2
+    },
+    "opIncomeCagr": {
+      "value": 40.8,
+      "points": 5
+    },
+    "opMargin": {
+      "value": 20.7,
+      "points": 3
+    },
+    "netMargin": {
+      "value": 12.4,
+      "points": 3
+    },
+    "axisPoints": 22.1,
+    "axisPointsRaw": 22.1,
+    "metricsUsed": 4
+  },
+  "totalScore": 57.6,
+  "grade": "보통",
+  "axesUsed": 3,
+  "coverageStatus": "full",
+  "qualityFlags": [],
+  "financialsAgeMonths": 8.3,
+  "dataStatus": {
+    "coverageStatus": "full",
+    "qualityFlags": [],
+    "operatingIncomeEstimated": false,
+    "negativeEquity": false
+  }
+}

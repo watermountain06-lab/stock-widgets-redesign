@@ -5,13 +5,11 @@
  "BABA": false,
  "BHP": false,
  "HSBC": false,
- "MRVL": true,
  "MUFG": false,
  "NVS": false,
  "RY": false,
  "SAN": false,
  "SAP": false,
  "SHEL": false,
- "TM": false,
- "TMO": true
+ "TM": false
 }

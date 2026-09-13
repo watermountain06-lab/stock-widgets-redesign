@@ -1,0 +1,11 @@
+{
+  "ticker": "APH",
+  "currentPrice": 83.92,
+  "targetHighPrice": 115.0,
+  "targetLowPrice": 85.0,
+  "targetMeanPrice": 99.26471,
+  "targetMedianPrice": 99.0,
+  "recommendationKey": "strong_buy",
+  "recommendationMean": 1.47059,
+  "numberOfAnalystOpinions": 17
+}
