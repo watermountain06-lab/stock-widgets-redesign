@@ -106,6 +106,11 @@ KNOWN_SPLITS = {
     "MU": [],     # last split 2000-05-02, outside this data's reporting window -- WebSearch confirmed
     "JPM": [],    # last split 2000-06-12 (3-for-2), outside this data's reporting window -- WebSearch confirmed 2026-09-04
     "LLY": [],    # last split 1997-10-16 (2-for-1), outside this data's reporting window -- WebSearch confirmed 2026-09-04
+    "PEP": [],    # confirmed empirically 2026-09-13, the way this table's other empty entries
+                  # were: across the full EarningsPerShareDiluted history (111 (start,end)
+                  # groups) no group holds two distinct values, so there is no duplicate-filing
+                  # ratio to find at any threshold. Any split predates the reporting window.
+    "SCHW": [],   # same test, same day, 122 groups, same result.
     "WMT": [("2024-02-26", 3)],  # 3-for-1 split, effective 2024-02-26 -- WebSearch confirmed 2026-09-05 (corporate.walmart.com release), within this data's 5y window
     "AMD": [],    # last split 2000-08-22 (2-for-1), outside this data's reporting window -- WebSearch confirmed 2026-09-05
     "JNJ": [],    # last split 2001-06-13 (2-for-1), outside this data's reporting window -- WebSearch confirmed 2026-09-05
