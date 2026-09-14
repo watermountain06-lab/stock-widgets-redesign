@@ -8,3 +8,4 @@
 .site-header nav a[aria-current]:after{content:'';height:2px;background:linear-gradient(90deg,#6851cd,#ca4089);position:absolute;bottom:-15px;left:0;right:0}
 .site-header a:focus-visible{outline:3px solid #6851cd;outline-offset:4px}
 @media(max-width:600px){.site-header .header-inner{padding:0 18px;gap:12px}.site-header .brand{font-size:17px}.site-header .brand-note{display:none}.site-header nav{gap:20px;font-size:12px}}
+
