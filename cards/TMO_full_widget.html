@@ -689,7 +689,7 @@
 
   <div class="card">
     <div class="card-title">종합 밸류에이션</div>
-    <div class="verdict-summary-head">종합 판단 <span class="summary-asof" style="font-size:11px;font-weight:400;color:var(--text3);">(2026.09.11 분석 기준)</span> <span class="tag mixed">고평가~적정 — 이익·매출 배수는 피어와 같고, 자산을 분모로 쓰는 두 지표만 비싸다</span></div>
+    <div class="verdict-summary-head">종합 판단 <span class="summary-asof" style="font-size:11px;font-weight:400;color:var(--text3);">(2026.09.11 분석 기준)</span> <span class="tag mixed">고평가~적정 — 이익·매출 배수는 피어와 같고, 장부가와 EBITDA를 분모로 쓰는 두 지표만 비싸다</span></div>
     <div class="verdict-summary-body">PER 3 · PBR 4(가중 0.5) · PSR 3 · PCR 3 · EV/EBITDA 4를 가중평균하면 15.0÷4.5 = 3.33/5단계다. 이익과 매출로 재면 TMO은 피어와 사실상 같은 값이고, 비싸게 나오는 둘(PBR·EV/EBITDA)은 모두 분모에 인수 회계가 끼어 있는 지표다. 즉 이 카드가 읽은 프리미엄은 사업의 프리미엄이라기보다 인수로 커진 회사라는 사실의 반영에 가깝다.</div>
     <div class="verdict-summary-risk">⚠️ 다만 그 인수는 실제로 치른 돈이다 — Clario 한 건에 $8.9B을 쓰면서 순차입금/EBITDA가 반년 만에 2.81배에서 3.47배로 올랐다(상세 #fund).</div>
   </div>
@@ -1329,7 +1329,7 @@ const MULTIPLE_DATA = {
     title: 'PSR 비교 — DHR · A · RVTY',
     unit: 'PSR', max: 7, tmoValue: 4.87,
     calcLine: 'PSR = 시가총액($225.48B) ÷ TTM 매출($46.34B = 25Q3 $11.122B + 25Q4 $12.215B + 26Q1 $11.005B + 26Q2 $11.994B) = 4.87x',
-    verdict: 'TMO PSR 4.87x는 앵커 5.3x 대비 −8.1% (앵커 2026.09.11 분석 시점 고정)로 네 곳 중 가장 낮다 — 다섯 지표 중 가장 싸게 읽히는 3단계다',
+    verdict: 'TMO PSR 4.87x는 앵커 5.3x 대비 −8.1% (앵커 2026.09.11 분석 시점 고정)로 RVTY 4.76x 다음으로 낮다 — 다섯 지표 중 가장 싸게 읽히는 3단계다',
     verdictCaveat: '매출에는 상각처럼 취득가를 배분해 만든 항목이 섞이지 않아, 다섯 중 회계 처리로 인한 왜곡이 가장 적은 비교다(인수한 회사의 매출이 그대로 얹히는 것 자체는 남는다). 대신 매출의 질까지는 담지 못한다 — TMO 매출의 55.5%를 차지하는 실험실제품·바이오파마서비스 세그먼트의 이익률이 14.0%로 네 세그먼트 중 가장 낮고, 그 다음으로 낮은 분석기기(23.0%)와도 9%p 벌어져 있다(상세 #fund). 매출 한 단위당 이익이 얇은 구성이라면 매출배수가 낮은 것이 곧 싸다는 뜻은 아니다.',
     anchor: { value: '5.3x', formula: 'DHR 5.60x·A 5.62x·RVTY 4.76x 평균(5.33x)', cross: 'DHR과 A가 5.6x로 거의 같은 자리에 있어 앵커가 안정적이다. TMO은 이 둘보다 13% 낮고 RVTY보다도 소폭 낮다.' },
     secondary: null,
