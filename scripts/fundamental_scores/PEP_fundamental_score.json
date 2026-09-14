@@ -1,0 +1,72 @@
+{
+  "ticker": "PEP",
+  "financialsAsOf": "2025-12-27",
+  "valuationAsOf": "2026-09-11",
+  "valuation": {
+    "combinedStage": 1.7,
+    "axisPoints": 27.2,
+    "axisPointsRaw": 27.224999999999998,
+    "historicalMultipleCoverage": 2,
+    "targetPriceAvailable": true
+  },
+  "health": {
+    "dataQuality": {},
+    "currentRatio": {
+      "value": 85.3,
+      "points": 1
+    },
+    "quickRatio": {
+      "value": 67.5,
+      "points": 2
+    },
+    "debtDependency": {
+      "value": 44.0,
+      "points": 2
+    },
+    "interestCoverage": {
+      "value": 10.3,
+      "points": 4
+    },
+    "debtToEquity": {
+      "value": 425.6,
+      "points": 1
+    },
+    "axisPoints": 13.2,
+    "axisPointsRaw": 13.200000000000001,
+    "ratiosUsed": 5
+  },
+  "growthProfit": {
+    "dataQuality": {},
+    "revenueCagr": {
+      "value": 2.8,
+      "points": 2
+    },
+    "opIncomeCagr": {
+      "value": -0.0,
+      "points": 2
+    },
+    "opMargin": {
+      "value": 12.2,
+      "points": 2
+    },
+    "netMargin": {
+      "value": 8.8,
+      "points": 3
+    },
+    "axisPoints": 15.3,
+    "axisPointsRaw": 15.3,
+    "metricsUsed": 4
+  },
+  "totalScore": 55.7,
+  "grade": "보통",
+  "axesUsed": 3,
+  "coverageStatus": "full",
+  "qualityFlags": [],
+  "financialsAgeMonths": 8.5,
+  "dataStatus": {
+    "coverageStatus": "full",
+    "qualityFlags": [],
+    "operatingIncomeEstimated": false,
+    "negativeEquity": false
+  }
+}

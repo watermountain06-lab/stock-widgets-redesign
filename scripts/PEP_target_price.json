@@ -1,0 +1,11 @@
+{
+  "ticker": "PEP",
+  "currentPrice": 136.32,
+  "targetHighPrice": 183.0,
+  "targetLowPrice": 124.0,
+  "targetMeanPrice": 155.0,
+  "targetMedianPrice": 155.0,
+  "recommendationKey": "hold",
+  "recommendationMean": 2.66667,
+  "numberOfAnalystOpinions": 22
+}

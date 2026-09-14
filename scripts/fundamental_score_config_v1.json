@@ -9,7 +9,7 @@
     "WFC",
     "GS",
     "C",
-    "AXP"
+    "AXP", "SCHW"
   ],
   "unsupported_tickers": {
     "SPCX": "상장 직후라 5년 이력이 없다 - 자기이력 대비 PER/PBR 5년 평균과 5년 CAGR이 정의되지 않는다",

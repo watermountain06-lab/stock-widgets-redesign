@@ -1,0 +1,11 @@
+{
+  "ticker": "SCHW",
+  "currentPrice": 107.25,
+  "targetHighPrice": 145.0,
+  "targetLowPrice": 91.0,
+  "targetMeanPrice": 124.95,
+  "targetMedianPrice": 125.5,
+  "recommendationKey": "buy",
+  "recommendationMean": 1.72727,
+  "numberOfAnalystOpinions": 20
+}

@@ -1,0 +1,26 @@
+{
+  "ticker": "SCHW",
+  "asOf": "2026-09-11",
+  "currentPrice": 107.25,
+  "dataQuality": {
+    "pbr": "missing (no positive equity/shares history within date tolerance, or fewer than 3 matched years)"
+  },
+  "per": {
+    "current": 23.06,
+    "historicalAvg5y": 25.37,
+    "gapPct": -9.1,
+    "stage": 2,
+    "sampleYears": 5
+  },
+  "targetPrice": {
+    "mean": 124.95,
+    "high": 145.0,
+    "low": 91.0,
+    "upsidePct": 16.5,
+    "stage": 1,
+    "numAnalysts": 20,
+    "recommendationKey": "buy"
+  },
+  "combinedStage": 2,
+  "combinedLabel": "낮음"
+}

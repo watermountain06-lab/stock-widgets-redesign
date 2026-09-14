@@ -8,9 +8,9 @@
 <style>
 
   /* HEADER */
-  .header { background: linear-gradient(135deg, #0b2028 0%, #0f1117 40%, #1a1d27 100%); border-bottom: 2px solid var(--accent3); padding: 28px 32px 24px; position: relative; overflow: hidden; max-width: 1100px; margin: 0 auto; }
-  .box-key { background: rgba(47,157,254,0.1); border: 1px solid var(--accent3); border-radius: 10px; padding: 12px 16px; max-width: 1100px; margin: 0 auto 16px; }
-  .header::before { content: ''; position: absolute; top: -60px; right: -60px; width: 240px; height: 240px; background: radial-gradient(circle, rgba(47,157,254,0.14) 0%, transparent 70%); pointer-events: none; }
+  .header { background: linear-gradient(135deg, #061a2e 0%, #0f1117 40%, #1a1d27 100%); border-bottom: 2px solid var(--accent3); padding: 28px 32px 24px; position: relative; overflow: hidden; max-width: 1100px; margin: 0 auto; }
+  .box-key { background: rgba(34,154,248,0.1); border: 1px solid var(--accent3); border-radius: 10px; padding: 12px 16px; max-width: 1100px; margin: 0 auto 16px; }
+  .header::before { content: ''; position: absolute; top: -60px; right: -60px; width: 240px; height: 240px; background: radial-gradient(circle, rgba(34,154,248,0.14) 0%, transparent 70%); pointer-events: none; }
   .header-top { display: flex; align-items: flex-start; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
   .ticker-block { display: flex; align-items: center; gap: 16px; flex: 1 1 320px; min-width: 0; }
   .ticker-block > div { min-width: 0; }
@@ -41,7 +41,7 @@
   :root {
     --bg: #0f1117; --bg2: #1a1d27; --bg3: #22263a; --border: #2e3347;
     --text: #e8eaf0; --text2: #9aa0b8; --text3: #5c6282;
-    --accent: #ee3134; --accent2: #f58183; --accent3: #ab0e11;
+    --accent: #03345a; --accent2: #229af8; --accent3: #022b4a;
     --ma5: #ff6b9d; --ma20: #9b59b6; --ma60: #f0c040; --ma120: #22d3ee;
     --green: #2ecc71; --red: #e74c3c; --gold: #f0c040; --blue: #3498db;
     --event-major: #38bdf8; --event-neutral: #f1c40f;
@@ -86,7 +86,7 @@
   .range-toggle { display: flex; gap: 6px; flex-wrap: wrap; }
   .range-btn { background: var(--bg3); border: 1px solid var(--border); color: var(--text3); font-size: 11px; font-weight: 700; padding: 4px 11px; border-radius: 999px; cursor: pointer; transition: all .15s; }
   .range-btn:hover { color: var(--text); border-color: var(--text2); }
-  .range-btn.active { background: rgba(47,157,254,0.18); color: var(--accent2); border-color: var(--accent); }
+  .range-btn.active { background: rgba(34,154,248,0.18); color: var(--accent2); border-color: var(--accent); }
   .ma-toggle-btn { background: var(--bg3); border: 1px solid; font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: 999px; cursor: pointer; opacity: 1; transition: opacity .15s; }
   .ma-toggle-btn.ma-off { opacity: 0.35; }
   .price-chart-container { margin-bottom: 16px; }
@@ -99,7 +99,7 @@
   .scorecard-score .denom { font-size: 16px; color: var(--text3); font-weight: 600; }
   .scorecard-grade { font-size: 12px; font-weight: 700; padding: 6px 14px; border-radius: 999px; background: rgba(46,204,113,0.15); color: var(--green); white-space: nowrap; }
   .scorecard-grade.grade-strong { background: rgba(46,204,113,0.18); color: var(--green); }
-  .scorecard-grade.grade-positive { background: rgba(47,157,254,0.15); color: var(--accent2); }
+  .scorecard-grade.grade-positive { background: rgba(34,154,248,0.15); color: var(--accent2); }
   .scorecard-grade.grade-mixed { background: rgba(240,192,64,0.18); color: var(--gold); }
   .scorecard-grade.grade-weak { background: rgba(231,76,60,0.15); color: var(--red); }
   .scorecard-bar { height: 6px; background: var(--bg3); border-radius: 999px; overflow: hidden; margin-bottom: 6px; }
@@ -131,8 +131,8 @@
 
   .detail-toggle { cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 8px; user-select: none; font-size: 12.5px; color: var(--text2); font-weight: 600; padding: 10px 2px 6px; border-top: 1px dashed var(--bg3); margin-top: 2px; }
   .detail-toggle:hover { color: var(--text); }
-  .detail-toggle .toggle-hint { display: flex; align-items: center; gap: 6px; background: rgba(47,157,254,0.12); border: 1px solid rgba(47,157,254,0.35); border-radius: 999px; padding: 5px 11px; flex-shrink: 0; transition: background 0.2s ease, border-color 0.2s ease; }
-  .detail-toggle:hover .toggle-hint { background: rgba(47,157,254,0.22); border-color: rgba(47,157,254,0.5); }
+  .detail-toggle .toggle-hint { display: flex; align-items: center; gap: 6px; background: rgba(34,154,248,0.12); border: 1px solid rgba(34,154,248,0.35); border-radius: 999px; padding: 5px 11px; flex-shrink: 0; transition: background 0.2s ease, border-color 0.2s ease; }
+  .detail-toggle:hover .toggle-hint { background: rgba(34,154,248,0.22); border-color: rgba(34,154,248,0.5); }
   .detail-toggle .toggle-hint-text { font-size: 10.5px; font-weight: 700; color: var(--accent2); white-space: nowrap; }
   .detail-toggle .chevron { font-size: 11px; color: var(--accent2); transition: transform 0.25s ease; flex-shrink: 0; }
   .detail-toggle.collapsed .chevron { transform: rotate(-90deg); }
@@ -150,7 +150,7 @@
   .yoy-footnote { font-size: 11px; color: var(--text3); margin-top: 10px; }
   .yoy-footnote a { color: var(--accent2); text-decoration: none; }
 
-  .fy-note { background: rgba(47,157,254,0.07); border: 1px solid var(--accent3); border-radius: 8px; padding: 10px 14px; margin-bottom: 14px; font-size: 12px; color: var(--text2); }
+  .fy-note { background: rgba(34,154,248,0.07); border: 1px solid var(--accent3); border-radius: 8px; padding: 10px 14px; margin-bottom: 14px; font-size: 12px; color: var(--text2); }
 
   .section-label { font-size: 13px; color: var(--text); font-weight: 700; margin-bottom: 10px; display:flex; align-items:center; gap:6px; }
   .section-label .dot { width:6px; height:6px; border-radius:50%; background:var(--accent2); }
@@ -174,7 +174,7 @@
 
   .activity-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 12px; }
   .act-card { background: var(--bg3); border-radius: 8px; padding: 12px 14px; display:flex; align-items:center; gap:12px; }
-  .act-icon { font-size: 19px; width:34px; height:34px; display:flex; align-items:center; justify-content:center; background:rgba(47,157,254,0.1); border-radius:8px; flex-shrink:0; }
+  .act-icon { font-size: 19px; width:34px; height:34px; display:flex; align-items:center; justify-content:center; background:rgba(34,154,248,0.1); border-radius:8px; flex-shrink:0; }
   .act-label { font-size: 11.5px; color: var(--text2); font-weight:600; margin-bottom:2px; }
   .act-value { font-size: 15px; font-weight: 700; color: var(--text); }
   .act-sub { font-size: 11px; color: var(--text2); margin-top:1px; }
@@ -184,7 +184,7 @@
   .val-item:last-child { margin-bottom: 0; }
   .val-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
   .val-item:hover { background: rgba(255,255,255,0.03); }
-  .val-item.selected { background: rgba(47,157,254,0.08); border-color: rgba(47,157,254,0.35); }
+  .val-item.selected { background: rgba(34,154,248,0.08); border-color: rgba(34,154,248,0.35); }
   .val-name { position: relative; font-size: 13px; font-weight: 600; color: var(--text); }
   .val-item.selected .val-name::after { content: '▸ 비교 보기'; font-size: 9.5px; font-weight: 600; color: var(--accent2); margin-left: 8px; vertical-align: middle; }
   .val-number { font-size: 14px; font-weight: 700; color: var(--accent2); }
@@ -274,12 +274,13 @@
 </style>
 </head>
 <body>
+
 <div class="back-bar">
   <a class="back-bar-left" href="../index.html"><span class="back-bar-logo"></span><span>[사이트명] · 전체 종목 목록</span></a>
   <div class="back-bar-right">
-    <a class="back-bar-nav" href="IBM_full_widget.html">◀ IBM</a>
-    <span class="back-bar-current">PEP · 시총 55위</span>
-    <a class="back-bar-nav" href="AXP_full_widget.html">다음 AXP ▶</a>
+    <a class="back-bar-nav" href="STX_full_widget.html">◀ STX</a>
+    <span class="back-bar-current">PEP · 시총 67위</span>
+    <a class="back-bar-nav" href="SCHW_full_widget.html">다음 SCHW ▶</a>
   </div>
 </div>
 
@@ -290,39 +291,39 @@
       <div>
         <div style="display:flex;align-items:center;gap:10px;margin-bottom:4px;">
           <span class="ticker-badge">PEP</span>
-          <span style="font-size:11px;color:var(--accent2);font-weight:600;">NYSE · 헬스케어 — 생명과학 도구·서비스</span>
+          <span style="font-size:11px;color:var(--accent2);font-weight:600;">NASDAQ · 필수소비재 — 음료·스낵</span>
         </div>
-        <div class="company-name">Thermo Fisher Scientific Inc.</div>
-        <div class="company-sub">제약·바이오·학계·병원이 연구와 생산에 쓰는 장비·시약·소모품을 만들고, 임상시험과 위탁생산까지 함께 파는 세계 최대 생명과학 도구 회사다 · 4개 보고 세그먼트(생명과학솔루션·분석기기·특수진단·실험실제품및바이오파마서비스) · CEO Marc N. Casper · 미국 상장기업 시총 55위 · 회계연도는 12월 31일 종료라 달력분기와 일치 · 인수로 성장해 온 회사라 GAAP 이익과 회사가 말하는 조정 이익의 간격이 크고, <strong style="color:var(--text2);">이 카드는 그 간격의 원인인 무형자산 상각을 되풀이되는 비용으로 보고 배수를 GAAP 기준으로 매겼다</strong></div>
+        <div class="company-name">PepsiCo, Inc.</div>
+        <div class="company-sub">펩시·게토레이·마운틴듀 같은 음료와 레이즈·도리토스·치토스·퀘이커 같은 과자를 한 회사 안에서 만들어 파는 식음료 회사다 · 6개 보고 세그먼트(북미식품·북미음료·국제프랜차이즈음료·EMEA·중남미식품·아시아태평양식품) · CEO Ramon Laguarta · 미국 상장기업 시총 67위 · <strong style="color:var(--text2);">회계연도가 12월 마지막 토요일에 끝나고 4분기만 16주, 나머지 세 분기는 12주씩이라 4분기 매출이 구조적으로 커 보인다</strong></div>
       </div>
     </div>
     <div class="price-block">
-      <div class="price-main">$609.82</div>
-      <div class="price-change" style="color:var(--green);">▲ +1.10% (2026.09.11 기준)</div>
-      <div style="font-size:11px;color:var(--text3);margin-top:2px;">52주 최저 $435.27 (2026.05.18) · 최고 $647.00 (2026.08.25)</div>
+      <div class="price-main">$136.32</div>
+      <div class="price-change" style="color:var(--red);">▼ -0.24% (2026.09.11 기준)</div>
+      <div style="font-size:11px;color:var(--text3);margin-top:2px;">52주 최저 $133.73 (2026.07.23) · 최고 $171.48 (2026.02.12)</div>
     </div>
   </div>
   <div class="header-meta">
-    <div class="meta-item"><span class="meta-label">시가총액</span><span class="meta-value highlight">약 $225.5B</span></div>
-    <div class="meta-item"><span class="meta-label">섹터</span><span class="meta-value">헬스케어 — 생명과학 도구·서비스</span></div>
-    <div class="meta-item"><span class="meta-label">FY2025 매출</span><span class="meta-value">$44.56B (YoY +3.9%)</span></div>
-    <div class="meta-item"><span class="meta-label">PER (TTM GAAP)</span><span class="meta-value highlight">32.8x</span></div>
-    <div class="meta-item"><span class="meta-label">배당수익률</span><span class="meta-value">0.31% (연 $1.88)</span></div>
+    <div class="meta-item"><span class="meta-label">시가총액</span><span class="meta-value highlight">약 $186.1B</span></div>
+    <div class="meta-item"><span class="meta-label">섹터</span><span class="meta-value">필수소비재 — 음료·스낵</span></div>
+    <div class="meta-item"><span class="meta-label">FY2025 매출</span><span class="meta-value">$93.93B (YoY +2.3%)</span></div>
+    <div class="meta-item"><span class="meta-label">PER (TTM GAAP)</span><span class="meta-value highlight">17.9x</span></div>
+    <div class="meta-item"><span class="meta-label">배당수익률</span><span class="meta-value">4.34% (연 $5.92)</span></div>
   </div>
 </div>
-<div class="asof-line" style="max-width:1100px;margin:10px auto 12px;padding:0 16px;box-sizing:border-box;font-size:11px;color:var(--text3);line-height:1.5;">가격·기술지표·배수: 2026.09.11 종가 기준 갱신 · 분석 문장·재무·앵커: 2026.09.11 기준 · 시가총액: SEC 공시 주식수(369,747,286주) 기준</div>
+<div class="asof-line" style="max-width:1100px;margin:10px auto 12px;padding:0 16px;box-sizing:border-box;font-size:11px;color:var(--text3);line-height:1.5;">가격·기술지표·배수: 2026.09.11 종가 기준 갱신 · 분석 문장·재무·앵커: 2026.09.11 기준 · 시가총액: SEC 공시 주식수(1,364,891,558주) 기준</div>
 <div class="box-key">
   <div style="font-size:13px;font-weight:700;color:var(--accent2);display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:10px;">
-    <span style="display:flex;align-items:center;gap:6px;"><span style="width:4px;height:14px;background:var(--accent2);border-radius:2px;display:inline-block;"></span>핵심 투자 논리 <span style="color:var(--gold);font-weight:600;">(고평가~적정)</span></span>
-    <span style="font-size:11px;font-weight:700;padding:4px 10px;border-radius:999px;background:rgba(46,204,113,0.15);color:var(--green);">2분기 매출 +10.5%·가이던스 상향</span>
-    <span style="font-size:11px;font-weight:700;padding:4px 10px;border-radius:999px;background:rgba(231,76,60,0.15);color:var(--red);">순차입금 $38.5B·유기성장 4%</span>
+    <span style="display:flex;align-items:center;gap:6px;"><span style="width:4px;height:14px;background:var(--accent2);border-radius:2px;display:inline-block;"></span>핵심 투자 논리 <span style="color:var(--green);font-weight:600;">(저평가)</span></span>
+    <span style="font-size:11px;font-weight:700;padding:4px 10px;border-radius:999px;background:rgba(46,204,113,0.15);color:var(--green);">다섯 중 넷이 피어 최저·배당 4.34%</span>
+    <span style="font-size:11px;font-weight:700;padding:4px 10px;border-radius:999px;background:rgba(231,76,60,0.15);color:var(--red);">북미 스낵 역성장·기술점수 25</span>
   </div>
-  <div style="font-size:17px;font-weight:800;color:var(--text);margin-bottom:12px;">1분기 유기성장 1%에 하루 -9.2%까지 무너졌던 주가가 7월 실적 한 번으로 5월 저점 대비 +40% 되돌아왔고, 다섯 배수의 가중평균은 3.33/5단계로 적정에서 반 단계 비싼 쪽이다 — 되돌림을 떠받치는 실적이 아직 한 분기뿐이다.</div>
+  <div style="font-size:17px;font-weight:800;color:var(--text);margin-bottom:12px;">52주 최고에서 20% 넘게 밀려 최저가 바로 위에 있고, 다섯 배수 중 넷이 KO·MDLZ·PG 셋 모두보다 싸고 가중평균은 1.78/5단계다 — 싼 배경에 북미 사업의 부진이 있다는 점이 문제다.</div>
   <div style="display:flex;flex-direction:column;gap:8px;">
-    <div style="font-size:12px;color:var(--text2);line-height:1.5;"><strong style="color:var(--accent2);">01</strong>&nbsp; 2026년 2분기 매출이 $11.99B(+10.5%)로 8분기 중 가장 높았고 조정 영업이익률도 22.8%로 90bp 올랐지만, 그 +10.5% 가운데 유기성장은 5%다(상세 #fund).</div>
-    <div style="font-size:12px;color:var(--text2);line-height:1.5;"><strong style="color:var(--accent2);">02</strong>&nbsp; PER 32.82x·PBR 4.28x·PSR 4.87x·PCR 25.02x·EV/EBITDA 22.49x를 가중평균하면 3.33/5단계로, 생명과학 도구 피어 셋 대비 비싼 쪽이되 크게 벌어지진 않았다(상세 #valuation).</div>
-    <div style="font-size:12px;color:var(--text2);line-height:1.5;"><strong style="color:var(--accent2);">03</strong>&nbsp; 3월에 임상데이터 회사 Clario를 $8.9B 현금으로 사면서 총차입금이 $42.55B, 순차입금이 EBITDA의 3.47배까지 올라왔고 자사주매입 한도는 $1.00B만 남았다(상세 #fund).</div>
-    <div style="font-size:12px;color:var(--text2);line-height:1.5;"><strong style="color:var(--accent2);">04</strong>&nbsp; 기술점수 80/100(적격) — 52주 레인지의 82.4% 지점에 있고 4개 이평선 중 3개를 상회하지만, 현재가가 MA5와 MA20 사이 ±0.5% 안에 끼어 있다(상세 #tech).</div>
+    <div style="font-size:12px;color:var(--text2);line-height:1.5;"><strong style="color:var(--accent2);">01</strong>&nbsp; 2026년 2분기 매출은 $24.18B(+6.4%)였지만 환율·인수효과를 걷어낸 유기성장은 2.4%였고, 북미 스낵(PFNA) 매출만 홀로 -1.7%로 뒷걸음쳤다(상세 #fund).</div>
+    <div style="font-size:12px;color:var(--text2);line-height:1.5;"><strong style="color:var(--accent2);">02</strong>&nbsp; PER 17.87x·PSR 1.92x·PCR 13.83x·EV/EBITDA 12.10x 넷이 KO·MDLZ·PG 셋 모두보다 낮고, 유일하게 최저가 아닌 PBR 8.42x는 자사주로 축소된 장부가의 영향을 크게 받는다(상세 #valuation).</div>
+    <div style="font-size:12px;color:var(--text2);line-height:1.5;"><strong style="color:var(--accent2);">03</strong>&nbsp; TTM 주주환원 $8.79B은 잉여현금흐름 $9.28B의 94.7%로, 배당 4.34%를 떠받치는 여유가 두껍지 않다(상세 #fund).</div>
+    <div style="font-size:12px;color:var(--text2);line-height:1.5;"><strong style="color:var(--accent2);">04</strong>&nbsp; 기술점수 25/100(부적격) — 4개 이평선을 모두 하회하고 장기·단기 추세이탈 플래그가 둘 다 켜져 있다(상세 #tech).</div>
   </div>
 </div>
 
@@ -336,7 +337,8 @@
 </div>
 
 <div id="tech" class="section active">
-  <div class="section-title" id="techHeaderTitle">기술적 분석 — 일봉 캔들스틱 (2025.09 ~ 2026.09) · 1년 수익률 <span id="techHeaderReturn">+28.0%</span></div>
+
+  <div class="section-title" id="techHeaderTitle">기술적 분석 — 일봉 캔들스틱 (2025.09 ~ 2026.09) · 1년 수익률 <span id="techHeaderReturn">-4.4%</span></div>
 
   <div class="price-chart-container">
     <div style="margin-bottom:10px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
@@ -355,7 +357,7 @@
     <svg id="pepCandleSvg" viewBox="0 0 720 240" width="100%" style="display:block;background:var(--bg3);border-radius:8px 8px 0 0;padding:4px;" role="img" aria-label="PEP 일봉 캔들스틱 차트"></svg>
     <svg id="pepVolumeSvg" viewBox="0 0 720 70" width="100%" style="display:block;background:var(--bg3);border-radius:0 0 8px 8px;padding:0 4px 4px;" role="img" aria-label="PEP 거래량 차트"></svg>
     <div style="margin-top:10px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
-      <div style="font-size:11px;color:var(--text3);" id="techRangeSummary">1년 최저 $435.27 (2026.05) → 1년 최고 $647.00 (2026.08) → 현재 $609.82</div>
+      <div style="font-size:11px;color:var(--text3);" id="techRangeSummary">1년 최저 $133.73 (2026.07) → 1년 최고 $171.48 (2026.02) → 현재 $136.32</div>
       <div style="display:flex;gap:8px;flex-wrap:wrap;">
         <button class="ma-toggle-btn" data-ma="ma5" style="color:var(--ma5);border-color:var(--ma5);">● MA5</button>
         <button class="ma-toggle-btn" data-ma="ma20" style="color:var(--ma20);border-color:var(--ma20);">● MA20</button>
@@ -369,37 +371,42 @@
   <div class="scorecard">
     <div class="scorecard-top">
       <div>
-        <div class="scorecard-score"><span class="num">80</span><span class="denom">/100</span></div>
+        <div class="scorecard-score"><span class="num">25</span><span class="denom">/100</span></div>
       </div>
       <div class="scorecard-verdict">
-        <div class="scorecard-grade grade-positive">기술적 분석 적격</div>
+        <div class="scorecard-grade grade-weak">기술적 분석 부적격</div>
         <div class="scorecard-noOpp-inline">🎯 돌파 신호 없음</div>
       </div>
     </div>
-    <div class="scorecard-bar"><div class="scorecard-bar-fill" style="width:80%;"></div></div>
+    <div class="scorecard-bar"><div class="scorecard-bar-fill" style="width:25%;"></div></div>
     <div class="scorecard-subtitle">가격·거래량 기반 기술 상태 점수 (모델 v1.0.0 · 2026-09-11 기준) · 투자 권고 아님</div>
 
     <div class="scorecard-subscores">
       <div class="subscore-box">
-        <div class="subscore-label"><span>추세구조</span><span class="subscore-max">30/40</span></div>
-        <div class="subscore-val">30</div>
-        <div class="subscore-bar"><div class="subscore-bar-fill" style="width:75%;"></div></div>
-        <div class="subscore-desc">MA50/150/200 배열 조건 4개 중 3개 충족</div>
+        <div class="subscore-label"><span>추세구조</span><span class="subscore-max">10/40</span></div>
+        <div class="subscore-val">10</div>
+        <div class="subscore-bar"><div class="subscore-bar-fill" style="width:25%;"></div></div>
+        <div class="subscore-desc">MA50/150/200 배열 조건 4개 중 1개 충족</div>
       </div>
       <div class="subscore-box">
-        <div class="subscore-label"><span>절대모멘텀</span><span class="subscore-max">30/40</span></div>
-        <div class="subscore-val">30</div>
-        <div class="subscore-bar"><div class="subscore-bar-fill" style="width:75%;"></div></div>
-        <div class="subscore-desc">최근 3개월~1년 가중 수익률 +24.16%</div>
+        <div class="subscore-label"><span>절대모멘텀</span><span class="subscore-max">10/40</span></div>
+        <div class="subscore-val">10</div>
+        <div class="subscore-bar"><div class="subscore-bar-fill" style="width:25%;"></div></div>
+        <div class="subscore-desc">최근 3개월~1년 가중 수익률 -6.94%</div>
       </div>
       <div class="subscore-box">
-        <div class="subscore-label"><span>52주위치</span><span class="subscore-max">20/20</span></div>
-        <div class="subscore-val">20</div>
-        <div class="subscore-bar"><div class="subscore-bar-fill" style="width:100%;"></div></div>
-        <div class="subscore-desc">저점 대비 +40.10%, 고점 대비 -5.75%</div>
+        <div class="subscore-label"><span>52주위치</span><span class="subscore-max">5/20</span></div>
+        <div class="subscore-val">5</div>
+        <div class="subscore-bar"><div class="subscore-bar-fill" style="width:25%;"></div></div>
+        <div class="subscore-desc">저점 대비 +1.94%, 고점 대비 -20.50%</div>
       </div>
     </div>
     <div class="subscores-note">추세구조·절대모멘텀·52주위치는 참고용으로 나눠 보여드리는 구성요소이며, 각각을 독립적인 매매 신호로 해석하지 마세요. 최종 점수는 지금처럼 세 구성요소를 합산한 방식 그대로입니다.</div>
+
+    <div class="scorecard-flags">
+      <span class="risk-flag" data-tooltip="현재가($136.32)가 MA150($148.99)·MA200($148.58)을 모두 하회하고, MA200 자체도 21거래일 전 $149.20에서 내려오는 중입니다.">⚠️ 장기추세이탈</span>
+      <span class="risk-flag" data-tooltip="현재가($136.32)가 MA5($137.15)·MA20($140.18)·MA50($139.48)을 모두 하회합니다.">⚠️ 단기추세이탈</span>
+    </div>
 
     <div class="detail-toggle collapsed" onclick="toggleCollapsible(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleCollapsible(this);}" role="button" tabindex="0" aria-expanded="false">
       <span>상세 근거 보기</span>
@@ -407,11 +414,11 @@
     </div>
     <div class="collapsible-body collapsed">
     <ul class="scorecard-evidence">
-      <li>추세구조는 네 조건 중 세 개만 채워 40점 만점에 30점이다 — ① 현재가($609.82)가 MA150($518.27)·MA200($536.63)을 모두 상회 ② MA200이 21거래일 전 $532.36에서 올라오는 중 ③ MA50($578.49)이 두 장기선보다 높음까지는 충족했지만, ④ MA150($518.27)이 MA200($536.63)보다 높아야 한다는 조건은 깨져 있다.</li>
-      <li>MA150이 MA200보다 $18.36 낮은 것은 두 창의 구성 차이에서 그대로 나온다. MA150 창은 2026.02.06부터이고 MA200 창은 2025.11.24부터인데, MA200에만 들어 있는 그 앞 50거래일(2025.11.24~2026.02.05)의 평균 종가가 $591.69로 두 이평선 값보다 한참 높다. 그 50봉이 창에서 빠져나가는 동안 주가가 지금 수준을 지키면 순서가 뒤집히지만, 주가가 다시 내려가면 MA150도 같이 내려가므로 정해진 일은 아니다.</li>
-      <li>최근 3개월~1년 가중 모멘텀이 +24.16%로 40점 만점에 30점이다 — 3개월 +28.21%, 6개월 +28.14%, 9개월 +8.30%, 12개월 +27.97%에 가중치(0.4·0.2·0.2·0.2)를 먹인 값이다. 9개월 창만 유독 낮은 것은 그 기산점(2025년 12월 9일 $563.07)이 1월 고점($639.45, 1월 22일) 직전의 높은 자리이기 때문이다.</li>
-      <li>52주 저점(2026.05.18, $435.27) 대비 +40.10%, 고점(2026.08.25, $647.00) 대비 -5.75%로 52주위치는 20점 만점을 받았다. 1년 레인지의 82.4% 지점이다.</li>
-      <li>14일 ATR이 2.51%로 최근 1년(252거래일) 자체 이력의 32.9 백분위에 그쳐, 90 백분위인 변동성 플래그 기준에 한참 못 미친다. 실적일 하루짜리 급변동은 4월 23일 -9.20%, 7월 23일 +8.71%로 컸지만(상세 #news), 하루치는 14일 평균에 1/14만 반영된다. 참고로 5년 1,254거래일 중 ±8% 이상 움직인 날은 5일, ±5% 이상은 22일이다.</li>
+      <li>추세구조는 네 조건 중 하나만 채워 40점 만점에 10점이다 — 충족한 것은 ② MA150($148.99)이 MA200($148.58)보다 높다 하나뿐이고, ① 현재가($136.32)가 두 장기선을 모두 하회 ③ MA200이 21거래일 전 $149.20에서 $148.58로 내려오는 중 ④ MA50($139.48)이 두 장기선보다 아래로, 나머지 셋은 전부 어긋나 있다.</li>
+      <li>유일하게 충족된 ②도 오래 버틸 자리는 아니다. 다음 거래일에 MA150 창에서 빠지는 종가는 2026.02.06의 $170.49인 반면 MA200 창에서 빠지는 것은 2025.11.24의 $145.50이라, <strong style="color:var(--text2);">두 창이 덜어내는 무게가 다르다</strong>. 다만 여기서 나오는 시점은 조건부다 — <strong style="color:var(--text2);">주가가 지금의 $136.32에 머문다는 가정에서만</strong> 격차가 +$0.41 → +$0.23 → +$0.08로 줄어 3거래일 뒤 뒤집히고, 주가가 움직이면 그 시점도 같이 움직인다.</li>
+      <li>최근 3개월~1년 가중 모멘텀이 -6.94%로 40점 만점에 10점이다 — 3개월 -5.16%, 6개월 -14.19%, 9개월 -5.75%, 12개월 -4.44%에 가중치(0.4·0.2·0.2·0.2)를 먹인 값이다. 측정한 네 기간이 모두 음수이고, 6개월 창이 -14.19%로 가장 깊다 — 네 기산점 중 가장 높은 2026.03.12 종가 $158.86에서 재기 때문이다.</li>
+      <li>52주 저점은 2026.07.23 장중 $133.73, 고점은 2026.02.12 장중 $171.48이고 현재가는 그 레인지의 6.9% 지점, 곧 아래에서 일곱 번째 칸이다. 이 카드가 쓰는 52주 고저는 종가가 아니라 <strong style="color:var(--text2);">장중 고가·저가</strong> 기준이며, 여기서 파생되는 비율도 모두 같은 기준으로 계산했다(종가 기준으로는 $134.95~$170.49).</li>
+      <li>14일 ATR이 1.49%로 최근 1년(252거래일) 자체 이력의 9.1 백분위에 그쳐, 90 백분위인 변동성 플래그 기준과는 반대쪽 끝에 있다. 떨어지는 중인데도 하루하루는 조용하다는 뜻이다 — 실제로 52주 동안 ±5% 이상 움직인 날이 하루도 없고, 가장 크게 움직인 날조차 2026.02.03 실적일의 +4.93%다.</li>
     </ul>
     </div>
 
@@ -425,113 +432,116 @@
     <div class="card" style="margin-bottom:0;">
       <div class="card-title">핵심 가격대<span class="levels-asof" style="font-size:11px;font-weight:400;color:var(--text3);margin-left:6px;">(2026.09.11 분석 기준)</span></div>
       <div class="zone-list">
-        <div class="zone-item"><span class="zone-label">52주 최고</span><div style="display:flex;align-items:center;gap:8px;"><span class="zone-val" style="color:var(--red);">$647.00</span><span class="zone-tag tag-resist">2026.08.25 · +6.1%</span></div></div>
-        <div class="zone-item"><span class="zone-label">현재가</span><div style="display:flex;align-items:center;gap:8px;"><span class="zone-val" style="color:var(--gold);">$609.82</span><span class="zone-tag tag-current">MA5·MA20 사이 ±0.5%</span></div></div>
-        <div class="zone-item"><span class="zone-label">최근접 지지</span><div style="display:flex;align-items:center;gap:8px;"><span class="zone-val" style="color:var(--green);">$578.49</span><span class="zone-tag tag-support">MA50(기술점수 기준선) · -5.1%</span></div></div>
-        <div class="zone-item"><span class="zone-label">2차 지지</span><div style="display:flex;align-items:center;gap:8px;"><span class="zone-val" style="color:var(--green);">$536.63</span><span class="zone-tag tag-support">MA200 · -12.0%</span></div></div>
-        <div class="zone-item"><span class="zone-label">52주 최저</span><div style="display:flex;align-items:center;gap:8px;"><span class="zone-val" style="color:var(--green);">$435.27</span><span class="zone-tag tag-support">2026.05.18 · -28.6%</span></div></div>
+        <div class="zone-item"><span class="zone-label">52주 최고</span><div style="display:flex;align-items:center;gap:8px;"><span class="zone-val" style="color:var(--red);">$171.48</span><span class="zone-tag tag-resist">2026.02.12 · +25.8%</span></div></div>
+        <div class="zone-item"><span class="zone-label">장기 저항 밀집</span><div style="display:flex;align-items:center;gap:8px;"><span class="zone-val" style="color:var(--red);">$148.58~148.99</span><span class="zone-tag tag-resist">MA200·MA150 · +9.0~9.3%</span></div></div>
+        <div class="zone-item"><span class="zone-label">MA 저항 밀집</span><div style="display:flex;align-items:center;gap:8px;"><span class="zone-val" style="color:var(--red);">$139.48~140.18</span><span class="zone-tag tag-resist">MA50·MA60·MA20 · +2.3~2.8%</span></div></div>
+        <div class="zone-item"><span class="zone-label">현재가</span><div style="display:flex;align-items:center;gap:8px;"><span class="zone-val" style="color:var(--gold);">$136.32</span><span class="zone-tag tag-current">전 이평선 하회 · 최근접 MA5 +0.6%</span></div></div>
+        <div class="zone-item"><span class="zone-label">52주 최저</span><div style="display:flex;align-items:center;gap:8px;"><span class="zone-val" style="color:var(--green);">$133.73</span><span class="zone-tag tag-support">2026.07.23 · -1.9%</span></div></div>
       </div>
     </div>
 
     <div class="card" style="margin-bottom:0;">
       <div class="card-title">이동평균선 현황</div>
-      <div class="ma-row"><span class="ma-name"><span class="ma-dot" style="background:var(--ma5)"></span>MA5 (단기)</span><div style="display:flex;align-items:center;gap:10px;"><span class="ma-val">$607.10</span><span class="ma-status status-above">현재가 상회</span></div></div>
-      <div class="ma-row"><span class="ma-name"><span class="ma-dot" style="background:var(--ma20)"></span>MA20 (중단기)</span><div style="display:flex;align-items:center;gap:10px;"><span class="ma-val">$612.84</span><span class="ma-status status-below">현재가 하회</span></div></div>
-      <div class="ma-row"><span class="ma-name"><span class="ma-dot" style="background:var(--ma60)"></span>MA60 (중기)</span><div style="display:flex;align-items:center;gap:10px;"><span class="ma-val">$563.60</span><span class="ma-status status-above">현재가 상회</span></div></div>
-      <div class="ma-row"><span class="ma-name"><span class="ma-dot" style="background:var(--ma120)"></span>MA120 (장기)</span><div style="display:flex;align-items:center;gap:10px;"><span class="ma-val">$521.61</span><span class="ma-status status-above">현재가 상회</span></div></div>
-      <div style="margin-top:12px;padding:10px;background:var(--bg3);border-radius:6px;font-size:11.5px;color:var(--text2);">4개 이평선 중 3개를 상회하고, 못 넘은 MA20($612.84)과의 거리도 -0.49%에 불과하다. 현재가는 MA5($607.10) 위 0.45%, MA20 아래 0.49%로 두 선 사이에 끼어 있어 단기 방향이 아직 정해지지 않은 모습이다. 중장기 쪽은 여유가 있다 — MA60 위 8.20%, MA120 위 16.91%이고, 기술점수가 쓰는 MA150($518.27)·MA200($536.63) 대비로도 각각 17.66%·13.64% 위에 있다.</div>
+      <div class="ma-row"><span class="ma-name"><span class="ma-dot" style="background:var(--ma5)"></span>MA5 (단기)</span><div style="display:flex;align-items:center;gap:10px;"><span class="ma-val">$137.15</span><span class="ma-status status-below">현재가 하회</span></div></div>
+      <div class="ma-row"><span class="ma-name"><span class="ma-dot" style="background:var(--ma20)"></span>MA20 (중단기)</span><div style="display:flex;align-items:center;gap:10px;"><span class="ma-val">$140.18</span><span class="ma-status status-below">현재가 하회</span></div></div>
+      <div class="ma-row"><span class="ma-name"><span class="ma-dot" style="background:var(--ma60)"></span>MA60 (중기)</span><div style="display:flex;align-items:center;gap:10px;"><span class="ma-val">$139.64</span><span class="ma-status status-below">현재가 하회</span></div></div>
+      <div class="ma-row"><span class="ma-name"><span class="ma-dot" style="background:var(--ma120)"></span>MA120 (장기)</span><div style="display:flex;align-items:center;gap:10px;"><span class="ma-val">$145.46</span><span class="ma-status status-below">현재가 하회</span></div></div>
+      <div style="margin-top:12px;padding:10px;background:var(--bg3);border-radius:6px;font-size:11.5px;color:var(--text2);">4개 이평선 중 상회하는 것이 하나도 없다. 가장 가까운 MA5($137.15)와의 거리가 -0.60%, 그 다음이 MA50($139.48) -2.26%·MA60($139.64) -2.38%·MA20($140.18) -2.75%로 세 선이 1% 안에 몰려 있어, 여기를 되찾지 못하면 단기 반등의 첫 관문부터 막힌다. 장기 쪽은 더 멀다 — MA120 아래 6.28%, 기술점수가 쓰는 MA150($148.99)·MA200($148.58) 아래로는 각각 8.51%·8.25%다.</div>
     </div>
   </div>
 
 </div>
 
 <div id="fund" class="section">
+
   <div class="section-title">기본적 분석 — 분기 재무제표 (SEC 10-Q/10-K, US GAAP 연결재무제표)</div>
+
+  <div class="fy-note">회계연도가 12월 마지막 토요일에 끝나고 <strong style="color:var(--text);">4분기만 16주, 1~3분기는 12주씩</strong>이다. 아래 차트에서 24Q4·25Q4 매출이 유독 큰 것은 성장이 아니라 이 4주 차이이며, 두 4분기 값은 모두 10-K 연간치에서 3분기 누계를 뺀 것이다.</div>
 
   <div class="card">
     <div class="card-title">분기 매출 / 영업이익 / 영업이익률 (2024 Q3 ~ 2026 Q2)</div>
     <div class="chart-wrap" style="height:260px;">
       <canvas id="pepRevChart"></canvas>
     </div>
-    <div style="font-size:11px;color:var(--text3);margin-top:10px;">영업이익률은 <strong style="color:var(--accent2);">GAAP 총매출 기준</strong>이라 회사가 말하는 조정 영업이익률(26Q2 22.8%)보다 5%p 안팎 낮다 — 차이의 대부분이 인수 무형자산 상각이고, 아래 카드에서 따로 다룬다. 4분기(24Q4·25Q4) 매출과 영업이익은 10-K 연간치에서 3분기 누계를 뺀 값이다. 8분기 중 가장 높은 분기는 매출 <strong style="color:var(--accent2);">26Q2 $11.99B</strong>, 영업이익률 <strong style="color:var(--accent2);">25Q4 18.5%</strong>이고, 이익률 자체는 16.6~18.5% 사이를 오갈 뿐 8분기 동안 방향을 만들지 않았다(두 번의 4분기가 각각 그 해의 최고치이긴 하나, 관측이 두 번뿐이라 계절성이라고 부르지는 않는다).</div>
+    <div style="font-size:11px;color:var(--text3);margin-top:10px;">영업이익률이 두 번 주저앉았는데 설명이 되는 정도가 서로 다르다. <strong style="color:var(--accent2);">25Q2의 7.9%</strong>는 Rockstar·Be&amp;Cheery 브랜드 손상차손 $1,860M(PBNA $1,529M·EMEA $251M·아시아태평양식품 $80M)이 한 분기에 들어온 결과로, 되돌리면 16.1%로 평시 수준에 붙는다. <strong style="color:var(--accent2);">24Q4의 8.1%</strong>는 FY2024 손상차손 $498M이 전액 4분기에 잡힌 것이 일부이지만 되돌려도 9.9%에 그쳐 <strong style="color:var(--text2);">나머지는 공시된 항목만으로 설명되지 않는다</strong>. 두 분기를 뺀 나머지 여섯 분기는 12.1~16.6% 구간이고, 최근 세 분기는 12.1% → 16.5% → 16.6%로 올라왔다.</div>
   </div>
 
   <div class="grid-4">
     <div class="stat-box">
       <div class="stat-label">잉여현금흐름 (TTM)</div>
-      <div class="stat-value up">$7.32B</div>
-      <div class="stat-sub">영업현금 $9.01B − Capex $1.70B · 매출의 15.8%</div>
+      <div class="stat-value up">$9.28B</div>
+      <div class="stat-sub">영업현금 $13.46B − Capex $4.17B · 매출의 9.6%</div>
     </div>
     <div class="stat-box">
       <div class="stat-label">Capex (TTM)</div>
-      <div class="stat-value">$1.70B</div>
-      <div class="stat-sub">매출의 3.7% · 유형자산 장부가 $10.76B</div>
+      <div class="stat-value">$4.17B</div>
+      <div class="stat-sub">매출의 4.3% · 보틀링·공장을 직접 굴리는 구조</div>
     </div>
     <div class="stat-box">
-      <div class="stat-label">R&amp;D (TTM)</div>
-      <div class="stat-value gold">$1.40B</div>
-      <div class="stat-sub">매출의 3.0% · 26년 상반기 $700M</div>
+      <div class="stat-label">영업현금흐름 (TTM)</div>
+      <div class="stat-value up">$13.46B</div>
+      <div class="stat-sub">매출의 13.9% · 순이익 $10.45B의 1.29배</div>
     </div>
     <div class="stat-box">
       <div class="stat-label">다음 실적</div>
-      <div class="stat-value gold">2026.10.28(예상)</div>
-      <div class="stat-sub">Q3 2026 · 연간 가이던스 조정EPS $24.93~25.33</div>
+      <div class="stat-value gold">2026.10.08(확정)</div>
+      <div class="stat-sub">Q3 2026 · 분기 종료 9월 5일 · 장 시작 전</div>
     </div>
   </div>
 
   <div class="card" style="margin-top:16px;">
-    <div class="card-title">GAAP 이익과 조정 이익의 간격 — 인수 무형자산 상각</div>
-    <div style="font-size:11.5px;color:var(--text2);line-height:1.7;">TTM GAAP 희석EPS는 <strong style="color:var(--text);">$18.58</strong>, 회사가 말하는 TTM 조정 EPS는 <strong style="color:var(--text);">$23.83</strong>으로 주당 $5.25, 28% 차이가 난다. 둘 다 회사가 직접 보고한 누적치만으로 계산했다(FY2025 $17.74·$22.87 − 25년 상반기 $8.26·$10.51 + 26년 상반기 $9.10·$11.47). 분기 값을 빼서 만들지 않은 이유는 희석주식수가 1년 새 3.79억주에서 3.71억주로 움직였기 때문이다.<br><br>
-    <strong style="color:var(--text);">간격의 대부분은 한 항목에서 나온다.</strong> 2026년 상반기 조정 내역을 주당으로 보면 인수 무형자산 상각 $2.46 · 구조조정 등 $0.40 · 판관비 조정 $0.21 · 매출원가 조정 $0.11 · 세금 조정 −$0.79로, 상각이 나머지를 다 합친 것보다 크다. 영업이익률로 봐도 같다 — GAAP 17.2% 대 조정 22.3%의 5.1%p 차이 중 <strong style="color:var(--accent2);">4.0%p가 상각</strong>이다.<br><br>
-    <strong style="color:var(--text);">그래서 이 상각을 일회성으로 볼 수 있는가.</strong> 회사가 10-K에 남은 상각 일정을 직접 적어 뒀다 — 2026년 $1,638M · 2027년 $1,608M · 2028년 $1,573M · 2029년 $1,457M · 2030년 $1,160M · 2031년 이후 $7,169M, 합계 $14,604M이다. 5년 내내 $1.1B 아래로 내려가지 않는 평탄한 일정이고, 이 표는 2025년 말 기준이라 <strong style="color:var(--text);">2026년 3월 Clario 인수로 새로 얹힌 무형자산 $3,796M(가중평균 상각기간 15년)은 아직 들어 있지도 않다</strong>. 실제로 상각액은 FY2023 $2,338M → FY2024 $1,952M → FY2025 $1,730M으로 줄어오다가, 26년 상반기 $915M(25년 상반기 $859M 대비 +6.5%)로 다시 돌아섰다.<br><br>
-    줄어들 자리를 새 인수가 곧바로 채우는 구조이므로 <strong style="color:var(--accent2);">이 카드는 상각을 되풀이되는 비용으로 보고 되돌리지 않는다</strong>. #valuation의 PER은 GAAP TTM EPS $18.58 기준 32.82x이고, 조정 EPS 기준 25.59x는 비교 불가능한 보조 수치로만 표기한다.</div>
+    <div class="card-title">FY2025 EPS $6.00과 TTM EPS $7.63의 간격 — 손상차손 한 분기</div>
+    <div style="font-size:11.5px;color:var(--text2);line-height:1.7;">이 카드의 배수는 전부 <strong style="color:var(--text);">TTM 희석EPS $7.63</strong>(25Q3 $1.90 + 25Q4 $1.85 + 26Q1 $1.70 + 26Q2 $2.18)을 쓴다. 회사가 마지막으로 보고한 연간 EPS는 FY2025 $6.00이므로, 같은 주가를 그 숫자로 나누면 PER이 17.87x가 아니라 22.72x로 나온다. 어느 쪽이 맞느냐가 아니라 <strong style="color:var(--text)">어느 12개월을 세느냐의 차이</strong>다.<br><br>
+    FY2025에는 25Q2의 브랜드 손상차손 $1,860M이 들어 있고 TTM 창(25Q3~26Q2)에는 들어 있지 않다. 그 분기의 희석EPS는 $0.92, 직전 해 같은 분기는 $2.23이었다. 세율도 같은 방향으로 움직였다 — 회사는 26Q2 보고세율이 22.0%로 1년 전 18.6%보다 3.4%p 올라간 이유를 <strong style="color:var(--text);">전년의 연방이자 충당금 환입과 Rockstar 손상, 그리고 올해부터 적용된 OECD 글로벌최저한세</strong>라고 적었다. 즉 낮았던 쪽은 작년이다.<br><br>
+    <strong style="color:var(--accent2);">되돌리는 조정은 하지 않는다.</strong> TTM 창이 이미 그 분기를 지나쳤으므로 조정할 대상이 없고, 창 안에 남아 있는 손상은 25Q3의 $100M뿐인데, 이는 세전 금액이고 같은 분기 세후 순이익 $2,603M의 3.8%에 해당하는 크기다. #valuation의 PER은 GAAP TTM $7.63 그대로이고, FY2025 $6.00은 이 카드 안에서만 비교용으로 적는다.</div>
   </div>
 
   <div class="card" style="margin-top:16px;">
-    <div class="card-title">재무 건전성 — Clario 이후의 레버리지와 유동성 (2026.06.27 기준)</div>
-    <div style="font-size:11px;color:var(--text3);line-height:1.5;margin:-4px 0 14px;">※ 인수로 성장하는 회사라 차입금은 늘 크다. 의미 있는 질문은 "부채가 큰가"가 아니라 "이번 인수로 얼마나 더 늘었고 그것을 무엇이 덮고 있는가"이므로, 아래는 그 쪽으로 정리했다.</div>
+    <div class="card-title">재무 건전성 — 유동비율 1배 미만을 무엇이 떠받치는가 (2026.06.13 기준)</div>
+    <div style="font-size:11px;color:var(--text3);line-height:1.5;margin:-4px 0 14px;">※ 유동비율 0.93배·부채비율 407%는 그 자체로는 경고처럼 보이지만, 필수소비재 대형주에서는 운전자본을 음수로 굴리는 정상 구조이기도 하다. 아래는 "숫자가 나쁜가"가 아니라 "무엇이 이 구조를 지탱하고 있고 어디가 약한가"로 정리했다.</div>
 
-    <div class="section-label"><span class="dot"></span>레버리지 — Clario 한 건으로 한 단계 올라섰다</div>
+    <div class="section-label"><span class="dot"></span>레버리지 — 순차입금 $42.50B, EBITDA의 2.37배</div>
     <div class="diag-summary ok">
       <div class="icon">🩺</div>
       <div>
-        <div class="title">종합 진단: 순차입금/EBITDA가 2.81배에서 3.47배로 올라왔다 — 감당 못 할 수준은 아니지만 여유는 줄었다</div>
-        <div class="sub">총차입 $42.55B(단기·유동성 $3.37B + 장기 $39.18B), 현금 $4.06B, 순차입금 $38.49B으로 TTM EBITDA($11.09B = 영업이익 $8.15B + 감가상각 $1.16B + 무형자산상각 $1.79B)의 3.47배다. 2025년 말에는 총차입 $39.39B·현금 $9.85B·순차입금 $29.53B으로 2.81배였는데, 그때 쌓아 둔 현금과 상반기에 새로 조달한 $5.24B이 3월 Clario 대금($5.81B 현금 + 인수대상 부채 $3.18B 상환)으로 나가면서 반년 만에 0.66배가 올랐다</div>
+        <div class="title">종합 진단: 차입 규모는 크지만 이익 대비 배율은 2.37배로 통제 범위에 있다</div>
+        <div class="sub">총차입 $53.21B(단기 $10.60B + 장기 $42.61B), 현금·단기투자 $10.72B, 순차입금 $42.50B이고, 이 카드가 구성한 TTM EBITDA $17.96B(영업이익 $14.36B + 감가상각·무형자산상각 $3.60B)의 2.37배다. 이자 쪽은 더 여유가 있다 — TTM 영업이익이 TTM 순이자비용·기타 $1.13B의 12.7배다. 2026년 2월에는 유로화 선순위채 €2.5B을 새로 찍었고 상반기에 만기 도래분 $1.6B과 €0.5B을 갚았다</div>
       </div>
     </div>
     <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:12px;">
-      <div class="stat-box" style="flex:1;min-width:150px;"><div class="stat-label">EBITDA / 이자비용</div><div class="stat-value up">7.56x</div><div class="stat-sub">TTM 이자비용 $1.47B · 영업이익 기준으로도 5.55x</div></div>
-      <div class="stat-box" style="flex:1;min-width:150px;"><div class="stat-label">커버넌트 여유 (GAAP 근사)</div><div class="stat-value up">20.7x</div><div class="stat-sub">순이자비용 $0.54B 기준 · 약정 최저선은 3.5x</div></div>
-      <div class="stat-box" style="flex:1;min-width:150px;"><div class="stat-label">미사용 신용한도</div><div class="stat-value">$5.00B</div><div class="stat-sub">무담보 리볼빙, 전액 미인출 · 2028년 1월 만기</div></div>
+      <div class="stat-box" style="flex:1;min-width:150px;"><div class="stat-label">순차입금 / EBITDA</div><div class="stat-value">2.37x</div><div class="stat-sub">순차입금 $42.50B ÷ TTM EBITDA $17.96B</div></div>
+      <div class="stat-box" style="flex:1;min-width:150px;"><div class="stat-label">영업이익 / 순이자비용</div><div class="stat-value up">12.7x</div><div class="stat-sub">TTM $14.36B ÷ $1.13B</div></div>
+      <div class="stat-box" style="flex:1;min-width:150px;"><div class="stat-label">미인출 약정한도</div><div class="stat-value up">$10.0B</div><div class="stat-sub">5년물 $5.0B(2031.05) + 364일물 $5.0B(2027.05)</div></div>
     </div>
-    <div style="margin-top:12px;font-size:11.5px;color:var(--text2);line-height:1.6;">리볼빙 약정에 걸린 커버넌트는 EBITDA를 순이자비용으로 나눈 값이 매 분기 말 <strong style="color:var(--text);">3.5배 이상</strong>이어야 한다는 조건 하나다. 다만 약정이 쓰는 두 금액은 계약서가 따로 정의한 것이고 회사는 그 정의도 실제 배율도 공시하지 않았다 — 위 20.7배는 GAAP EBITDA $11.09B을 이자수익 $0.93B 상계 후 순이자비용 $0.54B으로 나눈 근사치다. 근사치로 보면 기준선까지 EBITDA가 지금의 17% 수준으로 내려가야 닿는 거리이고, 회사는 6월 27일 기준 인출 잔액이 없다고 공시했다. 1년 내 갚아야 할 차입은 $3.37B으로 총차입의 7.9%이고, 상반기에 이미 $1.41B을 상환하면서 $5.24B을 새로 조달했다.</div>
 
-    <div class="section-label" style="margin-top:14px;"><span class="dot" style="background:var(--blue);"></span>유동성·운전자본 — 레버리지가 오른 만큼 단기 쪽은 평범하다</div>
+    <div class="section-label" style="margin-top:14px;"><span class="dot" style="background:var(--blue);"></span>유동성 — 1배 미만의 유동비율이 기업어음 위에 서 있다</div>
     <div class="diag-summary ok">
       <div class="icon">💵</div>
       <div>
-        <div class="title">종합 진단: 유동비율 1.55배, 재고를 뺀 당좌비율도 1.18배로 단기 지급능력에는 문제가 없다</div>
-        <div class="sub">유동자산 $23.37B 대 유동부채 $15.07B이고, 유동자산에서 재고 $5.63B을 뺀 당좌자산은 $17.74B이다. 다만 현금 비중은 낮다 — 유동자산 중 현금은 $4.06B(17.4%)뿐이고 매출채권이 $9.45B으로 가장 큰 항목이라, 이 회사의 단기 유동성은 쌓아 둔 현금이 아니라 들어오는 대금에 기대고 있다</div>
+        <div class="title">종합 진단: 유동비율 0.93배·당좌비율 0.69배 — 부족분을 메우는 것은 현금이 아니라 미인출 한도다</div>
+        <div class="sub">유동자산 $32.78B 대 유동부채 $35.11B으로 $2.33B이 모자라고, 유동부채 안의 단기차입 $10.60B 가운데 <strong style="color:var(--text);">$6.1B이 기업어음</strong>이다. 부족분 $2.33B은 현금 $10.25B을 이미 넣고 계산한 뒤에 남은 것이라, 이 구조를 지탱하는 것은 유동자산 바깥에 있다 — 미인출 약정 $10.0B과 회사가 유지한다고 밝힌 Tier 1 기업어음 시장 접근성이다. 달리 말하면 단기 조달 여건 악화가 이 회사에서 가장 직접적으로 작동할 재무 리스크로 보인다</div>
       </div>
     </div>
-    <div style="margin-top:12px;font-size:11.5px;color:var(--text2);line-height:1.6;">수익성 개선이 어디서 왔는지는 손익계산서만으로 계산된다. GAAP 영업이익률은 25년 상반기 16.7%에서 26년 상반기 17.2%로 <strong style="color:var(--text);">+0.44%p</strong> 올랐는데, 매출 대비 비중 변화를 항목별로 쪼개면 매출원가 −0.24%p(매출총이익률 40.7%→40.5%) · 판관비 +0.25%p · R&amp;D +0.23%p · 구조조정비용 +0.21%p로 합이 +0.45%p다. 즉 개선분은 전부 비용 비중이 내려간 데서 나왔고, 매출총이익률은 오히려 뒤로 갔다.</div>
+    <div style="margin-top:12px;font-size:11.5px;color:var(--text2);line-height:1.6;">부채비율 406.9%(총부채 $89.92B ÷ 자기자본 $22.10B)도 같은 방식으로 읽어야 한다. 자기자본이 작은 것은 손실이 쌓여서가 아니라 <strong style="color:var(--text);">자사주 $42.15B과 누적기타포괄손실 $14.34B</strong>이 차감되기 때문이다 — 납입자본 $4.47B과 이익잉여금 $74.12B에서 그 둘을 빼면 $22.10B이다. 자사주만 되돌려 놓아도 장부가는 $64.24B, 누적기타포괄손실까지 되돌리면 $78.59B이 된다. 분모가 이렇게 크게 움직인다는 사실이 #valuation에서 PBR의 가중치를 1.0이 아니라 0.5로 둔 근거다.</div>
   </div>
 
   <div class="grid-2">
     <div class="card" style="margin-bottom:0;">
-      <div class="card-title">매출 구성 (2026 Q2, 외부고객 매출 $11.99B 기준)</div>
+      <div class="card-title">매출 구성 (2026 Q2, 총매출 $24.18B 기준)</div>
       <div style="display:flex;align-items:center;justify-content:center;gap:20px;">
         <div class="chart-wrap" style="height:170px;width:170px;flex-shrink:0;">
           <canvas id="segmentPieChart"></canvas>
         </div>
-        <div style="display:flex;flex-direction:column;gap:9px;">
-          <div style="display:flex;align-items:center;gap:7px;font-size:11px;color:var(--text2);white-space:nowrap;"><span style="width:8px;height:8px;border-radius:50%;background:#ee3134;display:inline-block;flex-shrink:0;"></span>실험실제품·바이오파마서비스 <strong style="color:var(--text);">$6.65B · 55.5%</strong></div>
-          <div style="display:flex;align-items:center;gap:7px;font-size:11px;color:var(--text2);white-space:nowrap;"><span style="width:8px;height:8px;border-radius:50%;background:#f58183;display:inline-block;flex-shrink:0;"></span>생명과학솔루션 <strong style="color:var(--text);">$2.36B · 19.6%</strong></div>
-          <div style="display:flex;align-items:center;gap:7px;font-size:11px;color:var(--text2);white-space:nowrap;"><span style="width:8px;height:8px;border-radius:50%;background:#ab0e11;display:inline-block;flex-shrink:0;"></span>분석기기 <strong style="color:var(--text);">$1.80B · 15.0%</strong></div>
-          <div style="display:flex;align-items:center;gap:7px;font-size:11px;color:var(--text2);white-space:nowrap;"><span style="width:8px;height:8px;border-radius:50%;background:#f9b5b6;display:inline-block;flex-shrink:0;"></span>특수진단 <strong style="color:var(--text);">$1.19B · 9.9%</strong></div>
+        <div style="display:flex;flex-direction:column;gap:7px;">
+          <div style="display:flex;align-items:center;gap:7px;font-size:11px;color:var(--text2);white-space:nowrap;"><span style="width:8px;height:8px;border-radius:50%;background:#05528e;display:inline-block;flex-shrink:0;"></span>북미 음료 <strong style="color:var(--text);">$7.24B · 30.0%</strong></div>
+          <div style="display:flex;align-items:center;gap:7px;font-size:11px;color:var(--text2);white-space:nowrap;"><span style="width:8px;height:8px;border-radius:50%;background:#1f99f8;display:inline-block;flex-shrink:0;"></span>북미 식품 <strong style="color:var(--text);">$6.37B · 26.3%</strong></div>
+          <div style="display:flex;align-items:center;gap:7px;font-size:11px;color:var(--text2);white-space:nowrap;"><span style="width:8px;height:8px;border-radius:50%;background:#0773c7;display:inline-block;flex-shrink:0;"></span>EMEA <strong style="color:var(--text);">$4.98B · 20.6%</strong></div>
+          <div style="display:flex;align-items:center;gap:7px;font-size:11px;color:var(--text2);white-space:nowrap;"><span style="width:8px;height:8px;border-radius:50%;background:#55b1f9;display:inline-block;flex-shrink:0;"></span>중남미 식품 <strong style="color:var(--text);">$2.94B · 12.2%</strong></div>
+          <div style="display:flex;align-items:center;gap:7px;font-size:11px;color:var(--text2);white-space:nowrap;"><span style="width:8px;height:8px;border-radius:50%;background:#93cefb;display:inline-block;flex-shrink:0;"></span>국제 프랜차이즈 음료 <strong style="color:var(--text);">$1.52B · 6.3%</strong></div>
+          <div style="display:flex;align-items:center;gap:7px;font-size:11px;color:var(--text2);white-space:nowrap;"><span style="width:8px;height:8px;border-radius:50%;background:#03365e;display:inline-block;flex-shrink:0;"></span>아시아태평양 식품 <strong style="color:var(--text);">$1.12B · 4.6%</strong></div>
         </div>
       </div>
-      <div style="margin-top:14px;font-size:11.5px;color:var(--text2);line-height:1.6;">매출은 실험실제품·바이오파마서비스 한 곳에 절반 넘게 몰려 있는데 <strong style="color:var(--text);">이익은 그렇지 않다</strong>. 세그먼트 이익률(내부거래 포함 매출 기준)은 생명과학솔루션 37.0%·특수진단 27.7%·분석기기 23.0%인 반면 실험실제품·바이오파마서비스는 <strong style="color:var(--red);">14.0%</strong>다. 매출은 55.5%를 담당하면서 조정 영업이익 $2.74B 중에서는 34.2%($936M)만 가져간다. 3월에 인수한 Clario도 이 세그먼트에 들어갔는데, 회사가 Clario 단독 매출·이익을 따로 공시하지 않아 이 14.0%를 끌어올리는 쪽인지 끌어내리는 쪽인지는 아직 알 수 없다.</div>
+      <div style="margin-top:14px;font-size:11.5px;color:var(--text2);line-height:1.6;">매출 1위와 이익률 1위가 정반대다. 세그먼트 영업이익률은 <strong style="color:var(--green);">국제 프랜차이즈 음료 41.8%</strong>가 압도적인데 매출 비중은 6.3%뿐이고, 매출 30.0%로 가장 큰 북미 음료는 14.5%다. 회사 스스로 10-Q에 이유를 적어 뒀다 — 완제품을 직접 만드는 보틀링 사업은 매출은 크지만 마진이 낮고, 원액을 보틀러에 파는 프랜차이즈 쪽은 그 반대다. 그 보틀링 사업이 전체 매출의 <strong style="color:var(--text);">36%</strong>다. 이번 분기 역성장한 곳은 북미 식품 하나(<strong style="color:var(--red);">-1.7%</strong>, 유기 -2%)이고 나머지 다섯은 +6.6~+15.4%로 늘었는데, 그 북미 식품이 세그먼트 영업이익의 29.7%로 여전히 최대 이익원이다.</div>
     </div>
 
     <div class="card" style="margin-bottom:0;">
@@ -540,90 +550,91 @@
         <div class="zone-item">
           <span class="zone-label">배당 (2026 상반기)</span>
           <div style="display:flex;align-items:center;gap:8px;">
-            <span class="zone-tag" style="background:rgba(154,160,184,0.18);color:var(--text2);">분기 주당 $0.47</span>
-            <span class="zone-val">$337M</span>
+            <span class="zone-tag" style="background:rgba(46,204,113,0.18);color:var(--green);">환원액의 89.1%</span>
+            <span class="zone-val">$3,914M</span>
           </div>
         </div>
         <div class="zone-item">
           <span class="zone-label">자사주매입 (2026 상반기)</span>
           <div style="display:flex;align-items:center;gap:8px;">
-            <span class="zone-tag" style="background:rgba(46,204,113,0.18);color:var(--green);">환원액의 92.2%</span>
-            <span class="zone-val">$4,000M</span>
+            <span class="zone-tag" style="background:rgba(154,160,184,0.18);color:var(--text2);">환원액의 10.9%</span>
+            <span class="zone-val">$479M</span>
           </div>
         </div>
         <div class="zone-item">
           <span class="zone-label">합계 (2026 상반기 주주환원)</span>
-          <span class="zone-val">$4,337M</span>
+          <span class="zone-val">$4,393M</span>
         </div>
         <div class="zone-item">
           <span class="zone-label">자사주매입 잔여 한도</span>
           <div style="display:flex;align-items:center;gap:8px;">
-            <span class="zone-tag" style="background:rgba(231,76,60,0.18);color:var(--red);">2026.07.31 기준</span>
-            <span class="zone-val" style="color:var(--gold);">$1.0B</span>
+            <span class="zone-tag" style="background:rgba(46,204,113,0.18);color:var(--green);">2026.06.13 기준</span>
+            <span class="zone-val">$9,518M</span>
           </div>
         </div>
         <div class="zone-item">
           <span class="zone-label">직전 승인</span>
-          <span class="zone-val">2025.11.06 이사회 $5.0B</span>
+          <span class="zone-val">2026.02.03 이사회 $10.0B (2030.02 만기)</span>
         </div>
       </div>
-      <div style="margin-top:10px;font-size:11px;color:var(--text3);">환원은 배당이 아니라 자사주매입 쪽이다 — 상반기 $4.00B으로 690만 주를 사들여 배당($337M)의 12배를 썼고, 배당수익률은 0.31%에 그친다. 다만 2025년 11월에 새로 받은 $5.0B 한도 중 7월 말 기준 <strong style="color:var(--text);">$1.0B만 남았다</strong>. 같은 반년에 Clario 대금으로 현금이 나갔고 순차입금이 0.66배 올랐으니, 이 속도를 이어가려면 새 승인이나 추가 조달이 필요하다.</div>
+      <div style="margin-top:10px;font-size:11px;color:var(--text3);">환원은 거의 전부 배당이다. 한도는 $9.52B이 남아 있지만 회사는 2026년 자사주매입을 <strong style="color:var(--text);">약 $1.0B</strong>만 하겠다고 직접 밝혔고(배당 약 $7.9B 포함 총 약 $8.9B), 상반기 실적은 그 계획과 같은 속도다. 여유가 두껍지는 않다 — TTM 기준 환원 $8.79B은 잉여현금흐름 $9.28B의 <strong style="color:var(--text);">94.7%</strong>다. 배당은 2026년 2월에 연 $5.69 → $5.92로 4% 올렸고 6월 지급분부터 적용됐다.</div>
     </div>
   </div>
 
   <div class="card" style="margin-top:16px;">
-    <div class="card-title">다음 실적 체크포인트 <span style="color:var(--gold);font-weight:600;">2026년 10월 28일(예상) · 2026 Q3</span></div>
+    <div class="card-title">다음 실적 체크포인트 <span style="color:var(--gold);font-weight:600;">2026년 10월 8일(확정) · 2026 Q3</span></div>
     <div style="font-size:12px;color:var(--text2);line-height:1.8;">
-      <div style="margin-bottom:8px;"><strong style="color:var(--accent2);">①</strong> 유기성장률이 2분기의 5%를 지키는지 — 1분기에는 1%였고, 그 격차가 4월과 7월의 주가 반응을 갈랐다(상세 #news).</div>
-      <div style="margin-bottom:8px;"><strong style="color:var(--accent2);">②</strong> 7월에 올린 연간 가이던스(매출 $47.4~48.1B, 조정EPS $24.93~25.33)를 유지하거나 다시 올리는지.</div>
-      <div style="margin-bottom:8px;"><strong style="color:var(--accent2);">③</strong> Clario를 온전히 품은 첫 분기다 — 실험실제품·바이오파마서비스 세그먼트의 이익률이 14.0%에서 어느 쪽으로 움직이는지.</div>
-      <div><strong style="color:var(--accent2);">④</strong> 자사주매입 한도가 $1.0B밖에 남지 않았다 — 새 승인이 나오는지, 아니면 순차입금 3.47배를 낮추는 쪽을 택하는지.</div>
+      <div style="margin-bottom:8px;"><strong style="color:var(--accent2);">①</strong> 북미 식품(PFNA)의 유기 매출이 -2%에서 돌아서는지 — 이 카드가 읽은 "싼 이유" 그 자체다.</div>
+      <div style="margin-bottom:8px;"><strong style="color:var(--accent2);">②</strong> 연간 가이던스(유기성장 2~4%·핵심 고정환율 EPS 4~6%)를 유지하는지. 2분기 유기성장은 2.4%로 하단 쪽이었다.</div>
+      <div style="margin-bottom:8px;"><strong style="color:var(--accent2);">③</strong> 2025년 12월 Elliott 합의에서 약속한 3년간 최소 100bp 마진 개선이 분기 이익률로 확인되는지(상세 #news).</div>
+      <div><strong style="color:var(--accent2);">④</strong> 기업어음 잔액 $6.1B과 유동비율 0.93배가 어느 쪽으로 움직이는지.</div>
     </div>
   </div>
 </div>
 
 <div id="valuation" class="section">
-  <div class="section-title">밸류에이션 (Valuation Multiples) — 현재가 $609.82 (2026.09.11 종가) · 생명과학 도구 피어 기준</div>
-  <div style="font-size:10.5px;color:var(--text3);margin:-4px 0 12px;">※ 피어는 <strong style="color:var(--text2);">Danaher(DHR)·Agilent(A)·Revvity(RVTY)</strong> 세 곳이다. 이 저장소에 이미 만들어 둔 카드 중에는 생명과학 도구 회사가 없어 빅파마로 대신하는 대신, 세 곳을 <strong style="color:var(--text2);">PEP와 똑같은 2026-09-11 종가와 똑같은 SEC 누적치 산식으로 직접 계산</strong>했고 StockAnalysis.com 집계와 대조해 전부 일치를 확인했다. EV/EBITDA만 네 곳 모두 그 집계값을 그대로 썼다(EV 정의를 맞추기 위해서다). <strong style="color:var(--text2);">PBR만 가중치 0.5</strong>이고 나머지 넷은 1.0이다 — 이유는 해당 카드에 수치로 적었다.</div>
+
+  <div class="section-title">밸류에이션 (Valuation Multiples) — 현재가 $136.32 (2026.09.11 종가) · 음료·스낵 피어 기준</div>
+  <div style="font-size:10.5px;color:var(--text3);margin:-4px 0 12px;">※ 피어는 <strong style="color:var(--text2);">Coca-Cola(KO)·Mondelez(MDLZ)·Procter &amp; Gamble(PG)</strong> 세 곳이다. PEP가 음료와 과자를 한 회사에서 하므로 각 사업의 순수 비교대상(KO=음료, MDLZ=과자)에 대형 필수소비재 기준선(PG)을 더했다. 넷 모두 <strong style="color:var(--text2);">같은 2026-09-11 종가</strong> 기준 StockAnalysis.com 집계값이고, PEP 자신의 수치는 SEC 누적치로 직접 계산해 집계와 대조했고 <strong style="color:var(--text2);">PER·PBR·PSR·PCR 넷은 반올림 차이 안에서 일치</strong>한다(PER 17.87 대 17.86, PBR 8.42 대 8.43). <strong style="color:var(--text2);">EV/EBITDA만 일치하지 않는다</strong> — 자체 구성값은 12.73x이고 게이지에는 피어와 정의를 맞추기 위해 집계값 12.10x를 썼다(아래 EV/EBITDA 카드 참고). <strong style="color:var(--text2);">PBR만 가중치 0.5</strong>이고 나머지 넷은 1.0이다.</div>
 
   <div class="grid-2">
     <div class="card">
       <div class="card-title">멀티플 5단계 평가</div>
-      <div style="font-size:10.5px;color:var(--text3);line-height:1.5;margin-bottom:14px;">※ 각 지표의 밴드는 앵커를 한가운데(3단계 정중앙)에 두고 ±55%로 잡았고, 앵커는 피어 평균에서 유도했다. PER·PSR·PCR이 3단계(적정), PBR·EV/EBITDA가 4단계다. <strong style="color:var(--text2);">가중평균 3.33/5단계 → 고평가~적정</strong>.</div>
+      <div style="font-size:10.5px;color:var(--text3);line-height:1.5;margin-bottom:14px;">※ 각 지표의 밴드는 앵커를 한가운데(3단계 정중앙)에 두고 ±55%로 잡았고, 앵커는 피어 평균에서 유도했다. 다섯 중 <strong style="color:var(--text2);">넷이 앵커 아래</strong>이고 PBR만 위다. <strong style="color:var(--text2);">가중평균 1.78/5단계 → 저평가</strong>.</div>
 
       <div class="val-item" data-metric="per" onclick="selectMultiple('per')">
-        <div class="val-header"><span class="val-name">PER (TTM GAAP)</span><div style="display:flex;align-items:center;gap:8px;"><span class="val-number">32.82x</span><span class="stage-badge stage-3">3단계 적정</span></div></div>
-        <div class="val-track"><div class="val-fill" style="width:52.3%;background:linear-gradient(90deg,#c8a84b,#f0c040);"></div></div>
-        <div class="val-labels"><span class="val-low">저 14x</span><span class="val-mid">적정 32x</span><span class="val-high">고 50x</span></div>
+        <div class="val-header"><span class="val-name">PER (TTM GAAP)</span><div style="display:flex;align-items:center;gap:8px;"><span class="val-number">17.87x</span><span class="stage-badge stage-2">2단계 낮음</span></div></div>
+        <div class="val-track"><div class="val-fill" style="width:27.4%;background:linear-gradient(90deg,#2ecc71,#27ae60);"></div></div>
+        <div class="val-labels"><span class="val-low">저 10.7x</span><span class="val-mid">적정 23.8x</span><span class="val-high">고 36.9x</span></div>
       </div>
 
       <div class="val-item" data-metric="pbr" onclick="selectMultiple('pbr')">
-        <div class="val-header"><span class="val-name">PBR</span><div style="display:flex;align-items:center;gap:8px;"><span class="val-number">4.28x</span><span class="stage-badge stage-4">4단계 높음</span></div></div>
-        <div class="val-track"><div class="val-fill" style="width:73.2%;background:linear-gradient(90deg,#e67e22,#e74c3c);"></div></div>
-        <div class="val-labels"><span class="val-low">저 1.5x</span><span class="val-mid">적정 3.4x</span><span class="val-high">고 5.3x</span></div>
+        <div class="val-header"><span class="val-name">PBR</span><div style="display:flex;align-items:center;gap:8px;"><span class="val-number">8.42x</span><span class="stage-badge stage-4">4단계 높음(가중치 0.5)</span></div></div>
+        <div class="val-track"><div class="val-fill" style="width:75.3%;background:linear-gradient(90deg,#e67e22,#e74c3c);"></div></div>
+        <div class="val-labels"><span class="val-low">저 3.0x</span><span class="val-mid">적정 6.6x</span><span class="val-high">고 10.2x</span></div>
       </div>
 
       <div class="val-item" data-metric="psr" onclick="selectMultiple('psr')">
-        <div class="val-header"><span class="val-name">PSR (TTM)</span><div style="display:flex;align-items:center;gap:8px;"><span class="val-number">4.87x</span><span class="stage-badge stage-3">3단계 적정</span></div></div>
-        <div class="val-track"><div class="val-fill" style="width:42.6%;background:linear-gradient(90deg,#c8a84b,#f0c040);"></div></div>
-        <div class="val-labels"><span class="val-low">저 2.4x</span><span class="val-mid">적정 5.3x</span><span class="val-high">고 8.2x</span></div>
+        <div class="val-header"><span class="val-name">PSR (시총/매출 TTM)</span><div style="display:flex;align-items:center;gap:8px;"><span class="val-number">1.92x</span><span class="stage-badge stage-1">1단계 매우낮음</span></div></div>
+        <div class="val-track"><div class="val-fill" style="width:19.4%;background:linear-gradient(90deg,#2ecc71,#27ae60);"></div></div>
+        <div class="val-labels"><span class="val-low">저 1.3x</span><span class="val-mid">적정 2.9x</span><span class="val-high">고 4.5x</span></div>
       </div>
 
       <div class="val-item" data-metric="pcr" onclick="selectMultiple('pcr')">
-        <div class="val-header"><span class="val-name">PCR (P/OCF)</span><div style="display:flex;align-items:center;gap:8px;"><span class="val-number">25.02x</span><span class="stage-badge stage-3">3단계 적정</span></div></div>
-        <div class="val-track"><div class="val-fill" style="width:58.1%;background:linear-gradient(90deg,#c8a84b,#f0c040);"></div></div>
-        <div class="val-labels"><span class="val-low">저 10.5x</span><span class="val-mid">적정 23x</span><span class="val-high">고 35.5x</span></div>
+        <div class="val-header"><span class="val-name">PCR (P/OCF)</span><div style="display:flex;align-items:center;gap:8px;"><span class="val-number">13.83x</span><span class="stage-badge stage-2">2단계 낮음</span></div></div>
+        <div class="val-track"><div class="val-fill" style="width:23.5%;background:linear-gradient(90deg,#2ecc71,#27ae60);"></div></div>
+        <div class="val-labels"><span class="val-low">저 8.8x</span><span class="val-mid">적정 19.5x</span><span class="val-high">고 30.2x</span></div>
       </div>
 
       <div class="val-item" data-metric="evebitda" onclick="selectMultiple('evebitda')">
-        <div class="val-header"><span class="val-name">EV/EBITDA</span><div style="display:flex;align-items:center;gap:8px;"><span class="val-number">22.49x</span><span class="stage-badge stage-4">4단계 높음</span></div></div>
-        <div class="val-track"><div class="val-fill" style="width:61.3%;background:linear-gradient(90deg,#e67e22,#e74c3c);"></div></div>
-        <div class="val-labels"><span class="val-low">저 9x</span><span class="val-mid">적정 20x</span><span class="val-high">고 31x</span></div>
+        <div class="val-header"><span class="val-name">EV/EBITDA</span><div style="display:flex;align-items:center;gap:8px;"><span class="val-number">12.10x</span><span class="stage-badge stage-1">1단계 매우낮음</span></div></div>
+        <div class="val-track"><div class="val-fill" style="width:18.9%;background:linear-gradient(90deg,#2ecc71,#27ae60);"></div></div>
+        <div class="val-labels"><span class="val-low">저 8.3x</span><span class="val-mid">적정 18.4x</span><span class="val-high">고 28.5x</span></div>
       </div>
     </div>
 
     <div class="card">
-      <div class="card-title"><span id="multipleCompareTitle">PER 비교 — DHR · A (RVTY는 축 밖)</span></div>
+      <div class="card-title"><span id="multipleCompareTitle">PER 비교 — KO · MDLZ · PG</span></div>
       <div class="chart-wrap" style="height:230px;">
         <canvas id="multipleChart"></canvas>
       </div>
@@ -648,62 +659,67 @@
   <div class="scorecard">
     <div class="scorecard-top">
       <div>
-        <div class="scorecard-score"><span class="num">56.1</span><span class="denom">/100</span></div>
+        <div class="scorecard-score"><span class="num">55.7</span><span class="denom">/100</span></div>
       </div>
       <div class="scorecard-verdict">
         <div><span class="scorecard-grade grade-mixed">재무 기본점수 · 보통 구간</span></div>
-        <div class="scorecard-noOpp-inline">기술 80 · 평균 68.1</div>
+        <div class="scorecard-noOpp-inline">기술 25 · 평균 40.4</div>
       </div>
     </div>
-    <div class="scorecard-bar"><div class="scorecard-bar-fill" style="width:56.1%;"></div></div>
+    <div class="scorecard-bar"><div class="scorecard-bar-fill" style="width:55.7%;"></div></div>
     <div class="scorecard-subtitle">3축(밸류에이션·재무건전성·성장·수익성) 종합, 100점 만점 환산 · 모델 v1.0.1 산식 동결 2026-08-25</div>
 
     <div class="scorecard-subscores">
       <div class="subscore-box">
-        <div class="subscore-label"><span>밸류에이션</span><span class="subscore-max">22.3/33</span></div>
-        <div class="subscore-val">22.3</div>
-        <div class="subscore-bar"><div class="subscore-bar-fill" style="width:67.6%;"></div></div>
-        <div class="subscore-desc">PER 34.38x 3단계·PBR 4.24x 2단계·목표주가 2단계(애널리스트 27명 컨센서스 +5.8%) — 종합 2.3/5단계(낮을수록 저평가) <span style="color:var(--gold);font-weight:700;">낮음</span> <span style="color:var(--text3);">(2026-09-11 모델 스냅샷 기준)</span></div>
+        <div class="subscore-label"><span>밸류에이션</span><span class="subscore-max">27.2/33</span></div>
+        <div class="subscore-val">27.2</div>
+        <div class="subscore-bar"><div class="subscore-bar-fill" style="width:82.4%;"></div></div>
+        <div class="subscore-desc">PER 22.72x 2단계·PBR 9.13x 1단계·목표주가 2단계(애널리스트 22명 컨센서스 +13.7%) — 종합 1.7/5단계(낮을수록 저평가) <span style="color:var(--gold);font-weight:700;">낮음</span> <span style="color:var(--text3);">(2026-09-11 모델 스냅샷 기준)</span></div>
       </div>
       <div class="subscore-box">
-        <div class="subscore-label"><span>재무건전성</span><span class="subscore-max">18.5/33</span></div>
-        <div class="subscore-val">18.5</div>
-        <div class="subscore-bar"><div class="subscore-bar-fill" style="width:56.1%;"></div></div>
-        <div class="subscore-desc">유동비율 189.0%·당좌비율 153.3%·차입금의존도 38.7%·이자보상배율 5.50배·부채비율 106.6% — 5개 비율 합계 14/25점</div>
+        <div class="subscore-label"><span>재무건전성</span><span class="subscore-max">13.2/33</span></div>
+        <div class="subscore-val">13.2</div>
+        <div class="subscore-bar"><div class="subscore-bar-fill" style="width:40.0%;"></div></div>
+        <div class="subscore-desc">유동비율 85.3%·당좌비율 67.5%·차입금의존도 44.0%·이자보상배율 10.30배·부채비율 425.6% — 5개 비율 합계 10/25점</div>
       </div>
       <div class="subscore-box">
         <div class="subscore-label"><span>성장·수익성</span><span class="subscore-max">15.3/34</span></div>
         <div class="subscore-val">15.3</div>
         <div class="subscore-bar"><div class="subscore-bar-fill" style="width:45.0%;"></div></div>
-        <div class="subscore-desc">매출 CAGR -0.3%·영업이익 CAGR -2.6%·영업이익률(OPM) 17.4%·순이익률 15.0% — 4개 지표 합계 9/20점</div>
+        <div class="subscore-desc">매출 CAGR 2.8%·영업이익 CAGR -0.0%·영업이익률(OPM) 12.2%·순이익률 8.8% — 4개 지표 합계 9/20점</div>
       </div>
     </div>
 
     <div class="scorecard-noflags">ℹ️ 데이터 상태 · 주요 재무지표가 기준 커버리지를 충족합니다</div>
 
     <div class="scorecard-footer">
-      <span>재무 데이터 기준일 2025-12-31 · 기준일로부터 8.3개월 경과</span>
+      <span>재무 데이터 기준일 2025-12-27 · 기준일로부터 8.5개월 경과</span>
       <span class="scorecard-disclaimer">서술적 스냅샷 지표 - 지금 저평가·재무건전성·성장성이 어느 수준인지 요약할 뿐이며, 향후 수익률과의 상관관계는 검증하지 않았습니다. 기술점수와의 단순평균도 순위·매수판단용이 아닙니다.</span>
     </div>
   </div>
 
   <div class="card">
+    <div style="font-size:11px;color:var(--text3);line-height:1.6;">⚠️ 위 스코어카드의 배수는 <strong style="color:var(--text2);">10-K 연간 수치</strong>로 계산된 별도 모델값이라 이 탭 위쪽 게이지와 숫자가 다르다 — PER 22.72x는 FY2025 EPS $6.00 기준(게이지는 TTM $7.63 기준 17.87x), PBR 9.13x와 재무비율들도 FY2025 결산 대차대조표 기준(게이지·#fund는 26Q2 기준)이다. 같은 회사를 다른 창으로 본 것이며 어느 쪽도 틀린 값이 아니다. 또 이 모델의 <strong style="color:var(--text2);">종합 1.7/5단계</strong>는 PER·PBR·목표주가 셋만 쓰는 계산이고, 아래 종합판단의 1.78/5단계는 다섯 배수를 쓰는 별개 계산이다 — 값이 가까운 것은 우연이다.</div>
+  </div>
+
+  <div class="card">
     <div class="card-title">종합 밸류에이션</div>
-    <div class="verdict-summary-head">종합 판단 <span class="summary-asof" style="font-size:11px;font-weight:400;color:var(--text3);">(2026.09.11 분석 기준)</span> <span class="tag mixed">고평가~적정 — 이익·매출 배수는 피어와 같고, 자산을 분모로 쓰는 두 지표만 비싸다</span></div>
-    <div class="verdict-summary-body">PER 3 · PBR 4(가중 0.5) · PSR 3 · PCR 3 · EV/EBITDA 4를 가중평균하면 15.0÷4.5 = 3.33/5단계다. 이익과 매출로 재면 PEP은 피어와 사실상 같은 값이고, 비싸게 나오는 둘(PBR·EV/EBITDA)은 모두 분모에 인수 회계가 끼어 있는 지표다. 즉 이 카드가 읽은 프리미엄은 사업의 프리미엄이라기보다 인수로 커진 회사라는 사실의 반영에 가깝다.</div>
-    <div class="verdict-summary-risk">⚠️ 다만 그 인수는 실제로 치른 돈이다 — Clario 한 건에 $8.9B을 쓰면서 순차입금/EBITDA가 반년 만에 2.81배에서 3.47배로 올랐다(상세 #fund).</div>
+    <div class="verdict-summary-head">종합 판단 <span class="summary-asof" style="font-size:11px;font-weight:400;color:var(--text3);">(2026.09.11 분석 기준)</span> <span class="tag positive">저평가 — 다섯 중 넷이 피어 아래, 비싼 하나는 자사주로 축소된 장부가의 영향을 크게 받는다</span></div>
+    <div class="verdict-summary-body">PER 2 · PBR 4(가중 0.5) · PSR 1 · PCR 2 · EV/EBITDA 1을 가중평균하면 8.0÷4.5 = 1.78/5단계다. PEP는 PER·PSR·PCR·EV/EBITDA 넷에서 KO·MDLZ·PG 셋보다 낮고, 앵커 위로 올라온 것은 PBR 하나뿐이다. 그 분모는 자사주 $42.15B을 차감한 자기자본 $22.10B이다(상세 #fund). 이익·매출·현금흐름 어느 분모로 재도 같은 방향이 나온다는 점이 이 판단의 근거다.</div>
+    <div class="verdict-summary-risk">⚠️ 다만 싼 데에는 이유가 있다 — 북미 식품 유기성장 -2%(상세 #fund), 기술점수 25/100, 현재가가 52주 최저 $133.73보다 1.9% 위일 뿐이다(상세 #tech). 배수가 낮은 것과 주가가 오를 근거가 있는 것은 다른 문제다.</div>
   </div>
 </div>
 
 <div id="news" class="section">
+
   <div class="section-title">시계열 주요 뉴스 (2025.09 ~ 2026.09)</div>
 
   <div class="card">
     <div class="card-title">종합 해석</div>
-    <div class="verdict-summary-head">지배적 내러티브 · 실적 발표 두 번이 1년의 방향을 통째로 뒤집었다<span class="tag positive">7/23 하루 +8.71% · 1월 고점→5월 저점 -31.5%</span></div>
-    <div class="verdict-summary-body">1월 22일 $639.45에서 5월 15일 $438.34까지 -31.5% 내려간 구간에는 2월 12일 Clario 인수 발표(-3.29%)와 4월 23일 1분기 유기성장 1%(-9.20%)가 나란히 있다. 저점에서 지금까지 되돌린 $171.48 가운데 $45.86, 곧 26.7%가 7월 23일 2분기 실적 하루에 나왔다. 고점은 8월 25일 장중 $647.00이다.</div>
-    <div class="verdict-summary-counter">⚠️ 반대 신호 — 되돌림을 떠받치는 실적이 아직 2분기 하나뿐이다. 9월에 UBS가 목표주가를 $540에서 $730으로 35% 올렸는데도 당일 주가는 +0.44%에 그쳤다.</div>
-    <div class="verdict-summary-next">🔍 다음 확인 포인트 — 10월 28일(예상) Q3 실적에서 유기성장률이 2분기의 5%를 지키는지.</div>
+    <div class="verdict-summary-head">지배적 내러티브 · Elliott 이후의 상승분을 반납하고 보도 전 수준 아래로 내려왔다<span class="tag negative">2월 고점 대비 -22.0% · Elliott 보도일보다 -9.3%</span></div>
+    <div class="verdict-summary-body">2025년 9월 2일 Elliott의 $4B 지분 보도 뒤 12월 합의, 2026년 2월 실적·$10B 자사주 승인이 이어졌고 주가는 2월 12일 장중 $171.48로 52주 최고를 찍었다. 이후 7월 23일 장중 $133.73까지 고점 대비 22.0% 내려왔는데, 그 사이 7월 실적에서 북미 식품 역성장이 확인됐다. 현재가 $136.32는 Elliott 보도 당일 종가 $150.28보다 9.3% 낮다.</div>
+    <div class="verdict-summary-counter">⚠️ 반대 신호 — 되돌림이 실적 붕괴에서 온 것은 아니다. 2분기 매출은 +6.4%였고 역성장한 세그먼트는 북미 식품 하나뿐이다(상세 #fund).</div>
+    <div class="verdict-summary-next">🔍 다음 확인 포인트 — 10월 8일 3분기 실적에서 북미 식품 유기성장이 -2%에서 돌아서는지.</div>
   </div>
 
   <div style="display:flex;gap:14px;flex-wrap:wrap;margin-bottom:16px;font-size:11px;color:var(--text2);">
@@ -716,83 +732,98 @@
     <div class="timeline">
       <div class="tl-item">
         <div class="tl-dot neutral"></div>
-        <div class="tl-date">2026년 9월 9일 — UBS 투자의견 Buy 상향<span class="tl-reaction flat">+0.44%(9/8→9/9 종가)</span></div>
-        <div class="tl-title">목표주가를 $540에서 $730으로 35% 올렸는데 주가는 0.44% 움직였다</div>
-        <div class="tl-desc">9월 3일 CLSA의 신규 커버리지(Outperform·목표 $748)에도 +1.63%에 그쳤다. 두 상향 모두 2027년 회복을 근거로 든다.</div>
-        <a class="tl-source" href="https://finance.yahoo.com/markets/stocks/articles/ubs-sets-730-target-stock-220700986.html" target="_blank" rel="noopener">관련 뉴스 보기 (TheStreet / Yahoo Finance) →</a>
-      </div>
-      <div class="tl-item">
-        <div class="tl-dot green"></div>
-        <div class="tl-date">2026년 7월 23일(장 시작 전) 발표 — Q2 2026 실적과 가이던스 상향<span class="tl-reaction up">+8.71%(7/22→7/23 종가)</span></div>
-        <div class="tl-title">매출 $11.99B(+10.5%)·조정EPS $6.03으로 가이던스를 $0.30 웃돌고 연간 전망을 올렸다</div>
-        <div class="tl-desc">유기성장이 1분기 1%에서 5%로 올라섰고 조정 영업이익률도 22.8%로 90bp 개선됐다. 거래량은 평소의 3.1배였다.</div>
-        <a class="tl-source" href="https://www.sec.gov/Archives/edgar/data/97745/000009774526000138/pep-20260723.htm" target="_blank" rel="noopener">원문 보기 (SEC 8-K 실적발표) →</a>
+        <div class="tl-date">2026년 9월 — 7월 저점 수준으로 되밀렸다<span class="tl-reaction down">-2.86%(8/31→9/11 종가)</span></div>
+        <div class="tl-title">9월 11일 종가 $136.32는 7월 저점 이후 가장 낮은 종가다</div>
+        <div class="tl-desc">하락분 $4.02 중 $1.48은 9월 4일 배당락분이고 나머지가 -1.8%다. 이 카드는 해당 기간의 개별 공시를 찾지 못했다.</div>
+        <a class="tl-source" href="https://stockanalysis.com/stocks/pep/dividend/" target="_blank" rel="noopener">배당 이력 보기 (StockAnalysis.com) →</a>
       </div>
       <div class="tl-item">
         <div class="tl-dot red"></div>
-        <div class="tl-date">2026년 4월 23일(장 시작 전) 발표 — Q1 2026 실적<span class="tl-reaction down">-9.20%(4/22→4/23 종가)</span></div>
-        <div class="tl-title">매출 $11.01B이 컨센서스 $10.85B을 넘겼는데도 하루 -9.20%가 나왔다</div>
-        <div class="tl-desc">조정EPS $5.44도 $0.20 웃돌았지만 유기성장은 1%였다. 거래량은 평소의 3.1배였고, 5월 15일까지 -6.1%가 더 빠졌다.</div>
-        <a class="tl-source" href="https://ir.thermofisher.com/investors/news-events/news/news-details/2026/Thermo-Fisher-Scientific-Reports-First-Quarter-2026-Results/default.aspx" target="_blank" rel="noopener">원문 보기 (Thermo Fisher IR) →</a>
-      </div>
-      <div class="tl-item">
-        <div class="tl-dot green"></div>
-        <div class="tl-date">2026년 3월 24일 — Clario 인수 완료<span class="tl-reaction up">+2.55%(3/23→3/24 종가)</span></div>
-        <div class="tl-title">임상시험 데이터 회사 Clario를 현금 $8.875B에 인수 완료했다</div>
-        <div class="tl-desc">무형자산 $3.80B·영업권 $5.93B이 새로 붙었고, 2027년 1월 $125M과 최대 $400M 어닝아웃이 남아 있다.</div>
-        <a class="tl-source" href="https://ir.thermofisher.com/investors/news-events/news/news-details/2026/Thermo-Fisher-Scientific-Completes-Acquisition-of-Clario-Holdings-Inc-/default.aspx" target="_blank" rel="noopener">원문 보기 (Thermo Fisher IR) →</a>
+        <div class="tl-date">2026년 7월 23일 — 52주 최저<span class="tl-reaction down">$133.73(장중 52주 최저)</span></div>
+        <div class="tl-title">2월 고점 $171.48에서 5개월 만에 -22.0% 내려온 자리다</div>
+        <div class="tl-desc">7월 실적과 잇단 목표주가 하향이 겹친 2주 뒤였고, 프리토레이 북미 물량 부진이 공통 근거였다.</div>
+        <a class="tl-source" href="https://www.tradingnews.com/news/pepsico-frito-lays-flat-volume-and-worse-than-anticipated" target="_blank" rel="noopener">관련 뉴스 보기 (Trading News) →</a>
       </div>
       <div class="tl-item">
         <div class="tl-dot red"></div>
-        <div class="tl-date">2026년 2월 12일 — Clario 인수 계약 발표<span class="tl-reaction down">-3.29%(2/11→2/12 종가)</span></div>
-        <div class="tl-title">발표 당일 -3.29%에 거래량은 평소의 2.6배였다</div>
-        <div class="tl-desc">직전 이틀도 각각 -1.27%·-2.34%로 밀려 사흘 합계 -6.8%다. 완료일인 3월 24일에는 +2.55%로 반대 반응이 나왔다.</div>
-        <a class="tl-source" href="https://www.sec.gov/Archives/edgar/data/97745/000114036126005014/ef20065513_8k.htm" target="_blank" rel="noopener">원문 보기 (SEC 8-K 계약 공시) →</a>
+        <div class="tl-date">2026년 7월 10일 — Citi 투자의견 Neutral 강등<span class="tl-reaction down">-0.35%(7/9→7/10)</span></div>
+        <div class="tl-title">목표주가를 $170에서 $145로 내리며 북미 부진에 회복 조짐이 없다고 했다</div>
+        <div class="tl-desc">가격 인하·신제품·진열 확대에도 북미가 살아나지 않는다는 것이 강등 사유였다. 당일 주가 반응은 작았다.</div>
+        <a class="tl-source" href="https://www.investing.com/news/stock-market-news/citi-downgrades-pepsico-to-neutral-as-north-america-weakness-shows-no-signs-of-aba-4786209" target="_blank" rel="noopener">관련 뉴스 보기 (Investing.com) →</a>
       </div>
       <div class="tl-item">
         <div class="tl-dot red"></div>
-        <div class="tl-date">2026년 1월 29일(장 시작 전) 발표 — FY2025 실적<span class="tl-reaction down">-2.61%(1/28→1/29 종가)</span></div>
-        <div class="tl-title">연간 매출 $44.56B(+3.9%)·GAAP EPS $17.74를 발표했다</div>
-        <div class="tl-desc">발표 당일 -2.61%, 다음 날까지 이틀간 -4.8%다. 1월 22일 고점 $639.45에서 1월 30일까지로 보면 -9.5%다.</div>
-        <a class="tl-source" href="https://www.sec.gov/Archives/edgar/data/97745/000009774526000012/pep-20260129.htm" target="_blank" rel="noopener">원문 보기 (SEC 8-K 실적발표) →</a>
+        <div class="tl-date">2026년 7월 9일(장 시작 전) 발표 — Q2 2026 실적<span class="tl-reaction down">-3.26%(7/8→7/9)</span></div>
+        <div class="tl-title">매출 $24.18B(+6.4%)·희석EPS $2.18인데도 하루 -3.26%가 나왔다</div>
+        <div class="tl-desc">유기성장이 2.4%에 그쳤고 연간 가이던스도 2~4%로 유지만 했다. 거래량은 평소의 2.6배였다.</div>
+        <a class="tl-source" href="https://www.sec.gov/Archives/edgar/data/77476/000007747626000037/q220268-kxexhibit991.htm" target="_blank" rel="noopener">원문 보기 (SEC 8-K 실적발표) →</a>
       </div>
       <div class="tl-item">
         <div class="tl-dot green"></div>
-        <div class="tl-date">2025년 10월 22일(장 시작 전) 발표 — Q3 2025 실적<span class="tl-reaction up">+1.65%(10/21→10/22 종가)</span></div>
-        <div class="tl-title">3분기 매출 $11.12B으로 전년 동기 대비 +4.9% 늘었다</div>
-        <div class="tl-desc">9월 1일 편입된 Solventum 여과 사업이 분기 종료일 9월 27일까지 27일치만 반영된 분기다.</div>
-        <a class="tl-source" href="https://www.sec.gov/Archives/edgar/data/97745/000009774525000150/pep-20251022.htm" target="_blank" rel="noopener">원문 보기 (SEC 8-K 실적발표) →</a>
+        <div class="tl-date">2026년 4월 16일(장 시작 전) 발표 — Q1 2026 실적<span class="tl-reaction up">+2.28%(4/15→4/16)</span></div>
+        <div class="tl-title">매출 $19.44B(+8.5%)·영업이익률 16.5%로 직전 분기 12.1%에서 올라섰다</div>
+        <div class="tl-desc">12월 합의에서 약속한 마진 개선이 처음 숫자로 확인된 분기다. 주가는 이 뒤 5월부터 다시 밀렸다.</div>
+        <a class="tl-source" href="https://www.sec.gov/Archives/edgar/data/77476/000007747626000019/q120268-kxexhibit991.htm" target="_blank" rel="noopener">원문 보기 (SEC 8-K 실적발표) →</a>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot green"></div>
+        <div class="tl-date">2026년 2월 3일(장 시작 전) 발표 — FY2025 실적 · $10B 자사주 · 배당 4% 인상<span class="tl-reaction up">+4.93%(2/2→2/3)</span></div>
+        <div class="tl-title">52주 중 가장 큰 하루 상승이고, 7거래일 뒤 장중 $171.48로 52주 최고를 찍었다</div>
+        <div class="tl-desc">$10B 자사주 프로그램(2030년 2월 만료)과 연 배당 $5.69→$5.92 인상을 같은 날 발표했다.</div>
+        <a class="tl-source" href="https://www.sec.gov/Archives/edgar/data/77476/000007747626000009/q420258-kxexhibit991.htm" target="_blank" rel="noopener">원문 보기 (SEC 8-K 실적발표) →</a>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot green"></div>
+        <div class="tl-date">2025년 12월 10일 — JPMorgan 투자의견 상향<span class="tl-reaction up">+3.50%(12/9→12/10)</span></div>
+        <div class="tl-title">Neutral에서 Overweight으로 올리고 목표주가를 $151에서 $164로 높였다</div>
+        <div class="tl-desc">회사 발표 자체보다 이틀 뒤 이 상향에 주가가 더 크게 움직였다. 거래량은 12월 중 가장 많았다.</div>
+        <a class="tl-source" href="https://www.cnbc.com/2025/12/10/buy-pepsico-heading-into-2026-as-innovation-drives-earnings-says-jpmorgan.html" target="_blank" rel="noopener">관련 뉴스 보기 (CNBC) →</a>
       </div>
       <div class="tl-item">
         <div class="tl-dot neutral"></div>
-        <div class="tl-date">2025년 9월 1일 — Solventum 여과·분리 사업 인수 완료<span class="tl-reaction flat">-1.05%(8/29→9/2 종가)</span></div>
-        <div class="tl-title">생명과학솔루션 세그먼트에 여과·분리 사업을 현금 $3.94B에 붙였다</div>
-        <div class="tl-desc">무형자산 $1.56B·영업권 $2.07B이 계상됐다. 9월 1일이 휴장이라 반응은 다음 거래일에 -1.05%로 나왔다.</div>
-        <a class="tl-source" href="https://www.sec.gov/Archives/edgar/data/97745/000009774525000111/pep-20250901.htm" target="_blank" rel="noopener">원문 보기 (SEC 8-K 공시) →</a>
+        <div class="tl-date">2025년 12월 8일(장 마감 후) — Elliott 합의 · 2026년 예비 가이던스<span class="tl-reaction flat">-0.68%(12/8→12/9)</span></div>
+        <div class="tl-title">3년간 최소 100bp 마진 개선과 공장 폐쇄·SKU 정리를 내놨지만 이튿날 -0.68%에 그쳤다</div>
+        <div class="tl-desc">2026년 목표로 유기성장 2~4%·핵심EPS 5~7%·FCF 전환율 80% 이상을 함께 제시했다.</div>
+        <a class="tl-source" href="https://www.sec.gov/Archives/edgar/data/77476/000007747625000059/exhibit991-pepsicopressrel.htm" target="_blank" rel="noopener">원문 보기 (SEC 8-K 공시) →</a>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot green"></div>
+        <div class="tl-date">2025년 10월 9일(장 시작 전) 발표 — Q3 2025 실적<span class="tl-reaction up">+4.23%(10/8→10/9)</span></div>
+        <div class="tl-title">이틀 연속 올라 +8.10%로, 52주 중 가장 강한 이틀 구간이었다</div>
+        <div class="tl-desc">직전 분기 브랜드 손상차손으로 영업이익률이 7.9%까지 떨어졌다가 14.9%로 돌아온 분기다.</div>
+        <a class="tl-source" href="https://www.sec.gov/Archives/edgar/data/77476/000007747625000055/pep-20251003.htm" target="_blank" rel="noopener">원문 보기 (SEC 8-K 실적발표) →</a>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot green"></div>
+        <div class="tl-date">2025년 9월 2일 — Elliott $4B 지분 보도<span class="tl-reaction up">+1.10%(8/29→9/2)</span></div>
+        <div class="tl-title">장중 $157.80까지 +6.2% 뛰었다가 종가로는 +1.10%만 남겼다</div>
+        <div class="tl-desc">포트폴리오·보틀링 사업 전면 재검토를 요구했고, 거래량은 평소의 2.4배였다.</div>
+        <a class="tl-source" href="https://www.cnbc.com/2025/09/02/pepsi-shares-jump-4percent-after-wsj-reports-elliott-planning-major-activist-campaign.html" target="_blank" rel="noopener">관련 뉴스 보기 (CNBC) →</a>
       </div>
     </div>
   </div>
 </div>
 
 <div id="invest" class="section">
+
   <div class="section-title">2026년 핵심 투자 포인트</div>
 
   <div class="bull-bear">
     <div class="bb-box">
       <div class="bb-title bb-bull">🐂 Bull 요인</div>
-      <div class="bb-item"><span class="bb-icon" style="color:var(--bull);">▲</span><span><strong>2분기 유기성장 5%:</strong> 1분기 1%에서 한 분기 만에 회복했다(상세 #fund).</span></div>
-      <div class="bb-item"><span class="bb-icon" style="color:var(--bull);">▲</span><span><strong>가이던스 상향:</strong> 매출 $47.4~48.1B·조정EPS $24.93~25.33으로 올렸다(상세 #news).</span></div>
-      <div class="bb-item"><span class="bb-icon" style="color:var(--bull);">▲</span><span><strong>기술점수 80/100 적격:</strong> 52주 레인지 82.4% 지점, 4개 이평선 중 3개 상회(상세 #tech).</span></div>
-      <div class="bb-item"><span class="bb-icon" style="color:var(--bull);">▲</span><span><strong>PSR 4.87x:</strong> 피어 셋 중 가장 낮고 앵커 5.3x보다 8.1% 아래다(상세 #valuation).</span></div>
-      <div class="bb-item"><span class="bb-icon" style="color:var(--bull);">▲</span><span><strong>자사주매입 $4.00B:</strong> 상반기에 690만 주를 사들였고 배당의 12배다(상세 #fund).</span></div>
+      <div class="bb-item"><span class="bb-icon" style="color:var(--bull);">▲</span><span><strong>배수 넷이 피어 최저:</strong> PER·PSR·PCR·EV/EBITDA가 KO·MDLZ·PG 셋 모두보다 낮다(상세 #valuation).</span></div>
+      <div class="bb-item"><span class="bb-icon" style="color:var(--bull);">▲</span><span><strong>배당수익률 4.34%:</strong> 2월에 연 $5.69에서 $5.92로 4% 올렸다(상세 #fund).</span></div>
+      <div class="bb-item"><span class="bb-icon" style="color:var(--bull);">▲</span><span><strong>나머지 다섯 세그먼트 성장:</strong> 북미 음료 포함 +6.6~+15.4%로 모두 늘었다(상세 #fund).</span></div>
+      <div class="bb-item"><span class="bb-icon" style="color:var(--bull);">▲</span><span><strong>이익률 회복 세 분기:</strong> 12.1% → 16.5% → 16.6%로 올라왔다(상세 #fund).</span></div>
+      <div class="bb-item"><span class="bb-icon" style="color:var(--bull);">▲</span><span><strong>자사주 한도 $9.52B:</strong> 2월 승인한 $10B 중 대부분이 남아 있다(상세 #fund).</span></div>
     </div>
     <div class="bb-box">
       <div class="bb-title bb-bear">🐻 Bear 요인</div>
-      <div class="bb-item"><span class="bb-icon" style="color:var(--bear);">▼</span><span><strong>연간 유기성장 약 4%:</strong> 회사 가이던스 기준으로도 한 자릿수 초반이다(상세 #fund).</span></div>
-      <div class="bb-item"><span class="bb-icon" style="color:var(--bear);">▼</span><span><strong>순차입금/EBITDA 3.47배:</strong> Clario 대금을 치르며 반년 만에 2.81배에서 올라왔다(상세 #fund).</span></div>
-      <div class="bb-item"><span class="bb-icon" style="color:var(--bear);">▼</span><span><strong>PBR 4.28x·EV/EBITDA 22.49x:</strong> 다섯 중 둘이 앵커 위 4단계다(상세 #valuation).</span></div>
-      <div class="bb-item"><span class="bb-icon" style="color:var(--bear);">▼</span><span><strong>자사주매입 한도 $1.0B:</strong> 승인액 $5.0B 중 상반기에 $4.0B을 썼다(상세 #fund).</span></div>
-      <div class="bb-item"><span class="bb-icon" style="color:var(--bear);">▼</span><span><strong>되돌림 근거가 한 분기:</strong> 유기성장 5%를 확인해 준 분기가 아직 하나뿐이다(상세 #news).</span></div>
+      <div class="bb-item"><span class="bb-icon" style="color:var(--bear);">▼</span><span><strong>북미 식품 역성장:</strong> 2분기 매출 -1.7%, 유기 -2%로 여섯 중 유일하게 줄었다(상세 #fund).</span></div>
+      <div class="bb-item"><span class="bb-icon" style="color:var(--bear);">▼</span><span><strong>기술점수 25/100 부적격:</strong> 4개 이평선을 모두 하회하고 추세이탈 플래그가 둘이다(상세 #tech).</span></div>
+      <div class="bb-item"><span class="bb-icon" style="color:var(--bear);">▼</span><span><strong>환원이 FCF의 94.7%:</strong> TTM 환원 $8.79B 대 잉여현금흐름 $9.28B이다(상세 #fund).</span></div>
+      <div class="bb-item"><span class="bb-icon" style="color:var(--bear);">▼</span><span><strong>유동비율 0.93배:</strong> 단기차입 $10.60B 중 $6.1B이 기업어음이다(상세 #fund).</span></div>
+      <div class="bb-item"><span class="bb-icon" style="color:var(--bear);">▼</span><span><strong>애널리스트 24명 중 보유 16명:</strong> 매수는 7명, 컨센서스 라벨은 Hold다.</span></div>
     </div>
   </div>
 
@@ -800,19 +831,19 @@
     <div class="card-title">목표가 밴드 — 시나리오별 공정가치 vs 현재가 · 애널리스트 목표가</div>
     <div style="position:relative;height:70px;margin:28px 6px 6px;">
       <div style="position:absolute;top:28px;left:0;right:0;height:10px;border-radius:5px;overflow:hidden;display:flex;">
-        <div style="width:29.0%;height:100%;background:rgba(46,204,113,0.45);"></div>
-        <div style="width:45.2%;height:100%;background:rgba(240,192,64,0.5);"></div>
-        <div style="width:25.8%;height:100%;background:rgba(231,76,60,0.45);"></div>
+        <div style="width:29.4%;height:100%;background:rgba(46,204,113,0.45);"></div>
+        <div style="width:41.2%;height:100%;background:rgba(240,192,64,0.5);"></div>
+        <div style="width:29.4%;height:100%;background:rgba(231,76,60,0.45);"></div>
       </div>
-      <div style="position:absolute;top:10px;left:60.1%;width:2px;height:28px;background:var(--gold);border-radius:1px;"></div>
-      <div style="position:absolute;top:-6px;left:60.1%;transform:translateX(-50%);font-size:11px;font-weight:800;color:var(--gold);white-space:nowrap;">현재 $609.82</div>
-      <div style="position:absolute;top:22px;left:72.4%;width:2px;height:24px;background:var(--gold);border-radius:1px;"></div>
-      <div style="position:absolute;top:48px;left:72.4%;transform:translateX(-50%);font-size:10px;font-weight:700;color:var(--gold);white-space:nowrap;">▲ 목표 $645.15(+5.8%)</div>
+      <div style="position:absolute;top:10px;left:33.7%;width:2px;height:28px;background:var(--gold);border-radius:1px;"></div>
+      <div style="position:absolute;top:-6px;left:33.7%;transform:translateX(-50%);font-size:11px;font-weight:800;color:var(--gold);white-space:nowrap;">현재 $136.32</div>
+      <div style="position:absolute;top:22px;left:62.5%;width:2px;height:24px;background:var(--gold);border-radius:1px;"></div>
+      <div style="position:absolute;top:48px;left:62.5%;transform:translateX(-50%);font-size:10px;font-weight:700;color:var(--gold);white-space:nowrap;">▲ 목표 $155.00(+13.7%)</div>
     </div>
     <div style="display:flex;justify-content:space-between;font-size:10.5px;color:var(--text3);margin-top:4px;">
-      <span style="color:var(--green);">Bear $436.63~520.24 (PER 23.5~28x)</span>
-      <span>Base $520.24~650.30 (PER 28~35x)</span>
-      <span style="color:var(--red);">Bull $650.30~724.62 (PER 35~39x)</span>
+      <span style="color:var(--green);">Bear $114.45~133.53 (PER 15~17.5x)</span>
+      <span>Base $133.53~160.23 (PER 17.5~21x)</span>
+      <span style="color:var(--red);">Bull $160.23~179.31 (PER 21~23.5x)</span>
     </div>
 
     <div class="detail-toggle collapsed" onclick="toggleCollapsible(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleCollapsible(this);}" role="button" tabindex="0" aria-expanded="false" aria-controls="investScenarioDetailBody">
@@ -821,37 +852,37 @@
     </div>
     <div id="investScenarioDetailBody" class="collapsible-body collapsed" aria-hidden="true">
       <div style="display:flex;flex-direction:column;gap:8px;margin-top:10px;font-size:11.5px;color:var(--text2);line-height:1.6;">
-        <div style="margin-bottom:2px;">세 구간 모두 #valuation과 같은 기준(TTM GAAP EPS $18.58)으로 계산했다. 아래 세 경계 가운데 $436.63·$520.24·$650.30은 <strong style="color:var(--text2);">최근 1년 주가가 실제로 지나간 자리 근처</strong>에 맞췄다 — 지금의 EPS로 환산하면 5월 18일 52주 최저가 23.4x, 6월 고가가 27.8x, 1월 22일 고점이 34.4x, 8월 25일 장중 최고가 34.8x다. Bull 상단 $724.62만 최근 1년 관측 범위 밖이다.</div>
-        <div><strong style="color:var(--green);">Bear $436.63~520.24</strong> — PER이 23.5~28x로 되돌아가는 경우. 하단은 5월 18일 장중 최저 $435.27 바로 위이고, 상단 $520.24는 5~6월 두 달의 고가 $515.96 바로 위다. 전제는 유기성장이 다시 1%대로 내려가 4월과 같은 재평가가 일어나는 것이다.</div>
-        <div><strong style="color:var(--text);">Base $520.24~650.30</strong> — PER이 28~35x에 머무는 경우. <strong style="color:var(--text);">현재가 $609.82는 이 구간 안(밴드의 60.1% 지점, 내재 32.82x)이다.</strong> 상단 $650.30은 1월 고점 $639.45와 8월 25일 장중 최고 $647.00 바로 위이므로, Base 안에 머무는 한 지난 1년의 최고가를 다시 시험하는 정도까지가 범위다.</div>
-        <div><strong style="color:var(--red);">Bull $650.30~724.62</strong> — PER이 35x 위로 재평가되는 경우. 최근 1년에 한 번도 닿지 않은 자리이고, 전제는 UBS가 9월 상향에서 든 근거, 곧 2027년 유기성장의 5~6%대 복귀가 실제로 확인되는 것이다. 구간 상단도 애널리스트 최고 목표가 $750보다는 낮다.</div>
-        <div style="margin-top:4px;"><strong style="color:var(--text);">컨센서스 평균 $645.15도 Base 구간(72.4% 지점)에 있다.</strong> 내재 배수가 34.72x로 Base 상단 35x 바로 아래다. 다만 이 밴드의 분모는 지금까지 번 TTM GAAP EPS $18.58이다. 같은 $645.15를 컨센서스 조정EPS로 나누면 2026년 $25.13 기준 25.7x, 2027년 $27.53 기준 23.4x가 된다. 정적 밴드는 앞으로의 이익 성장을 분모에 넣지 않으므로, 성장이 가이던스대로 나오는 경우 이 밴드는 실제보다 비싸게 읽힌다.</div>
+        <div style="margin-bottom:2px;">세 구간 모두 #valuation과 같은 기준(TTM GAAP EPS $7.63)으로 계산했다. 지금의 EPS로 환산하면 7월 23일 장중 최저가 17.53x, 현재가가 17.87x, MA200이 19.47x, 2월 12일 장중 최고가 22.47x이며, 네 경계 중 <strong style="color:var(--text2);">최근 1년에 실제로 거래된 자리는 Base 상단 $160.23 하나뿐</strong>이다(2월·3월에 8거래일). 나머지 셋은 1년 레인지 바로 밖이거나 한참 밖이다.</div>
+        <div><strong style="color:var(--green);">Bear $114.45~133.53</strong> — PER이 15~17.5x로 더 내려가는 경우. 상단 $133.53은 7월 23일 장중 최저 $133.73 바로 아래이고, 하단 $114.45는 최근 1년에 닿은 적 없는 자리다. 이 시나리오가 두는 가정 하나는 북미 식품 역성장이 3분기에도 이어지는 것이다.</div>
+        <div><strong style="color:var(--text);">Base $133.53~160.23</strong> — PER이 17.5~21x에 머무는 경우. <strong style="color:var(--text);">현재가 $136.32는 이 구간 안(밴드의 33.7% 지점, 내재 17.87x)이고 하단에서 2.1% 위에 있다.</strong> 상단 $160.23은 2월 고점과 7월 저점 사이의 중간대이며, MA200 $148.58은 이 구간 한가운데다.</div>
+        <div><strong style="color:var(--red);">Bull $160.23~179.31</strong> — PER이 21x 위로 되돌아가는 경우. 2월 12일 장중 최고 $171.48이 이 구간 안에 들어오므로, 지난 1년의 고점을 다시 시험하는 정도까지가 범위다. 구간 상단도 애널리스트 최고 목표가 $183보다 낮다.</div>
+        <div style="margin-top:4px;"><strong style="color:var(--text);">컨센서스 평균 $155.00도 Base 구간(62.5% 지점)에 있다.</strong> 내재 배수는 20.31x로 Base 상단 21x 바로 아래다. 다만 이 밴드의 분모는 지금까지 번 TTM GAAP EPS $7.63이다. 같은 $155.00을 컨센서스 추정 EPS로 나누면 2026년 $8.56 기준 18.11x, 2027년 $8.98 기준 17.26x가 된다 — 정적 밴드는 앞으로의 이익 성장을 분모에 넣지 않으므로, 성장이 컨센서스대로 나오는 경우 이 밴드는 실제보다 비싸게 읽힌다.</div>
       </div>
       <div style="margin-top:14px;padding-top:12px;border-top:1px solid var(--border);">
-        <div style="font-size:11px;color:var(--text3);margin-bottom:8px;">애널리스트 29명 분포(StockAnalysis.com, 2026-09 기준): Strong Buy 19명·Buy 4명·Hold 5명·Sell 1명·Strong Sell 0명, 컨센서스 라벨은 Buy다. 평균 목표가는 StockAnalysis.com $645.15, Yahoo Finance $645.15(27명)로 소수점까지 같고 최고 $750·최저 $520도 두 곳이 동일하다. Yahoo의 추천 평균 점수는 1.52로 매수 쪽에 가깝다.</div>
+        <div style="font-size:11px;color:var(--text3);margin-bottom:8px;">애널리스트 24명 분포(StockAnalysis.com, 2026-09 기준): Strong Buy 3명·Buy 4명·Hold 16명·Sell 0명·Strong Sell 1명, 컨센서스 라벨은 Hold다. 평균 목표가는 StockAnalysis.com $155.00, Yahoo Finance도 $155.00(22명)으로 같고 최고 $183·최저 $124도 두 곳이 동일하다. Yahoo의 추천 평균 점수는 2.67로 보유 쪽에 가깝다. 애널리스트 수만 24명과 22명으로 다르다.</div>
         <div style="height:8px;border-radius:4px;overflow:hidden;display:flex;margin-top:8px;">
-          <div style="width:79.3%;height:100%;background:var(--green);"></div>
-          <div style="width:17.2%;height:100%;background:#f0c040;"></div>
-          <div style="width:3.5%;height:100%;background:var(--red);"></div>
+          <div style="width:29.2%;height:100%;background:var(--green);"></div>
+          <div style="width:66.6%;height:100%;background:#f0c040;"></div>
+          <div style="width:4.2%;height:100%;background:var(--red);"></div>
         </div>
         <div style="display:flex;justify-content:space-between;font-size:10.5px;margin-top:6px;">
-          <span style="color:var(--green);">매수 23명 (Strong Buy 19·Buy 4)</span>
-          <span style="color:#f0c040;">보유 5명</span>
+          <span style="color:var(--green);">매수 7명 (Strong Buy 3·Buy 4)</span>
+          <span style="color:#f0c040;">보유 16명</span>
           <span style="color:var(--red);">매도 1명</span>
         </div>
         <div class="yoy-footnote" style="margin-top:8px;">출처: <a href="https://stockanalysis.com/stocks/pep/forecast/" target="_blank" rel="noopener">StockAnalysis.com PEP 전망 →</a> · <a href="https://stockanalysis.com/stocks/pep/statistics/" target="_blank" rel="noopener">StockAnalysis.com PEP 통계 →</a></div>
       </div>
     </div>
-    <div style="margin-top:10px;font-size:11px;color:var(--text3);">현재가(60.1% 지점)와 컨센서스 목표가(72.4% 지점)가 모두 Base 구간에 놓인다. 마커 색은 각자가 놓인 구간을 따라 둘 다 gold로 표시했다.</div>
+    <div style="margin-top:10px;font-size:11px;color:var(--text3);">현재가(33.7% 지점)와 컨센서스 목표가(62.5% 지점)가 모두 Base 구간에 놓인다. 마커 색은 각자가 놓인 구간을 따라 둘 다 gold로 표시했다.</div>
   </div>
 
   <div class="card" style="margin-top:16px;">
     <div class="card-title">4개 분석 종합 — 한눈에 보기</div>
     <div class="zone-list">
-      <div class="zone-item"><span class="zone-label">📈 기술적 분석</span><span class="zone-val" style="color:var(--green);">기술점수 80/100 적격 — 52주 레인지 82.4% 지점, 다만 현재가가 MA5와 MA20 사이에 끼어 있다</span></div>
-      <div class="zone-item"><span class="zone-label">📊 기본적 분석</span><span class="zone-val" style="color:var(--gold);">2분기 매출 +10.5%·유기성장 5%, 순차입금 $38.49B은 EBITDA의 3.47배</span></div>
-      <div class="zone-item"><span class="zone-label">⚖️ 밸류에이션</span><span class="zone-val" style="color:var(--gold);">고평가~적정 — 가중평균 3.33/5단계, PER·PSR·PCR은 피어 범위 안이고 PBR·EV/EBITDA만 4단계</span></div>
-      <div class="zone-item"><span class="zone-label">📰 시계열 뉴스</span><span class="zone-val" style="color:var(--green);">4월 하루 -9.20%를 7월 +8.71%로 뒤집고 8월 25일 장중 $647.00까지 올라갔다</span></div>
+      <div class="zone-item"><span class="zone-label">📈 기술적 분석</span><span class="zone-val" style="color:var(--red);">기술점수 25/100 부적격 — 4개 이평선을 모두 하회하고 장기·단기 추세이탈 플래그가 둘 다 켜져 있다</span></div>
+      <div class="zone-item"><span class="zone-label">📊 기본적 분석</span><span class="zone-val" style="color:var(--gold);">2분기 매출 +6.4%·유기성장 2.4%, 역성장은 북미 식품 하나뿐이고 환원은 FCF의 94.7%다</span></div>
+      <div class="zone-item"><span class="zone-label">⚖️ 밸류에이션</span><span class="zone-val" style="color:var(--green);">저평가 — 가중평균 1.78/5단계, PER·PSR·PCR·EV/EBITDA 넷이 피어 셋 모두보다 낮다</span></div>
+      <div class="zone-item"><span class="zone-label">📰 시계열 뉴스</span><span class="zone-val" style="color:var(--red);">Elliott 보도 뒤 2월 장중 $171.48까지 올랐다가 되밀려, 보도일 종가보다 9.3% 아래에 있다</span></div>
     </div>
   </div>
 
@@ -860,25 +891,25 @@
     <div class="grid-3">
       <div class="stat-box">
         <div class="stat-label">투자의견</div>
-        <div class="stat-value" style="color:var(--accent2);font-size:19px;">Buy (매수 23/29)</div>
-        <div class="stat-sub">애널리스트 29명 분포(StockAnalysis.com)</div>
+        <div class="stat-value" style="color:var(--accent2);font-size:19px;">Hold (보유 16/24)</div>
+        <div class="stat-sub">애널리스트 24명 분포(StockAnalysis.com)</div>
       </div>
       <div class="stat-box">
         <div class="stat-label">평균 목표주가</div>
-        <div class="stat-value gold" style="font-size:19px;">$645.15</div>
-        <div class="stat-sub">+5.8%</div>
+        <div class="stat-value gold" style="font-size:19px;">$155.00</div>
+        <div class="stat-sub">+13.7%</div>
       </div>
       <div class="stat-box">
         <div class="stat-label">다음 실적</div>
-        <div class="stat-value gold" style="font-size:19px;">2026.10.28(예상)</div>
-        <div class="stat-sub">2026 Q3</div>
+        <div class="stat-value gold" style="font-size:19px;">2026.10.08(확정)</div>
+        <div class="stat-sub">2026 Q3 · 장 시작 전</div>
       </div>
     </div>
     <div class="stat-box" style="margin-top:12px;">
       <div class="stat-label">결론</div>
       <div style="display:flex;flex-direction:column;gap:6px;margin-top:6px;">
-        <div style="font-size:13px;color:var(--text);line-height:1.6;"><strong style="color:var(--accent2);">1.</strong>&nbsp; PER·PSR·PCR은 생명과학 도구 피어 셋이 만든 범위 안에 들어 있고 비싸게 나오는 나머지 둘은 분모에 인수 회계가 끼어 있는 지표라(상세 #valuation), 가중평균 3.33/5단계는 적정에서 반 단계 비싼 정도지만,</div>
-        <div style="font-size:13px;color:var(--text);line-height:1.6;"><strong style="color:var(--accent2);">2.</strong>&nbsp; 그 결론을 떠받치는 실적이 아직 7월의 한 분기뿐이고 4월에는 같은 회사가 유기성장 1%로 하루 -9.20%를 맞았다 — 10월 28일 3분기에서 5%가 유지되는지가 이 카드의 판단이 그대로 서는지를 가른다.</div>
+        <div style="font-size:13px;color:var(--text);line-height:1.6;"><strong style="color:var(--accent2);">1.</strong>&nbsp; 이익·매출·현금흐름 어느 분모로 재도 PEP가 KO·MDLZ·PG보다 싸고 가중평균 1.78/5단계는 저평가 구간이지만(상세 #valuation),</div>
+        <div style="font-size:13px;color:var(--text);line-height:1.6;"><strong style="color:var(--accent2);">2.</strong>&nbsp; 그 할인과 나란히 놓인 부담이 매출의 26.3%를 차지하는 북미 식품의 역성장이다 — 10월 8일 3분기에서 이 세그먼트가 유기 -2%에서 돌아서는지가, 저평가가 회복으로 이어질지를 판단할 첫 확인사항이다.</div>
       </div>
     </div>
   </div>
@@ -1241,10 +1272,10 @@ function toggleCollapsible(header) {
 function renderFundChart() {
   const ctx = document.getElementById('pepRevChart');
   if (!ctx) return;
-  const revenue=[10.598,11.395,10.364,10.855,11.122,12.215,11.005,11.994];
-  const opinc=[1.838,2.016,1.716,1.834,1.941,2.255,1.863,2.087];
-  const opm=[17.3,17.7,16.6,16.9,17.5,18.5,16.9,17.4];
-  const y2min=14, y2max=21;
+  const revenue=[23.319,27.784,17.919,22.726,23.937,29.343,19.443,24.181];
+  const opinc=[3.872,2.250,2.583,1.789,3.569,3.557,3.213,4.023];
+  const opm=[16.6,8.1,14.4,7.9,14.9,12.1,16.5,16.6];
+  const y2min=6, y2max=19;
   new Chart(ctx,{
     data:{
       labels:["24 Q3","24 Q4","25 Q1","25 Q2","25 Q3","25 Q4","26 Q1","26 Q2"],
@@ -1270,14 +1301,14 @@ function renderFundChart() {
 function renderSegmentChart() {
   const ctx = document.getElementById('segmentPieChart');
   if (!ctx) return;
-  const total = 11994;
+  const total = 24181;
   new Chart(ctx,{
     type:'doughnut',
     data:{
-      labels:['실험실제품·바이오파마서비스','생명과학솔루션','분석기기','특수진단'],
+      labels:['북미 음료','북미 식품','EMEA','중남미 식품','국제 프랜차이즈 음료','아시아태평양 식품'],
       datasets:[{
-        data:[6652, 2355, 1799, 1188],
-        backgroundColor:['#ee3134','#f58183','#ab0e11','#f9b5b6'],
+        data:[7243, 6368, 4983, 2940, 1523, 1124],
+        backgroundColor:['#05528e','#1f99f8','#0773c7','#55b1f9','#93cefb','#03365e'],
         borderColor:'#1a1d27',
         borderWidth:2
       }]
@@ -1299,72 +1330,73 @@ function renderSegmentChart() {
 // ══════ #valuation ══════
 const MULTIPLE_DATA = {
   per: {
-    title: 'PER 비교 — DHR · A (RVTY는 축 밖)',
-    unit: 'PER', max: 40, pepValue: 32.82,
-    calcLine: '(2026.09.11 종가 기준 계산) PER = 주가($609.82) ÷ TTM GAAP 희석EPS($18.58 = FY2025 $17.74 − 25년 상반기 $8.26 + 26년 상반기 $9.10) = 32.82x · 회사 보고 누적치만 써서 분기값 재구성을 피했다',
-    verdict: 'PEP PER 32.82x는 앵커 32x보다 2.6% 높다 — 다섯 지표 중 앵커에 가장 가까운 3단계다',
-    verdictCaveat: '<strong>네 곳 모두 GAAP 기준이라 인수 무형자산 상각이 분모에서 빠지지 않았다.</strong> 그래서 인수를 많이 한 회사일수록 이 배수가 높게 나오는데, 세 피어 중 PEP가 가장 심한 쪽이 아니다 — 상각액이 EBITDA에서 차지하는 비중은 RVTY 38.5% · DHR 21.9% · PEP 15.2% · A 4.0% 순이다. <strong>RVTY 59.39x는 같은 축에 그리면 나머지 셋이 뭉개져 차트와 앵커 양쪽에서 뺐다</strong>(이익 기반이 작은 회사에 상각이 그대로 얹혀 배수가 튄 경우이고, 다른 네 지표에서는 RVTY도 정상 범위라 그대로 넣었다). PEP 자신을 회사 기준 조정 EPS로 재면 25.59x인데, 그 기준으로 피어를 다시 맞추는 작업은 하지 않았으므로 게이지에는 GAAP을 썼다.',
-    anchor: { value: '32x', formula: 'DHR 35.64x·A 28.97x 평균(32.31x) — 규모와 사업 구성이 비교 가능한 두 곳만 사용', cross: '회사가 7월에 올린 2026년 조정EPS 가이던스 $24.93~25.33으로 계산한 선행 PER은 24.1~24.5x다. 컨센서스 2027년 조정EPS $27.53 기준으로는 22.2x까지 내려간다 — 다만 이 둘은 상각을 되돌린 회사 기준이라 위 32.82x와 직접 비교할 수 없다.' },
-    secondary: { label: '조정 PER 25.59x — 비교 불가능한 보조 수치', caveat: '위 게이지·단계 판정에는 쓰지 않았다. TTM 조정 EPS $23.83으로 나눈 값이고, 그 $23.83에서는 인수 무형자산 상각 주당 $2.46(반기)이 빠져 있다. 이 카드는 그 상각을 되풀이되는 비용으로 본다(근거는 #fund의 상각 일정 카드).' },
+    title: 'PER 비교 — KO · MDLZ · PG',
+    unit: 'PER', max: 30, pepValue: 17.87,
+    calcLine: '(2026.09.11 종가 기준 계산) PER = 주가($136.32) ÷ TTM GAAP 희석EPS($7.63 = 25Q3 $1.90 + 25Q4 $1.85 + 26Q1 $1.70 + 26Q2 $2.18) = 17.87x · 25Q4는 회사가 분기로 따로 보고하지 않아 10-K 연간 $6.00에서 3분기 누계 $4.15를 뺐다',
+    verdict: 'PEP PER 17.87x는 앵커 23.8x 대비 -24.9% (앵커 2026.09.11 분석 시점 고정)로 피어 셋 중 가장 낮다 — 2단계다',
+    verdictCaveat: '<strong>PEP 쪽에는 회사가 말하는 조정·핵심 EPS를 쓰지 않았고, 네 곳 모두 같은 집계(StockAnalysis.com)의 동일 산식 값이다.</strong> PEP의 TTM 창(25Q3~26Q2)에는 25Q2의 브랜드 손상차손 $1,860M이 들어 있지 않다 — 그래서 같은 주가를 회사의 마지막 연간 EPS $6.00으로 나누면 17.87x가 아니라 22.72x가 되고, 그 22.72x는 스코어카드 모델이 쓰는 값이다(상세 #fund). 어느 쪽을 쓰든 KO 26.53x보다는 낮다. 세 피어 사이의 산포(26.53 ~ 21.93, 1.21배)는 다섯 지표 중 두 번째로 좁아 앵커가 비교적 안정적이다.',
+    anchor: { value: '23.8x', formula: 'KO 26.53x·MDLZ 22.88x·PG 21.93x 평균(23.78x)', cross: '컨센서스 추정 EPS로 재면 2026년 $8.56 기준 15.93x, 2027년 $8.98 기준 15.18x다. 분모가 이미 번 이익이 아니라 추정치라 위 GAAP 17.87x와 같은 기준이 아니므로, 이 카드의 게이지·단계 판정에는 쓰지 않았다.' },
+    secondary: null,
     peers: [
-      { name:'DHR', value:35.64, status:'anchor' },
-      { name:'A', value:28.97, status:'anchor' }
+      { name:'KO', value:26.53, status:'anchor' },
+      { name:'MDLZ', value:22.88, status:'anchor' },
+      { name:'PG', value:21.93, status:'anchor' }
     ]
   },
   pbr: {
-    title: 'PBR 비교 — DHR · A · RVTY',
-    unit: 'PBR', max: 7, pepValue: 4.28,
-    calcLine: 'PBR = 주가($609.82) ÷ BPS($142.47 = 자기자본 $52,679M ÷ 3.697억주) = 4.28x',
-    verdict: 'PEP PBR 4.28x는 앵커 3.4x 대비 +26% (앵커 2026.09.11 분석 시점 고정)다 — EV/EBITDA와 함께 둘뿐인 4단계다',
-    verdictCaveat: '분모가 무엇으로 채워져 있는지를 보면 이 배수의 뜻이 달라진다. 자기자본 $52,679M보다 <strong>영업권 $54,832M + 인수 무형자산 $18,606M = $73,438M</strong>이 더 크다. 유형자기자본은 <strong>−$20,759M</strong>으로 음수다 — 즉 이 배수가 나누는 장부가는 취득가 배분으로 올라온 자산만으로도 전액이 덮이고 남는다. 게다가 그 금액은 딜이 있던 분기에 계단식으로 뛴다 — 영업권만 2025년 말 $49,362M에서 Clario 직후 $55,187M으로 한 분기에 $5.8B 늘었다. 배수 자체는 계산되고 피어 간 순서(A 5.63 &gt; PEP 4.28 &gt; DHR 2.68 &gt; RVTY 1.92)에도 정보가 남아 있어 <strong>가중치를 0이 아니라 0.5</strong>로 뒀다.',
-    anchor: { value: '3.4x', formula: 'DHR 2.68x·A 5.63x·RVTY 1.92x 평균(3.41x)', cross: '네 곳의 값이 1.92x에서 5.63x까지 2.93배 벌어지는데, 이는 다섯 지표 중 피어 간 산포가 가장 큰 것이다(PER 2.05배 · PSR 1.18배 · PCR 1.21배 · EV/EBITDA 1.14배). 같은 업종 같은 날인데도 이만큼 흩어진다는 것 자체가 이 지표를 앵커로 쓰기 어렵게 만든다.' },
-    secondary: null,
+    title: 'PBR 비교 — KO · MDLZ · PG',
+    unit: 'PBR', max: 12, pepValue: 8.42,
+    calcLine: 'PBR = 시가총액($186.06B) ÷ 자기자본($22.098B, 2026.06.13) = 8.42x · 주당으로는 BPS $16.19 대비 주가 $136.32',
+    verdict: 'PEP PBR 8.42x는 앵커 6.6x 대비 +27.6% (앵커 2026.09.11 분석 시점 고정)로, 다섯 지표 가운데 유일하게 앵커 위에 있는 4단계다',
+    verdictCaveat: '분모가 왜 작은지를 보면 이 배수의 뜻이 달라진다. 자기자본 $22.10B은 납입자본 $4.47B과 이익잉여금 $74.12B에서 <strong>자사주 $42.15B과 누적기타포괄손실 $14.34B</strong>을 뺀 값이다(4.47 + 74.12 − 42.15 − 14.34 = 22.10). 손실이 쌓여서가 아니라 수십 년간 자기 주식을 사서 없앤 결과이고, 자사주만 되돌려도 장부가는 $64.24B(PBR 2.90x), 둘 다 되돌리면 $78.59B(PBR 2.37x)이 된다. 피어 간 순서(KO 10.51 &gt; PEP 8.42 &gt; PG 6.33 &gt; MDLZ 3.00)에는 여전히 정보가 있지만, 산포가 3.50배로 다섯 지표 중 가장 크다. PEP 자신의 분모가 위와 같은 차감으로 만들어진다는 것은 대차대조표에서 확인되는 반면 <strong>피어 셋에 같은 분해를 해 보지는 않았으므로</strong>, 이 순서가 사업가치 차이를 얼마나 담고 있는지는 이 카드가 판정하지 않는다. 그래서 <strong>가중치를 0이 아니라 0.5</strong>로 뒀다.',
+    anchor: { value: '6.6x', formula: 'KO 10.51x·MDLZ 3.00x·PG 6.33x 평균(6.61x)', cross: 'PEP는 이 지표에서만 MDLZ(3.00x)·PG(6.33x)보다 비싸고 KO(10.51x)보다만 싸다 — 나머지 네 지표에서는 셋 모두보다 낮다. 다섯 중 하나만 방향이 다르다는 사실 자체가, 그 하나를 액면대로 읽기 전에 분모를 먼저 봐야 한다는 신호다.' },
+    secondary: { label: '자사주 환원 후 PBR 2.90x — 비교 불가능한 보조 수치', caveat: '위 게이지·단계 판정에는 쓰지 않았다. 자기자본에 자사주 $42.15B만 더한 $64.24B으로 나눈 값이며, 피어 셋에는 같은 조정을 적용하지 않았으므로 피어와 나란히 놓을 수 없다.' },
     peers: [
-      { name:'DHR', value:2.68, status:'anchor' },
-      { name:'A', value:5.63, status:'anchor' },
-      { name:'RVTY', value:1.92, status:'anchor' }
+      { name:'KO', value:10.51, status:'anchor' },
+      { name:'MDLZ', value:3.00, status:'anchor' },
+      { name:'PG', value:6.33, status:'anchor' }
     ]
   },
   psr: {
-    title: 'PSR 비교 — DHR · A · RVTY',
-    unit: 'PSR', max: 7, pepValue: 4.87,
-    calcLine: 'PSR = 시가총액($225.48B) ÷ TTM 매출($46.34B = 25Q3 $11.122B + 25Q4 $12.215B + 26Q1 $11.005B + 26Q2 $11.994B) = 4.87x',
-    verdict: 'PEP PSR 4.87x는 앵커 5.3x 대비 −8.1% (앵커 2026.09.11 분석 시점 고정)로 네 곳 중 가장 낮다 — 다섯 지표 중 가장 싸게 읽히는 3단계다',
-    verdictCaveat: '매출에는 상각처럼 취득가를 배분해 만든 항목이 섞이지 않아, 다섯 중 회계 처리로 인한 왜곡이 가장 적은 비교다(인수한 회사의 매출이 그대로 얹히는 것 자체는 남는다). 대신 매출의 질까지는 담지 못한다 — PEP 매출의 55.5%를 차지하는 실험실제품·바이오파마서비스 세그먼트의 이익률이 14.0%로 네 세그먼트 중 가장 낮고, 그 다음으로 낮은 분석기기(23.0%)와도 9%p 벌어져 있다(상세 #fund). 매출 한 단위당 이익이 얇은 구성이라면 매출배수가 낮은 것이 곧 싸다는 뜻은 아니다.',
-    anchor: { value: '5.3x', formula: 'DHR 5.60x·A 5.62x·RVTY 4.76x 평균(5.33x)', cross: 'DHR과 A가 5.6x로 거의 같은 자리에 있어 앵커가 안정적이다. PEP은 이 둘보다 13% 낮고 RVTY보다도 소폭 낮다.' },
+    title: 'PSR 비교 — MDLZ · PG (KO는 앵커 제외)',
+    unit: 'PSR', max: 9, pepValue: 1.92,
+    calcLine: 'PSR = 시가총액($186.06B) ÷ TTM 매출($96.90B = 25Q3 $23.937B + 25Q4 $29.343B + 26Q1 $19.443B + 26Q2 $24.181B) = 1.92x',
+    verdict: 'PEP PSR 1.92x는 앵커 2.9x 대비 -33.8% (앵커 2026.09.11 분석 시점 고정)로 네 곳 중 가장 낮다 — 1단계다',
+    verdictCaveat: '<strong>이 지표만 KO를 앵커에서 뺐다.</strong> KO는 원액을 보틀러에 팔아 매출은 작고 마진이 높은 구조라 PSR이 7.58x로 구조적으로 높게 나오는데, PEP는 보틀링을 직접 연결해 잡는다 — 10-Q가 밝힌 보틀링 사업 비중이 연결매출의 <strong>36%</strong>이고, 회사 스스로 "완제품 음료 사업은 매출이 크고 마진이 낮다"고 적어 뒀다. 매출의 성격이 다른 두 회사를 매출배수로 비교하면 PEP가 싸 보이는 만큼이 곧 할인은 아니다. <strong>다만 앵커를 어떻게 잡든 단계는 1단계로 같다</strong> — KO를 넣은 앵커 4.49x로 계산하면 게이지가 하한 아래(-2.0%)로 나가 오히려 더 싸게 읽힌다. 가장 직접적인 비교는 같은 과자 회사 MDLZ 2.01x이고, 그 대비로는 -4.5%에 그친다.',
+    anchor: { value: '2.9x', formula: 'MDLZ 2.01x·PG 3.88x 평균(2.95x) — 연결 매출의 성격이 비교 가능한 두 곳만 사용', cross: 'PEP의 TTM 순이익률은 10.8%이므로 이 매출배수는 그 수익성과 함께 읽어야 한다 — 매출배수가 낮다는 사실만으로 싸다고 읽으면 안 된다 — 이익 기준 지표인 PER·EV/EBITDA가 같은 방향을 가리킨다는 점이 이 카드가 저평가로 본 실제 근거다.' },
     secondary: null,
     peers: [
-      { name:'DHR', value:5.60, status:'anchor' },
-      { name:'A', value:5.62, status:'anchor' },
-      { name:'RVTY', value:4.76, status:'anchor' }
+      { name:'MDLZ', value:2.01, status:'anchor' },
+      { name:'PG', value:3.88, status:'anchor' },
+      { name:'KO', value:7.58, status:'context' }
     ]
   },
   pcr: {
-    title: 'PCR(P/OCF) 비교 — DHR · A · RVTY',
-    unit: 'P/OCF', max: 30, pepValue: 25.02,
-    calcLine: 'PCR(P/OCF) = 시가총액($225.48B) ÷ TTM 영업현금흐름($9.01B = FY2025 $7.818B − 25년 상반기 $2.122B + 26년 상반기 $3.317B) = 25.02x',
-    verdict: 'PEP P/OCF 25.02x는 앵커 23x 대비 +8.8% (앵커 2026.09.11 분석 시점 고정)로 3단계 위쪽 끝이다 — 한 칸만 더 가면 4단계다',
-    verdictCaveat: 'Capex를 더 빼도 순서는 그대로다 — 잉여현금흐름 기준 P/FCF는 30.81x다. PEP의 Capex는 매출의 3.7%($1.70B)에 그쳐 영업현금흐름과 잉여현금흐름의 차이가 작다. 영업현금흐름 자체는 TTM $9.01B으로 GAAP 순이익 $6.97B보다 29% 크고, 그 안에는 현금이 나가지 않는 무형자산 상각 $1.79B과 감가상각 $1.16B이 더해져 있다 — 그래서 이 지표는 PER과 달리 상각에 눌리지 않는다.',
-    anchor: { value: '23x', formula: 'DHR 21.21x·A 25.75x·RVTY 22.10x 평균(23.02x)', cross: null },
+    title: 'PCR(P/OCF) 비교 — KO · MDLZ · PG',
+    unit: 'P/OCF', max: 26, pepValue: 13.83,
+    calcLine: 'PCR(P/OCF) = 시가총액($186.06B) ÷ TTM 영업현금흐름($13.46B = FY2025 $12.087B − 25년 상반기 $0.996B + 26년 상반기 $2.365B) = 13.83x',
+    verdict: 'PEP P/OCF 13.83x는 앵커 19.5x 대비 -29.1% (앵커 2026.09.11 분석 시점 고정)로 네 곳 중 가장 낮다 — 2단계다',
+    verdictCaveat: 'Capex를 빼도 순서는 그대로지만 격차는 줄어든다 — PEP의 P/FCF는 20.05x다. PEP의 Capex가 TTM $4.17B, 매출의 4.3%로 보틀링·공장을 직접 굴리는 만큼 무겁기 때문이다. 영업현금흐름 $13.46B은 GAAP 순이익 $10.45B의 1.29배이고, 차이의 대부분은 현금이 나가지 않는 감가상각·무형자산상각 $3.60B이다. 이 지표는 PER과 달리 손상차손·상각에 눌리지 않는다는 점에서 위 PER 판정을 독립적으로 뒷받침한다.',
+    anchor: { value: '19.5x', formula: 'KO 23.25x·MDLZ 17.96x·PG 17.25x 평균(19.49x)', cross: null },
     secondary: null,
     peers: [
-      { name:'DHR', value:21.21, status:'anchor' },
-      { name:'A', value:25.75, status:'anchor' },
-      { name:'RVTY', value:22.10, status:'anchor' }
+      { name:'KO', value:23.25, status:'anchor' },
+      { name:'MDLZ', value:17.96, status:'anchor' },
+      { name:'PG', value:17.25, status:'anchor' }
     ]
   },
   evebitda: {
-    title: 'EV/EBITDA 비교 — DHR · A · RVTY',
-    unit: 'EV/EBITDA', max: 26, pepValue: 22.49,
-    calcLine: '(2026.09.11 종가 기준) EV는 $263.96B(시총 $225.48B + 총차입 $42.55B − 현금 $4.06B)이고, 네 곳 모두 StockAnalysis.com의 동일 산식 집계값 22.49x를 썼다 · 이 카드가 영업이익($8.15B)+감가상각($1.16B)+무형자산상각($1.79B)으로 EBITDA를 직접 구성하면 $11.09B, 배수는 23.81x다',
-    verdict: 'PEP EV/EBITDA 22.49x는 앵커 20x 대비 +12.5%로 네 곳 중 가장 높다 — PBR과 함께 둘뿐인 4단계다',
-    verdictCaveat: '이 배수는 인수 무형자산 상각 $1,786M을 분모에 되돌려 놓기 때문에, 인수를 많이 한 회사일수록 싸 보이게 만든다. 그러면 PEP이 가장 덕을 보는가 — <strong>아니다.</strong> 상각액이 EBITDA에서 차지하는 비중은 <strong>RVTY 38.5% · DHR 21.9% · PEP 15.2% · A 4.0%</strong>로, 환입 효과는 RVTY와 DHR 쪽에 더 크게 붙는다. 즉 이 지표는 PEP을 피어 대비 유리하게 만들지 않으며, 실제로 PEP은 네 곳 중 가장 높게 나왔다. 넷 중 성격이 다른 쪽은 Agilent 하나뿐이라 <strong>가중치를 1.0으로 뒀다</strong>. 참고로 순차입금은 반년 새 $8.95B 늘었는데, 그 중 총차입 증가분은 $3.16B뿐이고 나머지는 현금이 $9.85B에서 $4.06B으로 $5.79B 빠져나간 몫이다 — 3월 Clario 대금이 쌓아 뒀던 현금부터 썼다는 뜻이다. 지금 EV의 14.6%가 순차입금이다.',
-    anchor: { value: '20x', formula: 'DHR 20.45x·A 21.06x·RVTY 18.49x 평균(20.00x)', cross: '자체 구성한 23.81x와 집계값 22.49x의 차이는 분모가 $0.65B 다른 데서 온다 — 이 카드는 영업이익에서 출발해 이자·기타손익을 넣지 않았고, 집계 쪽은 세전이익에서 출발한다. 어느 쪽을 써도 단계는 4단계로 같다.' },
+    title: 'EV/EBITDA 비교 — KO · MDLZ · PG',
+    unit: 'EV/EBITDA', max: 26, pepValue: 12.10,
+    calcLine: '(2026.09.11 종가 기준) EV는 $228.56B(시총 $186.06B + 총차입 $53.21B − 현금·단기투자 $10.72B)이고, 네 곳 모두 EV 정의를 맞추기 위해 StockAnalysis.com의 동일 산식 집계값 12.10x를 썼다 · 이 카드가 영업이익($14.36B)+감가상각·무형자산상각($3.60B)으로 EBITDA를 직접 구성하면 $17.96B, 배수는 12.73x다',
+    verdict: 'PEP EV/EBITDA 12.10x는 앵커 18.4x 대비 -34.2%로 네 곳 중 가장 낮다 — PSR과 함께 둘뿐인 1단계다',
+    verdictCaveat: '<strong>다섯 중 유일하게 순차입금을 분자에 얹는 지표다.</strong> 같은 집계의 차입·현금으로 계산하면 순차입금이 EV에서 차지하는 비중은 MDLZ 20.3% · <strong>PEP 18.6%</strong> · PG 6.9% · KO 6.8%로, PEP는 네 곳 중 두 번째로 무겁다. 순차입금이 크면 분자가 커져 배수가 높아지는 방향이므로, 레버리지를 반영하고도 가장 낮게 나온 이 판정은 차입이 만들어 준 결과가 아니다. 사업 구성이 PEP에 더 가까운 MDLZ 16.45x 대비로도 -26.4% 낮다. 자체 구성한 12.73x로 바꿔 넣어도 단계는 1단계로 같다.',
+    anchor: { value: '18.4x', formula: 'KO 23.99x·MDLZ 16.45x·PG 14.65x 평균(18.36x)', cross: '자체 구성한 12.73x와 집계값 12.10x의 차이는 EBITDA 정의 차이에서 온다 — 집계도 같은 EV $228.56B을 쓴다고 보면 그쪽 분모는 약 $18.9B으로 이 카드의 $17.96B보다 크다. 둘 중 어느 쪽을 써도 앵커 대비 -30% 아래이고 단계는 같으므로, 이 카드는 피어와 정의를 맞출 수 있는 집계값을 게이지에 썼다.' },
     secondary: null,
     peers: [
-      { name:'DHR', value:20.45, status:'anchor' },
-      { name:'A', value:21.06, status:'anchor' },
-      { name:'RVTY', value:18.49, status:'anchor' }
+      { name:'KO', value:23.99, status:'anchor' },
+      { name:'MDLZ', value:16.45, status:'anchor' },
+      { name:'PG', value:14.65, status:'anchor' }
     ]
   },
 };

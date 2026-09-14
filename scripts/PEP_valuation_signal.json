@@ -1,0 +1,31 @@
+{
+  "ticker": "PEP",
+  "asOf": "2026-09-11",
+  "currentPrice": 136.32,
+  "dataQuality": {},
+  "per": {
+    "current": 22.72,
+    "historicalAvg5y": 26.18,
+    "gapPct": -13.2,
+    "stage": 2,
+    "sampleYears": 5
+  },
+  "pbr": {
+    "current": 9.13,
+    "historicalAvg5y": 12.6,
+    "gapPct": -27.6,
+    "stage": 1,
+    "sampleYears": 5
+  },
+  "targetPrice": {
+    "mean": 155.0,
+    "high": 183.0,
+    "low": 124.0,
+    "upsidePct": 13.7,
+    "stage": 2,
+    "numAnalysts": 22,
+    "recommendationKey": "hold"
+  },
+  "combinedStage": 2,
+  "combinedLabel": "낮음"
+}

@@ -247,7 +247,13 @@ def main():
             continue
         path = cards / entry["href"]
         html = path.read_text(encoding="utf-8")
-        score = json.loads((SCORES / f"{SCORE_FILE.get(tk, tk)}_fundamental_score.json")
+        score_path = SCORES / f"{SCORE_FILE.get(tk, tk)}_fundamental_score.json"
+        if not score_path.exists():
+            # stocks.json says this card has a score, so the file belongs in fundamental_scores/.
+            # A build agent that writes it beside the other scripts leaves it invisible here.
+            sys.exit(f"{tk}: stocks.json reports a score but {score_path} is missing "
+                     f"- move the build's {tk}_fundamental_score.json into {SCORES.name}/")
+        score = json.loads(score_path
                            .read_text(encoding="utf-8"))
         if "valuation" not in score:
             skipped.append(tk)
