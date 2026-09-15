@@ -1,7 +1,10 @@
 scripts/
 data/
 prototypes/
-.claude/
+# Keep Claude's local settings out, but version the /ticker skill: it is the
+# working procedure for building a card, not machine-local configuration.
+.claude/*
+!.claude/skills/
 __pycache__/
 *.pyc
 .DS_Store
