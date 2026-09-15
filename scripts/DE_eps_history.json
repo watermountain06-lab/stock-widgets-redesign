@@ -1,0 +1,650 @@
+[
+  {
+    "quarter_end": "2009-07-31",
+    "quarter_eps": 0.99,
+    "ttm_eps": 3.9,
+    "fp": "Q3",
+    "form": "10-Q",
+    "available_date": "2009-08-28",
+    "accn": "0001104659-09-052248"
+  },
+  {
+    "quarter_end": "2009-10-31",
+    "quarter_eps": -0.52,
+    "ttm_eps": 2.06,
+    "fp": "Q4-derived",
+    "form": "10-K-derived",
+    "available_date": "2009-12-17",
+    "accn": "0001104659-09-070344"
+  },
+  {
+    "quarter_end": "2010-01-31",
+    "quarter_eps": 0.57,
+    "ttm_eps": 2.15,
+    "fp": "Q1",
+    "form": "10-Q",
+    "available_date": "2010-03-01",
+    "accn": "0001104659-10-010697"
+  },
+  {
+    "quarter_end": "2010-04-30",
+    "quarter_eps": 1.28,
+    "ttm_eps": 2.32,
+    "fp": "Q2",
+    "form": "10-Q",
+    "available_date": "2010-05-28",
+    "accn": "0001104659-10-031404"
+  },
+  {
+    "quarter_end": "2010-07-31",
+    "quarter_eps": 1.44,
+    "ttm_eps": 2.77,
+    "fp": "Q3",
+    "form": "10-Q",
+    "available_date": "2010-08-27",
+    "accn": "0001104659-10-046204"
+  },
+  {
+    "quarter_end": "2010-10-31",
+    "quarter_eps": 1.06,
+    "ttm_eps": 4.35,
+    "fp": "Q4-derived",
+    "form": "10-K-derived",
+    "available_date": "2010-12-17",
+    "accn": "0001104659-10-063219"
+  },
+  {
+    "quarter_end": "2011-01-31",
+    "quarter_eps": 1.2,
+    "ttm_eps": 4.98,
+    "fp": "Q1",
+    "form": "10-Q",
+    "available_date": "2011-02-25",
+    "accn": "0001104659-11-010186"
+  },
+  {
+    "quarter_end": "2011-04-30",
+    "quarter_eps": 2.12,
+    "ttm_eps": 5.82,
+    "fp": "Q2",
+    "form": "10-Q",
+    "available_date": "2011-05-27",
+    "accn": "0001104659-11-031895"
+  },
+  {
+    "quarter_end": "2011-07-31",
+    "quarter_eps": 1.69,
+    "ttm_eps": 6.07,
+    "fp": "Q3",
+    "form": "10-Q",
+    "available_date": "2011-09-01",
+    "accn": "0001104659-11-049960"
+  },
+  {
+    "quarter_end": "2011-10-31",
+    "quarter_eps": 1.62,
+    "ttm_eps": 6.63,
+    "fp": "Q4-derived",
+    "form": "10-K-derived",
+    "available_date": "2011-12-19",
+    "accn": "0001104659-11-070023"
+  },
+  {
+    "quarter_end": "2012-01-31",
+    "quarter_eps": 1.3,
+    "ttm_eps": 6.73,
+    "fp": "Q1",
+    "form": "10-Q",
+    "available_date": "2012-03-01",
+    "accn": "0001104659-12-014959"
+  },
+  {
+    "quarter_end": "2012-04-30",
+    "quarter_eps": 2.61,
+    "ttm_eps": 7.22,
+    "fp": "Q2",
+    "form": "10-Q",
+    "available_date": "2012-05-31",
+    "accn": "0001104659-12-040962"
+  },
+  {
+    "quarter_end": "2012-07-31",
+    "quarter_eps": 1.98,
+    "ttm_eps": 7.51,
+    "fp": "Q3",
+    "form": "10-Q",
+    "available_date": "2012-08-30",
+    "accn": "0001104659-12-060912"
+  },
+  {
+    "quarter_end": "2012-10-31",
+    "quarter_eps": 1.74,
+    "ttm_eps": 7.63,
+    "fp": "Q4-derived",
+    "form": "10-K-derived",
+    "available_date": "2012-12-17",
+    "accn": "0001104659-12-084558"
+  },
+  {
+    "quarter_end": "2013-01-31",
+    "quarter_eps": 1.65,
+    "ttm_eps": 7.98,
+    "fp": "Q1",
+    "form": "10-Q",
+    "available_date": "2013-02-28",
+    "accn": "0001104659-13-015827"
+  },
+  {
+    "quarter_end": "2013-04-30",
+    "quarter_eps": 2.76,
+    "ttm_eps": 8.13,
+    "fp": "Q2",
+    "form": "10-Q",
+    "available_date": "2013-05-30",
+    "accn": "0001104659-13-045612"
+  },
+  {
+    "quarter_end": "2013-07-31",
+    "quarter_eps": 2.56,
+    "ttm_eps": 8.71,
+    "fp": "Q3",
+    "form": "10-Q",
+    "available_date": "2013-08-29",
+    "accn": "0001104659-13-066988"
+  },
+  {
+    "quarter_end": "2013-10-31",
+    "quarter_eps": 2.12,
+    "ttm_eps": 9.09,
+    "fp": "Q4-derived",
+    "form": "10-K-derived",
+    "available_date": "2013-12-16",
+    "accn": "0001104659-13-090354"
+  },
+  {
+    "quarter_end": "2014-01-31",
+    "quarter_eps": 1.81,
+    "ttm_eps": 9.25,
+    "fp": "Q1",
+    "form": "10-Q",
+    "available_date": "2014-02-27",
+    "accn": "0001104659-14-014013"
+  },
+  {
+    "quarter_end": "2014-04-30",
+    "quarter_eps": 2.65,
+    "ttm_eps": 9.14,
+    "fp": "Q2",
+    "form": "10-Q",
+    "available_date": "2014-05-29",
+    "accn": "0001104659-14-042322"
+  },
+  {
+    "quarter_end": "2014-07-31",
+    "quarter_eps": 2.33,
+    "ttm_eps": 8.91,
+    "fp": "Q3",
+    "form": "10-Q",
+    "available_date": "2014-08-28",
+    "accn": "0001104659-14-063631"
+  },
+  {
+    "quarter_end": "2014-10-31",
+    "quarter_eps": 1.84,
+    "ttm_eps": 8.63,
+    "fp": "Q4-derived",
+    "form": "10-K-derived",
+    "available_date": "2014-12-19",
+    "accn": "0001104659-14-087794"
+  },
+  {
+    "quarter_end": "2015-01-31",
+    "quarter_eps": 1.12,
+    "ttm_eps": 7.94,
+    "fp": "Q1",
+    "form": "10-Q",
+    "available_date": "2015-02-26",
+    "accn": "0001104659-15-014162"
+  },
+  {
+    "quarter_end": "2015-04-30",
+    "quarter_eps": 2.03,
+    "ttm_eps": 7.32,
+    "fp": "Q2",
+    "form": "10-Q",
+    "available_date": "2015-05-28",
+    "accn": "0001104659-15-041408"
+  },
+  {
+    "quarter_end": "2015-07-31",
+    "quarter_eps": 1.53,
+    "ttm_eps": 6.52,
+    "fp": "Q3",
+    "form": "10-Q",
+    "available_date": "2015-08-27",
+    "accn": "0001558370-15-001712"
+  },
+  {
+    "quarter_end": "2015-10-31",
+    "quarter_eps": 1.09,
+    "ttm_eps": 5.77,
+    "fp": "Q4-derived",
+    "form": "10-K-derived",
+    "available_date": "2015-12-18",
+    "accn": "0001047469-15-009300"
+  },
+  {
+    "quarter_end": "2015-11-01",
+    "quarter_eps": 1.09,
+    "ttm_eps": 5.74,
+    "fp": "Q4-derived",
+    "form": "10-K-derived",
+    "available_date": "2017-12-18",
+    "accn": "0001047469-17-007719"
+  },
+  {
+    "quarter_end": "2016-01-31",
+    "quarter_eps": 0.8,
+    "ttm_eps": 4.51,
+    "fp": "Q1",
+    "form": "10-Q",
+    "available_date": "2016-02-25",
+    "accn": "0001558370-16-003529"
+  },
+  {
+    "quarter_end": "2016-01-31",
+    "quarter_eps": 0.8,
+    "ttm_eps": 3.78,
+    "fp": "Q1",
+    "form": "10-Q",
+    "available_date": "2017-02-24",
+    "accn": "0001558370-17-000952"
+  },
+  {
+    "quarter_end": "2016-04-30",
+    "quarter_eps": 1.56,
+    "ttm_eps": 4.25,
+    "fp": "Q2",
+    "form": "10-Q",
+    "available_date": "2016-05-26",
+    "accn": "0001558370-16-006167"
+  },
+  {
+    "quarter_end": "2016-05-01",
+    "quarter_eps": 1.56,
+    "ttm_eps": 4.72,
+    "fp": "Q2",
+    "form": "10-Q",
+    "available_date": "2017-06-02",
+    "accn": "0001558370-17-004638"
+  },
+  {
+    "quarter_end": "2016-07-31",
+    "quarter_eps": 1.55,
+    "ttm_eps": 5.47,
+    "fp": "Q3",
+    "form": "10-Q",
+    "available_date": "2016-09-01",
+    "accn": "0001558370-16-008153"
+  },
+  {
+    "quarter_end": "2016-07-31",
+    "quarter_eps": 1.55,
+    "ttm_eps": 6.22,
+    "fp": "Q3",
+    "form": "10-Q",
+    "available_date": "2017-08-31",
+    "accn": "0001558370-17-006878"
+  },
+  {
+    "quarter_end": "2017-01-29",
+    "quarter_eps": 0.61,
+    "ttm_eps": 5.27,
+    "fp": "Q1",
+    "form": "10-Q",
+    "available_date": "2017-02-24",
+    "accn": "0001558370-17-000952"
+  },
+  {
+    "quarter_end": "2017-04-30",
+    "quarter_eps": 2.49,
+    "ttm_eps": 6.2,
+    "fp": "Q2",
+    "form": "10-Q",
+    "available_date": "2017-06-02",
+    "accn": "0001558370-17-004638"
+  },
+  {
+    "quarter_end": "2017-07-30",
+    "quarter_eps": 1.97,
+    "ttm_eps": 6.62,
+    "fp": "Q3",
+    "form": "10-Q",
+    "available_date": "2017-08-31",
+    "accn": "0001558370-17-006878"
+  },
+  {
+    "quarter_end": "2017-10-29",
+    "quarter_eps": 1.61,
+    "ttm_eps": 6.68,
+    "fp": "Q4-derived",
+    "form": "10-K-derived",
+    "available_date": "2017-12-18",
+    "accn": "0001047469-17-007719"
+  },
+  {
+    "quarter_end": "2018-01-28",
+    "quarter_eps": -1.66,
+    "ttm_eps": 4.41,
+    "fp": "Q1",
+    "form": "10-Q",
+    "available_date": "2018-03-01",
+    "accn": "0001558370-18-001362"
+  },
+  {
+    "quarter_end": "2018-04-29",
+    "quarter_eps": 3.67,
+    "ttm_eps": 5.59,
+    "fp": "Q2",
+    "form": "10-Q",
+    "available_date": "2018-05-31",
+    "accn": "0001558370-18-005045"
+  },
+  {
+    "quarter_end": "2018-07-29",
+    "quarter_eps": 2.78,
+    "ttm_eps": 6.4,
+    "fp": "Q3",
+    "form": "10-Q",
+    "available_date": "2018-08-30",
+    "accn": "0001558370-18-007303"
+  },
+  {
+    "quarter_end": "2018-10-28",
+    "quarter_eps": 2.45,
+    "ttm_eps": 7.24,
+    "fp": "Q4-derived",
+    "form": "10-K-derived",
+    "available_date": "2018-12-17",
+    "accn": "0001047469-18-007694"
+  },
+  {
+    "quarter_end": "2019-01-27",
+    "quarter_eps": 1.54,
+    "ttm_eps": 10.44,
+    "fp": "Q1",
+    "form": "10-Q",
+    "available_date": "2019-02-28",
+    "accn": "0001558370-19-001282"
+  },
+  {
+    "quarter_end": "2019-04-28",
+    "quarter_eps": 3.52,
+    "ttm_eps": 10.29,
+    "fp": "Q2",
+    "form": "10-Q",
+    "available_date": "2019-05-30",
+    "accn": "0001558370-19-005380"
+  },
+  {
+    "quarter_end": "2019-07-28",
+    "quarter_eps": 2.81,
+    "ttm_eps": 10.32,
+    "fp": "Q3",
+    "form": "10-Q",
+    "available_date": "2019-08-29",
+    "accn": "0001558370-19-008382"
+  },
+  {
+    "quarter_end": "2019-11-03",
+    "quarter_eps": 2.28,
+    "ttm_eps": 10.15,
+    "fp": "Q4-derived",
+    "form": "10-K-derived",
+    "available_date": "2019-12-19",
+    "accn": "0001558370-19-011614"
+  },
+  {
+    "quarter_end": "2020-02-02",
+    "quarter_eps": 1.63,
+    "ttm_eps": 10.24,
+    "fp": "Q1",
+    "form": "10-Q",
+    "available_date": "2020-02-27",
+    "accn": "0001558370-20-001593"
+  },
+  {
+    "quarter_end": "2020-05-03",
+    "quarter_eps": 2.11,
+    "ttm_eps": 8.83,
+    "fp": "Q2",
+    "form": "10-Q",
+    "available_date": "2020-05-28",
+    "accn": "0001558370-20-007066"
+  },
+  {
+    "quarter_end": "2020-08-02",
+    "quarter_eps": 2.57,
+    "ttm_eps": 8.59,
+    "fp": "Q3",
+    "form": "10-Q",
+    "available_date": "2020-08-27",
+    "accn": "0001558370-20-010868"
+  },
+  {
+    "quarter_end": "2020-11-01",
+    "quarter_eps": 2.38,
+    "ttm_eps": 8.69,
+    "fp": "Q4-derived",
+    "form": "10-K-derived",
+    "available_date": "2020-12-17",
+    "accn": "0001558370-20-014436"
+  },
+  {
+    "quarter_end": "2021-01-31",
+    "quarter_eps": 3.87,
+    "ttm_eps": 10.93,
+    "fp": "Q1",
+    "form": "10-Q",
+    "available_date": "2021-02-25",
+    "accn": "0001558370-21-001774"
+  },
+  {
+    "quarter_end": "2021-05-02",
+    "quarter_eps": 5.68,
+    "ttm_eps": 14.5,
+    "fp": "Q2",
+    "form": "10-Q",
+    "available_date": "2021-05-27",
+    "accn": "0001558370-21-007781"
+  },
+  {
+    "quarter_end": "2021-08-01",
+    "quarter_eps": 5.32,
+    "ttm_eps": 17.25,
+    "fp": "Q3",
+    "form": "10-Q",
+    "available_date": "2021-08-26",
+    "accn": "0001558370-21-012088"
+  },
+  {
+    "quarter_end": "2021-10-31",
+    "quarter_eps": 4.12,
+    "ttm_eps": 18.99,
+    "fp": "Q4-derived",
+    "form": "10-K-derived",
+    "available_date": "2021-12-16",
+    "accn": "0001558370-21-016864"
+  },
+  {
+    "quarter_end": "2022-01-30",
+    "quarter_eps": 2.92,
+    "ttm_eps": 18.04,
+    "fp": "Q1",
+    "form": "10-Q",
+    "available_date": "2022-02-24",
+    "accn": "0001558370-22-001900"
+  },
+  {
+    "quarter_end": "2022-05-01",
+    "quarter_eps": 6.81,
+    "ttm_eps": 19.17,
+    "fp": "Q2",
+    "form": "10-Q",
+    "available_date": "2022-05-26",
+    "accn": "0001558370-22-009375"
+  },
+  {
+    "quarter_end": "2022-07-31",
+    "quarter_eps": 6.16,
+    "ttm_eps": 20.01,
+    "fp": "Q3",
+    "form": "10-Q",
+    "available_date": "2022-09-01",
+    "accn": "0001558370-22-014113"
+  },
+  {
+    "quarter_end": "2022-10-30",
+    "quarter_eps": 7.39,
+    "ttm_eps": 23.28,
+    "fp": "Q4-derived",
+    "form": "10-K-derived",
+    "available_date": "2022-12-15",
+    "accn": "0001558370-22-018703"
+  },
+  {
+    "quarter_end": "2023-01-29",
+    "quarter_eps": 6.55,
+    "ttm_eps": 26.91,
+    "fp": "Q1",
+    "form": "10-Q",
+    "available_date": "2023-02-23",
+    "accn": "0001558370-23-001877"
+  },
+  {
+    "quarter_end": "2023-04-30",
+    "quarter_eps": 9.65,
+    "ttm_eps": 29.75,
+    "fp": "Q2",
+    "form": "10-Q",
+    "available_date": "2023-06-01",
+    "accn": "0001558370-23-010713"
+  },
+  {
+    "quarter_end": "2023-07-30",
+    "quarter_eps": 10.2,
+    "ttm_eps": 33.79,
+    "fp": "Q3",
+    "form": "10-Q",
+    "available_date": "2023-08-31",
+    "accn": "0001558370-23-015380"
+  },
+  {
+    "quarter_end": "2023-10-29",
+    "quarter_eps": 8.23,
+    "ttm_eps": 34.63,
+    "fp": "Q4-derived",
+    "form": "10-K-derived",
+    "available_date": "2023-12-15",
+    "accn": "0001558370-23-019812"
+  },
+  {
+    "quarter_end": "2024-01-28",
+    "quarter_eps": 6.23,
+    "ttm_eps": 34.31,
+    "fp": "Q1",
+    "form": "10-Q",
+    "available_date": "2024-02-29",
+    "accn": "0001558370-24-002149"
+  },
+  {
+    "quarter_end": "2024-04-28",
+    "quarter_eps": 8.53,
+    "ttm_eps": 33.19,
+    "fp": "Q2",
+    "form": "10-Q",
+    "available_date": "2024-05-30",
+    "accn": "0001558370-24-008770"
+  },
+  {
+    "quarter_end": "2024-07-28",
+    "quarter_eps": 6.29,
+    "ttm_eps": 29.28,
+    "fp": "Q3",
+    "form": "10-Q",
+    "available_date": "2024-08-29",
+    "accn": "0001558370-24-012529"
+  },
+  {
+    "quarter_end": "2024-10-27",
+    "quarter_eps": 4.57,
+    "ttm_eps": 25.62,
+    "fp": "Q4-derived",
+    "form": "10-K-derived",
+    "available_date": "2024-12-12",
+    "accn": "0001558370-24-016169"
+  },
+  {
+    "quarter_end": "2025-01-26",
+    "quarter_eps": 3.19,
+    "ttm_eps": 22.58,
+    "fp": "Q1",
+    "form": "10-Q",
+    "available_date": "2025-02-27",
+    "accn": "0001558370-25-001714"
+  },
+  {
+    "quarter_end": "2025-04-27",
+    "quarter_eps": 6.64,
+    "ttm_eps": 20.69,
+    "fp": "Q2",
+    "form": "10-Q",
+    "available_date": "2025-05-29",
+    "accn": "0001558370-25-008218"
+  },
+  {
+    "quarter_end": "2025-07-27",
+    "quarter_eps": 4.75,
+    "ttm_eps": 19.15,
+    "fp": "Q3",
+    "form": "10-Q",
+    "available_date": "2025-08-28",
+    "accn": "0001558370-25-011789"
+  },
+  {
+    "quarter_end": "2025-11-02",
+    "quarter_eps": 3.92,
+    "ttm_eps": 18.5,
+    "fp": "Q4-derived",
+    "form": "10-K-derived",
+    "available_date": "2025-12-18",
+    "accn": "0001104659-25-122321"
+  },
+  {
+    "quarter_end": "2026-02-01",
+    "quarter_eps": 2.42,
+    "ttm_eps": 17.73,
+    "fp": "Q1",
+    "form": "10-Q",
+    "available_date": "2026-02-26",
+    "accn": "0001104659-26-020158"
+  },
+  {
+    "quarter_end": "2026-05-03",
+    "quarter_eps": 6.55,
+    "ttm_eps": 17.64,
+    "fp": "Q2",
+    "form": "10-Q",
+    "available_date": "2026-05-28",
+    "accn": "0001104659-26-067311"
+  },
+  {
+    "quarter_end": "2026-08-02",
+    "quarter_eps": 5.1,
+    "ttm_eps": 17.99,
+    "fp": "Q3",
+    "form": "10-Q",
+    "available_date": "2026-08-27",
+    "accn": "0001104659-26-102213"
+  }
+]

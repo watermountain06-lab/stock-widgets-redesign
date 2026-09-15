@@ -1,0 +1,11 @@
+{
+  "ticker": "DIS",
+  "currentPrice": 106.805,
+  "targetHighPrice": 144.0,
+  "targetLowPrice": 88.0,
+  "targetMeanPrice": 127.21548,
+  "targetMedianPrice": 129.0,
+  "recommendationKey": "strong_buy",
+  "recommendationMean": 1.4375,
+  "numberOfAnalystOpinions": 31
+}

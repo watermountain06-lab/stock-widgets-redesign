@@ -1834,5 +1834,36 @@
     },
     "combinedStage": 1,
     "combinedLabel": "매우낮음"
+  },
+  "DE": {
+    "ticker": "DE",
+    "asOf": "2026-09-14",
+    "currentPrice": 681.46,
+    "dataQuality": {},
+    "per": {
+      "current": 36.84,
+      "historicalAvg5y": 17.28,
+      "gapPct": 113.3,
+      "stage": 5,
+      "sampleYears": 5
+    },
+    "pbr": {
+      "current": 7.1,
+      "historicalAvg5y": 5.17,
+      "gapPct": 37.3,
+      "stage": 5,
+      "sampleYears": 5
+    },
+    "targetPrice": {
+      "mean": 688.4426,
+      "high": 813.18,
+      "low": 500.0,
+      "upsidePct": 1.0,
+      "stage": 3,
+      "numAnalysts": 23,
+      "recommendationKey": "buy"
+    },
+    "combinedStage": 4,
+    "combinedLabel": "높음"
   }
 }

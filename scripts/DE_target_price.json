@@ -1,0 +1,11 @@
+{
+  "ticker": "DE",
+  "currentPrice": 687.64,
+  "targetHighPrice": 813.18,
+  "targetLowPrice": 500.0,
+  "targetMeanPrice": 688.4426,
+  "targetMedianPrice": 728.0,
+  "recommendationKey": "buy",
+  "recommendationMean": 1.96,
+  "numberOfAnalystOpinions": 23
+}
