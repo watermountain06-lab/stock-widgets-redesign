@@ -1803,5 +1803,36 @@
     },
     "combinedStage": 2,
     "combinedLabel": "낮음"
+  },
+  "DIS": {
+    "ticker": "DIS",
+    "asOf": "2026-09-14",
+    "currentPrice": 108.59,
+    "dataQuality": {},
+    "per": {
+      "current": 15.85,
+      "historicalAvg5y": 66.2,
+      "gapPct": -76.1,
+      "stage": 1,
+      "sampleYears": 5
+    },
+    "pbr": {
+      "current": 1.76,
+      "historicalAvg5y": 2.1,
+      "gapPct": -16.1,
+      "stage": 2,
+      "sampleYears": 5
+    },
+    "targetPrice": {
+      "mean": 127.21548,
+      "high": 144.0,
+      "low": 88.0,
+      "upsidePct": 17.2,
+      "stage": 1,
+      "numAnalysts": 31,
+      "recommendationKey": "strong_buy"
+    },
+    "combinedStage": 1,
+    "combinedLabel": "매우낮음"
   }
 }

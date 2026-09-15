@@ -111,6 +111,9 @@ KNOWN_SPLITS = {
                   # groups) no group holds two distinct values, so there is no duplicate-filing
                   # ratio to find at any threshold. Any split predates the reporting window.
     "SCHW": [],   # same test, same day, 122 groups, same result.
+    "DIS": [],    # same test 2026-09-15, 62 groups, no group holding two distinct values.
+    "DE": [],     # same test, 131 groups. Max intra-group spread is 1.016x - restatement
+                  # noise, nowhere near the 1.3x a split would leave.
     "WMT": [("2024-02-26", 3)],  # 3-for-1 split, effective 2024-02-26 -- WebSearch confirmed 2026-09-05 (corporate.walmart.com release), within this data's 5y window
     "AMD": [],    # last split 2000-08-22 (2-for-1), outside this data's reporting window -- WebSearch confirmed 2026-09-05
     "JNJ": [],    # last split 2001-06-13 (2-for-1), outside this data's reporting window -- WebSearch confirmed 2026-09-05
