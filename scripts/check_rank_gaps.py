@@ -118,7 +118,7 @@ def main():
     floor = min(c for c in caps.values() if c)      # the smallest card already built
     cache = json.loads(CACHE.read_text(encoding="utf-8")) if CACHE.exists() else {}
 
-    gaps, odd, checked = [], [], 0
+    gaps, odd, checked, truncated = [], [], 0, None
     for row in listing():
         cap = to_billions(row["cap"])
         if cap is None or cap < floor:
@@ -130,6 +130,7 @@ def main():
             continue
         checked += 1
         if checked > args.limit:
+            truncated = row                 # the budget ran out before this row was examined
             break
         dom = is_domestic(row["ticker"], cache)
         if dom is None:
@@ -143,6 +144,20 @@ def main():
 
     CACHE.write_text(json.dumps(cache, indent=1, sort_keys=True), encoding="utf-8")
 
+    # The limit is a budget on SEC calls, and it is spent on every unbuilt row including
+    # the foreign private issuers that are then discarded - between rank 1 and rank 83 there
+    # are enough of them to exhaust a small budget entirely. A sweep that stopped early has
+    # not seen the boundary, so it must not be able to say the boundary is clear: on
+    # 2026-09-15 a --limit 15 run reported "no gaps" while DE, DIS and T sat unbuilt above
+    # the floor. Reporting the truncation is the whole point - this check exists because an
+    # all-clear that expired went unnoticed once already.
+    if truncated is not None:
+        print(f"INCOMPLETE - stopped after {args.limit} candidates, at rank {truncated['rank']} "
+              f"({truncated['ticker']}, {truncated['cap']}), still above the ${floor:,.1f}B floor.")
+        print("Re-run with a larger --limit before treating this as clear.")
+        for row, cap, shares in gaps:
+            print(f"MISSING  {row['ticker']:<6} ${cap:8.2f}B  {row['name'][:44]}")
+        return 1
     if not gaps and not odd:
         print(f"no gaps: every US-domestic filer above ${floor:,.1f}B has a card")
         return 0
