@@ -31,39 +31,36 @@
     "ratiosUsed": 3
   },
   "growthProfit": {
-    "dataQuality": {},
+    "dataQuality": {
+      "opMargin": "missing (operatingIncome ends 2024-10-27, revenue ends 2025-11-02 - the filer stopped tagging OperatingIncomeLoss)",
+      "opIncomeCagr": "missing (series ends 2024-10-27, revenue ends 2025-11-02)"
+    },
     "revenueCagr": {
       "value": -4.6,
       "points": 1
-    },
-    "opIncomeCagr": {
-      "value": 4.1,
-      "points": 2
-    },
-    "opMargin": {
-      "value": 19.8,
-      "points": 3
     },
     "netMargin": {
       "value": 11.0,
       "points": 3
     },
-    "axisPoints": 15.3,
-    "axisPointsRaw": 15.3,
-    "metricsUsed": 4
+    "axisPoints": 13.6,
+    "axisPointsRaw": 13.600000000000001,
+    "metricsUsed": 2
   },
-  "totalScore": 32.9,
+  "totalScore": 31.2,
   "grade": "미흡",
   "axesUsed": 3,
   "coverageStatus": "partial",
   "qualityFlags": [
-    "health_ratios_below_gate"
+    "health_ratios_below_gate",
+    "growth_metrics_below_gate"
   ],
   "financialsAgeMonths": 10.3,
   "dataStatus": {
     "coverageStatus": "partial",
     "qualityFlags": [
-      "health_ratios_below_gate"
+      "health_ratios_below_gate",
+      "growth_metrics_below_gate"
     ],
     "operatingIncomeEstimated": false,
     "negativeEquity": false
