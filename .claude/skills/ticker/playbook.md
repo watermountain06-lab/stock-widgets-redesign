@@ -236,9 +236,9 @@ Since 2026-09-11 `stock-widgets-preview` updates itself after every US close (Gi
 
 **Two guards in this stage used to fire on wording rather than on state; both were fixed 2026-09-13, and the reason is worth carrying.** `build_valuation_base.py` decided "stage 2B already moved this card" by finding `(분석일 YYYY.MM.DD 기준 계산)` anywhere in the HTML — which is exactly what a build agent writes by hand, so it blocked five consecutive brand-new cards (TXN, LIN, CRWD, VZ, AMGN) and each was worked around by rewording the card. It now also requires `site_data/valuation_base/{T}.json`, the condition `update_cards.py` actually branches on, so a card without a baseline provably has never been touched by 2B. Separately, `valuation.py` only recognised an anchor as-of introduced by `, ` or `(앵커 `, so a card writing `평균 27.23x· 2026.09.11 기준` got a second date appended and shipped reading `…기준, 2026.09.11 기준)` (CRM, LIN, CRWD). **The general rule: a script must never detect "have I already run here?" by searching for a string a human also writes — bind it to the state the behaviour branches on. And if you find yourself rewording a card to satisfy a check, stop and fix the check.**
 
-### Step 5c — the eight integration commands (run all eight, in this order, before every commit)
+### Step 5c — the nine integration commands (run all nine, in this order, before every commit)
 
-Each one exists because the thing it checks silently broke at least once. Run them from the **redesign** repo; every one of them writes and every one takes `--check` and exits non-zero when something is stale, so the same eight lines are both the promotion step and the verification pass.
+Each one exists because the thing it checks silently broke at least once. Run them from the **redesign** repo; every one of them writes and every one takes `--check` and exits non-zero when something is stale, so the same nine lines are both the promotion step and the verification pass.
 
 ```
 python3 scripts/fix_chart_identity.py          # cards' own chart bar reads its own ticker/colour
@@ -247,11 +247,12 @@ python3 scripts/fix_header_price_row.py        # header price row matches the pr
 python3 scripts/fix_card_rank_text.py          # the rank each card states about itself
 python3 scripts/build_fundamental_scorecard.py # 재무 기본점수 block from {T}_fundamental_score.json
 python3 scripts/fix_52w_prose.py               # narrative 52-week percentages == the maintained subscore
+python3 scripts/fix_tech_score_text.py         # every restated 기술점수 N/100 등급 == the maintained scorecard
 python3 scripts/sync_cards.py                  # every preview card copied across, home href flipped
 python3 scripts/build_home.py                  # redesign index.html rendered from preview's homepage
 ```
 
-Order matters: the first six edit **preview's** cards (the source), so they must run before `sync_cards.py` carries the result over, and `build_home.py` last because it reads the finished card set and refuses to write if preview lists a card this repo does not have.
+Order matters: the first seven edit **preview's** cards (the source), so they must run before `sync_cards.py` carries the result over, and `build_home.py` last because it reads the finished card set and refuses to write if preview lists a card this repo does not have.
 
 What each one caught, so the next builder knows why it is not optional:
 - **fix_chart_identity** — `renderMultipleChart()` used to hardcode the card's own ticker label, its `MULTIPLE_DATA` key and its two brand colours, so a copied card silently wore the template's identity. 26 cards shipped drawing their own bar in another company's colour; C then shipped in KLAC's teal hours after that sweep; AXP was caught about to render its bar labelled "IBM". A chart with the wrong company's name on it looks completely normal.
@@ -260,6 +261,7 @@ What each one caught, so the next builder knows why it is not optional:
 - **fix_card_rank_text** — every card until 2026-09-13 was appended at the end, so the rank baked into its HTML stayed right by accident. Inserting TMO, MRVL and APH into ranks already assigned moved everything below them and nothing rewrote what a card says about itself.
 - **build_fundamental_scorecard** — only 11 of 50 scored cards carried the block and 8 of those 11 were stale; TSM showed 73.8 against a real 88.7.
 - **fix_52w_prose** — the 52주위치 subscore is rewritten daily from preview's `site_data/tech_state/`, but the sentence beside it was written once at build time from that build's own `{T}_tech_signal.json` snapshot, which nothing refreshes. 36 of 66 cards contradicted their own subscore; MU said +708.4% where its subscore said +560.70%.
+- **fix_tech_score_text** — `update_cards.py` maintains the technical scorecard daily but not the summary surfaces that restate its headline, so 28 cards quoted a score they no longer held and on eight the grade word had flipped with it: GE said 적격 where its own badge said 부적격. MSFT is the instructive one - right number, wrong word, because the 3-tier word comes from `displayGrade` and not from the digits.
 - **build_home** — redesign's homepage was still the original mockup (S&P 500 at 6,449.15, "5% 이상 상승 11개") sitting on the live domain.
 
 Then verify before committing: every homepage row's price equals its card header's, no `href` 404s, no missing `logos/{ticker}.png`, and the chain walks the full set in rank order in both directions.
