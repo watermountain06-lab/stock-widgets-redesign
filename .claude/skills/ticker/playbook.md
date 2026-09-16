@@ -248,11 +248,14 @@ python3 scripts/fix_card_rank_text.py          # the rank each card states about
 python3 scripts/build_fundamental_scorecard.py # 재무 기본점수 block from {T}_fundamental_score.json
 python3 scripts/fix_52w_prose.py               # narrative 52-week percentages == the maintained subscore
 python3 scripts/fix_tech_score_text.py         # every restated 기술점수 N/100 등급 == the maintained scorecard
+python3 scripts/fix_weighted_avg_text.py       # stated 가중평균 == what the card's own badges produce
+python3 scripts/fix_ma_prose.py                # prose MA values == the card's own bars (mostly a detector)
+python3 scripts/fix_momentum_text.py           # restated 절대모멘텀 % and score == the maintained subscore
 python3 scripts/sync_cards.py                  # every preview card copied across, home href flipped
 python3 scripts/build_home.py                  # redesign index.html rendered from preview's homepage
 ```
 
-Order matters: the first seven edit **preview's** cards (the source), so they must run before `sync_cards.py` carries the result over, and `build_home.py` last because it reads the finished card set and refuses to write if preview lists a card this repo does not have.
+Order matters: the first ten edit **preview's** cards (the source), so they must run before `sync_cards.py` carries the result over, and `build_home.py` last because it reads the finished card set and refuses to write if preview lists a card this repo does not have.
 
 What each one caught, so the next builder knows why it is not optional:
 - **fix_chart_identity** — `renderMultipleChart()` used to hardcode the card's own ticker label, its `MULTIPLE_DATA` key and its two brand colours, so a copied card silently wore the template's identity. 26 cards shipped drawing their own bar in another company's colour; C then shipped in KLAC's teal hours after that sweep; AXP was caught about to render its bar labelled "IBM". A chart with the wrong company's name on it looks completely normal.
@@ -262,6 +265,14 @@ What each one caught, so the next builder knows why it is not optional:
 - **build_fundamental_scorecard** — only 11 of 50 scored cards carried the block and 8 of those 11 were stale; TSM showed 73.8 against a real 88.7.
 - **fix_52w_prose** — the 52주위치 subscore is rewritten daily from preview's `site_data/tech_state/`, but the sentence beside it was written once at build time from that build's own `{T}_tech_signal.json` snapshot, which nothing refreshes. 36 of 66 cards contradicted their own subscore; MU said +708.4% where its subscore said +560.70%.
 - **fix_tech_score_text** — `update_cards.py` maintains the technical scorecard daily but not the summary surfaces that restate its headline, so 28 cards quoted a score they no longer held and on eight the grade word had flipped with it: GE said 적격 where its own badge said 부적격. MSFT is the instructive one - right number, wrong word, because the 3-tier word comes from `displayGrade` and not from the digits.
+- **fix_weighted_avg_text** — stage 2B moves every metric badge with the price, and the 가중평균 those badges imply is quoted in the box-key bullet where nothing rewrites it. Twelve cards had drifted and five had crossed a 7-tier boundary. It syncs the average and deliberately **not** the headline tier label, because the label carries the documented ±1 discretionary move and is a judgment, not arithmetic.
+- **fix_momentum_text** — 61 of 65 cards restated a weighted momentum their own 절대모멘텀 subscore no longer held, some enormously: SNDK +654.8% against +454.78%. Syncs both the return and the score out of forty from that one subscore-box. **Refuses any card whose maintained figure has crossed zero**, because the prose around the number is a judgment and META's "뚜렷한 하락 추세" does not survive a +4.82% being dropped into it.
+- **fix_ma_prose** — MA50/150/200 feed 추세구조 but appear in no maintained surface, so until this existed 274 of 434 prose MA citations could not even be checked. It recomputes MA5/20/60/120 from the card's own bars and compares them against the maintained ma-row table **before** trusting those bars for the three lines the table cannot vouch for. In practice it syncs almost nothing and that is correct — see the rule below — so `--check` is the part that earns its place: it reports which cards need a hand rewrite and exits non-zero.
+
+**The rule those last three converge on: never sync a number inside a sentence that makes a claim.** Syncing the value in "MA5($444.95)만 상회한다" when the stock is below all four lines leaves a freshly-numbered falsehood, which reads as authored today and is worse than an obviously stale number. AMAT, ANET, GE, PM and XOM all came back that way on a first run. Both gates now refuse a card that carries a relationship word (상회/하회/정배열/…) or a sign reversal, and hand the card to the queue instead.
+
+**And the rewrite pattern for that queue: 움직이는 값은 빼고 움직이지 않는 사실은 남긴다.** The durable half stays in words — a dated event (PANW's 9월 1일 -9.28% 급락), a mechanism (TXN's MA60 window still holding the June high), a rule (조건 하나당 10점) — and the moving half is handed back to whichever surface maintains it: the ma-row table for price-vs-line, the 추세구조 score for how many 정배열 conditions are met, the risk flag for which line was lost, the 변동성 확대 flag for where ATR sits. A conditional works where a fact will not: LRCX's 혼조 conclusion became "현재가가 MA120 위에 있는 동안은…", which stays true whichever way the price goes.
+
 - **build_home** — redesign's homepage was still the original mockup (S&P 500 at 6,449.15, "5% 이상 상승 11개") sitting on the live domain.
 
 Then verify before committing: every homepage row's price equals its card header's, no `href` 404s, no missing `logos/{ticker}.png`, and the chain walks the full set in rank order in both directions.
