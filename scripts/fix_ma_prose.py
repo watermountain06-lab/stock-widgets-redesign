@@ -49,6 +49,11 @@ MA_ROW_BLOCK = re.compile(r'<div class="ma-row">.*?</div></div>', re.S)
 SCRIPT = re.compile(r"<script.*?</script>", re.S)
 CITE = re.compile(r"MA(\d+)(\s*\(\s*\$?)([\d,]+\.\d+)(\s*\))")
 DERIVED = re.compile(r"[+-]?\d+\.\d+\s*%|\$\s?[\d,]+\.\d+")
+# A relationship claim is not a citation. Syncing the value inside "MA5($444.95)
+# 만 상회한다" leaves a freshly-numbered sentence asserting the opposite of the
+# truth, which reads as authored today and is worse than an obviously old
+# number. AMAT, ANET, GE, PM and XOM all came back this way on the first run.
+CLAIM = re.compile(r"상회|하회|웃돌|밑돌|넘어서|위에 있|아래에 있|낮다|높다|정배열|역배열")
 # a citation's own "$1,234.56" matches DERIVED, and so does the next citation's.
 # Testing the raw text made MA120 look derived because MA5 followed it, so every
 # citation is masked out before asking whether a *derived* figure is present.
@@ -77,7 +82,7 @@ def main():
     cards = Path(args.cards_dir)
     data = json.loads((cards / "site_data" / "stocks.json").read_text(encoding="utf-8"))
 
-    changed, stale, skipped, derived, unproven, mixed = [], [], 0, 0, [], []
+    changed, stale, skipped, derived, unproven, mixed, hand = [], [], 0, 0, [], [], []
     for entry in data["tickers"]:
         tk = entry["ticker"]
         path = cards / entry["href"]
@@ -127,11 +132,20 @@ def main():
             a = max(masked.rfind(">", 0, m.start()), masked.rfind('"', 0, m.start())) + 1
             nxt = [x for x in (masked.find("<", m.end()), masked.find('"', m.end()))
                    if x != -1]
-            if DERIVED.search(masked[a:min(nxt) if nxt else len(masked)]):
+            node = masked[a:min(nxt) if nxt else len(masked)]
+            if DERIVED.search(node) or CLAIM.search(node):
                 node_ok = False
                 break
         if not node_ok:
             derived += len(cites)
+            # how many of those the card actually gets wrong today - the queue
+            # for hand rewriting, and the reason --check must still fail.
+            drifted = sum(1 for m in cites
+                          if abs(sum(close[-int(m.group(1)):]) / int(m.group(1))
+                                 - float(m.group(3).replace(",", "")))
+                          / (sum(close[-int(m.group(1)):]) / int(m.group(1))) > TOL)
+            if drifted:
+                hand.append(f"{tk}({drifted})")
             mixed.append(tk)
             continue
 
@@ -164,15 +178,22 @@ def main():
     if args.check:
         print(f"cards quoting an MA their own bars no longer produce: {len(stale)}"
               + (f" - {' '.join(stale)}" if stale else ""))
-        print(f"citations in cards left whole for hand rewrite: {derived}"
+        print(f"citations in cards left whole for hand rewrite (derived or claim-bearing): {derived}"
               f" ({len(mixed)} cards)")
+        if hand:
+            print(f"  STALE and only fixable by hand: {sum(int(x.split('(')[1][:-1]) for x in hand)}"
+                  f" citations in {len(hand)} cards - {' '.join(hand)}")
         for t in unproven:
             print(f"  BARS DISAGREE WITH THE MAINTAINED TABLE, skipped - {t}")
-        return 1 if stale else 0
+        return 1 if stale or hand else 0
     print(f"updated {len(changed)}: {' '.join(changed) or '-'}")
-    print(f"citations in cards left whole for hand rewrite: {derived}"
+    print(f"citations in cards left whole for hand rewrite (derived or claim-bearing): {derived}"
           f" ({len(mixed)} cards)")
     print(f"no bars or no MA table: {skipped}")
+    if hand:
+        print(f"  stale and only fixable by hand: "
+              f"{sum(int(x.split('(')[1][:-1]) for x in hand)} citations in "
+              f"{len(hand)} cards - {' '.join(hand)}")
     for t in unproven:
         print(f"  bars disagree with the maintained table, skipped - {t}")
     return 0
