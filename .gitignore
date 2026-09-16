@@ -1,4 +1,7 @@
-scripts/
+# scripts/ was ignored wholesale, but 420 of its files are tracked anyway - they were
+# force-added one at a time as they were written. The rule stopped protecting anything
+# and only trapped new ones: fix_weighted_avg_text.py, a promotion gate, was silently
+# unversioned until someone checked. __pycache__ has its own rule below.
 data/
 prototypes/
 # Keep Claude's local settings out, but version the /ticker skill: it is the
