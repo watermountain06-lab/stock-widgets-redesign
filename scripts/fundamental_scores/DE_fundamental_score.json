@@ -1,0 +1,68 @@
+{
+  "ticker": "DE",
+  "financialsAsOf": "2025-11-02",
+  "valuationAsOf": "2026-09-14",
+  "valuation": {
+    "combinedStage": 4.2,
+    "axisPoints": 6.6,
+    "axisPointsRaw": 6.599999999999999,
+    "historicalMultipleCoverage": 2,
+    "targetPriceAvailable": true
+  },
+  "health": {
+    "dataQuality": {
+      "currentRatio": "missing",
+      "quickRatio": "missing"
+    },
+    "debtDependency": {
+      "value": 44.0,
+      "points": 2
+    },
+    "interestCoverage": {
+      "value": 2.7,
+      "points": 2
+    },
+    "debtToEquity": {
+      "value": 308.2,
+      "points": 1
+    },
+    "axisPoints": 11.0,
+    "axisPointsRaw": 11.0,
+    "ratiosUsed": 3
+  },
+  "growthProfit": {
+    "dataQuality": {
+      "opMargin": "missing (operatingIncome ends 2024-10-27, revenue ends 2025-11-02 - the filer stopped tagging OperatingIncomeLoss)",
+      "opIncomeCagr": "missing (series ends 2024-10-27, revenue ends 2025-11-02)"
+    },
+    "revenueCagr": {
+      "value": -4.6,
+      "points": 1
+    },
+    "netMargin": {
+      "value": 11.0,
+      "points": 3
+    },
+    "axisPoints": 13.6,
+    "axisPointsRaw": 13.600000000000001,
+    "metricsUsed": 2
+  },
+  "totalScore": 31.2,
+  "grade": "미흡",
+  "axesUsed": 3,
+  "coverageStatus": "partial",
+  "qualityFlags": [
+    "health_ratios_below_gate",
+    "growth_metrics_below_gate"
+  ],
+  "financialsAgeMonths": 10.3,
+  "dataStatus": {
+    "coverageStatus": "partial",
+    "qualityFlags": [
+      "health_ratios_below_gate",
+      "growth_metrics_below_gate"
+    ],
+    "operatingIncomeEstimated": false,
+    "negativeEquity": false
+  }
+}

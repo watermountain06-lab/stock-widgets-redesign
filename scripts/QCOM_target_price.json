@@ -1,0 +1,11 @@
+{
+  "ticker": "QCOM",
+  "currentPrice": 181.97,
+  "targetHighPrice": 400.0,
+  "targetLowPrice": 100.0,
+  "targetMeanPrice": 194.43333,
+  "targetMedianPrice": 175.0,
+  "recommendationKey": "hold",
+  "recommendationMean": 2.56757,
+  "numberOfAnalystOpinions": 30
+}

@@ -1570,5 +1570,300 @@
     },
     "combinedStage": 3,
     "combinedLabel": "적정"
+  },
+  "TMO": {
+    "ticker": "TMO",
+    "asOf": "2026-09-11",
+    "currentPrice": 609.82,
+    "dataQuality": {},
+    "per": {
+      "current": 34.38,
+      "historicalAvg5y": 32.8,
+      "gapPct": 4.8,
+      "stage": 3,
+      "sampleYears": 5
+    },
+    "pbr": {
+      "current": 4.24,
+      "historicalAvg5y": 4.71,
+      "gapPct": -10.0,
+      "stage": 2,
+      "sampleYears": 5
+    },
+    "targetPrice": {
+      "mean": 645.14813,
+      "high": 750.0,
+      "low": 520.0,
+      "upsidePct": 5.8,
+      "stage": 2,
+      "numAnalysts": 27,
+      "recommendationKey": "buy"
+    },
+    "combinedStage": 2,
+    "combinedLabel": "낮음"
+  },
+  "MRVL": {
+    "ticker": "MRVL",
+    "asOf": "2026-09-11",
+    "currentPrice": 236.1,
+    "dataQuality": {
+      "per": "missing (no positive EPS history, or fewer than 3 usable years)"
+    },
+    "pbr": {
+      "current": 14.43,
+      "historicalAvg5y": 4.41,
+      "gapPct": 227.2,
+      "stage": 5,
+      "sampleYears": 5
+    },
+    "targetPrice": {
+      "mean": 285.3031,
+      "high": 400.0,
+      "low": 143.0,
+      "upsidePct": 20.8,
+      "stage": 1,
+      "numAnalysts": 42,
+      "recommendationKey": "strong_buy"
+    },
+    "combinedStage": 3,
+    "combinedLabel": "적정"
+  },
+  "APH": {
+    "ticker": "APH",
+    "asOf": "2026-09-11",
+    "currentPrice": 83.92,
+    "dataQuality": {},
+    "per": {
+      "current": 50.25,
+      "historicalAvg5y": 33.58,
+      "gapPct": 49.6,
+      "stage": 5,
+      "sampleYears": 5
+    },
+    "pbr": {
+      "current": 15.38,
+      "historicalAvg5y": 8.57,
+      "gapPct": 79.4,
+      "stage": 5,
+      "sampleYears": 5
+    },
+    "targetPrice": {
+      "mean": 99.26471,
+      "high": 115.0,
+      "low": 85.0,
+      "upsidePct": 18.3,
+      "stage": 1,
+      "numAnalysts": 17,
+      "recommendationKey": "strong_buy"
+    },
+    "combinedStage": 3,
+    "combinedLabel": "적정"
+  },
+  "TMUS": {
+    "ticker": "TMUS",
+    "asOf": "2026-09-11",
+    "currentPrice": 182.33,
+    "dataQuality": {},
+    "per": {
+      "current": 18.76,
+      "historicalAvg5y": 36.59,
+      "gapPct": -48.7,
+      "stage": 1,
+      "sampleYears": 5
+    },
+    "pbr": {
+      "current": 3.39,
+      "historicalAvg5y": 3.07,
+      "gapPct": 10.4,
+      "stage": 4,
+      "sampleYears": 5
+    },
+    "targetPrice": {
+      "mean": 243.375,
+      "high": 300.0,
+      "low": 169.0,
+      "upsidePct": 33.5,
+      "stage": 1,
+      "numAnalysts": 24,
+      "recommendationKey": "buy"
+    },
+    "combinedStage": 2,
+    "combinedLabel": "낮음"
+  },
+  "QCOM": {
+    "ticker": "QCOM",
+    "asOf": "2026-09-11",
+    "currentPrice": 181.97,
+    "dataQuality": {},
+    "per": {
+      "current": 36.32,
+      "historicalAvg5y": 19.44,
+      "gapPct": 86.9,
+      "stage": 5,
+      "sampleYears": 5
+    },
+    "pbr": {
+      "current": 9.19,
+      "historicalAvg5y": 8.78,
+      "gapPct": 4.7,
+      "stage": 3,
+      "sampleYears": 5
+    },
+    "targetPrice": {
+      "mean": 194.43333,
+      "high": 400.0,
+      "low": 100.0,
+      "upsidePct": 6.8,
+      "stage": 2,
+      "numAnalysts": 30,
+      "recommendationKey": "hold"
+    },
+    "combinedStage": 3,
+    "combinedLabel": "적정"
+  },
+  "STX": {
+    "ticker": "STX",
+    "asOf": "2026-09-11",
+    "currentPrice": 830.17,
+    "dataQuality": {
+      "pbr": "missing (no positive equity/shares history within date tolerance, or fewer than 3 matched years)"
+    },
+    "per": {
+      "current": 59.72,
+      "historicalAvg5y": 38.66,
+      "gapPct": 54.5,
+      "stage": 5,
+      "sampleYears": 4
+    },
+    "targetPrice": {
+      "mean": 1125.0,
+      "high": 1600.0,
+      "low": 700.0,
+      "upsidePct": 35.5,
+      "stage": 1,
+      "numAnalysts": 23,
+      "recommendationKey": "strong_buy"
+    },
+    "combinedStage": 3,
+    "combinedLabel": "적정"
+  },
+  "PEP": {
+    "ticker": "PEP",
+    "asOf": "2026-09-11",
+    "currentPrice": 136.32,
+    "dataQuality": {},
+    "per": {
+      "current": 22.72,
+      "historicalAvg5y": 26.18,
+      "gapPct": -13.2,
+      "stage": 2,
+      "sampleYears": 5
+    },
+    "pbr": {
+      "current": 9.13,
+      "historicalAvg5y": 12.6,
+      "gapPct": -27.6,
+      "stage": 1,
+      "sampleYears": 5
+    },
+    "targetPrice": {
+      "mean": 155.0,
+      "high": 183.0,
+      "low": 124.0,
+      "upsidePct": 13.7,
+      "stage": 2,
+      "numAnalysts": 22,
+      "recommendationKey": "hold"
+    },
+    "combinedStage": 2,
+    "combinedLabel": "낮음"
+  },
+  "SCHW": {
+    "ticker": "SCHW",
+    "asOf": "2026-09-11",
+    "currentPrice": 107.25,
+    "dataQuality": {
+      "pbr": "missing (no positive equity/shares history within date tolerance, or fewer than 3 matched years)"
+    },
+    "per": {
+      "current": 23.06,
+      "historicalAvg5y": 25.37,
+      "gapPct": -9.1,
+      "stage": 2,
+      "sampleYears": 5
+    },
+    "targetPrice": {
+      "mean": 124.95,
+      "high": 145.0,
+      "low": 91.0,
+      "upsidePct": 16.5,
+      "stage": 1,
+      "numAnalysts": 20,
+      "recommendationKey": "buy"
+    },
+    "combinedStage": 2,
+    "combinedLabel": "낮음"
+  },
+  "DIS": {
+    "ticker": "DIS",
+    "asOf": "2026-09-14",
+    "currentPrice": 108.59,
+    "dataQuality": {},
+    "per": {
+      "current": 15.85,
+      "historicalAvg5y": 66.2,
+      "gapPct": -76.1,
+      "stage": 1,
+      "sampleYears": 5
+    },
+    "pbr": {
+      "current": 1.76,
+      "historicalAvg5y": 2.1,
+      "gapPct": -16.1,
+      "stage": 2,
+      "sampleYears": 5
+    },
+    "targetPrice": {
+      "mean": 127.21548,
+      "high": 144.0,
+      "low": 88.0,
+      "upsidePct": 17.2,
+      "stage": 1,
+      "numAnalysts": 31,
+      "recommendationKey": "strong_buy"
+    },
+    "combinedStage": 1,
+    "combinedLabel": "매우낮음"
+  },
+  "DE": {
+    "ticker": "DE",
+    "asOf": "2026-09-14",
+    "currentPrice": 681.46,
+    "dataQuality": {},
+    "per": {
+      "current": 36.84,
+      "historicalAvg5y": 17.28,
+      "gapPct": 113.3,
+      "stage": 5,
+      "sampleYears": 5
+    },
+    "pbr": {
+      "current": 7.1,
+      "historicalAvg5y": 5.17,
+      "gapPct": 37.3,
+      "stage": 5,
+      "sampleYears": 5
+    },
+    "targetPrice": {
+      "mean": 688.4426,
+      "high": 813.18,
+      "low": 500.0,
+      "upsidePct": 1.0,
+      "stage": 3,
+      "numAnalysts": 23,
+      "recommendationKey": "buy"
+    },
+    "combinedStage": 4,
+    "combinedLabel": "높음"
   }
 }

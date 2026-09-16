@@ -47,7 +47,7 @@
 </style>
 <link rel="stylesheet" href="styles.css?v=restore-source-4">
 <link rel="stylesheet" href="header.css?v=1">
-<script src="data-status.js?v=restore-source-4" defer></script>
+<script src="data-status.js?v=main-81ab160" defer></script>
 <link rel="stylesheet" href="theme.css?v=2">
 <script src="theme.js?v=2"></script>
 </head>
@@ -107,7 +107,7 @@
         <div class="tab-pillbar" id="tab-bar">
           <button class="tab-btn active" data-view="rank">순위별</button>
           <button class="tab-btn" data-view="sector">업종별</button>
-          <button class="tab-btn" data-view="attract">매력도별 <span class="tab-pill">준비중</span></button>
+          <button class="tab-btn" data-view="attract">매력도별</button>
           <button class="tab-btn" data-view="change">등락률별</button>
         </div>
         <div class="toolbar-tools" style="display:flex;align-items:center;gap:14px;">
@@ -143,19 +143,19 @@
 
 </div>
 
-<script src="stock-data.js?v=clean-labels-3"></script>
+<script src="stock-data.js?v=main-81ab160"></script>
 <script src="reading.js?v=resume-only"></script>
 <script src="navigation.js?v=local-20260913-2"></script>
 <script>
 (function(){
 
-  // 목업 데이터 — 아래 DATA(가격/등락률/시가총액)와 매크로 지표·스탯카드 숫자(11/7/9/6)·날짜는
-  // 전부 레이아웃 시연용 예시 값이며 실제 계산된 수치가 아님. href만 실제 카드 페이지로 연결됨.
+  // 종목 시세·평가·점수는 main의 저장 데이터. 매크로 지표와 Today 편성 날짜는 예시.
   var DATA = window.StockData.stocks;
 
   document.getElementById('ticker-count').textContent = DATA.length;
 
   function changeCell(c){
+    if(!Number.isFinite(c))return '<span>—</span>';
     var color = c >= 0 ? 'var(--up)' : 'var(--down)';
     var sign = c >= 0 ? '+' : '&minus;';
     return '<span class="num" style="font-size:14px;font-weight:700;color:'+color+';">'+sign+Math.abs(c).toFixed(2)+'%</span>';
@@ -174,6 +174,7 @@
       + '<small>'+window.StockData.quoteLabel(d)+' '+ (d.quoteAsOf ? 'Twelve Data · '+d.quoteAsOf : '')+'</small>'
       + '<div class="card-bottom"><span>시가총액 <b class="num">'+d.marketCap+'</b></span><span>분석 보기 ↗</span></div></article>';
   }
+  function valuationCell(d){return (d.tier||'미평가')+(d.tierConflict?' · 평가 충돌':'')+'<small>재무점수 '+(d.score==null?'미평가':d.score.toFixed(1))+(d.scoreFlags.length?' · 제한 사항: '+d.scoreFlags.join(', '):'')+'</small>';}
   function render() {
     var query = document.getElementById('stock-search').value.trim().toLowerCase();
     var data = DATA.filter(function(d){return (d.ticker+' '+d.name).toLowerCase().includes(query);});
@@ -181,16 +182,17 @@
     tabs.forEach(function(t){var active=t.dataset.view===view;t.classList.toggle('active',active);t.setAttribute('aria-pressed',String(active));});
     panel.classList.toggle('table-view',view!=='rank');
     if(view==='change') data.sort(function(a,b){return b.change-a.change;});
+    if(view==='attract') data.sort((a,b)=>(b.score ?? -Infinity)-(a.score ?? -Infinity)||a.rank-b.rank);
     if(view==='rank') panel.innerHTML=data.map(card).join('');
     else {
       if(view==='sector') data.sort((a,b)=>a.sector.localeCompare(b.sector,'ko')||a.rank-b.rank);
       const changeRanks=new Map([...DATA].sort((a,b)=>b.change-a.change).map((d,i)=>[d.ticker,i+1]));
-      const columns=[['rank',view==='change'?'등락 순위':'시총 순위'],['ticker','종목'],['sector','업종'],['price','주가'],['change','등락률'],[view==='attract'?'valuation':'marketCap',view==='attract'?'매력도':'시가총액']];
+      const columns=[['rank',view==='change'?'등락 순위':'시총 순위'],['ticker','종목'],['sector','업종'],['price','주가'],['change','등락률'],[view==='attract'?'valuation':'marketCap',view==='attract'?'평가 · 재무점수':'시가총액']];
 
       function numeric(value){const n=parseFloat(String(value).replace(/[^0-9.-]/g,''));return n*(String(value).includes('T')?1e12:String(value).includes('B')?1e9:String(value).includes('M')?1e6:1);}
       function sortValue(d){if(sortKey==='rank')return view==='change'?changeRanks.get(d.ticker):d.rank;if(sortKey==='price'||sortKey==='marketCap')return numeric(d[sortKey]);return d[sortKey]??'';}
       if(sortKey)data.sort((a,b)=>{const av=sortValue(a),bv=sortValue(b);return sortDirection*(typeof av==='number'?av-bv:String(av).localeCompare(String(bv),'ko'))||a.rank-b.rank;});
-      panel.innerHTML='<div class="stock-table-scroll"><table class="stock-table"><caption>'+({sector:'업종별 · 시가총액 순위',change:'등락률 순위 · 등록 종목 기준',attract:'매력도 평가 준비 중 · 시가총액 순위 참고'})[view]+'</caption><thead><tr>'+columns.map(([key,label])=>'<th scope="col" aria-sort="'+(sortKey===key?(sortDirection===1?'ascending':'descending'):'none')+'">'+(key==='valuation'?label:'<button type="button" data-sort="'+key+'">'+label+' <span aria-hidden="true">'+(sortKey===key?(sortDirection===1?'↑':'↓'):'↕')+'</span></button>')+'</th>').join('')+'</tr></thead><tbody>'+data.map(d=>'<tr><td>'+(view==='change'?changeRanks.get(d.ticker):d.rank)+'위</td><td><a href="'+d.href+'"><strong>'+d.ticker+'</strong><small>'+d.name+'</small></a></td><td>'+d.sector+'</td><td>'+d.price+'</td><td>'+changeCell(d.change)+'</td><td>'+(view==='attract'?'미평가':d.marketCap)+'</td></tr>').join('')+'</tbody></table></div>';
+      panel.innerHTML='<div class="stock-table-scroll"><table class="stock-table"><caption>'+({sector:'업종별 · 시가총액 순위',change:'등락률 순위 · 등록 종목 기준',attract:'저장 평가 · 재무점수 높은 순 · 평가·재무 기준일은 상세 분석 참고'})[view]+'</caption><thead><tr>'+columns.map(([key,label])=>'<th scope="col" aria-sort="'+(sortKey===key?(sortDirection===1?'ascending':'descending'):'none')+'">'+(key==='valuation'?label:'<button type="button" data-sort="'+key+'">'+label+' <span aria-hidden="true">'+(sortKey===key?(sortDirection===1?'↑':'↓'):'↕')+'</span></button>')+'</th>').join('')+'</tr></thead><tbody>'+data.map(d=>'<tr><td>'+(view==='change'?changeRanks.get(d.ticker):d.rank)+'위</td><td><a href="'+d.href+'"><strong>'+d.ticker+'</strong><small>'+d.name+'</small></a></td><td>'+d.sector+'</td><td>'+d.price+'</td><td>'+changeCell(d.change)+'</td><td>'+(view==='attract'?valuationCell(d):d.marketCap)+'</td></tr>').join('')+'</tbody></table></div>';
     }
     if(!data.length) panel.innerHTML='<div class="empty-state">표시할 종목이 없습니다</div>';
   }
@@ -209,8 +211,8 @@
     const list=selectedStocks(category);
     discoveryIndex=Math.min(discoveryIndex,Math.max(0,list.length-1));
     document.getElementById('discovery-position').textContent=list.length?`${discoveryIndex+1} / ${list.length} 종목`:'해당 종목 없음';
-    document.getElementById('discovery-tabs').innerHTML=categories.map(([key,label])=>'<button data-category="'+key+'" aria-pressed="'+(key===category)+'">'+label+' <small>'+(key==='value'||key==='deep'?'준비 중':selectedStocks(key).length)+'</small></button>').join('');
-    document.getElementById('discovery-note').textContent=category==='value'||category==='deep'?'가치 평가 기준과 재무 데이터 연결 후 표시됩니다.':'등록 종목 기준 · 종목을 모두 확인한 뒤 다음 분류로 이동';
+    document.getElementById('discovery-tabs').innerHTML=categories.map(([key,label])=>'<button data-category="'+key+'" aria-pressed="'+(key===category)+'">'+label+' <small>'+selectedStocks(key).length+'</small></button>').join('');
+    document.getElementById('discovery-note').textContent=category==='value'||category==='deep'?'동일 평가 등급만 분류 · 복합 등급 및 평가 충돌 종목 제외':'등록 종목 기준 · 종목을 모두 확인한 뒤 다음 분류로 이동';
     document.getElementById('discovery-grid').innerHTML=list.slice(discoveryIndex,discoveryIndex+1).map(d=>'<a class="discovery-card" href="'+d.href+'"><img src="logos/'+d.ticker.toLowerCase()+'.png" alt=""><span><strong>'+d.ticker+'</strong><small>'+d.name+'</small></span><span class="discovery-quote"><strong>'+d.price+'</strong>'+changeCell(d.change)+'</span><small class="selection-reason">'+window.StockData.quoteLabel(d)+' '+'</small></a>').join('')||'<p class="empty-state">현재 조건에 해당하는 종목이 없습니다.</p>';
   }
   document.getElementById('discovery-tabs').addEventListener('click',e=>{const button=e.target.closest('[data-category]');if(button){category=button.dataset.category;discoveryIndex=0;discoveryElapsed=0;renderDiscovery();}});

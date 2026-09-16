@@ -1,0 +1,11 @@
+{
+  "ticker": "TMUS",
+  "currentPrice": 182.33,
+  "targetHighPrice": 300.0,
+  "targetLowPrice": 169.0,
+  "targetMeanPrice": 243.375,
+  "targetMedianPrice": 235.0,
+  "recommendationKey": "buy",
+  "recommendationMean": 1.7037,
+  "numberOfAnalystOpinions": 24
+}

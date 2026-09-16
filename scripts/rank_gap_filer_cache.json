@@ -1,0 +1,20 @@
+{
+ "ARM": false,
+ "AZN": false,
+ "BABA": false,
+ "BHP": false,
+ "DE": true,
+ "DIS": true,
+ "HSBC": false,
+ "MUFG": false,
+ "NVO": false,
+ "NVS": false,
+ "RY": false,
+ "SAN": false,
+ "SAP": false,
+ "SHEL": false,
+ "T": true,
+ "TD": false,
+ "TM": false,
+ "TTE": false
+}

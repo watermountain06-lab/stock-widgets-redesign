@@ -36,18 +36,13 @@
     "ratiosUsed": 5
   },
   "growthProfit": {
-    "dataQuality": {},
+    "dataQuality": {
+      "opMargin": "missing (operatingIncome ends 2012-12-31, revenue ends 2025-12-31 - the filer stopped tagging OperatingIncomeLoss)",
+      "opIncomeCagr": "missing (series ends 2012-12-31, revenue ends 2025-12-31)"
+    },
     "revenueCagr": {
       "value": 16.3,
       "points": 4
-    },
-    "opIncomeCagr": {
-      "value": 13.6,
-      "points": 3
-    },
-    "opMargin": {
-      "value": 49.9,
-      "points": 5
     },
     "netMargin": {
       "value": 19.0,
@@ -55,17 +50,21 @@
     },
     "axisPoints": 27.2,
     "axisPointsRaw": 27.200000000000003,
-    "metricsUsed": 4
+    "metricsUsed": 2
   },
   "totalScore": 63.5,
   "grade": "양호",
   "axesUsed": 3,
-  "coverageStatus": "full",
-  "qualityFlags": [],
+  "coverageStatus": "partial",
+  "qualityFlags": [
+    "growth_metrics_below_gate"
+  ],
   "financialsAgeMonths": 8.3,
   "dataStatus": {
-    "coverageStatus": "full",
-    "qualityFlags": [],
+    "coverageStatus": "partial",
+    "qualityFlags": [
+      "growth_metrics_below_gate"
+    ],
     "operatingIncomeEstimated": false,
     "negativeEquity": false
   }

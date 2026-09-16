@@ -1,0 +1,72 @@
+{
+  "ticker": "TMO",
+  "financialsAsOf": "2025-12-31",
+  "valuationAsOf": "2026-09-11",
+  "valuation": {
+    "combinedStage": 2.3,
+    "axisPoints": 22.3,
+    "axisPointsRaw": 22.275000000000002,
+    "historicalMultipleCoverage": 2,
+    "targetPriceAvailable": true
+  },
+  "health": {
+    "dataQuality": {},
+    "currentRatio": {
+      "value": 189.0,
+      "points": 3
+    },
+    "quickRatio": {
+      "value": 153.3,
+      "points": 4
+    },
+    "debtDependency": {
+      "value": 38.7,
+      "points": 2
+    },
+    "interestCoverage": {
+      "value": 5.5,
+      "points": 3
+    },
+    "debtToEquity": {
+      "value": 106.6,
+      "points": 2
+    },
+    "axisPoints": 18.5,
+    "axisPointsRaw": 18.48,
+    "ratiosUsed": 5
+  },
+  "growthProfit": {
+    "dataQuality": {},
+    "revenueCagr": {
+      "value": -0.3,
+      "points": 1
+    },
+    "opIncomeCagr": {
+      "value": -2.6,
+      "points": 1
+    },
+    "opMargin": {
+      "value": 17.4,
+      "points": 3
+    },
+    "netMargin": {
+      "value": 15.0,
+      "points": 4
+    },
+    "axisPoints": 15.3,
+    "axisPointsRaw": 15.3,
+    "metricsUsed": 4
+  },
+  "totalScore": 56.1,
+  "grade": "보통",
+  "axesUsed": 3,
+  "coverageStatus": "full",
+  "qualityFlags": [],
+  "financialsAgeMonths": 8.3,
+  "dataStatus": {
+    "coverageStatus": "full",
+    "qualityFlags": [],
+    "operatingIncomeEstimated": false,
+    "negativeEquity": false
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "ticker": "STX",
+  "currentPrice": 830.17,
+  "targetHighPrice": 1600.0,
+  "targetLowPrice": 700.0,
+  "targetMeanPrice": 1125.0,
+  "targetMedianPrice": 1150.0,
+  "recommendationKey": "strong_buy",
+  "recommendationMean": 1.44,
+  "numberOfAnalystOpinions": 23
+}

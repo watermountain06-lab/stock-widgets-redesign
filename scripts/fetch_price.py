@@ -78,13 +78,25 @@ def monthly_ohlc(bars):
     return list(months.values())
 
 
+# A year of US trading sessions. Every other consumer of a 52-week figure in this
+# project uses this window: compute_technical_score's position52w, update_cards'
+# window_stats, and the card header's high/low line.
+SESSIONS_PER_YEAR = 252
+
+
 def summarize(ticker, bars):
     closes = [b["c"] for b in bars]
-    highs = [b["h"] for b in bars]
-    lows = [b["l"] for b in bars]
     cur = closes[-1]
-    hi_52w, hi_date = max(zip(highs, (b["date"] for b in bars)))
-    lo_52w, lo_date = min(zip(lows, (b["date"] for b in bars)))
+    # These fields took their extremes over every bar handed in, and the caller hands in
+    # five years - so "high52w" held the five-year high in 71 of 73 files. Nothing reads
+    # them in code, which is why it went unnoticed, but every build agent reads them and
+    # has to work out for itself that they are wrong. DIS shipped 185.90/78.73 here
+    # against a real 52-week 117.09/92.19. Take the window the name promises.
+    window = bars[-SESSIONS_PER_YEAR:]
+    highs = [b["h"] for b in window]
+    lows = [b["l"] for b in window]
+    hi_52w, hi_date = max(zip(highs, (b["date"] for b in window)))
+    lo_52w, lo_date = min(zip(lows, (b["date"] for b in window)))
     return {
         "ticker": ticker,
         "asOf": bars[-1]["date"],

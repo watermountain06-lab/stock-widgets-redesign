@@ -20,8 +20,11 @@ available from an unattended pipeline - see the project plan for why this is
 an intentional v1 scope cut, not an oversight.
 """
 import argparse
+import ast
 import json
+import re
 import sys
+from pathlib import Path
 
 
 def nearest_price_on_or_before(daily_bars, target_date):
@@ -118,6 +121,15 @@ def pair_by_nearest_date(series_a, series_b, tolerance_days=120):
 MIN_HISTORY_YEARS = 3  # below this, a "5-year average" is more noise than signal
 
 
+def avg_key(series):
+    """The average is over however many fiscal years survived, and MIN_HISTORY_YEARS is 3.
+    Naming it historicalAvg5y regardless made a 4-sample average on STX read as five years
+    of history; only sampleYears, two lines below, said otherwise. So the 5y name is used
+    only when the sample really is five, and a short one gets a name that does not lie.
+    """
+    return "historicalAvg5y" if len(series) == 5 else "historicalAvg"
+
+
 def compute_signal(ticker, price_data, financials_data, target_data=None,
                     weight_component_a=0.6, weight_component_b=0.4):
     current_price = price_data["current"]
@@ -141,7 +153,7 @@ def compute_signal(ticker, price_data, financials_data, target_data=None,
             hist_avg_per = sum(m for _, m in per_series) / len(per_series)
             per_gap_pct = round((current_per - hist_avg_per) / hist_avg_per * 100, 1)
             result["per"] = {
-                "current": current_per, "historicalAvg5y": round(hist_avg_per, 2),
+                "current": current_per, avg_key(per_series): round(hist_avg_per, 2),
                 "gapPct": per_gap_pct, "stage": stage_from_gap_pct(per_gap_pct),
                 "sampleYears": len(per_series),
             }
@@ -157,7 +169,7 @@ def compute_signal(ticker, price_data, financials_data, target_data=None,
             hist_avg_pbr = sum(m for _, m in pbr_series) / len(pbr_series)
             pbr_gap_pct = round((current_pbr - hist_avg_pbr) / hist_avg_pbr * 100, 1)
             result["pbr"] = {
-                "current": current_pbr, "historicalAvg5y": round(hist_avg_pbr, 2),
+                "current": current_pbr, avg_key(pbr_series): round(hist_avg_pbr, 2),
                 "gapPct": pbr_gap_pct, "stage": stage_from_gap_pct(pbr_gap_pct),
                 "sampleYears": len(pbr_series),
             }
@@ -195,6 +207,88 @@ def compute_signal(ticker, price_data, financials_data, target_data=None,
     return result
 
 
+def split_factor_after(filed, splits):
+    """Cumulative split factor for values filed before those splits took effect."""
+    f = 1.0
+    for date, ratio in splits:
+        if filed and str(date) > filed:
+            f *= float(ratio)
+    return f
+
+
+def correct_for_splits(ticker, financials):
+    """Put every filed per-share figure and share count on today's split basis.
+
+    EDGAR restates only the comparative years a given filing actually shows, so an
+    as-filed annual series is internally MIXED when a split falls inside it. KLAC's
+    file holds FY2022 21.92 and FY2023 24.15 (filed before the 2026-06-12 10:1)
+    beside FY2024-26 at 2.03/3.04/3.66 (filed after) - a tenfold step inside one
+    series. compute_multiple_series then divides a split-ADJUSTED historical price
+    by that unadjusted EPS, so the contaminated years' multiples come out low by the
+    split factor and drag the 5-year average down. No error, no warning.
+
+    Each value is scaled by the splits effective after its own FILED date: per-share
+    figures divided, share counts multiplied.
+    """
+    try:
+        src = (Path(__file__).resolve().parent / "fetch_eps_history.py").read_text(encoding="utf-8")
+        table = ast.literal_eval(re.search(r"KNOWN_SPLITS\s*=\s*\{.*?\n\}", src, re.S).group(0).split("=", 1)[1].strip())
+    except Exception:
+        return financials, []
+    splits = table.get(ticker) or []
+    if not splits:
+        return financials, []
+
+    PER_SHARE = ("epsDiluted", "epsBasic", "dividendPerShare")
+    COUNTS = ("sharesOutstanding",)
+    out = json.loads(json.dumps(financials))
+    notes = []
+    for tag in PER_SHARE + COUNTS:
+        block = out.get(tag)
+        if not isinstance(block, dict):
+            continue
+        for bucket in ("annual", "latestQuarter"):
+            rows = block.get(bucket)
+            rows = rows if isinstance(rows, list) else ([rows] if isinstance(rows, dict) else [])
+            for r in rows:
+                f = split_factor_after(r.get("filed"), splits)
+                if f == 1.0 or not isinstance(r.get("val"), (int, float)):
+                    continue
+                r["val"] = r["val"] * f if tag in COUNTS else r["val"] / f
+                notes.append(f"{tag} {r.get('end', '?')[:10]} /{f:g}" if tag in PER_SHARE
+                             else f"{tag} {r.get('end', '?')[:10]} x{f:g}")
+    return out, notes
+
+
+def split_after_filing(ticker, financials):
+    """Refuse a ticker whose filed per-share history predates a split the price already reflects.
+
+    Amphenol split 2:1 on 2026-09-03; its most recent annual figures were filed 2026-02-11 and
+    have never been restated, so this script happily returned PER 25.13x against a true 50.3x.
+    There is no error and no warning - the price comes from one file and the EPS from another,
+    and neither knows a split happened between them. CrowdStrike is in the same position
+    (4:1 on 2026-07-02, annuals filed 2026-03-05) and escaped only because its EPS history was
+    rejected as unusable for an unrelated reason.
+    """
+    try:
+        src = (Path(__file__).resolve().parent / "fetch_eps_history.py").read_text(encoding="utf-8")
+        table = ast.literal_eval(re.search(r"KNOWN_SPLITS\s*=\s*\{.*?\n\}", src, re.S).group(0).split("=", 1)[1].strip())
+    except Exception:
+        return None                      # no table to check against; stay out of the way
+    splits = table.get(ticker) or []
+    if not splits:
+        return None
+    filed = [x.get("filed") for x in (financials.get("revenue") or {}).get("annual", []) if x.get("filed")]
+    if not filed:
+        return None
+    latest = max(filed)
+    after = [s for s in splits if str(s[0]) > latest]
+    if not after:
+        return None
+    return (f"latest annual financials were filed {latest}, but a split is recorded after that: "
+            + ", ".join(f"{d} {r}:1" for d, r in after))
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("ticker")
@@ -202,6 +296,12 @@ def main():
     ap.add_argument("--financials", required=True, help="fetch_financials.py --years 5 output")
     ap.add_argument("--target", default=None, help="fetch_target_price.py output (optional)")
     ap.add_argument("--out", default=None)
+    ap.add_argument("--no-split-correction", action="store_true",
+                    help="do not put filed per-share values on today's split basis "
+                         "(use when the financials passed in are already corrected)")
+    ap.add_argument("--allow-split-gap", action="store_true",
+                    help="proceed even though a known split postdates the filed financials "
+                         "(use only when the financials passed in are already split-corrected)")
     args = ap.parse_args()
 
     with open(args.price) as f:
@@ -215,6 +315,18 @@ def main():
                 target_data = json.load(f)
         except FileNotFoundError:
             print(f"warning: {args.target} not found, proceeding without target price", file=sys.stderr)
+
+    if not args.no_split_correction:
+        financials_data, notes = correct_for_splits(args.ticker.upper(), financials_data)
+        if notes:
+            print(f"split-corrected {len(notes)} filed values onto today's basis: "
+                  + ", ".join(notes[:6]) + (" ..." if len(notes) > 6 else ""), file=sys.stderr)
+    stale = split_after_filing(args.ticker.upper(), financials_data)
+    if stale and not args.allow_split_gap and args.no_split_correction:
+        sys.exit(f"{args.ticker.upper()}: {stale}\n"
+                 "The price is post-split and the filed per-share figures are not, so every\n"
+                 "historical multiple would be wrong by the split factor. Drop\n"
+                 "--no-split-correction to let this script put them on today's basis.")
 
     result = compute_signal(args.ticker.upper(), price_data, financials_data, target_data)
 

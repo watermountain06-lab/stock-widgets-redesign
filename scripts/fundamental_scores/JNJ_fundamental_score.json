@@ -34,36 +34,35 @@
     "ratiosUsed": 4
   },
   "growthProfit": {
-    "dataQuality": {},
+    "dataQuality": {
+      "opMargin": "missing (operatingIncome ends 2014-12-28, revenue ends 2025-12-28 - the filer stopped tagging OperatingIncomeLoss)",
+      "opIncomeCagr": "missing (series ends 2014-12-28, revenue ends 2025-12-28)"
+    },
     "revenueCagr": {
       "value": 5.6,
-      "points": 3
-    },
-    "opIncomeCagr": {
-      "value": 16.2,
-      "points": 3
-    },
-    "opMargin": {
-      "value": 22.9,
       "points": 3
     },
     "netMargin": {
       "value": 28.5,
       "points": 5
     },
-    "axisPoints": 23.8,
-    "axisPointsRaw": 23.799999999999997,
-    "metricsUsed": 4
+    "axisPoints": 27.2,
+    "axisPointsRaw": 27.200000000000003,
+    "metricsUsed": 2
   },
-  "totalScore": 47.7,
+  "totalScore": 51.1,
   "grade": "보통",
   "axesUsed": 3,
-  "coverageStatus": "full",
-  "qualityFlags": [],
+  "coverageStatus": "partial",
+  "qualityFlags": [
+    "growth_metrics_below_gate"
+  ],
   "financialsAgeMonths": 8.4,
   "dataStatus": {
-    "coverageStatus": "full",
-    "qualityFlags": [],
+    "coverageStatus": "partial",
+    "qualityFlags": [
+      "growth_metrics_below_gate"
+    ],
     "operatingIncomeEstimated": false,
     "negativeEquity": false
   }

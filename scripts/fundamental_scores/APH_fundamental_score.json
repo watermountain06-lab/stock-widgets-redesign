@@ -1,0 +1,72 @@
+{
+  "ticker": "APH",
+  "financialsAsOf": "2025-12-31",
+  "valuationAsOf": "2026-09-11",
+  "valuation": {
+    "combinedStage": 3.4,
+    "axisPoints": 13.2,
+    "axisPointsRaw": 13.200000000000001,
+    "historicalMultipleCoverage": 2,
+    "targetPriceAvailable": true
+  },
+  "health": {
+    "dataQuality": {},
+    "currentRatio": {
+      "value": 297.9,
+      "points": 4
+    },
+    "quickRatio": {
+      "value": 247.6,
+      "points": 4
+    },
+    "debtDependency": {
+      "value": 9.8,
+      "points": 4
+    },
+    "interestCoverage": {
+      "value": 16.0,
+      "points": 4
+    },
+    "debtToEquity": {
+      "value": 169.4,
+      "points": 2
+    },
+    "axisPoints": 23.8,
+    "axisPointsRaw": 23.759999999999998,
+    "ratiosUsed": 5
+  },
+  "growthProfit": {
+    "dataQuality": {},
+    "revenueCagr": {
+      "value": 22.3,
+      "points": 4
+    },
+    "opIncomeCagr": {
+      "value": 31.4,
+      "points": 4
+    },
+    "opMargin": {
+      "value": 25.4,
+      "points": 4
+    },
+    "netMargin": {
+      "value": 18.5,
+      "points": 4
+    },
+    "axisPoints": 27.2,
+    "axisPointsRaw": 27.200000000000003,
+    "metricsUsed": 4
+  },
+  "totalScore": 64.2,
+  "grade": "양호",
+  "axesUsed": 3,
+  "coverageStatus": "full",
+  "qualityFlags": [],
+  "financialsAgeMonths": 8.3,
+  "dataStatus": {
+    "coverageStatus": "full",
+    "qualityFlags": [],
+    "operatingIncomeEstimated": false,
+    "negativeEquity": false
+  }
+}

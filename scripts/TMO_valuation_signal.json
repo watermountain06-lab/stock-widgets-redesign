@@ -1,0 +1,31 @@
+{
+  "ticker": "TMO",
+  "asOf": "2026-09-11",
+  "currentPrice": 609.82,
+  "dataQuality": {},
+  "per": {
+    "current": 34.38,
+    "historicalAvg5y": 32.8,
+    "gapPct": 4.8,
+    "stage": 3,
+    "sampleYears": 5
+  },
+  "pbr": {
+    "current": 4.24,
+    "historicalAvg5y": 4.71,
+    "gapPct": -10.0,
+    "stage": 2,
+    "sampleYears": 5
+  },
+  "targetPrice": {
+    "mean": 645.14813,
+    "high": 750.0,
+    "low": 520.0,
+    "upsidePct": 5.8,
+    "stage": 2,
+    "numAnalysts": 27,
+    "recommendationKey": "buy"
+  },
+  "combinedStage": 2,
+  "combinedLabel": "낮음"
+}

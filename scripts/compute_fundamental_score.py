@@ -291,8 +291,22 @@ def compute_growth_profit_axis(fin, config, op_income_annual, op_income_estimate
     net_income_annual = fin.get("netIncomeAttributableToParent", {}).get("annual") or fin["netIncome"]["annual"]
 
     latest_revenue = latest_duration(revenue_annual)
-    latest_op_income = latest_duration(op_income_annual)
     latest_net_income = latest_duration(net_income_annual)
+    # Same defect instant_pair() was written for, on the income statement instead of the
+    # balance sheet, and it went unfixed because the lesson was applied only where it was
+    # found. OperatingIncomeLoss is a tag many filers abandon: KLA's stops at FY2014, GE's
+    # and Berkshire's at FY2012, J&J's at FY2014 - while revenue runs to the current year.
+    # Dividing one by the other across that gap printed an operating margin of 5.7% for KLA
+    # (real: about 40%), 49.9% for GE, and a plausible-looking 22.9% for J&J that was FY2014
+    # income over FY2025 revenue. Nothing flagged it, on four live cards.
+    op_end = latest_instant(op_income_annual) and max(
+        (e["end"] for e in op_income_annual if e.get("val") is not None), default=None)
+    rev_end = max((e["end"] for e in revenue_annual if e.get("val") is not None), default=None)
+    latest_op_income = latest_duration(op_income_annual) if op_end == rev_end else None
+    if op_end is not None and rev_end is not None and op_end != rev_end:
+        out["dataQuality"]["opMargin"] = (
+            f"missing (operatingIncome ends {op_end}, revenue ends {rev_end} - "
+            "the filer stopped tagging OperatingIncomeLoss)")
 
     rev = score_growth_metric(revenue_annual, target_years, g["revenueCagr"]["buckets"])
     if rev is not None:
@@ -301,18 +315,24 @@ def compute_growth_profit_axis(fin, config, op_income_annual, op_income_estimate
     else:
         out["dataQuality"]["revenueCagr"] = "missing (이력 부족)"
 
-    op = score_growth_metric(op_income_annual, target_years, g["opIncomeCagr"]["buckets"])
+    # The CAGR is internally consistent - both endpoints come from the same series - but on
+    # a series that stopped years ago it describes a window that ended then, printed beside
+    # current-year metrics. KLA's "영업이익 CAGR -12.7%" measures a period ending FY2014.
+    op = (score_growth_metric(op_income_annual, target_years, g["opIncomeCagr"]["buckets"])
+          if op_end == rev_end else None)
+    if op is None and op_end is not None and rev_end is not None and op_end != rev_end:
+        out["dataQuality"]["opIncomeCagr"] = f"missing (series ends {op_end}, revenue ends {rev_end})"
     if op is not None:
         out["opIncomeCagr"] = op
         raw_points.append(op["points"])
-    else:
+    elif "opIncomeCagr" not in out["dataQuality"]:
         out["dataQuality"]["opIncomeCagr"] = "missing (이력 부족)"
 
     if latest_revenue and latest_op_income is not None:
         v = round(latest_op_income / latest_revenue * 100, 1)
         out["opMargin"] = {"value": v, "points": bucket_points(v, g["opMargin"]["buckets"])}
         raw_points.append(out["opMargin"]["points"])
-    else:
+    elif "opMargin" not in out["dataQuality"]:
         out["dataQuality"]["opMargin"] = "missing"
 
     if latest_revenue and latest_net_income is not None:

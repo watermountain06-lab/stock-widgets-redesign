@@ -1,0 +1,72 @@
+{
+  "ticker": "QCOM",
+  "financialsAsOf": "2025-09-28",
+  "valuationAsOf": "2026-09-11",
+  "valuation": {
+    "combinedStage": 3.2,
+    "axisPoints": 14.8,
+    "axisPointsRaw": 14.849999999999998,
+    "historicalMultipleCoverage": 2,
+    "targetPriceAvailable": true
+  },
+  "health": {
+    "dataQuality": {},
+    "currentRatio": {
+      "value": 281.6,
+      "points": 4
+    },
+    "quickRatio": {
+      "value": 210.3,
+      "points": 4
+    },
+    "debtDependency": {
+      "value": 29.5,
+      "points": 3
+    },
+    "interestCoverage": {
+      "value": 18.6,
+      "points": 4
+    },
+    "debtToEquity": {
+      "value": 136.5,
+      "points": 2
+    },
+    "axisPoints": 22.4,
+    "axisPointsRaw": 22.44,
+    "ratiosUsed": 5
+  },
+  "growthProfit": {
+    "dataQuality": {},
+    "revenueCagr": {
+      "value": 0.1,
+      "points": 2
+    },
+    "opIncomeCagr": {
+      "value": -8.0,
+      "points": 1
+    },
+    "opMargin": {
+      "value": 27.9,
+      "points": 4
+    },
+    "netMargin": {
+      "value": 12.5,
+      "points": 3
+    },
+    "axisPoints": 17.0,
+    "axisPointsRaw": 17.0,
+    "metricsUsed": 4
+  },
+  "totalScore": 54.3,
+  "grade": "보통",
+  "axesUsed": 3,
+  "coverageStatus": "full",
+  "qualityFlags": [],
+  "financialsAgeMonths": 11.4,
+  "dataStatus": {
+    "coverageStatus": "full",
+    "qualityFlags": [],
+    "operatingIncomeEstimated": false,
+    "negativeEquity": false
+  }
+}
