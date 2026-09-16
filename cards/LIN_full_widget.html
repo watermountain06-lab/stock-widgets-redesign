@@ -403,7 +403,7 @@
 
     <div class="scorecard-flags">
       <span class="risk-flag" data-tooltip="현재가 $466.22가 MA200($481.54)을 3.2% 하회한다. 다만 MA150($499.01)이 아직 MA200 위에 있고 MA200 자체도 21거래일 전 $475.55에서 올라오는 중이어서, 장기 배열이 완전히 무너진 상태는 아니다.">⚠ 장기추세이탈</span>
-      <span class="risk-flag" data-tooltip="현재가 $466.22가 MA50($497.11)을 6.2% 하회한다. MA50은 21거래일 전 $511.30에서 내려왔다. 7월 7일 고점 이후에도 7거래일은 MA50 위에 있었지만 7월 17일 내준 뒤로는 40거래일 동안 한 번도 되찾지 못했다.">⚠ 단기추세이탈</span>
+      <span class="risk-flag" data-tooltip="현재가는 MA50을 큰 폭으로 하회하고 있고 MA50 자체도 21거래일 전보다 내려와 있다(값은 위 블록). 7월 7일 고점 이후에도 7거래일은 MA50 위에 있었지만, 7월 17일 내준 뒤로는 되찾지 못한 채로 이어지고 있다.">⚠ 단기추세이탈</span>
     </div>
 
     <div class="detail-toggle collapsed" onclick="toggleCollapsible(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleCollapsible(this);}" role="button" tabindex="0" aria-expanded="false">
@@ -412,10 +412,10 @@
     </div>
     <div class="collapsible-body collapsed">
     <ul class="scorecard-evidence">
-      <li>중장기 정배열 조건 4가지 중 2가지만 충족해 추세구조는 40점 만점에 20점이다 — 충족: ① MA150($499.01)이 MA200($481.54)보다 높다 ② MA200이 21거래일 전($475.55)보다 올라와 아직 상승 중이다. 미충족: ③ 현재가($466.22)가 MA150·MA200을 모두 하회 ④ MA50($497.11)이 MA150 아래에 있다. 장기선 배열 자체는 살아 있는데 가격만 그 아래로 떨어진, 조정 초기에 흔한 모양이다.</li>
-      <li>최근 3개월~1년 가중 모멘텀이 -1.19%로 40점 만점에 10점이다 — 직전 1년 구간 시작 전 종가 $472.70에서 7월 7일 $548.20까지 올랐다가 되밀려, 252거래일 수익률이 -1.4%로 거의 제자리다.</li>
-      <li>52주 저점(2025.12.08, $387.78) 대비 +20.23%, 고점(2026.07.07, $548.20) 대비 -14.95%로 52주위치는 20점 만점에 15점이다 — 세 구성요소 중 유일하게 절반을 넘겼고, 총점 45점의 3분의 1이 여기서 나왔다.</li>
-      <li>현재가는 MA5($468.09)·MA20($480.73)·MA50($497.11)·MA60($500.56)·MA120($501.86)·MA150($499.01)·MA200($481.54) <strong style="color:var(--text2);">7개 이평선을 전부 하회한다</strong>. 그중 MA50·MA150·MA60·MA120 네 개가 $497.11~501.86 폭 0.96% 안에 몰려 있어, 되돌림이 오면 한 자리에서 저항이 겹친다.</li>
+      <li>중장기 정배열 조건 가운데 살아 있는 쪽은 장기선끼리의 관계이고(MA150이 MA200보다 높고 MA200도 아직 올라오는 중), 깨져 있는 쪽은 가격과의 관계다(현재가가 두 장기선 아래, MA50도 MA150 아래). 충족 개수와 점수는 위 블록에 있다. 장기선 배열 자체는 살아 있는데 가격만 그 아래로 떨어진, 조정 초기에 흔한 모양이다.</li>
+      <li>최근 3개월~1년 가중 모멘텀이 -3.71%로 40점 만점에 10점이다 — 직전 1년 구간 시작 전 종가 $472.70에서 7월 7일 $548.20까지 올랐다가 되밀려, 252거래일 수익률이 -1.4%로 거의 제자리다.</li>
+      <li>52주 저점(2025.12.08, $387.78) 대비 +20.23%, 고점(2026.07.07, $548.20) 대비 -14.95%로 52주위치는 20점 만점으로 채점된다 — 세 구성요소의 점수 배분과 총점은 위 블록에 있고, 어느 항목이 총점을 떠받치고 있는지도 거기서 바로 읽힌다.</li>
+      <li>현재가가 <strong style="color:var(--text2);">일곱 이평선 아래에 있는 동안은</strong>(각 값은 위 표와 스코어카드), MA50·MA150·MA60·MA120 네 개가 1%대의 좁은 폭에 몰려 있어 되돌림이 오면 한 자리에서 저항이 겹친다.</li>
       <li>ATR은 1.54%로 자체 1년 이력에서 16.3백분위다 — 두 달 사이 고점에서 15% 빠진 종목치고 일중 변동폭은 오히려 평소보다 좁다. 7월 7일 이후 47거래일 중 2%를 넘게 움직인 날이 7월 31일(-6.0%)과 8월 12일(-2.3%) 둘뿐이어서, 하락의 대부분은 한 번의 급락이 아니라 완만한 흘러내림으로 쌓였다.</li>
     </ul>
     </div>
@@ -444,7 +444,7 @@
       <div class="ma-row"><span class="ma-name"><span class="ma-dot" style="background:var(--ma20)"></span>MA20 (중단기)</span><div style="display:flex;align-items:center;gap:10px;"><span class="ma-val">$479.25</span><span class="ma-status status-below">현재가 하회</span></div></div>
       <div class="ma-row"><span class="ma-name"><span class="ma-dot" style="background:var(--ma60)"></span>MA60 (중기)</span><div style="display:flex;align-items:center;gap:10px;"><span class="ma-val">$498.88</span><span class="ma-status status-below">현재가 하회</span></div></div>
       <div class="ma-row"><span class="ma-name"><span class="ma-dot" style="background:var(--ma120)"></span>MA120 (장기)</span><div style="display:flex;align-items:center;gap:10px;"><span class="ma-val">$501.61</span><span class="ma-status status-below">현재가 하회</span></div></div>
-      <div style="margin-top:12px;padding:10px;background:var(--bg3);border-radius:6px;font-size:11.5px;color:var(--text2);">4개 이평선 중 하나도 상회하지 못한다 — 가장 가까운 MA5($468.09)조차 0.4% 위에 있다. 점수에 쓰이는 MA50($497.11)·MA150($499.01)·MA200($481.54)까지 넣어도 7개 전부 현재가 위다. 다만 MA150이 MA200보다 높고 MA200도 아직 상승 중이라, 장기 배열이 역전된 것이 아니라 가격이 그 아래로 내려와 있는 상태다.</div>
+      <div style="margin-top:12px;padding:10px;background:var(--bg3);border-radius:6px;font-size:11.5px;color:var(--text2);">이평선별 현재가 상회·하회 여부는 위 표에, 점수에 쓰이는 MA50·MA150·MA200은 스코어카드에 있다. 읽을 점은 장기 배열이 역전된 것이 아니라 가격이 그 아래로 내려와 있는 상태라는 것이다 — MA150이 MA200보다 높고 MA200도 아직 상승 중이기 때문이다.</div>
     </div>
   </div>
 

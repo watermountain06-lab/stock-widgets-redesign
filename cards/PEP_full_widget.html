@@ -405,7 +405,7 @@
 
     <div class="scorecard-flags">
       <span class="risk-flag" data-tooltip="현재가($136.32)가 MA150($148.99)·MA200($148.58)을 모두 하회하고, MA200 자체도 21거래일 전 $149.20에서 내려오는 중입니다.">⚠️ 장기추세이탈</span>
-      <span class="risk-flag" data-tooltip="현재가($136.32)가 MA5($137.15)·MA20($140.18)·MA50($139.48)을 모두 하회합니다.">⚠️ 단기추세이탈</span>
+      <span class="risk-flag" data-tooltip="현재가가 MA5·MA20·MA50을 모두 하회합니다.">⚠️ 단기추세이탈</span>
     </div>
 
     <div class="detail-toggle collapsed" onclick="toggleCollapsible(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleCollapsible(this);}" role="button" tabindex="0" aria-expanded="false">
@@ -416,7 +416,7 @@
     <ul class="scorecard-evidence">
       <li>추세구조는 네 조건 중 하나만 채워 40점 만점에 10점이다 — 충족한 것은 ② MA150($148.99)이 MA200($148.58)보다 높다 하나뿐이고, ① 현재가($136.32)가 두 장기선을 모두 하회 ③ MA200이 21거래일 전 $149.20에서 $148.58로 내려오는 중 ④ MA50($139.48)이 두 장기선보다 아래로, 나머지 셋은 전부 어긋나 있다.</li>
       <li>유일하게 충족된 ②도 오래 버틸 자리는 아니다. 다음 거래일에 MA150 창에서 빠지는 종가는 2026.02.06의 $170.49인 반면 MA200 창에서 빠지는 것은 2025.11.24의 $145.50이라, <strong style="color:var(--text2);">두 창이 덜어내는 무게가 다르다</strong>. 다만 여기서 나오는 시점은 조건부다 — <strong style="color:var(--text2);">주가가 지금의 $136.32에 머문다는 가정에서만</strong> 격차가 +$0.41 → +$0.23 → +$0.08로 줄어 3거래일 뒤 뒤집히고, 주가가 움직이면 그 시점도 같이 움직인다.</li>
-      <li>최근 3개월~1년 가중 모멘텀이 -6.94%로 40점 만점에 10점이다 — 3개월 -5.16%, 6개월 -14.19%, 9개월 -5.75%, 12개월 -4.44%에 가중치(0.4·0.2·0.2·0.2)를 먹인 값이다. 측정한 네 기간이 모두 음수이고, 6개월 창이 -14.19%로 가장 깊다 — 네 기산점 중 가장 높은 2026.03.12 종가 $158.86에서 재기 때문이다.</li>
+      <li>최근 3개월~1년 가중 모멘텀이 -8.69%로 40점 만점에 10점이다 — 3개월 -5.16%, 6개월 -14.19%, 9개월 -5.75%, 12개월 -4.44%에 가중치(0.4·0.2·0.2·0.2)를 먹인 값이다. 측정한 네 기간이 모두 음수이고, 6개월 창이 -14.19%로 가장 깊다 — 네 기산점 중 가장 높은 2026.03.12 종가 $158.86에서 재기 때문이다.</li>
       <li>52주 저점은 2026.07.23 장중 $133.73, 고점은 2026.02.12 장중 $171.48이고 현재가는 그 레인지의 6.9% 지점, 곧 아래에서 일곱 번째 칸이다. 이 카드가 쓰는 52주 고저는 종가가 아니라 <strong style="color:var(--text2);">장중 고가·저가</strong> 기준이며, 여기서 파생되는 비율도 모두 같은 기준으로 계산했다(종가 기준으로는 $134.95~$170.49).</li>
       <li>14일 ATR이 1.49%로 최근 1년(252거래일) 자체 이력의 9.1 백분위에 그쳐, 90 백분위인 변동성 플래그 기준과는 반대쪽 끝에 있다. 떨어지는 중인데도 하루하루는 조용하다는 뜻이다 — 실제로 52주 동안 ±5% 이상 움직인 날이 하루도 없고, 가장 크게 움직인 날조차 2026.02.03 실적일의 +4.93%다.</li>
     </ul>
@@ -446,7 +446,7 @@
       <div class="ma-row"><span class="ma-name"><span class="ma-dot" style="background:var(--ma20)"></span>MA20 (중단기)</span><div style="display:flex;align-items:center;gap:10px;"><span class="ma-val">$139.82</span><span class="ma-status status-below">현재가 하회</span></div></div>
       <div class="ma-row"><span class="ma-name"><span class="ma-dot" style="background:var(--ma60)"></span>MA60 (중기)</span><div style="display:flex;align-items:center;gap:10px;"><span class="ma-val">$139.45</span><span class="ma-status status-below">현재가 하회</span></div></div>
       <div class="ma-row"><span class="ma-name"><span class="ma-dot" style="background:var(--ma120)"></span>MA120 (장기)</span><div style="display:flex;align-items:center;gap:10px;"><span class="ma-val">$145.21</span><span class="ma-status status-below">현재가 하회</span></div></div>
-      <div style="margin-top:12px;padding:10px;background:var(--bg3);border-radius:6px;font-size:11.5px;color:var(--text2);">4개 이평선 중 상회하는 것이 하나도 없다. 가장 가까운 MA5($137.15)와의 거리가 -0.60%, 그 다음이 MA50($139.48) -2.26%·MA60($139.64) -2.38%·MA20($140.18) -2.75%로 세 선이 1% 안에 몰려 있어, 여기를 되찾지 못하면 단기 반등의 첫 관문부터 막힌다. 장기 쪽은 더 멀다 — MA120 아래 6.28%, 기술점수가 쓰는 MA150($148.99)·MA200($148.58) 아래로는 각각 8.51%·8.25%다.</div>
+      <div style="margin-top:12px;padding:10px;background:var(--bg3);border-radius:6px;font-size:11.5px;color:var(--text2);">이평선별 현재가 상회·하회 여부와 값은 위 표에 있다. 구조에서 읽을 점은 MA50·MA60·MA20 세 선이 1% 안에 몰려 있다는 것으로, 이 띠를 되찾지 못하면 단기 반등의 첫 관문부터 막힌다. 장기 쪽은 더 멀어, 기술점수가 쓰는 MA150·MA200까지는 거리가 한참 남아 있다.</div>
     </div>
   </div>
 

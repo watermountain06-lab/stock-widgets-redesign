@@ -402,7 +402,7 @@
     <div class="subscores-note">추세구조·절대모멘텀·52주위치는 참고용으로 나눠 보여드리는 구성요소이며, 각각을 독립적인 매매 신호로 해석하지 마세요. 최종 점수는 지금처럼 세 구성요소를 합산한 방식 그대로입니다.</div>
 
     <div class="scorecard-flags">
-      <span class="risk-flag" data-tooltip="현재가 $243.29가 MA50($238.00)은 넘었지만 MA150($247.51)·MA200($261.24)을 모두 하회하고, MA150도 MA200 아래에 있으며 MA200 자체가 21거래일 전 $268.62에서 내려오는 중이다.">⚠ 장기추세이탈</span>
+      <span class="risk-flag" data-tooltip="현재가와 MA50·MA150·MA200의 관계, 그리고 MA150과 MA200의 순서가 네 조건을 가르며, MA200 자체는 21거래일 전보다 내려오는 중이다 — 각 값과 충족 개수는 위 블록에 있다.">⚠ 장기추세이탈</span>
       <span class="risk-flag" data-tooltip="52주 고점($332.46, 2026.06.02) 대비 -26.8% — 7월 14일 하루에만 -25.2% 빠졌고, 7월 23일 장중 $199.19까지 밀린 뒤 저점 대비 +22.1% 되돌렸다.">⚠ 고점대비큰조정</span>
     </div>
 
@@ -412,10 +412,10 @@
     </div>
     <div class="collapsible-body collapsed">
     <ul class="scorecard-evidence">
-      <li>중장기 정배열 조건 4가지를 하나도 충족하지 못해 추세구조는 0점이다 — ① 현재가($243.29)가 MA150($247.51)·MA200($261.24)을 모두 하회 ② MA150이 MA200보다 낮음 ③ MA200이 21거래일 전($268.62)보다 내려와 하락 중 ④ MA50($238.00)도 두 장기선 아래.</li>
-      <li>최근 3개월~1년 가중 모멘텀이 -10.33%로 40점 만점에 0점이다 — 1년 전 $256.88에서 6월 2일 $329.23까지 올랐다가, 7월 14일 실적 사전경고 하루에 -25.2%가 빠지면서 1년 수익률 자체가 마이너스로 돌아섰다.</li>
+      <li>중장기 정배열은 네 가지 조건으로 따진다 — ① 현재가가 MA150·MA200을 모두 상회 ② MA150이 MA200보다 높음 ③ MA200 자체가 21거래일 전보다 상승 ④ MA50이 MA150·MA200을 모두 상회. 조건 하나당 10점이므로 충족 개수는 위 추세구조 점수에 그대로 나타난다.</li>
+      <li>최근 3개월~1년 가중 모멘텀이 -7.51%로 40점 만점에 10점이다 — 1년 전 $256.88에서 6월 2일 $329.23까지 올랐다가, 7월 14일 실적 사전경고 하루에 -25.2%가 빠지면서 1년 수익률 자체가 마이너스로 돌아섰다.</li>
       <li>52주 저점(2026.07.23, $199.19) 대비 +22.14%지만 고점(2026.06.02, $332.46) 대비 -26.82%로, 52주위치는 20점 만점 중 5점에 그쳤다.</li>
-      <li>단기 이평선은 이미 되찾았다 — 현재가가 MA5($236.85)·MA20($234.39)·MA60($242.78)을 모두 상회하고 MA120($245.79)만 1.0% 아래다. 점수에 쓰이는 MA50/150/200 배열이 무너져 있어 총점에는 잡히지 않지만, 7월 23일 저점 $199.19 대비로는 +22.1% 올라온 자리다.</li>
+      <li>단기 이평선부터 차례로 되찾아 온 구간이고, 어느 선까지 넘었는지는 위 표에 있다. 점수에 쓰이는 MA50/150/200 배열이 아직 정리되지 않아 총점에는 잡히지 않지만, 7월 23일 저점 $199.19에서 올라온 자리라는 점은 그대로다.</li>
       <li>ATR은 2.61%로 자체 1년 이력에서 28.6백분위다 — 7월에 하루 -25%가 난 종목인데도 최근 3주(8월 24일 이후) 일중 변동폭은 평소보다 오히려 좁다.</li>
     </ul>
     </div>
@@ -444,7 +444,7 @@
       <div class="ma-row"><span class="ma-name"><span class="ma-dot" style="background:var(--ma20)"></span>MA20 (중단기)</span><div style="display:flex;align-items:center;gap:10px;"><span class="ma-val">$236.10</span><span class="ma-status status-above">현재가 상회</span></div></div>
       <div class="ma-row"><span class="ma-name"><span class="ma-dot" style="background:var(--ma60)"></span>MA60 (중기)</span><div style="display:flex;align-items:center;gap:10px;"><span class="ma-val">$242.54</span><span class="ma-status status-above">현재가 상회</span></div></div>
       <div class="ma-row"><span class="ma-name"><span class="ma-dot" style="background:var(--ma120)"></span>MA120 (장기)</span><div style="display:flex;align-items:center;gap:10px;"><span class="ma-val">$245.86</span><span class="ma-status status-above">현재가 상회</span></div></div>
-      <div style="margin-top:12px;padding:10px;background:var(--bg3);border-radius:6px;font-size:11.5px;color:var(--text2);">4개 이평선 중 3개를 상회한다 — MA5·MA20·MA60이 모두 현재가 아래로 내려왔고 MA120도 1.0% 위에 불과하다. 다만 기술점수가 쓰는 MA150($247.51)·MA200($261.24)은 각각 1.7%·6.9% 위에 남아 있어, 단기 회복과 장기 역배열이 공존하는 구간이다.</div>
+      <div style="margin-top:12px;padding:10px;background:var(--bg3);border-radius:6px;font-size:11.5px;color:var(--text2);">이평선별 현재가 상회·하회 여부와 값은 위 표에 있다. 이 구간의 성격은 단기 회복과 장기 역배열의 공존이고, 그 경계선은 기술점수가 쓰는 MA150·MA200이다 — 배열 조건을 몇 개나 충족했는지는 위 스코어카드의 추세구조 점수에 있으며, 단기 회복이 장기 추세 전환으로 이어졌는지는 그 점수가 올라가야 확인되는 구간이다.</div>
     </div>
   </div>
 
