@@ -40,6 +40,16 @@ def render():
                if not (REPO / "cards" / h).exists()]
     if missing:
         sys.exit(f"preview lists {len(missing)} card(s) this repo does not have: {', '.join(missing)}")
+
+    # same for the icons. The page builds each src as logos/<ticker>.png in JS
+    # and a missing file renders as a blank box rather than an error, so it can
+    # sit on the public domain unnoticed - PEP, SCHW, DIS and DE did exactly
+    # that in preview for days, in that repo's own copy of this page.
+    have = {f.name.lower() for f in (REPO / "logos").glob("*.png")}
+    no_logo = sorted({t for t in re.findall(r'"ticker": "([A-Z][A-Z0-9._-]*)"', out)
+                      if f"{t.lower()}.png" not in have})
+    if no_logo:
+        sys.exit(f"no logos/<ticker>.png in this repo for: {', '.join(no_logo)}")
     return out, n
 
 
