@@ -252,10 +252,12 @@ python3 scripts/fix_weighted_avg_text.py       # stated 가중평균 == what the
 python3 scripts/fix_ma_prose.py                # prose MA values == the card's own bars (mostly a detector)
 python3 scripts/fix_momentum_text.py           # restated 절대모멘텀 % and score == the maintained subscore
 python3 scripts/sync_cards.py                  # every preview card copied across, home href flipped
-python3 scripts/build_home.py                  # redesign index.html rendered from preview's homepage
+python3 scripts/build_home.py                  # stock-data.js refreshed from preview; the page itself is this repo's
 ```
 
 Order matters: the first ten edit **preview's** cards (the source), so they must run before `sync_cards.py` carries the result over, and `build_home.py` last because it reads the finished card set and refuses to write if preview lists a card this repo does not have.
+
+**`build_home.py` no longer writes `index.html` (changed 2026-09-18).** It used to overwrite the page with preview's rendered homepage, which kept the numbers honest but handed preview the design as well — so every promotion silently discarded this repo's own layout, and the public domain served preview's plain page. `index.html`, `theme.css`, `today.html` and the rest of the page are this repo's, hand-owned, and nothing generated writes to them. Only `stock-data.js` is generated, and only its `stocks` and `meta` regions: `days` is the Today schedule, an editorial choice preview knows nothing about, and `StockData.selectionReason` / `.quoteLabel` are called by `today.js` at render time, so all three are preserved byte for byte. The splice emits hand-written JS, so it is syntax-checked — a stray brace once left `}}};`, and a `stock-data.js` that does not parse takes `window.StockData` down with it and blanks the page rather than failing loudly.
 
 What each one caught, so the next builder knows why it is not optional:
 - **fix_chart_identity** — `renderMultipleChart()` used to hardcode the card's own ticker label, its `MULTIPLE_DATA` key and its two brand colours, so a copied card silently wore the template's identity. 26 cards shipped drawing their own bar in another company's colour; C then shipped in KLAC's teal hours after that sweep; AXP was caught about to render its bar labelled "IBM". A chart with the wrong company's name on it looks completely normal.
