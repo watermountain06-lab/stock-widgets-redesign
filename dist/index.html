@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>[사이트명] — 미국 거래소 상장 주식 분석</title>
+<title>US stock 가치를 말하다 — 미국 거래소 상장 주식 분석</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;800&display=swap">
 <style>
   :root{
@@ -55,45 +55,46 @@
 
 <div style="min-height:100vh;background:var(--bg);display:flex;flex-direction:column;">
 
-  <header class="site-header"><div class="header-inner"><a class="brand" href="index.html">◧ [사이트명]</a><span class="brand-note">공시로 읽는 기업의 흐름<br>하루씩, 한 종목씩</span><nav aria-label="주 메뉴"><a href="index.html" aria-current="page">Home</a><a href="today.html">Today</a><a href="market-news.html">뉴스·영상</a></nav></div></header>
+  <header class="site-header"><div class="header-inner"><a class="brand" href="index.html">◧ US stock 가치를 말하다</a><span class="brand-note">공시로 읽는 기업의 흐름<br>하루씩, 한 종목씩</span><nav aria-label="주 메뉴"><a href="index.html" aria-current="page">Home</a><a href="today.html">Today</a><a href="market-news.html">뉴스·영상</a></nav></div></header>
 
   <section class="home-feature" aria-label="오늘의 종목 미리보기">
 <p class="feature-kicker">DAILY BRIEF</p><h1>오늘, 살펴볼 기업.</h1><p class="feature-intro">움직임과 가치로 찾고, 핵심만 빠르게 확인하세요.</p><div class="feature-label"><strong>오늘의 종목</strong><a href="today.html">Today 열기 ↗</a></div><div id="discovery-tabs" class="discovery-tabs" aria-label="오늘의 종목 분류"></div><p id="discovery-note" class="feature-intro"></p><div id="discovery-grid"></div><div class="discovery-timing"><span id="discovery-position"></span></div><div class="discovery-progress" role="progressbar" aria-label="다음 종목 또는 분류까지 진행" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span id="discovery-progress-fill"></span></div>
   </section>
-  <details class="market-demo" open><summary>시장 지표 <span class="market-note">예시 데이터</span></summary>
-  <!-- 1.5 매크로 지표 스트립 (아래 숫자·날짜 전부 목업 값, 실데이터 연동 전) -->
+  <details class="market-demo" open><summary>시장 지표 <span class="market-note" id="macro-note">불러오는 중</span></summary>
+  <!-- 매크로 지표 스트립. 값은 preview의 MACRO에서 stock-data.js의 meta.macro로 실려 오고,
+       아래 JS가 채운다. 채우지 못하면 대시가 남는다 - 틀린 숫자를 보여주느니 빈칸이 낫다. -->
   <div style="border-bottom:1px solid var(--border);background:var(--panel);">
     <div class="wrap">
       <div class="box-w macro-grid" style="display:grid;grid-template-columns:repeat(6,1fr);padding:14px 0;text-align:center;">
         <div style="padding-right:16px;">
           <div style="font-size:11px;color:var(--text3);margin-bottom:4px;">S&amp;P 500</div>
-          <div class="num" style="font-size:15px;font-weight:700;">6,449.15</div>
-          <div class="num" style="font-size:11.5px;font-weight:600;color:var(--up);">+0.42%</div>
+          <div class="num" style="font-size:15px;font-weight:700;" id="m-sp500">&mdash;</div>
+          <div class="num" style="font-size:11.5px;font-weight:600;" id="m-sp500-chg">&mdash;</div>
         </div>
         <div style="padding:0 16px;border-left:1px solid var(--border2);">
           <div style="font-size:11px;color:var(--text3);margin-bottom:4px;">VIX</div>
-          <div class="num" style="font-size:15px;font-weight:700;">14.55</div>
-          <div class="num" style="font-size:11.5px;font-weight:600;color:var(--down);">&minus;4.78%</div>
+          <div class="num" style="font-size:15px;font-weight:700;" id="m-vix">&mdash;</div>
+          <div class="num" style="font-size:11.5px;font-weight:600;" id="m-vix-chg">&mdash;</div>
         </div>
         <div style="padding:0 16px;border-left:1px solid var(--border2);">
           <div style="font-size:11px;color:var(--text3);margin-bottom:4px;">원/달러</div>
-          <div class="num" style="font-size:15px;font-weight:700;">&#8361;1,421.30</div>
-          <div class="num" style="font-size:11.5px;font-weight:600;color:var(--up);">+0.62%</div>
+          <div class="num" style="font-size:15px;font-weight:700;" id="m-usdkrw">&mdash;</div>
+          <div class="num" style="font-size:11.5px;font-weight:600;" id="m-usdkrw-chg">&mdash;</div>
         </div>
         <div style="padding:0 16px;border-left:1px solid var(--border2);">
           <div style="font-size:11px;color:var(--text3);margin-bottom:4px;">기준금리</div>
-          <div class="num" style="font-size:15px;font-weight:700;">3.63%</div>
-          <div style="font-size:11.5px;color:var(--text3);">다음 FOMC 9/15</div>
+          <div class="num" style="font-size:15px;font-weight:700;" id="m-fed">&mdash;</div>
+          <div style="font-size:11.5px;color:var(--text3);" id="m-fomc">&mdash;</div>
         </div>
         <div style="padding:0 16px;border-left:1px solid var(--border2);">
           <div style="font-size:11px;color:var(--text3);margin-bottom:4px;">실업률</div>
-          <div class="num" style="font-size:15px;font-weight:700;">4.1%</div>
-          <div style="font-size:11.5px;color:var(--text3);">2026.07</div>
+          <div class="num" style="font-size:15px;font-weight:700;" id="m-unemp">&mdash;</div>
+          <div style="font-size:11.5px;color:var(--text3);" id="m-unemp-asof">&mdash;</div>
         </div>
         <div style="padding-left:16px;border-left:1px solid var(--border2);">
           <div style="font-size:11px;color:var(--text3);margin-bottom:4px;">물가상승률</div>
-          <div class="num" style="font-size:15px;font-weight:700;">3.4%</div>
-          <div style="font-size:11.5px;color:var(--text3);">2026.07</div>
+          <div class="num" style="font-size:15px;font-weight:700;" id="m-cpi">&mdash;</div>
+          <div style="font-size:11.5px;color:var(--text3);" id="m-cpi-asof">&mdash;</div>
         </div>
       </div>
     </div>
@@ -136,7 +137,7 @@
   <!-- 5. 하단 -->
   <div style="border-top:1px solid var(--border);">
     <div class="wrap" style="padding:22px 40px;font-size:11.5px;color:var(--text3);line-height:1.7;">
-      &copy; 2026 [사이트명]<br>
+      &copy; 2026 US stock 가치를 말하다<br>
       데이터는 SEC 공시와 각사 실적발표 자료를 기준으로 하며, 투자 판단의 참고 자료일 뿐 투자 권유가 아닙니다
     </div>
   </div>
@@ -201,6 +202,40 @@
   document.getElementById('stock-search').addEventListener('input',render);
   window.addEventListener('quotes-updated',()=>{render();renderDiscovery();});
   render();
+
+  // 시장 지표. meta.macro는 preview의 MACRO를 그대로 옮긴 것이고, 지표 하나가
+  // 빠지거나 status가 fresh가 아니면 그 칸만 대시로 남긴다. 값을 지어내지 않는다.
+  (function(){
+    var macro = (window.StockData.meta || {}).macro;
+    var note = document.getElementById('macro-note');
+    function set(id, text){var el=document.getElementById(id); if(el) el.innerHTML=text;}
+    function live(ind){return ind && ind.status === 'fresh' ? ind : null;}
+    function num(v, digits){return v.toLocaleString('en-US',{minimumFractionDigits:digits,maximumFractionDigits:digits});}
+    function pct(v){
+      if(!Number.isFinite(v)) return '&mdash;';
+      var color = v >= 0 ? 'var(--up)' : 'var(--down)';
+      return '<span style="color:'+color+';">'+(v>=0?'+':'&minus;')+Math.abs(v).toFixed(2)+'%</span>';
+    }
+    if(!macro){ note.textContent = '불러오지 못함'; return; }
+    var ind = macro.indicators || {};
+    var sp = live(ind.sp500), vx = live(ind.vix), fx = live(ind.usdkrw),
+        fed = live(ind.fedTarget), un = live(ind.unemployment), cpi = live(ind.cpiYoy);
+    if(sp){ set('m-sp500', num(sp.value,2)); set('m-sp500-chg', pct(sp.changePct)); }
+    if(vx){ set('m-vix', num(vx.value,2)); set('m-vix-chg', pct(vx.changePct)); }
+    if(fx){ set('m-usdkrw', '&#8361;'+num(fx.value,2)); set('m-usdkrw-chg', pct(fx.changePct)); }
+    if(fed){ set('m-fed', fed.lower.toFixed(2)+'~'+fed.upper.toFixed(2)+'%'); }
+    if(un){ set('m-unemp', un.value.toFixed(1)+'%'); set('m-unemp-asof', un.asOf.replace('-','.')); }
+    if(cpi){ set('m-cpi', cpi.value.toFixed(1)+'%'); set('m-cpi-asof', cpi.asOf.replace('-','.')); }
+    var fomc = macro.nextFomc;
+    if(fomc && fomc.start){
+      var p = fomc.start.split('-');
+      set('m-fomc', '다음 FOMC ' + Number(p[1]) + '/' + Number(p[2]));
+    }
+    // The strip says which session it speaks for, so a figure that stops updating
+    // is visible as a date rather than as a number that merely looks current.
+    var asOf = (sp && sp.asOf) || macro.priceSession || (window.StockData.meta || {}).asOf;
+    note.textContent = asOf ? asOf.replace(/-/g,'.') + ' 기준' : '기준일 미상';
+  })();
 
   var category='up';
   var discoveryIndex=0, discoveryElapsed=0;
