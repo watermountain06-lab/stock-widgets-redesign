@@ -58,3 +58,12 @@ SPCX는 심볼/상장 검증 전이므로 수집하지 않습니다. 시가총�
 - 오늘의 종목: 상승·하락·저평가·초저평가 네 분류를 5초 간격으로 전환. 일시정지와 포커스/호버 중 정지 지원.
 - 순위별 카드는 유지하고 업종·등락률·매력도는 표로 표시. 매력도는 미평가로 표시.
 - 시장 지표 기본 펼침, 시스템 light/dark 자동 반영, Today 실제 날짜 및 종목별 요약 공간 추가.
+
+## 시장 뉴스 API (2026-09-23)
+
+- `python3 tooling/news_server.py --port 8091`: 공개 `dist/` 파일과 `/api/news?topic=all`을 함께 제공하는 로컬 서버입니다. Google News RSS에서 지정 매체의 최근 7일 기사를 수집합니다. 각 매체의 유료 API에 직접 연결한 방식은 아닙니다.
+- 주제: `all`, `rates`, `fx`, `economy`, `jobs`, `companies`. 서버 캐시는 10분이며 갱신 실패 시 마지막 캐시와 지연 상태를 반환합니다.
+- 제목, 매체, 게시 시각을 표시하고 주제·매체 필터를 제공합니다. 기사는 Google News 경유 원문 링크로 이동합니다. 기사 본문은 수집하지 않습니다.
+- `python3 tooling/news_server.py --snapshot` 후 `python3 tooling/build_static.py`로 정적 호스팅용 기사 목록을 갱신합니다. API가 없는 정적 호스팅에서는 저장 목록과 수집 시각을 명시합니다. 지속적인 자동 갱신을 배포하려면 동일 출처의 API 서버 또는 별도 수집 배치가 필요합니다.
+- YouTube 영역은 검색 링크이며 YouTube Data API 연결은 아직 없습니다.
+- 검증: `python3 -B -m unittest discover -s tooling -p test_news_api.py -v`.

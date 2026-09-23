@@ -3,7 +3,7 @@ from pathlib import Path
 import shutil
 
 ROOT = Path(__file__).resolve().parents[1]
-PUBLIC = ['index.html', 'today.html', 'market-news.html', 'styles.css', 'today.css',
+PUBLIC = ['market-news.js', 'market-news-snapshot.json', 'flow.css', 'flow.js', 'index.html', 'today.html', 'market-news.html', 'styles.css', 'today.css',
           'theme.css', 'header.css', 'detail-theme.css', 'stock-data.js',
           'data-status.js', 'today.js', 'theme.js', 'navigation.js', 'reading.js',
           'news.js', 'news-snapshot.json', 'quotes-snapshot.json', 'CNAME']

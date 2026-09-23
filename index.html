@@ -50,15 +50,17 @@
 <script src="data-status.js?v=main-81ab160" defer></script>
 <link rel="stylesheet" href="theme.css?v=2">
 <script src="theme.js?v=2"></script>
+<link rel="stylesheet" href="flow.css?v=16">
 </head>
-<body>
+<body class="home-page">
 
 <div style="min-height:100vh;background:var(--bg);display:flex;flex-direction:column;">
 
   <header class="site-header"><div class="header-inner"><a class="brand" href="index.html">◧ US stock 가치를 말하다</a><span class="brand-note">공시로 읽는 기업의 흐름<br>하루씩, 한 종목씩</span><nav aria-label="주 메뉴"><a href="index.html" aria-current="page">Home</a><a href="today.html">Today</a><a href="market-news.html">뉴스·영상</a></nav></div></header>
 
   <section class="home-feature" aria-label="오늘의 종목 미리보기">
-<p class="feature-kicker">DAILY BRIEF</p><h1>오늘, 살펴볼 기업.</h1><p class="feature-intro">움직임과 가치로 찾고, 핵심만 빠르게 확인하세요.</p><div class="feature-label"><strong>오늘의 종목</strong><a href="today.html">Today 열기 ↗</a></div><div id="discovery-tabs" class="discovery-tabs" aria-label="오늘의 종목 분류"></div><p id="discovery-note" class="feature-intro"></p><div id="discovery-grid"></div><div class="discovery-timing"><span id="discovery-position"></span></div><div class="discovery-progress" role="progressbar" aria-label="다음 종목 또는 분류까지 진행" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span id="discovery-progress-fill"></span></div>
+<div class="hero-space" aria-hidden="true"></div><div class="hero-menu"><p class="feature-kicker">DAILY DISCOVERY</p><h1>오늘의 발견</h1><p class="feature-intro">관심 있는 흐름을 선택하세요.</p><div id="discovery-tabs" class="discovery-tabs" aria-label="오늘의 종목 분류"></div><a class="today-shortcut" href="today.html">Today 전체 보기 ↗</a></div>
+<dialog id="discovery-dialog" aria-labelledby="discovery-title"><div class="dialog-heading"><div><p class="feature-kicker">STOCK LIST</p><h2 id="discovery-title">오늘의 종목</h2></div><button id="discovery-close" aria-label="팝업 닫기">✕</button></div><p id="discovery-note" class="feature-intro"></p><div id="discovery-grid"></div><div class="discovery-timing"><span id="discovery-position"></span></div></dialog>
   </section>
   <details class="market-demo" open><summary>시장 지표 <span class="market-note" id="macro-note">불러오는 중</span></summary>
   <!-- 매크로 지표 스트립. 값은 preview의 MACRO에서 stock-data.js의 meta.macro로 실려 오고,
@@ -105,12 +107,7 @@
   <div>
     <div class="wrap" style="padding:20px 40px 18px;">
       <div class="box-w" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px;">
-        <div class="tab-pillbar" id="tab-bar">
-          <button class="tab-btn active" data-view="rank">순위별</button>
-          <button class="tab-btn" data-view="sector">업종별</button>
-          <button class="tab-btn" data-view="attract">매력도별</button>
-          <button class="tab-btn" data-view="change">등락률별</button>
-        </div>
+        <h2 style="font-size:20px;margin:0">매력도별 종목</h2>
         <div class="toolbar-tools" style="display:flex;align-items:center;gap:14px;">
           
           <div class="search-box" style="display:flex;align-items:center;gap:8px;padding:8px 14px;border:1px solid var(--border);border-radius:999px;background:var(--panel);">
@@ -163,9 +160,8 @@
   }
 
 
-  var view = 'rank', sortKey=null, sortDirection=1;
+  var view = 'attract', sortKey=null, sortDirection=1;
   var panel = document.getElementById('data-panel');
-  var tabs = document.querySelectorAll('.tab-btn');
   function card(d, i) {
     return '<article class="stock-card"><div class="card-top"><span class="rank-label">'+(view === 'change' ? '등락률 ' + (i+1) : '시가총액 ' + d.rank)+'위</span>'
       + '</div>'
@@ -180,7 +176,6 @@
     var query = document.getElementById('stock-search').value.trim().toLowerCase();
     var data = DATA.filter(function(d){return (d.ticker+' '+d.name).toLowerCase().includes(query);});
     document.getElementById('ticker-count').textContent = data.length;
-    tabs.forEach(function(t){var active=t.dataset.view===view;t.classList.toggle('active',active);t.setAttribute('aria-pressed',String(active));});
     panel.classList.toggle('table-view',view!=='rank');
     if(view==='change') data.sort(function(a,b){return b.change-a.change;});
     if(view==='attract') data.sort((a,b)=>(b.score ?? -Infinity)-(a.score ?? -Infinity)||a.rank-b.rank);
@@ -198,7 +193,6 @@
     if(!data.length) panel.innerHTML='<div class="empty-state">표시할 종목이 없습니다</div>';
   }
   panel.addEventListener('click',e=>{const button=e.target.closest('[data-sort]');if(!button)return;const key=button.dataset.sort;if(sortKey!==key){sortKey=key;sortDirection=1;}else if(sortDirection===1){sortDirection=-1;}else{sortKey=null;sortDirection=1;}render();panel.querySelector('[data-sort="'+key+'"]').focus();});
-  tabs.forEach(function(t){t.addEventListener('click',function(){view=t.dataset.view;sortKey=null;sortDirection=1;render();});});
   document.getElementById('stock-search').addEventListener('input',render);
   window.addEventListener('quotes-updated',()=>{render();renderDiscovery();});
   render();
@@ -245,41 +239,22 @@
   function renderDiscovery(){
     const list=selectedStocks(category);
     discoveryIndex=Math.min(discoveryIndex,Math.max(0,list.length-1));
-    document.getElementById('discovery-position').textContent=list.length?`${discoveryIndex+1} / ${list.length} 종목`:'해당 종목 없음';
-    document.getElementById('discovery-tabs').innerHTML=categories.map(([key,label])=>'<button data-category="'+key+'" aria-pressed="'+(key===category)+'">'+label+' <small>'+selectedStocks(key).length+'</small></button>').join('');
-    document.getElementById('discovery-note').textContent=category==='value'||category==='deep'?'동일 평가 등급만 분류 · 복합 등급 및 평가 충돌 종목 제외':'등록 종목 기준 · 종목을 모두 확인한 뒤 다음 분류로 이동';
-    document.getElementById('discovery-grid').innerHTML=list.slice(discoveryIndex,discoveryIndex+1).map(d=>'<a class="discovery-card" href="'+d.href+'"><img src="logos/'+d.ticker.toLowerCase()+'.png" alt=""><span><strong>'+d.ticker+'</strong><small>'+d.name+'</small></span><span class="discovery-quote"><strong>'+d.price+'</strong>'+changeCell(d.change)+'</span><small class="selection-reason">'+window.StockData.quoteLabel(d)+' '+'</small></a>').join('')||'<p class="empty-state">현재 조건에 해당하는 종목이 없습니다.</p>';
+    document.getElementById('discovery-position').textContent=list.length?`${list.length}개 종목`:'해당 종목 없음';
+    document.getElementById('discovery-tabs').innerHTML=categories.map(([key,label])=>'<button type="button" data-category="'+key+'" aria-haspopup="dialog" aria-pressed="'+(key===category)+'"><span class="discovery-icon" aria-hidden="true">'+({up:'↗',down:'↘',value:'◇',deep:'◆'})[key]+'</span><span class="discovery-name">'+label+'</span><span class="discovery-count" aria-label="'+selectedStocks(key).length+'개 종목">'+selectedStocks(key).length+'<span>종목</span></span></button>').join('');
+    document.getElementById('discovery-note').textContent=category==='value'||category==='deep'?'동일 평가 등급만 분류 · 복합 등급 및 평가 충돌 종목 제외':'등록 종목의 저장 시세 기준';
+    document.getElementById('discovery-grid').innerHTML=list.map(d=>'<a class="discovery-card" href="'+d.href+'"><img src="logos/'+d.ticker.toLowerCase()+'.png" alt=""><span><strong>'+d.ticker+'</strong><small>'+d.name+'</small></span><span class="discovery-quote"><strong>'+d.price+'</strong>'+changeCell(d.change)+'</span><small class="selection-reason">'+window.StockData.quoteLabel(d)+' '+'</small></a>').join('')||'<p class="empty-state">현재 조건에 해당하는 종목이 없습니다.</p>';
   }
-  document.getElementById('discovery-tabs').addEventListener('click',e=>{const button=e.target.closest('[data-category]');if(button){category=button.dataset.category;discoveryIndex=0;discoveryElapsed=0;renderDiscovery();}});
+  document.getElementById('discovery-tabs').addEventListener('click',e=>{const button=e.target.closest('[data-category]');if(button){category=button.dataset.category;discoveryIndex=0;discoveryElapsed=0;renderDiscovery();document.getElementById('discovery-title').textContent=categories.find(c=>c[0]===category)[1];document.getElementById('discovery-dialog').showModal();}});
   renderDiscovery();
 
-  const feature=document.querySelector('.home-feature');
+  const dialog=document.getElementById('discovery-dialog');
+  document.getElementById('discovery-close').onclick=()=>dialog.close();
+  dialog.addEventListener('click',e=>{if(e.target===dialog){const r=dialog.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)dialog.close();}});
 
-  const progressFill=document.getElementById('discovery-progress-fill');
-  const progressTrack=progressFill.parentElement;
-  let previousFrame=performance.now();
-  function tickDiscovery(now){
-    const elapsed=now-previousFrame;previousFrame=now;
-    const readingCard=feature.querySelector('#discovery-grid');
-    if(!document.hidden&&!readingCard.matches(':hover')&&!readingCard.contains(document.activeElement)){
-      discoveryElapsed+=Math.min(elapsed,100);
-      if(discoveryElapsed>=discoveryDuration){
-        discoveryElapsed=0;
-        const list=selectedStocks(category);
-        if(discoveryIndex+1<list.length)discoveryIndex++;
-        else{discoveryIndex=0;category=categories[(categories.findIndex(c=>c[0]===category)+1)%categories.length][0];}
-        renderDiscovery();
-      }
-    }
-    const percent=Math.min(100,discoveryElapsed/discoveryDuration*100);
-    progressFill.style.transform='scaleX('+percent/100+')';
-    progressTrack.setAttribute('aria-valuenow',String(Math.round(percent)));
-    requestAnimationFrame(tickDiscovery);
-  }
-  requestAnimationFrame(tickDiscovery);
 })();
 </script>
 
+<script src="flow.js?v=8"></script>
 </body>
 </html>
 
