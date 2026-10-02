@@ -45,6 +45,18 @@ Every tab accumulates small-print explanations (caveats, methodology notes, "why
 
 If you're unsure whether something is "why the number looks that way" (keep) vs. an implementation detail or a restatement (cut), default to cutting and let the user ask if they want it back — this has never once gone the other way in practice.
 
+## v2 새 종목 (preview `v2/`, 71위~, 2026-10-02)
+
+S&P500 시총 71위부터는 루트 카드 없이 preview의 v2 카드만 만든다(2026-10-01 사용자 결정 — 홈·일일 파이프라인 등록은 나중). 이 경로는 아래 Step 0~6(redesign에서 한 장씩 손으로 채우던 방식)이 아니라 **preview `v2/newcards/`의 도구**로 만든다 — 순서·점검 목록·옵션은 그 폴더의 `README.md`가 원본이다. 이 플레이북의 원칙(숫자를 지어내지 않기, 배열을 손으로 치지 않기, 탭마다 Codex·브라우저 검토, 판단은 마무리 보고에 기록)은 그대로 적용한다.
+
+- **흐름**: `build.py T --data`(숫자만) → 점검 → SEC 원문으로 `cfg/cfg_{t}.py` 작성 → `build.py T` → 브라우저 → Codex → Fable(비판만) → Codex 2차 → `v2/CARD_ITEMS.md` 기록, 공통 과제는 `after_100_cards_agenda.md`.
+- **SEC 요약 데이터(companyfacts)가 최신 10-Q를 늦게 싣는 종목이 잦다**(ABT·WELL·NEE, 10월 초 기준). 인라인 XBRL 보충(`BUILD['overlay']`) 뒤에 배열·백테스트를 만들어야 최신 EPS가 들어간다.
+- **엔진 숫자는 늘 10-Q 표와 대조한다** — 이번 12장에서 1년 안 만기 차입금 누락(ETN·T·UNP), 멈춘 단기투자 태그(T·MCD·PFE), 영업이익 줄 없음(ETN·PFE·WELL), 매출 태그 재정의·반올림(PFE·NEE), 주식 수 단위 오류(MCD)가 나왔다. 대부분 경고 없이 조용히 틀린다.
+- **분사 종목**(Yahoo `events.splits`에 1.45 미만 비율): 자기 이력은 재작성 숫자가 처음 공시된 날부터, 최근 4분기 합이 모두 분사 뒤여야 한다(WDC·T).
+- **S&P500 섹터 비교군을 처음 만들면 이상값부터 본다**(부동산 PSR 741~1,862배, SPG 0 — 데이터 오류로 뺐다).
+- **Codex가 SEC 밖 출처(회사 보도자료·규제기관 발표)로 지적하면 원문을 직접 받아 확인한 뒤 반영한다.** UNP 배당 인상·STB 일정은 맞았고, 엔진 동작에 대한 지적은 코드로 확인해 기각한 적도 있다(UNP 낙관 시나리오).
+- **리츠·유틸리티**는 사이트에 업종 전용 평가(FFO·규제 자본)가 없어 일반 규칙으로 만들고 한계를 카드에 적는다(WELL·NEE, 안건 D40).
+
 ## Step 0 — Pick the ticker
 
 1. Confirm the current market-cap ranking via WebSearch/companiesmarketcap.com, cross-checked against at least 2 sources. Don't trust an old manifest order — rankings move.
