@@ -3,24 +3,32 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SPCX 종합 분석 위젯 (재설계 조립본 v1, WIP — 상장 초기 데이터 제한)</title>
+<title>SPCX 종합 분석 위젯 (재설계 조립본 v1)</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<script>
+// 탭을 열 때 선의 점이 바닥에서 날아오르고 도넛이 돌며 들어오는 애니메이션을 끈다 — 막대가 자라는 동작은 남긴다(2026-09-30 사용자).
+Chart.defaults.datasets.line.animation = false;
+Chart.overrides.doughnut.animation = false;
+</script>
 <style>
 
-  /* HEADER (라이브 NVDA_analysis_widget.html에서 재사용) */
-  .header { background: linear-gradient(135deg, #101a05 0%, #0f1117 40%, #1a1d27 100%); border-bottom: 2px solid var(--accent3); padding: 28px 32px 24px; position: relative; overflow: hidden; max-width: 1100px; margin: 0 auto; }
-  .box-key { background: rgba(118,185,0,0.1); border: 1px solid var(--accent3); border-radius: 10px; padding: 12px 16px; max-width: 1100px; margin: 0 auto 16px; }
-  .header::before { content: ''; position: absolute; top: -60px; right: -60px; width: 240px; height: 240px; background: radial-gradient(circle, rgba(118,185,0,0.14) 0%, transparent 70%); pointer-events: none; }
+  /* HEADER (라이브 SPCX_analysis_widget.html에서 재사용) */
+  .header { background: var(--bg2); border-top: 3px solid var(--brand); border-bottom: 2px solid var(--accent3); padding: 28px 32px 24px; position: relative; overflow: hidden; max-width: 1100px; margin: 0 auto; }
+  .box-key { background: color-mix(in srgb, var(--accent) 10%, transparent); border: 1px solid var(--accent3); border-radius: 10px; padding: 12px 16px; max-width: 1100px; margin: 0 auto 16px; }
+  .header::before { content: ''; position: absolute; top: -60px; right: -60px; width: 240px; height: 240px; background: none; pointer-events: none; }
   .header-top { display: flex; align-items: flex-start; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
   .ticker-block { display: flex; align-items: center; gap: 16px; flex: 1 1 320px; min-width: 0; }
   .ticker-block > div { min-width: 0; }
-  .ticker-badge { background: linear-gradient(135deg, var(--accent3), var(--accent)); color: #0f1117; font-size: 13px; font-weight: 800; padding: 5px 12px; border-radius: 6px; letter-spacing: 1px; }
+  .ticker-badge { background: linear-gradient(135deg, var(--accent3), var(--accent)); color: var(--bg); font-size: 13px; font-weight: 800; padding: 5px 12px; border-radius: 6px; letter-spacing: 1px; }
   .company-name { font-size: 22px; font-weight: 700; color: var(--text); }
   .company-sub { font-size: 12px; color: var(--text3); margin-top: 2px; }
   .price-block { text-align: right; flex: 0 0 auto; margin-left: auto; }
   .price-main { font-size: 32px; font-weight: 800; color: var(--accent2); letter-spacing: -1px; }
-  .price-change { font-size: 13px; color: var(--red); font-weight: 600; }
+  .price-change { font-size: 16px; color: var(--red); font-weight: 700; letter-spacing: 0; margin-right: 4px; }
   .header-meta { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 16px; margin-top: 16px; }
-  .meta-item { display: flex; flex-direction: column; }
+  .meta-item { display: flex; flex-direction: column; height: 100%; }
+  .meta-item .meta-label { flex: 1 0 auto; }
+  .header-meta { align-items: stretch; }
   .meta-label { font-size: 11px; color: var(--text3); text-transform: uppercase; letter-spacing: 0.8px; }
   .meta-value { font-size: 14px; font-weight: 600; color: var(--text2); margin-top: 2px; }
   .meta-value.highlight { color: var(--accent2); }
@@ -35,20 +43,22 @@
   /* SECTIONS (tab show/hide) */
   .section { display: none; padding: 28px 32px; max-width: 1100px; margin: 0 auto; }
   .section.active { display: block; }
-
+  /* 요약은 탭이 아니라 항상 보이는 맨 윗단이다. 나머지 탭은 탭 바 아래에서
+     펼쳤다 접었다 한다. `.section`을 쓰지 않으므로 showSection이 건드리지 않는다. */
+  .summary { display: block; padding: 28px 32px; max-width: 1100px; margin: 0 auto; }
 
 
 /* ══════ #tech ══════ */
   :root {
-    --bg: #0f1117; --bg2: #1a1d27; --bg3: #22263a; --border: #2e3347;
-    --text: #e8eaf0; --text2: #9aa0b8; --text3: #5c6282;
-    --accent: #005288; --accent2: #0090ee; --accent3: #003457;
-    --ma5: #ff6b9d; --ma20: #9b59b6; --ma60: #f0c040; --ma120: #22d3ee;
-    --green: #2ecc71; --red: #e74c3c; --gold: #f0c040; --blue: #3498db;
-    --radius: 10px; --shadow: 0 4px 20px rgba(0,0,0,0.4);
+    --bg: var(--bg); --bg2: var(--bg2); --bg3: var(--bg3); --border: var(--border);
+    --text: var(--text); --text2: var(--text2); --text3: var(--text3);
+    
+    --ma5: #ff6b9d; --ma20: #9b59b6; --ma60: var(--gold); --ma120: #22d3ee;
+    --green: var(--green); --red: var(--red); --gold: var(--gold); --blue: var(--blue);
+    --radius: 10px; --shadow: var(--shadow);
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', -apple-system, sans-serif; font-size: 14px; line-height: 1.6; }
+  body { background: var(--bg); color: var(--text); font-family: 'Noto Sans KR', system-ui, -apple-system, sans-serif; font-size: 14px; line-height: 1.6; }
   .page { max-width: 1100px; margin: 0 auto; padding: 28px 32px; }
 
   .section-title { font-size: 16px; font-weight: 700; color: var(--accent2); margin-bottom: 20px; padding-bottom: 10px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 8px; }
@@ -72,7 +82,7 @@
   .zone-list { display: flex; flex-direction: column; gap: 8px; margin-top: 4px; }
   .zone-item { display: flex; justify-content: space-between; align-items: center; padding: 8px 12px; background: var(--bg3); border-radius: 6px; }
   .zone-label { font-size: 12px; color: var(--text2); }
-  .zone-val { font-size: 13px; font-weight: 700; color: var(--accent2); }
+  .zone-val { font-size: 13px; font-weight: 700; color: var(--text); }
   .zone-tag { font-size: 10px; padding: 2px 8px; border-radius: 10px; font-weight: 600; }
   .tag-support { background: rgba(46,204,113,0.15); color: var(--green); }
   .tag-resist { background: rgba(231,76,60,0.15); color: var(--red); }
@@ -81,66 +91,31 @@
   .range-toggle { display: flex; gap: 6px; flex-wrap: wrap; }
   .range-btn { background: var(--bg3); border: 1px solid var(--border); color: var(--text3); font-size: 11px; font-weight: 700; padding: 4px 11px; border-radius: 999px; cursor: pointer; transition: all .15s; }
   .range-btn:hover { color: var(--text); border-color: var(--text2); }
-  .range-btn.active { background: rgba(118,185,0,0.18); color: var(--accent2); border-color: var(--accent); }
+  .range-btn.active { background: color-mix(in srgb, var(--accent) 18%, transparent); color: var(--accent2); border-color: var(--accent); }
   .ma-toggle-btn { background: var(--bg3); border: 1px solid; font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: 999px; cursor: pointer; opacity: 1; transition: opacity .15s; }
   .ma-toggle-btn.ma-off { opacity: 0.35; }
   .price-chart-container { margin-bottom: 16px; }
 
   /* ── SCORECARD (신규) ── */
-  .scorecard { background: linear-gradient(135deg, var(--bg2) 0%, #171a26 100%); border: 1px solid var(--border); border-radius: var(--radius); padding: 22px 24px; margin-bottom: 20px; }
-  .scorecard-top { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 12px; margin-bottom: 14px; }
-  .scorecard-score { display: flex; align-items: baseline; gap: 4px; }
-  .scorecard-score .num { font-size: 40px; font-weight: 800; color: var(--accent2); line-height: 1; }
-  .scorecard-score .denom { font-size: 16px; color: var(--text3); font-weight: 600; }
-  .scorecard-grade { font-size: 12px; font-weight: 700; padding: 6px 14px; border-radius: 999px; background: rgba(46,204,113,0.15); color: var(--green); white-space: nowrap; }
-  .scorecard-grade.grade-strong { background: rgba(46,204,113,0.18); color: var(--green); }
-  .scorecard-grade.grade-positive { background: rgba(159,219,47,0.15); color: var(--accent2); }
-  .scorecard-grade.grade-mixed { background: rgba(240,192,64,0.18); color: var(--gold); }
-  .scorecard-grade.grade-weak { background: rgba(231,76,60,0.15); color: var(--red); }
-  .scorecard-bar { height: 6px; background: var(--bg3); border-radius: 999px; overflow: hidden; margin-bottom: 6px; }
-  .scorecard-bar-fill { height: 100%; background: linear-gradient(90deg, var(--accent3), var(--accent2)); border-radius: 999px; }
-  .scorecard-subtitle { font-size: 11.5px; color: var(--text3); margin-bottom: 18px; }
-  .scorecard-subscores { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-bottom: 10px; }
-  .subscore-box { background: var(--bg3); border-radius: 8px; padding: 12px 14px; }
-  .subscore-box .subscore-label { font-size: 11px; color: var(--text2); margin-bottom: 6px; display: flex; justify-content: space-between; }
-  .subscore-box .subscore-val { font-size: 20px; font-weight: 700; color: var(--text); }
-  .subscore-box .subscore-max { font-size: 12px; color: var(--text3); font-weight: 500; }
-  .subscore-bar { height: 4px; background: var(--bg); border-radius: 999px; overflow: hidden; margin-top: 8px; }
-  .subscore-bar-fill { height: 100%; background: var(--accent2); border-radius: 999px; }
-  .subscore-desc { font-size: 10.5px; color: var(--text3); margin-top: 8px; }
-  .subscores-note { font-size: 10.5px; color: var(--text3); margin-bottom: 16px; line-height: 1.5; }
-  .scorecard-flags { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 14px; }
-  .risk-flag { font-size: 11px; font-weight: 700; padding: 4px 11px; border-radius: 999px; background: rgba(231,76,60,0.15); color: var(--red); position: relative; cursor: help; }
-  .risk-flag[data-tooltip]::after { content: attr(data-tooltip); position: absolute; bottom: calc(100% + 8px); left: 50%; transform: translateX(-50%); width: max-content; max-width: 260px; background: #05060a; color: var(--text2); font-size: 11px; font-weight: 500; line-height: 1.5; padding: 8px 10px; border-radius: 8px; border: 1px solid var(--border); box-shadow: var(--shadow); opacity: 0; visibility: hidden; transition: opacity 0.15s ease; pointer-events: none; z-index: 20; text-align: left; white-space: normal; }
-  .risk-flag[data-tooltip]::before { content: ''; position: absolute; bottom: 100%; left: 50%; transform: translateX(-50%); border: 5px solid transparent; border-top-color: #05060a; opacity: 0; visibility: hidden; transition: opacity 0.15s ease; z-index: 20; }
-  .risk-flag[data-tooltip]:hover::after, .risk-flag[data-tooltip]:hover::before { opacity: 1; visibility: visible; }
-  .scorecard-noflags { font-size: 11.5px; color: var(--text3); margin-bottom: 14px; }
+  .risk-flag { font-size: 11px; font-weight: 700; padding: 4px 11px; border-radius: 999px; background: rgba(231,76,60,0.15); color: var(--red); }
   .opportunity-badge { font-size: 11px; font-weight: 700; padding: 4px 11px; border-radius: 999px; background: rgba(52,152,219,0.18); color: var(--blue); }
   .opportunity-badge .sub { font-weight: 500; opacity: 0.85; }
-  .scorecard-verdict { display: flex; flex-direction: column; align-items: flex-end; gap: 6px; }
-  .scorecard-noOpp-inline { font-size: 10.5px; color: var(--text3); white-space: nowrap; }
-  .scorecard-evidence { list-style: none; display: flex; flex-direction: column; gap: 7px; margin-bottom: 14px; }
-  .scorecard-evidence li { font-size: 12.5px; color: var(--text2); padding-left: 16px; position: relative; }
-  .scorecard-evidence li::before { content: '●'; position: absolute; left: 0; color: var(--accent2); font-size: 8px; top: 5px; }
-  .scorecard-footer { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; padding-top: 12px; border-top: 1px dashed var(--border); font-size: 10.5px; color: var(--text3); }
-  .scorecard-disclaimer { font-size: 10.5px; color: var(--text3); font-style: italic; }
 
   @media (max-width: 640px) {
     .page { padding: 20px 16px; }
     .grid-3, .grid-4 { grid-template-columns: 1fr 1fr; }
-    .scorecard-subscores { grid-template-columns: 1fr; }
   }
 
 /* ══════ #fund ══════ */
   :root {
-    --bg: #0f1117; --bg2: #1a1d27; --bg3: #22263a; --border: #2e3347;
-    --text: #e8eaf0; --text2: #9aa0b8; --text3: #5c6282;
-    --accent: #005288; --accent2: #0090ee; --accent3: #003457;
-    --green: #2ecc71; --red: #e74c3c; --gold: #f0c040; --blue: #3498db;
-    --radius: 10px; --shadow: 0 4px 20px rgba(0,0,0,0.4);
+    --bg: var(--bg); --bg2: var(--bg2); --bg3: var(--bg3); --border: var(--border);
+    --text: var(--text); --text2: var(--text2); --text3: var(--text3);
+    
+    --green: var(--green); --red: var(--red); --gold: var(--gold); --blue: var(--blue);
+    --radius: 10px; --shadow: var(--shadow);
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', -apple-system, sans-serif; font-size: 14px; line-height: 1.6; }
+  body { background: var(--bg); color: var(--text); font-family: 'Noto Sans KR', system-ui, -apple-system, sans-serif; font-size: 14px; line-height: 1.6; }
   .page { max-width: 1100px; margin: 0 auto; padding: 28px 32px; }
 
   .section-title { font-size: 16px; font-weight: 700; color: var(--accent2); margin-bottom: 20px; padding-bottom: 10px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 8px; }
@@ -173,6 +148,10 @@
   .diag-summary .sub { font-size:12px; color:var(--text2); margin-top:2px; line-height:1.4; }
   .diag-summary.watch { background: linear-gradient(90deg, rgba(240,192,64,0.14), rgba(240,192,64,0.03)); border-color: rgba(240,192,64,0.35); }
   .diag-summary.watch .title { color: var(--gold); }
+  .diag-summary.alert { background: linear-gradient(90deg, rgba(231,76,60,0.14), rgba(231,76,60,0.03)); border-color: rgba(231,76,60,0.35); }
+  .diag-summary.alert .title { color: var(--red); }
+  .diag-summary.none { background: var(--bg3); border-color: var(--border); }
+  .diag-summary.none .title { color: var(--text2); }
   .diag-list { display:flex; flex-direction:column; gap:6px; margin-bottom: 22px; }
   .diag-row { display:flex; align-items:center; justify-content:space-between; background:var(--bg3); border-radius:8px; padding:10px 14px; }
   .diag-left { display:flex; align-items:baseline; gap:10px; }
@@ -183,11 +162,56 @@
   .diag-badge.safe { background:rgba(46,204,113,0.16); color:var(--green); }
   .diag-badge.info { background:rgba(154,160,184,0.14); color:var(--text2); }
   .diag-badge.watch { background:rgba(240,192,64,0.16); color:var(--gold); }
+  .diag-badge.alert { background:rgba(231,76,60,0.16); color:var(--red); }
+  .score-comp { display:flex; align-items:center; gap:24px; flex-wrap:wrap; }
+  .sc-total { display:flex; align-items:baseline; gap:6px; min-width:150px; }
+  .sc-total-l { font-size:12px; color:var(--text2); }
+  .sc-total-v { font-size:26px; font-weight:800; color:var(--text); }
+  /* 그룹 안의 칸은 한 줄로 둔다. 폭이 모자라면 칸이 접히지 않고 그룹이 통째로 다음 줄로 간다(2026-09-24).
+     flex-basis 0이라 넓은 화면에서는 두 그룹 폭이 같다(auto로 두면 칸 5개 쪽이 더 넓어진다). */
+  .sc-group { display:flex; flex-direction:column; align-items:center; gap:6px; flex:1 1 0; min-width:max-content; background:var(--bg3); border-radius:8px; padding:10px 14px; }
+  .sc-group-l { font-size:11px; color:var(--text3); text-align:center; }
+  .sc-group-l [data-axis-pts] { color:var(--text); font-weight:700; }
+  .sc-tiles { display:flex; gap:8px; flex-wrap:nowrap; justify-content:center; }
+  @media (max-width: 520px) {
+    .sc-group { min-width:0; width:100%; padding:10px 8px; }
+    .sc-tiles { gap:4px; }
+    .sc-item { min-width:0; }
+    #fundComp .sc-tile { width:44px; }
+    .sc-name { font-size:9px; }
+  }
+  .sc-item { display:flex; flex-direction:column; align-items:center; gap:2px; min-width:52px; }
+  .sc-tile { width:52px; height:22px; border-radius:5px; display:flex; align-items:center; justify-content:center; font-size:12.5px; font-weight:800; background:rgba(46,204,113,0.16); color:var(--green); }
+  .sc-tile.lost { background:rgba(240,192,64,0.18); color:var(--gold); }
+  .sc-tile.none { background:var(--bg3); color:var(--text3); }
+  .sc-name { font-size:10px; color:var(--text2); white-space:nowrap; }
+  .sc-tile.low { background:rgba(231,76,60,0.16); color:var(--red); }
+  .vs-head { display:flex; align-items:baseline; gap:10px; margin-bottom:12px; }
+  .vs-head-l { font-size:12px; color:var(--text3); }
+  .vs-verdict { font-size:20px; font-weight:800; color:var(--gold); }
+  .vs-asof { margin-left:auto; font-size:11px; color:var(--text3); }
+  .vs-table-wrap { overflow-x:auto; }
+  .vs-table { display:grid; grid-template-columns:150px 64px repeat(5, 44px) minmax(0, 1fr); column-gap:8px; row-gap:8px; align-items:center; background:var(--bg3); border-radius:8px; padding:12px 14px; min-width:560px; }
+  .vc-head { font-size:9.5px; color:var(--text3); text-align:center; white-space:nowrap; }
+  .vs-name { font-size:12px; color:var(--text2); cursor:help; white-space:nowrap; }
+  .vs-val { font-size:17px; font-weight:800; color:var(--text); }
+  .vs-note { grid-column:span 5; font-size:11.5px; color:var(--text2); }
+  .vs-note strong { color:var(--text); }
+  .vs-table .sc-tile { width:44px; height:20px; border-radius:4px; font-size:11.5px; }
+  .vs-pill { justify-self:end; font-size:11px; font-weight:700; border-radius:999px; padding:2px 9px; white-space:nowrap; color:var(--green); background:rgba(46,204,113,0.14); }
+  .vs-pill.mid { color:var(--gold); background:rgba(240,192,64,0.16); }
+  .vs-pill.high { color:var(--red); background:rgba(231,76,60,0.14); }
+  /* "계산 어려움" 배지 — 현금흐름 알약과 한 칸에 묶는다(격자 칸 수를 바꾸지 않게) */
+  .vs-pill-wrap { justify-self:end; display:flex; gap:6px; align-items:center; flex-wrap:wrap; justify-content:flex-end; }
+  .vs-pill-wrap .vs-pill { justify-self:auto; }
+  .vs-hard { font-size:11px; font-weight:700; border-radius:999px; padding:2px 9px; white-space:nowrap; color:var(--gold); background:rgba(240,192,64,0.12); border:1px dashed rgba(240,192,64,0.55); cursor:help; }
+  .vs-premise { font-size:12px; color:var(--text2); line-height:1.6; margin:12px 0 10px; }
+  .vs-premise strong { color:var(--text); }
 
   .detail-toggle { cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 8px; user-select: none; font-size: 12.5px; color: var(--text2); font-weight: 600; padding: 10px 2px 6px; border-top: 1px dashed var(--bg3); margin-top: 2px; }
   .detail-toggle:hover { color: var(--text); }
-  .detail-toggle .toggle-hint { display: flex; align-items: center; gap: 6px; background: rgba(159,219,47,0.12); border: 1px solid rgba(159,219,47,0.35); border-radius: 999px; padding: 5px 11px; flex-shrink: 0; transition: background 0.2s ease, border-color 0.2s ease; }
-  .detail-toggle:hover .toggle-hint { background: rgba(159,219,47,0.22); border-color: rgba(159,219,47,0.5); }
+  .detail-toggle .toggle-hint { display: flex; align-items: center; gap: 6px; background: color-mix(in srgb, var(--accent) 12%, transparent); border: 1px solid color-mix(in srgb, var(--accent) 35%, transparent); border-radius: 999px; padding: 5px 11px; flex-shrink: 0; transition: background 0.2s ease, border-color 0.2s ease; }
+  .detail-toggle:hover .toggle-hint { background: color-mix(in srgb, var(--accent) 22%, transparent); border-color: color-mix(in srgb, var(--accent) 50%, transparent); }
   .detail-toggle .toggle-hint-text { font-size: 10.5px; font-weight: 700; color: var(--accent2); white-space: nowrap; }
   .detail-toggle .chevron { font-size: 11px; color: var(--accent2); transition: transform 0.25s ease; flex-shrink: 0; }
   .detail-toggle.collapsed .chevron { transform: rotate(-90deg); }
@@ -196,7 +220,7 @@
 
   .activity-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 12px; }
   .act-card { background: var(--bg3); border-radius: 8px; padding: 12px 14px; display:flex; align-items:center; gap:12px; }
-  .act-icon { font-size: 19px; width:34px; height:34px; display:flex; align-items:center; justify-content:center; background:rgba(159,219,47,0.1); border-radius:8px; flex-shrink:0; }
+  .act-icon { font-size: 19px; width:34px; height:34px; display:flex; align-items:center; justify-content:center; background:color-mix(in srgb, var(--accent) 10%, transparent); border-radius:8px; flex-shrink:0; }
   .act-label { font-size: 11.5px; color: var(--text2); font-weight:600; margin-bottom:2px; }
   .act-value { font-size: 15px; font-weight: 700; color: var(--text); }
   .act-sub { font-size: 11px; color: var(--text2); margin-top:1px; }
@@ -207,8 +231,9 @@
   .ccc-explain { font-size: 11.5px; color: var(--text2); line-height: 1.6; margin-bottom: 22px; }
   .tl-bar-wrap { position: relative; margin: 40px 4px 8px; }
   .tl-bar { height: 18px; border-radius: 5px; overflow: hidden; display: flex; }
-  .tl-seg-inv { background: linear-gradient(90deg,#3498db,#2980b9); display:flex; align-items:center; justify-content:center; font-size:10px; font-weight:700; color:#fff; }
-  .tl-seg-ar { background: linear-gradient(90deg,#9fdb2f,#76b900); display:flex; align-items:center; justify-content:center; font-size:10px; font-weight:700; color:#0f1117; }
+  .tl-seg-float { background: repeating-linear-gradient(45deg, rgba(240,192,64,0.28) 0 6px, rgba(240,192,64,0.14) 6px 12px); display:flex; align-items:center; justify-content:center; font-size:10px; font-weight:700; color:var(--gold); }
+  .tl-seg-inv { background: linear-gradient(90deg,var(--blue),#2980b9); display:flex; align-items:center; justify-content:center; font-size:10px; font-weight:700; color:#fff; }
+  .tl-seg-ar { background: linear-gradient(90deg,var(--accent),var(--accent)); display:flex; align-items:center; justify-content:center; font-size:10px; font-weight:700; color:var(--bg); }
   .tl-marker { position: absolute; top: -18px; width: 2px; background: var(--gold); }
   .tl-marker-label { position: absolute; top: -32px; transform: translateX(-50%); font-size: 10.5px; font-weight: 700; color: var(--gold); white-space: nowrap; }
   .tl-ccc-span { position: absolute; height: 3px; background: rgba(240,192,64,0.6); border-radius: 2px; top: 24px; }
@@ -217,9 +242,9 @@
   .zone-list { display: flex; flex-direction: column; gap: 8px; margin-top: 4px; }
   .zone-item { display: flex; justify-content: space-between; align-items: center; padding: 8px 12px; background: var(--bg3); border-radius: 6px; }
   .zone-label { font-size: 12px; color: var(--text2); }
-  .zone-val { font-size: 13px; font-weight: 700; color: var(--accent2); }
+  .zone-val { font-size: 13px; font-weight: 700; color: var(--text); }
   .zone-tag { font-size: 10px; padding: 2px 8px; border-radius: 10px; font-weight: 600; }
-  .tag-record { background: rgba(118,185,0,0.2); color: var(--accent2); }
+  .tag-record { background: color-mix(in srgb, var(--accent) 20%, transparent); color: var(--accent2); }
 
   @media (max-width: 640px) {
     .page { padding: 20px 16px; }
@@ -229,14 +254,14 @@
 
 /* ══════ #valuation ══════ */
   :root {
-    --bg: #0f1117; --bg2: #1a1d27; --bg3: #22263a; --border: #2e3347;
-    --text: #e8eaf0; --text2: #9aa0b8; --text3: #5c6282;
-    --accent: #005288; --accent2: #0090ee; --accent3: #003457;
-    --green: #2ecc71; --red: #e74c3c; --gold: #f0c040; --blue: #3498db;
-    --radius: 10px; --shadow: 0 4px 20px rgba(0,0,0,0.4);
+    --bg: var(--bg); --bg2: var(--bg2); --bg3: var(--bg3); --border: var(--border);
+    --text: var(--text); --text2: var(--text2); --text3: var(--text3);
+    
+    --green: var(--green); --red: var(--red); --gold: var(--gold); --blue: var(--blue);
+    --radius: 10px; --shadow: var(--shadow);
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', -apple-system, sans-serif; font-size: 14px; line-height: 1.6; }
+  body { background: var(--bg); color: var(--text); font-family: 'Noto Sans KR', system-ui, -apple-system, sans-serif; font-size: 14px; line-height: 1.6; }
   .page { max-width: 1100px; margin: 0 auto; padding: 28px 32px; }
 
   .section-title { font-size: 16px; font-weight: 700; color: var(--accent2); margin-bottom: 20px; padding-bottom: 10px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 8px; }
@@ -252,43 +277,26 @@
   .val-item { margin-bottom: 18px; padding: 8px; margin-left: -8px; margin-right: -8px; border-radius: 8px; border: 1px solid transparent; transition: background 0.15s ease, border-color 0.15s ease; cursor: pointer; }
   .val-item:last-child { margin-bottom: 0; }
   .val-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
-  .val-item:hover { background: rgba(255,255,255,0.03); }
-  .val-item.selected { background: rgba(159,219,47,0.08); border-color: rgba(159,219,47,0.35); }
+  .val-item:hover { background: color-mix(in srgb, var(--text) 3%, transparent); }
+  .val-item.selected { background: color-mix(in srgb, var(--accent) 8%, transparent); border-color: color-mix(in srgb, var(--accent) 35%, transparent); }
   .val-name { position: relative; font-size: 13px; font-weight: 600; color: var(--text); }
   .val-item.selected .val-name::after { content: '▸ 비교 보기'; font-size: 9.5px; font-weight: 600; color: var(--accent2); margin-left: 8px; vertical-align: middle; }
   .val-number { font-size: 14px; font-weight: 700; color: var(--accent2); }
   .val-track { height: 8px; background: var(--bg3); border-radius: 4px; position: relative; overflow: hidden; }
   .val-fill { height: 100%; border-radius: 4px; transition: width 0.8s ease; }
-  .val-labels { display: flex; justify-content: space-between; margin-top: 4px; }
-  .val-low { font-size: 10px; color: var(--green); }
-  .val-mid { font-size: 10px; color: var(--accent2); text-align: center; }
-  .val-high { font-size: 10px; color: var(--red); }
-  .stage-badge { font-size: 13px; padding: 2px 10px; border-radius: 12px; font-weight: 700; }
-  .stage-1 { background: rgba(46,204,113,0.2); color: #2ecc71; }
-  .stage-2 { background: rgba(39,174,96,0.2); color: #27ae60; }
-  .stage-3 { background: rgba(200,168,75,0.2); color: var(--accent2); }
-  .stage-4 { background: rgba(231,126,35,0.2); color: #e67e22; }
-  .stage-5 { background: rgba(231,76,60,0.2); color: var(--red); }
-
+  .hist-badge { font-size:11.5px; padding:2px 9px; border-radius:12px; font-weight:700; white-space:nowrap; }
+  .hist-badge.good { background:rgba(46,204,113,0.15); color:var(--green); }
+  .hist-badge.mid { background:rgba(240,192,64,0.15); color:var(--gold); }
+  .hist-badge.bad { background:rgba(231,76,60,0.15); color:var(--red); }
+  .hist-fill.good { background:var(--green); } .hist-fill.mid { background:var(--gold); } .hist-fill.bad { background:var(--red); }
+  .hist-labels { display:flex; justify-content:space-between; margin-top:4px; font-size:10px; color:var(--text3); }
+  .hist-note { font-size:10px; font-weight:500; color:var(--text3); margin-left:6px; }
 
   /* PEER-COMPARE VERDICT BLOCK */
-  .verdict-line { font-size:15px; font-weight:700; color:var(--text); line-height:1.45; margin-top:14px; }
-  .verdict-caveat { font-size:11px; color:var(--text3); margin-top:5px; line-height:1.5; display:flex; align-items:flex-start; gap:6px; }
-  .caveat-icon { display:inline-flex; align-items:center; justify-content:center; width:14px; height:14px; border-radius:50%; background:var(--gold); color:#0f1117; font-size:10px; font-weight:800; flex-shrink:0; margin-top:1.5px; }
-  .anchor-card { margin-top:14px; background:var(--bg3); border-radius:8px; padding:12px 14px; }
-  .anchor-card-label { font-size:10.5px; color:var(--text3); text-transform:uppercase; letter-spacing:0.6px; margin-bottom:8px; }
-  .anchor-card-formula { font-family:'SF Mono',Menlo,Consolas,monospace; font-size:12.5px; font-weight:500; color:var(--text2); line-height:1.5; padding:2px 0 2px 10px; border-left:2px solid var(--text3); }
-  .anchor-card-formula + .anchor-card-formula { margin-top:6px; }
-  .anchor-card-cross { font-size:11px; color:var(--text3); margin-top:10px; padding-top:8px; border-top:1px dashed rgba(255,255,255,0.06); line-height:1.5; }
-  .secondary-row { margin-top:10px; background:rgba(52,152,219,0.08); border:1px solid rgba(52,152,219,0.25); border-radius:8px; padding:10px 12px; }
-  .secondary-row-label { font-size:11.5px; font-weight:700; color:var(--blue); }
-  .secondary-row-caveat { font-size:10.5px; color:var(--text3); margin-top:4px; line-height:1.5; }
 
   /* SYNTHESIS VERDICT (종합 밸류에이션) */
   .verdict-summary-head { font-size:14px; font-weight:800; color:var(--text); }
   .verdict-summary-head .tag { font-size:11.5px; font-weight:700; color:var(--green); margin-left:4px; }
-  .verdict-summary-head .tag.mixed { color:var(--gold); }
-  .verdict-summary-head .tag.negative { color:var(--red); }
   .verdict-summary-body { font-size:12.5px; color:var(--text2); line-height:1.7; margin-top:10px; }
   .verdict-summary-risk { margin-top:12px; background:rgba(240,192,64,0.08); border:1px solid rgba(240,192,64,0.25); border-radius:8px; padding:10px 12px; font-size:11.5px; color:var(--text2); line-height:1.6; }
 
@@ -299,15 +307,15 @@
 
 /* ══════ #news ══════ */
   :root {
-    --bg: #0f1117; --bg2: #1a1d27; --bg3: #22263a; --border: #2e3347;
-    --text: #e8eaf0; --text2: #9aa0b8; --text3: #5c6282;
-    --accent: #005288; --accent2: #0090ee; --accent3: #003457;
-    --green: #2ecc71; --red: #e74c3c; --gold: #f0c040; --blue: #3498db;
-    --event-major: #38bdf8; --event-neutral: #f1c40f;
-    --radius: 10px; --shadow: 0 4px 20px rgba(0,0,0,0.4);
+    --bg: var(--bg); --bg2: var(--bg2); --bg3: var(--bg3); --border: var(--border);
+    --text: var(--text); --text2: var(--text2); --text3: var(--text3);
+    
+    --green: var(--green); --red: var(--red); --gold: var(--gold); --blue: var(--blue);
+    --event-major: var(--sky); --event-neutral: var(--gold);
+    --radius: 10px; --shadow: var(--shadow);
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', -apple-system, sans-serif; font-size: 14px; line-height: 1.6; }
+  body { background: var(--bg); color: var(--text); font-family: 'Noto Sans KR', system-ui, -apple-system, sans-serif; font-size: 14px; line-height: 1.6; }
   .page { max-width: 1100px; margin: 0 auto; padding: 28px 32px; }
 
   .section-title { font-size: 16px; font-weight: 700; color: var(--accent2); margin-bottom: 20px; padding-bottom: 10px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 8px; }
@@ -331,6 +339,25 @@
   .tl-desc { font-size: 12px; color: var(--text2); line-height: 1.5; }
   .tl-source { display: inline-flex; align-items: center; gap: 4px; margin-top: 6px; font-size: 11px; font-weight: 600; color: var(--accent2); text-decoration: none; }
   .tl-source:hover { text-decoration: underline; }
+  .bb-row { display:grid; grid-template-columns:14px 64px minmax(0, 1fr); gap:8px; align-items:center; padding:7px 0; border-bottom:1px solid var(--border); font-size:12.5px; }
+  .bb-row:last-child { border-bottom:none; }
+  .op-strip { display:grid; grid-template-columns:repeat(3, minmax(0, 1fr)); background:var(--bg3); border-radius:8px; padding:12px 0; }
+  .op-cell { display:flex; flex-direction:column; align-items:center; text-align:center; gap:3px; padding:0 18px; border-left:1px solid var(--border); }
+  .op-cell:first-child { border-left:none; }
+  .op-label { font-size:11px; color:var(--text3); }
+  .op-val { font-size:17px; font-weight:800; color:var(--text); }
+  .op-sub { font-size:12px; font-weight:600; color:var(--text2); }
+  .op-sub.op-up { color:var(--green); }
+  .op-sub.op-down { color:var(--red); }
+  .op-dist { display:flex; height:6px; width:150px; border-radius:3px; overflow:hidden; margin-top:3px; }
+  @media (max-width: 600px) { .op-strip { grid-template-columns:1fr; row-gap:12px; } .op-cell { border-left:none; } }
+  .bb-row.bull .bb-icon { color:var(--bull); } .bb-row.bear .bb-icon { color:var(--bear); }
+  .bb-head { font-weight:700; color:var(--text); white-space:nowrap; }
+  .bb-text { color:var(--text2); line-height:1.45; }
+  .tl-pager { display:flex; justify-content:center; gap:6px; margin-top:14px; }
+  .tl-pager:empty { display:none; }
+  .news-list { margin:10px 0 0; padding-left:20px; font-size:12.5px; color:var(--text2); line-height:1.7; }
+  .news-list li::marker { color:var(--accent2); font-weight:700; }
   .tl-reaction { display:inline-block; margin-left:8px; font-size:10px; font-weight:700; padding:2px 7px; border-radius:999px; }
   .tl-reaction.up { background:rgba(46,204,113,0.15); color:var(--green); }
   .tl-reaction.down { background:rgba(231,76,60,0.15); color:var(--red); }
@@ -348,8 +375,6 @@
   /* SYNTHESIS CARD (종합 해석, new) — reuses #valuation's 종합 밸류에이션 verdict pattern */
   .verdict-summary-head { font-size:14px; font-weight:800; color:var(--text); }
   .verdict-summary-head .tag { font-size:11.5px; font-weight:700; color:var(--green); margin-left:4px; }
-  .verdict-summary-head .tag.mixed { color:var(--gold); }
-  .verdict-summary-head .tag.negative { color:var(--red); }
   .verdict-summary-body { font-size:12.5px; color:var(--text2); line-height:1.7; margin-top:10px; }
   .verdict-summary-counter { margin-top:12px; background:rgba(240,192,64,0.08); border:1px solid rgba(240,192,64,0.25); border-radius:8px; padding:10px 12px; font-size:11.5px; color:var(--text2); line-height:1.6; }
   .verdict-summary-next { margin-top:10px; background:rgba(52,152,219,0.08); border:1px solid rgba(52,152,219,0.25); border-radius:8px; padding:10px 12px; font-size:11.5px; color:var(--text2); line-height:1.6; }
@@ -360,15 +385,15 @@
 
 /* ══════ #invest ══════ */
   :root {
-    --bg: #0f1117; --bg2: #1a1d27; --bg3: #22263a; --border: #2e3347;
-    --text: #e8eaf0; --text2: #9aa0b8; --text3: #5c6282;
-    --accent: #005288; --accent2: #0090ee; --accent3: #003457;
-    --green: #2ecc71; --red: #e74c3c; --gold: #f0c040; --blue: #3498db;
+    --bg: var(--bg); --bg2: var(--bg2); --bg3: var(--bg3); --border: var(--border);
+    --text: var(--text); --text2: var(--text2); --text3: var(--text3);
+    
+    --green: var(--green); --red: var(--red); --gold: var(--gold); --blue: var(--blue);
     --bull: #D85A30; --bear: #185FA5;
-    --radius: 10px; --shadow: 0 4px 20px rgba(0,0,0,0.4);
+    --radius: 10px; --shadow: var(--shadow);
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { background: var(--bg); color: var(--text); font-family: 'Segoe UI', -apple-system, sans-serif; font-size: 14px; line-height: 1.6; }
+  body { background: var(--bg); color: var(--text); font-family: 'Noto Sans KR', system-ui, -apple-system, sans-serif; font-size: 14px; line-height: 1.6; }
   .page { max-width: 1100px; margin: 0 auto; padding: 28px 32px; }
 
   .section-title { font-size: 16px; font-weight: 700; color: var(--accent2); margin-bottom: 20px; padding-bottom: 10px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 8px; }
@@ -392,7 +417,7 @@
   .zone-list { display: flex; flex-direction: column; gap: 8px; margin-top: 4px; }
   .zone-item { display: flex; justify-content: space-between; align-items: center; padding: 8px 12px; background: var(--bg3); border-radius: 6px; }
   .zone-label { font-size: 12px; color: var(--text2); }
-  .zone-val { font-size: 13px; font-weight: 700; color: var(--accent2); }
+  .zone-val { font-size: 13px; font-weight: 700; color: var(--text); }
 
   @media (max-width: 640px) {
     .page { padding: 20px 16px; }
@@ -400,7 +425,7 @@
   }
 
   body { padding-top: 46px; }
-  .back-bar { position: fixed; top: 0; left: 0; right: 0; height: 46px; background: rgba(10,11,17,0.92); backdrop-filter: blur(8px); border-bottom: 1px solid var(--border); z-index: 1000; display: flex; align-items: center; justify-content: space-between; padding: 0 20px; }
+  .back-bar { position: fixed; top: 0; left: 0; right: 0; height: 46px; background: color-mix(in srgb, var(--bg2) 94%, transparent); backdrop-filter: blur(8px); border-bottom: 1px solid var(--border); z-index: 1000; display: flex; align-items: center; justify-content: space-between; padding: 0 20px; }
   .back-bar-left { display: flex; align-items: center; gap: 8px; text-decoration: none; }
   .back-bar-logo { width: 20px; height: 20px; border-radius: 5px; background: var(--accent2); flex-shrink: 0; }
   .back-bar-left span { color: var(--text2); font-size: 12.5px; font-weight: 600; transition: color 0.2s; }
@@ -410,12 +435,71 @@
   .back-bar-nav:hover { color: var(--accent2); }
   .back-bar-nav.disabled { color: var(--text3); pointer-events: none; }
   .back-bar-current { color: var(--text); font-weight: 700; padding: 4px 10px; background: var(--bg3); border-radius: 6px; white-space: nowrap; }
+
+  /* ══════ 첫 탭: 적정주가 3가지 근거 ══════ */
+  .logic-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:10px; margin-bottom:14px; }
+  .logic-box { background:var(--bg2); border:1px solid var(--border); border-left-width:3px; border-radius:var(--radius); padding:10px 12px; }
+  .logic-box.logic-positive { border-left-color:var(--green); }
+  .logic-box.logic-neutral { border-left-color:var(--gold); }
+  .logic-box.logic-negative { border-left-color:var(--red); }
+  .logic-box.logic-info { border-left-color:var(--sky); }
+  .logic-head { display:flex; align-items:center; justify-content:space-between; gap:6px; margin-bottom:5px; }
+  .logic-tag { font-size:11.5px; font-weight:800; color:var(--text); }
+  .logic-verdict { font-size:10px; font-weight:700; padding:2px 7px; border-radius:999px; background:var(--bg3); color:var(--text2); white-space:nowrap; }
+  .logic-positive .logic-verdict { background:rgba(46,204,113,0.15); color:var(--green); }
+  .logic-neutral .logic-verdict { background:rgba(240,192,64,0.15); color:var(--gold); }
+  .logic-negative .logic-verdict { background:rgba(231,76,60,0.15); color:var(--red); }
+  .logic-info .logic-verdict { background:rgba(56,189,248,0.15); color:var(--sky); }
+  .logic-score { font-size:19px; font-weight:800; color:var(--text); }
+  .logic-denom { font-size:11px; font-weight:600; color:var(--text3); }
+  .logic-desc { font-size:12px; color:var(--text2); line-height:1.65; }
+  /* 4칸 한 줄은 박스 폭 약 220px까지 버틴다(내재가치 칸 "$315 · 낮은 성장 … · 높은 성장 …"이 먼저 접힌다).
+     예전 기준 1100px에서는 1100px 창에서도 2×2가 됐다(2026-09-24). */
+  @media (max-width: 980px) { .logic-grid { grid-template-columns:repeat(2,1fr); } }
+  @media (max-width: 620px) { .logic-grid { grid-template-columns:1fr; } }
 </style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>/* site theme v2 */
+:root{--bg:#f8f9fc;--bg2:#ffffff;--bg3:#f1f2f7;--border:#e6e5ee;--text:#191923;--text2:#646474;--text3:#797989;--accent:#6551c9;--accent2:#191923;--accent3:#ece8fb;--green:#14804a;--red:#d92d20;--gold:#a8650c;--blue:#1d4ed8;--sky:#0369a1;--indigo:#4f46e5;--shadow:0 1px 3px rgba(25,25,35,.06);--brand:#0089e4;color-scheme:light}
+:root[data-theme="dark"]{--bg:#15171d;--bg2:#20232d;--bg3:#2a2e3b;--border:#393d4d;--text:#ececf5;--text2:#bec0d0;--text3:#a5a9bd;--accent:#b3a3ff;--accent2:#ececf5;--accent3:#36304f;--green:#7cddb6;--red:#ff8799;--gold:#f2c14e;--blue:#83b8ff;--sky:#7dd3fc;--indigo:#a5b4fc;--shadow:0 4px 20px rgba(0,0,0,.35);--brand:#0089e4;color-scheme:dark}
+.ticker-badge{background:var(--brand)!important;color:#fff!important}
+.hdr-logo{width:34px;height:34px;object-fit:contain;border-radius:8px;background:#fff;padding:4px;border:1px solid var(--border);margin-right:12px;display:inline-block;vertical-align:middle}
+.hdr-logo + .company-name{display:inline-block;vertical-align:middle}
+.back-bar-logo{background:var(--accent)!important}
+.price-main{color:var(--text)!important}
+#theme-toggle{position:relative;width:54px;height:28px;padding:3px 6px;border:1px solid var(--border);border-radius:20px;background:var(--bg2);color:var(--text2);display:flex;justify-content:space-between;align-items:center;cursor:pointer;font-size:12px}
+#theme-toggle .theme-knob{position:absolute;top:3px;left:3px;width:20px;height:20px;border-radius:50%;background:var(--accent);transition:transform .2s}
+#theme-toggle[aria-checked=true] .theme-knob{transform:translateX(26px)}
+</style>
+<script>
+(function(){   // 라이브 홈(theme.js)과 같은 규칙·같은 저장 키 — 홈에서 고른 모드가 카드에도 이어진다
+  var mq = window.matchMedia ? matchMedia('(prefers-color-scheme: dark)') : null, choice = null;
+  try { choice = localStorage.getItem('site-theme'); } catch (e) {}
+  if (choice !== 'light' && choice !== 'dark') choice = null;
+  function apply(){
+    var dark = choice ? choice === 'dark' : !!(mq && mq.matches);
+    document.documentElement.dataset.theme = dark ? 'dark' : 'light';
+    var t = document.getElementById('theme-toggle');
+    if (t) { t.setAttribute('aria-checked', String(dark)); t.title = dark ? '라이트 모드로 전환' : '다크 모드로 전환'; }
+  }
+  apply();
+  if (mq && mq.addEventListener) mq.addEventListener('change', apply);
+  window.addEventListener('storage', function(e){ if (e.key === 'site-theme' || e.key === null) { choice = (e.newValue === 'light' || e.newValue === 'dark') ? e.newValue : null; apply(); } });
+  document.addEventListener('DOMContentLoaded', function(){
+    var t = document.getElementById('theme-toggle'); if (!t) return;
+    t.onclick = function(){ choice = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
+      try { localStorage.setItem('site-theme', choice); } catch (e) {} apply(); };
+    apply();
+  });
+})();
+</script>
+<!-- theme: site v2 -->
 </head>
 <body>
 <div class="back-bar">
-  <a class="back-bar-left" href="../index.html"><span class="back-bar-logo"></span><span>[사이트명] · 전체 종목 목록</span></a>
-  <div class="back-bar-right">
+  <a class="back-bar-left" href="../index.html"><span class="back-bar-logo"></span><span>US stock 가치를 말하다 · 전체 종목 목록</span></a>
+  <div class="back-bar-right"><button id="theme-toggle" type="button" role="switch" aria-label="다크 모드" aria-checked="false"><span aria-hidden="true">☀</span><span aria-hidden="true">☾</span><span class="theme-knob"></span></button>
     <a class="back-bar-nav" href="TSM_full_widget.html">◀ TSM</a>
     <span class="back-bar-current">SPCX · 시총 7위</span>
     <a class="back-bar-nav" href="AVGO_full_widget.html">다음 AVGO ▶</a>
@@ -431,187 +515,506 @@
           <span class="ticker-badge">SPCX</span>
           <span style="font-size:11px;color:var(--accent);font-weight:600;">NASDAQ · Falcon·Starship·Starlink·AI</span>
         </div>
-        <div class="company-name">Space Exploration Technologies Corp.</div>
-        <div class="company-sub">발사체 · Starlink 위성인터넷 · AI 인프라 · S&amp;P 500 미편입(상장 2026.06.12)</div>
+        <img class="hdr-logo" src="logos/spcx.png" alt="" onerror="if(!this.dataset.r){this.dataset.r=1;this.src='../logos/spcx.png'}else{this.remove()}"><div class="company-name">Space Exploration Technologies Corp.</div>
       </div>
     </div>
     <div class="price-block">
-      <div class="price-main">$151.85</div>
-      <div class="price-change" style="color:var(--red);">▼ -0.56% (2026.09.21 기준)</div>
-      <div style="font-size:11px;color:var(--text3);margin-top:2px;">상장 이후 최저 $104.83 (2026.08.03) · 최고 $225.64 (2026.06.16)</div>
+      <div style="font-size:11px;color:var(--text3);margin-bottom:2px;">현재가 (2026.10.05)</div>
+      <div class="price-main"><span class="price-change" style="color:var(--green);">▲ +7.63%</span> $171.09</div>
     </div>
   </div>
-  <div class="header-meta">
-    <div class="meta-item"><span class="meta-label">시가총액</span><span class="meta-value highlight">$2.00T</span></div>
-    <div class="meta-item"><span class="meta-label">섹터</span><span class="meta-value">Aerospace &amp; Defense · Space Technology</span></div>
-    <div class="meta-item"><span class="meta-label">매출 (Q2 2026, 단일분기)</span><span class="meta-value">$7.81B(+92% YoY)</span></div>
-    <div class="meta-item"><span class="meta-label">EPS (Q2 2026, 단일분기)</span><span class="meta-value">-$0.09(GAAP, 순손실)</span></div>
-    <div class="meta-item"><span class="meta-label">배당수익률</span><span class="meta-value">무배당</span></div>
+  <div class="header-meta" style="grid-template-columns:repeat(4,1fr);">
+    <div class="meta-item">
+      <span class="meta-label">종합 평가 (밸류에이션)</span>
+      <span class="meta-value" data-verdict style="font-size:22px;color:var(--gold);">판정 보류</span>
+    </div>
+    <div class="meta-item">
+      <span class="meta-label">현재가 요구 성장 (계산 불가)</span>
+      <span class="meta-value" id="spcxDcfReq" style="font-size: 22px; color: var(--text3);">—</span>
+    </div>
+    <div class="meta-item">
+      <span class="meta-label" id="spcxConfidenceLabel" title="PER 해당 없음 — 최근 4분기 순이익률 2% 미만">밴드 적중률</span>
+      <span class="meta-value" id="spcxConfidence" style="font-size:22px;color:var(--text3);">해당 없음</span>
+    </div>
+    <div class="meta-item">
+      <span class="meta-label">적정주가 (배수 기준)</span>
+      <span class="meta-value" id="spcxFairBand" style="font-size:22px;color:var(--text3);">해당 없음</span>
+    </div>
   </div>
-</div>
-<div class="asof-line" style="max-width:1100px;margin:10px auto 12px;padding:0 16px;box-sizing:border-box;font-size:11px;color:var(--text3);line-height:1.5;">가격·기술지표·배수: 2026.09.21 종가 기준 갱신 · 분석 문장·재무·앵커: 2026.09.03 기준 · 시가총액: SEC 공시 주식수 기준</div>
-<div class="box-key">
-  <div style="font-size:13px;font-weight:700;color:var(--accent2);display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:10px;">
-    <span style="display:flex;align-items:center;gap:6px;"><span style="width:4px;height:14px;background:var(--accent2);border-radius:2px;display:inline-block;"></span>핵심 투자 논리 <span style="color:var(--gold);font-weight:600;">(데이터 초기 단계)</span></span>
-    <span style="font-size:11px;font-weight:700;padding:4px 10px;border-radius:999px;background:rgba(46,204,113,0.15);color:var(--green);">성장 · 매출 +92%</span>
-    <span style="font-size:11px;font-weight:700;padding:4px 10px;border-radius:999px;background:rgba(231,76,60,0.15);color:var(--red);">적자 · Capex 부담</span>
-  </div>
-  <div style="font-size:17px;font-weight:800;color:var(--text);margin-bottom:12px;">매출은 폭발적으로 늘고 있지만 아직 적자이고, 상장한 지 3개월·공개된 분기 실적이 1건뿐이라 검증된 데이터가 많지 않다.</div>
-  <div style="display:flex;flex-direction:column;gap:8px;">
-    <div style="font-size:12px;color:var(--text2);line-height:1.5;"><strong style="color:var(--accent2);">01</strong>&nbsp; 상장 후 첫(유일한) 분기 실적(Q2 2026)에서 매출 $7.81B(+92% YoY) — Starlink 기반 Connectivity 부문이 $4.3B로 견인.</div>
-    <div style="font-size:12px;color:var(--text2);line-height:1.5;"><strong style="color:var(--accent2);">02</strong>&nbsp; AI 인프라 부문 매출이 $2.6B(+247% YoY)로 빠르게 부상 — 우주 발사·통신 회사에서 AI 인프라 회사로 사업 축이 확장되는 중.</div>
-    <div style="font-size:12px;color:var(--text2);line-height:1.5;"><strong style="color:var(--accent2);">03</strong>&nbsp; 영업손실 $143M·순손실 $541M — 6개월 누적 Capex만 $28.5B에 달해 여전히 대규모 투자 국면.</div>
-    <div style="font-size:12px;color:var(--text2);line-height:1.5;"><strong style="color:var(--accent2);">04</strong>&nbsp; 상장 3개월·재무제표 1건뿐이라 밸류에이션·기술점수·예상밴드 백테스트처럼 다년치 데이터가 필요한 지표는 이 카드에서 아직 제공하지 않는다.</div>
   </div>
 </div>
 
-<!-- NAV -->
-<div class="nav">
-  <button class="nav-btn active" onclick="showSection('tech', this)">📈 기술적 분석</button>
-  <button class="nav-btn" onclick="showSection('fund', this)">📊 기본적 분석</button>
-  <button class="nav-btn" onclick="showSection('valuation', this)">⚖️ 밸류에이션</button>
-  <button class="nav-btn" onclick="showSection('news', this)">📰 시계열 뉴스</button>
-  <button class="nav-btn" onclick="showSection('invest', this)">🎯 투자 포인트</button>
-</div>
+<div id="tech" class="summary">
 
-<div id="tech" class="section active">
-  <div class="section-title" id="techHeaderTitle">기술적 분석 — 일봉 캔들스틱 (상장 이후, 2026.06 ~ 2026.09) · 상장 후 수익률 <span id="techHeaderReturn">--</span></div>
+  <!-- ══════════ 네 가지 관점 ══════════
+       값은 전부 SPCX_SCORES / SPCX_DCF에서 렌더한다. HTML에 적힌 숫자는
+       스크립트가 꺼졌을 때를 위한 대비용이다. -->
+  <div class="logic-grid" id="spcxLogicGrid">
+    <div class="logic-box logic-info">
+      <div class="logic-head"><span class="logic-tag">내재가치 <span class="logic-denom">현금흐름</span></span><span class="logic-verdict" id="spcxDcfVerdict">계산 불가</span></div>
+      <div class="logic-score" id="spcxDcfBox" title="상장 3개월 — 내재가치는 과거 매출 성장 13분기 이상이 필요하다">계산 불가</div>
+    </div>
+    <div class="logic-box logic-neutral" id="spcxFundBox">
+      <div class="logic-head"><span class="logic-tag">기본적 분석 <span class="logic-denom">재무제표</span></span><span class="logic-verdict" id="spcxFundVerdict">해석 제한</span></div>
+      <div class="logic-score" id="spcxFundScore">43.6<span class="logic-denom">/100</span></div>
+    </div>
+    <div class="logic-box logic-negative" id="spcxPeerBox">
+      <div class="logic-head"><span class="logic-tag">밸류에이션 <span class="logic-denom">동종업 대비</span></span><span class="logic-verdict" id="spcxPeerVerdict">비싼 편</span></div>
+      <div class="logic-score" id="spcxPeerScore">7.2<span class="logic-denom">/100</span></div>
+    </div>
+    <div class="logic-box logic-positive" id="spcxSelfBox">
+      <div class="logic-head"><span class="logic-tag">밸류에이션 <span class="logic-denom">자기 이력 대비</span></span><span class="logic-verdict" id="spcxSelfVerdict">표본 부족</span></div>
+      <div class="logic-score" id="spcxSelfScore">—</div>
+    </div>
+  </div>
+
+  <div class="section-title" id="techHeaderTitle">주가 차트 — 일봉 캔들스틱 (2026.06 ~ 2026.10) · 1년 수익률 <span id="techHeaderReturn" style="color: var(--green);">+6.3%</span></div>
 
   <!-- ══════════ 1. 차트 ══════════ -->
   <div class="price-chart-container">
     <div style="margin-bottom:10px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
       <div class="range-toggle" id="spcxRangeToggle">
         <button class="range-btn" data-range="1M">1개월</button>
-        <button class="range-btn active" data-range="ALL">전체(상장 이후)</button>
+        <button class="range-btn" data-range="6M">6개월</button>
+        <button class="range-btn active" data-range="1Y">1년</button>
+        <button class="range-btn" data-range="3Y">3년</button>
+        <button class="range-btn" data-range="5Y">5년</button>
       </div>
-      <div id="spcxMaToggle" style="display:flex;gap:8px;flex-wrap:wrap;"></div>
+      <div id="spcxMaToggle" style="display:flex;gap:8px;flex-wrap:wrap;">
+        <button class="ma-toggle-btn ma-off" data-ma="backtest" style="color:#d4a017;border-color:#d4a017;">◆ 예상밴드 백테스트</button>
+        <button class="ma-toggle-btn ma-off" data-ma="dcf" style="color:#0ea5e9;border-color:#0ea5e9;">◆ DCF 시나리오</button>
+      </div>
     </div>
+    <div id="spcxChartLegend" style="display:none;font-size:11px;color:var(--text2);margin-bottom:8px;padding:7px 10px;background:var(--bg3);border-radius:6px;line-height:1.7;"></div>
     <svg id="spcxCandleSvg" viewBox="0 0 720 240" width="100%" style="display:block;background:var(--bg3);border-radius:8px 8px 0 0;padding:4px;" role="img" aria-label="SPCX 일봉 캔들스틱 차트"></svg>
     <svg id="spcxVolumeSvg" viewBox="0 0 720 70" width="100%" style="display:block;background:var(--bg3);border-radius:0 0 8px 8px;padding:0 4px 4px;" role="img" aria-label="SPCX 거래량 차트"></svg>
     <div style="margin-top:10px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
-      <div style="font-size:11px;color:var(--text3);" id="techRangeSummary">상장 이후 최저 $104.83 (2026.08) → 상장 이후 최고 $225.64 (2026.06) → 현재 $147.76</div>
+      <div style="font-size:11px;color:var(--text3);" id="techRangeSummary">1년 최저 $104.83 (2026.08) → 1년 최고 $225.64 (2026.06) → 현재 $171.09</div>
       <div style="display:flex;gap:8px;flex-wrap:wrap;">
         <button class="ma-toggle-btn" data-ma="ma5" style="color:var(--ma5);border-color:var(--ma5);">● MA5</button>
         <button class="ma-toggle-btn" data-ma="ma20" style="color:var(--ma20);border-color:var(--ma20);">● MA20</button>
+        <button class="ma-toggle-btn" data-ma="ma60" style="color:var(--ma60);border-color:var(--ma60);">● MA60</button>
+        <button class="ma-toggle-btn" data-ma="ma120" style="color:var(--ma120);border-color:var(--ma120);">● MA120</button>
         <button class="ma-toggle-btn" data-ma="pricelabels" style="color:var(--text2);border-color:var(--text2);margin-left:4px;">◆ 가격라벨</button>
       </div>
     </div>
   </div>
+</div>
 
-  <!-- ══════════ 2. 기술 상태 스코어카드 — 데이터 부족으로 준비 중 ══════════ -->
-  <div class="scorecard">
-    <div class="scorecard-top">
-      <div class="scorecard-verdict" style="align-items:flex-start;">
-        <div class="scorecard-grade" style="background:rgba(154,160,184,0.16);color:var(--text2);">데이터 부족 — 준비 중</div>
-      </div>
-    </div>
-    <div class="scorecard-subtitle">가격·거래량 기반 기술 상태 점수는 MA150·MA200(최소 150~200 거래일)이 필요합니다. SPCX는 2026-06-12 상장으로 현재 거래일이 58일뿐이라 아직 계산할 수 없습니다 — 매일 가격 데이터가 쌓이는 대로 채워질 예정입니다(MA200 완성까지 약 1년 소요 예상).</div>
+<!-- NAV — 요약 바로 아래. 여기부터가 "더 보고 싶으면 펼치는" 영역이다.
+     순서는 요약의 근거 박스 4개와 맞춘다(내재가치·기본적 분석·밸류에이션·뉴스). -->
+<div class="nav">
+  <button class="nav-btn" onclick="showSection('dcf', this)">💵 내재가치</button>
+  <button class="nav-btn" onclick="showSection('fund', this)">📊 기본적 분석</button>
+  <button class="nav-btn" onclick="showSection('valuation', this)">⚖️ 밸류에이션</button>
+  <button class="nav-btn" onclick="showSection('news', this)">📰 시계열 뉴스</button>
+  <button class="nav-btn" onclick="showSection('invest', this)">🎯 투자 포인트</button>
+</div>
+
+<style>
+  /* 내재가치 탭 전용. 다른 탭의 표 없는 관례를 깨지 않도록 #dcf 안으로 묶는다. */
+  #dcf table { width: 100%; border-collapse: collapse; font-size: 12px; }
+  #dcf th, #dcf td { padding: 7px 10px; border-bottom: 1px solid var(--border); text-align: right; white-space: nowrap; }
+  #dcf th { color: var(--text3); font-size: 10.5px; font-weight: 600; letter-spacing: 0.3px; }
+  #dcf td:first-child, #dcf th:first-child { text-align: left; }
+  #dcf tbody tr:last-child td { border-bottom: none; }
+  #dcf .scn-name { font-weight: 700; }
+  #dcf .scn-low  { color: var(--red); }
+  #dcf .scn-base { color: var(--sky); }
+  #dcf .scn-high { color: var(--green); }
+  #dcf .big { font-size: 15px; font-weight: 700; }
+  #dcf .note { font-size: 10.5px; color: var(--text3); line-height: 1.6; margin-top: 10px; }
+  #dcf .wrap { overflow-x: auto; }
+  #dcf .lede { font-size: 12.5px; color: var(--text2); margin: -8px 0 16px; }
+  #dcf th.story { text-align: left; }
+  #dcf td.story { text-align: left; white-space: normal; color: var(--text2); line-height: 1.55; min-width: 260px; word-break: keep-all; }
+  #dcf .reverse { font-size: 12px; color: var(--text2); line-height: 1.6; margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--border); }
+  #dcf .reverse b { color: var(--sky); }
+  #dcf .knobs { display: flex; flex-direction: column; gap: 8px; margin-bottom: 14px; }
+  #dcf .knob { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+  #dcf .knob-l { font-size: 11.5px; color: var(--text3); width: 96px; flex-shrink: 0; }
+  #dcf .knob-d { color: var(--text2); }
+  #dcf .knob-btns { display: flex; gap: 4px; flex-wrap: wrap; }
+  #dcf .pick-result { display: flex; align-items: baseline; gap: 10px; margin: 4px 0 6px; }
+  #dcf #dcfPickValue { font-size: 22px; font-weight: 800; }
+  #dcf #dcfPickUpside { font-size: 13px; font-weight: 700; }
+  #dcf .ruler { position: relative; height: 92px; margin: 0 28px; }
+  #dcf .ruler-line { position: absolute; left: 0; right: 0; top: 46px; height: 2px; background: var(--border); }
+  #dcf .ruler-pt { position: absolute; top: 46px; transform: translate(-50%, -50%); transition: left .25s ease; }
+  #dcf .ruler-dot { width: 10px; height: 10px; border-radius: 50%; margin: 0 auto; opacity: .45; }
+  #dcf .ruler-pt.on .ruler-dot { width: 16px; height: 16px; opacity: 1; box-shadow: 0 0 0 3px var(--bg2), 0 0 0 4px currentColor; }
+  #dcf .ruler-lab { position: absolute; bottom: 14px; left: 50%; transform: translateX(-50%); font-size: 10.5px; white-space: nowrap; text-align: center; line-height: 1.3; opacity: .6; }
+  #dcf .ruler-pt.on .ruler-lab { opacity: 1; font-weight: 700; bottom: 18px; }
+  #dcf .ruler-now { position: absolute; top: 30px; width: 2px; height: 32px; background: var(--gold); transform: translateX(-1px); transition: left .25s ease; }
+  #dcf .ruler-now span { position: absolute; top: 36px; left: 50%; transform: translateX(-50%); font-size: 10.5px; color: var(--gold); white-space: nowrap; text-align: center; line-height: 1.3; }
+  @media (max-width: 600px) {
+    #dcf thead { display: none; }
+    #dcf tbody tr { display: grid; grid-template-columns: 48px 1fr auto; align-items: baseline; border-bottom: 1px solid var(--border); padding: 6px 0; }
+    #dcf tbody tr:last-child { border-bottom: none; }
+    #dcf tbody td { border-bottom: none; padding: 4px 6px; }
+    #dcf td.story { grid-column: 1 / -1; min-width: 0; padding-top: 0; }
+  }
+</style>
+
+<div id="dcf" class="section">
+  <div class="section-title">내재가치 (DCF) — 현금흐름이 말하는 가격</div>
+  <div class="lede">회사가 앞으로 벌어들일 현금만으로 계산한 주당 가치다.</div>
+  <div class="note" id="dcfHardNote" hidden></div>
+
+  <!-- ── 1. 세 시나리오 ── -->
+  <div class="card">
+    <div class="card-title">세 시나리오</div>
+    <div class="wrap"><table>
+      <thead><tr><th>시나리오</th><th>주당 가치</th><th>현재가 대비</th><th class="story">어떤 경우인가</th></tr></thead>
+      <tbody>
+        <tr>
+          <td class="scn-name scn-low">보수</td>
+          <td class="big scn-low" data-dcf-value="low">—</td><td style="" data-dcf-upside="low">—</td>
+          <td class="story">상장 3개월이라 과거 성장·마진 이력이 없어 계산하지 않는다.</td>
+        </tr>
+        <tr>
+          <td class="scn-name scn-base">기본</td>
+          <td class="big scn-base" data-dcf-value="base">—</td><td style="" data-dcf-upside="base">—</td>
+          <td class="story">상장 3개월이라 과거 성장·마진 이력이 없어 계산하지 않는다.</td>
+        </tr>
+        <tr>
+          <td class="scn-name scn-high">낙관</td>
+          <td class="big scn-high" data-dcf-value="high">—</td><td style="" data-dcf-upside="high">—</td>
+          <td class="story">상장 3개월이라 과거 성장·마진 이력이 없어 계산하지 않는다.</td>
+        </tr>
+      </tbody>
+    </table></div>
+    <div class="note">세 값은 확률이 아니라, 과거 실적에서 서로 다른 가정을 뽑아 계산한 결과다.</div>
+    <div class="note" data-dcf-nonop hidden></div>
+    <div class="reverse">내재가치를 계산하지 못했다 — 상장 3개월 — 내재가치는 과거 매출 성장 13분기 이상이 필요하다</div>
   </div>
 
-  <!-- ══════════ 3. 핵심 가격대 (상장 이후 기준) ══════════ -->
+  <!-- ── 2. 직접 바꿔보기 ── -->
   <div class="card">
-    <div class="card-title">핵심 가격대 (상장 이후 기준)<span class="levels-asof" style="font-size:11px;font-weight:400;color:var(--text3);margin-left:6px;">(가격 레벨: 2026.09.21 종가 기준)</span></div>
-    <div class="price-ladder">
-      <div class="ladder-item">
-        <div class="ladder-dot" style="background:var(--red);"></div>
-        <span class="ladder-label">상장 이후 최고</span>
-        <span class="ladder-value" style="color:var(--red);">$225.64</span><span class="ladder-meta">2026.06.16 · 저항선</span>
-      </div>
-      <div class="ladder-item">
-        <div class="ladder-dot" style="background:var(--gold);"></div>
-        <span class="ladder-label">현재가</span>
-        <span class="ladder-value" style="color:var(--gold);">$151.85</span><span class="ladder-meta">고점 대비 -32.7%</span>
-      </div>
-      <div class="ladder-item">
-        <div class="ladder-dot" style="background:var(--green);"></div>
-        <span class="ladder-label">상장 이후 최저</span>
-        <span class="ladder-value" style="color:var(--green);">$104.83</span><span class="ladder-meta">2026.08.03 · 첫 분기 실적 발표 직전</span>
-      </div>
+    <div class="card-title">직접 바꿔보기</div>
+    <div class="knobs">
+      <div class="knob"><span class="knob-l">시나리오</span><span class="knob-btns" data-knob="scn"></span></div>
+      <div class="knob"><span class="knob-l">할인율 <span class="knob-d" data-knob-default="wacc">(10%)</span></span><span class="knob-btns" data-knob="wacc"></span></div>
+      <div class="knob"><span class="knob-l">영구성장 <span class="knob-d" data-knob-default="term">(2.5%)</span></span><span class="knob-btns" data-knob="term"></span></div>
     </div>
-    <div style="margin-top:10px;font-size:11px;color:var(--text3);">MA60·MA120·52주 범위 등 다년치 데이터가 필요한 지표는 아직 표시하지 않는다 — 데이터가 쌓이는 대로 순차적으로 추가할 예정.</div>
+    <div class="pick-result"><span id="dcfPickValue">—</span><span id="dcfPickUpside"></span></div>
+    <div class="ruler" id="dcfRuler"></div>
   </div>
 </div>
 
 <div id="fund" class="section">
-  <div class="section-title">기본적 분석 — 상장 후 첫(유일한) 분기 실적 (Q2 2026 · 2026.06.30 기준)</div>
-  <div style="font-size:10.5px;color:var(--text3);margin:-12px 0 16px;">※ 2026-06-12 상장 이후 공개된 분기보고서(10-Q)가 이 1건뿐이라, 여러 분기 추세를 보여주는 차트·재무건전성 비율(회전율·CCC 등 다기간 비교가 필요한 지표)은 아직 만들 수 없다. 분기가 쌓이는 대로 순차적으로 채워 넣을 예정.</div>
+  <div class="section-title">기본적 분석 — 분기 재무제표</div>
 
-  <!-- ══════════ 1. Q2 2026 핵심 손익 (YoY) ══════════ -->
+  <!-- ══════════ 0. 점수 구성 — 요약 격자의 기본적 분석 점수가 어디서 나오나 ══════════ -->
+  <div class="card score-comp" id="fundComp">
+    <div class="sc-total"><span class="sc-total-l">기본적 분석</span><span class="sc-total-v" id="fundCompTotal">43.6</span></div>
+    <div class="sc-group" data-axis="health"><div class="sc-group-l">재무건전성 <span data-axis-pts="">22.4</span>/33</div><div class="sc-tiles" data-axis-items=""><div class="sc-item"><div class="sc-tile">5</div><div class="sc-name">유동비율</div></div><div class="sc-item"><div class="sc-tile">5</div><div class="sc-name">당좌비율</div></div><div class="sc-item"><div class="sc-tile lost">3</div><div class="sc-name">차입금의존도</div></div><div class="sc-item"><div class="sc-tile lost">1</div><div class="sc-name">이자보상배율</div></div><div class="sc-item"><div class="sc-tile lost">3</div><div class="sc-name">부채비율</div></div></div></div>
+    <div class="sc-group" data-axis="growthProfit"><div class="sc-group-l">성장·수익성 <span data-axis-pts="">6.8</span>/34</div><div class="sc-tiles" data-axis-items=""><div class="sc-item"><div class="sc-tile none">—</div><div class="sc-name">매출 성장</div></div><div class="sc-item"><div class="sc-tile none">—</div><div class="sc-name">이익 성장</div></div><div class="sc-item"><div class="sc-tile lost">1</div><div class="sc-name">영업이익률</div></div><div class="sc-item"><div class="sc-tile lost">1</div><div class="sc-name">순이익률</div></div></div></div>
+  </div>
+
+  <!-- ══════════ 1. 분기 매출/순이익/영업이익률 차트 ══════════ -->
+  <div class="card">
+    <div class="card-title">분기 매출 / 순이익 / 영업이익률 (Q1 2025~Q2 2026 · 공개된 4개 분기)</div>
+    <div class="chart-wrap" style="height:260px;">
+      <canvas id="spcxRevChart"></canvas>
+    </div>
+    <div class="yoy-footnote" style="margin-top:8px;">상장(2026-06-12) 전 분기는 투자설명서(424B4)의 1분기 값과 10-Q의 상반기 값에서 뺀 2분기 값이다. 2025년 3·4분기는 공개되지 않았다.</div>
+  </div>
+
+  <!-- ══════════ 2. FCF / Capex / R&D / 다음실적 ══════════ -->
   <div class="grid-4">
     <div class="stat-box">
-      <div class="stat-label">매출 (Q2 2026)</div>
-      <div class="stat-value up">$7.81B</div>
-      <div class="stat-sub">+92.0% YoY (전년동기 $4.07B)</div>
+      <div class="stat-label">FCF (Q2 2026)</div>
+      <div class="stat-value">−$15.9B</div>
+      <div class="stat-sub">현금창출력</div>
     </div>
     <div class="stat-box">
-      <div class="stat-label">영업손실 (Q2 2026)</div>
-      <div class="stat-value down">-$143M</div>
-      <div class="stat-sub">영업손실률 -1.8%</div>
+      <div class="stat-label">Capex (Q2 2026)</div>
+      <div class="stat-value">$18.4B</div>
+      <div class="stat-sub">미래 재투자</div>
     </div>
     <div class="stat-box">
-      <div class="stat-label">순손실 (Q2 2026)</div>
-      <div class="stat-value down">-$541M</div>
-      <div class="stat-sub">전년동기 -$1,008M 대비 적자폭 46% 축소</div>
+      <div class="stat-label">R&amp;D (Q2 2026)</div>
+      <div class="stat-value">$3.5B</div>
+      <div class="stat-sub">기술 경쟁력 투자</div>
     </div>
     <div class="stat-box">
       <div class="stat-label">다음 실적</div>
-      <div class="stat-value gold">2026년 11월경 (예상)</div>
-      <div class="stat-sub">Q3 2026 · 아직 공식 일정 미확정</div>
+      <div class="stat-value">11월 초 예상</div>
+      <div class="stat-sub">일정 · Q3 2026</div>
     </div>
   </div>
 
-  <!-- ══════════ 2. 매출 구성 — 3개 사업부문 ══════════ -->
+  <!-- ══════════ 3. 재무 건전성 (구조 유지) ══════════ -->
   <div class="card" style="margin-top:16px;">
-    <div class="card-title">매출 구성 — 사업 부문 (Q2 2026 · 2026.06.30 기준)</div>
-    <div class="zone-list">
-      <div class="zone-item">
-        <span class="zone-label">Connectivity (Starlink — Consumer·Enterprise&amp;Government)</span>
-        <span class="zone-val">$4.29B · 54.9% <span style="color:var(--green);">(+65.9% YoY)</span></span>
-      </div>
-      <div class="zone-item">
-        <span class="zone-label">AI (Advertising·AI Solutions&amp;Infrastructure)</span>
-        <span class="zone-val">$2.56B · 32.8% <span style="color:var(--green);">(+247.5% YoY)</span></span>
-      </div>
-      <div class="zone-item">
-        <span class="zone-label">Space (Launch Services·Launch&amp;Development)</span>
-        <span class="zone-val">$0.96B · 12.3% <span style="color:var(--green);">(+29.0% YoY)</span></span>
+    <div class="card-title"><span>재무 건전성 — 안정성·활동성 (Q2 2026 · 2026.06.30 기준)</span></div>
+
+    <div class="section-label"><span class="dot"></span>안정성 — 단기 지급능력·차입 의존도 (<span id="fundHealthAxis">22.4/33</span>)</div>
+    <div class="diag-summary watch" id="fundHealthSummary">
+      <div class="icon">🩺</div>
+      <div>
+        <div class="title" id="fundHealthTitle">종합 진단: 양호 (재무건전성 68%)</div>
       </div>
     </div>
-    <div style="margin-top:10px;font-size:11.5px;color:var(--text2);line-height:1.6;">이제는 "로켓 회사"보다 "Starlink 통신사"에 가깝다 — 매출의 절반 이상(54.9%)이 Connectivity(Starlink)에서 나온다. 다만 가장 빠르게 크는 쪽은 AI 부문으로, 1년 만에 매출이 3.5배(+247.5%)로 뛰며 두 번째로 큰 사업부가 됐다. 로켓 발사 자체(Space)는 매출 비중이 12.3%로 가장 작다.</div>
-    <div class="yoy-footnote" style="margin-top:10px;">출처: <a href="https://www.sec.gov/Archives/edgar/data/1181412/000162828026052535/spcx-20260630.htm" target="_blank" rel="noopener">Space Exploration Technologies Corp. Form 10-Q, Q2 2026 (SEC EDGAR) →</a></div>
+
+    <div class="detail-toggle collapsed" onclick="toggleCollapsible(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleCollapsible(this);}" role="button" tabindex="0" aria-expanded="false">
+      <span>안정성 상세 — 개별 비율 7개</span>
+      <span class="toggle-hint"><span class="toggle-hint-text">상세 보기</span><span class="chevron">▾</span></span>
+    </div>
+    <div class="collapsible-body collapsed">
+
+    <div class="diag-list">
+      <div class="diag-row" data-fund-metric="currentRatio">
+        <div class="diag-left"><span class="diag-label">유동비율</span><span class="diag-value">511.5%</span></div>
+      <div class="diag-badge safe" title="구성표 배점 5/5점">✅ 양호</div></div>
+      <div class="diag-row" data-fund-metric="quickRatio">
+        <div class="diag-left"><span class="diag-label">당좌비율</span><span class="diag-value">498.7%</span></div>
+      <div class="diag-badge safe" title="구성표 배점 5/5점">✅ 양호</div></div>
+      <div class="diag-row" data-fund-metric="debtDependency">
+        <div class="diag-left"><span class="diag-label">차입금의존도</span><span class="diag-value">19.9%</span></div>
+      <div class="diag-badge watch" title="구성표 배점 3/5점">보통</div></div>
+      <div class="diag-row" data-fund-metric="interestCoverage">
+        <div class="diag-left"><span class="diag-label">이자보상배율</span><span class="diag-value">영업적자</span></div>
+      <div class="diag-badge alert" title="구성표 배점 1/5점">⚠️ 주의</div></div>
+      <div class="diag-row" data-fund-metric="debtToEquity">
+        <div class="diag-left"><span class="diag-label">부채비율</span><span class="diag-value">51.5%</span></div>
+      <div class="diag-badge watch" title="구성표 배점 3/5점">보통</div></div>
+      <div class="diag-row">
+        <div class="diag-left"><span class="diag-label">총자산증가율</span><span class="diag-value">—</span><span class="diag-note">상장 전 연간 재무상태표가 공개되지 않아 계산하지 않는다</span></div>
+        <div class="diag-badge info">ℹ️ 참고</div>
+      </div>
+      <div class="diag-row">
+        <div class="diag-left"><span class="diag-label">Net Cash/주</span><span class="diag-value" id="fundNetCashPs">—</span><span class="diag-note" id="fundNetCashNote">순현금 $60.3B (주식 수 자료 없음) · 현금·단기투자 $100.0B − 차입금·리스 $39.7B</span></div>
+        <div class="diag-badge info">ℹ️ 참고</div>
+      </div>
+    </div>
+
+    <div style="margin-top:14px;font-size:11.5px;color:var(--text2);line-height:1.6;">상장·회사채로 현금이 크게 늘어 유동비율 511.5%·당좌비율 498.7%다(현금·유가증권 $100B). 영업손실이라 이자보상배율은 계산되지 않는다.</div>
+    </div>
+
+    <div class="section-label" style="margin-top:14px;"><span class="dot" style="background:var(--blue);"></span>활동성 — 회수·재고소진·지급 속도 (<span id="actPeriod">TTM 기준</span>)</div>
+    <div class="diag-summary none" id="actSummary">
+      <div class="icon">🔄</div>
+      <div>
+        <div class="title" id="actTitle">종합 진단: 판정하지 않음 — 5년 비교 이력 부족</div>
+      </div>
+    </div>
+
+    <div class="detail-toggle collapsed" onclick="toggleCollapsible(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleCollapsible(this);}" role="button" tabindex="0" aria-expanded="false">
+      <span>활동성 상세 — 개별 비율·CCC 그래프</span>
+      <span class="toggle-hint"><span class="toggle-hint-text">상세 보기</span><span class="chevron">▾</span></span>
+    </div>
+    <div class="collapsible-body collapsed">
+
+    <div class="activity-grid">
+      <div class="act-card">
+        <div class="act-icon">💳</div>
+        <div><div class="act-label">매출채권 회전율·회전기간</div><div class="act-value" data-act-turn="dso">7.67회</div><div class="act-sub" data-act-sub="dso">47.6일 만에 현금화 · 직전 분기 47.2일 대비 +0.4일</div></div>
+      </div>
+      <div class="act-card">
+        <div class="act-icon">📦</div>
+        <div><div class="act-label">재고자산 회전율·회전기간</div><div class="act-value" data-act-turn="dio">3.40회</div><div class="act-sub" data-act-sub="dio">107.3일 재고 보유 · 직전 분기 104.0일 대비 +3.3일</div></div>
+      </div>
+      <div class="act-card">
+        <div class="act-icon">🧾</div>
+        <div><div class="act-label">매입채무 회전율·지급기간</div><div class="act-value" data-act-turn="dpo">7.05회</div><div class="act-sub" data-act-sub="dpo">51.8일 만에 지급 · 직전 분기 52.5일 대비 −0.7일</div></div>
+      </div>
+      <div class="act-card">
+        <div class="act-icon">🔄</div>
+        <div><div class="act-label">영업순환주기</div><div class="act-value" data-act-days="op">154.9일</div><div class="act-sub" data-act-sub="op">재고보유+매출채권 회전기간 · 직전 분기 151.2일 대비 +3.7일</div></div>
+      </div>
+    </div>
+    <div class="ccc-card">
+      <div class="ccc-head">
+        <div class="ccc-head-label">⏱️ 현금창출주기 (CCC)</div>
+        <div class="ccc-head-value" data-act-days="ccc">103.1일</div>
+      </div>
+      <div class="ccc-explain" id="actCccExplain">재고를 사서 판매 대금을 회수하기까지 154.9일이 걸리는데, 그중 51.8일은 매입채무(외상)로 버티고 나머지 <strong style="color:var(--gold);">103.1일은 회사가 직접 현금으로 메워야</strong> 하는 기간이다. 직전 분기 98.7일보다 4.4일 길어졌다.</div>
+      <div class="tl-bar-wrap" id="actBar">
+        <div class="tl-marker" style="left:33.4%; height:18px;"></div>
+        <div class="tl-marker-label" style="left: 33.4%; transform: translateX(-50%);">매입채무 지급 51.8일</div>
+        <div class="tl-bar">
+          <div class="tl-seg-inv" style="width:69.3%;" title="재고보유 107.3일">재고보유 107.3일</div>
+          <div class="tl-seg-ar" style="width:30.7%;" title="매출채권회수 47.6일">매출채권회수 47.6일</div>
+        </div>
+        <div class="tl-ccc-span" style="left:33.4%; width:66.6%;"></div>
+      </div>
+    </div>
+
+    </div>
   </div>
 
-  <!-- ══════════ 3. 재무 스냅샷 (단일 시점, 비율·추세 아님) ══════════ -->
-  <div class="card" style="margin-top:16px;">
-    <div class="card-title">재무 스냅샷 (2026.06.30 기준 — 단일 시점, 다기간 비율 아님)</div>
-    <div class="zone-list">
-      <div class="zone-item"><span class="zone-label">현금 및 현금성자산</span><span class="zone-val">$93.52B</span></div>
-      <div class="zone-item"><span class="zone-label">총부채(원금 기준)</span><span class="zone-val">$38.43B</span></div>
-      <div class="zone-item"><span class="zone-label">자기자본</span><span class="zone-val">$127.22B</span></div>
-      <div class="zone-item"><span class="zone-label">영업활동현금흐름 (상반기 누적)</span><span class="zone-val">$3.47B</span></div>
-      <div class="zone-item"><span class="zone-label">설비투자(Capex, 상반기 누적)</span><span class="zone-val" style="color:var(--red);">$28.48B</span></div>
-    </div>
-    <div style="margin-top:10px;font-size:11.5px;color:var(--text2);line-height:1.6;">현금(93.5B)이 부채(38.4B)보다 훨씬 많아 당장의 지급 능력 자체는 넉넉하다. 다만 상반기 영업현금흐름(3.47B)보다 설비투자(28.48B)가 8배 이상 커서, 영업으로 버는 돈만으로는 투자를 감당하지 못하고 있다 — 대규모 IPO 조달 자금으로 이 투자 속도를 뒷받침하는 국면으로 해석된다. 유동비율·부채비율 등 기준 대비 비율 평가는 비교할 전분기 데이터가 없어 아직 하지 않는다.</div>
-  </div>
-</div>
-<div id="valuation" class="section">
-  <div class="section-title">밸류에이션 (Valuation Multiples) — 준비 중</div>
+  <!-- ══════════ 4. 최신 분기 핵심 재무 (YoY/QoQ) ══════════ -->
   <div class="card">
-    <div class="card-title">데이터 부족 — 아직 계산할 수 없음</div>
-    <div style="font-size:12.5px;color:var(--text2);line-height:1.7;">PER·PSR·EV/EBITDA 등 밸류에이션 배수는 보통 TTM(직전 4개 분기 합산) 실적을 기준으로 계산한다. SPCX는 2026-06-12 상장 이후 공개된 분기보고서가 Q2 2026 1건뿐이라 TTM을 만들 수 없다 — 게다가 이 유일한 분기도 순손실(-$541M)이라 PER 자체가 정의되지 않는다.</div>
-    <div style="margin-top:12px;font-size:12.5px;color:var(--text2);line-height:1.7;">분기가 4개 쌓이면(2027년 상반기 예상) TTM 기준 지표부터 순차적으로 채워 넣을 예정이다. 참고로 시가총액은 $1.95T(2026-09-03 종가 $147.76 × 발행주식 131.8억주 기준)이다.</div>
+    <div class="card-title">최신 분기 핵심 재무 — <span id="fundPeriodTitle">YoY (Q2 2026 vs Q2 2025)</span></div>
+    <div style="display:flex;gap:8px;margin-bottom:14px;">
+      <button class="range-btn range-btn-lg active" data-period="yoy" onclick="selectFundPeriod('yoy')" style="background:var(--accent3);color:var(--accent2);border:1px solid var(--accent);font-size:13px;padding:9px 22px;border-radius:10px;cursor:pointer;">YoY · 전년동기</button>
+      <button class="range-btn range-btn-lg" data-period="qoq" onclick="selectFundPeriod('qoq')" style="background:var(--bg3);color:var(--text3);border:1px solid var(--border);font-size:13px;padding:9px 22px;border-radius:10px;cursor:pointer;">QoQ · 전분기</button>
+    </div>
+    <div class="chart-wrap" style="height:240px;">
+      <canvas id="spcxFundCompareChart"></canvas>
+    </div>
+    <div class="yoy-footnote" id="fundFootnote"></div>
+  </div>
+
+  <!-- ══════════ 5. 매출 구성 + 자본배분·주주환원 (side by side) ══════════ -->
+  <div class="grid-2">
+    <div class="card" style="margin-bottom:0;">
+      <div class="card-title">매출 구성 — 사업 부문 (Q2 2026)</div>
+
+      <div style="display:flex;align-items:center;justify-content:center;gap:20px;">
+        <div class="chart-wrap" style="height:170px;width:170px;flex-shrink:0;">
+          <canvas id="segmentPieChart"></canvas>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:9px;">
+          <div style="display:flex;align-items:center;gap:7px;font-size:11px;color:var(--text2);white-space:nowrap;"><span style="width:8px;height:8px;border-radius:50%;background:#3b82f6;display:inline-block;flex-shrink:0;"></span>연결성(스타링크) <strong style="color:var(--text);">$4.3B · 54.9%</strong></div>
+          <div style="display:flex;align-items:center;gap:7px;font-size:11px;color:var(--text2);white-space:nowrap;"><span style="width:8px;height:8px;border-radius:50%;background:#a855f7;display:inline-block;flex-shrink:0;"></span>AI <strong style="color:var(--text);">$2.6B · 32.8%</strong></div>
+          <div style="display:flex;align-items:center;gap:7px;font-size:11px;color:var(--text2);white-space:nowrap;"><span style="width:8px;height:8px;border-radius:50%;background:#f97316;display:inline-block;flex-shrink:0;"></span>우주(발사) <strong style="color:var(--text);">$1.0B · 12.3%</strong></div>
+        </div>
+      </div>
+
+      <div class="yoy-footnote" style="margin-top:14px;">부문 영업이익은 연결성 +$1.66B · 우주 −$0.54B · AI −$1.26B · 출처: <a href="https://www.sec.gov/Archives/edgar/data/1181412/000162828026052515/earningsreleaseq22608042.htm" target="_blank" rel="noopener">SpaceX Q2 2026 실적 발표 →</a></div>
+    </div>
+
+    <div class="card" style="margin-bottom:0;">
+      <div class="card-title">자본배분 · 주주환원 (Q2 2026 · 2026.06.30 기준)</div>
+      <div class="zone-list">
+        <div class="zone-item">
+          <span class="zone-label">설비투자 (Q2 2026, AI $15.8B)</span>
+          <span class="zone-val">$18.4B</span>
+        </div>
+        <div class="zone-item">
+          <span class="zone-label">Cursor 인수 (8월 완료)</span>
+          <span class="zone-val">$60B</span>
+        </div>
+        <div class="zone-item">
+          <span class="zone-label">배당 · 자사주 매입</span>
+          <span class="zone-val">없음</span>
+        </div>
+      </div>
+      <div class="yoy-footnote" style="margin-top:14px;">6월 상장으로 Class A 6억 3,890만 주를 주당 $135에, 회사채 $25B를 발행했다 · 출처: <a href="https://www.sec.gov/Archives/edgar/data/1181412/000162828026052535/spcx-20260630.htm" target="_blank" rel="noopener">SpaceX Q2 2026 10-Q →</a></div>
+    </div>
+  </div>
+
+  <!-- ══════════ 6. 다음 실적 체크포인트 ══════════ -->
+  <div class="card" style="margin-top:16px;">
+    <div class="card-title">다음 실적 체크포인트 <span style="color:var(--gold);font-weight:600;">2026년 11월 초 (예상) · Q3 2026</span></div>
+    <div style="font-size:12px;color:var(--text2);line-height:1.8;">
+      <div style="margin-bottom:8px;"><strong style="color:var(--accent2);">①</strong> AI 부문이 흑자로 돌아서는지(Q2 영업손실 −$1.26B, 설비투자 $15.8B)</div>
+      <div style="margin-bottom:8px;"><strong style="color:var(--accent2);">②</strong> 클라우드 계약 $14.1B와 수주잔고 $47.5B가 매출로 옮겨지는 속도</div>
+      <div style="margin-bottom:8px;"><strong style="color:var(--accent2);">③</strong> 8월에 인수를 마친 Cursor가 처음 반영되는 분기의 매출·비용</div>
+      <div><strong style="color:var(--accent2);">④</strong> 스타링크(연결성) 영업이익 +$1.66B의 성장세가 이어지는지</div>
+    </div>
   </div>
 </div>
+
+<div id="valuation" class="section">
+  <div class="section-title">밸류에이션 (Valuation Multiples) — 현재가 <span data-vs="price">$171.09</span></div>
+
+  <div class="card val-summary">
+    <div class="vs-head"><span class="vs-head-l">종합 밸류에이션</span><span class="vs-verdict" data-verdict>판정 보류</span><span class="vs-asof"><span data-vs="asof">2026.10.05</span> 종가 기준</span></div>
+    <div class="vs-table-wrap"><div class="vs-table" id="valComp">
+      <div></div><div></div><div class="vc-head">PER</div><div class="vc-head">PBR</div><div class="vc-head">PSR</div><div class="vc-head">PCR</div><div class="vc-head">EV/EBITDA</div><div></div>
+      <div class="vs-name" title="지난 5년 SPCX 자신의 배수보다 지금이 얼마나 낮은가. 높을수록 싸다.">자기 이력 대비</div><div class="vs-val" data-vc-score="self">—</div><div class="sc-tile none" data-vc="self" data-m="per">—</div><div class="sc-tile none" data-vc="self" data-m="pbr">—</div><div class="sc-tile none" data-vc="self" data-m="psr">—</div><div class="sc-tile none" data-vc="self" data-m="pcr">—</div><div class="sc-tile none" data-vc="self" data-m="evebitda">—</div><div class="vs-pill high" data-vs-pill="self">비싸다</div>
+      <div class="vs-name" title="회사가 앞으로 벌어들일 현금만으로 계산한 주당 가치(기본 시나리오).">현금흐름 (내재가치)</div><div class="vs-val" data-vs="dcf">—</div><div class="vs-note">현재가 <span data-vs="price">$171.09</span> 대비 <strong data-vs="upside">—</strong> · 기본 시나리오</div><div class="vs-pill mid" data-vs-pill="dcf" title="
+0.7 이하 매우 싸다 · 0.9 이하 싸다 · 1.1 이하 적정 · 1.5 이하 비싸다 · 초과 매우 비싸다">계산 불가</div>
+      <div class="vs-name" title="같은 산업재 섹터와 IT 섹터 종목들보다 배수가 얼마나 낮은가. 높을수록 싸다.">동종업 대비</div><div class="vs-val" data-vc-score="peer">7.2</div><div class="sc-tile none" data-vc="peer" data-m="per">—</div><div class="sc-tile low" data-vc="peer" data-m="pbr">29</div><div class="sc-tile low" data-vc="peer" data-m="psr">0</div><div class="sc-tile low" data-vc="peer" data-m="pcr">0</div><div class="sc-tile low" data-vc="peer" data-m="evebitda">0</div><div class="vs-pill high" data-vs-pill="peer">비싸다</div>
+    </div></div>
+    <div class="vs-premise">동종업 중 가장 비싼 쪽이다(매출의 101배, 순손실). <strong>상장 3개월이라 자기 5년 이력과 현금흐름 내재가치는 계산할 수 없어 종합 판정은 보류한다.</strong></div>
+    <div class="verdict-summary-risk">⚠️ 최근 4분기 잉여현금흐름이 −$32.3B다. AI 설비투자를 상장 대금(주당 $135 × 6억 3,890만 주)과 회사채 $25B로 치르고 있다.</div>
+  </div>
+
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title">배수별 자기 이력 위치 (상장 뒤)</div>
+
+      <div class="val-item" data-metric="per" onclick="selectMultiple('per')">
+        <div class="val-header">
+          <span class="val-name">PER (TTM) <span class="hist-note" data-hist="note"></span></span>
+          <div style="display:flex;align-items:center;gap:8px;">
+            <span class="val-number" data-hist="cur">—</span>
+            <span class="hist-badge mid" data-hist="badge">이력 부족</span>
+          </div>
+        </div>
+        <div class="val-track"><div class="val-fill hist-fill mid" data-hist="fill" style="width: 0%;"></div></div>
+        <div class="hist-labels"><span data-hist="min">—</span><span data-hist="median">—</span><span data-hist="max">—</span></div>
+      </div>
+
+      <div class="val-item" data-metric="pbr" onclick="selectMultiple('pbr')">
+        <div class="val-header">
+          <span class="val-name">PBR <span class="hist-note" data-hist="note"></span></span>
+          <div style="display:flex;align-items:center;gap:8px;">
+            <span class="val-number" data-hist="cur">—</span>
+            <span class="hist-badge mid" data-hist="badge">이력 부족</span>
+          </div>
+        </div>
+        <div class="val-track"><div class="val-fill hist-fill mid" data-hist="fill" style="width: 0%;"></div></div>
+        <div class="hist-labels"><span data-hist="min">—</span><span data-hist="median">—</span><span data-hist="max">—</span></div>
+      </div>
+
+      <div class="val-item" data-metric="psr" onclick="selectMultiple('psr')">
+        <div class="val-header">
+          <span class="val-name">PSR (TTM) <span class="hist-note" data-hist="note"></span></span>
+          <div style="display:flex;align-items:center;gap:8px;">
+            <span class="val-number" data-hist="cur">—</span>
+            <span class="hist-badge mid" data-hist="badge">이력 부족</span>
+          </div>
+        </div>
+        <div class="val-track"><div class="val-fill hist-fill mid" data-hist="fill" style="width: 0%;"></div></div>
+        <div class="hist-labels"><span data-hist="min">—</span><span data-hist="median">—</span><span data-hist="max">—</span></div>
+      </div>
+
+      <div class="val-item" data-metric="pcr" onclick="selectMultiple('pcr')">
+        <div class="val-header">
+          <span class="val-name">PCR (FCF, TTM) <span class="hist-note" data-hist="note"></span></span>
+          <div style="display:flex;align-items:center;gap:8px;">
+            <span class="val-number" data-hist="cur">—</span>
+            <span class="hist-badge mid" data-hist="badge">이력 부족</span>
+          </div>
+        </div>
+        <div class="val-track"><div class="val-fill hist-fill mid" data-hist="fill" style="width: 0%;"></div></div>
+        <div class="hist-labels"><span data-hist="min">—</span><span data-hist="median">—</span><span data-hist="max">—</span></div>
+      </div>
+
+      <div class="val-item" data-metric="evebitda" onclick="selectMultiple('evebitda')">
+        <div class="val-header">
+          <span class="val-name">EV/EBITDA <span class="hist-note" data-hist="note"></span></span>
+          <div style="display:flex;align-items:center;gap:8px;">
+            <span class="val-number" data-hist="cur">—</span>
+            <span class="hist-badge mid" data-hist="badge">이력 부족</span>
+          </div>
+        </div>
+        <div class="val-track"><div class="val-fill hist-fill mid" data-hist="fill" style="width: 0%;"></div></div>
+        <div class="hist-labels"><span data-hist="min">—</span><span data-hist="median">—</span><span data-hist="max">—</span></div>
+      </div>
+    </div>
+
+    <div class="card" style="display:flex;flex-direction:column;">
+      <div class="card-title"><span id="multipleCompareTitle">PER 비교 (SPCX 적자로 계산 불가) · 2026.10.05 종가</span></div>
+      <div class="chart-wrap" style="flex:1;min-height:230px;">
+        <canvas id="multipleChart"></canvas>
+      </div>
+    </div>
+  </div>
+
+</div>
+
 <div id="news" class="section">
-  <div class="section-title">시계열 주요 뉴스 (2026.05 ~ 2026.09, 상장 전체 기간)</div>
+  <div class="section-title">시계열 주요 뉴스 (2026.06 ~ 2026.09)</div>
 
   <div class="card">
     <div class="card-title">종합 해석</div>
-    <div class="verdict-summary-head">지배적 내러티브 · 사상 최대 IPO의 전형적인 급등-급락-재조정 사이클<span class="tag mixed">낮은 유통물량 · 상장 초기 극단적 변동성</span></div>
-    <div class="verdict-summary-body">$135에 상장(6/12)한 뒤 나흘 만에 $225.64까지(+67%) 급등했다가, 전체 발행주식의 5% 미만만 유통되는 낮은 유통물량과 과열 논란 속에 첫 실적 발표 직전인 8/3 $104.83까지(고점 대비 -53.5%) 미끄러졌다. 첫 실적(8/4)에서 매출 서프라이즈로 장중 +9.4%까지 갔다가 대규모 Capex 부담에 시간외 -8.6%로 반납하는 등, 상장 3개월 동안 이미 두 차례의 급등락 사이클을 겪었다.</div>
-    <div class="verdict-summary-counter">⚠️ 반대 신호 — 첫 분기부터 순손실(-$541M)을 기록했고 상반기 Capex($28.5B)가 영업현금흐름(3.5B)의 8배가 넘는다. 낮은 유통물량은 상승뿐 아니라 하락도 증폭시키는 구조라, 지금까지의 큰 변동폭을 "정상화되는 과정"으로만 보기는 이르다.</div>
-    <div class="verdict-summary-next">🔍 다음 확인 포인트 — Q3 2026 실적(2026년 11월경 예상)에서 순손실 폭이 줄어드는지, Connectivity·AI 두 성장 부문의 매출 증가세가 유지되는지, 유통물량 확대(락업 해제 등) 일정이 있는지.</div>
+    <div class="verdict-summary-head">지배적 내러티브 · 상장 대금으로 AI에 크게 투자한다<span class="tag">성장 기대·현금 소진</span></div>
+    <ol class="news-list">
+      <li>상장 후 첫 분기 매출이 $7.8B로 92% 늘었고, 세 부문 모두 성장이 빨라졌다고 밝혔다.</li>
+      <li>이익은 스타링크(연결성)가 내고, 우주·AI는 적자다. AI 설비투자가 Q2에만 $15.8B였다.</li>
+      <li>상장(주당 $135)과 회사채 $25B로 현금을 모아 Cursor를 $60B에 인수했다.</li>
+    </ol>
+    <div class="verdict-summary-counter">⚠️ 최근 4분기 순손실 −$8.2B, 잉여현금흐름 −$32.3B다. 매출의 101배에 거래돼 동종업 가운데 가장 비싼 쪽이다.</div>
+    <div class="verdict-summary-next">🔍 다음 확인 포인트 · Q3 2026 실적(11월 초 예상)에서 AI 부문 적자가 줄어드는지, Cursor가 매출에 얼마나 더해지는지.</div>
   </div>
+
+  <!-- TODAY_NEWS_ANCHOR: 정적 스크립트가 "오늘의 뉴스" 카드를 여기에 삽입. 종합 해석 카드 바로 뒤, 타임라인 카드 바로 앞. 삽입 시 이 주석 앵커를 유일한 시작 마커로, 다음 줄의 legend 시작(<div style="display:flex;gap:14px)을 끝 마커로 사용해 그 사이만 교체할 것 — 카드 내부에 </div>가 여러 번 나올 수 있으므로 비탐욕 정규식으로 카드 자체를 통째로 지우거나 자르지 말 것. -->
 
   <div style="display:flex;gap:14px;flex-wrap:wrap;margin-bottom:16px;font-size:11px;color:var(--text2);">
     <span style="display:flex;align-items:center;gap:5px;"><span style="width:10px;height:10px;border-radius:50%;background:var(--event-major);display:inline-block;"></span>초대형 이벤트</span>
@@ -621,116 +1024,1295 @@
   </div>
 
   <div class="card">
-    <div class="timeline">
+    <div class="timeline" id="newsTimeline">
       <div class="tl-item">
-        <div class="tl-dot"></div>
-        <div class="tl-date">2026년 8월 4일 발표 · 반응 — 상장 후 첫 분기(Q2 2026) 실적<span class="tl-reaction down">시간외 -8.6%</span></div>
-        <div class="tl-title">매출 $7.81B(+92%) 서프라이즈로 장중 +9.4% 급등했지만 대규모 Capex 부담에 시간외 -8.6%로 반납</div>
-        <div class="tl-desc">매출은 컨센서스를 크게 웃돌았지만 상반기 Capex $28.5B 규모가 부각되며 정규장 상승분을 시간외에 반납했다.</div>
-        <a class="tl-source" href="https://www.sec.gov/Archives/edgar/data/1181412/000162828026052535/spcx-20260630.htm" target="_blank" rel="noopener">관련 공시 보기 (SEC 10-Q) →</a>
-      </div>
-      <div class="tl-item">
-        <div class="tl-dot red"></div>
-        <div class="tl-date">2026년 6월 16일~8월 3일 — 고점 대비 -53.5% 조정</div>
-        <div class="tl-title">낮은 유통물량(발행주식의 5% 미만)발 과열 논란 속 상장 직후 고점을 대부분 반납</div>
-        <div class="tl-desc">유통물량이 적어 상장 초기 변동성이 특히 컸고, 손실 규모와 공격적인 투자 계획에 대한 우려가 겹치며 6주 만에 고점 대비 반토막 수준까지 조정됐다.</div>
-        <a class="tl-source" href="https://www.bloomberg.com/news/articles/2026-07-28/spacex-falls-20-below-ipo-price-erasing-1-2-trillion-value" target="_blank" rel="noopener">관련 뉴스 보기 (Bloomberg) →</a>
+        <div class="tl-dot neutral"></div>
+        <div class="tl-date">2026년 8월 14일 — Cursor 인수 완료<span class="tl-reaction flat" data-react="2026-08-14">0.0%</span></div>
+        <div class="tl-title">AI 코딩 도구 Cursor(Anysphere) 인수 마무리 · 6월 합의 당시 $60B</div>
+        <a class="tl-source" href="https://www.sec.gov/Archives/edgar/data/1181412/000162828026056945/spcx-20260814.htm" target="_blank" rel="noopener">SpaceX 8-K (SEC) →</a>
       </div>
       <div class="tl-item">
         <div class="tl-dot"></div>
-        <div class="tl-date">2026년 6월 12일 상장 → 6월 16일 고점<span class="tl-reaction up">+67% (IPO가 대비)</span></div>
-        <div class="tl-title">사상 최대 규모 IPO — $135에 상장, 나흘 만에 장중 $225.64까지 급등</div>
-        <div class="tl-desc">나스닥에 SPCX로 상장했고 낮은 유통물량과 시장 기대가 겹치며 나흘 만에 IPO가 대비 +67%까지 급등했다.</div>
-        <a class="tl-source" href="https://ir.spacex.com/updates/releases-details/2026/Space-Exploration-Technologies-Corp--Announces-Closing-of-Initial-Public-Offering-Including-Full-Exercise-of-Underwriters-Option-to-Purchase-Additional-Shares-2026-RgoR-Y1Vwh/default.aspx" target="_blank" rel="noopener">관련 발표 보기 (SpaceX IR) →</a>
+        <div class="tl-date">2026년 8월 4일 발표 · 8월 5일 반응 — Q2 2026 실적(상장 후 첫 분기)<span class="tl-reaction flat" data-react="2026-08-05">0.0%</span></div>
+        <div class="tl-title">매출 $7.8B(+92%) · 순손실 −$541M으로 축소 · 스타링크 가입자 2배, 연결성 영업이익 +79% · AI 클라우드 계약 $14.1B</div>
+        <a class="tl-source" href="https://www.sec.gov/Archives/edgar/data/1181412/000162828026052515/earningsreleaseq22608042.htm" target="_blank" rel="noopener">SpaceX 실적 발표 (SEC) →</a>
       </div>
       <div class="tl-item">
         <div class="tl-dot neutral"></div>
-        <div class="tl-date">2026년 5월 20일 — S-1 상장신고서 제출</div>
-        <div class="tl-title">최초로 재무제표 일부가 공개된 시점 — IPO 절차의 시작</div>
-        <div class="tl-desc">SEC에 S-1을 제출하며 비상장 시절 내부 재무 상태가 처음으로 외부에 공개됐다.</div>
-        <a class="tl-source" href="https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001181412&type=S-1" target="_blank" rel="noopener">관련 공시 보기 (SEC EDGAR) →</a>
+        <div class="tl-date">2026년 6월 23일 장 마감 후 발표 · 6월 24일 반응 — 회사채 $25B 가격 결정<span class="tl-reaction flat" data-react="2026-06-24">0.0%</span></div>
+        <div class="tl-title">2031~2056년 만기 선순위 무담보채 5종(연 5.35~6.65%) · 6월 26일 발행 완료</div>
+        <a class="tl-source" href="https://www.sec.gov/Archives/edgar/data/1181412/000162828026044955/spcx-pricing8xk.htm" target="_blank" rel="noopener">SpaceX 8-K (SEC) →</a>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot green"></div>
+        <div class="tl-date">2026년 6월 16일 — Cursor 인수 합의<span class="tl-reaction flat" data-react="2026-06-16">0.0%</span></div>
+        <div class="tl-title">AI 코딩 도구 Cursor를 $60B에 인수하기로 합의 · 같은 날 Roelof Botha를 독립 이사로 선임</div>
+        <a class="tl-source" href="https://www.sec.gov/Archives/edgar/data/1181412/000162828026043411/spaceexplorationtechnologi.htm" target="_blank" rel="noopener">SpaceX 8-K (SEC) →</a>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-date">2026년 6월 12일 — 나스닥 상장<span class="tl-reaction flat" data-react="2026-06-12">0.0%</span></div>
+        <div class="tl-title">Class A 6억 3,890만 주를 주당 $135에 공모(초과배정 포함) · 첫날 시가 $150</div>
+        <a class="tl-source" href="https://www.sec.gov/Archives/edgar/data/1181412/000162828026042639/spaceexplorationtechnologi.htm" target="_blank" rel="noopener">SpaceX 투자설명서 (SEC) →</a>
       </div>
     </div>
+    <div class="tl-pager" id="newsPager"></div>
   </div>
 </div>
-<div id="invest" class="section">
-  <div class="section-title">2026년 핵심 투자 포인트</div>
 
+<div id="invest" class="section">
+
+  <!-- 기술적 분석: 사이트 목적(내재가치 대비 판단)에서 뺀다. 지우지 않고 숨긴다. -->
+  <div class="card" hidden>
+    <div class="card-title">추세 구조</div>
+    <div style="font-size:12.5px;color:var(--text2);line-height:1.7;">
+      기술적 분석(추세 상태)은 이 사이트의 판단(내재가치 대비)에서 뺐다. 이 칸은 화면에 보이지 않는다.
+    </div>
+  </div>
+  <div class="section-title">핵심 투자 포인트</div>
+
+  <!-- Bull 3 · Bear 3 고정 (모든 티커 같은 틀). 항목 = 머리말 + 한 문장.
+       앞으로 가장 크게 작용할 요인만 고른다. -->
   <div class="bull-bear">
     <div class="bb-box">
       <div class="bb-title bb-bull">🐂 Bull 요인</div>
-      <div class="bb-item"><span class="bb-icon" style="color:var(--bull);">▲</span><span><strong>매출 +92% YoY 고성장:</strong> 첫 공개 분기(Q2 2026) 매출 $7.81B, 전년동기($4.07B) 대비 거의 두 배.</span></div>
-      <div class="bb-item"><span class="bb-icon" style="color:var(--bull);">▲</span><span><strong>AI 부문 급부상:</strong> AI 매출이 1년 만에 3.5배(+247.5%)로 성장 — Starlink에 이은 두 번째 성장축으로 자리잡는 중.</span></div>
-      <div class="bb-item"><span class="bb-icon" style="color:var(--bull);">▲</span><span><strong>넉넉한 현금 보유:</strong> 현금 $93.5B, 부채 $38.4B — IPO로 확보한 실탄이 두터워 단기 지급 능력 자체는 여유 있음.</span></div>
-      <div class="bb-item"><span class="bb-icon" style="color:var(--bull);">▲</span><span><strong>순손실 폭 축소:</strong> 순손실이 전년동기 -$1,008M에서 -$541M로 46% 줄어 적자 규모가 개선되는 방향.</span></div>
-      <div class="bb-item"><span class="bb-icon" style="color:var(--bull);">▲</span><span><strong>애널리스트 대체로 우호적:</strong> Moderate Buy 컨센서스(매수 25·보유 5·매도 3, MarketBeat).</span></div>
+      <div class="bb-row bull"><span class="bb-icon">▲</span><span class="bb-head">성장</span><span class="bb-text">상장 후 첫 분기 매출이 92% 늘었다(Q2 $7.8B).</span></div>
+      <div class="bb-row bull"><span class="bb-icon">▲</span><span class="bb-head">스타링크</span><span class="bb-text">연결성 부문 영업이익이 +79% 늘어 $1.66B였고, 가입자가 2배가 됐다.</span></div>
+      <div class="bb-row bull"><span class="bb-icon">▲</span><span class="bb-head">AI 계약</span><span class="bb-text">클라우드 계약 $14.1B를 맺었고 수주잔고가 $47.5B다.</span></div>
     </div>
     <div class="bb-box">
       <div class="bb-title bb-bear">🐻 Bear 요인</div>
-      <div class="bb-item"><span class="bb-icon" style="color:var(--bear);">▼</span><span><strong>여전히 적자:</strong> 영업손실 -$143M·순손실 -$541M — 아직 이익을 내는 회사가 아니다.</span></div>
-      <div class="bb-item"><span class="bb-icon" style="color:var(--bear);">▼</span><span><strong>현금흐름 대비 과도한 투자:</strong> 상반기 영업현금흐름(3.5B)의 8배가 넘는 Capex(28.5B) — 자체 현금창출력만으로는 투자를 감당하지 못함.</span></div>
-      <div class="bb-item"><span class="bb-icon" style="color:var(--bear);">▼</span><span><strong>낮은 유통물량발 극단적 변동성:</strong> 발행주식의 5% 미만만 유통 — 상장 3개월 만에 +67% 급등 후 고점 대비 -53.5% 급락을 이미 겪음.</span></div>
-      <div class="bb-item"><span class="bb-icon" style="color:var(--bear);">▼</span><span><strong>검증된 데이터가 거의 없음:</strong> 공개된 분기 실적이 1건뿐이라 이 성장률·손익 추세가 계속될지, 일회성인지 아직 판단할 근거가 부족하다.</span></div>
-      <div class="bb-item"><span class="bb-icon" style="color:var(--bear);">▼</span><span><strong>애널리스트 목표주가 편차가 매우 큼:</strong> 소스별 평균 $219~$232, 개별 목표가는 낮게는 $117·높게는 $450까지 — 컨센서스 자체의 신뢰도가 아직 낮다.</span></div>
+      <div class="bb-row bear"><span class="bb-icon">▼</span><span class="bb-head">밸류</span><span class="bb-text">매출의 101배에 거래돼 동종업 가운데 가장 비싸다.</span></div>
+      <div class="bb-row bear"><span class="bb-icon">▼</span><span class="bb-head">현금흐름</span><span class="bb-text">최근 4분기 잉여현금흐름이 −$32.3B다(AI 설비투자).</span></div>
+      <div class="bb-row bear"><span class="bb-icon">▼</span><span class="bb-head">이익</span><span class="bb-text">최근 4분기 순손실이 −$8.2B이고 AI 부문은 Q2에도 −$1.26B 적자다.</span></div>
     </div>
   </div>
 
   <div class="card" style="margin-top:16px;">
-    <div class="card-title">애널리스트 컨센서스 (참고용 — 상장 3개월차, 커버리지 초기 단계)</div>
-    <div class="grid-3">
-      <div class="stat-box">
-        <div class="stat-label">투자의견</div>
-        <div class="stat-value" style="color:var(--accent2);font-size:19px;">Moderate Buy</div>
-        <div class="stat-sub">매수 25 · 보유 5 · 매도 3 (MarketBeat)</div>
+    <div class="card-title">투자의견 요약</div>
+    <div class="op-strip">
+      <div class="op-cell">
+        <span class="op-label">애널리스트 <span data-an="n">35명 · 목표가 31</span>명</span>
+        <span class="op-val"><span data-an="rating">Buy</span> <span class="op-sub">매수 <span data-an="buy">28</span> · 유지 <span data-an="hold">5</span> · 매도 <span data-an="sell">2</span></span></span>
+        <div class="op-dist"><div data-an-bar="buy" style="width: 80%; background: var(--green);"></div><div data-an-bar="hold" style="width: 14.3%; background: var(--gold);"></div><div data-an-bar="sell" style="width: 5.7%; background: var(--red);"></div></div>
       </div>
-      <div class="stat-box">
-        <div class="stat-label">평균 목표주가</div>
-        <div class="stat-value gold" style="font-size:19px;">$219~232</div>
-        <div class="stat-sub">소스별 편차 있음(S&amp;P Global 35명 $219.22 등)</div>
+      <div class="op-cell">
+        <span class="op-label">평균 목표주가 · <span data-an="asof">2026-10-05</span></span>
+        <span class="op-val"><span data-an="mean">$229.29</span> <span class="op-sub op-up" data-an="upside">+34.0%</span></span>
       </div>
-      <div class="stat-box">
-        <div class="stat-label">목표주가 범위</div>
-        <div class="stat-value" style="font-size:19px;">$117 ~ $450</div>
-        <div class="stat-sub">최저~최고, 편차가 매우 큼</div>
+      <div class="op-cell">
+        <span class="op-label">다음 실적</span>
+        <span class="op-val">11월 초 <span class="op-sub">Q3 2026 예상</span></span>
       </div>
-    </div>
-    <div style="margin-top:10px;font-size:11px;color:var(--text3);">상장한 지 3개월밖에 안 돼 커버리지 자체가 초기 단계다. 목표주가가 소스마다, 애널리스트마다 크게 갈리는 것 자체가 "아직 시장도 이 회사를 어떻게 밸류에이션해야 할지 합의하지 못했다"는 뜻으로 읽는 게 정확하다 — 다른 티커처럼 단일 신뢰 구간으로 요약하지 않는다.</div>
-  </div>
-
-  <div class="card" style="margin-top:16px;">
-    <div class="card-title">4개 분석 종합 — 한눈에 보기</div>
-    <div class="zone-list">
-      <div class="zone-item"><span class="zone-label">📈 기술적 분석</span><span class="zone-val" style="color:var(--text2);">데이터 부족(거래일 58일) — MA5·MA20만 계산 가능, 기술점수·52주 범위·백테스트는 준비 중</span></div>
-      <div class="zone-item"><span class="zone-label">📊 기본적 분석</span><span class="zone-val" style="color:var(--gold);">첫 공개 분기(Q2 2026) 매출 $7.81B(+92%)·순손실 -$541M(적자폭 46% 축소), 비교할 과거 분기 없음</span></div>
-      <div class="zone-item"><span class="zone-label">⚖️ 밸류에이션</span><span class="zone-val" style="color:var(--text2);">TTM 데이터 없음(분기 1개뿐) + 첫 분기 적자라 PER 자체가 정의되지 않음 — 준비 중</span></div>
-      <div class="zone-item"><span class="zone-label">📰 시계열 뉴스</span><span class="zone-val" style="color:var(--red);">상장 후 이미 급등(+67%)→급락(-53.5%)→실적발 급등락 사이클 한 번씩 경험 — 낮은 유통물량발 변동성 지속 중</span></div>
     </div>
   </div>
 </div>
+
+<!-- DISCLAIMER -->
 <div class="disclaimer" style="max-width:1100px;margin:0 auto;padding:0 32px 32px;font-size:11px;color:var(--text3);line-height:1.6;">
-  ⚠️ 본 위젯은 차트, 분기 재무제표, SEC 공시, 공개 뉴스를 기반으로 작성된 정보 제공 목적의 분석 자료입니다. 투자 권고 또는 매매 추천이 아니며, 모든 투자 결정은 본인의 판단과 책임 하에 이루어져야 합니다. 과거 실적이 미래 수익을 보장하지 않습니다.
+  ⚠️ 본 위젯은 차트, 분기 재무제표, 공개 뉴스를 기반으로 작성된 정보 제공 목적의 분석 자료입니다. 투자 권고 또는 매매 추천이 아니며, 모든 투자 결정은 본인의 판단과 책임 하에 이루어져야 합니다. 과거 실적이 미래 수익을 보장하지 않습니다.
 </div>
+
 <script>
-const SPCX_DAILY = [["2026-06-12",150.0,176.52,149.34,160.95,519234800],["2026-06-15",171.74,193.0,168.35,192.5,256226600],["2026-06-16",200.51,225.64,199.98,211.39,195401600],["2026-06-17",209.84,213.8,187.01,191.82,201719500],["2026-06-18",188.39,190.0,172.11,185.0,272126800],["2026-06-22",176.04,176.75,154.0,154.6,169183800],["2026-06-23",151.06,165.5,147.11,156.11,155848100],["2026-06-24",154.2,159.86,150.72,154.54,76101500],["2026-06-25",156.63,160.65,150.0,153.0,62212400],["2026-06-26",150.62,158.4,148.51,153.23,126932900],["2026-06-29",157.36,166.17,151.74,164.19,81443100],["2026-06-30",163.38,172.4,161.64,170.86,82047500],["2026-07-01",171.57,171.74,155.0,157.54,109317600],["2026-07-02",159.73,162.16,155.88,162.0,61257100],["2026-07-06",165.95,167.9,155.04,160.42,188831300],["2026-07-07",158.92,159.3,148.86,149.47,83779700],["2026-07-08",152.55,152.93,145.2,148.3,60949400],["2026-07-09",150.45,153.5,147.59,152.16,46468600],["2026-07-10",150.13,150.57,145.07,145.3,46826000],["2026-07-13",144.7,144.92,136.78,139.14,71456500],["2026-07-14",140.95,143.33,135.52,136.08,46694800],["2026-07-15",137.51,139.34,132.15,135.27,58040900],["2026-07-16",135.01,137.76,130.74,131.11,58725600],["2026-07-17",127.43,130.33,122.12,123.99,83706200],["2026-07-20",125.29,125.7,119.68,119.85,57337300],["2026-07-21",122.11,129.88,120.36,123.54,79718100],["2026-07-22",123.29,124.77,115.19,115.26,92731800],["2026-07-23",115.21,118.55,110.85,118.24,75246500],["2026-07-24",116.01,117.0,111.4,115.07,56786100],["2026-07-27",113.5,114.85,108.66,113.5,64540700],["2026-07-28",109.32,118.13,107.01,116.41,81714300],["2026-07-29",114.4,117.59,110.35,112.55,53995200],["2026-07-30",115.14,118.93,111.35,112.2,56008000],["2026-07-31",113.1,113.64,107.57,108.37,58835700],["2026-08-03",106.4,114.92,104.83,114.53,70524000],["2026-08-04",117.33,126.71,115.72,125.33,144130100],["2026-08-05",112.37,117.5,106.66,108.27,208488400],["2026-08-06",107.09,115.75,105.11,114.92,255176600],["2026-08-07",114.97,133.48,114.53,133.11,242130700],["2026-08-10",134.95,139.26,130.17,138.74,169934300],["2026-08-11",138.66,139.98,130.5,133.29,108900600],["2026-08-12",135.05,149.6,134.01,146.15,167236400],["2026-08-13",143.75,145.05,139.76,141.29,120282200],["2026-08-14",142.9,144.02,135.5,140.0,96727800],["2026-08-17",139.98,149.8,139.58,146.23,116675400],["2026-08-18",140.73,146.46,139.41,143.34,84191000],["2026-08-19",144.96,145.01,136.72,139.65,76612300],["2026-08-20",137.29,137.88,130.39,134.0,119813200],["2026-08-21",134.32,137.35,131.22,136.97,78808300],["2026-08-24",134.36,138.33,133.1,135.0,60188400],["2026-08-25",136.94,139.75,136.1,137.95,53075000],["2026-08-26",137.0,140.18,135.1,139.63,61380500],["2026-08-27",139.99,142.06,138.6,140.87,55268800],["2026-08-28",139.83,143.29,137.9,141.5,55111200],["2026-08-31",140.08,144.14,139.88,143.69,63145000],["2026-09-01",141.87,145.23,141.17,142.23,53808100],["2026-09-02",142.68,143.1,138.17,140.71,49903700],["2026-09-03",141.36,152.3,141.05,149.74,121333600],["2026-09-04",148.59,150.85,147.32,147.95,49122400],["2026-09-08",149.05,155.0,145.14,153.47,85840700],["2026-09-09",152.04,153.0,145.55,147.55,120593500],["2026-09-10",145.0,154.7,144.89,148.18,118598900],["2026-09-11",150.01,151.85,145.92,151.21,79273400],["2026-09-14",147.33,152.56,146.0,148.15,67861000],["2026-09-15",148.45,148.55,142.87,143.49,72746800],["2026-09-16",144.88,153.01,144.36,150.88,108770000],["2026-09-17",153.8,156.87,152.63,154.81,83986400],["2026-09-18",154.6,156.6,149.93,152.71,335670500],["2026-09-21",154.77,158.13,151.6,151.85,81899500]];
-const SPCX_MA5 = [null,null,null,null,188.332,187.062,179.784,168.414,160.65,154.296,156.214,159.164,159.764,161.564,163.002,160.058,155.546,154.47,151.13,146.874,144.196,141.59,137.38,133.118,129.26,126.752,122.75,120.176,118.392,117.122,115.696,115.154,113.946,112.606,112.812,114.596,113.74,114.284,119.232,124.074,125.666,133.242,138.516,139.894,141.392,143.402,142.102,140.644,140.038,137.792,136.714,136.71,138.084,138.99,140.728,141.584,141.8,143.574,144.864,146.82,147.884,149.378,149.672,149.712,147.716,148.382,149.708,150.008,150.748];
-const SPCX_MA20 = [null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,163.126,161.8825,159.021,155.007,151.6155,148.358,146.805,144.7625,142.9475,141.051,139.0645,136.6755,133.76,131.493,128.8115,126.517,125.31,123.3085,121.4465,120.837,120.817,120.6775,121.2215,121.7305,122.531,123.85,124.84,126.0595,126.8475,127.9425,129.0175,130.0945,131.4485,132.882,134.5385,135.9965,136.8415,138.4635,140.2045,140.9465,141.683,142.396,142.4975,142.9935,143.401,143.264,143.641,144.399,145.3345,146.0785];
+// ══════ shared: collapsible toggle (from #fund, reused by #invest) ══════
+// ─── COLLAPSIBLE CARDS ───
+function toggleCollapsible(header) {
+  const body = header.nextElementSibling;
+  const hintText = header.querySelector('.toggle-hint-text');
+  const expandedLabel = '상세 숨기기';
+  const collapsedLabel = '상세 보기';
+  const collapsing = !header.classList.contains('collapsed');
+  if (collapsing) {
+    body.style.maxHeight = body.scrollHeight + 'px';
+    requestAnimationFrame(() => {
+      header.classList.add('collapsed');
+      body.classList.add('collapsed');
+      header.setAttribute('aria-expanded', 'false');
+      if (hintText) hintText.textContent = collapsedLabel;
+    });
+  } else {
+    header.classList.remove('collapsed');
+    body.classList.remove('collapsed');
+    body.style.maxHeight = body.scrollHeight + 'px';
+    header.setAttribute('aria-expanded', 'true');
+    if (hintText) hintText.textContent = expandedLabel;
+    body.addEventListener('transitionend', function clear() {
+      if (!header.classList.contains('collapsed')) body.style.maxHeight = 'none';
+      body.removeEventListener('transitionend', clear);
+    });
+  }
+}
 
+// ─── 분기 매출/순이익/OPM 차트 ───
+function renderFundChart() {
+  const ctx = document.getElementById('spcxRevChart');
+  if (!ctx) return;
+  const revenue=[4.067,4.071,4.694,7.814];
+  const netIncome=[-0.528,-1.008,-4.276,-0.541];
+  const opm=[0.7,-23.8,-41.4,-1.8];
+  const y2min=-50, y2max=10;
+  new Chart(ctx,{
+    data:{
+      labels:['Q1 2025','Q2 2025','Q1 2026','Q2 2026'],
+      datasets:[
+        {type:'bar',label:'매출($B)',data:revenue,backgroundColor:'rgba(124,106,214,0.55)',borderColor:'#7c6ad6',borderWidth:1,borderRadius:4,yAxisID:'y'},
+        {type:'bar',label:'순이익($B)',data:netIncome,backgroundColor:'rgba(59,130,246,0.5)',borderColor:'#3b82f6',borderWidth:1,borderRadius:4,yAxisID:'y'},
+        {type:'line',label:'OPM(%)',data:opm,borderColor:'#d4a017',backgroundColor:'rgba(212,160,23,.1)',tension:.35,pointRadius:4,borderWidth:2.5,fill:false,yAxisID:'y2'}
+      ]
+    },
+    options:{
+      responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{labels:{color:'#8a8d9e',font:{size:11}}}},
+      scales:{
+        x:{grid:{color:'rgba(128,130,145,0.05)'},ticks:{color:'#8a8d9e',font:{size:10},maxRotation:30}},
+        y:{position:'left',grid:{color:'rgba(128,130,145,0.05)'},ticks:{color:'#8a8d9e',font:{size:10},callback:v=>'$'+v+'B'}},
+        y2:{position:'right',min:y2min,max:y2max,grid:{display:false},ticks:{color:'#d4a017',font:{size:10},callback:v=>v+'%'}}
+      }
+    }
+  });
+}
 
+// ─── FUND YoY/QoQ COMPARE ───
+// 매출 · 영업이익 · 순이익 · FCF (단위 $B). 2026-09-23 SEC companyfacts로 대조했다.
+// FCF = 영업현금흐름 − PaymentsToAcquireProductiveAssets, 분기값은 누적값의 차이.
+// 증감률은 반올림 전 원자료로 계산한다 — 반올림한 63.7 ÷ 53.5로 계산하면
+// 영업이익 QoQ가 +19.1%로 나오지만 원자료는 +19.05%라 +19.0%다.
+const FUND_COMPARE = {
+  yoy: {
+    curLabel: 'Q2 2026', cmpLabel: 'Q2 2025',
+    titleSuffix: 'YoY (Q2 2026 vs Q2 2025)',
+    chart: { cur: [7.8, -0.1, -0.5, -15.9], cmp: [4.1, -1.0, -1.0, -3.2] },
+    deltas: ['+91.9%', '적자 축소', '적자 축소', '적자 확대'],
+    footnote: '기준일: 2026.06.30(Q2 2026) vs 2025.06.30(Q2 2025) · FCF는 영업현금흐름 − 설비투자 · <a href="https://www.sec.gov/Archives/edgar/data/1181412/000162828026052515/earningsreleaseq22608042.htm" target="_blank" rel="noopener">SpaceX Q2 2026 실적 발표 (SEC 8-K) →</a>'
+  },
+  qoq: {
+    curLabel: 'Q2 2026', cmpLabel: 'Q1 2026',
+    titleSuffix: 'QoQ (Q2 2026 vs Q1 2026)',
+    chart: { cur: [7.8, -0.1, -0.5, -15.9], cmp: [4.7, -1.9, -4.3, -9.1] },
+    deltas: ['+66.5%', '적자 축소', '적자 축소', '적자 확대'],
+    footnote: '기준일: 2026.06.30(Q2 2026) vs 2026.03.31(Q1 2026) · FCF는 영업현금흐름 − 설비투자 · <a href="https://www.sec.gov/Archives/edgar/data/1181412/000162828026052515/earningsreleaseq22608042.htm" target="_blank" rel="noopener">SpaceX Q2 2026 실적 발표 (SEC 8-K) →</a>'
+  }
+};
+
+const fundBarLabelPlugin = {
+  id: 'fundBarLabels',
+  afterDatasetsDraw(chart) {
+    if (!chart.fundDeltas) return;
+    const { ctx } = chart;
+    const meta = chart.getDatasetMeta(1);
+    const values = chart.data.datasets[1].data;
+    ctx.save();
+    ctx.textAlign = 'center';
+    meta.data.forEach((bar, i) => {
+      const { x, y, base } = bar.getProps(['x', 'y', 'base'], true);
+      const delta = chart.fundDeltas[i] || '';
+      // 음수 막대(GOOGL Q2 2026 FCF −$5.9B)는 0선 위에 라벨을 단다. "적자 전환"도 빨강.
+      const top = Math.min(y, base), v = values[i];
+      const color = (delta.startsWith('-') || delta.startsWith('−') || delta.includes('적자')) ? '#e5484d' : '#1fa463';
+      ctx.font = '700 11.5px sans-serif';
+      ctx.fillStyle = '#6f7180';
+      ctx.fillText((v < 0 ? '−$' : '$') + Math.abs(v) + 'B', x, top - 22);
+      ctx.font = '700 10.5px sans-serif';
+      ctx.fillStyle = color;
+      ctx.fillText(delta, x, top - 9);
+    });
+    ctx.restore();
+  }
+};
+
+let fundCompareChart = null;
+function selectFundPeriod(period) {
+  const d = FUND_COMPARE[period];
+  if (!d) return;
+  document.querySelectorAll('[data-period]').forEach(b => {
+    const active = b.dataset.period === period;
+    b.classList.toggle('active', active);
+    b.style.background = active ? 'var(--accent3)' : 'var(--bg3)';
+    b.style.color = active ? 'var(--accent2)' : 'var(--text3)';
+    b.style.borderColor = active ? 'var(--accent)' : 'var(--border)';
+  });
+  document.getElementById('fundPeriodTitle').textContent = d.titleSuffix;
+  document.getElementById('fundFootnote').innerHTML = d.footnote;
+
+  const ctx = document.getElementById('spcxFundCompareChart');
+  if (!ctx) return;
+  if (fundCompareChart) {
+    fundCompareChart.data.datasets[0].data = d.chart.cmp;
+    fundCompareChart.data.datasets[1].data = d.chart.cur;
+    fundCompareChart.data.datasets[0].label = d.cmpLabel;
+    fundCompareChart.data.datasets[1].label = d.curLabel;
+    fundCompareChart.fundDeltas = d.deltas;
+    fundCompareChart.update();
+  } else {
+    fundCompareChart = new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: ['매출', '영업이익', '순이익', 'FCF'],
+        datasets: [
+          { label: d.cmpLabel, data: d.chart.cmp, backgroundColor: 'rgba(138,141,158,0.35)', borderColor: '#9a9cab', borderWidth: 1, borderRadius: 4 },
+          { label: d.curLabel, data: d.chart.cur, backgroundColor: 'rgba(124,106,214,0.55)', borderColor: '#7c6ad6', borderWidth: 1, borderRadius: 4 }
+        ]
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        layout: { padding: { top: 34 } },
+        plugins: { legend: { labels: { color: '#8a8d9e', font: { size: 11 } } } },
+        scales: {
+          x: { grid: { display: false }, ticks: { color: '#8a8d9e', font: { size: 11 } } },
+          y: { grid: { color: 'rgba(128,130,145,0.05)' }, ticks: { color: '#8a8d9e', font: { size: 10 }, callback: v => '$' + v + 'B' } }
+        }
+      },
+      plugins: [fundBarLabelPlugin]
+    });
+    fundCompareChart.fundDeltas = d.deltas;
+    fundCompareChart.update();
+  }
+}
+
+// ─── 매출 구성 도넛 차트 (연결성 / AI / 우주) ───
+function renderSegmentChart() {
+  const ctx = document.getElementById('segmentPieChart');
+  if (!ctx) return;
+  const total = 7814;
+  new Chart(ctx,{
+    type:'doughnut',
+    data:{
+      labels:['연결성(스타링크)','AI','우주(발사)'],
+      datasets:[{
+        data:[4291, 2561, 962],
+        backgroundColor:['#3b82f6','#a855f7','#f97316'],
+        borderColor:'#8a8d9e',
+        borderWidth:2
+      }]
+    },
+    options:{
+      responsive:true,maintainAspectRatio:false,
+      cutout:'62%',
+      plugins:{
+        legend:{display:false},
+        tooltip:{callbacks:{label:ctx=>{
+          const pct=(ctx.raw/total*100).toFixed(1);
+          return `${ctx.label}: $${(ctx.raw/1000).toFixed(1)}B (${pct}%)`;
+        }}}
+      }
+    }
+  });
+}
+
+// ══════ #valuation ══════
+const MULTIPLE_DATA = {
+  per: {
+    title: 'PER 비교 (SPCX 적자로 계산 불가) · 2026.10.05 종가',
+    unit: 'PER', max: 180, spcxValue: null,
+    peers: [
+      { name:'RTX', value:32.5, status:'reference' },
+      { name:'GE', value:36.0, status:'reference' },
+      { name:'TMUS', value:17.2, status:'reference' },
+      { name:'PLTR', value:163.3, status:'reference' }
+    ]
+  },
+  pbr: {
+    title: 'PBR 비교 · 2026.10.05 종가',
+    unit: 'PBR', max: 50, spcxValue: 18.2,
+    peers: [
+      { name:'GE', value:18.0, status:'reference' },
+      { name:'TMUS', value:3.1, status:'reference' },
+      { name:'PLTR', value:46.6, status:'reference' }
+    ]
+  },
+  psr: {
+    title: 'PSR 비교 · 2026.10.05 종가',
+    unit: 'PSR(TTM)', max: 120, spcxValue: 100.8,
+    peers: [
+      { name:'RTX', value:2.7, status:'reference' },
+      { name:'GE', value:6.3, status:'reference' },
+      { name:'TMUS', value:1.9, status:'reference' },
+      { name:'PLTR', value:74.0, status:'reference' }
+    ]
+  },
+  pcr: {
+    title: 'PCR(FCF) 비교 (SPCX 잉여현금흐름 적자) · 2026.10.05 종가',
+    unit: 'PCR(FCF)', max: 150, spcxValue: null,
+    peers: [
+      { name:'RTX', value:17.5, status:'reference' },
+      { name:'GE', value:32.4, status:'reference' },
+      { name:'TMUS', value:6.1, status:'reference' },
+      { name:'PLTR', value:133.9, status:'reference' }
+    ]
+  },
+  evebitda: {
+    title: 'EV/EBITDA 비교 (SPCX 427배, 축 밖) · 2026.10.05 종가',
+    unit: 'EV/EBITDA', max: 200, spcxValue: 427.4,
+    peers: [
+      { name:'RTX', value:18.8, status:'reference' },
+      { name:'TMUS', value:8.0, status:'reference' },
+      { name:'PLTR', value:167.4, status:'reference' }
+    ]
+  }
+};
+
+let multipleChart = null;
+function renderMultipleChart(key) {
+  const d = MULTIPLE_DATA[key];
+  const ctx = document.getElementById('multipleChart');
+  if (!ctx || !d) return;
+  if (multipleChart) multipleChart.destroy();
+    // Self identity and colour are derived, never hardcoded — copying a card
+    // used to carry the template ticker's name and brand colour into the new
+    // card's own bar, and renaming the MULTIPLE_DATA key never reached labels[0].
+    const selfKey = Object.keys(d).find(function (k) { return /Value$/.test(k); });
+    const _vs = (typeof SPCX_VALUATION !== 'undefined') ? SPCX_VALUATION.self.metrics.find(m => m.metric === key) : null;
+    const _bbc = document.querySelector('.back-bar-current');
+    const selfLabel = (_bbc ? _bbc.textContent.split('\u00b7')[0].trim() : '')
+      || (selfKey ? selfKey.replace(/Value$/, '').toUpperCase() : '');
+    const _cs = getComputedStyle(document.documentElement);
+    const selfBd = _cs.getPropertyValue('--accent').trim();
+    const selfBg = _cs.getPropertyValue('--accent2').trim();
+  const labels = [selfLabel, ...d.peers.map(p=>p.name)];
+  // 자기 값이 축(d.max)을 넘으면 막대를 축 끝에서 자르고 툴팁에 실제 값을 쓴다(AMZN PCR 367x).
+  const selfNA = !!_vs && _vs.current == null;   // 적자로 오늘 배수가 없다 — 막대 없이 툴팁으로
+  const selfRaw = selfNA ? null : _vs ? +_vs.current.toFixed(1) : d[selfKey];
+  const selfOver = selfRaw != null && d.max != null && selfRaw > d.max;
+  const data = [selfOver ? d.max : selfRaw, ...d.peers.map(p=>p.value)];
+  const bg = [ selfBg, ...d.peers.map(p=> p.status==='excluded' ? 'rgba(229,72,77,0.18)' : 'rgba(138,141,158,0.35)') ];
+  const bd = [ selfBd, ...d.peers.map(p=> p.status==='excluded' ? '#c0392b' : '#9a9cab') ];
+  multipleChart = new Chart(ctx,{
+    type:'bar',
+    data:{ labels, datasets:[{ label:d.unit, data, backgroundColor:bg, borderColor:bd, borderWidth:1, borderRadius:5 }] },
+    options:{
+      responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>{ if (ctx.dataIndex === 0 && selfNA) return `${d.unit} 계산 불가 · ` + (_vs.currentNote === 'missing' ? '분모 데이터 없음' : '분모가 적자'); if (ctx.dataIndex === 0 && selfOver) return `${d.unit} 실제 ${selfRaw}x · 축 밖`; const p = d.peers[ctx.dataIndex - 1]; return p && p.note ? `${d.unit} ${p.note}` : `${d.unit} ${ctx.raw}x`; }}}},
+      scales:{
+        x:{grid:{display:false},ticks:{color:'#8a8d9e',font:{size:10.5}}},
+        y:{max:d.max,grid:{color:'rgba(128,130,145,0.05)'},ticks:{color:'#8a8d9e',font:{size:10},callback:v=>v+'x'}}
+      }
+    }
+  });
+}
+
+let currentMultipleKey = 'per';
+function selectMultiple(key) {
+  const d = MULTIPLE_DATA[key];
+  if (!d) return;
+  currentMultipleKey = key;
+  document.querySelectorAll('.val-item[data-metric]').forEach(el => el.classList.toggle('selected', el.dataset.metric === key));
+  document.getElementById('multipleCompareTitle').textContent = d.title;
+
+  renderMultipleChart(key);
+}
+
+// ══════ #tech (runs immediately, #tech is the default active tab) ══════
+const SPCX_DAILY = [["2026-06-12",150.0,176.52,149.34,160.95,519234800],["2026-06-15",171.74,193.0,168.35,192.5,256226600],["2026-06-16",200.51,225.64,199.98,211.39,195401600],["2026-06-17",209.84,213.8,187.01,191.82,201719500],["2026-06-18",188.39,190.0,172.11,185.0,272126800],["2026-06-22",176.04,176.75,154.0,154.6,169183800],["2026-06-23",151.06,165.5,147.11,156.11,155848100],["2026-06-24",154.2,159.86,150.72,154.54,76101500],["2026-06-25",156.63,160.65,150.0,153.0,62212400],["2026-06-26",150.62,158.4,148.51,153.23,126932900],["2026-06-29",157.36,166.17,151.74,164.19,81443100],["2026-06-30",163.38,172.4,161.64,170.86,82047500],["2026-07-01",171.57,171.74,155.0,157.54,109317600],["2026-07-02",159.73,162.16,155.88,162.0,61257100],["2026-07-06",165.95,167.9,155.04,160.42,188831300],["2026-07-07",158.92,159.3,148.86,149.47,83779700],["2026-07-08",152.55,152.93,145.2,148.3,60949400],["2026-07-09",150.45,153.5,147.59,152.16,46468600],["2026-07-10",150.13,150.57,145.07,145.3,46826000],["2026-07-13",144.7,144.92,136.78,139.14,71456500],["2026-07-14",140.95,143.33,135.52,136.08,46694800],["2026-07-15",137.51,139.34,132.15,135.27,58040900],["2026-07-16",135.01,137.76,130.74,131.11,58725600],["2026-07-17",127.43,130.33,122.12,123.99,83706200],["2026-07-20",125.29,125.7,119.68,119.85,57337300],["2026-07-21",122.11,129.88,120.36,123.54,79718100],["2026-07-22",123.29,124.77,115.19,115.26,92731800],["2026-07-23",115.21,118.55,110.85,118.24,75246500],["2026-07-24",116.01,117.0,111.4,115.07,56786100],["2026-07-27",113.5,114.85,108.66,113.5,64540700],["2026-07-28",109.32,118.13,107.01,116.41,81714300],["2026-07-29",114.4,117.59,110.35,112.55,53995200],["2026-07-30",115.14,118.93,111.35,112.2,56008000],["2026-07-31",113.1,113.64,107.57,108.37,58835700],["2026-08-03",106.4,114.92,104.83,114.53,70524000],["2026-08-04",117.33,126.71,115.72,125.33,144130100],["2026-08-05",112.37,117.5,106.66,108.27,208488400],["2026-08-06",107.09,115.75,105.11,114.92,255176600],["2026-08-07",114.97,133.48,114.53,133.11,242130700],["2026-08-10",134.95,139.26,130.17,138.74,169934300],["2026-08-11",138.66,139.98,130.5,133.29,108900600],["2026-08-12",135.05,149.6,134.01,146.15,167236400],["2026-08-13",143.75,145.05,139.76,141.29,120282200],["2026-08-14",142.9,144.02,135.5,140.0,96727800],["2026-08-17",139.98,149.8,139.58,146.23,116675400],["2026-08-18",140.73,146.46,139.41,143.34,84191000],["2026-08-19",144.96,145.01,136.72,139.65,76612300],["2026-08-20",137.29,137.88,130.39,134.0,119813200],["2026-08-21",134.32,137.35,131.22,136.97,78808300],["2026-08-24",134.36,138.33,133.1,135.0,60188400],["2026-08-25",136.94,139.75,136.1,137.95,53075000],["2026-08-26",137.0,140.18,135.1,139.63,61380500],["2026-08-27",139.99,142.06,138.6,140.87,55268800],["2026-08-28",139.83,143.29,137.9,141.5,55111200],["2026-08-31",140.08,144.14,139.88,143.69,63145000],["2026-09-01",141.87,145.23,141.17,142.23,53808100],["2026-09-02",142.68,143.1,138.17,140.71,49903700],["2026-09-03",141.36,152.3,141.05,149.74,121333600],["2026-09-04",148.59,150.85,147.32,147.95,49122400],["2026-09-08",149.05,155.0,145.14,153.47,85840700],["2026-09-09",152.04,153.0,145.55,147.55,120593500],["2026-09-10",145.0,154.7,144.89,148.18,118598900],["2026-09-11",150.01,151.85,145.92,151.21,79273400],["2026-09-14",147.33,152.56,146.0,148.15,67861000],["2026-09-15",148.45,148.55,142.87,143.49,72746800],["2026-09-16",144.88,153.01,144.36,150.88,108770000],["2026-09-17",153.8,156.87,152.63,154.81,83986400],["2026-09-18",154.6,156.6,149.93,152.71,335670500],["2026-09-21",154.77,158.13,151.6,151.85,82283700],["2026-09-22",151.7,154.94,150.55,154.72,59197600],["2026-09-23",153.28,154.26,147.89,148.36,60641600],["2026-09-24",148.2,149.0,145.88,148.03,72721400],["2026-09-25",148.38,149.67,146.0,148.68,54595200],["2026-09-28",148.49,150.8,145.36,145.47,83516700],["2026-09-29",146.68,150.06,145.47,149.24,80056700],["2026-09-30",148.68,152.58,147.75,150.86,79614200],["2026-10-01",150.56,153.78,146.03,148.07,69092500],["2026-10-02",149.57,159.84,149.34,158.96,119859100],["2026-10-05",158.99,172.47,158.62,171.09,134696900]];
+const SPCX_MA5 = [null,null,null,null,188.332,187.062,179.784,168.414,160.65,154.296,156.214,159.164,159.764,161.564,163.002,160.058,155.546,154.47,151.13,146.874,144.196,141.59,137.38,133.118,129.26,126.752,122.75,120.176,118.392,117.122,115.696,115.154,113.946,112.606,112.812,114.596,113.74,114.284,119.232,124.074,125.666,133.242,138.516,139.894,141.392,143.402,142.102,140.644,140.038,137.792,136.714,136.71,138.084,138.99,140.728,141.584,141.8,143.574,144.864,146.82,147.884,149.378,149.672,149.712,147.716,148.382,149.708,150.008,150.748,152.994,152.49,151.134,150.328,149.052,147.956,148.456,148.464,150.52,155.644];
+const SPCX_MA20 = [null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,163.126,161.8825,159.021,155.007,151.6155,148.358,146.805,144.7625,142.9475,141.051,139.0645,136.6755,133.76,131.493,128.8115,126.517,125.31,123.3085,121.4465,120.837,120.817,120.6775,121.2215,121.7305,122.531,123.85,124.84,126.0595,126.8475,127.9425,129.0175,130.0945,131.4485,132.882,134.5385,135.9965,136.8415,138.4635,140.2045,140.9465,141.683,142.396,142.4975,142.9935,143.401,143.264,143.641,144.399,145.3345,146.0785,147.0645,147.585,148.005,148.3955,148.594,148.8715,149.303,149.671,150.132,151.289];
+const SPCX_MA60 = [null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 141.88, 141.65, 140.91, 139.91, 139.18, 138.49, 138.43, 138.41, 138.38, 138.36, 138.38, 138.12, 137.74, 137.59, 137.31, 137.13, 137.15, 137.15, 137.26, 137.69];   // 거래일 60일을 넘어 일봉으로 계산(2026-10-05부터)
+const SPCX_MA120 = [];   // 거래일 120일 미만 — 데이터가 쌓이면 채운다
+// DCF 시나리오 결과 — **화면의 DCF 숫자는 전부 여기서 나온다.**
+// 가정은 전부 회사 자기 이력에서 나온다 — 성장은 5년/3년 매출 CAGR, 마진은
+// 5년·최근 2년 중앙값과 현재값. 범위가 아니라 가정 세 개의 결과다.
+//
+// 2026-09-22 이전에는 이 상수가 선언만 되고 아무 데서도 쓰이지 않았다. 헤더와
+// 근거 박스에는 같은 숫자가 HTML로 따로 박혀 있어서, 코드를 고쳐도 화면만 낡은
+// 채 남았다(D&A 태그 버그를 고친 뒤 $317.87 대 $315.00으로 갈렸고 Codex·Fable이
+// 둘 다 지적했다). 이제 아래 IIFE가 헤더와 근거 박스를 이 값에서 그린다.
+//
+// 갱신: python3 v2/build_dcf.py SPCX --price <현재가>
+// 밸류에이션 종합 판정 — 헤더 첫 칸과 밸류에이션 탭 머리가 이 한 값을 쓴다.
+// 사람이 내린 판단이다(근거: 밸류에이션 탭의 세 줄 — 자기 이력 · 현금흐름 · 동종업).
+// 규칙으로 정할지는 backlog "v2 카드 70장 확대"의 열린 결정 (b).
+// 종합 평가는 시스템이 정한다 — 아래 VALUATION 블록 뒤의 자동 판정이 채운다(2026-09-25).
+let SPCX_VERDICT = '계산 중';
+
+const SPCX_DCF = {"low": null, "base": null, "high": null, "requiredGrowth": null, "baseEquivGrowth": null, "reqMode": "growth", "requiredMargin": null, "marginNow": null, "growth5y": null, "nonopPerShare": 0, "s2cFallback": false, "asOf": "2026-09-24", "unavailable": "상장 3개월 — 내재가치는 과거 매출 성장 13분기 이상이 필요하다"};   // 부분 카드 — 계산 불가(v2/adapters/spcx_ttm.py 참조)
+// 현금흐름 판정 5단계 — 헤더 색·요약 칸·밸류에이션 알약이 모두 이 함수 하나를 쓴다(2026-09-25).
+// 현재가 ÷ 기본 내재가치: ≤0.7 매우 싸다 · ≤0.9 싸다 · ≤1.1 적정 · ≤1.5 비싸다 · 초과 매우 비싸다.
+// 보수~낙관이 현재가를 사이에 두면 '시나리오별 갈림'을 붙인다(Fable: NVDA 0.38~1.46).
+function dcfLevel(price, D) {
+  if (!D || price == null || typeof D.base !== 'number' || !isFinite(D.base))
+    return { label: '계산 불가', cls: 'mid', color: 'var(--gold)', split: false, ratio: null, range: '' };
+  if (D.base <= 0)
+    return { label: '매우 비싸다', cls: 'high', color: 'var(--red)', split: false, ratio: null, range: '기본 내재가치가 0 이하다' };
+  const r = price / D.base;
+  const [cls, label] = r <= 0.7 ? ['', '매우 싸다'] : r <= 0.9 ? ['', '싸다'] : r <= 1.1 ? ['mid', '적정']
+                     : r <= 1.5 ? ['high', '비싸다'] : ['high', '매우 비싸다'];
+  const color = cls === '' ? '#0ea5e9' : cls === 'mid' ? 'var(--gold)' : 'var(--red)';
+  const _mn = Math.min(D.low, D.base, D.high), _mx = Math.max(D.low, D.base, D.high);   // 세 시나리오 최소·최대(카드 한정)
+  const split = _mn > 0 && _mn < price && price < _mx;
+  const range = _mn > 0
+    ? `시나리오 범위: ${(price / _mx).toFixed(2)} ~ ${(price / _mn).toFixed(2)}(세 시나리오 최대·최소 기준)` : '';
+  return { label, cls, color, split, ratio: r, range };
+}
+const DCF_RULE_TEXT = '0.7 이하 매우 싸다 · 0.9 이하 싸다 · 1.1 이하 적정 · 1.5 이하 비싸다 · 초과 매우 비싸다';
+// 쏠림 안내(2026-10-02 사용자 결정, A0 — research/verdict_replay_prereg.md 결과): 사전 규칙상 문턱 변형이 모두 탈락해 V0를 유지하고,
+// 이 칸이 대부분 종목에서 "매우 비싸다"라는 사실을 툴팁으로 알린다. 숫자는 현금흐름이 계산되는 S&P500 비금융 종목의 월별 비중(dq 필터 적용).
+// 금융 카드에는 넣지 않는다(검증 패널에 금융이 없다).
+const DCF_SKEW_NOTE = "이 칸은 보수적으로 잡혀 있다(할인율 10%, 5년 뒤 영구성장 2.5%). S&P500 비금융 종목의 83~91%가 매달 '매우 비싸다'에 들어간다(2024-10~2026-09). 다른 종목과 견주려면 위 비율 숫자를 함께 볼 것.";
+// baseEquivGrowth — 기본 시나리오 $315를 requiredGrowth와 **같은 방식**(5년 내내 일정한
+// 성장률, 같은 마진 경로)으로 환산한 값. 내재가치 탭이 requiredGrowth와 나란히 싣는다.
+// 기본 시나리오의 경로 CAGR 33.9%와 비교하면 안 된다 — 69.4%→2.5%로 앞에 몰린 경로라
+// 일정한 33.9%는 $315가 아니라 $298.96을 준다. 그러면 주가 $299~315에서 헤더는
+// 파랑(내재가치 아래)인데 탭 문장은 "요구 성장이 더 높다"가 되어 서로 어긋난다.
+//   d.implied_growth(base, SPCX_DCF.base, 0.10, 0.025, margin_path=d.margin_path_for(hist, "기본"))
+
+// ── 요약 격자 네 칸 (2026-09-22 재구성) ──
+// 전에는 "적정주가를 뒷받침하는 3가지 근거"라고 적어놓고 박스가 4개였고, 값이
+// 가격 · 점수 · 점수 · 문장으로 단위가 셋이었다. 같은 격자에 놓이면 비교 가능한
+// 것처럼 보이는데 아니었다. 손으로 쓴 뉴스 박스(재현 불가)를 빼고, 밸류에이션을
+// **동종업 대비**와 **자기 이력 대비** 둘로 갈라 네 칸을 채운다.
+//
+// 두 밸류에이션 점수를 평균내지 않는 것이 핵심이다. NVDA는 42.5점이 벌어지는데
+// (동종업 46.7 대 자기 이력 89.2), 그 격차가 이 종목에 대한 진짜 정보다 —
+// 자기 역사상 가장 싼 구간이면서 동종업 중에서는 중간이다. 이익 기준(PER)으로는
+// 24개 중 6위로 싸지만 자산·매출 기준(PBR·PSR)으로는 하위권인데, 마진이
+// 예외적이라 같은 매출·자산에서 훨씬 많은 이익을 뽑기 때문이다. 한 숫자로
+// 뭉개면 이 사실이 사라진다.
+//
+// 색은 점수에서 나온다 — 헤더 ④ 밴드 적중률과 **같은 문턱**이다.
+//     초록 70점 이상 · 노랑 30~70점 · 빨강 30점 미만
+// 내재가치 칸만 파랑 고정이다. 점수가 아니라 가격이라
+// 같은 색을 쓴다.
+//
+// 갱신: python3 v2/build_peer_score.py SPCX --self v2/SPCX_multiples.json
+//       python3 v2/build_fundamental_score.py SPCX
+const SPCX_SCORES = {
+  fundamental: 43.6,   // 재무건전성 + 성장·수익성 — 성장 항목 부족으로 해석 제한
+  peer: 7.2,           // 산업재 + IT 섹터 대비 배수 순위 (PER은 해당 없음, PCR은 적자라 0점)
+  selfHistory: null,   // 상장 3개월 — 5년 이력 없음
+  asOf: "2026-10-05",
+  fundamentalAsOf: "2026-06-30",   // Q2 2026 10-Q (2026-08-04 공시)
+};
+// 기본적 분석이 98.1이 아니라 96.1인 이유. redesign의 동결 모델(v1.0.1)은
+// **연간치만** 써서 NVDA 같은 1월 결산 종목은 대차대조표가 최대 12개월 뒤처진다.
+// v2는 배점 구간을 그대로 두고 입력만 최신 분기로 바꾼다. 바뀐 칸은 하나 —
+// **차입금의존도 4.1%(5점) → 10.4%(4점)**. 장기차입금이 FY2026의 $7.5B에서
+// Q2 FY27에 $32.4B로 4.3배 늘었는데, 연간 기준으로는 2027년 2월까지 안 보인다.
+// 마진은 분기가 오히려 좋지만(OPM 60.4→66.2%) 이미 만점이라 올라갈 자리가 없다.
+// `--basis annual`로 돌리면 98.1이 그대로 나온다 — 배점을 안 건드렸다는 확인이다.
+// 헤더와 근거 박스를 위 상수에서 다시 그린다. HTML에 적힌 값은 스크립트가
+// 꺼졌을 때를 위한 대비용일 뿐이고, 진짜 출처는 SPCX_DCF 하나다.
+//
+// ── 헤더 네 칸의 색 규칙 (2026-09-22 고정, 2026-09-23 순서 변경) ──
+// 카드를 만들 때마다 색이 달라지지 않도록 한곳에 모아 둔다.
+// 2026-09-23 순서를 종합 평가 · 요구 성장 · 밴드 적중률 · 적정주가로 바꾸고
+// 내재가치 칸을 뺐다 — 바로 아래 요약 격자 첫 칸에 같은 $315가 있다.
+//
+//   종합 평가 (밸류에이션)   노랑 고정 — SPCX_VERDICT
+//   현재가 요구 성장         현재가 < 내재가치면 파랑, 넘으면 빨강
+//   밴드 적중률              초록 70%↑ · 노랑 30~70% · 빨강 30%↓ (spcxHitTone)
+//   적정주가 (배수 기준)     초록 고정 — 값과 무관
+//
+// 요구 성장 칸의 문턱을 **내재가치 자체**로 잡은 이유. 요구 성장률을 기본 시나리오의
+// 5년 CAGR 33.87%와 비교하면 직관적이지만 정확하지 않다. 기본 시나리오는
+// 69.4%에서 2.5%로 줄어드는 **앞에 몰린** 경로라, 같은 CAGR이어도 현재가치가
+// 더 크다(할인은 시점에 민감하다). 실제로 주가가 내재가치 $315일 때 비율은
+// 1.000이 아니라 1.045이고, CAGR 기준으로 색을 주면 적정가보다 5% 싼
+// $298.93에서 이미 빨강이 된다. 가격끼리 비교하면 그 오차가 없다.
+//
+// 적정주가와 밴드 적중률 칸이 값에 반응하지 않는 것은 의도다. 적정주가는 "지난 1년 배수가 오간 범위"라
+// 좋고 나쁨이 없고, 밴드 적중률은 다른 질문("이 밴드를 믿을 수 있나")에 답한다.
+(function(){
+  const d = SPCX_DCF, $ = id => document.getElementById(id);
+  const base = $('spcxDcfBase'), req = $('spcxDcfReq'), box = $('spcxDcfBox');
+  const price = (typeof SPCX_DAILY !== 'undefined' && SPCX_DAILY.length)
+    ? SPCX_DAILY[SPCX_DAILY.length - 1][4] : null;
+  // 내재가치를 계산할 수 없는 카드(신규 상장 등, d.base == null)는 칸마다 사유만 적는다(2026-09-25, SPCX).
+  if (d.base == null) {
+    const why = d.unavailable || '입력 부족';
+    if (req) { req.textContent = '—'; req.style.color = 'var(--text3)'; const c = req.closest('.meta-item'); if (c) c.title = '계산 불가 — ' + why; }
+    if (box) { box.textContent = '계산 불가'; box.title = why; }
+    const dv0 = $('spcxDcfVerdict'); if (dv0) { dv0.textContent = '계산 불가'; dv0.title = why; }
+    return;
+  }
+  if (base) base.style.color = '#0ea5e9';
+  if (base) base.textContent = '$' + (Math.abs(d.base) < 10 ? d.base.toFixed(2) : Math.round(d.base));
+  // 요구 성장률이 최근 5년 실제 성장의 3배를 넘으면(또는 해가 없으면) 성장만으로는 가격이
+  // 설명되지 않는다 — 대신 요구 영업이익률을 보인다(reqMode, build_dcf_block.py, 2026-09-24).
+  const mMode = d.reqMode === 'margin', f1 = v => (v * 100).toFixed(1) + '%';
+  // 마진 모드인데 영업이익률 100%로도 닿지 않으면(해 없음) 요구 성장률을 대신 보인다(2026-09-30 사용자 결정, LRCX·PLTR).
+  const noSol = mMode && d.requiredMargin == null && d.requiredGrowth != null;
+  if (req) req.textContent = noSol ? '연 ' + f1(d.requiredGrowth)
+                           : mMode ? (d.requiredMargin != null ? f1(d.requiredMargin) : '—')
+                                   : '연 ' + f1(d.requiredGrowth);
+  if (req && mMode) {
+    const lb = req.closest('.meta-item') && req.closest('.meta-item').querySelector('.meta-label');
+    if (lb) lb.textContent = noSol ? '현재가 요구 성장 (마진 100%로도 불가)' : `현재가 요구 영업이익률 (현재 ${f1(d.marginNow)})`;
+  }
+  if (req && price != null) {
+    const lv = dcfLevel(price, d);
+    req.style.color = lv.color;   // 5단계와 같은 신호: 싸다 파랑 · 적정 노랑 · 비싸다 빨강
+    const cell = req.closest('.meta-item');
+    if (cell) cell.title = (mMode
+        ? `현재가 $${price.toFixed(2)} 가 정당화되려면 매출이 지난 5년 속도(연 ${f1(d.growth5y)})로 크다가 식는 동안`
+          + ` 영업이익률이 ${d.requiredMargin != null ? f1(d.requiredMargin) : '(범위 밖)'}여야 한다(현재 ${f1(d.marginNow)}).`
+          + `\n성장만으로는 설명되지 않는다 — ` + (d.requiredGrowth != null
+            ? `일정 성장이라면 연 ${f1(d.requiredGrowth)}가 필요해 지난 5년의 3배를 넘는다.`
+            : `어떤 일정 성장률로도 현재가에 닿지 않는다.`)
+        : `현재가 $${price.toFixed(2)} 가 정당화되려면 5년 내내`
+          + ` 연 ${(d.requiredGrowth*100).toFixed(1)}% 매출 성장이 필요하다.`)
+      + `\n현재가 ÷ 내재가치 ${d.base <= 0 ? '계산 불가(음수)' : '$' + Math.round(d.base)} = ${lv.ratio != null ? lv.ratio.toFixed(2) : '—'} → ${lv.label}`
+      + ` (${DCF_RULE_TEXT})`;
+  }
+  if (box)  box.innerHTML = (d.base > 0 ? '$' + (Math.abs(d.base) < 10 ? d.base.toFixed(2) : Math.round(d.base)) : '0 이하')
+    + '<span class="logic-denom"> · 보수 ' + (d.low > 0 ? '$' + (d.low < 10 ? d.low.toFixed(2) : Math.round(d.low)) : '계산 불가')
+    + ' · 낙관 ' + (d.high > 0 ? '$' + (d.high < 10 ? d.high.toFixed(2) : Math.round(d.high)) : '계산 불가') + '</span>';
+  const dv = $('spcxDcfVerdict');
+  if (dv && price != null) {
+    const lv = dcfLevel(price, d);
+    dv.textContent = lv.label + (lv.split ? ' · 갈림' : '');
+    // 종합 평가(사람 판단)와 방향이 다르면 카드별 사유를 data-dcf-note에 적어 둔다.
+    const note = dv.dataset.dcfNote;
+    dv.title = `현재가 ÷ 기본 내재가치 = ${lv.ratio != null ? lv.ratio.toFixed(2) : '—'}`
+      + (lv.range ? '\n' + lv.range : '') + (note ? '\n' + note : '');
+  }
+})();
+
+// ── 내재가치 탭: 세 시나리오 표 + 직접 바꿔보기 (2026-09-23) ──
+// 표의 주당 가치는 SPCX_DCF, "현재가 대비"는 마지막 종가에서 계산한다. 예전에는
+// 이 열이 HTML에 박혀 있어서 $222.27 기준 +41.7%가 $228.87 카드에 남아 있었다.
+//
+// 버튼이 고르는 값은 아래 격자에서 **찾기만** 한다. DCF를 JS로 다시 짜지 않는다.
+// 영구성장 버튼은 6년차 이후만 바꾸는 게 아니다. 시나리오의 성장 경로가 첫해 값에서
+// 영구성장률까지 직선으로 식으므로 2~5년차 성장도 함께 움직인다. $315를 만든
+// scenarios()와 같은 정의라 의도된 동작이다(옛 민감도 표는 경로를 고정해 값이 달랐다).
+// 격자의 기본값 칸(할인율 10% · 영구 2.5%)은 SPCX_DCF와 같아야 하고, 갱신
+// 스크립트가 다르면 멈춘다.
+//
+// 갱신: python3 v2/build_dcf_grid.py SPCX
+/* DCF_GRID:BEGIN */
+const SPCX_DCF_GRID = null;   // 내재가치 계산 불가
+/* DCF_GRID:END */
+(function(){
+  const D = SPCX_DCF, G = (typeof SPCX_DCF_GRID !== 'undefined') ? SPCX_DCF_GRID : null;
+  const price = (typeof SPCX_DAILY !== 'undefined' && SPCX_DAILY.length)
+    ? SPCX_DAILY[SPCX_DAILY.length - 1][4] : null;
+  const pct = v => (v >= price ? '+' : '−') + Math.abs((v / price - 1) * 100).toFixed(1) + '%';
+  const tone = v => v >= price ? 'var(--green)' : 'var(--red)';
+  if (D.base == null) {   // 계산 불가(신규 상장 등) — 탭에 사유만 적고 끝낸다
+    document.querySelectorAll('#dcf [data-dcf-value], #dcf [data-dcf-upside], #dcf [data-dcf-req], #dcf [data-dcf-basev], #dcf [data-dcf-baseeq]')
+      .forEach(el => { el.textContent = '—'; el.style.color = ''; });
+    const r = document.querySelector('#dcf .reverse');
+    if (r) r.textContent = '내재가치를 계산하지 못했다 — ' + (D.unavailable || '입력 부족');
+    // 비영업 자산 줄과 "직접 바꿔보기" 카드는 값이 없으면 틀(NVDA) 숫자가 남으므로 숨긴다(Fable)
+    document.querySelectorAll('#dcf [data-dcf-nonop]').forEach(el => { el.textContent = ''; el.hidden = true; });
+    const pick = document.getElementById('dcfPickValue');
+    const knobCard = pick && pick.closest('.card');
+    if (knobCard) knobCard.hidden = true;
+    return;
+  }
+
+  document.querySelectorAll('#dcf [data-dcf-value]').forEach(el => {
+    const v0 = D[el.dataset.dcfValue]; el.textContent = v0 > 0 ? '$' + v0.toFixed(2) : '계산 불가(음수)';   // 카드 한정
+  });
+  if (price != null) document.querySelectorAll('#dcf [data-dcf-upside]').forEach(el => {
+    const v = D[el.dataset.dcfUpside];
+    if (!(v > 0)) { el.textContent = '—'; return; }   // 음수 시나리오(카드 한정)
+    el.textContent = pct(v); el.style.color = tone(v);
+  });
+  const fill = (sel, text) => document.querySelectorAll('#dcf ' + sel).forEach(el => { el.textContent = text; });
+  if (price != null) fill('[data-dcf-price]', '$' + price.toFixed(2));
+  fill('[data-dcf-req]', (D.requiredGrowth * 100).toFixed(1) + '%');
+  fill('[data-dcf-basev]', '$' + (Math.abs(D.base) < 10 ? D.base.toFixed(2) : Math.round(D.base)));
+  fill('[data-dcf-baseeq]', D.baseEquivGrowth != null ? (D.baseEquivGrowth * 100).toFixed(1) + '%' : '—');
+  const pc = v => (v * 100).toFixed(1) + '%';
+  if (D.reqMode === 'margin') document.querySelectorAll('#dcf .reverse').forEach(el => {
+    el.innerHTML = `지금 가격(${price != null ? '$' + price.toFixed(2) : '현재가'})이 정당하려면, 매출이 지난 5년 속도(연 ${pc(D.growth5y)})로 크다가 식는 동안`
+      + ` 영업이익률이 <b>${D.requiredMargin != null ? pc(D.requiredMargin) : '범위 밖'}</b>여야 한다(지금 ${pc(D.marginNow)}).`
+      + ` 성장만으로는 설명되지 않는다 — ` + (D.requiredGrowth != null
+        ? `일정 성장으로 맞추려면 연 ${pc(D.requiredGrowth)}가 필요해 지난 5년 실제의 3배를 넘는다.`
+        : `어떤 일정 성장률로도 현재가에 닿지 않는다.`);
+  });
+  // 비영업 자산 분리 표기 — 주주가치에 더한 지분·장기투자(주당). 사업이 버는 현금과 구분한다.
+  document.querySelectorAll('#dcf [data-dcf-nonop]').forEach(el => {
+    const n = D.nonopPerShare || 0;
+    el.textContent = n >= 1
+      ? `기본 시나리오 $${Math.round(D.base)} = 사업 가치 $${Math.round(D.base) - Math.round(n)} + 비영업 자산 $${Math.round(n)}(주당, 지분·장기투자)`   // 반올림한 두 값의 합이 합계와 맞게
+      : '';
+    el.hidden = n < 1;
+  });
+
+  if (!G) {   // 직접 바꿔보기 표가 없는 카드(보험사 등) — 틀의 대체값(NVDA $297)이 남지 않게(2026-10-06)
+    const pv = document.getElementById('dcfPickValue'), pu = document.getElementById('dcfPickUpside');
+    if (pv) { pv.textContent = '계산 불가'; pv.style.color = 'var(--text3)'; } if (pu) pu.textContent = '';
+    return;
+  }
+  const SCN = [['보수', 'low', 'var(--red)'], ['기본', 'base', '#0ea5e9'], ['낙관', 'high', 'var(--green)']];
+  const st = { scn: 1, wacc: G.waccs.indexOf(G.default[0]), term: G.terms.indexOf(G.default[1]) };
+  const opts = {
+    scn: SCN.map(s => s[0]),
+    wacc: G.waccs.map(w => +(w * 100).toFixed(1) + '%'),
+    term: G.terms.map(t => +(t * 100).toFixed(1) + '%'),
+  };
+  document.querySelectorAll('#dcf [data-knob-default]').forEach(el => {
+    const v = G.default[el.dataset.knobDefault === 'wacc' ? 0 : 1];
+    el.textContent = '(' + +(v * 100).toFixed(1) + '%)';
+  });
+  const ruler = document.getElementById('dcfRuler');
+  // 자의 양 끝은 격자 전체에서 한 번만 정한다. 선택마다 다시 잡으면 현재가
+  // 표시까지 움직여 무엇이 바뀌었는지 읽기 어렵다. 범위가 8배쯤이라 로그 눈금.
+  const every = SCN.flatMap(s => G.values[s[0]].flat()).filter(v => v != null && v > 0).concat(price != null ? [price] : []);   // 음수 칸 제외(카드 한정)
+  const LO = Math.log(Math.min(...every) * 0.92), HI = Math.log(Math.max(...every) * 1.04);
+
+  function draw() {
+    document.querySelectorAll('#dcf [data-knob]').forEach(box => {
+      box.querySelectorAll('button').forEach((b, i) => b.classList.toggle('active', i === st[box.dataset.knob]));
+    });
+    const vals = SCN.map(s => G.values[s[0]][st.term][st.wacc]);
+    const pick = vals[st.scn], col = SCN[st.scn][2];
+    const pv = document.getElementById('dcfPickValue'), pu = document.getElementById('dcfPickUpside');
+    pv.textContent = pick > 0 ? '주당 $' + (pick < 10 ? pick.toFixed(2) : Math.round(pick)) : '계산 불가(음수)'; pv.style.color = col;
+    if (price != null) { pu.textContent = pick > 0 ? '현재가 대비 ' + pct(pick) : '—'; pu.style.color = pick > 0 ? tone(pick) : ''; }
+
+    const x = v => ((Math.log(v) - LO) / (HI - LO) * 100).toFixed(2) + '%';
+    ruler.innerHTML = '<div class="ruler-line"></div>'
+      + (price != null ? `<div class="ruler-now" style="left:${x(price)}"><span>현재가<br>$${price.toFixed(2)}</span></div>` : '')
+      + SCN.map((s, i) => !(vals[i] > 0) ? '' : `<div class="ruler-pt${i === st.scn ? ' on' : ''}" style="left:${x(vals[i])};color:${s[2]}">`
+        + `<div class="ruler-lab">${s[0]}<br>$${vals[i] < 10 ? vals[i].toFixed(2) : Math.round(vals[i])}</div><div class="ruler-dot" style="background:${s[2]}"></div></div>`).join('');
+  }
+
+  document.querySelectorAll('#dcf [data-knob]').forEach(box => {
+    const k = box.dataset.knob;
+    opts[k].forEach((label, i) => {
+      const b = document.createElement('button');
+      b.type = 'button'; b.className = 'range-btn'; b.textContent = label;
+      b.onclick = () => { st[k] = i; draw(); };
+      box.appendChild(b);
+    });
+  });
+  draw();
+})();
+
+// ── 기본적 분석 탭: 점수 입력 9개와 순현금 (2026-09-23) ──
+// 요약 격자의 "기본적 분석 96.1"과 탭의 항목별 배지가 같은 계산에서 나오도록
+// SPCX_FUNDAMENTAL 하나에서 그린다. 예전 탭은 "기준 150%↑" 같은 손으로 쓴 통과
+// 기준을 달아서, 점수를 깎은 차입금의존도(4/5점)까지 "✅ 양호"로 보였다.
+// 성장·수익성 입력(CAGR 2개, 마진 2개)은 점수의 절반인데 탭에 없었다.
+//
+// 갱신: python3 v2/build_fundamental_score.py SPCX --card
+/* FUNDAMENTAL:BEGIN */
+const SPCX_FUNDAMENTAL = {"ticker": "SPCX", "basis": "quarter", "asOf": "2026-06-30", "filedAt": "2026-08-04", "periodSource": "10-Q", "score": 43.6, "grade": "보통", "qualityFlags": ["growth_metrics_below_gate"], "axes": {"health": {"rows": [{"metric": "currentRatio", "value": 511.53773316920746, "points": 5, "note": null, "label": "유동비율", "unit": "%", "higherIsBetter": true, "buckets": [{"upper_exclusive": 100, "points": 1}, {"upper_exclusive": 150, "points": 2}, {"upper_exclusive": 200, "points": 3}, {"upper_exclusive": 300, "points": 4}, {"upper_exclusive": null, "points": 5}]}, {"metric": "quickRatio", "value": 498.66963355742826, "points": 5, "note": null, "label": "당좌비율", "unit": "%", "higherIsBetter": true, "buckets": [{"upper_exclusive": 50, "points": 1}, {"upper_exclusive": 100, "points": 2}, {"upper_exclusive": 150, "points": 3}, {"upper_exclusive": 250, "points": 4}, {"upper_exclusive": null, "points": 5}]}, {"metric": "debtDependency", "value": 19.860455465061992, "points": 3, "note": null, "label": "차입금의존도", "unit": "%", "higherIsBetter": false, "buckets": [{"upper_exclusive": 5, "points": 5}, {"upper_exclusive": 15, "points": 4}, {"upper_exclusive": 30, "points": 3}, {"upper_exclusive": 50, "points": 2}, {"upper_exclusive": null, "points": 1}]}, {"metric": "interestCoverage", "value": null, "points": 1, "note": "영업적자", "label": "이자보상배율", "unit": "x", "higherIsBetter": true, "buckets": [{"upper_exclusive": 1, "points": 1}, {"upper_exclusive": 4, "points": 2}, {"upper_exclusive": 10, "points": 3}, {"upper_exclusive": 30, "points": 4}, {"upper_exclusive": null, "points": 5}]}, {"metric": "debtToEquity", "value": 51.52015343017041, "points": 3, "note": null, "label": "부채비율", "unit": "%", "higherIsBetter": false, "buckets": [{"upper_exclusive": 25, "points": 5}, {"upper_exclusive": 50, "points": 4}, {"upper_exclusive": 100, "points": 3}, {"upper_exclusive": 200, "points": 2}, {"upper_exclusive": null, "points": 1}]}], "used": 5, "pointsRaw": 22.44, "points": 22.4, "max": 33}, "growthProfit": {"rows": [{"metric": "revenueCagr", "value": null, "points": null, "note": null, "label": "매출 CAGR", "unit": "%", "higherIsBetter": true, "buckets": [{"upper_exclusive": 0, "points": 1}, {"upper_exclusive": 5, "points": 2}, {"upper_exclusive": 12, "points": 3}, {"upper_exclusive": 25, "points": 4}, {"upper_exclusive": null, "points": 5}]}, {"metric": "opIncomeCagr", "value": null, "points": null, "note": null, "label": "영업이익 CAGR", "unit": "%", "higherIsBetter": true, "buckets": [{"upper_exclusive": 0, "points": 1}, {"upper_exclusive": 8, "points": 2}, {"upper_exclusive": 18, "points": 3}, {"upper_exclusive": 35, "points": 4}, {"upper_exclusive": null, "points": 5}]}, {"metric": "opMargin", "value": -1.8300486306629127, "points": 1, "note": null, "label": "영업이익률(OPM)", "unit": "%", "higherIsBetter": true, "buckets": [{"upper_exclusive": 5, "points": 1}, {"upper_exclusive": 15, "points": 2}, {"upper_exclusive": 25, "points": 3}, {"upper_exclusive": 35, "points": 4}, {"upper_exclusive": null, "points": 5}]}, {"metric": "netMargin", "value": -6.9234706936268235, "points": 1, "note": null, "label": "순이익률", "unit": "%", "higherIsBetter": true, "buckets": [{"upper_exclusive": 3, "points": 1}, {"upper_exclusive": 8, "points": 2}, {"upper_exclusive": 15, "points": 3}, {"upper_exclusive": 25, "points": 4}, {"upper_exclusive": null, "points": 5}]}], "used": 2, "pointsRaw": 6.800000000000001, "points": 6.8, "max": 34}}, "axisMaxTotal": 67, "note": "밸류에이션 축은 제외한다 — 이 점수는 재무제표에서 나온 것만 본다", "configVersion": "1.0.1", "netCash": {"cash": 93522000000.0, "sti": 6487000000.0, "lt_marketable": 0.0, "debt": 38285000000.0, "lease": 1423000000.0, "shares": null, "net": 60301000000.0, "perShare": null}};
+/* FUNDAMENTAL:END */
+(function(){
+  const F = (typeof SPCX_FUNDAMENTAL !== 'undefined') ? SPCX_FUNDAMENTAL : null;
+  if (!F) return;
+  SPCX_SCORES.fundamental = F.score;          // 요약 격자도 이 값을 쓴다
+  const $ = id => document.getElementById(id);
+  const rows = {};
+  Object.values(F.axes).forEach(a => a.rows.forEach(r => { rows[r.metric] = r; }));
+
+  // 안정성 줄 — 값과 오른쪽 배지. 배지는 구성표의 5점 배점에서만 나온다(2026-09-24 사용자 결정).
+  // 루트 카드는 "기준 150%↑" 같은 손 기준으로 배지를 달아 4점 항목도 "✅ 양호"였다 — 그래서
+  // 배지 말을 점수에 묶는다: 5점 양호 · 3~4점 보통 · 1~2점 주의 · 결측 —.
+  const BADGE = p => p == null ? ['info', '—'] : p >= 5 ? ['safe', '✅ 양호'] : p >= 3 ? ['watch', '보통'] : ['alert', '⚠️ 주의'];
+  document.querySelectorAll('[data-fund-metric]').forEach(el => {
+    const r = rows[el.dataset.fundMetric], v = el.querySelector('.diag-value');
+    if (!r || !v) return;
+    v.textContent = r.value == null ? (r.note || '—')
+      : r.metric === 'interestCoverage' ? (Math.abs(r.value) < 1 ? r.value.toFixed(2) : Math.round(r.value)) + 'x' : r.value.toFixed(1) + '%';
+    let b = el.querySelector('.diag-badge');
+    if (!b) { b = document.createElement('div'); el.appendChild(b); }
+    const [cls, txt] = BADGE(r.points);
+    b.className = 'diag-badge ' + cls; b.textContent = txt; b.title = `구성표 배점 ${r.points == null ? '없음' : r.points + '/5점'}`;
+  });
+
+  // 구성표 — 총점 · 축 점수 · 항목별 점수 칸(5점 만점). 깎인 항목은 노란 칸.
+  const SHORT = { currentRatio: '유동비율', quickRatio: '당좌비율', debtDependency: '차입금의존도',
+                  interestCoverage: '이자보상배율', debtToEquity: '부채비율', revenueCagr: '매출 성장',
+                  opIncomeCagr: '이익 성장', opMargin: '영업이익률', netMargin: '순이익률' };
+  const tot = $('fundCompTotal');
+  if (tot) tot.textContent = F.score == null ? '—' : F.score.toFixed(1);
+  document.querySelectorAll('#fundComp [data-axis]').forEach(box => {
+    const a = F.axes[box.dataset.axis];
+    box.querySelector('[data-axis-pts]').textContent = a.points == null ? '—' : a.points.toFixed(1);
+    box.querySelector('[data-axis-items]').innerHTML = a.rows.map(r => {
+      const cls = r.points == null ? ' none' : r.points < 5 ? ' lost' : '';
+      return `<div class="sc-item"><div class="sc-tile${cls}">${r.points == null ? '—' : r.points}</div>`
+        + `<div class="sc-name">${SHORT[r.metric]}</div></div>`;
+    }).join('');
+  });
+
+  const N = F.netCash, B = v => (v < 0 ? '−$' : '$') + Math.abs(v / 1e9).toFixed(1) + 'B';
+  if (N && $('fundNetCashPs')) {
+    // 주식 수를 모르면(SEC 데이터에 없는 신규 상장) 주당 값은 비운다
+    $('fundNetCashPs').textContent = N.perShare == null ? '—' : (N.perShare < 0 ? '−$' : '$') + Math.abs(N.perShare).toFixed(2);
+    $('fundNetCashNote').textContent = `순현금 ${B(N.net)}` + (N.shares ? ` ÷ ${(N.shares / 1e9).toFixed(2)}B주` : ' (주식 수 자료 없음)') + ' · '
+      + `현금·단기투자 ${B(N.cash + N.sti)}` + (N.lt_marketable ? ` + 장기 채권 ${B(N.lt_marketable)}` : '')
+      + ` − 차입금·리스 ${B(N.debt + N.lease)}`;
+  }
+  const hx = $('fundHealthAxis');
+  if (hx && F.axes.health.points != null) hx.textContent = `${F.axes.health.points.toFixed(1)}/${F.axes.health.max}`;
+  // 안정성 종합 진단 — 손으로 쓴 문구 대신 축 점수 비율에서 나온다(2026-09-24, AAPL에서 결정).
+  // 단어는 동결 설정의 등급(80 우수 · 60 양호 · 40 보통 · 미흡), 색은 카드 공통 30/70.
+  const hs = $('fundHealthSummary'), ht = $('fundHealthTitle'), ha = F.axes.health;
+  if (hs && ht && ha.points != null) {
+    const r = ha.points / ha.max * 100;
+    const word = r >= 80 ? '우수' : r >= 60 ? '양호' : r >= 40 ? '보통' : '미흡';
+    hs.className = 'diag-summary' + (r >= 70 ? '' : r >= 30 ? ' watch' : ' alert');
+    ht.textContent = `종합 진단: ${word} (재무건전성 ${Math.round(r)}%)`;
+  }
+})();
+
+// ── 시계열 뉴스: 한 페이지 5개 ──
+// 최신이 1페이지. 항목 수가 바뀌어도(자동 수집 포함) 페이지 수는 저절로 정해진다.
+(function(){
+  const tl = document.getElementById('newsTimeline'), pager = document.getElementById('newsPager');
+  if (!tl || !pager) return;
+  const PER = 5, items = [...tl.querySelectorAll(':scope > .tl-item')];
+  const pages = Math.ceil(items.length / PER);
+  if (pages <= 1) return;
+  function show(p) {
+    items.forEach((el, i) => { el.style.display = Math.floor(i / PER) === p ? '' : 'none'; });
+    pager.querySelectorAll('button').forEach((b, i) => {
+      b.classList.toggle('active', i === p); b.setAttribute('aria-current', i === p ? 'page' : 'false');
+    });
+  }
+  for (let p = 0; p < pages; p++) {
+    const b = document.createElement('button');
+    b.type = 'button'; b.className = 'range-btn'; b.textContent = p + 1;
+    b.setAttribute('aria-label', `뉴스 ${p + 1}페이지`);
+    b.onclick = () => show(p);
+    pager.appendChild(b);
+  }
+  show(0);
+})();
+
+// ── 시계열 뉴스: 사건일 주가 반응은 SPCX_DAILY에서 계산한다 (전일 종가 대비) ──
+(function(){
+  if (typeof SPCX_DAILY === 'undefined') return;
+  const ix = {}; SPCX_DAILY.forEach((r, i) => { ix[r[0]] = i; });
+  document.querySelectorAll('#news [data-react]').forEach(el => {
+    const i = ix[el.dataset.react];
+    if (i == null || i === 0) { el.remove(); return; }
+    const c = (SPCX_DAILY[i][4] / SPCX_DAILY[i - 1][4] - 1) * 100;
+    el.className = 'tl-reaction ' + (c >= 0.5 ? 'up' : c <= -0.5 ? 'down' : 'flat');
+    const t = Math.abs(c).toFixed(1);   // −0.03%가 '−0.0%'로 찍히지 않게
+    el.textContent = (t === '0.0' ? '' : c >= 0 ? '+' : '−') + t + '%';
+  });
+})();
+
+// ── 밸류에이션 탭: 요약 격자의 두 밸류에이션 점수를 배수별로 (2026-09-23) ──
+// 두 점수는 다섯 배수 점수의 단순평균이다. 칸 색은 카드 공통 30/70.
+// 요약 격자도 이 값을 읽는다 — 94.9 스코어카드(옛 단계 체계, 손으로 쓴 값)를
+// 지우고 그 자리에 둔다.
+//
+// 갱신: python3 v2/build_peer_score.py SPCX --self v2/SPCX_multiples.json --card
+/* VALUATION:BEGIN */
+const SPCX_VALUATION = {"peer": {"score": 7.2, "sector": "Industrials + Information Technology", "asOf": ["2026-08-27", "2026-09-14"], "priceSession": "2026-10-05", "metrics": [{"metric": "pbr", "score": 28.6, "rank": 21, "peers": 28}, {"metric": "psr", "score": 0.0, "rank": 34, "peers": 33}, {"metric": "pcr", "score": 0.0, "rank": 30, "peers": 29}, {"metric": "evebitda", "score": 0.0, "rank": 29, "peers": 28}]}, "self": {"score": null, "window": ["2026-10-05", "2026-10-05"], "perBasis": "diluted", "metrics": []}, "perNA": {"netMargin": -0.3566, "rule": "최근 4분기 GAAP 순이익률 < 2% 또는 적자", "source": "SPCX_multiples.json의 ttm(어댑터 — S-1·10-Q 손입력) 순이익 ÷ 매출"}};
+/* VALUATION:END */
+
+// ── 종합 평가 자동 판정 (2026-09-25 사용자 결정 · 방향 합산) ──
+// 사람이 적던 종합 평가를 규칙으로 바꿨다. 각 신호는 방향 한 표만 던진다 — 두 배수 점수를
+// 평균내지 않는다는 원칙은 그대로다.
+//   자기 이력·동종업 점수: 70 이상 +1(싼 편) · 30 미만 −1(비싼 편) · 그 사이 0 (카드 공통 30/70)
+//   현금흐름 5단계(dcfLevel): 매우 싸다 +1(경고) · 싸다 +1 · 적정 0 · 비싸다 −1 · 매우 비싸다 −2
+//     (사이트 목적이 내재가치 대비 판단이라 배수보다 두 배 무게)
+//   합계 +3 이상 저평가 · +1~+2 적정~저평가 · 0 적정 · −1~−2 적정~고평가 · −3 이하 고평가
+// 도입 당시 사람 판단과 6장 중 4장 일치(GOOGL 적정~고평가→고평가, AMZN 적정→적정~고평가).
+// 밴드 이탈 신호는 S&P500 통제 유니버스 검증을 통과하면 한 표로 더한다(backlog).
+(function(){
+  const V = SPCX_VALUATION, D = SPCX_DCF;
+  const last = SPCX_DAILY[SPCX_DAILY.length - 1];
+  // 기권 규칙(2026-09-25, Fable 지적 · 사용자 결정): 표를 못 던지는 심판은 0표가 아니라 **제외**한다.
+  // 0표는 "적정"이라는 주장이라, 적자·신규 상장·표본 부족 종목이 근거 없이 적정 쪽으로 끌려간다.
+  // 배수 심판은 유효 배수 3개 이상일 때만 성립한다. 현금흐름이 기권하거나 성립한 심판이 2명 미만이면 판정 보류.
+  const valid = side => side && side.score != null
+    && (side.metrics || []).filter(m => m.score != null).length >= 3;
+  const vote = s => s >= 70 ? 1 : s < 30 ? -1 : 0;
+  // '매우 싸다'는 +1만 준다(2026-09-25 사용자 결정) — S&P500 검증에서 내재가치 대비 가장 싼 무리가
+  // 오히려 부진했다(가치 함정: 보험·헬스케어·자동차·크루즈). 효과는 중간 구간 순위에서 나왔다.
+  const DV = {'매우 싸다': 1, '싸다': 1, '적정': 0, '비싸다': -1, '매우 비싸다': -2};
+  const lv = dcfLevel(last[4], D);
+  const judges = [
+    ['자기 이력', valid(V.self) ? vote(V.self.score) : null, V.self && V.self.score, 1],
+    ['동종업', valid(V.peer) ? vote(V.peer.score) : null, V.peer && V.peer.score, 1],
+    ['현금흐름', lv.label in DV ? DV[lv.label] : null, lv.label, 2],
+  ];
+  const seated = judges.filter(j => j[1] != null);
+  const maxW = seated.reduce((a, j) => a + j[3], 0);
+  const total = seated.reduce((a, j) => a + j[1], 0);
+  const dcfIn = judges[2][1] != null;
+  // 기권이 있으면 최대 가능 표(전원 4표)에 맞춰 늘려 같은 문턱을 쓴다.
+  const n = maxW ? total * 4 / maxW : 0;
+  SPCX_VERDICT = (!dcfIn || seated.length < 2) ? '판정 보류'
+    : n >= 3 ? '저평가' : n >= 1 ? '적정~저평가' : n > -1 ? '적정' : n > -3 ? '적정~고평가' : '고평가';
+  const sgn = v => (v > 0 ? '+' : v < 0 ? '−' : '') + Math.abs(v);
+  const tip = judges.map(j => `${j[0]} ${typeof j[2] === 'number' ? j[2].toFixed(1) : (j[2] ?? '—')} → `
+      + (j[1] == null ? '기권' : sgn(j[1]))).join('\n')
+    + `\n심판 ${seated.length}/3 · 합계 ${sgn(total)}` + (maxW && maxW < 4 ? ` (4표 기준 ${(n < 0 ? '−' : n > 0 ? '+' : '') + Math.abs(n).toFixed(1)})` : '')
+    + ` → ${SPCX_VERDICT}`
+    + '\n(+3 이상 저평가 · +1~+2 적정~저평가 · 0 적정 · −1~−2 적정~고평가 · −3 이하 고평가)'
+    + (lv.label === '매우 싸다' ? '\n⚠ 현금흐름이 "매우 싸다"여도 +1만 준다 — 가장 싼 무리에는 가치 함정이 많았다. 왜 싼지 확인할 것.' : '');
+  document.querySelectorAll('[data-verdict]').forEach(el => { el.textContent = SPCX_VERDICT; el.title = tip; });
+  // A7(2026-10-04 사용자 결정 — 표시만, 판정 규칙은 그대로): 자기 이력·동종업 점수가 문턱(30·70) ±2점 안이고 그 칸 표가
+  // 한 칸만 바뀌어도 종합 판정이 달라지면 헤더 판정 밑에 작게 적는다.
+  const verdictOf = js => { const s = js.filter(j => j[1] != null), w = s.reduce((a, j) => a + j[3], 0), t = s.reduce((a, j) => a + j[1], 0), m = w ? t * 4 / w : 0;
+    return (js[2][1] == null || s.length < 2) ? '판정 보류' : m >= 3 ? '저평가' : m >= 1 ? '적정~저평가' : m > -1 ? '적정' : m > -3 ? '적정~고평가' : '고평가'; };
+  const edges = [];
+  // 카드 규칙과 같은 식으로 다시 낸 판정이 실제 판정과 같을 때만 본다(은행 등 판정 식이 다른 카드는 건너뜀)
+  if (verdictOf(judges) === SPCX_VERDICT) judges.slice(0, 2).forEach((j, i) => {
+    if (j[1] == null || typeof j[2] !== 'number') return;
+    [30, 70].forEach(th => {
+      if (Math.abs(j[2] - th) > 2) return;
+      const js = judges.map(x => x.slice()); js[i][1] = j[2] >= th ? j[1] - 1 : j[1] + 1;
+      const v = verdictOf(js);
+      if (v !== SPCX_VERDICT) edges.push(`${j[0]} ${j[2].toFixed(1)}점이 문턱 ${th} 옆이라 그 칸 표가 한 칸 바뀌면 ${v}`);
+    });
+  });
+  document.querySelectorAll('[data-verdict]').forEach(el => {
+    if (edges.length) el.title += '\n\n경계: ' + edges.join(' / ');
+  });
+})();
+(function(){
+  const V = (typeof SPCX_VALUATION !== 'undefined') ? SPCX_VALUATION : null;
+  if (!V) return;
+  SPCX_SCORES.peer = V.peer.score; SPCX_SCORES.selfHistory = V.self.score;
+  const tone = v => v >= 70 ? '' : v >= 30 ? ' lost' : ' low';
+  // 배수별 자기 5년 위치 — 막대는 백분위(왼쪽 끝 = 5년 최저, 가운데 = 중앙값).
+  // 예전 "5단계 평가"는 손으로 잡은 적정 앵커(재현 불가)와 옛 단계 체계였다.
+  const histCls = v => v >= 70 ? 'good' : v >= 30 ? 'mid' : 'bad';
+  // 자기 이력이 없는 카드(신규 상장 등)는 막대마다 "이력 부족"을 적는다 — 안 그러면 틀(NVDA) 숫자가 남는다.
+  if (!V.self.metrics.length) document.querySelectorAll('#valuation .val-item[data-metric]').forEach(item => {
+    const f = sel => item.querySelector(`[data-hist="${sel}"]`);
+    if (f('cur')) f('cur').textContent = '—';
+    if (f('badge')) { f('badge').className = 'hist-badge mid'; f('badge').textContent = '이력 부족'; }
+    if (f('note')) f('note').textContent = '';
+    if (f('fill')) { f('fill').className = 'val-fill hist-fill mid'; f('fill').style.width = '0%'; }
+    ['min', 'median', 'max'].forEach(k => { if (f(k)) f(k).textContent = '—'; });
+  });
+  V.self.metrics.forEach(m => {
+    const item = document.querySelector(`#valuation .val-item[data-metric="${m.metric}"]`);
+    if (!item) return;
+    const f = sel => item.querySelector(`[data-hist="${sel}"]`), x = v => v.toFixed(1) + 'x';
+    // 오늘 분모가 0 이하면 current가 null이다(build_multiple_history, 0점). 과거 양수값을 쓰지 않는다.
+    f('cur').textContent = m.current == null ? '계산 불가' : x(m.current);
+    // per_na = PER 해당 없음(A3 — 최근 4분기 GAAP 순이익률 2% 미만): 값은 보이되 점수·평균에서 뺀다.
+    const perNA = m.currentNote === 'per_na';
+    // pbr_na = PBR 해당 없음(C11 — 자본 음수): 비싸다는 뜻이 아니라 잴 수 없다. 점수·평균에서 뺀다.
+    const pbrNA = m.currentNote === 'pbr_na';
+    const na = m.current == null, neg = na && m.currentNote !== 'missing' && !perNA && !pbrNA;   // missing = 분모를 못 구함(점수 없음)
+    // 본업 기준 PER((영업이익 + 순이자) × (1 − 실효세율), A8 2026-10-04)이면 이름을 바꾼다 — 공시 EPS에 투자 평가이익이
+    // 크게 섞인 종목(v2/core_earnings.json, GOOGL). 2026-09-24.
+    if (m.metric === 'per' && V.self.perBasis === 'core') {
+      const nm = item.querySelector('.val-name'); if (nm && nm.firstChild) nm.firstChild.textContent = 'PER (본업 기준) ';
+    }
+    f('badge').className = 'hist-badge ' + (m.score == null ? 'mid' : histCls(m.score));
+    // 50% 넘게 올라가 있으면 "하위 94%"보다 "상위 6%"가 바로 읽힌다(2026-09-24 AAPL).
+    f('badge').textContent = perNA ? '해당 없음 · 평균 제외(순이익률 2% 미만)' : pbrNA ? '해당 없음 · 평균 제외(자본 음수)' : neg ? '적자 · 0점' : na ? '데이터 없음 · 평균 제외' : m.percentile >= 50 ? `5년 중 상위 ${Math.round(100 - m.percentile)}%` : `5년 중 하위 ${Math.round(m.percentile)}%`;
+    // 이력이 5년에 못 미치면(회사 전용 태그 구간을 버린 경우 등) 이름 옆에 적는다.
+    const nt = f('note'); if (nt) nt.textContent = m.days < 1200 ? `최근 ${(m.days / 252).toFixed(1)}년 이력` : '';
+    f('fill').className = 'val-fill hist-fill ' + (m.score == null ? 'mid' : histCls(m.score));
+    f('fill').style.width = (m.score == null || perNA || pbrNA ? 0 : Math.max(m.percentile, 2)) + '%';
+    f('min').textContent = '최저 ' + x(m.min); f('median').textContent = '중앙 ' + x(m.median); f('max').textContent = '최고 ' + x(m.max);
+  });
+  ['peer', 'self'].forEach(k => {
+    const el = document.querySelector(`#valComp [data-vc-score="${k}"]`);
+    // 동종업 표본이 모자라면 점수가 null이다(Codex 지적) — 숫자 대신 '표본 부족'.
+    if (el) el.textContent = V[k].score == null ? '—' : V[k].score.toFixed(1);
+    // 빠진 배수(적자·표본 부족·동결)는 평균에서 빠진다. HTML의 대체값이 남지 않게
+    // 먼저 전부 비우고, 데이터에 있는 배수만 채운다(Codex).
+    document.querySelectorAll(`#valComp [data-vc="${k}"]`).forEach(t => { t.className = 'sc-tile none'; t.textContent = '—'; });
+    V[k].metrics.forEach(m => {
+      const t = document.querySelector(`#valComp [data-vc="${k}"][data-m="${m.metric}"]`);
+      if (t && m.score != null) { t.className = 'sc-tile' + tone(m.score); t.textContent = Math.round(m.score); }
+    });
+  });
+
+  // 종합 밸류에이션 문장의 숫자 — 두 점수, 내재가치, 현재가 대비, 기준일.
+  // 예전 본문은 옛 단계 체계("5개 배수 전부 2단계 이하, 전방위 저평가")와 손으로
+  // 쓴 가격($208.27 → $206.84)이었다.
+  const last = (typeof SPCX_DAILY !== 'undefined' && SPCX_DAILY.length) ? SPCX_DAILY[SPCX_DAILY.length - 1] : null;
+  const D = (typeof SPCX_DCF !== 'undefined') ? SPCX_DCF : null;
+  const put = (k, t) => document.querySelectorAll(`#valuation [data-vs="${k}"]`).forEach(el => { el.textContent = t; });
+  const f1 = v => v == null ? '—' : v.toFixed(1);
+  put('self', f1(V.self.score)); put('peer', f1(V.peer.score));
+  if (D && D.base == null) { put('dcf', '—'); put('low', '—'); put('req', '—'); }
+  else if (D) { put('dcf', D.base > 0 ? '$' + (Math.abs(D.base) < 10 ? D.base.toFixed(2) : Math.round(D.base)) : '0 이하'); put('low', D.low > 0 ? '$' + (D.low < 10 ? D.low.toFixed(2) : Math.round(D.low)) : '계산 불가'); put('req', D.reqMode === 'margin' ? (D.requiredMargin != null ? (D.requiredMargin * 100).toFixed(1) + '%' : '—') : (D.requiredGrowth * 100).toFixed(1) + '%'); }
+  if (last) {
+    put('asof', last[0].replaceAll('-', '.'));
+    put('price', '$' + last[4].toFixed(2));
+    if (D && D.base != null && D.base > 0) { const u = (D.base / last[4] - 1) * 100; put('upside', (u >= 0 ? '+' : '−') + Math.abs(u).toFixed(1) + '%'); }
+    else if (D) put('upside', '—');
+  }
+  // 판정 알약 — 점수는 카드 공통 30/70(70↑ 싸다 · 30~70 중간 · 30↓ 비싸다).
+  // 현금흐름은 5단계 — 현재가 ÷ 기본 내재가치(2026-09-25 사용자 결정). 0.7 이하는 그레이엄식
+  // 안전마진 30% 이상. 세 시나리오 값을 경계로 쓰는 안은 폭이 좁은 종목(AAPL $119~$139)에서
+  // '비싸다' 구간이 사라져 버렸다.
+  const pill = (k, cls, txt) => { const el = document.querySelector(`#valuation [data-vs-pill="${k}"]`);
+    if (el) { el.className = 'vs-pill' + (cls ? ' ' + cls : ''); el.textContent = txt; } };
+  const byScore = v => v >= 70 ? ['', '싸다'] : v >= 30 ? ['mid', '중간'] : ['high', '비싸다'];
+  pill('self', ...byScore(V.self.score)); pill('peer', ...(V.peer.score == null ? ['mid', '표본 부족'] : byScore(V.peer.score)));
+  if (D && last) {
+    const lv = dcfLevel(last[4], D);
+    pill('dcf', lv.cls, lv.label + (lv.split ? ' · 갈림' : ''));
+    const el = document.querySelector('#valuation [data-vs-pill="dcf"]');
+    if (el) el.title = (lv.ratio != null ? `현재가 ÷ 기본 내재가치 = ${lv.ratio.toFixed(2)}` : lv.range)
+      + (lv.ratio != null && lv.range ? '\n' + lv.range : '') + '\n' + DCF_RULE_TEXT
+      + (lv.ratio != null ? '\n' + DCF_SKEW_NOTE : '')
+      + (lv.split ? '\n보수~낙관 시나리오가 현재가를 사이에 둬, 가정에 따라 판정이 갈린다.' : '');
+    // ── "계산 어려움" 배지(2026-09-26 사용자 결정 — 판정은 유지하고 표시만) ──
+    // 신호 5개는 결과를 보기 전에 고정했다(build_dcf_block.hard_signals, CARD_ITEMS ⑤).
+    if (el && Array.isArray(D.hard)) {
+      const pct = x => (x * 100).toFixed(1) + '%', H = D.hardDetail || {};
+      const TXT = {
+        roic: () => `자본수익률 ${pct(H.roic)} < 할인율 10% — 평균 투하자본 기준이라, 추가 투자의 수익률이 할인율보다 높지 않으면 성장이 가치를 만들지 못한다`,
+        ic: () => '투하자본이 0 이하 — 매출/자본이 상한(10)에 걸린다',
+        tax: () => `실효세율 ${pct(H.tax)} < 10% — 세금 가정에 따라 값이 크게 바뀐다`,
+        nonop: () => `비영업 자산이 내재가치의 ${pct(H.nonopShare)} — 본업 밖 자산이 값을 좌우한다`,
+        nosol: () => '어떤 일정 성장률로도 현재가에 닿지 않는다',
+      };
+      const lines = D.hard.map(k => '· ' + (TXT[k] ? TXT[k]() : k));
+      const tv = D.tvShare != null ? `잔존가치(5년 뒤)가 내재가치의 ${Math.round(D.tvShare * 100)}%` : '';
+      let wrap = el.parentElement.classList.contains('vs-pill-wrap') ? el.parentElement : null;
+      if (!wrap) { wrap = document.createElement('div'); wrap.className = 'vs-pill-wrap'; el.replaceWith(wrap); wrap.appendChild(el); }
+      wrap.querySelectorAll('.vs-hard').forEach(x => x.remove());
+      if (D.hard.length) {
+        const b = document.createElement('span');
+        b.className = 'vs-hard'; b.textContent = `⚠ 계산 어려움 ${D.hard.length}/5`;
+        b.title = lines.join('\n') + (tv ? '\n· ' + tv : '') + '\n판정은 그대로 두고, 이 값을 해석할 때 주의할 점만 보여 준다.';
+        wrap.insertBefore(b, el);   // 배지를 왼쪽, 판정 알약을 오른쪽 끝에(2026-09-26 사용자 요청)
+      }
+      const note = document.getElementById('dcfHardNote');
+      if (note) {
+        note.textContent = (D.hard.length ? `⚠ 계산 어려움 ${D.hard.length}/5 — ` + D.hard.map(k => (TXT[k] ? TXT[k]() : k).split(' — ')[0]).join(' · ') + ' · ' : '') + tv;
+        note.hidden = !note.textContent;
+      }
+    }
+  }
+})();
+
+// ── 기본적 분석 탭: 활동성 칸 (2026-09-23) ──
+// 색은 영업순환주기(DSO+DIO)를 자기 5년 20분기와 비교한 위치에서 나온다. 30/70
+// 문턱은 카드 공통이다. 매입채무(DPO)는 색에서 뺀다 — 지급을 늦추면 CCC가 줄어
+// 초록을 얻는 구멍이 생긴다. 점수 숫자는 싣지 않는다(겹치는 TTM 창이라 독립
+// 관측이 2~4개뿐, 5점 단위는 가짜 정밀도). 근거와 한계는 스크립트 docstring.
+//
+// 예전 값은 손으로 쓴 두 점 평균이었고 직전 분기 DPO·CCC가 틀려 있었다
+// (46.6 → 실제 56.9일, 102.0 → 91.8일). 그래서 "CCC +5.9일, 지급기간 확대가
+// 일부 상쇄"라고 적혀 있었는데 실제로는 +16.2일이었고 지급기간은 그대로였다.
+//
+// 갱신: python3 v2/build_activity_score.py SPCX
+/* ACTIVITY:BEGIN */
+const SPCX_ACTIVITY = {"ticker": "SPCX", "status": "N/A", "reason": "5년 비교 이력 부족"};
+/* ACTIVITY:END */
+(function(){
+  const A = (typeof SPCX_ACTIVITY !== 'undefined') ? SPCX_ACTIVITY : null;
+  const $ = id => document.getElementById(id);
+  if (!A || A.status !== 'ok') {
+    // 판정할 수 없으면 HTML에 남은 옛 숫자와 색을 보여주지 않는다.
+    const box = $('actSummary'), title = $('actTitle');
+    if (box) { box.classList.remove('watch', 'alert'); box.classList.add('none'); }
+    if (title) title.textContent = '종합 진단: 판정하지 않음 — ' + ((A && A.reason) || '활동성 데이터 없음');
+    const toggle = box && box.nextElementSibling;
+    if (toggle && toggle.classList.contains('detail-toggle')) {
+      toggle.style.display = 'none';
+      if (toggle.nextElementSibling) toggle.nextElementSibling.style.display = 'none';
+    }
+    const per = $('actPeriod'); if (per) per.textContent = 'TTM 기준';
+    return;
+  }
+  const per = $('actPeriod');
+  if (per) per.textContent = `TTM 기준 · ${A.asOf.replaceAll('-', '.')}까지 4분기`;
+  const d1 = v => v.toFixed(1);
+  const cmp = k => {
+    const diff = A.now[k] - A.prev[k];
+    const sign = Math.abs(diff) < 0.05 ? '±' : (diff > 0 ? '+' : '−');
+    return `직전 분기 ${d1(A.prev[k])}일 대비 ${sign}${d1(Math.abs(diff))}일`;
+  };
+  const WORD = { green: '짧은 편', yellow: '보통', red: '긴 편' };
+  const CLS  = { green: '', yellow: 'watch', red: 'alert' };
+
+  const box = $('actSummary');
+  if (box) { box.classList.remove('watch', 'alert'); if (CLS[A.tone]) box.classList.add(CLS[A.tone]); }
+  const title = $('actTitle');
+  if (title) title.textContent = `종합 진단: 매출채권·재고에 묶이는 기간 ${d1(A.now.op)}일, 지난 5년 중 ${WORD[A.tone]}`;
+
+  document.querySelectorAll('[data-act-turn]').forEach(el => { el.textContent = A.now[el.dataset.actTurn] > 0 ? (365 / A.now[el.dataset.actTurn]).toFixed(2) + '회' : (el.dataset.actTurn === 'dio' ? '재고 없음' : '해당 없음'); });   // 회전기간 0(재고 없음)이면 Infinity회가 찍혔다(META, 2026-10-05)
+  document.querySelectorAll('[data-act-days]').forEach(el => { el.textContent = d1(A.now[el.dataset.actDays]) + '일'; });
+  const LEAD = { dso: v => `${v}일 만에 현금화`, dio: v => `${v}일 재고 보유`,
+                 dpo: v => `${v}일 만에 지급`, op: () => '재고보유+매출채권 회전기간' };
+  document.querySelectorAll('[data-act-sub]').forEach(el => {
+    const k = el.dataset.actSub; el.textContent = LEAD[k](d1(A.now[k])) + ' · ' + cmp(k);
+  });
+
+  const ex = $('actCccExplain'), cccDiff = A.now.ccc - A.prev.ccc;
+  // CCC가 음수면(AAPL) 문장이 뒤집힌다 — 대금을 먼저 받고 공급업체에는 나중에 준다.
+  // 색은 그대로 DSO+DIO 규칙이다(지급 지연이 초록이 되는 구멍을 막은 NVDA 결정).
+  const lead = A.now.ccc >= 0
+    ? `재고를 사서 판매 대금을 회수하기까지 ${d1(A.now.op)}일이 걸리는데, 그중 ${d1(A.now.dpo)}일은 매입채무(외상)로 버티고 나머지 `
+      + `<strong style="color:var(--gold);">${d1(A.now.ccc)}일은 회사가 직접 현금으로 메워야</strong> 하는 기간이다. `
+    : `재고를 사서 판매 대금을 회수하기까지 ${d1(A.now.op)}일이 걸리는데, 매입채무(외상)는 ${d1(A.now.dpo)}일 뒤에 갚는다. `
+      + `<strong style="color:var(--gold);">판매 대금을 받고도 ${d1(-A.now.ccc)}일 동안 공급업체 돈으로 운영하는</strong> 구조다. `;
+  if (ex) ex.innerHTML = lead
+    + (Math.abs(cccDiff) < 0.05 ? '직전 분기와 같다.'
+       : A.now.ccc < 0 && A.prev.ccc < 0
+         ? `그 기간이 직전 분기 ${d1(-A.prev.ccc)}일보다 ${d1(Math.abs(cccDiff))}일 ${cccDiff < 0 ? '늘었다' : '줄었다'}.`
+         : `직전 분기 ${d1(A.prev.ccc)}일보다 ${d1(Math.abs(cccDiff))}일 ${cccDiff > 0 ? '길어졌다' : '짧아졌다'}.`);
+
+  const bar = $('actBar');
+  if (bar) {
+    // 눈금은 영업순환주기와 지급기간 중 긴 쪽. 예전엔 영업순환주기로만 잡아서 CCC가 음수면
+    // 지급 표시가 막대 밖(259%)으로 나갔다. 음수면 노란 구간이 영업순환주기 끝에서 지급일까지다.
+    const span = Math.max(A.now.op, A.now.dpo);
+    const pct = v => (v / span * 100).toFixed(1) + '%';
+    bar.querySelectorAll('.tl-marker, .tl-marker-label').forEach(el => { el.style.left = pct(A.now.dpo); });
+    const ml = bar.querySelector('.tl-marker-label');
+    ml.textContent = `매입채무 지급 ${d1(A.now.dpo)}일`;
+    // 오른쪽 끝(음수 CCC면 지급일이 눈금 끝)에서는 라벨을 왼쪽으로 붙여 잘리지 않게 한다.
+    ml.style.transform = A.now.dpo / span > 0.85 ? 'translateX(-100%)' : 'translateX(-50%)';
+    const cs = bar.querySelector('.tl-ccc-span');
+    cs.style.left = pct(Math.min(A.now.dpo, A.now.op)); cs.style.width = pct(Math.abs(A.now.ccc));
+    // 음수 CCC면 막대를 지급일까지 세 번째 구간(외상으로 운영하는 기간)으로 채운다. 빈 구간과
+    // 아래 노란 선만으로는 무엇을 뜻하는지 읽히지 않았다(2026-09-24 사용자 지적, MSFT).
+    let fl = bar.querySelector('.tl-seg-float');
+    if (A.now.ccc < 0) {
+      if (!fl) { fl = document.createElement('div'); fl.className = 'tl-seg-float'; bar.querySelector('.tl-bar').appendChild(fl); }
+      fl.style.width = pct(-A.now.ccc); fl.textContent = `외상으로 운영 ${d1(-A.now.ccc)}일`;
+      cs.style.display = 'none';
+    } else if (fl) { fl.remove(); cs.style.display = ''; }
+    const inv = bar.querySelector('.tl-seg-inv'), ar = bar.querySelector('.tl-seg-ar');
+    inv.style.width = pct(A.now.dio); inv.textContent = `재고보유 ${d1(A.now.dio)}일`;
+    ar.style.width = pct(A.now.dso);  ar.textContent = `매출채권회수 ${d1(A.now.dso)}일`;
+    // 막대의 8%보다 좁은 구간은 글자가 잘린다(MSFT 재고 3.9일 → "유 3.9"). 글자를 빼고 툴팁으로.
+    [[inv, `재고보유 ${d1(A.now.dio)}일`], [ar, `매출채권회수 ${d1(A.now.dso)}일`]].forEach(([seg, label]) => {
+      seg.title = label;
+      if (parseFloat(seg.style.width) < 8) seg.textContent = '';
+    });
+  }
+
+})();
+
+// ── 투자포인트 탭: 애널리스트 목표가 (출처·기준일 포함) ──
+// 갱신: StockAnalysis 예측 페이지(stockanalysis.com/stocks/spcx/forecast/)의 값과 날짜를 옮긴다.
+// 현재가 대비는 마지막 종가에서 계산한다.
+const SPCX_ANALYST = { asOf: '2026-10-05', source: 'StockAnalysis (의견 집계 · 개별 목표가)', rating: 'Buy', n: 35, nTargets: 31, mean: 229.29, median: 217,
+  low: 75, high: 800, strongBuy: 22, buy: 6, hold: 5, sell: 0, strongSell: 2 };
+(function(){
+  const A = SPCX_ANALYST, last = (typeof SPCX_DAILY !== 'undefined' && SPCX_DAILY.length) ? SPCX_DAILY[SPCX_DAILY.length - 1] : null;
+  const put = (k, t) => document.querySelectorAll(`#invest [data-an="${k}"]`).forEach(el => { el.textContent = t; });
+  const usd = v => '$' + (Number.isInteger(v) ? v : v.toFixed(2));
+  const buys = A.strongBuy + A.buy, sells = A.sell + A.strongSell;
+  put('rating', A.rating); put('n', A.n + (A.nTargets != null && A.nTargets !== A.n ? `명 · 목표가 ${A.nTargets}` : '')); put('asof', A.asOf); put('mean', usd(A.mean)); put('median', usd(A.median));
+  put('low', usd(A.low)); put('high', usd(A.high)); put('buy', buys); put('sb', A.strongBuy); put('b', A.buy);
+  put('hold', A.hold); put('sell', sells);
+  const bar = { buy: buys, hold: A.hold, sell: sells };
+  document.querySelectorAll('#invest [data-an-bar]').forEach(el => { el.style.width = (bar[el.dataset.anBar] / A.n * 100).toFixed(1) + '%'; });
+  if (!last) return;
+  const px = last[4], up = (A.mean / px - 1) * 100;
+  put('price', '$' + px.toFixed(2)); put('upside', (up >= 0 ? '+' : '−') + Math.abs(up).toFixed(1) + '%');
+  // 목표가가 현재가보다 낮으면 빨강 — 예전엔 op-up(초록)이 HTML에 고정돼 AAPL −2.6%도 초록이었다(2026-09-24).
+  document.querySelectorAll('#invest [data-an="upside"]').forEach(el => { el.classList.toggle('op-up', up >= 0); el.classList.toggle('op-down', up < 0); });
+})();
+
+// 요약 격자 세 점수를 SPCX_SCORES에서 렌더한다. 색과 배지는 점수에서 나온다.
+(function(){
+  const S = SPCX_SCORES, $ = id => document.getElementById(id);
+  const GREEN = 70, RED = 30;   // 헤더 ④ 밴드 적중률과 같은 문턱
+  const tone = v => v >= GREEN ? 'logic-positive' : v >= RED ? 'logic-neutral' : 'logic-negative';
+  // 배지 말은 칸마다 다르다 — 98.1은 "싸다"가 아니라 "재무가 좋다"는 뜻이다.
+  const WORDS = {
+    fund: ['우수', '보통', '취약'],   // 대체용. 실제 단어는 아래에서 등급으로 덮어쓴다
+    val:  ['싼 편', '중간', '비싼 편'],
+  };
+  const word = (v, set) => v >= GREEN ? set[0] : v >= RED ? set[1] : set[2];
+  const put = (boxId, scoreId, verdictId, v, set, title) => {
+    const box = $(boxId), sc = $(scoreId), vd = $(verdictId);
+    if (!box) return;
+    if (v == null) { if (sc) sc.innerHTML = '—'; if (vd) vd.textContent = '표본 부족'; return; }
+    box.classList.remove('logic-positive', 'logic-neutral', 'logic-negative');
+    box.classList.add(tone(v));
+    if (sc) sc.innerHTML = v.toFixed(1) + '<span class="logic-denom">/100</span>';
+    if (vd) vd.textContent = word(v, set);
+    if (title) box.title = title;
+  };
+  put('spcxFundBox', 'spcxFundScore', 'spcxFundVerdict', S.fundamental, WORDS.fund,
+      `재무건전성과 성장·수익성만 본 점수다(밸류에이션 축 제외).`
+      + `\n대차대조표와 마진은 ${S.fundamentalAsOf} 분기(Q2 2026, 10-Q), 성장률은 연간 시계열을 쓴다.`
+      + `\n상장 3개월이라 연간 성장률(3·5년)이 없어 성장 항목이 비고, 그래서 해석 제한이다.`);
+  // 단어는 동결 설정의 등급(우수 80 · 양호 60 · 보통 40 · 미흡)에서 가져온다. 색은 카드
+  // 공통 30/70 그대로다. 예전엔 70 이상을 "우수"라 불러 70~79점이 격자에선 우수,
+  // 등급으론 양호가 됐다. 음수 자본·추정 영업이익·항목 부족·최신 분기 없음이면
+  // 등급 대신 "해석 제한"을 단다.
+  if (typeof SPCX_FUNDAMENTAL !== 'undefined') {
+    const F = SPCX_FUNDAMENTAL, vd = $('spcxFundVerdict'), box = $('spcxFundBox');
+    const WHY = { negative_equity: '자본이 음수다', operating_income_estimated: '영업이익을 세전이익+이자비용으로 추정했다',
+                  health_ratios_below_gate: '재무건전성 항목이 부족하다', growth_metrics_below_gate: '성장·수익성 항목이 부족하다',
+                  no_latest_quarter: '최신 분기 재무제표가 없다' };
+    if (vd) vd.textContent = F.qualityFlags.length ? '해석 제한' : (F.grade || '—');
+    if (box && F.qualityFlags.length) {
+      box.classList.remove('logic-positive', 'logic-negative'); box.classList.add('logic-neutral');
+      box.title += '\n⚠ 해석 제한 — ' + F.qualityFlags.map(f => WHY[f] || f).join(', ');
+    }
+  }
+  put('spcxPeerBox', 'spcxPeerScore', 'spcxPeerVerdict', S.peer, WORDS.val,
+      `GICS 산업재 섹터에 IT 섹터를 더해 배수 순위를 매긴 값이다(산업재는 3~5종목뿐).`
+      + `\nPER은 순손실이라 해당 없음(점수에서 뺌), PCR은 잉여현금흐름 적자라 0점(가장 비싼 쪽)으로 셌다.`
+      + `\n배수마다 "나보다 싼 종목이 몇 %인가"를 뒤집어 점수로 썼고, PER은 해당 없음(적자)이라 빼고 나머지 네 개를 평균했다.`
+      + `\n회계 기준이 다른 종목(IFRS)과 사업모델이 다른 종목(파운드리)이 섞여 있다.`);
+  put('spcxSelfBox', 'spcxSelfScore', 'spcxSelfVerdict', S.selfHistory, WORDS.val,
+      `이 종목 자신의 5년 배수 분포에서 지금과 배수가 같거나 높았던 날의 비율을 점수로 쓴 값이다.`
+      + `\n상장 3개월이라 5년 이력이 없다.`
+      + ``);
+  // 두 밸류에이션 점수가 크게 갈리면 그 사실 자체가 정보다.
+  const gap = (S.peer == null || S.selfHistory == null) ? 0 : Math.abs(S.peer - S.selfHistory);
+  const grid = $('spcxLogicGrid');
+  if (grid && gap >= 20) grid.title = `밸류에이션 두 점수가 ${gap.toFixed(1)}점 갈린다`
+    + ` — 동종업 ${S.peer} 대 자기 이력 ${S.selfHistory}. 평균내지 않고 나란히 둔다.`;
+})();
+// 시점별 내재가치 (v2/build_dcf_track.py). 각 분기 실적이 공개된 날짜에,
+// **그날까지 공시된 것만으로** 다시 계산한 값이다. 백테스트가 체크포인트마다
+// PER 밴드를 다시 만드는 것과 같은 규칙. 오늘 값 하나를 과거에 가로줄로
+// 긋는 것은 "2024년에도 내재가치가 $315였다"고 말하는 셈이라 틀렸다.
+const SPCX_DCF_TRACK = [];
+const SPCX_BACKTEST = [];   // 실적 체크포인트가 부족해 밴드 백테스트 없음(상장 2026-06-12)
+// ─── 일봉 기준 밴드 적중률 ───
+// 체크포인트 판정(full_hit/breached_*)은 하루만 벗어나도 그 구간 전체를 실패로 보기 때문에,
+// "예상 밴드 안에서 마감한 일봉이 몇 %인가"로 따로 센다. 진행 중인 구간의
+// 이미 지나간 일봉도 포함한다(이미 관측된 날을 빼면 실제보다 좋아 보인다).
+//
+// 이름이 한때 "백테스트 신뢰도"였는데 2026-09-22에 "밴드 적중률"로 바꿨다.
+// 이 값은 **밴드 폭의 서술**이지 예측 성과가 아니다. 밴드를 두 배로 넓히면
+// 적중률은 저절로 올라간다. 예측력을 주장하려면 밴드를 무작위로 흔들었을 때의
+// 적중률과 비교해야 하는데 아직 안 했다.
+// 밴드는 10~90 백분위로 만든다. 그러면 **명목 포함률은 80%**다. 그 80%가
+// 이 숫자를 읽는 유일한 기준선이다. 58.5%는 "절반 넘게 맞혔다"가 아니라
+// "맞혀야 할 80%에 21.5%p 못 미친다"는 뜻이다(2026-09-22 Fable 발견).
+// (2026-10-04, C14 ②) 위 설명은 바뀌었다 — S&P500 실측에서 10~90 백분위 밴드의 적중은 평균 58%(종목별 41~74%)라 80%는 기대치가 아니다.
+// C14 ②: 80%는 이 숫자의 기준선이 아니다. 명목값은 밴드를 10~90 백분위로 만들었다는 사실로만 남긴다.
+const SPCX_BAND_NOMINAL = 0.80;
+const SPCX_BAND_HIT = (function(){
+  const lastDate = SPCX_DAILY[SPCX_DAILY.length-1][0];
+  let total = 0, inside = 0, below = 0, above = 0;
+  let excluded = 0, finished = 0, early = 0;   // early = 흑자 초기 구간(A9 B6, 2026-10-04)   // C1(2026-10-03): 실적 발표를 넘긴 구간은 빼고, 끝난 체크포인트가 4개 미만이면 해당 없음 — 2026-10-04부터 모든 구간이 다음 실적 공시에서 끝나 C1 제외는 진짜 자료 공백 때만 걸린다(C14)
+  SPCX_BACKTEST.forEach(cp=>{
+    if (cp.early_profit) { early++; cp._excluded = true; return; }   // 흑자 초기 구간(A9 B6 — 파일 안 첫 흑자 TTM부터 최근 4분기가 모두 흑자가 되기 전까지)
+    if (cp.spans_earnings) { excluded++; cp._excluded = true; return; }   // 흑자·자료 공백으로 다음 실적을 넘긴 구간(C1)
+    if (!cp.is_open) finished++;
+    // 진행 중인 구간은 JSON의 period_end_date가 데이터 생성일에 멈춰 있다.
+    // 그 뒤로 지나간 일봉도 실제 관측이므로 마지막 봉까지 센다.
+    //
+    // (2026-10-04) 진행 중 구간은 이제 적중률에 넣지 않는다 — 아래 경고는 열린 상자의 툴팁·색에만 해당한다.
+    // ⚠ 다음 실적이 나오면 `compute_earnings_backtest_band.py`를 다시 돌려야
+    // 한다. 안 돌리면 이 열린 구간이 EPS 갱신을 넘어 계속 자라고, 그때부터는
+    // 옛 EPS에 고정된 달러 밴드에 새 주가를 대는 셈이 된다 — 백테스트 v2가
+    // docstring 1번에서 폐기한 바로 그 비교다. 창을 252거래일로 늘려 재보면
+    // 달러 기준 82.1% 대 PER 기준 52.1%로 30%p 벌어진다(Fable 측정).
+    // `update_cards.py`는 가격만 갱신하고 이 JSON은 건드리지 않는다.
+    const end = cp.is_open ? lastDate : (cp.period_end_date || lastDate);
+    const bars = SPCX_DAILY.filter(b => b[0] > cp.checkpoint_date && b[0] <= end);
+    const hit = bars.filter(b => b[4] >= cp.predicted_low && b[4] <= cp.predicted_high).length;
+    cp._bars = bars.length;
+    cp._hit = hit;
+    cp._below = bars.filter(b => b[4] < cp.predicted_low).length;
+    cp._above = bars.filter(b => b[4] > cp.predicted_high).length;
+    // 현지 통화 재무 종목(TSM·ASML)은 엔진이 현지 통화 가격으로 센 일수를 쓴다(C10) — 달러 밴드는 체크포인트 날 환율로 고정돼 구간 안 환율 변동이 섞인다
+    if (cp.days_total != null && !cp.is_open) { cp._bars = cp.days_total; cp._hit = cp.days_in; cp._below = cp.days_below; cp._above = cp.days_above; }
+    cp._hitRatio = cp._bars ? cp._hit/cp._bars : null;
+    // 진행 중인 분기는 끝나 다음 실적이 나와야 적중률에 넣는다 — 지금까지 끝난 분기만 센다(2026-10-04 사용자 결정). 차트 상자에는 그대로 보인다.
+    if (!cp.is_open) { total += cp._bars; inside += cp._hit; below += cp._below; above += cp._above; }
+  });
+  // 최근 4구간만 따로 — 통합 비율이 최신 국면을 희석한다. 예전에 이걸
+  // "최근 1년"이라 불렀는데 실제로는 204거래일, 약 10개월이다(Codex 지적).
+  const recent = SPCX_BACKTEST.filter(cp => !cp._excluded && !cp.is_open).slice(-4);
+  const rTotal = recent.reduce((a,cp)=>a+(cp._bars||0),0);
+  const rInside = recent.reduce((a,cp)=>a+(cp._hit||0),0);
+  return {total, inside, below, above, excluded, early, finished, few: finished < 4, ratio: total && finished >= 4 ? inside/total : null,
+          rCount: recent.length, rTotal, rInside, rRatio: rTotal ? rInside/rTotal : null};
+})();
+// 적중률 색은 **헤더와 박스가 같은 규칙**을 쓴다 (2026-09-22 통일).
+//
+//     초록  74% 이상        노랑  41~74%        빨강  41% 미만   (2026-10-04부터 — S&P500 실측 종목별 10·90 분위, C14 ②)
+//
+// 묻는 것은 하나다 — "밴드 안에서 마감한 일봉이 얼마나 되나". 전에는 헤더만
+// **명목 80%와의 거리**로 칠했는데, 그러면 100%로 맞춘 구간이 감점돼 박스는
+// 초록인데 헤더는 빨강인 화면이 나왔다. 한 숫자가 두 뜻을 가지면 읽는 사람이
+// 어느 쪽을 믿어야 할지 알 수 없다. 두 문턱(20/80과 30/70)을 12구간에 다
+// 대보니 색이 갈리는 구간이 0개라, 합치는 데 잃는 것이 없었다.
+//
+// 넓어서 저절로 맞은 밴드가 초록이 되는 문제는 남는다. 그건 색이 아니라
+// **폭 배수**로 드러낸다 — 박스 툴팁에 있고, 2023-11-21 구간은 $36~$173
+// (4.81배)이라 100%가 성과가 아니다. 헤더 툴팁에도 같은 경고를 적어 둔다.
+// 명목 80%(SPCX_BAND_NOMINAL)는 여전히 라벨에 쓴다. 밴드가 10~90 백분위로
+// 만들어졌다는 **사실**이고, 색과는 별개다.
+// 색 기준은 S&P500 438종목 실측 적중의 종목별 분위(2026-10-04 사용자 결정, C14 ②) — 상위 10% 74% 이상 초록, 하위 10% 41% 미만 빨강.
+// 예전 70·30은 '10~90 백분위라 80%가 들어와야 한다'는 기대에서 나왔는데, 시장 전체 실측 적중이 평균 58%라 그 기대가 틀렸다.
+const SPCX_HIT_GREEN = 0.74, SPCX_HIT_RED = 0.41;
+function spcxHitTone(ratio){
+  if (ratio == null) return {key:'none', color:'var(--text3)', fill:'rgba(138,141,158,0.12)', border:'#9a9cab'};
+  if (ratio >= SPCX_HIT_GREEN) return {key:'good', color:'var(--green)', fill:'rgba(31,164,99,0.16)', border:'#1fa463'};
+  if (ratio >= SPCX_HIT_RED)   return {key:'mid',  color:'var(--gold)',  fill:'rgba(212,160,23,0.16)', border:'#d4a017'};
+  return {key:'bad', color:'var(--red)', fill:'rgba(229,72,77,0.16)', border:'#e5484d'};
+}
+// 진행 중인 구간은 세 색 어디에도 올리지 않는다. 판정이 아직 안 끝났는데
+// 부분 집계를 판정 색으로 칠하면 다음 주에 바뀔 값이 확정처럼 보인다.
+const SPCX_BAND_PENDING = {fill:'rgba(148,163,184,0.14)', border:'#94a3b8'};
+function spcxBandTone(cp){
+  if (cp.is_open || cp._hitRatio == null) return SPCX_BAND_PENDING;
+  return spcxHitTone(cp._hitRatio);
+}
+(function(){
+  const el = document.getElementById('spcxConfidence');
+  const label = document.getElementById('spcxConfidenceLabel');
+  const h = SPCX_BAND_HIT;
+  // PER 해당 없음(A3): PER 구간 × EPS로 만든 밴드라 적중률·적정주가를 같은 자리에 "해당 없음"으로 둔다.
+  if (el && typeof SPCX_VALUATION !== 'undefined' && SPCX_VALUATION.perNA) {
+    el.textContent = '해당 없음'; el.style.color = 'var(--text3)';
+    if (label) { label.textContent = '밴드 적중률'; label.title = 'PER 해당 없음 — 최근 4분기 순이익률 2% 미만'; }
+    const fb = document.getElementById('spcxFairBand'); if (fb) { fb.textContent = '해당 없음'; fb.style.color = 'var(--text3)'; }
+    return;
+  }
+  // C1: 끝난 체크포인트가 4개 미만이면 해당 없음(실적을 넘긴 구간을 뺀 뒤 센다)
+  if (el && h.few && SPCX_BACKTEST.length) {   // 빈 배열은 아래 분기 — 카드별 사유 툴팁(BA·COF 등)을 살린다
+    el.textContent = '해당 없음'; el.style.color = 'var(--text3)';
+    if (label) { label.textContent = '밴드 적중률'; label.title = `끝난 체크포인트 ${h.finished}개 — 4개 미만${h.excluded ? `, 실적을 넘긴 구간 ${h.excluded}개 제외` : ''}${h.early ? `, 흑자 초기 구간 ${h.early}개 제외` : ''}`; }
+    return;
+  }
+  if (el && h.ratio == null) {   // 백테스트 체크포인트가 없으면(신규 상장 등) 비워 둔다
+    el.textContent = '해당 없음'; el.style.color = 'var(--text3)';
+    if (label) { label.textContent = '밴드 적중률'; label.title = '백테스트 없음'; }
+    return;
+  }
+  if (!el) return;
+  el.textContent = (h.ratio*100).toFixed(1) + '%';
+  el.style.color = spcxHitTone(h.ratio).color;
+  if (label) {
+    // 라벨 = 맞은 날/센 날 + 이탈이 어느 쪽으로 쏠렸나, 값 = 비율 (2026-09-24 사용자 결정).
+    // 목표 80%와 상하단 이탈 일수는 툴팁에 있다. 이탈이 한쪽으로 쏠렸다면 그게 밴드가
+    // 틀린 방향이다(NVDA는 전부 하단 — 밴드가 체계적으로 높게 잡혀 있다).
+    const lean = h.below && !h.above ? ', 이탈 전부 하단'
+               : h.above && !h.below ? ', 이탈 전부 상단'
+               : h.above > h.below ? ', 상단우세'
+               : h.below > h.above ? ', 하단우세' : '';
+    label.textContent = `밴드 적중률 (${h.inside}/${h.total}일${lean}${h.excluded ? `, 실적을 넘긴 구간 ${h.excluded}개 제외` : ''}${h.early ? `, 흑자 초기 구간 ${h.early}개 제외` : ''})`;
+  }
+  const cell = el.closest('.meta-item');
+  if (cell) {
+    const r = h.rRatio == null ? '—' : (h.rRatio*100).toFixed(1) + '%';
+    cell.title = `지난 2년 PER(최근 가중) 10~90% 범위 × 그때 EPS로 그린 과거 범위이지 미래 예측 구간이 아니다. 끝난 분기 ${h.inside}/${h.total}일 = ${(h.ratio*100).toFixed(1)}%.`
+      + `\nS&P500 438종목 실측(2023-09~2026-09): 평균 58%, 종목별 41~74%(10~90 분위). 공시 직전 약 73%가 다음 날 약 61%로 떨어진다(진단) — 실적 발표 때 PER 수준이 옮겨 간다.`
+      + `\n이탈 ${h.below+h.above}일 중 하단 ${h.below}일 · 상단 ${h.above}일.`
+      + `\n최근 ${h.rCount}구간(${h.rTotal}거래일) ${r}.`
+      + `\n색은 시장 실측 기준 — 초록 ${(SPCX_HIT_GREEN*100).toFixed(0)}%↑ · 노랑 ${(SPCX_HIT_RED*100).toFixed(0)}~${(SPCX_HIT_GREEN*100).toFixed(0)}% · 빨강 ${(SPCX_HIT_RED*100).toFixed(0)}%↓. 두 문턱은 종목 평균 적중의 상위·하위 10% 자리이고, 차트 박스도 같은 색을 쓰지만 한 분기 박스는 0%·100%가 흔하다(S&P500 구간의 약 21%·32%).`
+      + `\n밴드가 넓을수록 저절로 올라가는 값이라 예측 성과가 아니다. 구간별 폭 배수는 박스 툴팁에 있다.`;
+  }
+})();
+
+// ─── SVG CANDLE + VOLUME CHART (실데이터 5년치 · 1M/6M/1Y/3Y/5Y 토글) ───
 (function(){
   const svgCandle = document.getElementById('spcxCandleSvg');
   const svgVol = document.getElementById('spcxVolumeSvg');
   const toggle = document.getElementById('spcxRangeToggle');
+  const maToggle = document.getElementById('spcxMaToggle');
   const headerTitle = document.getElementById('techHeaderTitle');
   const headerReturn = document.getElementById('techHeaderReturn');
   const rangeSummary = document.getElementById('techRangeSummary');
   if(!svgCandle || !svgVol || !toggle) return;
-  const RANGES = {'1M':21,'ALL':Infinity};
-  const RANGE_LABELS = {'1M':'1개월','ALL':'전체(상장 이후)'};
+  const RANGES = {'1M':21,'6M':126,'1Y':252,'3Y':756,'5Y':Infinity};
+  const RANGE_LABELS = {'1M':'1개월','6M':'6개월','1Y':'1년','3Y':'3년','5Y':'5년'};
   const NS = 'http://www.w3.org/2000/svg';
-  const UP='#2ecc71', DOWN='#e74c3c';
-  const maColors = {ma5:'#ff6b9d', ma20:'#9b59b6'};
-  const maState = {ma5:true, ma20:true, pricelabels:true};
-  let currentRange = 'ALL';
+  const UP='#1fa463', DOWN='#e5484d';
+  const maColors = {ma5:'#ec4899', ma20:'#9b59b6', ma60:'#d4a017', ma120:'#06b6d4'};
+  const maState = {ma5:true, ma20:true, ma60:true, ma120:true, pricelabels:true, backtest:false, dcf:false};
+  let currentRange = '1Y';
+  const legendEl = document.getElementById('spcxChartLegend');
 
   function updateHeader(rangeKey, data, prevClose){
     const base = prevClose != null ? prevClose : data[0][4];
@@ -739,7 +2321,7 @@ const SPCX_MA20 = [null,null,null,null,null,null,null,null,null,null,null,null,n
     const sign = retPct >= 0 ? '+' : '';
     const dateFrom = data[0][0].slice(0,7).replace('-','.');
     const dateTo = data[data.length-1][0].slice(0,7).replace('-','.');
-    headerTitle.childNodes[0].textContent = `기술적 분석 — 일봉 캔들스틱 (${dateFrom} ~ ${dateTo}) · ${RANGE_LABELS[rangeKey]} 수익률 `;
+    headerTitle.childNodes[0].textContent = `주가 차트 — 일봉 캔들스틱 (${dateFrom} ~ ${dateTo}) · ${RANGE_LABELS[rangeKey]} 수익률 `;
     headerReturn.textContent = `${sign}${retPct}%`;
     headerReturn.style.color = retPct >= 0 ? 'var(--green)' : 'var(--red)';
 
@@ -756,7 +2338,7 @@ const SPCX_MA20 = [null,null,null,null,null,null,null,null,null,null,null,null,n
     const data = SPCX_DAILY.slice(-n);
     const startIdx = SPCX_DAILY.length - data.length;
     const prevClose = startIdx > 0 ? SPCX_DAILY[startIdx - 1][4] : null;
-    const ma5 = SPCX_MA5.slice(-n), ma20 = SPCX_MA20.slice(-n);
+    const ma5 = SPCX_MA5.slice(-n), ma20 = SPCX_MA20.slice(-n), ma60 = SPCX_MA60.slice(-n), ma120 = SPCX_MA120.slice(-n);
     updateHeader(rangeKey, data, prevClose);
     while(svgCandle.firstChild) svgCandle.removeChild(svgCandle.firstChild);
     while(svgVol.firstChild) svgVol.removeChild(svgVol.firstChild);
@@ -764,7 +2346,91 @@ const SPCX_MA20 = [null,null,null,null,null,null,null,null,null,null,null,null,n
     const W=720,H=240,pL=45,pR=12,pT=10,pB=20;
     const cW=W-pL-pR,cH=H-pT-pB;
     const highs=data.map(d=>d[2]), lows=data.map(d=>d[3]);
-    const maVals=[...ma5,...ma20].filter(v=>v!=null);
+    // 예상밴드 백테스트: 화면에 보이는 구간과 겹치는 체크포인트만 골라서, 그 예상 고점/저점도
+    // y축 스케일에 포함시켜야 밴드가 플롯 밖으로 잘리지 않는다 (2026-09-02 추가).
+    const dataDates = data.map(d=>d[0]);
+    function idxForDate(dateStr){
+      let lo=0, hi=dataDates.length-1;
+      if(dateStr<=dataDates[0]) return 0;
+      if(dateStr>=dataDates[hi]) return hi;
+      while(lo<hi){ const mid=(lo+hi)>>1; if(dataDates[mid]<dateStr) lo=mid+1; else hi=mid; }
+      return lo;
+    }
+    // ── 구간이 언제 끝나는가 ──
+    // 진행 중인 구간(is_open)은 JSON의 period_end_date가 **카드를 만든 날**에
+    // 멈춰 있다. 매일 가격만 갱신되면 그 뒤로 새 일봉이 쌓이므로, 열린 구간은
+    // 마지막 일봉까지 늘려 잡아야 갱신할 때마다 박스가 따라 넓어진다.
+    // 새 분기 보고서가 나와야 밴드 값이 바뀌므로, 그 전까지는 같은 높이로
+    // 오른쪽으로만 자란다.
+    //
+    // 예전에는 이 계산이 세 군데에 따로 있었고 겹침 구간에서만 is_open이
+    // 빠져 있었다. 그래서 백테스트 밴드는 마지막 일봉까지 가는데 남색 겹침만
+    // 2주 일찍 끊겼다. 한 곳에서만 정한다.
+    const cpEnd = cp => cp.is_open
+      ? dataDates[dataDates.length-1]
+      : (cp.period_end_date || dataDates[dataDates.length-1]);
+    const visibleCheckpoints = maState.backtest ? SPCX_BACKTEST.filter(cp=>
+      cpEnd(cp) >= dataDates[0] && cp.checkpoint_date <= dataDates[dataDates.length-1]
+    ) : [];
+    const priceVals=[...ma5,...ma20,...ma60,...ma120].filter(v=>v!=null);
+    const priceMx = Math.max(...highs,...priceVals), priceMn = Math.min(...lows,...priceVals);
+    const priceSpan = (priceMx-priceMn) || priceMx*0.1;
+    const BACKTEST_CAP = 1.5;
+    const capHi = priceMx + priceSpan*BACKTEST_CAP, capLo = priceMn - priceSpan*BACKTEST_CAP;
+    const clipBand = v => Math.max(capLo, Math.min(capHi, v));
+    visibleCheckpoints.forEach(cp=>{
+      cp._drawLow = clipBand(cp.predicted_low);
+      cp._drawHigh = clipBand(cp.predicted_high);
+      cp._clipped = cp._drawLow !== cp.predicted_low || cp._drawHigh !== cp.predicted_high;
+    });
+    const backtestVals = visibleCheckpoints.flatMap(cp=>[cp._drawLow, cp._drawHigh]);
+    // DCF 구간도 같은 방식으로 클리핑한다. 높은 성장 시나리오가 화면 밖으로
+    // 크게 벗어나도 실제 주가가 얇은 띠로 눌리지 않게 한다.
+    // DCF는 **현재가 기준**으로 자른다.
+    // 백테스트 밴드의 클리핑은 "주가 범위의 1.5배"인데, 그 범위가 뷰마다 달라
+    // 같은 내재가치가 1개월 뷰에서는 $284, 5년 뷰에서는 $575에서 잘렸다.
+    // 내재가치는 보는 기간과 무관하므로 기준도 기간과 무관해야 한다.
+    const lastClose = data[data.length-1][4];
+    // 아래쪽은 자르지 않는다. 가장 낮은 값은 이미 "낮은 성장" 시나리오이고
+    // 그 자체가 계산된 값이다(NVDA $160). 임의의 하한선을 두면 실제로 쓰이지도
+    // 않으면서 "여기까지 떨어질 수 있다"는 오해만 만든다.
+    // 위쪽만 현재가의 2배에서 자른다 — 높은 성장 시나리오가 화면 밖으로 크게
+    // 벗어나 실제 주가를 얇은 띠로 눌러버리는 것을 막기 위해서다.
+    const DCF_CAP_HI = lastClose * 2.0;
+    const clipDcf = v => Math.max(0, Math.min(DCF_CAP_HI, v));   // 음수 시나리오는 0에 그린다 — 실제 값은 툴팁(E17, 2026-10-05)
+    // 둘 다 켜면 **백테스트 밴드(상자) 위에 DCF 기본선**을 얹는다.
+    // 세 그림이 서로 다른 질문에 답한다 — DCF만: 현금흐름이 말하는 가격대,
+    // 백테스트만: 시장 배수가 말하는 가격대, 둘 다: 그 둘이 어긋나는 정도.
+    //
+    // 2026-09-22 이전에는 두 범위의 **교집합**을 남색으로 칠했는데, 재보니
+    // 정보가 없었다(Fable 발견). 9개 체크포인트에서 교집합이 밴드 대비
+    // 0%(2024년 3개) / 32·44·77%(2025년) / **100%(2026년 3개)**였다.
+    // DCF 범위가 $160~$602로 3.8배나 넓어 밴드를 통째로 삼키기 때문에,
+    // 남색 구간은 "비었거나 백테스트 밴드를 색만 바꿔 다시 그린 것"이었다.
+    // 기본선 하나로 바꾸면 9번 중 5번 안 / 4번 아래로 실제로 갈린다.
+    //
+    // 어느 쪽이든 "두 기준이 동의하니 더 믿을 만하다"고는 부르지 않는다.
+    // 둘 다 같은 시점 TTM 실적을 레벨로 쓰고 씌우는 배수만 다르다(Codex·Fable
+    // 공통 지적). 독립된 두 증거가 아니다.
+    const overlapOnly = maState.dcf && maState.backtest;
+    // 겹침 모드에서는 두 알약에 같은 남색 표시를 줘, 화면의 남색 선이
+    // 무엇을 뜻하는지 버튼만 봐도 연결되게 한다.
+    document.querySelectorAll('.ma-toggle-btn[data-ma="dcf"], .ma-toggle-btn[data-ma="backtest"]')
+      .forEach(b=>{ b.style.boxShadow = overlapOnly ? '0 0 0 1.5px #6366f1 inset' : ''; });
+    // 화면에 실제로 그려지는 구간만 y축 계산에 넣는다. 예전에는 전체 이력을
+    // 넣어, 1년 뷰인데도 2024년의 낮은 값이 y축을 아래로 늘리고 있었다.
+    const dcfPrior = SPCX_DCF_TRACK.filter(t => t.d <= dataDates[0]).slice(-1);
+    const dcfVisible = maState.dcf
+      ? dcfPrior.concat(SPCX_DCF_TRACK.filter(
+          t => t.d > dataDates[0] && t.d <= dataDates[dataDates.length-1]))
+      : [];
+    // 둘 다 켜면 DCF는 **기본선만** 그리므로 y축에도 기본값만 넣는다.
+    // 낮은·높은 성장까지 넣으면 화면이 $160~$602로 벌어져 정작 주가가
+    // 얇은 띠로 눌린다.
+    const dcfVals = overlapOnly
+      ? dcfVisible.map(t => t.base).filter(v => v > 0).map(clipDcf)   // 겹침 모드도 음수는 축에서 뺀다(E17)
+      : dcfVisible.flatMap(t => [t.low, t.base, t.high].filter(v => v > 0).map(clipDcf));   // 음수는 빼고 기본도 축에 넣는다(카드 한정, Codex)
+    const maVals=[...priceVals,...backtestVals,...dcfVals];
     const mx=Math.max(...highs,...maVals), mn=Math.min(...lows,...maVals);
     const pad=(mx-mn)*0.06 || mx*0.02;
     const top=mx+pad, bot=Math.max(0, mn-pad), rng=(top-bot)||1;
@@ -772,16 +2438,134 @@ const SPCX_MA20 = [null,null,null,null,null,null,null,null,null,null,null,null,n
     const colW = cW/data.length;
     const bodyW = Math.max(colW*0.62, 0.4);
 
+    function checkpointX(cp){
+      const x0 = pL + idxForDate(cp.checkpoint_date)*colW;
+      const x1 = pL + (idxForDate(cpEnd(cp))+1)*colW;
+      return [Math.max(x0,pL), Math.min(x1,W-pR)];
+    }
+    visibleCheckpoints.forEach(cp=>{
+      // 둘 다 켰을 때도 밴드는 그대로 그린다. DCF 기본선이 이 상자 안에
+      // 있는지 밖에 있는지를 보는 것이 이 화면의 목적이기 때문이다.
+      const [x0,x1] = checkpointX(cp);
+      let yTop = py(cp._drawHigh), yBot = py(cp._drawLow);
+      if (cp._clipped && (yBot-yTop) < 3) {
+        const mid = (yTop+yBot)/2;
+        yTop = Math.min(Math.max(mid-1.5, pT), pT+cH-3);
+        yBot = yTop+3;
+      }
+      const rect = document.createElementNS(NS,'rect');
+      rect.setAttribute('x', x0); rect.setAttribute('y', yTop);
+      rect.setAttribute('width', Math.max(x1-x0,0)); rect.setAttribute('height', Math.max(yBot-yTop,0));
+      rect.setAttribute('fill', spcxBandTone(cp).fill);
+      // 폭이 넓어 저절로 맞은 밴드를 색만으로는 구분할 수 없다. 배수를 여기 적는다.
+      const width = cp.predicted_high / cp.predicted_low;
+      const title = document.createElementNS(NS,'title');
+      title.textContent =
+        `${cp.checkpoint_date} ~ ${cp.is_open ? '진행 중' : (cp.period_end_date || '')}`
+        + `\n예상밴드 $${cp.predicted_low.toFixed(2)}~$${cp.predicted_high.toFixed(2)} (폭 ${width.toFixed(2)}배)`
+        + (cp._bars ? `\n일봉 ${cp._bars}일 중 ${cp._hit}일(${(cp._hitRatio*100).toFixed(1)}%)이 밴드 안에서 마감` + (cp.days_total != null && !cp.is_open ? ' (현지 통화 기준 — 달러 밴드는 체크포인트 날 환율 고정)' : '') : '')
+        + (cp.is_open ? '\n아직 판정 전이라 회색이다.' : '')
+        + (cp._clipped ? '\n차트 범위를 크게 벗어나 잘라서 표시했다.' : '');
+      rect.appendChild(title);
+      svgCandle.appendChild(rect);
+    });
+
+    // ── 시점별 DCF (계단 선 + 구간) ──
+    // 값은 분기 실적 공개일에만 바뀐다. 그 사이는 수평으로 유지하고 공개일에
+    // 수직으로 움직이는 **계단**이어야 한다. 점을 직선으로 이으면 공시가 없던
+    // 날에도 값이 조금씩 변한 것처럼 보인다(Codex 지적).
+    if (maState.dcf && dcfVisible.length) {
+      const stepsHigh = [], stepsLow = [], stepsBase = [], marks = [];
+      let prev = null;
+      for (let i = 0; i < data.length; i++) {
+        const day = dataDates[i];
+        let v = null;
+        for (const t of SPCX_DCF_TRACK) { if (t.d <= day) v = t; else break; }
+        if (!v) continue;
+        const cx = pL + (i + 0.5) * colW;
+        if (prev && v.d !== prev.d) {          // 공개일 — 수직으로 갈아탄다
+          stepsHigh.push([cx, py(clipDcf(prev.high))]);
+          stepsLow.push([cx, py(clipDcf(prev.low))]);
+          stepsBase.push([cx, py(clipDcf(prev.base))]);
+        }
+        stepsHigh.push([cx, py(clipDcf(v.high))]);
+        stepsLow.push([cx, py(clipDcf(v.low))]);
+        stepsBase.push([cx, py(clipDcf(v.base))]);
+        marks.push({cx, v});
+        prev = v;
+      }
+      if (stepsBase.length) {
+        // DCF 단독일 때만 낮은~높은 성장 구간을 칠한다. 둘 다 켜면 그 구간이
+        // 백테스트 밴드를 통째로 덮어 화면이 읽히지 않는다.
+        if (!overlapOnly) {
+          const poly = document.createElementNS(NS,'polygon');
+          poly.setAttribute('points',
+            stepsHigh.map(p=>p.join(',')).join(' ') + ' ' +
+            stepsLow.slice().reverse().map(p=>p.join(',')).join(' '));
+          poly.setAttribute('fill','rgba(14,165,233,0.10)');
+          svgCandle.appendChild(poly);
+        }
+
+        // 기본선은 두 모드 모두에서 그린다. 둘 다 켰을 때는 이 선이 주인공이라
+        // 남색(알약 표시와 같은 색)으로 굵게 뽑는다.
+        const line = document.createElementNS(NS,'polyline');
+        line.setAttribute('points', stepsBase.map(p=>p.join(',')).join(' '));
+        line.setAttribute('fill','none');
+        line.setAttribute('stroke', overlapOnly ? '#6366f1' : '#0ea5e9');
+        line.setAttribute('stroke-width', overlapOnly ? '2.4' : '1.8');
+        line.setAttribute('stroke-dasharray','6 3');
+        svgCandle.appendChild(line);
+
+        // 구간별 툴팁 — 예전에는 어디에 올려도 마지막 값만 보였다(Codex 지적).
+        const byPeriod = new Map();
+        marks.forEach(m=>{
+          const e = byPeriod.get(m.v.d) || {v:m.v, x0:m.cx, x1:m.cx};
+          e.x0 = Math.min(e.x0, m.cx); e.x1 = Math.max(e.x1, m.cx);
+          byPeriod.set(m.v.d, e);
+        });
+        byPeriod.forEach(e=>{
+          const hit = document.createElementNS(NS,'rect');
+          // 둘 다 켜면 구간이 안 보이므로 기본선 주위만 잡는다.
+          const _vmx = Math.max(e.v.low, e.v.base, e.v.high), _vmn = Math.max(Math.min(e.v.low, e.v.base, e.v.high), 0);   // 순서가 뒤집힌 시나리오도 잡히게(카드 한정, Codex)
+          const yTop = overlapOnly ? py(clipDcf(e.v.base)) - 6 : py(clipDcf(_vmx));
+          const yBot = overlapOnly ? py(clipDcf(e.v.base)) + 6 : py(clipDcf(_vmn));
+          hit.setAttribute('x', e.x0); hit.setAttribute('y', yTop);
+          hit.setAttribute('width', Math.max(e.x1-e.x0, 1));
+          hit.setAttribute('height', Math.max(yBot - yTop, 1));
+          hit.setAttribute('fill','transparent');
+          const tt = document.createElementNS(NS,'title');
+          const usd = x => x < 0 ? '계산 불가(음수)' : '$' + x.toFixed(0);   // 카드 한정
+          let txt = `${e.v.d} 공시 기준 · 보수 ${usd(e.v.low)}`
+            + ` · 기본 ${usd(e.v.base)} · 낙관 ${usd(e.v.high)}`
+            + (e.v.high > DCF_CAP_HI ? ' · 낙관은 화면 밖이라 잘라서 표시' : '')
+            // 계산 오류가 아니라 모델 구조다(AVGO 인수 직후 — 마진이 이력 최저인데 높은 성장은 현재 마진을 고정).
+            + (e.v.high < e.v.low ? '\n⚠ 이 시점엔 낙관이 가장 낮다. 현재 영업이익률이 과거보다 낮아, 그 마진으로 빨리 클수록 재투자가 이익을 넘어 가치가 줄어든다.' : '');
+          if (overlapOnly) {
+            // 그 시점 밴드와 견줘 안/밖을 읽어준다 — 이 화면이 답하는 질문이다.
+            const cp = visibleCheckpoints.filter(c => c.checkpoint_date <= e.v.d).slice(-1)[0];
+            if (cp) {
+              const inBand = e.v.base >= cp.predicted_low && e.v.base <= cp.predicted_high;
+              txt += `\n예상밴드 $${cp.predicted_low.toFixed(0)}~$${cp.predicted_high.toFixed(0)}`
+                + ` → 현금흐름 기준값이 밴드 ${inBand ? '안에 있다' : (e.v.base < cp.predicted_low ? '아래에 있다' : '위에 있다')}`;
+            }
+          }
+          tt.textContent = txt;
+          hit.appendChild(tt);
+          svgCandle.appendChild(hit);
+        });
+      }
+    }
+
     for(let i=0;i<=3;i++){
       const v = bot + rng*i/3;
       const y = py(v);
       const l=document.createElementNS(NS,'line');
       l.setAttribute('x1',pL);l.setAttribute('x2',W-pR);l.setAttribute('y1',y);l.setAttribute('y2',y);
-      l.setAttribute('stroke','rgba(255,255,255,.08)');l.setAttribute('stroke-width','1');
+      l.setAttribute('stroke','rgba(128,130,145,.08)');l.setAttribute('stroke-width','1');
       svgCandle.appendChild(l);
       const t=document.createElementNS(NS,'text');
       t.setAttribute('x',pL-4);t.setAttribute('y',y+3);t.setAttribute('text-anchor','end');
-      t.setAttribute('font-size','9');t.setAttribute('fill','rgba(154,160,184,.8)');
+      t.setAttribute('font-size','9');t.setAttribute('fill','rgba(138,141,158,.8)');
       t.textContent='$'+v.toFixed(0);
       svgCandle.appendChild(t);
     }
@@ -828,6 +2612,23 @@ const SPCX_MA20 = [null,null,null,null,null,null,null,null,null,null,null,null,n
     };
     if (maState.ma5) drawMaLine(ma5, maColors.ma5);
     if (maState.ma20) drawMaLine(ma20, maColors.ma20);
+    if (maState.ma60) drawMaLine(ma60, maColors.ma60);
+    if (maState.ma120) drawMaLine(ma120, maColors.ma120);
+
+    visibleCheckpoints.forEach(cp=>{
+      const [x0,x1] = checkpointX(cp);
+      const borderColor = spcxBandTone(cp).border;
+      [cp._drawHigh, cp._drawLow].forEach(v=>{
+        const y = py(v);
+        const line = document.createElementNS(NS,'line');
+        line.setAttribute('x1',x0); line.setAttribute('x2',x1);
+        line.setAttribute('y1',y); line.setAttribute('y2',y);
+        line.setAttribute('stroke', borderColor); line.setAttribute('stroke-width','1');
+        line.setAttribute('stroke-dasharray', cp.is_open ? '2,2' : '4,2');
+        line.setAttribute('opacity','0.85');
+        svgCandle.appendChild(line);
+      });
+    });
 
     if (maState.pricelabels) {
     const closeIdx = data.length-1;
@@ -846,7 +2647,7 @@ const SPCX_MA20 = [null,null,null,null,null,null,null,null,null,null,null,null,n
       const cy = py(m.v);
       const dot=document.createElementNS(NS,'circle');
       dot.setAttribute('cx',cx);dot.setAttribute('cy',cy);dot.setAttribute('r','3.5');
-      dot.setAttribute('fill',m.color);dot.setAttribute('stroke','#0f1117');dot.setAttribute('stroke-width','1.5');
+      dot.setAttribute('fill',m.color);dot.setAttribute('stroke','#8a8d9e');dot.setAttribute('stroke-width','1.5');
       svgCandle.appendChild(dot);
 
       const labelText = `${m.label} $${m.v.toFixed(2)}`;
@@ -869,7 +2670,7 @@ const SPCX_MA20 = [null,null,null,null,null,null,null,null,null,null,null,null,n
       const bg=document.createElementNS(NS,'rect');
       bg.setAttribute('x', bgX);bg.setAttribute('y', ty-8);
       bg.setAttribute('width', labelW);bg.setAttribute('height', 12);
-      bg.setAttribute('fill','rgba(15,17,23,0.85)');bg.setAttribute('rx','2');
+      bg.style.fill='color-mix(in srgb, var(--bg2) 90%, transparent)';bg.setAttribute('rx','2');
       svgCandle.appendChild(bg);
       const t=document.createElementNS(NS,'text');
       t.setAttribute('x', tx);t.setAttribute('y', ty+2);
@@ -888,9 +2689,26 @@ const SPCX_MA20 = [null,null,null,null,null,null,null,null,null,null,null,null,n
       t.setAttribute('x', Math.min(Math.max(cx,pL+10), W-20));
       t.setAttribute('y', H-4);
       t.setAttribute('text-anchor','middle');t.setAttribute('font-size','9');
-      t.setAttribute('fill','rgba(154,160,184,.8)');
+      t.setAttribute('fill','rgba(138,141,158,.8)');
       t.textContent = data[idx][0].slice(2).replace(/-/g,'.');
       svgCandle.appendChild(t);
+    }
+
+    // 토글을 켜면 노란 상자와 남색 선이 갑자기 나타난다. 그게 무엇인지
+    // 한 줄씩만 적는다 — 적중률 같은 수치는 헤더 네 칸에 이미 있다.
+    if (legendEl) {
+      const lines = [];
+      if (maState.backtest) {
+        lines.push('<strong style="color:#d4a017;">◆ 예상밴드</strong> 그 시점까지'
+          + ' 공시된 실적만으로 계산한 가격 범위다.');
+      }
+      if (maState.dcf) {
+        lines.push('<strong style="color:' + (overlapOnly ? '#6366f1' : '#0ea5e9') + ';">◆ DCF</strong>'
+          + ' 앞으로 벌어들일 현금을 현재 가치로 할인해 구한 값이다.'
+          + (overlapOnly ? '' : ' 낮은·기본·높은 세 가정의 범위.'));
+      }
+      legendEl.innerHTML = lines.join('<br>');
+      legendEl.style.display = lines.length ? 'block' : 'none';
     }
 
     const VW=720,VH=70,vpT=6,vpB=4;
@@ -900,7 +2718,7 @@ const SPCX_MA20 = [null,null,null,null,null,null,null,null,null,null,null,null,n
       const [,o,,,c,v] = d;
       const cx = pL + (i+0.5)*colW;
       const up = c >= o;
-      const col = up ? 'rgba(46,204,113,0.55)' : 'rgba(231,76,60,0.55)';
+      const col = up ? 'rgba(31,164,99,0.55)' : 'rgba(229,72,77,0.55)';
       const h = (v/maxV)*vcH;
       const rect=document.createElementNS(NS,'rect');
       rect.setAttribute('x', cx - bodyW/2);
@@ -920,24 +2738,47 @@ const SPCX_MA20 = [null,null,null,null,null,null,null,null,null,null,null,null,n
     });
   });
 
-  document.querySelectorAll('.ma-toggle-btn').forEach(btn=>{
-    btn.addEventListener('click', ()=>{
-      const key = btn.dataset.ma;
-      maState[key] = !maState[key];
-      btn.classList.toggle('ma-off', !maState[key]);
-      draw(currentRange);
+  if (maToggle) {
+    document.querySelectorAll('.ma-toggle-btn').forEach(btn=>{
+      btn.addEventListener('click', ()=>{
+        const key = btn.dataset.ma;
+        maState[key] = !maState[key];
+        btn.classList.toggle('ma-off', !maState[key]);
+        draw(currentRange);
+      });
     });
-  });
+  }
 
-  draw('ALL');
+  draw('1Y');
 })();
 
+// ══════ NAV + LAZY CHART INIT ══════
+const charts = {};
+function renderCharts(sectionId) {
+  setTimeout(() => {
+    if (sectionId === 'fund') {
+      if (!charts['fundRev']) { renderFundChart(); charts['fundRev'] = true; }
+      if (!charts['fundCompare']) { selectFundPeriod('yoy'); charts['fundCompare'] = true; }
+      if (!charts['fundSegment']) { renderSegmentChart(); charts['fundSegment'] = true; }
+    }
+    if (sectionId === 'valuation' && !charts['multiple']) { selectMultiple(currentMultipleKey); charts['multiple'] = true; }
+  }, 50);
+}
+
+// 요약(#tech)은 `.summary`라 여기서 건드리지 않는다 — 항상 맨 위에 남는다.
+// 탭은 한 번에 하나만 열리고, 열려 있는 탭을 다시 누르면 접혀 요약만 남는다.
+// 처음 열었을 때는 아무 탭도 펼치지 않는다.
 function showSection(id, btn) {
+  const target = document.getElementById(id);
+  const wasOpen = target.classList.contains('active');
   document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
   document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
+  if (wasOpen) return;               // 같은 탭을 다시 눌렀다 — 접는다
+  target.classList.add('active');
   if (btn) btn.classList.add('active');
+  renderCharts(id);
 }
+
 </script>
 </body>
 </html>

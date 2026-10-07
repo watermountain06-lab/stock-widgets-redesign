@@ -28,16 +28,17 @@ from pathlib import Path
 
 PREVIEW = Path.home() / "Workspace/stock-widgets-preview"
 BLOCK = re.compile(r'( *)<div class="back-bar-right">.*?</div>', re.S)
+TOGGLE = re.compile(r'<button id="theme-toggle".*?</button>', re.S)   # v2 카드의 밝게/어둡게 스위치(2026-10-07) — 다시 쓸 때 지우지 않는다
 LABEL = re.compile(r'<span class="back-bar-current">(.*?) · 시총 (\d+)위</span>')
 
 
-def build(indent, prev, label, rank, nxt, labels):
+def build(indent, prev, label, rank, nxt, labels, toggle=""):
     i = indent + "  "
     left = (f'{i}<a class="back-bar-nav" href="{prev}_full_widget.html">◀ {labels[prev]}</a>'
             if prev else f'{i}<span class="back-bar-nav disabled">◀ 이전</span>')
     right = (f'{i}<a class="back-bar-nav" href="{nxt}_full_widget.html">다음 {labels[nxt]} ▶</a>'
              if nxt else f'{i}<span class="back-bar-nav disabled">다음 ▶</span>')
-    return (f'{indent}<div class="back-bar-right">\n{left}\n'
+    return (f'{indent}<div class="back-bar-right">{toggle}\n{left}\n'
             f'{i}<span class="back-bar-current">{label} · 시총 {rank}위</span>\n'
             f'{right}\n{indent}</div>')
 
@@ -70,7 +71,8 @@ def main():
         if not m:
             sys.exit(f"{t}: no back-bar-right block")
         new = build(m.group(1), order[i - 1] if i else None, labels[t], i + 1,
-                    order[i + 1] if i + 1 < len(order) else None, labels)
+                    order[i + 1] if i + 1 < len(order) else None, labels,
+                    (TOGGLE.search(m.group(0)) or [""])[0])
         if new != m.group(0):
             changed.append(t)
             if not args.check:

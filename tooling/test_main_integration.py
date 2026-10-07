@@ -46,17 +46,20 @@ class AnalysisRegression(unittest.TestCase):
         current = fn(fin, config, [{'end': '2025-12-31', 'val': 40}], False)
         self.assertEqual(current['opMargin']['value'], 40)
 
-    def test_catalog_and_deployment_cover_all_70_stocks(self):
+    def test_catalog_and_deployment_cover_all_stocks(self):
         code = "const fs=require('fs'),vm=require('vm'),c={window:{}};vm.runInNewContext(fs.readFileSync('stock-data.js','utf8'),c);process.stdout.write(JSON.stringify(c.window.StockData));"
         data = json.loads(subprocess.check_output(['node', '-e', code], cwd=ROOT))
-        self.assertEqual(len(data['stocks']), 70)
-        self.assertEqual(len({s['ticker'] for s in data['stocks']}), 70)
+        # 종목 수는 카드 파일 수와 같아야 한다(70 → 103, 2026-10-07 v2 승격 — 고정값이면 종목이 늘 때마다 깨진다)
+        n_cards = len(list((ROOT / 'cards').glob('*_full_widget.html')))
+        self.assertGreaterEqual(len(data['stocks']), 70)
+        self.assertEqual(len(data['stocks']), n_cards)
+        self.assertEqual(len({s['ticker'] for s in data['stocks']}), n_cards)
         for stock in data['stocks']:
             path = ROOT / stock['href']
             self.assertTrue(path.exists(), stock['ticker'])
             self.assertEqual(path.read_bytes(), (ROOT / 'dist' / stock['href']).read_bytes())
             self.assertTrue((ROOT / 'dist/logos' / (stock['ticker'].lower() + '.png')).exists())
-        self.assertEqual(data['meta']['asOf'], '2026-09-14')
+        self.assertRegex(data['meta']['asOf'] or '', r'^\d{4}-\d{2}-\d{2}$')   # 기준일은 매 승격마다 바뀐다
 
 if __name__ == '__main__':
     unittest.main()
