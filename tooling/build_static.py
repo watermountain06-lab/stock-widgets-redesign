@@ -6,7 +6,8 @@ ROOT = Path(__file__).resolve().parents[1]
 PUBLIC = ['market-news.js', 'market-news-snapshot.json', 'flow.css', 'flow.js', 'index.html', 'today.html', 'market-news.html', 'styles.css', 'today.css',
           'theme.css', 'header.css', 'detail-theme.css', 'stock-data.js',
           'data-status.js', 'today.js', 'theme.js', 'navigation.js', 'reading.js',
-          'news.js', 'news-snapshot.json', 'quotes-snapshot.json', 'CNAME']
+          'news.js', 'news-snapshot.json', 'quotes-snapshot.json', 'CNAME',
+          'value-data.js', 'value-gap.js', 'value-gap.css']
 
 def build():
     target = ROOT / 'dist'

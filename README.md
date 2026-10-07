@@ -67,3 +67,16 @@ SPCX는 심볼/상장 검증 전이므로 수집하지 않습니다. 시가총�
 - `python3 tooling/news_server.py --snapshot` 후 `python3 tooling/build_static.py`로 정적 호스팅용 기사 목록을 갱신합니다. API가 없는 정적 호스팅에서는 저장 목록과 수집 시각을 명시합니다. 지속적인 자동 갱신을 배포하려면 동일 출처의 API 서버 또는 별도 수집 배치가 필요합니다.
 - YouTube 영역은 검색 링크이며 YouTube Data API 연결은 아직 없습니다.
 - 검증: `python3 -B -m unittest discover -s tooling -p test_news_api.py -v`.
+
+## 라이브 승격 순서 (2026-10-07)
+
+preview(`~/Workspace/stock-widgets-preview`)가 매일 갱신한 카드와 숫자를 이 저장소로 가져오는 순서다. 승격과 push는 매번 사용자 승인을 받는다.
+
+1. `python3 scripts/sync_cards.py` (카드 복사)
+2. 로고 확인 (`logos/`에 새 종목 로고)
+3. `python3 scripts/build_home.py` (`stock-data.js`의 종목·시장 지표)
+4. `python3 scripts/build_value_gap.py` (홈 "매수 기준가와의 거리" 섹션의 `value-data.js`. 종목 이름을 `stock-data.js`에서 읽으므로 3번 다음에 돌린다)
+5. `python3 tooling/build_static.py` (`dist/` 사본)
+6. `python3 -m unittest discover -s tooling -v`
+
+3·4번 스크립트는 `--check`를 붙이면 아무것도 쓰지 않고, preview보다 뒤처졌으면 0이 아닌 값으로 끝난다.

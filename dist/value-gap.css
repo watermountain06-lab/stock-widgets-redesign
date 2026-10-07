@@ -1,0 +1,37 @@
+/* 홈 "매수 기준가" 섹션 (2026-10-07 시안). 초록·빨강은 theme.css가 어두운 테마에만 정의해서 섹션 안에 따로 둔다. */
+.value-gap{--vg-good:#1f8a5b;--vg-bad:#c2413b}
+:root[data-theme="dark"] .value-gap{--vg-good:#4cc38a;--vg-bad:#f07167}
+.home-page .value-gap{width:var(--home-content-width);max-width:1120px;margin:0 auto 28px;box-sizing:border-box;padding:28px 32px;border:1px solid var(--border);border-radius:18px;background:var(--panel);color:var(--text)}
+.vg-head{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;margin-bottom:18px}
+.vg-head h2{font-size:20px;margin:6px 0 8px}
+.vg-intro{font-size:12.5px;color:var(--text2);margin:0;line-height:1.6;max-width:640px}
+.vg-asof{font-size:11.5px;color:var(--text3);white-space:nowrap}
+.vg-list{list-style:none;margin:0;padding:0}
+.vg-row{display:grid;grid-template-columns:minmax(150px,1.1fr) minmax(220px,1.6fr) minmax(160px,1.4fr) minmax(150px,1fr);align-items:center;gap:18px;padding:14px 0;border-top:1px solid var(--border)}
+.vg-name{display:flex;align-items:center;gap:10px;color:var(--text);text-decoration:none}
+.vg-name img{width:28px;height:28px;border-radius:7px;object-fit:contain;background:#fff}
+.vg-name small{display:block;font-size:11.5px;color:var(--text2)}
+.vg-meta{display:flex;flex-wrap:wrap;gap:6px}
+.vg-meta span{font-size:11px;padding:3px 8px;border-radius:999px;border:1px solid var(--border);color:var(--text2)}
+.vg-meta .vg-verdict{color:var(--vg-good);border-color:currentColor;font-weight:700}
+.vg-judge.is-plus{color:var(--vg-good)}
+.vg-judge.is-minus{color:var(--vg-bad)}
+.vg-meta .vg-hard{color:var(--text3);border-style:dashed;cursor:help}
+.vg-gauge{position:relative;height:10px;border-radius:999px;background:color-mix(in srgb,var(--text3) 22%,transparent);overflow:visible}
+.vg-zone{position:absolute;left:0;top:0;bottom:0;border-radius:999px 0 0 999px;background:color-mix(in srgb,var(--vg-good) 22%,transparent)}
+.vg-line{position:absolute;top:-5px;bottom:-5px;width:2px;margin-left:-1px;background:var(--text3)}
+.vg-dot{position:absolute;top:50%;width:14px;height:14px;margin:-7px 0 0 -7px;border-radius:50%;background:var(--text2);border:2px solid var(--panel)}
+.vg-dot.is-under{background:var(--vg-good)}
+.vg-text b{display:block;font-size:13.5px}
+.vg-text small{font-size:11.5px;color:var(--text3)}
+.vg-empty{padding:24px 0;text-align:center;color:var(--text2);border-top:1px solid var(--border);margin:0}
+.vg-history{margin-top:18px;padding-top:16px;border-top:1px solid var(--border)}
+.vg-history p{font-size:12px;color:var(--text2);margin:0 0 10px}
+.vg-history p small{color:var(--text3)}
+.vg-history ol{list-style:none;margin:0;padding:0;display:flex;align-items:flex-end;gap:10px;height:64px}
+.vg-history li{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%;font-size:10.5px;color:var(--text3)}
+.vg-history .vg-bar{width:60%;min-height:2px;flex:none;border-radius:3px 3px 0 0;background:color-mix(in srgb,var(--vg-good) 55%,transparent)}
+.vg-history li b{font-size:11px;color:var(--text);margin-top:3px}
+.vg-note{font-size:11px;color:var(--text3);line-height:1.6;margin:16px 0 0}
+@media(max-width:800px){.vg-row{grid-template-columns:1fr 1fr;gap:10px 14px}.vg-meta{grid-column:1/-1;order:3}}
+@media(max-width:600px){.home-page .value-gap{padding:20px 18px}.vg-head{flex-direction:column;gap:4px}.vg-row{grid-template-columns:1fr}.vg-history ol{gap:4px}}

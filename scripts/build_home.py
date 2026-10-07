@@ -40,9 +40,12 @@ QUOTE_SOURCE = "preview 일일 파이프라인"
 META_SOURCE = "저장 시세·공시 분석"
 
 # The page groups non-comparable scores separately and marks the cheap end of
-# the tier scale. Only these two tiers carry a valuation badge; everything else
-# renders without one, which is what `null` means here.
-VALUATION = {"저평가": "undervalued", "초저평가": "deep-value"}
+# the tier scale. Only these tiers carry a valuation badge; everything else
+# renders without one, which is what `null` means here. 적정~저평가 counts as
+# 저평가, the same rule preview's homepage uses (2026-10-07): under the v2
+# verdicts no card reaches a plain 저평가, so the exact-match rule left both
+# discovery tabs permanently empty.
+VALUATION = {"적정~저평가": "undervalued", "저평가": "undervalued", "초저평가": "deep-value"}
 
 
 class BuildError(Exception):
