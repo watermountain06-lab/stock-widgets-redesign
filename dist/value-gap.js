@@ -98,9 +98,9 @@
     + '<div class="vg-history"><p>분기별 기준가 아래 종목 수 <small>막대를 누르면 종목 보기</small></p><ol>' + hist + '</ol></div>';
 
   // 종목이 VISIBLE개를 넘으면 시장 지표처럼 저절로 넘긴다 - 단, 세로로 한 줄씩 끊어서(2026-10-08 사용자 결정).
-  // 3.5초마다 0.5초 동안 한 줄 올리고 맨 위 줄을 맨 아래로 옮긴다. 마우스·포커스가 있거나, 탭이 가려졌거나,
+  // 1초마다(2026-10-08 사용자 요청, 처음엔 3.5초) 0.5초 동안 한 줄 올리고 맨 위 줄을 맨 아래로 옮긴다. 마우스·포커스가 있거나, 탭이 가려졌거나,
   // '동작 줄이기' 설정이면 멈춘다. 줄 높이는 칸 폭에 따라 바뀌므로(컨테이너 쿼리) 크기가 바뀔 때마다 다시 잰다.
-  var VISIBLE = 4, STEP = 3500, SLIDE = 500;
+  var VISIBLE = 4, STEP = 1000, SLIDE = 500;
   var viewport = root.querySelector('.vg-viewport'), ul = viewport && viewport.querySelector('.vg-list');
   if (!ul || ul.children.length <= VISIBLE) return;
   var reduced = matchMedia('(prefers-reduced-motion: reduce)'), paused = false, busy = false;
