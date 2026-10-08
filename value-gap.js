@@ -44,6 +44,24 @@
     return '<li><button type="button" data-vg-quarter="' + i + '"' + (h.under ? '' : ' disabled') + ' aria-haspopup="dialog" aria-label="' + h.quarter + ' 기준가 아래 ' + h.under + '종목 (' + h.total + '종목 중)">'
       + '<span class="vg-bar" style="height:' + Math.round(h.under / max * 24) + 'px"></span><b>' + h.under + '</b><small>' + h.quarter.replace(/^20/, '').replace('Q', '.Q') + '</small></button></li>';
   }).join('');
+  // 팝업 카드의 가로 막대: 그 분기 주가 범위(띠), 기준가(세로선, 위 라벨), 현재가(점, 아래 둘째 줄 라벨).
+  // 라벨이 겹치지 않게 세 층으로 나눈다. 값이 없으면(분기 일봉 없음 등) 그 요소만 뺀다.
+  function quarterBar(s, md){
+    var vals = [s.low, s.high, s.buyPrice, s.current].filter(function(v){ return typeof v === 'number'; });
+    var lo = Math.min.apply(null, vals) * 0.96, hi = Math.max.apply(null, vals) * 1.04;
+    function x(v){ return ((v - lo) / (hi - lo) * 100).toFixed(1); }
+    function lx(v){ return Math.max(12, Math.min(88, Number(x(v)))); }
+    var out = '<div class="vg-q" aria-label="분기 주가 ' + (s.low != null ? money(s.low) + '~' + money(s.high) : '없음') + ', 기준가 ' + money(s.buyPrice) + ', 현재가 ' + (s.current != null ? money(s.current) : '없음') + '">';
+    out += '<span class="vg-q-buy-label" style="left:' + lx(s.buyPrice) + '%">기준가 ' + money(s.buyPrice) + ' (' + md + ')</span>';
+    out += '<span class="vg-q-track">';
+    if (s.low != null) out += '<span class="vg-q-range" style="left:' + x(s.low) + '%;width:' + (x(s.high) - x(s.low)).toFixed(1) + '%"></span>';
+    out += '<span class="vg-q-buy" style="left:' + x(s.buyPrice) + '%"></span>';
+    if (s.current != null) out += '<span class="vg-q-cur" style="left:' + x(s.current) + '%"></span>';
+    out += '</span>';
+    if (s.low != null) out += '<span class="vg-q-range-label" style="left:' + lx((s.low + s.high) / 2) + '%">분기 주가 ' + money(s.low) + ' ~ ' + money(s.high) + '</span>';
+    if (s.current != null) out += '<span class="vg-q-cur-label" style="left:' + lx(s.current) + '%">현재가 ' + money(s.current) + '</span>';
+    return out + '</div>';
+  }
   // 분기 막대를 누르면 '오늘의 발견'과 같은 대화상자에 그 분기의 종목을 보여 준다(대화상자는 index.html의 것을 같이 쓴다).
   function openQuarter(h){
     var dialog = document.getElementById('discovery-dialog');
@@ -53,9 +71,10 @@
     document.getElementById('discovery-note').textContent = '그 분기 당시의 주가와, 그때까지의 공시로 계산한 기준가 기준 · 추적 ' + h.total + '종목 중';
     document.getElementById('discovery-position').textContent = h.under + '개 종목';
     document.getElementById('discovery-grid').innerHTML = h.stocks.map(function(s){
+      var md = s.date.slice(5).replace(/^0/, '').replace('-0', '-').replace('-', '/');
       return '<a class="discovery-card" href="cards/' + esc(s.ticker) + '_full_widget.html"><img src="logos/' + s.ticker.toLowerCase() + '.png" alt=""><span><strong>' + esc(s.ticker) + '</strong><small>' + esc(s.name) + '</small></span>'
-        + '<span class="discovery-quote"><strong class="vg-dialog-gap">' + '−' + Math.abs(s.gap * 100).toFixed(1) + '%</strong></span>'
-        + '<small class="selection-reason">' + s.date.replace(/-/g, '.') + ' · 당시 주가 ' + money(s.price) + ' · 기준가 ' + money(s.buyPrice) + '</small></a>';
+        + '<span class="discovery-quote"><strong class="vg-dialog-gap">' + '−' + Math.abs(s.gap * 100).toFixed(1) + '%</strong><small>' + md + ' 기준가 대비</small></span>'
+        + quarterBar(s, md) + '</a>';
     }).join('');
     dialog.showModal();
   }

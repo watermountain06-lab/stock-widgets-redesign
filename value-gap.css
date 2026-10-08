@@ -44,3 +44,15 @@
 }
 /* 한 열로 쌓이는 화면(700px 이하)에서는 '오늘의 발견' 메뉴를 먼저 보이고 이 칸은 그 아래로 */
 @media(max-width:700px){.home-feature .value-gap{order:2;margin-top:8px}}
+/* 분기 팝업 카드의 가로 막대(대화상자는 .value-gap 밖이라 색을 따로 둔다) */
+.vg-q{--q-range:#8cc4a9;--q-buy:#5b5d6b;--q-cur:#1d1d27;position:relative;flex-basis:100%;height:72px;margin-top:4px;border-top:1px solid var(--border2);font-size:10.5px}
+:root[data-theme="dark"] .vg-q{--q-range:#3f8a66;--q-buy:#a5a9bd;--q-cur:#ececf5}
+.vg-q-track{position:absolute;left:0;right:0;top:26px;height:8px;border-radius:999px;background:color-mix(in srgb,var(--text3) 20%,transparent)}
+.vg-q-range{position:absolute;top:0;bottom:0;border-radius:999px;background:var(--q-range)}
+.vg-q-buy{position:absolute;top:-6px;bottom:-6px;width:2px;margin-left:-1px;background:var(--q-buy)}
+.vg-q-cur{position:absolute;top:50%;width:12px;height:12px;margin:-6px 0 0 -6px;border-radius:50%;background:var(--q-cur);border:2px solid var(--panel)}
+.vg-q span[class$="-label"]{position:absolute;line-height:14px;transform:translateX(-50%);white-space:nowrap;color:var(--text2)}
+.vg-q-buy-label{top:6px}
+.vg-q-range-label{top:40px;color:var(--text3)!important}
+.vg-q-cur-label{top:56px;font-weight:700;color:var(--text)!important}
+.discovery-quote .vg-dialog-gap+small{font-size:10px}
