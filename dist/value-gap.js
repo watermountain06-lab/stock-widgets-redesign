@@ -40,11 +40,31 @@
   var fullest = Math.max.apply(null, V.history.map(function(h){ return h.total; }).concat([1]));
   var shown = V.history.filter(function(h){ return h.total >= fullest / 2; });
   var max = Math.max.apply(null, shown.map(function(h){ return h.under; }).concat([1]));
-  var hist = shown.map(function(h){
-    return '<li title="' + h.quarter + ' · ' + h.total + '종목 중 ' + h.under + '종목"><span class="vg-bar" style="height:' + Math.round(h.under / max * 24) + 'px"></span><b>' + h.under + '</b><small>' + h.quarter.replace(/^20/, '').replace('Q', '.Q') + '</small></li>';
+  var hist = shown.map(function(h, i){
+    return '<li><button type="button" data-vg-quarter="' + i + '"' + (h.under ? '' : ' disabled') + ' aria-haspopup="dialog" aria-label="' + h.quarter + ' 기준가 아래 ' + h.under + '종목 (' + h.total + '종목 중)">'
+      + '<span class="vg-bar" style="height:' + Math.round(h.under / max * 24) + 'px"></span><b>' + h.under + '</b><small>' + h.quarter.replace(/^20/, '').replace('Q', '.Q') + '</small></button></li>';
   }).join('');
+  // 분기 막대를 누르면 '오늘의 발견'과 같은 대화상자에 그 분기의 종목을 보여 준다(대화상자는 index.html의 것을 같이 쓴다).
+  function openQuarter(h){
+    var dialog = document.getElementById('discovery-dialog');
+    if (!dialog) return;
+    var label = h.quarter.replace(/^(\d{4})Q(\d)$/, '$1년 $2분기');
+    document.getElementById('discovery-title').textContent = label + ' 기준가 아래';
+    document.getElementById('discovery-note').textContent = '그 분기 당시의 주가와, 그때까지의 공시로 계산한 기준가 기준 · 추적 ' + h.total + '종목 중';
+    document.getElementById('discovery-position').textContent = h.under + '개 종목';
+    document.getElementById('discovery-grid').innerHTML = h.stocks.map(function(s){
+      return '<a class="discovery-card" href="cards/' + esc(s.ticker) + '_full_widget.html"><img src="logos/' + s.ticker.toLowerCase() + '.png" alt=""><span><strong>' + esc(s.ticker) + '</strong><small>' + esc(s.name) + '</small></span>'
+        + '<span class="discovery-quote"><strong class="vg-dialog-gap">' + '−' + Math.abs(s.gap * 100).toFixed(1) + '%</strong></span>'
+        + '<small class="selection-reason">' + s.date.replace(/-/g, '.') + ' · 당시 주가 ' + money(s.price) + ' · 기준가 ' + money(s.buyPrice) + '</small></a>';
+    }).join('');
+    dialog.showModal();
+  }
+  root.addEventListener('click', function(e){
+    var b = e.target.closest('[data-vg-quarter]');
+    if (b && !b.disabled) openQuarter(shown[Number(b.dataset.vgQuarter)]);
+  });
   root.innerHTML = '<div class="vg-head"><p class="feature-kicker">VALUE CHECK</p><span class="vg-asof num">' + (V.asOf ? V.asOf.replace(/-/g, '.') + ' 종가' : '') + '</span></div>'
     + '<h2>매수 기준가와의 거리</h2>'
     + list
-    + '<div class="vg-history"><p>분기별 기준가 아래 종목 수 <small>(카드 약 80~90종목 중)</small></p><ol>' + hist + '</ol></div>';
+    + '<div class="vg-history"><p>분기별 기준가 아래 종목 수 <small>막대를 누르면 종목 보기</small></p><ol>' + hist + '</ol></div>';
 })();

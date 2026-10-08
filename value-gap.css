@@ -27,9 +27,14 @@
 .vg-history p{flex:0 0 150px;font-size:11px;color:var(--text2);margin:0;line-height:1.4}
 .vg-history p small{display:block;color:var(--text3)}
 .vg-history ol{flex:1;list-style:none;margin:0;padding:0;display:flex;align-items:flex-end;gap:6px;min-width:0}
-.vg-history li{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;font-size:9.5px;color:var(--text3);min-width:0}
+.vg-history li{flex:1;min-width:0;display:flex}
+.vg-history button{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:0;min-width:0;padding:4px 0;border:0;border-radius:6px;background:transparent;font:inherit;font-size:9.5px;color:var(--text3);cursor:pointer}
+.vg-history button:hover:not(:disabled),.vg-history button:focus-visible{background:color-mix(in srgb,var(--vg-good) 10%,transparent)}
+.vg-history button:disabled{cursor:default}
+.vg-dialog-gap{color:#1f8a5b}
+:root[data-theme="dark"] .vg-dialog-gap{color:#4cc38a}
 .vg-history .vg-bar{flex:none;width:70%;min-height:2px;border-radius:2px 2px 0 0;background:color-mix(in srgb,var(--vg-good) 55%,transparent)}
-.vg-history li b{font-size:10.5px;color:var(--text);margin-top:2px}
+.vg-history button b{font-size:10.5px;color:var(--text);margin-top:2px}
 /* 좁은 칸(약 800px 이하 화면, 모바일): 이름 아래에 막대 */
 @container (max-width:440px){
   .vg-row{grid-template-columns:1fr;row-gap:2px}
