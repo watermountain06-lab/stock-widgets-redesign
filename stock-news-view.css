@@ -1,0 +1,29 @@
+/* 뉴스·영상 탭 "종목 소식" 칸 (2026-10-08 — 뉴스·YouTube 두 칸 아래, 페이지 폭 전체). '더 보기' 버튼(.sn-more)은 뉴스 목록도 같이 쓴다. 카드 타임라인과 같은 점 색(초대형·긍정·부정·중립)을 쓰는데,
+   theme.css는 초록·빨강을 어두운 테마에만 정의해서 칸 안에 따로 둔다(카드의 밝은·어두운 값 그대로). */
+.stock-news{--sn-major:#0369a1;--sn-pos:#14804a;--sn-neg:#d92d20;--sn-neu:#a8650c}
+:root[data-theme="dark"] .stock-news{--sn-major:#7dd3fc;--sn-pos:#7cddb6;--sn-neg:#ff8799;--sn-neu:#f2c14e}
+.stock-news{container-type:inline-size;margin-top:48px}
+.sn-legend{display:flex;flex-wrap:wrap;gap:14px;font-size:11px;color:var(--muted,var(--text2));margin:4px 0 8px}
+.sn-legend span{display:inline-flex;align-items:center;gap:5px}
+.sn-dot{width:9px;height:9px;border-radius:50%;flex:none;background:var(--sn-neu)}
+.sn-dot.major{background:var(--sn-major)}.sn-dot.positive{background:var(--sn-pos)}.sn-dot.negative{background:var(--sn-neg)}
+.sn-day{margin:0;padding:22px 0 6px;font-size:13px;font-weight:700;color:var(--text)}
+.sn-list{list-style:none;margin:0;padding:0}
+.sn-item{display:grid;grid-template-columns:150px minmax(0,1fr) auto;column-gap:20px;align-items:start;padding:14px 0;border-bottom:1px solid var(--line,var(--border))}
+.sn-stock{display:flex;align-items:center;gap:9px;color:var(--text);text-decoration:none;min-width:0}
+.sn-stock img{width:26px;height:26px;border-radius:7px;object-fit:contain;background:#fff;flex:none}
+.sn-stock strong{display:block;font-size:13px}
+.sn-stock small{display:block;font-size:11px;color:var(--muted,var(--text2));white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sn-body{min-width:0}
+.sn-label{display:flex;align-items:center;gap:7px;font-size:11px;color:var(--muted,var(--text2))}
+.sn-title{margin:5px 0 4px;font-size:15px;line-height:1.55;font-weight:600;color:var(--text)}
+.sn-source{font-size:11px;color:var(--muted,var(--text2));text-decoration:none}
+.sn-source:hover{text-decoration:underline}
+.sn-react{font-size:13px;font-weight:700;white-space:nowrap;color:var(--muted,var(--text2))}
+.sn-react.up{color:var(--sn-pos)}.sn-react.down{color:var(--sn-neg)}
+.market-news-main .sn-more{margin:22px 0 0;padding:10px 16px;border:1px solid var(--line,var(--border));border-radius:999px;background:transparent;color:var(--text);font:inherit;font-size:13px;cursor:pointer}
+/* 뉴스 칸은 넓은 화면에서도 약 420px라, 칸 폭이 좁으면 종목·반응 %를 윗줄에, 내용을 아랫줄에 둔다 */
+@container (max-width:560px){
+  .sn-item{grid-template-columns:minmax(0,1fr) auto;row-gap:8px}
+  .sn-body{grid-column:1/-1;grid-row:2}
+}

@@ -1,0 +1,53 @@
+name: Market news snapshot
+
+# 뉴스·영상 탭의 시장 뉴스(Google News RSS 스냅샷)를 매일 새로 받는다(2026-10-08 사용자 결정).
+# 이 저장소는 라이브 사이트라 push마다 사용자 승인을 받는데, 이 작업이 바꾸는 두 파일
+# (market-news-snapshot.json과 dist/ 사본)만은 매일 자동 커밋을 예외로 허락받았다. 다른 파일은 건드리지 않는다.
+# 받기에 실패한 주제는 어제 기사를 두고 stale로 표시한다(tooling/refresh_market_news.py).
+
+on:
+  schedule:
+    - cron: "0 12 * * *"   # 매일 12:00 UTC = 미국 동부 08:00, 한국 21:00
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pages: write
+
+concurrency:
+  group: market-news
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - name: Fetch
+        run: python3 tooling/refresh_market_news.py
+      - name: Commit the snapshot only
+        run: |
+          git add market-news-snapshot.json dist/market-news-snapshot.json
+          if git diff --cached --quiet; then echo "no change"; exit 0; fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "market news snapshot $(date -u +%Y-%m-%d)"
+          pushed=false
+          for i in 1 2 3; do
+            if git pull --rebase && git push; then pushed=true; break; fi
+            git rebase --abort 2>/dev/null || true   # 충돌한 rebase를 남기면 다음 시도와 성공 판정이 어긋난다(Codex)
+            sleep $((i * 20))
+          done
+          [ "$pushed" = true ] || { echo "push failed"; exit 1; }
+          echo "pushed=true" >> "$GITHUB_OUTPUT"
+        id: commit
+      # Actions 토큰으로 한 push는 Pages 빌드를 띄우지 않을 수 있어 직접 요청한다(preview v2_cards.yml과 같은 방식)
+      - name: Request a Pages build
+        if: steps.commit.outputs.pushed == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh api -X POST "repos/${{ github.repository }}/pages/builds"
