@@ -544,8 +544,8 @@ Chart.overrides.doughnut.animation = false;
       <span class="meta-value" id="gevDcfReq" style="font-size: 22px; color: var(--red);">48.9%</span>
     </div>
     <div class="meta-item">
-      <span class="meta-label" id="gevConfidenceLabel">밴드 적중률 (122/307일, 하단우세)</span>
-      <span class="meta-value" id="gevConfidence" style="font-size: 22px; color: var(--red);">39.7%</span>
+      <span class="meta-label" id="gevConfidenceLabel">밴드 적중률</span>
+      <span class="meta-value" id="gevConfidence" style="font-size: 22px; color: var(--text3);">해당 없음</span>
     </div>
     <div class="meta-item">
       <span class="meta-label">적정주가 (배수 기준)</span>
@@ -2194,7 +2194,7 @@ const GEV_ANALYST = { asOf: '2026-10-06', source: 'StockAnalysis (의견 집계 
 // PER 밴드를 다시 만드는 것과 같은 규칙. 오늘 값 하나를 과거에 가로줄로
 // 긋는 것은 "2024년에도 내재가치가 $315였다"고 말하는 셈이라 틀렸다.
 const GEV_DCF_TRACK = [{d:"2026-07-22",low:65.7,base:86.5,high:110.7}];
-const GEV_BACKTEST = [{"checkpoint_date": "2025-04-23", "period_end_date": "2025-07-22", "predicted_low": 377.94, "predicted_high": 784.27, "zone": "breached_bottom", "is_open": false}, {"checkpoint_date": "2025-07-23", "period_end_date": "2025-10-21", "predicted_low": 228.14, "predicted_high": 446.55, "zone": "breached_top", "is_open": false}, {"checkpoint_date": "2025-10-22", "period_end_date": "2026-01-28", "predicted_low": 350.71, "predicted_high": 936.96, "zone": "full_hit", "is_open": false}, {"checkpoint_date": "2026-01-29", "period_end_date": "2026-04-21", "predicted_low": 1036.07, "predicted_high": 2666.99, "zone": "breached_bottom", "is_open": false}, {"checkpoint_date": "2026-04-22", "period_end_date": "2026-07-21", "predicted_low": 1593.33, "predicted_high": 5103.54, "zone": "breached_bottom", "is_open": false}, {"checkpoint_date": "2026-07-22", "period_end_date": "2026-09-09", "predicted_low": 1042.78, "predicted_high": 5059.12, "zone": "breached_bottom", "is_open": true}];
+const GEV_BACKTEST = [];
 // ─── 일봉 기준 밴드 적중률 ───
 // 체크포인트 판정(full_hit/breached_*)은 하루만 벗어나도 그 구간 전체를 실패로 보기 때문에,
 // "예상 밴드 안에서 마감한 일봉이 몇 %인가"로 따로 센다. 진행 중인 구간의

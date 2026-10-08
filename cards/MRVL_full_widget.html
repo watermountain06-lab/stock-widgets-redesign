@@ -2197,7 +2197,7 @@ const MRVL_ANALYST = { asOf: '2026-10-06', source: 'StockAnalysis (의견 집계
 // PER 밴드를 다시 만드는 것과 같은 규칙. 오늘 값 하나를 과거에 가로줄로
 // 긋는 것은 "2024년에도 내재가치가 $315였다"고 말하는 셈이라 틀렸다.
 const MRVL_DCF_TRACK = [{d:"2024-08-30",low:-11.1,base:-15.7,high:-16.0},{d:"2024-12-04",low:-11.6,base:-16.2,high:-15.4},{d:"2025-03-12",low:-11.4,base:-16.6,high:-12.6},{d:"2025-05-30",low:-11.9,base:-18.1,high:-10.9},{d:"2025-08-29",low:-11.7,base:-18.7,high:-9.5},{d:"2025-12-03",low:-7.5,base:-14.6,high:4.6},{d:"2026-03-11",low:-6.9,base:-2.1,high:6.5},{d:"2026-05-28",low:-7.4,base:-14.1,high:4.7},{d:"2026-08-28",low:-7.4,base:3.0,high:6.1}];
-const MRVL_BACKTEST = [{"checkpoint_date": "2026-05-28", "period_end_date": "2026-08-27", "predicted_low": 80.67, "predicted_high": 167.08, "zone": "breached_top", "is_open": false}, {"checkpoint_date": "2026-08-28", "period_end_date": "2026-09-11", "predicted_low": 86.05, "predicted_high": 287.16, "zone": "full_hit", "is_open": true}];
+const MRVL_BACKTEST = [];
 // ─── 일봉 기준 밴드 적중률 ───
 // 체크포인트 판정(full_hit/breached_*)은 하루만 벗어나도 그 구간 전체를 실패로 보기 때문에,
 // "예상 밴드 안에서 마감한 일봉이 몇 %인가"로 따로 센다. 진행 중인 구간의

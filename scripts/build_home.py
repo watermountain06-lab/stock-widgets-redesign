@@ -27,6 +27,7 @@ Usage: python3 scripts/build_home.py [--check]
 import argparse
 import json
 import re
+import subprocess
 import sys
 from pathlib import Path
 
@@ -46,6 +47,46 @@ META_SOURCE = "저장 시세·공시 분석"
 # verdicts no card reaches a plain 저평가, so the exact-match rule left both
 # discovery tabs permanently empty.
 VALUATION = {"적정~저평가": "undervalued", "저평가": "undervalued", "초저평가": "deep-value"}
+
+
+def card_bands():
+    """Each card's current '예상밴드 백테스트' band (the open checkpoint), via node.
+
+    The cards hold BACKTEST as JSON in some files and as a JS object literal in others,
+    so scripts/extract_card_bands.js evaluates them rather than parsing here.
+    """
+    try:
+        out = subprocess.run(["node", str(REPO / "scripts/extract_card_bands.js")],
+                             capture_output=True, text=True, check=True).stdout
+    except (OSError, subprocess.CalledProcessError) as e:
+        raise BuildError(f"cannot read the cards' bands: {e}") from e
+    bands = json.loads(out)
+    bad = sorted(t for t, v in bands.items() if "error" in v)
+    if bad:
+        raise BuildError(f"band extraction failed for: {', '.join(bad)}")
+    return bands
+
+
+def band_position(price, b):
+    """Where today's price sits against the card's current band (2026-10-08 user decision).
+
+    The table shows the position only, without colour: the 2026-09-25 S&P500 test found
+    that names below their band went on to do worse, not better (band_breach_prereg.md),
+    so "below" is a fact about the price, not a buy signal. gap is measured from the
+    nearer edge the price has crossed.
+    """
+    if b is None or b.get("perNA"):
+        return {"pos": "na"}
+    if b.get("low") is None or b.get("high") is None:
+        return {"pos": "none"}
+    out = {"low": b["low"], "high": b["high"], "checkpoint": b["checkpoint"]}
+    if price < b["low"]:
+        out.update(pos="below", gap=round(price / b["low"] - 1, 4))
+    elif price > b["high"]:
+        out.update(pos="above", gap=round(price / b["high"] - 1, 4))
+    else:
+        out["pos"] = "inside"
+    return out
 
 
 class BuildError(Exception):
@@ -85,15 +126,16 @@ def cap(v):
     return f"${v / 1e12:.2f}T" if v >= 1e12 else f"${v / 1e9:.1f}B"
 
 
-def record(r, session):
+def record(r, session, bands):
     """One preview row as the homepage's JS expects it.
 
     The thirteen fields preview publishes are carried across unchanged, so the
-    page and preview can never disagree about a number. The five extra fields
+    page and preview can never disagree about a number. The six extra fields
     are derived here: two formatted strings beside their raw values (the tables
     sort on the raw ones), the session the prices came from, a label saying the
-    quote is stored rather than live, and the valuation badge, which is a pure
-    function of the tier preview already maintains.
+    quote is stored rather than live, the valuation badge, which is a pure
+    function of the tier preview already maintains, and the price's position
+    against the card's current band (read from the card itself).
     """
     out = dict(r)
     out["href"] = f"cards/{r['href']}"
@@ -104,6 +146,7 @@ def record(r, session):
     out["quoteDate"] = session
     out["quoteSource"] = QUOTE_SOURCE
     out["valuation"] = VALUATION.get(r["tier"])
+    out["band"] = band_position(r["price"], bands.get(r["ticker"]))
     return out
 
 
@@ -120,7 +163,7 @@ def check_assets(rows):
         raise BuildError(f"no logos/<ticker>.png in this repo for: {', '.join(no_logo)}")
 
 
-def splice(cur, rows, meta, macro):
+def splice(cur, rows, meta, macro, bands):
     """Replace the `stocks` array and the `meta` object, leave everything else alone.
 
     The macro indicators ride inside `meta` rather than as a fourth top-level key. The
@@ -141,7 +184,7 @@ def splice(cur, rows, meta, macro):
     if end < 0:
         raise BuildError("stock-data.js: no closing }}; after meta")
 
-    body = ",\n  ".join(json.dumps(record(r, meta["priceSession"]), ensure_ascii=False)
+    body = ",\n  ".join(json.dumps(record(r, meta["priceSession"], bands), ensure_ascii=False)
                         for r in rows)
     m = dict(meta)
     m.update({"mode": "snapshot", "source": META_SOURCE, "asOf": meta["priceSession"],
@@ -172,7 +215,7 @@ def main():
         rows, meta, macro = preview_data()
         check_assets(rows)
         cur = OUT.read_text(encoding="utf-8")
-        new = splice(cur, rows, meta, macro)
+        new = splice(cur, rows, meta, macro, card_bands())
     except BuildError as e:
         sys.exit(f"build_home: {e}")
 

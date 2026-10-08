@@ -172,27 +172,39 @@
       + '<small>'+window.StockData.quoteLabel(d)+' '+ (d.quoteAsOf ? 'Twelve Data · '+d.quoteAsOf : '')+'</small>'
       + '<div class="card-bottom"><span>시가총액 <b class="num">'+d.marketCap+'</b></span><span>분석 보기 ↗</span></div></article>';
   }
-  function valuationCell(d){return (d.tier||'미평가')+(d.tierConflict?' · 평가 충돌':'')+'<small>재무점수 '+(d.score==null?'미평가':d.score.toFixed(1))+(d.scoreFlags.length?' · 제한 사항: '+d.scoreFlags.join(', '):'')+'</small>';}
+  // 둘째 줄은 재무점수 대신 카드의 '예상밴드 백테스트' 현재 구간에 대한 현재가 위치(2026-10-08 사용자 결정). 색은 넣지 않는다 —
+  // S&P500 검정에서 밴드 아래 무리가 이후 더 나빴다(band_breach_prereg.md), '아래'는 매수 신호가 아니라 위치다.
+  function bandText(b){
+    const usd=v=>'$'+Math.round(v).toLocaleString('en-US'), pct=g=>(g<0?'−':'+')+Math.abs(g*100).toFixed(1)+'%';
+    if(!b||b.pos==='none')return '밴드 없음';
+    if(b.pos==='na')return '밴드 해당 없음';
+    if(b.pos==='inside')return '밴드 안 '+usd(b.low)+'~'+usd(b.high).slice(1);
+    return (b.pos==='below'?'밴드 아래 ':'밴드 위 ')+pct(b.gap);
+  }
+  function valuationCell(d){return (d.tier||'미평가')+(d.tierConflict?' · 평가 충돌':'')+'<small>'+bandText(d.band)+'</small>';}
   function render() {
     var query = document.getElementById('stock-search').value.trim().toLowerCase();
     var data = DATA.filter(function(d){return (d.ticker+' '+d.name).toLowerCase().includes(query);});
     document.getElementById('ticker-count').textContent = data.length;
     panel.classList.toggle('table-view',view!=='rank');
     if(view==='change') data.sort(function(a,b){return b.change-a.change;});
-    // 종합평가(v2 판정) 싼 순, 같은 평가 안에서는 재무점수 높은 순, 미평가는 맨 뒤(2026-10-08 사용자 요청)
+    // 종합평가(v2 판정) 싼 순, 미평가는 맨 뒤. 같은 평가 안에서는 밴드 아래 → 안 → 위 → 밴드 없음,
+    // 밴드 밖은 벗어난 정도가 큰 순(2026-10-08 사용자 요청)
     const TIER_ORDER=['초저평가','저평가','적정~저평가','적정','고평가~적정','적정~고평가','고평가'];
     function tierRank(d){const i=TIER_ORDER.indexOf(d.tier);return i<0?TIER_ORDER.length:i;}
-    if(view==='attract') data.sort((a,b)=>tierRank(a)-tierRank(b)||(b.score ?? -Infinity)-(a.score ?? -Infinity)||a.rank-b.rank);
+    const BAND_ORDER={below:0,inside:1,above:2,none:3,na:3};
+    function bandKey(d){const b=d.band||{pos:'none'};return [BAND_ORDER[b.pos] ?? 3,-Math.abs(b.gap||0)];}
+    if(view==='attract') data.sort((a,b)=>{const x=bandKey(a),y=bandKey(b);return tierRank(a)-tierRank(b)||x[0]-y[0]||x[1]-y[1]||a.rank-b.rank;});
     if(view==='rank') panel.innerHTML=data.map(card).join('');
     else {
       if(view==='sector') data.sort((a,b)=>a.sector.localeCompare(b.sector,'ko')||a.rank-b.rank);
       const changeRanks=new Map([...DATA].sort((a,b)=>b.change-a.change).map((d,i)=>[d.ticker,i+1]));
-      const columns=[['rank',view==='change'?'등락 순위':'시총 순위'],['ticker','종목'],['sector','업종'],['price','주가'],['change','등락률'],[view==='attract'?'valuation':'marketCap',view==='attract'?'평가 · 재무점수':'시가총액']];
+      const columns=[['rank',view==='change'?'등락 순위':'시총 순위'],['ticker','종목'],['sector','업종'],['price','주가'],['change','등락률'],[view==='attract'?'valuation':'marketCap',view==='attract'?'평가 · 밴드 위치':'시가총액']];
 
       function numeric(value){const n=parseFloat(String(value).replace(/[^0-9.-]/g,''));return n*(String(value).includes('T')?1e12:String(value).includes('B')?1e9:String(value).includes('M')?1e6:1);}
       function sortValue(d){if(sortKey==='rank')return view==='change'?changeRanks.get(d.ticker):d.rank;if(sortKey==='price'||sortKey==='marketCap')return numeric(d[sortKey]);return d[sortKey]??'';}
       if(sortKey)data.sort((a,b)=>{const av=sortValue(a),bv=sortValue(b);return sortDirection*(typeof av==='number'?av-bv:String(av).localeCompare(String(bv),'ko'))||a.rank-b.rank;});
-      panel.innerHTML='<div class="stock-table-scroll"><table class="stock-table"><caption>'+({sector:'업종별 · 시가총액 순위',change:'등락률 순위 · 등록 종목 기준',attract:'종합평가 순 · 같은 평가 안에서는 재무점수 높은 순 · 평가·재무 기준일은 상세 분석 참고'})[view]+'</caption><thead><tr>'+columns.map(([key,label])=>'<th scope="col" aria-sort="'+(sortKey===key?(sortDirection===1?'ascending':'descending'):'none')+'">'+(key==='valuation'?label:'<button type="button" data-sort="'+key+'">'+label+' <span aria-hidden="true">'+(sortKey===key?(sortDirection===1?'↑':'↓'):'↕')+'</span></button>')+'</th>').join('')+'</tr></thead><tbody>'+data.map(d=>'<tr><td>'+(view==='change'?changeRanks.get(d.ticker):d.rank)+'위</td><td><a href="'+d.href+'"><strong>'+d.ticker+'</strong><small>'+d.name+'</small></a></td><td>'+d.sector+'</td><td>'+d.price+'</td><td>'+changeCell(d.change)+'</td><td>'+(view==='attract'?valuationCell(d):d.marketCap)+'</td></tr>').join('')+'</tbody></table></div>';
+      panel.innerHTML='<div class="stock-table-scroll"><table class="stock-table"><caption>'+({sector:'업종별 · 시가총액 순위',change:'등락률 순위 · 등록 종목 기준',attract:'종합평가 순 · 같은 평가 안에서는 밴드 아래 → 안 → 위 · 밴드는 각 카드 예상밴드 백테스트의 현재 구간'})[view]+'</caption><thead><tr>'+columns.map(([key,label])=>'<th scope="col" aria-sort="'+(sortKey===key?(sortDirection===1?'ascending':'descending'):'none')+'">'+(key==='valuation'?label:'<button type="button" data-sort="'+key+'">'+label+' <span aria-hidden="true">'+(sortKey===key?(sortDirection===1?'↑':'↓'):'↕')+'</span></button>')+'</th>').join('')+'</tr></thead><tbody>'+data.map(d=>'<tr><td>'+(view==='change'?changeRanks.get(d.ticker):d.rank)+'위</td><td><a href="'+d.href+'"><strong>'+d.ticker+'</strong><small>'+d.name+'</small></a></td><td>'+d.sector+'</td><td>'+d.price+'</td><td>'+changeCell(d.change)+'</td><td>'+(view==='attract'?valuationCell(d):d.marketCap)+'</td></tr>').join('')+'</tbody></table></div>';
     }
     if(!data.length) panel.innerHTML='<div class="empty-state">표시할 종목이 없습니다</div>';
   }
