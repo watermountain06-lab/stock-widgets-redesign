@@ -47,7 +47,7 @@
 </style>
 <link rel="stylesheet" href="styles.css?v=restore-source-4">
 <link rel="stylesheet" href="header.css?v=1">
-<script src="data-status.js?v=main-81ab160" defer></script>
+<script src="data-status.js?v=main-1008" defer></script>
 <link rel="stylesheet" href="theme.css?v=2">
 <script src="theme.js?v=2"></script>
 <link rel="stylesheet" href="flow.css?v=16">
@@ -178,6 +178,7 @@
   function bandText(b){
     if(!b||b.pos==='none')return '밴드 없음';
     if(b.pos==='na')return '밴드 해당 없음';
+    if(b.raw<-100)return '밴드 표시 불가';   // 밴드가 무너진 종목(PANW·MRK·PFE, 2026-10-08 사용자 결정)
     return '밴드 점수 '+String(b.score).replace('-','−');
   }
   function valuationCell(d){return (d.tier||'미평가')+(d.tierConflict?' · 평가 충돌':'')+'<small>'+bandText(d.band)+'</small>';}

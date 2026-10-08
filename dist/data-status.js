@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded',async()=>{
   const box=document.createElement('aside');box.className='data-status';
   const meta=window.StockData.meta;
-  box.textContent='데이터 출처: '+meta.source+' · 시세 기준일: '+meta.asOf+' · 재무점수 평가 기준 '+meta.scoreValuationAsOfMin+' ~ '+meta.scoreValuationAsOfMax+' · 실시간 아님 · 시장 지표와 Today 날짜 편성은 예시';
+  box.textContent='데이터 출처: '+meta.source+' · 시세 기준일: '+meta.asOf+' · 실시간 아님 · 시장 지표와 Today 날짜 편성은 예시';
   const header=document.querySelector('.site-header');header.after(box);
   try {
     const response=await fetch('quotes-snapshot.json',{cache:'no-store'});
