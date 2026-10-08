@@ -80,6 +80,10 @@ def band_position(price, b):
     if b.get("low") is None or b.get("high") is None:
         return {"pos": "none"}
     out = {"low": b["low"], "high": b["high"], "checkpoint": b["checkpoint"]}
+    # 밴드 점수(2026-10-08 사용자 결정): 하단이면 100, 상단이면 0. 화면은 0~100으로 자르고, 순서는 자르기 전 값(raw)으로
+    # 매겨 밴드 밖에서도 더 멀리 아래인 종목이 위로 온다.
+    raw = (b["high"] - price) / (b["high"] - b["low"]) * 100
+    out.update(score=round(min(100, max(0, raw))), raw=round(raw, 2))
     if price < b["low"]:
         out.update(pos="below", gap=round(price / b["low"] - 1, 4))
     elif price > b["high"]:
