@@ -173,14 +173,12 @@
       + '<div class="card-bottom"><span>시가총액 <b class="num">'+d.marketCap+'</b></span><span>분석 보기 ↗</span></div></article>';
   }
   // 둘째 줄은 재무점수 대신 카드의 '예상밴드 백테스트' 현재 구간에 대한 현재가 위치와 밴드 점수(하단 100 · 상단 0,
-  // 밖은 0~100으로 자름 — 2026-10-08 사용자 결정). 색은 넣지 않는다 —
+  // 아래는 100 초과·위는 0 미만, −100~200에서 자름 — 2026-10-08 사용자 결정). 색은 넣지 않는다 —
   // S&P500 검정에서 밴드 아래 무리가 이후 더 나빴다(band_breach_prereg.md), '아래'는 매수 신호가 아니라 위치다.
   function bandText(b){
-    const usd=v=>'$'+Math.round(v).toLocaleString('en-US'), pct=g=>(g<0?'−':'+')+Math.abs(g*100).toFixed(1)+'%';
     if(!b||b.pos==='none')return '밴드 없음';
     if(b.pos==='na')return '밴드 해당 없음';
-    const where=b.pos==='inside'?'밴드 안 '+usd(b.low)+'~'+usd(b.high).slice(1):(b.pos==='below'?'밴드 아래 ':'밴드 위 ')+pct(b.gap);
-    return '밴드 점수 '+b.score+' · '+where;
+    return '밴드 점수 '+String(b.score).replace('-','−');
   }
   function valuationCell(d){return (d.tier||'미평가')+(d.tierConflict?' · 평가 충돌':'')+'<small>'+bandText(d.band)+'</small>';}
   function render() {
@@ -204,7 +202,7 @@
       function numeric(value){const n=parseFloat(String(value).replace(/[^0-9.-]/g,''));return n*(String(value).includes('T')?1e12:String(value).includes('B')?1e9:String(value).includes('M')?1e6:1);}
       function sortValue(d){if(sortKey==='rank')return view==='change'?changeRanks.get(d.ticker):d.rank;if(sortKey==='price'||sortKey==='marketCap')return numeric(d[sortKey]);return d[sortKey]??'';}
       if(sortKey)data.sort((a,b)=>{const av=sortValue(a),bv=sortValue(b);return sortDirection*(typeof av==='number'?av-bv:String(av).localeCompare(String(bv),'ko'))||a.rank-b.rank;});
-      panel.innerHTML='<div class="stock-table-scroll"><table class="stock-table"><caption>'+({sector:'업종별 · 시가총액 순위',change:'등락률 순위 · 등록 종목 기준',attract:'종합평가 순 · 같은 평가 안에서는 밴드 점수 높은 순 · 밴드 점수는 각 카드 예상밴드 백테스트의 현재 구간에서 하단 100 · 상단 0'})[view]+'</caption><thead><tr>'+columns.map(([key,label])=>'<th scope="col" aria-sort="'+(sortKey===key?(sortDirection===1?'ascending':'descending'):'none')+'">'+(key==='valuation'?label:'<button type="button" data-sort="'+key+'">'+label+' <span aria-hidden="true">'+(sortKey===key?(sortDirection===1?'↑':'↓'):'↕')+'</span></button>')+'</th>').join('')+'</tr></thead><tbody>'+data.map(d=>'<tr><td>'+(view==='change'?changeRanks.get(d.ticker):d.rank)+'위</td><td><a href="'+d.href+'"><strong>'+d.ticker+'</strong><small>'+d.name+'</small></a></td><td>'+d.sector+'</td><td>'+d.price+'</td><td>'+changeCell(d.change)+'</td><td>'+(view==='attract'?valuationCell(d):d.marketCap)+'</td></tr>').join('')+'</tbody></table></div>';
+      panel.innerHTML='<div class="stock-table-scroll"><table class="stock-table"><caption>'+({sector:'업종별 · 시가총액 순위',change:'등락률 순위 · 등록 종목 기준',attract:'종합평가 순 · 같은 평가 안에서는 밴드 점수 높은 순 · 밴드 점수는 각 카드 예상밴드 백테스트의 현재 구간에서 하단 100 · 상단 0 (아래는 100 초과, 위는 0 미만)'})[view]+'</caption><thead><tr>'+columns.map(([key,label])=>'<th scope="col" aria-sort="'+(sortKey===key?(sortDirection===1?'ascending':'descending'):'none')+'">'+(key==='valuation'?label:'<button type="button" data-sort="'+key+'">'+label+' <span aria-hidden="true">'+(sortKey===key?(sortDirection===1?'↑':'↓'):'↕')+'</span></button>')+'</th>').join('')+'</tr></thead><tbody>'+data.map(d=>'<tr><td>'+(view==='change'?changeRanks.get(d.ticker):d.rank)+'위</td><td><a href="'+d.href+'"><strong>'+d.ticker+'</strong><small>'+d.name+'</small></a></td><td>'+d.sector+'</td><td>'+d.price+'</td><td>'+changeCell(d.change)+'</td><td>'+(view==='attract'?valuationCell(d):d.marketCap)+'</td></tr>').join('')+'</tbody></table></div>';
     }
     if(!data.length) panel.innerHTML='<div class="empty-state">표시할 종목이 없습니다</div>';
   }
