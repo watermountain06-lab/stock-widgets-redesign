@@ -53,6 +53,8 @@
 .vg-q-cur{position:absolute;top:50%;width:12px;height:12px;margin:-6px 0 0 -6px;border-radius:50%;background:var(--q-cur);border:2px solid var(--panel)}
 .vg-q span[class$="-label"]{position:absolute;line-height:14px;transform:translateX(-50%);white-space:nowrap;color:var(--text2)}
 .vg-q-buy-label{top:6px}
-.vg-q-range-label{top:40px;color:var(--text3)!important}
+.vg-q-end{position:absolute;top:40px;line-height:14px;white-space:nowrap;color:var(--text3)}
+.vg-q-low{transform:none}.vg-q-low.is-out{transform:translateX(calc(-100% - 4px))}
+.vg-q-high{transform:translateX(-100%)}.vg-q-high.is-out{transform:translateX(4px)}
 .vg-q-cur-label{top:56px;font-weight:700;color:var(--text)!important}
 .discovery-quote .vg-dialog-gap+small{font-size:10px}
