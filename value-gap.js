@@ -15,23 +15,22 @@
   function money(v){ return '$' + v.toLocaleString('en-US', {minimumFractionDigits:2, maximumFractionDigits:2}); }
   function esc(s){ return String(s).replace(/[&<>"]/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
   function pos(r){ return Math.max(0, Math.min(100, (r - LO) / (HI - LO) * 100)); }
-  function vote(v){ return v == null ? '기권' : v > 0 ? '+' + v : v < 0 ? '−' + Math.abs(v) : '0'; }
+  // 라벨은 가운데 정렬이라 막대 끝에서 잘리지 않게 안쪽으로 당긴다.
+  function labelPos(p){ return Math.max(8, Math.min(92, p)); }
   function row(s){
-    var r = s.price / s.buyPrice, pct = Math.abs(s.gap * 100).toFixed(1);
-    var where = '기준가보다 ' + pct + '% ' + (s.gap <= 0 ? '낮음' : '높음');
-    var judges = s.judges.map(function(j){
-      return '<span class="vg-judge' + (j[1] > 0 ? ' is-plus' : j[1] < 0 ? ' is-minus' : '') + '">' + esc(j[0]) + ' ' + vote(j[1]) + '</span>';
-    }).join('');
+    var r = s.price / s.buyPrice, pct = (s.gap * 100).toFixed(1);
+    var gap = (s.gap <= 0 ? '−' : '+') + Math.abs(pct) + '%';
+    var where = '기준가보다 ' + Math.abs(pct) + '% ' + (s.gap <= 0 ? '낮음' : '높음');
     var hard = s.hard.length
       ? '<span class="vg-hard" tabindex="0" title="' + esc(s.hard.map(function(k){ return HARD[k] || k; }).join(' · ')) + '">계산 주의</span>' : '';
     return '<li class="vg-row">'
-      + '<a class="vg-name" href="' + esc(s.href) + '"><img src="logos/' + s.ticker.toLowerCase() + '.png" alt="" loading="lazy"><span><strong>' + esc(s.ticker) + '</strong><small>' + esc(s.name) + '</small></span></a>'
-      + '<div class="vg-gauge" role="img" aria-label="현재가 ' + money(s.price) + ', 매수 기준가 ' + money(s.buyPrice) + ', ' + where + '">'
-      +   '<span class="vg-zone" style="width:' + pos(1) + '%"></span><span class="vg-line" style="left:' + pos(1) + '%"></span>'
-      +   '<span class="vg-dot' + (s.gap <= 0 ? ' is-under' : '') + '" style="left:' + pos(r) + '%"></span>'
+      + '<a class="vg-name" href="' + esc(s.href) + '"><img src="logos/' + s.ticker.toLowerCase() + '.png" alt="" loading="lazy"><span><strong>' + esc(s.ticker) + hard + '</strong><small>' + esc(s.name) + '</small></span></a>'
+      + '<div class="vg-gauge num" role="img" aria-label="현재가 ' + money(s.price) + ', 매수 기준가 ' + money(s.buyPrice) + ', ' + where + '">'
+      +   '<span class="vg-gap' + (s.gap <= 0 ? ' is-under' : '') + '" style="left:' + labelPos(pos(r)) + '%">' + gap + '</span>'
+      +   '<span class="vg-track"><span class="vg-zone" style="width:' + pos(1) + '%"></span><span class="vg-line" style="left:' + pos(1) + '%"></span>'
+      +   '<span class="vg-dot' + (s.gap <= 0 ? ' is-under' : '') + '" style="left:' + pos(r) + '%" title="현재가 ' + money(s.price) + '"></span></span>'
+      +   '<span class="vg-buy" style="left:' + labelPos(pos(1)) + '%" title="기본 내재가치의 90% · 현금흐름 판단이 \'싸다\'가 되는 가격">기준가 ' + money(Math.round(s.buyPrice)).replace(/\.00$/, '') + '</span>'
       + '</div>'
-      + '<div class="vg-text num"><b>' + where + '</b><small>' + money(s.price) + ' · 기준가 ' + money(s.buyPrice) + '</small></div>'
-      + '<div class="vg-meta"><span class="vg-verdict">' + esc(s.verdict) + '</span>' + judges + hard + '</div>'
       + '</li>';
   }
   var list = V.stocks.length
@@ -46,8 +45,6 @@
   }).join('');
   root.innerHTML = '<div class="vg-head"><p class="feature-kicker">VALUE CHECK</p><span class="vg-asof num">' + (V.asOf ? V.asOf.replace(/-/g, '.') + ' 종가' : '') + '</span></div>'
     + '<h2>매수 기준가와의 거리</h2>'
-    + '<p class="vg-intro">v2 판정이 적정~저평가 이상인 종목만. 매수 기준가는 기본 내재가치의 90%로, 현금흐름 판단이 \'싸다\'가 되는 가격입니다.</p>'
     + list
-    + '<div class="vg-history"><p>분기별 기준가 아래 종목 수 <small>(카드 약 80~90종목 중)</small></p><ol>' + hist + '</ol></div>'
-    + '<p class="vg-note">기준가는 할인율 10%·영구성장률 2.5% 가정의 계산값이며 목표가나 예상 수익률이 아닙니다. 판정은 사이트 규칙의 결과로 이후 수익을 뜻하지 않습니다.</p>';
+    + '<div class="vg-history"><p>분기별 기준가 아래 종목 수 <small>(카드 약 80~90종목 중)</small></p><ol>' + hist + '</ol></div>';
 })();
