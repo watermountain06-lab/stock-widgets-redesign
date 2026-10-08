@@ -179,7 +179,10 @@
     document.getElementById('ticker-count').textContent = data.length;
     panel.classList.toggle('table-view',view!=='rank');
     if(view==='change') data.sort(function(a,b){return b.change-a.change;});
-    if(view==='attract') data.sort((a,b)=>(b.score ?? -Infinity)-(a.score ?? -Infinity)||a.rank-b.rank);
+    // 종합평가(v2 판정) 싼 순, 같은 평가 안에서는 재무점수 높은 순, 미평가는 맨 뒤(2026-10-08 사용자 요청)
+    const TIER_ORDER=['초저평가','저평가','적정~저평가','적정','고평가~적정','적정~고평가','고평가'];
+    function tierRank(d){const i=TIER_ORDER.indexOf(d.tier);return i<0?TIER_ORDER.length:i;}
+    if(view==='attract') data.sort((a,b)=>tierRank(a)-tierRank(b)||(b.score ?? -Infinity)-(a.score ?? -Infinity)||a.rank-b.rank);
     if(view==='rank') panel.innerHTML=data.map(card).join('');
     else {
       if(view==='sector') data.sort((a,b)=>a.sector.localeCompare(b.sector,'ko')||a.rank-b.rank);
@@ -189,7 +192,7 @@
       function numeric(value){const n=parseFloat(String(value).replace(/[^0-9.-]/g,''));return n*(String(value).includes('T')?1e12:String(value).includes('B')?1e9:String(value).includes('M')?1e6:1);}
       function sortValue(d){if(sortKey==='rank')return view==='change'?changeRanks.get(d.ticker):d.rank;if(sortKey==='price'||sortKey==='marketCap')return numeric(d[sortKey]);return d[sortKey]??'';}
       if(sortKey)data.sort((a,b)=>{const av=sortValue(a),bv=sortValue(b);return sortDirection*(typeof av==='number'?av-bv:String(av).localeCompare(String(bv),'ko'))||a.rank-b.rank;});
-      panel.innerHTML='<div class="stock-table-scroll"><table class="stock-table"><caption>'+({sector:'업종별 · 시가총액 순위',change:'등락률 순위 · 등록 종목 기준',attract:'저장 평가 · 재무점수 높은 순 · 평가·재무 기준일은 상세 분석 참고'})[view]+'</caption><thead><tr>'+columns.map(([key,label])=>'<th scope="col" aria-sort="'+(sortKey===key?(sortDirection===1?'ascending':'descending'):'none')+'">'+(key==='valuation'?label:'<button type="button" data-sort="'+key+'">'+label+' <span aria-hidden="true">'+(sortKey===key?(sortDirection===1?'↑':'↓'):'↕')+'</span></button>')+'</th>').join('')+'</tr></thead><tbody>'+data.map(d=>'<tr><td>'+(view==='change'?changeRanks.get(d.ticker):d.rank)+'위</td><td><a href="'+d.href+'"><strong>'+d.ticker+'</strong><small>'+d.name+'</small></a></td><td>'+d.sector+'</td><td>'+d.price+'</td><td>'+changeCell(d.change)+'</td><td>'+(view==='attract'?valuationCell(d):d.marketCap)+'</td></tr>').join('')+'</tbody></table></div>';
+      panel.innerHTML='<div class="stock-table-scroll"><table class="stock-table"><caption>'+({sector:'업종별 · 시가총액 순위',change:'등락률 순위 · 등록 종목 기준',attract:'종합평가 순 · 같은 평가 안에서는 재무점수 높은 순 · 평가·재무 기준일은 상세 분석 참고'})[view]+'</caption><thead><tr>'+columns.map(([key,label])=>'<th scope="col" aria-sort="'+(sortKey===key?(sortDirection===1?'ascending':'descending'):'none')+'">'+(key==='valuation'?label:'<button type="button" data-sort="'+key+'">'+label+' <span aria-hidden="true">'+(sortKey===key?(sortDirection===1?'↑':'↓'):'↕')+'</span></button>')+'</th>').join('')+'</tr></thead><tbody>'+data.map(d=>'<tr><td>'+(view==='change'?changeRanks.get(d.ticker):d.rank)+'위</td><td><a href="'+d.href+'"><strong>'+d.ticker+'</strong><small>'+d.name+'</small></a></td><td>'+d.sector+'</td><td>'+d.price+'</td><td>'+changeCell(d.change)+'</td><td>'+(view==='attract'?valuationCell(d):d.marketCap)+'</td></tr>').join('')+'</tbody></table></div>';
     }
     if(!data.length) panel.innerHTML='<div class="empty-state">표시할 종목이 없습니다</div>';
   }
