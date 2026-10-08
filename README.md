@@ -73,10 +73,11 @@ SPCX는 심볼/상장 검증 전이므로 수집하지 않습니다. 시가총�
 preview(`~/Workspace/stock-widgets-preview`)가 매일 갱신한 카드와 숫자를 이 저장소로 가져오는 순서다. 승격과 push는 매번 사용자 승인을 받는다.
 
 1. `python3 scripts/sync_cards.py` (카드 복사)
-2. 로고 확인 (`logos/`에 새 종목 로고)
-3. `python3 scripts/build_home.py` (`stock-data.js`의 종목·시장 지표)
-4. `python3 scripts/build_value_gap.py` (홈 "매수 기준가와의 거리" 섹션의 `value-data.js`. 종목 이름을 `stock-data.js`에서 읽으므로 3번 다음에 돌린다)
-5. `python3 tooling/build_static.py` (`dist/` 사본)
-6. `python3 -m unittest discover -s tooling -v`
+2. `python3 scripts/fix_backbar_chain.py --cards-dir "$PWD/cards"` (카드 위 이전/다음 링크와 "시총 N위" 라벨을 순위표대로 다시 맞춤)
+3. 로고 확인 (`logos/`에 새 종목 로고)
+4. `python3 scripts/build_home.py` (`stock-data.js`의 종목·시장 지표)
+5. `python3 scripts/build_value_gap.py` (홈 "매수 기준가와의 거리" 칸의 `value-data.js`. 종목 이름을 `stock-data.js`에서 읽으므로 4번 다음에 돌린다)
+6. `python3 tooling/build_static.py` (`dist/` 사본)
+7. `python3 -m unittest discover -s tooling -v`
 
-3·4번 스크립트는 `--check`를 붙이면 아무것도 쓰지 않고, preview보다 뒤처졌으면 0이 아닌 값으로 끝난다.
+1·2·4·5번 스크립트는 `--check`를 붙이면 아무것도 쓰지 않고, preview보다 뒤처졌으면 0이 아닌 값으로 끝난다.
