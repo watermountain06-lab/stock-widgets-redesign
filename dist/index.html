@@ -51,7 +51,7 @@
 <link rel="stylesheet" href="theme.css?v=2">
 <script src="theme.js?v=2"></script>
 <link rel="stylesheet" href="flow.css?v=16">
-<link rel="stylesheet" href="value-gap.css?v=1">
+<link rel="stylesheet" href="value-gap.css?v=2">
 </head>
 <body class="home-page">
 
@@ -60,7 +60,7 @@
   <header class="site-header"><div class="header-inner"><a class="brand" href="index.html">◧ US stock 가치를 말하다</a><span class="brand-note">공시로 읽는 기업의 흐름<br>하루씩, 한 종목씩</span><nav aria-label="주 메뉴"><a href="index.html" aria-current="page">Home</a><a href="today.html">Today</a><a href="market-news.html">뉴스·영상</a></nav></div></header>
 
   <section class="home-feature" aria-label="오늘의 종목 미리보기">
-<div class="hero-space" aria-hidden="true"></div><div class="hero-menu"><p class="feature-kicker">DAILY DISCOVERY</p><h1>오늘의 발견</h1><p class="feature-intro">관심 있는 흐름을 선택하세요.</p><div id="discovery-tabs" class="discovery-tabs" aria-label="오늘의 종목 분류"></div><a class="today-shortcut" href="today.html">Today 전체 보기 ↗</a></div>
+<div class="hero-space value-gap" id="value-gap" role="region" aria-label="매수 기준가와의 거리"></div><div class="hero-menu"><p class="feature-kicker">DAILY DISCOVERY</p><h1>오늘의 발견</h1><p class="feature-intro">관심 있는 흐름을 선택하세요.</p><div id="discovery-tabs" class="discovery-tabs" aria-label="오늘의 종목 분류"></div><a class="today-shortcut" href="today.html">Today 전체 보기 ↗</a></div>
 <dialog id="discovery-dialog" aria-labelledby="discovery-title"><div class="dialog-heading"><div><p class="feature-kicker">STOCK LIST</p><h2 id="discovery-title">오늘의 종목</h2></div><button id="discovery-close" aria-label="팝업 닫기">✕</button></div><p id="discovery-note" class="feature-intro"></p><div id="discovery-grid"></div><div class="discovery-timing"><span id="discovery-position"></span></div></dialog>
   </section>
   <details class="market-demo" open><summary>시장 지표 <span class="market-note" id="macro-note">불러오는 중</span></summary>
@@ -104,8 +104,6 @@
   </div>
 
   </details>
-  <!-- 매수 기준가 섹션(2026-10-07 시안): value-gap.js가 value-data.js로 채운다 -->
-  <section id="value-gap" class="value-gap" aria-label="매수 기준가와의 거리"></section>
   <!-- 3. 탭 + 검색 바 -->
   <div>
     <div class="wrap" style="padding:20px 40px 18px;">
@@ -259,7 +257,7 @@
 
 <script src="flow.js?v=8"></script>
 <script src="value-data.js?v=1"></script>
-<script src="value-gap.js?v=1"></script>
+<script src="value-gap.js?v=2"></script>
 </body>
 </html>
 
