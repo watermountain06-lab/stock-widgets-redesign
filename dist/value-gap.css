@@ -6,7 +6,8 @@
 .vg-head .feature-kicker{margin:10px 0 0}
 .vg-asof{font-size:11px;color:var(--text3);white-space:nowrap}
 .value-gap h2{font-size:22px;margin:10px 0 6px}
-.vg-list{list-style:none;margin:6px 0 0;padding:0}
+.vg-viewport{margin-top:6px;overflow:hidden}
+.vg-list{list-style:none;margin:0;padding:0}
 .vg-row{display:grid;grid-template-columns:170px minmax(0,1fr);align-items:center;column-gap:20px;padding:13px 0;border-top:1px solid var(--border)}
 .vg-name{display:flex;align-items:center;gap:9px;color:var(--text);text-decoration:none;min-width:0}
 .vg-name img{width:26px;height:26px;border-radius:7px;object-fit:contain;background:#fff;flex:none}

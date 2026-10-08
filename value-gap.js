@@ -34,7 +34,7 @@
       + '</li>';
   }
   var list = V.stocks.length
-    ? '<ul class="vg-list">' + V.stocks.map(row).join('') + '</ul>'
+    ? '<div class="vg-viewport"><ul class="vg-list">' + V.stocks.map(row).join('') + '</ul></div>'
     : '<p class="vg-empty">오늘은 v2 판정이 적정~저평가 이상인 종목이 없습니다.</p>';
   // 관측 종목이 가장 많은 분기의 절반도 안 되는 분기(추적 시작 무렵)는 분모가 달라 뺀다.
   var fullest = Math.max.apply(null, V.history.map(function(h){ return h.total; }).concat([1]));
@@ -96,4 +96,36 @@
     + '<h2>매수 기준가와의 거리</h2>'
     + list
     + '<div class="vg-history"><p>분기별 기준가 아래 종목 수 <small>막대를 누르면 종목 보기</small></p><ol>' + hist + '</ol></div>';
+
+  // 종목이 VISIBLE개를 넘으면 시장 지표처럼 저절로 넘긴다 - 단, 세로로 한 줄씩 끊어서(2026-10-08 사용자 결정).
+  // 3.5초마다 0.5초 동안 한 줄 올리고 맨 위 줄을 맨 아래로 옮긴다. 마우스·포커스가 있거나, 탭이 가려졌거나,
+  // '동작 줄이기' 설정이면 멈춘다. 줄 높이는 칸 폭에 따라 바뀌므로(컨테이너 쿼리) 크기가 바뀔 때마다 다시 잰다.
+  var VISIBLE = 4, STEP = 3500, SLIDE = 500;
+  var viewport = root.querySelector('.vg-viewport'), ul = viewport && viewport.querySelector('.vg-list');
+  if (!ul || ul.children.length <= VISIBLE) return;
+  var reduced = matchMedia('(prefers-reduced-motion: reduce)'), paused = false, busy = false;
+  function fit(){
+    var rows = [].slice.call(ul.children, 0, VISIBLE);
+    viewport.style.height = rows.reduce(function(h, li){ return h + li.offsetHeight; }, 0) + 'px';
+  }
+  function advance(){
+    if (paused || busy || document.hidden || reduced.matches) return;
+    busy = true;
+    var first = ul.firstElementChild;
+    ul.style.transition = 'transform ' + SLIDE + 'ms ease';
+    ul.style.transform = 'translateY(-' + first.offsetHeight + 'px)';
+    setTimeout(function(){
+      ul.style.transition = 'none';
+      ul.appendChild(first);
+      ul.style.transform = 'none';
+      busy = false;
+    }, SLIDE);
+  }
+  viewport.addEventListener('mouseenter', function(){ paused = true; });
+  viewport.addEventListener('mouseleave', function(){ paused = false; });
+  viewport.addEventListener('focusin', function(){ paused = true; });
+  viewport.addEventListener('focusout', function(){ paused = false; });
+  if ('ResizeObserver' in window) new ResizeObserver(fit).observe(root); else addEventListener('resize', fit);
+  fit();
+  setInterval(advance, STEP);
 })();
