@@ -1,0 +1,115 @@
+/* Tracking 탭(2026-10-09, 이전 Today) — 날짜 버튼·칩·흐르는 카드·선택 종목 칸·판정 성적표. 시안: claude.ai/artifact/1WmfVhA2Nm8e51UZiUSaoc
+   오름·내림 색은 theme.css가 어두운 테마에만 초록·빨강을 정의해서 여기 따로 둔다(뉴스 탭 종목 소식과 같은 값).
+   선 색은 이 페이지의 --line, 강조색은 --purple(어두운 테마는 theme.css가 바꾼다). */
+main{--tk-up:#14804a;--tk-down:#c42b1c;--tk-soft:#efebfc;--tk-track:#f1eff6;--tk-accent:var(--purple,#6851cd);--tk-panel:var(--panel,#fff)}
+:root[data-theme="dark"] main{--tk-up:#7cddb6;--tk-down:#ff8799;--tk-soft:#36304f;--tk-track:#2a2e3b;--tk-accent:#b3a3ff}
+.tk-up,.tracking .up{color:var(--tk-up)}.tk-down,.tracking .down{color:var(--tk-down)}
+.tracking{margin-bottom:28px}
+.tk-note{margin:0;font-size:11px;color:var(--muted)}
+.tracking [hidden],.tracking[hidden]{display:none!important}   /* .tk-chips·.tk-panel의 display:flex가 hidden을 덮지 않게 */
+
+/* 위: 날짜 · 목록 */
+.tk-title-row{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+.tk-title-row h1{margin:0;font-size:clamp(24px,3.4vw,30px);font-weight:800}
+.tk-title-row span,.tk-watch small{font-size:12px;font-weight:500;color:var(--muted)}
+.tk-lead{margin:4px 0 14px;font-size:14px}
+.tk-days,.tk-chips{display:flex;gap:8px;flex-wrap:wrap}
+.tk-days button{min-height:48px;min-width:76px;display:flex;flex-direction:column;align-items:center;justify-content:center;line-height:1.25;padding:4px 14px;border-radius:12px;border:1px solid var(--line);background:var(--tk-panel);color:var(--ink);font:inherit;cursor:pointer}
+.tk-days button strong{font-size:14px}.tk-days button span{font-size:11px}
+.tk-days button[aria-pressed="true"]{background:var(--ink);color:var(--bg,#fafafb);border-color:var(--ink)}
+.tk-change{margin:12px 0;font-size:13px;padding:8px 12px;border-radius:10px;background:var(--tk-soft)}
+.tk-chip{display:inline-flex;align-items:center;gap:6px;min-height:44px;padding:0 18px;border-radius:999px;border:1px solid var(--line);background:var(--tk-panel);color:var(--ink);font:inherit;font-size:14px;font-weight:700;cursor:pointer;text-decoration:none}
+.tk-chip small{font-size:11px;font-weight:500;opacity:.75}
+.tk-chip[aria-pressed="true"]{background:var(--tk-accent);border-color:var(--tk-accent);color:var(--tk-panel)}
+.tk-now .today-flow{margin:4px 0 0}
+.tk-now .continuous-flow{--flow-card-width:230px;--flow-card-gap:10px;height:250px}
+.tk-flow-card{padding:16px 18px!important;border-radius:16px!important;height:auto!important}
+.tk-flow-card .flow-stock-heading{margin-bottom:10px!important;gap:10px}
+.tk-flow-card .flow-stock-heading img{width:36px;height:36px;padding:5px;border-radius:10px;border:1px solid #ecebf2}
+.tk-flow-card .flow-stock-heading strong{font-size:18px;font-weight:800}
+.tk-flow-card .flow-stock-heading small{font-size:11px}
+.tk-flow-card .flow-price{font-size:22px;margin:4px 0 8px}
+.tk-flow-card .flow-score{padding:6px 0}
+.tk-watch{border:1px solid var(--line);border-radius:14px;padding:4px 16px;background:var(--tk-panel)}
+.tk-watch>button{width:100%;min-height:44px;display:flex;justify-content:space-between;align-items:center;border:0;background:transparent;color:var(--ink);font:inherit;font-size:14px;font-weight:700;padding:0;cursor:pointer}
+.tk-watch .tk-chips{padding:4px 0 12px}
+
+/* 가운데: 선택 종목 */
+.tk-panel{display:flex;flex-direction:column;gap:18px;padding:24px;border:1px solid var(--line);border-radius:18px;background:var(--tk-panel)}
+.tk-stock-head{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.tk-stock-head h2{margin:0;font-size:20px;font-weight:800}
+.tk-stock-head h2 small{font-size:14px;font-weight:500}
+.tk-verdict{padding:6px 14px;border-radius:999px;font-size:13px;font-weight:700;background:var(--tk-soft);color:var(--tk-accent)}
+.tk-judges{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+.tk-judge{display:flex;flex-direction:column;gap:10px;padding:14px 16px;border-radius:14px;border:1px solid var(--line)}
+.tk-judge>div:first-child{display:flex;justify-content:space-between;align-items:flex-start;gap:8px}
+.tk-judge strong{font-size:13px}.tk-judge strong small{display:block;font-size:11px;font-weight:500;color:var(--muted)}
+.tk-judge p{margin:0;font-size:20px;font-weight:800;font-variant-numeric:tabular-nums}
+.tk-judge p small{font-size:11px;font-weight:500;color:var(--muted);margin-left:2px}
+.tk-pill{white-space:nowrap;padding:1px 10px;border-radius:999px;font-size:12px;font-weight:700;border:1px solid var(--line);color:var(--muted)}
+.tk-pill.cheap{border-color:var(--tk-up);color:var(--tk-up)}.tk-pill.dear{border-color:var(--tk-down);color:var(--tk-down)}
+.tk-track{position:relative;height:10px;border-radius:999px;background:var(--tk-track)}
+.tk-meter{background:linear-gradient(90deg,var(--tk-track) 0 30%,var(--tk-soft) 30% 70%,var(--tk-track) 70%)}
+.tk-meter i{position:absolute;top:-3px;bottom:-3px;width:2px;background:var(--muted)}
+.tk-track b{position:absolute;top:50%;width:16px;height:16px;margin:-8px 0 0 -8px;border-radius:50%;background:var(--tk-accent);border:3px solid var(--tk-panel);box-shadow:0 0 0 1px var(--tk-accent);box-sizing:border-box}
+.tk-steps{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:3px}
+.tk-steps i{height:10px;border-radius:3px;background:var(--tk-track)}.tk-steps i.on{background:var(--tk-accent)}
+.tk-band{display:flex;flex-direction:column;gap:6px}
+.tk-band-row{display:grid;grid-template-columns:130px minmax(0,1fr) 130px;align-items:center;gap:12px;font-size:13px}
+.tk-band-row b{text-align:right;font-size:14px}
+.tk-summary-body{display:flex;flex-direction:column;gap:8px;padding-top:16px;border-top:1px solid var(--line)}
+.tk-summary-body p{margin:0}
+.tk-head{font-size:15px;font-weight:700}
+.tk-next{font-size:13px}
+.tk-next span{display:inline-block;margin-right:6px;padding:0 8px;border-radius:999px;font-size:11px;font-weight:700;background:var(--tk-soft);color:var(--tk-accent)}
+.tk-actions{display:flex;gap:10px;flex-wrap:wrap}
+.tk-btn{display:inline-flex;align-items:center;min-height:44px;padding:0 16px;border-radius:999px;border:1px solid var(--line);background:var(--tk-panel);color:var(--ink);font:inherit;font-size:13px;text-decoration:none;cursor:pointer}
+.tk-why{margin:4px 0 0;padding-left:18px;font-size:13px;line-height:1.7}
+
+/* 아래: 판정 성적표 */
+.tk-panel h2{margin:0;font-size:19px;font-weight:800}
+.tk-panel h2 small{font-size:12px;font-weight:500;color:var(--muted);margin-left:6px}
+.tk-score-note{margin:4px 0 0;font-size:13px}
+.tk-bars{display:flex;flex-direction:column}
+.tk-bar-row{display:flex;align-items:center;gap:12px;padding:8px 0;border-bottom:1px solid var(--line);font-size:14px}
+.tk-bar-row>a{flex:0 0 52px;color:inherit;text-decoration:none}
+.tk-bar-row>b{flex:0 0 64px;margin-left:12px;text-align:right;font-variant-numeric:tabular-nums}
+.tk-bar-row>small{flex:0 0 96px;text-align:right;font-size:11px;color:var(--muted)}
+.tk-bar{position:relative;flex:1 1 auto;min-width:0;height:44px}
+.tk-bar .zero{position:absolute;top:18px;bottom:0;left:50%;width:1px;background:var(--muted)}
+.tk-bar .fill{position:absolute;top:22px;bottom:4px;border-radius:3px;border:1px solid currentColor}
+.tk-bar .fill.up{color:var(--tk-up)}.tk-bar .fill.down{color:var(--tk-down)}
+.tk-bar .fill.open{background:repeating-linear-gradient(135deg,color-mix(in srgb,currentColor 22%,transparent) 0 4px,transparent 4px 8px)}
+.tk-bar .fill:not(.open){background:color-mix(in srgb,currentColor 18%,transparent)}
+.tk-bar span{position:absolute;top:0;font-size:11px;line-height:18px;white-space:nowrap;font-variant-numeric:tabular-nums}
+.tk-bar .p0{color:var(--muted);padding:0 6px}
+.tk-bar .p1{font-weight:700;padding:0 4px}
+.tk-more-box summary{display:inline-flex;align-items:center;min-height:44px;padding:0 16px;border-radius:999px;border:1px solid var(--line);font-size:13px;cursor:pointer;list-style:none}
+.tk-more-box summary::-webkit-details-marker{display:none}
+.tk-block{margin-top:22px}
+.tk-block h3{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin:0 0 10px;font-size:16px}
+.tk-block h3 span{font-size:11px;font-weight:500;color:var(--muted)}
+.tk-scroll{overflow-x:auto}
+.tk-table{width:100%;border-collapse:collapse;font-size:13px}
+.tk-table th{text-align:left;font-size:11px;font-weight:600;color:var(--muted);padding:8px 10px;border-bottom:1px solid var(--line);white-space:nowrap}
+.tk-table td{padding:10px;border-bottom:1px solid var(--line);vertical-align:top;white-space:nowrap}
+.tk-table td a{color:inherit;text-decoration:none}
+.tk-table td strong{display:block}
+.tk-table td small{display:block;font-size:11px;color:var(--muted)}
+.tk-table .num{font-weight:700;font-variant-numeric:tabular-nums}
+.tk-badge{display:inline-block;font-size:11px;font-weight:700;padding:2px 8px;border-radius:999px;border:1px solid var(--line);color:var(--muted)}
+.tk-badge.up{border-color:currentColor;color:var(--tk-up)}.tk-badge.down{border-color:currentColor;color:var(--tk-down)}
+.tk-journal{list-style:none;margin:0;padding:0}
+.tk-day{margin:14px 0 4px;font-size:12px;font-weight:700;color:var(--muted)}
+.tk-row{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 12px;padding:9px 0;border-bottom:1px solid var(--line);font-size:13px}
+.tk-row a{color:inherit;text-decoration:none}
+.tk-row em{font-style:normal;font-weight:700}
+.tk-row small{font-size:11px;color:var(--muted)}
+.tk-arrow{font-size:11px;color:var(--muted)}
+.tk-row.in .tk-arrow{color:var(--tk-up)}.tk-row.out .tk-arrow{color:var(--tk-down)}
+.tk-more{margin-top:14px;padding:8px 14px;border:1px solid var(--line);border-radius:999px;background:transparent;color:inherit;font:inherit;font-size:12px;cursor:pointer}
+@media(max-width:700px){
+ .tk-panel{padding:18px 16px}
+ .tk-band-row{grid-template-columns:1fr auto}.tk-band-row .tk-track{grid-column:1/-1;grid-row:2}
+ .tk-bar-row{flex-wrap:wrap}.tk-bar{order:5;flex-basis:100%}.tk-bar-row>small{flex:1 1 auto}
+}

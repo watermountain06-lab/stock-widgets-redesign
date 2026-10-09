@@ -1,4 +1,5 @@
-// 카드의 '시계열 주요 뉴스' 타임라인 항목을 꺼낸다(2026-10-08, 뉴스·영상 탭 '종목 소식' 칸).
+// 카드의 '시계열 주요 뉴스' 타임라인 항목과 그 위 '종합 해석' 상자를 꺼낸다
+// (2026-10-08, 뉴스·영상 탭 '종목 소식' 칸과 Tracking 탭 '종목 요약' 칸).
 // 이 저장소의 cards/ 사본(라이브에 올라간 카드)을 읽기만 한다.   node scripts/extract_card_timelines.js > out.json
 // 반응 %는 카드 HTML에 적힌 값을 옮기지 않고, 카드 JS와 같은 식으로 그 카드의 DAILY에서 다시 계산한다
 // (data-react 날짜 종가 ÷ 전날 종가 − 1, ±0.5% 미만은 flat — 카드가 화면에서 하는 계산 그대로).
@@ -34,8 +35,22 @@ for (const f of fs.readdirSync(CARDS).filter(f => f.endsWith('_full_widget.html'
   try {
     const daily = value(html, T, 'DAILY') || [];
     const ix = {}; daily.forEach((r, i) => { ix[r[0]] = i; });
+    // 종합 해석: 헤드(지배적 내러티브 + 태그) · 근거 항목 · 반대 근거 · 다음 확인 포인트 — 카드 문장 그대로
+    let summary = null;
+    const si = html.indexOf('<div class="card-title">종합 해석</div>');
+    if (si >= 0) {
+      const box = html.slice(si, html.indexOf('TODAY_NEWS_ANCHOR', si) > 0 ? html.indexOf('TODAY_NEWS_ANCHOR', si) : si + 20000);
+      const head = box.match(/<div class="verdict-summary-head">([\s\S]*?)<\/div>/);
+      const tag = head && head[1].match(/<span class="tag">([\s\S]*?)<\/span>/);
+      const list = box.match(/<ol class="news-list">([\s\S]*?)<\/ol>/);
+      const counter = box.match(/<div class="verdict-summary-counter">([\s\S]*?)<\/div>/);
+      const next = box.match(/<div class="verdict-summary-next">([\s\S]*?)<\/div>/);
+      summary = { head: head ? text(head[1].replace(/<span class="tag">[\s\S]*?<\/span>/, '')) : null, tag: tag ? text(tag[1]) : null,
+                  points: list ? [...list[1].matchAll(/<li>([\s\S]*?)<\/li>/g)].map(m => text(m[1])) : [],
+                  counter: counter ? text(counter[1]) : null, next: next ? text(next[1]) : null };
+    }
     const start = html.indexOf('id="newsTimeline"');
-    if (start < 0) { out[T] = { items: [] }; continue; }
+    if (start < 0) { out[T] = { items: [], summary }; continue; }
     // 타임라인 구간 = newsTimeline부터 다음 섹션(class="section") 또는 첫 <script까지
     const ends = [html.indexOf('class="section"', start), html.indexOf('<script', start)].filter(x => x > 0);
     const region = html.slice(start, Math.min(...ends));
@@ -59,7 +74,7 @@ for (const f of fs.readdirSync(CARDS).filter(f => f.endsWith('_full_widget.html'
                    title: text(title), url: src ? src[1] : null, source: src ? text(src[2]).replace(/\s*→$/, '') : null,
                    reactDate: react || null, reaction, trend });
     }
-    out[T] = { items };
+    out[T] = { items, summary };
   } catch (e) { out[T] = { error: String(e).slice(0, 160) }; }
 }
 console.log(JSON.stringify(out, null, 1));

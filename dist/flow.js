@@ -1,5 +1,5 @@
 (() => {
-  function flowing(container, cards, selectable = false, onSelect = null, initialIndex = 0) {
+  function flowing(container, cards, selectable = false, onSelect = null, initialIndex = 0, onCenter = null) {
     let index=initialIndex,position=initialIndex,manual=null;
     const reduced=matchMedia('(prefers-reduced-motion: reduce)');
     const viewport=document.createElement('div');viewport.className='coverflow continuous-flow';viewport.tabIndex=0;viewport.setAttribute('aria-label','카드 탐색 · 좌우 방향키로 이동');
@@ -20,7 +20,8 @@
           if(t===1)manual=null;
         }else if(!reduced.matches){position+=elapsed/6500;}
         position=(position+cards.length)%cards.length;
-        index=Math.round(position)%cards.length;render();
+        const was=index;index=Math.round(position)%cards.length;render();
+        if(onCenter&&index!==was)onCenter(index);
       }
       frame=requestAnimationFrame(tick);
     }
@@ -45,10 +46,16 @@
   if(macro){const cards=[...macro.children].map(original=>{const card=document.createElement('button');card.type='button';card.className='macro-flow-card';card.setAttribute('aria-label',original.firstElementChild.textContent+' 카드 선택');card.append(...original.childNodes);original.remove();return card;});macro.removeAttribute('style');macro.className='market-flow';flowing(macro,cards,true);}
   const today=document.getElementById('today-flow');
   if(today){
+    // Tracking 탭(2026-10-09): 고른 날의 목록을 흐르게 하고, 카드에는 그날 종가·종합평가·밴드 점수·판정 뒤 수익률
     let signature='',focusCard;
-    function render(force=false){const selection=window.TodaySelection;const key=selection.tickers.join(',');if(!force&&signature===key){focusCard(selection.index);return;}signature=key;today.replaceChildren();const cards=selection.tickers.map(ticker=>window.StockData.stocks.find(s=>s.ticker===ticker)).map(s=>{
-      const card=document.createElement('button');card.type='button';card.className='flow-stock';card.setAttribute('aria-label',s.name+' 선택');
-      card.innerHTML=`<div class="flow-stock-heading"><img src="logos/${s.ticker.toLowerCase()}.png" alt=""><span><small>${s.ticker}</small><strong>${s.name}</strong></span><span class="flow-arrow">↗</span></div><small>현재주가</small><div class="flow-price">${s.price}<span class="${s.change>=0?'up':'down'}">${s.change>=0?'+':''}${s.change.toFixed(2)}%</span></div><div class="flow-score"><span>매력도지수</span><b>산정 전</b></div><div class="flow-score"><span>참고 재무점수</span><b>${s.score==null?'미평가':s.score.toFixed(1)}</b></div>`;return card;});focusCard=flowing(today,cards,true,i=>window.selectTodayStock(selection.tickers[i]),selection.index);}
-    render();window.addEventListener('today-selection',()=>render());window.addEventListener('quotes-updated',()=>render(true));
+    const pct=r=>r==null?'—':(r>0?'+':r<0?'−':'')+Math.abs(r*100).toFixed(1)+'%';
+    const esc=s=>String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+    function render(){const selection=window.TodaySelection;if(!selection||!selection.cards.length){today.replaceChildren();signature='';return;}
+      const key=selection.session+'|'+selection.tickers.join(',');if(signature===key){focusCard(selection.index);return;}signature=key;today.replaceChildren();
+      const cards=selection.cards.map(s=>{
+      const card=document.createElement('button');card.type='button';card.className='flow-stock tk-flow-card';card.setAttribute('aria-label',s.name+' 선택');
+      card.innerHTML=`<div class="flow-stock-heading"><img src="logos/${esc(s.ticker.toLowerCase())}.png" alt=""><span><strong>${esc(s.ticker)}</strong><small>${esc(s.name)}</small></span></div><div class="flow-price">$${s.close.toFixed(2)}</div><div class="flow-score"><span>종합평가</span><b>${esc(s.verdict)}</b></div><div class="flow-score"><span>밴드 점수</span><b>${esc(s.band.replace(/^밴드 점수 /,''))}</b></div><div class="flow-score"><span>판정 뒤</span><b class="${s.ret>0?'tk-up':s.ret<0?'tk-down':''}">${pct(s.ret)}</b></div>`;return card;});
+      focusCard=flowing(today,cards,true,i=>window.selectTodayStock(selection.tickers[i]),selection.index,i=>window.centerTodayStock&&window.centerTodayStock(i));}
+    render();window.addEventListener('today-selection',render);
   }
 })();

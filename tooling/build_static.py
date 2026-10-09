@@ -8,7 +8,8 @@ PUBLIC = ['market-news.js', 'market-news-snapshot.json', 'flow.css', 'flow.js', 
           'data-status.js', 'today.js', 'theme.js', 'navigation.js', 'reading.js',
           'news.js', 'news-snapshot.json', 'quotes-snapshot.json', 'CNAME',
           'value-data.js', 'value-gap.js', 'value-gap.css',
-          'stock-news.js', 'stock-news-view.js', 'stock-news-view.css']
+          'stock-news.js', 'stock-news-view.js', 'stock-news-view.css',
+          'tracking-data.js', 'tracking.css']
 
 def build():
     target = ROOT / 'dist'

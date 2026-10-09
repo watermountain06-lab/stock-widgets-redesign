@@ -78,9 +78,10 @@ preview(`~/Workspace/stock-widgets-preview`)가 매일 갱신한 카드와 숫�
 4. `python3 scripts/build_home.py` (`stock-data.js`의 종목·시장 지표)
 5. `python3 scripts/build_value_gap.py` (홈 "매수 기준가와의 거리" 칸의 `value-data.js`. 종목 이름을 `stock-data.js`에서 읽으므로 4번 다음에 돌린다)
 6. `python3 scripts/build_stock_news.py` (뉴스·영상 탭 "종목 소식"의 `stock-news.js` — 1번에서 복사한 `cards/`의 타임라인과 4번의 종목 이름을 읽는다)
-7. `python3 tooling/build_static.py` (`dist/` 사본)
-8. `python3 -m unittest discover -s tooling -v`
+7. `python3 scripts/build_tracking.py` (Tracking 탭의 `tracking-data.js` — preview `origin/main`의 `v2/daily_status.json` 이력에서 회차별 판정을 읽고, 1번 `cards/`의 종가·종합 해석·타임라인과 4번의 시세 기준일을 쓴다. 먼저 preview에서 `git fetch`)
+8. `python3 tooling/build_static.py` (`dist/` 사본)
+9. `python3 -m unittest discover -s tooling -v`
 
 시장 뉴스(`market-news-snapshot.json`)는 승격과 따로 매일 12:00 UTC에 `.github/workflows/market_news.yml`이 받아 자동 커밋한다 — 승인 없이 push되는 유일한 파일이다(2026-10-08 사용자 결정). 그래서 로컬에서 push하기 전에는 `git pull --rebase`가 필요하다.
 
-1·2·4·5·6번 스크립트는 `--check`를 붙이면 아무것도 쓰지 않고, preview보다 뒤처졌으면 0이 아닌 값으로 끝난다.
+1·2·4·5·6·7번 스크립트는 `--check`를 붙이면 아무것도 쓰지 않고, preview보다 뒤처졌으면 0이 아닌 값으로 끝난다.
