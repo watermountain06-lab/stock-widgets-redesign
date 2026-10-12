@@ -881,7 +881,7 @@ Chart.overrides.doughnut.animation = false;
     <div class="card-title">다음 실적 체크포인트 <span style="color:var(--gold);font-weight:600;">Q3 2026</span></div>
     <div style="font-size:12px;color:var(--text2);line-height:1.8;">
       <div style="margin-bottom:8px;"><strong style="color:var(--accent2);">①</strong> 매출 증가율(1년 전 대비)이 최근 흐름(+70.0% → +84.7% → +92.8%)보다 낮아지지 않는지</div>
-      <div style="margin-bottom:8px;"><strong style="color:var(--accent2);">②</strong> GAAP 영업이익률이 1년 전 같은 분기보다 높은지(Q2 2026 47.1%, 1년 전 26.8%)</div>
+      <div style="margin-bottom:8px;"><strong style="color:var(--accent2);">②</strong> Q3 2026 GAAP 영업이익률이 1년 전 같은 분기(Q3 2025 33.3%)보다 높은지(직전 Q2 2026 47.1%)</div>
     </div>
   </div>
 </div>
@@ -1066,8 +1066,8 @@ Chart.overrides.doughnut.animation = false;
         <div class="op-dist"><div data-an-bar="buy" style="width: 68.8%; background: var(--green);"></div><div data-an-bar="hold" style="width: 21.9%; background: var(--gold);"></div><div data-an-bar="sell" style="width: 9.4%; background: var(--red);"></div></div>
       </div>
       <div class="op-cell">
-        <span class="op-label">평균 목표주가 · <span data-an="asof">2026-10-11</span></span>
-        <span class="op-val"><span data-an="mean">$204.50</span> <span class="op-sub op-down" data-an="upside">−2.2%</span></span>
+        <span class="op-label">평균 목표주가 · <span data-an="asof">2026-10-12</span></span>
+        <span class="op-val"><span data-an="mean">$207.95</span> <span class="op-sub op-down" data-an="upside">−0.5%</span></span>
       </div>
       <div class="op-cell">
         <span class="op-label">다음 실적</span>
@@ -2054,7 +2054,7 @@ const PLTR_ACTIVITY = {"ticker": "PLTR", "status": "N/A", "reason": "5년 비교
 // ── 투자포인트 탭: 애널리스트 목표가 (출처·기준일 포함) ──
 // 갱신: StockAnalysis 예측 페이지(stockanalysis.com/stocks/pltr/forecast/)의 값과 날짜를 옮긴다.
 // 현재가 대비는 마지막 종가에서 계산한다.
-const PLTR_ANALYST = { asOf: '2026-10-11', source: 'StockAnalysis (의견 집계 · 개별 목표가)', rating: 'Buy', n: 32, nTargets: 22, mean: 204.5, median: 215,
+const PLTR_ANALYST = { asOf: '2026-10-12', source: 'StockAnalysis (의견 집계 · 개별 목표가)', rating: 'Buy', n: 32, nTargets: 22, mean: 207.95, median: 223,
   low: 80, high: 265, strongBuy: 20, buy: 2, hold: 7, sell: 2, strongSell: 1 };
 (function(){
   const A = PLTR_ANALYST, last = (typeof PLTR_DAILY !== 'undefined' && PLTR_DAILY.length) ? PLTR_DAILY[PLTR_DAILY.length - 1] : null;

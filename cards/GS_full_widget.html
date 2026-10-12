@@ -932,7 +932,7 @@ Chart.overrides.doughnut.animation = false;
       <div class="vs-name" title="은행은 초과이익모형(장부가치 + 자기자본비용 10%를 넘는 이익의 현재가치)으로 계산한다. 기본 시나리오.">초과이익 (내재가치)</div><div class="vs-val" data-vs="dcf">$518</div><div class="vs-note">현재가 <span data-vs="price">$895.32</span> 대비 <strong data-vs="upside">−42.1%</strong> · 초과이익모형 기본</div><div class="vs-pill-wrap"><div class="vs-pill high" data-vs-pill="dcf" title="현재가 ÷ 기본 내재가치 = 1.73
 시나리오 범위: 1.48 ~ 1.78(세 시나리오 최대·최소 기준)
 0.7 이하 매우 싸다 · 0.9 이하 싸다 · 1.1 이하 적정 · 1.5 이하 비싸다 · 초과 매우 비싸다">매우 비싸다</div></div>
-      <div class="vs-name" title="S&amp;P500 은행(대형·지역) 대비 P/TBV·PER 순위. 높을수록 싸다. 두 배수가 같은 방향일 때만 표를 준다. 참고 — 같은 사업 모델(증권·투자은행) 카드: MS P/TBV 3.57배·PER 15.4배, SCHW P/TBV —·PER 17.6배(판정에 쓰지 않음, 사전 등록 10-2).">동종업 대비</div><div class="vs-val" data-vc-score="peer">19.6</div><div class="sc-tile lost" data-vc="peer" data-m="per">31</div><div class="sc-tile low" data-vc="peer" data-m="pbr">8</div><div class="sc-tile none" data-vc="peer" data-m="psr">—</div><div class="sc-tile none" data-vc="peer" data-m="pcr">—</div><div class="sc-tile none" data-vc="peer" data-m="evebitda">—</div><div class="vs-pill mid" data-vs-pill="peer">중간</div>
+      <div class="vs-name" title="S&amp;P500 은행(대형·지역) 대비 P/TBV·PER 순위. 높을수록 싸다. 두 배수가 같은 방향일 때만 표를 준다. 참고 — 같은 사업 모델(증권·투자은행) 카드: MS P/TBV 3.57배·PER 15.4배, SCHW P/TBV 6.86배·PER 17.6배(판정에 쓰지 않음, 사전 등록 10-2).">동종업 대비</div><div class="vs-val" data-vc-score="peer">19.6</div><div class="sc-tile lost" data-vc="peer" data-m="per">31</div><div class="sc-tile low" data-vc="peer" data-m="pbr">8</div><div class="sc-tile none" data-vc="peer" data-m="psr">—</div><div class="sc-tile none" data-vc="peer" data-m="pcr">—</div><div class="sc-tile none" data-vc="peer" data-m="evebitda">—</div><div class="vs-pill mid" data-vs-pill="peer">중간</div>
     </div></div>
     <div class="vs-premise">P/TBV 2.60배는 자기 5년 이력의 위쪽(상위 14%)이고 S&P500 은행 13곳(본인 포함) 중 비싼 쪽부터 2번째다. <strong>초과이익모형 기본 가치 $518은 현재가의 58%</strong>로, 지금 가격은 ROE 28.5%가 5년 이어진다는 값이다(최근 4분기 18.4%, GAAP).</div>
     <div class="verdict-summary-risk">⚠️ 현재가 ÷ 기본 가치가 1.73로 "매우 비싸다"다. 세 칸이 자기 이력 0 · 동종업 0 · 초과이익 −2로 종합 평가는 적정~고평가다.</div>
@@ -1100,7 +1100,7 @@ Chart.overrides.doughnut.animation = false;
         <div class="op-dist"><div data-an-bar="buy" style="width: 30.8%; background: var(--green);"></div><div data-an-bar="hold" style="width: 61.5%; background: var(--gold);"></div><div data-an-bar="sell" style="width: 7.7%; background: var(--red);"></div></div>
       </div>
       <div class="op-cell">
-        <span class="op-label">평균 목표주가 · <span data-an="asof">2026-10-11</span></span>
+        <span class="op-label">평균 목표주가 · <span data-an="asof">2026-10-12</span></span>
         <span class="op-val"><span data-an="mean">$1098.38</span> <span class="op-sub op-up" data-an="upside">+22.7%</span></span>
       </div>
       <div class="op-cell">
@@ -2150,7 +2150,7 @@ const GS_ACTIVITY = {"ticker": "GS", "status": "na", "reason": "은행이라 매
 // ── 투자포인트 탭: 애널리스트 목표가 (출처·기준일 포함) ──
 // 갱신: StockAnalysis 예측 페이지(stockanalysis.com/stocks/gs/forecast/)의 값과 날짜를 옮긴다.
 // 현재가 대비는 마지막 종가에서 계산한다.
-const GS_ANALYST = { asOf: '2026-10-11', source: 'StockAnalysis (의견 집계 · 개별 목표가)', rating: 'Hold', n: 26, nTargets: 16, mean: 1098.38, median: 1066,
+const GS_ANALYST = { asOf: '2026-10-12', source: 'StockAnalysis (의견 집계 · 개별 목표가)', rating: 'Hold', n: 26, nTargets: 16, mean: 1098.38, median: 1066,
   low: 955, high: 1299, strongBuy: 7, buy: 1, hold: 16, sell: 1, strongSell: 1 };
 (function(){
   const A = GS_ANALYST, last = (typeof GS_DAILY !== 'undefined' && GS_DAILY.length) ? GS_DAILY[GS_DAILY.length - 1] : null;

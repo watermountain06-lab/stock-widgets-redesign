@@ -915,7 +915,7 @@ Chart.overrides.doughnut.animation = false;
     <div class="card-title">다음 실적 체크포인트 <span style="color:var(--gold);font-weight:600;">Q1 FY27</span></div>
     <div style="font-size:12px;color:var(--text2);line-height:1.8;">
       <div style="margin-bottom:8px;"><strong style="color:var(--accent2);">①</strong> 매출 증가율(1년 전 대비)이 최근 흐름(+16.7% → +18.3% → +17.7%)보다 낮아지지 않는지</div>
-      <div style="margin-bottom:8px;"><strong style="color:var(--accent2);">②</strong> GAAP 영업이익률이 1년 전 같은 분기보다 높은지(Q4 FY26 45.1%, 1년 전 44.9%)</div>
+      <div style="margin-bottom:8px;"><strong style="color:var(--accent2);">②</strong> Q1 FY27 GAAP 영업이익률이 1년 전 같은 분기(Q1 FY26 48.9%)보다 높은지(직전 Q4 FY26 45.1%)</div>
     </div>
   </div>
 </div>
@@ -1112,13 +1112,13 @@ Chart.overrides.doughnut.animation = false;
     <div class="card-title">투자의견 요약</div>
     <div class="op-strip">
       <div class="op-cell">
-        <span class="op-label">애널리스트 <span data-an="n">56명 · 목표가 35</span>명</span>
+        <span class="op-label">애널리스트 <span data-an="n">56명 · 목표가 33</span>명</span>
         <span class="op-val"><span data-an="rating">Strong Buy</span> <span class="op-sub">매수 <span data-an="buy">55</span> · 유지 <span data-an="hold">1</span> · 매도 <span data-an="sell">0</span></span></span>
         <div class="op-dist"><div data-an-bar="buy" style="width: 98.2%; background: var(--green);"></div><div data-an-bar="hold" style="width: 1.8%; background: var(--gold);"></div><div data-an-bar="sell" style="width: 0%; background: var(--red);"></div></div>
       </div>
       <div class="op-cell">
-        <span class="op-label">평균 목표주가 · <span data-an="asof">2026-10-11</span></span>
-        <span class="op-val"><span data-an="mean">$581.69</span> <span class="op-sub op-up" data-an="upside">+8.7%</span></span>
+        <span class="op-label">평균 목표주가 · <span data-an="asof">2026-10-12</span></span>
+        <span class="op-val"><span data-an="mean">$582.31</span> <span class="op-sub op-up" data-an="upside">+8.8%</span></span>
       </div>
       <div class="op-cell">
         <span class="op-label">다음 실적</span>
@@ -2098,7 +2098,7 @@ const MSFT_ACTIVITY = {"ticker": "MSFT", "status": "ok", "asOf": "2026-06-30", "
 // ── 투자포인트 탭: 애널리스트 목표가 (출처·기준일 포함) ──
 // 갱신: StockAnalysis 예측 페이지(stockanalysis.com/stocks/msft/forecast/)의 값과 날짜를 옮긴다.
 // 현재가 대비는 마지막 종가에서 계산한다.
-const MSFT_ANALYST = { asOf: '2026-10-11', source: 'StockAnalysis (의견 집계 · 개별 목표가)', rating: 'Strong Buy', n: 56, nTargets: 35, mean: 581.69, median: 575,
+const MSFT_ANALYST = { asOf: '2026-10-12', source: 'StockAnalysis (의견 집계 · 개별 목표가)', rating: 'Strong Buy', n: 56, nTargets: 33, mean: 582.31, median: 586,
   low: 440, high: 725, strongBuy: 41, buy: 14, hold: 1, sell: 0, strongSell: 0 };
 (function(){
   const A = MSFT_ANALYST, last = (typeof MSFT_DAILY !== 'undefined' && MSFT_DAILY.length) ? MSFT_DAILY[MSFT_DAILY.length - 1] : null;

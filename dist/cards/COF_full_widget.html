@@ -1101,8 +1101,8 @@ Chart.overrides.doughnut.animation = false;
         <div class="op-dist"><div data-an-bar="buy" style="width: 79.2%; background: var(--green);"></div><div data-an-bar="hold" style="width: 20.8%; background: var(--gold);"></div><div data-an-bar="sell" style="width: 0%; background: var(--red);"></div></div>
       </div>
       <div class="op-cell">
-        <span class="op-label">평균 목표주가 · <span data-an="asof">2026-10-11</span></span>
-        <span class="op-val"><span data-an="mean">$255.79</span> <span class="op-sub op-up" data-an="upside">+28.4%</span></span>
+        <span class="op-label">평균 목표주가 · <span data-an="asof">2026-10-12</span></span>
+        <span class="op-val"><span data-an="mean">$254.47</span> <span class="op-sub op-up" data-an="upside">+27.7%</span></span>
       </div>
       <div class="op-cell">
         <span class="op-label">다음 실적</span>
@@ -2151,7 +2151,7 @@ const COF_ACTIVITY = {"ticker": "COF", "status": "na", "reason": "은행이라 �
 // ── 투자포인트 탭: 애널리스트 목표가 (출처·기준일 포함) ──
 // 갱신: StockAnalysis 예측 페이지(stockanalysis.com/stocks/cof/forecast/)의 값과 날짜를 옮긴다.
 // 현재가 대비는 마지막 종가에서 계산한다.
-const COF_ANALYST = { asOf: '2026-10-11', source: 'StockAnalysis (의견 집계 · 개별 목표가)', rating: 'Buy', n: 24, nTargets: 19, mean: 255.79, median: 259,
+const COF_ANALYST = { asOf: '2026-10-12', source: 'StockAnalysis (의견 집계 · 개별 목표가)', rating: 'Buy', n: 24, nTargets: 19, mean: 254.47, median: 259,
   low: 219, high: 300, strongBuy: 14, buy: 5, hold: 5, sell: 0, strongSell: 0 };
 (function(){
   const A = COF_ANALYST, last = (typeof COF_DAILY !== 'undefined' && COF_DAILY.length) ? COF_DAILY[COF_DAILY.length - 1] : null;

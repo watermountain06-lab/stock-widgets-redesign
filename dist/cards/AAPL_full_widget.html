@@ -917,7 +917,7 @@ Chart.overrides.doughnut.animation = false;
     <div class="card-title">다음 실적 체크포인트 <span style="color:var(--gold);font-weight:600;">2026년 10월 29일 무렵 (예상) · Q4 FY26</span></div>
     <div style="font-size:12px;color:var(--text2);line-height:1.8;">
       <div style="margin-bottom:8px;"><strong style="color:var(--accent2);">①</strong> 매출 증가율(1년 전 대비)이 최근 흐름(+15.7% → +16.6% → +16.4%)보다 낮아지지 않는지</div>
-      <div style="margin-bottom:8px;"><strong style="color:var(--accent2);">②</strong> GAAP 영업이익률이 1년 전 같은 분기보다 높은지(Q3 FY26 32.6%, 1년 전 30.0%)</div>
+      <div style="margin-bottom:8px;"><strong style="color:var(--accent2);">②</strong> Q4 FY26 GAAP 영업이익률이 1년 전 같은 분기(Q4 FY25 31.6%)보다 높은지(직전 Q3 FY26 32.6%)</div>
     </div>
   </div>
 </div>
@@ -1119,8 +1119,8 @@ Chart.overrides.doughnut.animation = false;
         <div class="op-dist"><div data-an-bar="buy" style="width: 56.8%; background: var(--green);"></div><div data-an-bar="hold" style="width: 29.5%; background: var(--gold);"></div><div data-an-bar="sell" style="width: 13.6%; background: var(--red);"></div></div>
       </div>
       <div class="op-cell">
-        <span class="op-label">평균 목표주가 · <span data-an="asof">2026-10-11</span></span>
-        <span class="op-val"><span data-an="mean">$337.06</span> <span class="op-sub op-up" data-an="upside">+0.1%</span></span>
+        <span class="op-label">평균 목표주가 · <span data-an="asof">2026-10-12</span></span>
+        <span class="op-val"><span data-an="mean">$337.77</span> <span class="op-sub op-up" data-an="upside">+0.3%</span></span>
       </div>
       <div class="op-cell">
         <span class="op-label">다음 실적</span>
@@ -2105,7 +2105,7 @@ const AAPL_ACTIVITY = {"ticker": "AAPL", "status": "ok", "asOf": "2026-06-27", "
 // ── 투자포인트 탭: 애널리스트 목표가 (출처·기준일 포함) ──
 // 갱신: StockAnalysis 예측 페이지(stockanalysis.com/stocks/aapl/forecast/)의 값과 날짜를 옮긴다.
 // 현재가 대비는 마지막 종가에서 계산한다.
-const AAPL_ANALYST = { asOf: '2026-10-11', source: 'StockAnalysis (의견 집계 · 개별 목표가)', rating: 'Buy', n: 44, nTargets: 28, mean: 337.06, median: 350,
+const AAPL_ANALYST = { asOf: '2026-10-12', source: 'StockAnalysis (의견 집계 · 개별 목표가)', rating: 'Buy', n: 44, nTargets: 28, mean: 337.77, median: 355,
   low: 245, high: 400, strongBuy: 19, buy: 6, hold: 13, sell: 3, strongSell: 3 };
 (function(){
   const A = AAPL_ANALYST, last = (typeof AAPL_DAILY !== 'undefined' && AAPL_DAILY.length) ? AAPL_DAILY[AAPL_DAILY.length - 1] : null;

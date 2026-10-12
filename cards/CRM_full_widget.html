@@ -881,7 +881,7 @@ Chart.overrides.doughnut.animation = false;
     <div class="card-title">다음 실적 체크포인트 <span style="color:var(--gold);font-weight:600;">Q3 FY27</span></div>
     <div style="font-size:12px;color:var(--text2);line-height:1.8;">
       <div style="margin-bottom:8px;"><strong style="color:var(--accent2);">①</strong> 매출 증가율(1년 전 대비)이 최근 흐름(+12.1% → +13.3% → +10.8%)보다 낮아지지 않는지</div>
-      <div style="margin-bottom:8px;"><strong style="color:var(--accent2);">②</strong> GAAP 영업이익률이 1년 전 같은 분기보다 높은지(Q2 FY27 20.5%, 1년 전 22.8%)</div>
+      <div style="margin-bottom:8px;"><strong style="color:var(--accent2);">②</strong> Q3 FY27 GAAP 영업이익률이 1년 전 같은 분기(Q3 FY26 21.3%)보다 높은지(직전 Q2 FY27 20.5%)</div>
       <div style="margin-bottom:8px;"><strong style="color:var(--accent2);">③</strong> 차입금 $39.3B이 줄어드는지</div>
     </div>
   </div>
@@ -1080,13 +1080,13 @@ Chart.overrides.doughnut.animation = false;
     <div class="card-title">투자의견 요약</div>
     <div class="op-strip">
       <div class="op-cell">
-        <span class="op-label">애널리스트 <span data-an="n">56명 · 목표가 36</span>명</span>
+        <span class="op-label">애널리스트 <span data-an="n">56명 · 목표가 35</span>명</span>
         <span class="op-val"><span data-an="rating">Buy</span> <span class="op-sub">매수 <span data-an="buy">39</span> · 유지 <span data-an="hold">15</span> · 매도 <span data-an="sell">2</span></span></span>
         <div class="op-dist"><div data-an-bar="buy" style="width: 69.6%; background: var(--green);"></div><div data-an-bar="hold" style="width: 26.8%; background: var(--gold);"></div><div data-an-bar="sell" style="width: 3.6%; background: var(--red);"></div></div>
       </div>
       <div class="op-cell">
-        <span class="op-label">평균 목표주가 · <span data-an="asof">2026-10-11</span></span>
-        <span class="op-val"><span data-an="mean">$272.19</span> <span class="op-sub op-up" data-an="upside">+18.8%</span></span>
+        <span class="op-label">평균 목표주가 · <span data-an="asof">2026-10-12</span></span>
+        <span class="op-val"><span data-an="mean">$276.40</span> <span class="op-sub op-up" data-an="upside">+20.6%</span></span>
       </div>
       <div class="op-cell">
         <span class="op-label">다음 실적</span>
@@ -2075,8 +2075,8 @@ const CRM_ACTIVITY = {"ticker": "CRM", "status": "N/A", "reason": "매입채무 
 // ── 투자포인트 탭: 애널리스트 목표가 (출처·기준일 포함) ──
 // 갱신: StockAnalysis 예측 페이지(stockanalysis.com/stocks/crm/forecast/)의 값과 날짜를 옮긴다.
 // 현재가 대비는 마지막 종가에서 계산한다.
-const CRM_ANALYST = { asOf: '2026-10-11', source: 'StockAnalysis (의견 집계 · 개별 목표가)', rating: 'Buy', n: 56, nTargets: 36, mean: 272.19, median: 276,
-  low: 160, high: 400, strongBuy: 33, buy: 6, hold: 15, sell: 2, strongSell: 0 };
+const CRM_ANALYST = { asOf: '2026-10-12', source: 'StockAnalysis (의견 집계 · 개별 목표가)', rating: 'Buy', n: 56, nTargets: 35, mean: 276.4, median: 280,
+  low: 165, high: 400, strongBuy: 33, buy: 6, hold: 15, sell: 2, strongSell: 0 };
 (function(){
   const A = CRM_ANALYST, last = (typeof CRM_DAILY !== 'undefined' && CRM_DAILY.length) ? CRM_DAILY[CRM_DAILY.length - 1] : null;
   const put = (k, t) => document.querySelectorAll(`#invest [data-an="${k}"]`).forEach(el => { el.textContent = t; });

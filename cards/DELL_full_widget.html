@@ -917,7 +917,7 @@ Chart.overrides.doughnut.animation = false;
     <div class="card-title">다음 실적 체크포인트 <span style="color:var(--gold);font-weight:600;">2026년 11월 24일 무렵 (예상) · Q3 FY27</span></div>
     <div style="font-size:12px;color:var(--text2);line-height:1.8;">
       <div style="margin-bottom:8px;"><strong style="color:var(--accent2);">①</strong> 매출 증가율(1년 전 대비)이 최근 흐름(+39.5% → +87.5% → +57.7%)보다 낮아지지 않는지</div>
-      <div style="margin-bottom:8px;"><strong style="color:var(--accent2);">②</strong> GAAP 영업이익률이 1년 전 같은 분기보다 높은지(Q2 FY27 11.5%, 1년 전 6.0%)</div>
+      <div style="margin-bottom:8px;"><strong style="color:var(--accent2);">②</strong> Q3 FY27 GAAP 영업이익률이 1년 전 같은 분기(Q3 FY26 7.8%)보다 높은지(직전 Q2 FY27 11.5%)</div>
     </div>
   </div>
 </div>
@@ -1118,7 +1118,7 @@ Chart.overrides.doughnut.animation = false;
         <div class="op-dist"><div data-an-bar="buy" style="width: 69%; background: var(--green);"></div><div data-an-bar="hold" style="width: 27.6%; background: var(--gold);"></div><div data-an-bar="sell" style="width: 3.4%; background: var(--red);"></div></div>
       </div>
       <div class="op-cell">
-        <span class="op-label">평균 목표주가 · <span data-an="asof">2026-10-11</span></span>
+        <span class="op-label">평균 목표주가 · <span data-an="asof">2026-10-12</span></span>
         <span class="op-val"><span data-an="mean">$577.91</span> <span class="op-sub op-down" data-an="upside">−1.4%</span></span>
       </div>
       <div class="op-cell">
@@ -2114,7 +2114,7 @@ const DELL_ACTIVITY = {"ticker": "DELL", "status": "ok", "asOf": "2026-07-31", "
 // ── 투자포인트 탭: 애널리스트 목표가 (출처·기준일 포함) ──
 // 갱신: StockAnalysis 예측 페이지(stockanalysis.com/stocks/dell/forecast/)의 값과 날짜를 옮긴다.
 // 현재가 대비는 마지막 종가에서 계산한다.
-const DELL_ANALYST = { asOf: '2026-10-11', source: 'StockAnalysis (의견 집계 · 개별 목표가)', rating: 'Buy', n: 29, nTargets: 22, mean: 577.91, median: 600,
+const DELL_ANALYST = { asOf: '2026-10-12', source: 'StockAnalysis (의견 집계 · 개별 목표가)', rating: 'Buy', n: 29, nTargets: 22, mean: 577.91, median: 600,
   low: 290, high: 735, strongBuy: 14, buy: 6, hold: 8, sell: 1, strongSell: 0 };
 (function(){
   const A = DELL_ANALYST, last = (typeof DELL_DAILY !== 'undefined' && DELL_DAILY.length) ? DELL_DAILY[DELL_DAILY.length - 1] : null;

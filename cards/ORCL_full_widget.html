@@ -883,7 +883,7 @@ Chart.overrides.doughnut.animation = false;
     <div class="card-title">다음 실적 체크포인트 <span style="color:var(--gold);font-weight:600;">2026년 12월 9일 무렵 (예상) · Q2 FY27</span></div>
     <div style="font-size:12px;color:var(--text2);line-height:1.8;">
       <div style="margin-bottom:8px;"><strong style="color:var(--accent2);">①</strong> 매출 증가율(1년 전 대비)이 최근 흐름(+21.7% → +20.6% → +29.6%)보다 낮아지지 않는지</div>
-      <div style="margin-bottom:8px;"><strong style="color:var(--accent2);">②</strong> GAAP 영업이익률이 1년 전 같은 분기보다 높은지(Q1 FY27 34.8%, 1년 전 28.7%)</div>
+      <div style="margin-bottom:8px;"><strong style="color:var(--accent2);">②</strong> Q2 FY27 GAAP 영업이익률이 1년 전 같은 분기(Q2 FY26 29.5%)보다 높은지(직전 Q1 FY27 34.8%)</div>
       <div style="margin-bottom:8px;"><strong style="color:var(--accent2);">③</strong> FCF(최근 4분기 −$28.7B)가 배당 지급(연 환산 약 $6.3B)을 넘는지</div>
       <div><strong style="color:var(--accent2);">④</strong> 차입금 $125.3B이 줄어드는지</div>
     </div>
@@ -1084,13 +1084,13 @@ Chart.overrides.doughnut.animation = false;
     <div class="card-title">투자의견 요약</div>
     <div class="op-strip">
       <div class="op-cell">
-        <span class="op-label">애널리스트 <span data-an="n">43명 · 목표가 31</span>명</span>
+        <span class="op-label">애널리스트 <span data-an="n">43명 · 목표가 30</span>명</span>
         <span class="op-val"><span data-an="rating">Buy</span> <span class="op-sub">매수 <span data-an="buy">35</span> · 유지 <span data-an="hold">7</span> · 매도 <span data-an="sell">1</span></span></span>
         <div class="op-dist"><div data-an-bar="buy" style="width: 81.4%; background: var(--green);"></div><div data-an-bar="hold" style="width: 16.3%; background: var(--gold);"></div><div data-an-bar="sell" style="width: 2.3%; background: var(--red);"></div></div>
       </div>
       <div class="op-cell">
-        <span class="op-label">평균 목표주가 · <span data-an="asof">2026-10-11</span></span>
-        <span class="op-val"><span data-an="mean">$244.87</span> <span class="op-sub op-up" data-an="upside">+73.2%</span></span>
+        <span class="op-label">평균 목표주가 · <span data-an="asof">2026-10-12</span></span>
+        <span class="op-val"><span data-an="mean">$247.53</span> <span class="op-sub op-up" data-an="upside">+75.1%</span></span>
       </div>
       <div class="op-cell">
         <span class="op-label">다음 실적</span>
@@ -2084,7 +2084,7 @@ const ORCL_ACTIVITY = {"ticker": "ORCL", "status": "N/A", "reason": "5년 비교
 // ── 투자포인트 탭: 애널리스트 목표가 (출처·기준일 포함) ──
 // 갱신: StockAnalysis 예측 페이지(stockanalysis.com/stocks/orcl/forecast/)의 값과 날짜를 옮긴다.
 // 현재가 대비는 마지막 종가에서 계산한다.
-const ORCL_ANALYST = { asOf: '2026-10-11', source: 'StockAnalysis (의견 집계 · 개별 목표가)', rating: 'Buy', n: 43, nTargets: 31, mean: 244.87, median: 240,
+const ORCL_ANALYST = { asOf: '2026-10-12', source: 'StockAnalysis (의견 집계 · 개별 목표가)', rating: 'Buy', n: 43, nTargets: 30, mean: 247.53, median: 240,
   low: 110, high: 400, strongBuy: 28, buy: 7, hold: 7, sell: 0, strongSell: 1 };
 (function(){
   const A = ORCL_ANALYST, last = (typeof ORCL_DAILY !== 'undefined' && ORCL_DAILY.length) ? ORCL_DAILY[ORCL_DAILY.length - 1] : null;

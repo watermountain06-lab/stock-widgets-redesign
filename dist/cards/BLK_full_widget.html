@@ -884,7 +884,7 @@ Chart.overrides.doughnut.animation = false;
     <div class="card-title">다음 실적 체크포인트 <span style="color:var(--gold);font-weight:600;">2026년 10월 13일 무렵 (예상) · Q3 2026</span></div>
     <div style="font-size:12px;color:var(--text2);line-height:1.8;">
       <div style="margin-bottom:8px;"><strong style="color:var(--accent2);">①</strong> 매출 증가율(1년 전 대비)이 최근 흐름(+23.4% → +27.0% → +30.6%)보다 낮아지지 않는지</div>
-      <div style="margin-bottom:8px;"><strong style="color:var(--accent2);">②</strong> GAAP 영업이익률이 1년 전 같은 분기보다 높은지(Q2 2026 34.7%, 1년 전 31.9%)</div>
+      <div style="margin-bottom:8px;"><strong style="color:var(--accent2);">②</strong> Q3 2026 GAAP 영업이익률이 1년 전 같은 분기(Q3 2025 30.0%)보다 높은지(직전 Q2 2026 34.7%)</div>
     </div>
   </div>
 </div>
@@ -1085,8 +1085,8 @@ Chart.overrides.doughnut.animation = false;
         <div class="op-dist"><div data-an-bar="buy" style="width: 94.4%; background: var(--green);"></div><div data-an-bar="hold" style="width: 5.6%; background: var(--gold);"></div><div data-an-bar="sell" style="width: 0%; background: var(--red);"></div></div>
       </div>
       <div class="op-cell">
-        <span class="op-label">평균 목표주가 · <span data-an="asof">2026-10-11</span></span>
-        <span class="op-val"><span data-an="mean">$1311.36</span> <span class="op-sub op-up" data-an="upside">+21.2%</span></span>
+        <span class="op-label">평균 목표주가 · <span data-an="asof">2026-10-12</span></span>
+        <span class="op-val"><span data-an="mean">$1316.21</span> <span class="op-sub op-up" data-an="upside">+21.6%</span></span>
       </div>
       <div class="op-cell">
         <span class="op-label">다음 실적</span>
@@ -2065,8 +2065,8 @@ const BLK_ACTIVITY = {"ticker": "BLK", "status": "N/A", "reason": "매출원가�
 // ── 투자포인트 탭: 애널리스트 목표가 (출처·기준일 포함) ──
 // 갱신: StockAnalysis 예측 페이지(stockanalysis.com/stocks/blk/forecast/)의 값과 날짜를 옮긴다.
 // 현재가 대비는 마지막 종가에서 계산한다.
-const BLK_ANALYST = { asOf: '2026-10-11', source: 'StockAnalysis (의견 집계 · 개별 목표가)', rating: 'Strong Buy', n: 18, nTargets: 14, mean: 1311.36, median: 1300,
-  low: 1144, high: 1479, strongBuy: 11, buy: 6, hold: 1, sell: 0, strongSell: 0 };
+const BLK_ANALYST = { asOf: '2026-10-12', source: 'StockAnalysis (의견 집계 · 개별 목표가)', rating: 'Strong Buy', n: 18, nTargets: 14, mean: 1316.21, median: 1300,
+  low: 1212, high: 1479, strongBuy: 11, buy: 6, hold: 1, sell: 0, strongSell: 0 };
 (function(){
   const A = BLK_ANALYST, last = (typeof BLK_DAILY !== 'undefined' && BLK_DAILY.length) ? BLK_DAILY[BLK_DAILY.length - 1] : null;
   const put = (k, t) => document.querySelectorAll(`#invest [data-an="${k}"]`).forEach(el => { el.textContent = t; });

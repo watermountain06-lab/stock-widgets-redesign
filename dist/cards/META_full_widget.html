@@ -915,7 +915,7 @@ Chart.overrides.doughnut.animation = false;
     <div class="card-title">다음 실적 체크포인트 <span style="color:var(--gold);font-weight:600;">2026년 10월 28일 무렵 (예상) · Q3 2026</span></div>
     <div style="font-size:12px;color:var(--text2);line-height:1.8;">
       <div style="margin-bottom:8px;"><strong style="color:var(--accent2);">①</strong> 매출 증가율(1년 전 대비)이 최근 흐름(+23.8% → +33.1% → +28.0%)보다 낮아지지 않는지</div>
-      <div style="margin-bottom:8px;"><strong style="color:var(--accent2);">②</strong> GAAP 영업이익률이 1년 전 같은 분기보다 높은지(Q2 2026 30.9%, 1년 전 43.0%)</div>
+      <div style="margin-bottom:8px;"><strong style="color:var(--accent2);">②</strong> Q3 2026 GAAP 영업이익률이 1년 전 같은 분기(Q3 2025 40.1%)보다 높은지(직전 Q2 2026 30.9%)</div>
     </div>
   </div>
 </div>
@@ -1122,8 +1122,8 @@ Chart.overrides.doughnut.animation = false;
         <div class="op-dist"><div data-an-bar="buy" style="width: 87.3%; background: var(--green);"></div><div data-an-bar="hold" style="width: 11.1%; background: var(--gold);"></div><div data-an-bar="sell" style="width:1.6%;background:var(--red);"></div></div>
       </div>
       <div class="op-cell">
-        <span class="op-label">평균 목표주가 · <span data-an="asof">2026-10-11</span></span>
-        <span class="op-val"><span data-an="mean">$808.55</span> <span class="op-sub op-up" data-an="upside">+12.5%</span></span>
+        <span class="op-label">평균 목표주가 · <span data-an="asof">2026-10-12</span></span>
+        <span class="op-val"><span data-an="mean">$808.07</span> <span class="op-sub op-up" data-an="upside">+12.4%</span></span>
       </div>
       <div class="op-cell">
         <span class="op-label">다음 실적</span>
@@ -2107,7 +2107,7 @@ const META_ACTIVITY = {"ticker": "META", "status": "ok", "asOf": "2026-06-30", "
 // ── 투자포인트 탭: 애널리스트 목표가 (출처·기준일 포함) ──
 // 갱신: StockAnalysis 예측 페이지(stockanalysis.com/stocks/meta/forecast/)의 값과 날짜를 옮긴다.
 // 현재가 대비는 마지막 종가에서 계산한다.
-const META_ANALYST = { asOf: '2026-10-11', source: 'StockAnalysis (의견 집계 · 개별 목표가)', rating: 'Strong Buy', n: 63, nTargets: 42, mean: 808.55, median: 810,
+const META_ANALYST = { asOf: '2026-10-12', source: 'StockAnalysis (의견 집계 · 개별 목표가)', rating: 'Strong Buy', n: 63, nTargets: 42, mean: 808.07, median: 810,
   low: 580, high: 1000, strongBuy: 47, buy: 8, hold: 7, sell: 0, strongSell: 1 };
 (function(){
   const A = META_ANALYST, last = (typeof META_DAILY !== 'undefined' && META_DAILY.length) ? META_DAILY[META_DAILY.length - 1] : null;

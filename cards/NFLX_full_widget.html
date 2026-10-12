@@ -883,7 +883,7 @@ Chart.overrides.doughnut.animation = false;
     <div class="card-title">다음 실적 체크포인트 <span style="color:var(--gold);font-weight:600;">Q3 2026</span></div>
     <div style="font-size:12px;color:var(--text2);line-height:1.8;">
       <div style="margin-bottom:8px;"><strong style="color:var(--accent2);">①</strong> 매출 증가율(1년 전 대비)이 최근 흐름(+17.6% → +16.2% → +13.4%)보다 낮아지지 않는지</div>
-      <div style="margin-bottom:8px;"><strong style="color:var(--accent2);">②</strong> GAAP 영업이익률이 1년 전 같은 분기보다 높은지(Q2 2026 33.4%, 1년 전 34.1%)</div>
+      <div style="margin-bottom:8px;"><strong style="color:var(--accent2);">②</strong> Q3 2026 GAAP 영업이익률이 1년 전 같은 분기(Q3 2025 28.2%)보다 높은지(직전 Q2 2026 33.4%)</div>
     </div>
   </div>
 </div>
@@ -1096,7 +1096,7 @@ Chart.overrides.doughnut.animation = false;
         <div class="op-dist"><div data-an-bar="buy" style="width: 68.6%; background: var(--green);"></div><div data-an-bar="hold" style="width: 29.4%; background: var(--gold);"></div><div data-an-bar="sell" style="width: 2%; background: var(--red);"></div></div>
       </div>
       <div class="op-cell">
-        <span class="op-label">평균 목표주가 · <span data-an="asof">2026-10-11</span></span>
+        <span class="op-label">평균 목표주가 · <span data-an="asof">2026-10-12</span></span>
         <span class="op-val"><span data-an="mean">$93.35</span> <span class="op-sub op-up" data-an="upside">+32.8%</span></span>
       </div>
       <div class="op-cell">
@@ -2076,7 +2076,7 @@ const NFLX_ACTIVITY = {"ticker": "NFLX", "status": "N/A", "reason": "5년 비교
 // ── 투자포인트 탭: 애널리스트 목표가 (출처·기준일 포함) ──
 // 갱신: StockAnalysis 예측 페이지(stockanalysis.com/stocks/nflx/forecast/)의 값과 날짜를 옮긴다.
 // 현재가 대비는 마지막 종가에서 계산한다.
-const NFLX_ANALYST = { asOf: '2026-10-11', source: 'StockAnalysis (의견 집계 · 개별 목표가)', rating: 'Buy', n: 51, nTargets: 31, mean: 93.35, median: 92,
+const NFLX_ANALYST = { asOf: '2026-10-12', source: 'StockAnalysis (의견 집계 · 개별 목표가)', rating: 'Buy', n: 51, nTargets: 31, mean: 93.35, median: 92,
   low: 57, high: 135, strongBuy: 28, buy: 7, hold: 15, sell: 0, strongSell: 1 };
 (function(){
   const A = NFLX_ANALYST, last = (typeof NFLX_DAILY !== 'undefined' && NFLX_DAILY.length) ? NFLX_DAILY[NFLX_DAILY.length - 1] : null;

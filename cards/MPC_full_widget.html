@@ -915,7 +915,7 @@ Chart.overrides.doughnut.animation = false;
     <div class="card-title">다음 실적 체크포인트 <span style="color:var(--gold);font-weight:600;">2026년 11월 3일 무렵 (예상) · Q3 2026</span></div>
     <div style="font-size:12px;color:var(--text2);line-height:1.8;">
       <div style="margin-bottom:8px;"><strong style="color:var(--accent2);">①</strong> 매출 증가율(1년 전 대비)이 최근 흐름(−1.7% → +8.5% → +53.8%)보다 낮아지지 않는지</div>
-      <div style="margin-bottom:8px;"><strong style="color:var(--accent2);">②</strong> GAAP 영업이익률이 1년 전 같은 분기보다 높은지(Q2 2026 14.1%, 1년 전 6.5%)</div>
+      <div style="margin-bottom:8px;"><strong style="color:var(--accent2);">②</strong> Q3 2026 GAAP 영업이익률이 1년 전 같은 분기(Q3 2025 7.8%)보다 높은지(직전 Q2 2026 14.1%)</div>
     </div>
   </div>
 </div>
@@ -1112,13 +1112,13 @@ Chart.overrides.doughnut.animation = false;
     <div class="card-title">투자의견 요약</div>
     <div class="op-strip">
       <div class="op-cell">
-        <span class="op-label">애널리스트 <span data-an="n">19명 · 목표가 17</span>명</span>
+        <span class="op-label">애널리스트 <span data-an="n">19명 · 목표가 18</span>명</span>
         <span class="op-val"><span data-an="rating">Buy</span> <span class="op-sub">매수 <span data-an="buy">9</span> · 유지 <span data-an="hold">9</span> · 매도 <span data-an="sell">1</span></span></span>
         <div class="op-dist"><div data-an-bar="buy" style="width: 47.4%; background: var(--green);"></div><div data-an-bar="hold" style="width: 47.4%; background: var(--gold);"></div><div data-an-bar="sell" style="width: 5.3%; background: var(--red);"></div></div>
       </div>
       <div class="op-cell">
-        <span class="op-label">평균 목표주가 · <span data-an="asof">2026-10-11</span></span>
-        <span class="op-val"><span data-an="mean">$399.35</span> <span class="op-sub op-down" data-an="upside">−12.2%</span></span>
+        <span class="op-label">평균 목표주가 · <span data-an="asof">2026-10-12</span></span>
+        <span class="op-val"><span data-an="mean">$411.44</span> <span class="op-sub op-down" data-an="upside">−9.6%</span></span>
       </div>
       <div class="op-cell">
         <span class="op-label">다음 실적</span>
@@ -1352,9 +1352,9 @@ const MULTIPLE_DATA = {
       { name:'VLO', value:0.9, status:'reference' },
       { name:'PSX', value:0.7, status:'reference' },
       { name:'XOM', value:1.9, status:'reference' },
-      { name:'CVX', value:2.0, status:'reference' },
+      { name:'CVX', value:1.9, status:'reference' },
       { name:'COP', value:2.5, status:'reference' },
-      { name:'OXY', value:2.9, status:'reference' }
+      { name:'OXY', value:2.8, status:'reference' }
     ]
   },
   pcr: {
@@ -1371,7 +1371,7 @@ const MULTIPLE_DATA = {
     title: '정유·석유 EV/EBITDA 비교 (PSX 값 없음·OXY 값 없음) · 10/9 종가',
     unit: 'EV/EBITDA', max: 15, mpcValue: null,
     peers: [
-      { name:'VLO', value:12.9, status:'reference' },
+      { name:'VLO', value:13.0, status:'reference' },
       { name:'XOM', value:9.8, status:'reference' },
       { name:'CVX', value:8.2, status:'reference' },
       { name:'COP', value:6.5, status:'reference' }
@@ -2104,7 +2104,7 @@ const MPC_ACTIVITY = {"ticker": "MPC", "status": "ok", "asOf": "2026-06-30", "pr
 // ── 투자포인트 탭: 애널리스트 목표가 (출처·기준일 포함) ──
 // 갱신: StockAnalysis 예측 페이지(stockanalysis.com/stocks/mpc/forecast/)의 값과 날짜를 옮긴다.
 // 현재가 대비는 마지막 종가에서 계산한다.
-const MPC_ANALYST = { asOf: '2026-10-11', source: 'StockAnalysis (의견 집계 · 개별 목표가)', rating: 'Buy', n: 19, nTargets: 17, mean: 399.35, median: 426,
+const MPC_ANALYST = { asOf: '2026-10-12', source: 'StockAnalysis (의견 집계 · 개별 목표가)', rating: 'Buy', n: 19, nTargets: 18, mean: 411.44, median: 445,
   low: 210, high: 519, strongBuy: 5, buy: 4, hold: 9, sell: 0, strongSell: 1 };
 (function(){
   const A = MPC_ANALYST, last = (typeof MPC_DAILY !== 'undefined' && MPC_DAILY.length) ? MPC_DAILY[MPC_DAILY.length - 1] : null;

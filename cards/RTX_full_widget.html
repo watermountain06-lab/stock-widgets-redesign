@@ -882,7 +882,7 @@ Chart.overrides.doughnut.animation = false;
     <div class="card-title">다음 실적 체크포인트 <span style="color:var(--gold);font-weight:600;">2026년 10월 20일 무렵 (예상) · Q3 2026</span></div>
     <div style="font-size:12px;color:var(--text2);line-height:1.8;">
       <div style="margin-bottom:8px;"><strong style="color:var(--accent2);">①</strong> 매출 증가율(1년 전 대비)이 최근 흐름(+12.1% → +8.7% → +14.5%)보다 낮아지지 않는지</div>
-      <div style="margin-bottom:8px;"><strong style="color:var(--accent2);">②</strong> GAAP 영업이익률이 1년 전 같은 분기보다 높은지(Q2 2026 11.4%, 1년 전 9.9%)</div>
+      <div style="margin-bottom:8px;"><strong style="color:var(--accent2);">②</strong> Q3 2026 GAAP 영업이익률이 1년 전 같은 분기(Q3 2025 11.2%)보다 높은지(직전 Q2 2026 11.4%)</div>
       <div style="margin-bottom:8px;"><strong style="color:var(--accent2);">③</strong> 차입금 $37.4B이 줄어드는지</div>
     </div>
   </div>
@@ -1287,12 +1287,12 @@ function renderSegmentChart() {
 const MULTIPLE_DATA = {
   per: {
     title: '항공·방산 PER 비교 (S&P500 산업재 81종목 중 6곳) · 10/9 종가',
-    unit: 'PER', max: 95, rtxValue: null,
+    unit: 'PER', max: 80, rtxValue: null,
     peers: [
       { name:'LMT', value:18.8, status:'reference' },
       { name:'GD', value:20.2, status:'reference' },
       { name:'NOC', value:15.3, status:'reference' },
-      { name:'BA', value:82.4, status:'reference' },
+      { name:'BA', value:68.5, status:'reference' },
       { name:'GE', value:36.3, status:'reference' },
       { name:'LHX', value:23.9, status:'reference' }
     ]

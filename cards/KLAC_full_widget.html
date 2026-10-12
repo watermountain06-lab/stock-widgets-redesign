@@ -915,7 +915,7 @@ Chart.overrides.doughnut.animation = false;
     <div class="card-title">다음 실적 체크포인트 <span style="color:var(--gold);font-weight:600;">2026년 10월 28일 무렵 (예상) · Q1 FY27</span></div>
     <div style="font-size:12px;color:var(--text2);line-height:1.8;">
       <div style="margin-bottom:8px;"><strong style="color:var(--accent2);">①</strong> 매출 증가율(1년 전 대비)이 최근 흐름(+7.2% → +11.5% → +15.2%)보다 낮아지지 않는지</div>
-      <div style="margin-bottom:8px;"><strong style="color:var(--accent2);">②</strong> GAAP 영업이익률이 1년 전 같은 분기보다 높은지(Q4 FY26 42.5%, 1년 전 42.6%)</div>
+      <div style="margin-bottom:8px;"><strong style="color:var(--accent2);">②</strong> Q1 FY27 GAAP 영업이익률이 1년 전 같은 분기(Q1 FY26 41.7%)보다 높은지(직전 Q4 FY26 42.5%)</div>
     </div>
   </div>
 </div>
@@ -999,7 +999,7 @@ Chart.overrides.doughnut.animation = false;
           </div>
         </div>
         <div class="val-track"><div class="val-fill hist-fill bad" data-hist="fill" style="width: 94%;"></div></div>
-        <div class="hist-labels"><span data-hist="min">최저 8.6x</span><span data-hist="median">중앙 22.5x</span><span data-hist="max">최고 67.6x</span></div>
+        <div class="hist-labels"><span data-hist="min">최저 10.3x</span><span data-hist="median">중앙 23.9x</span><span data-hist="max">최고 67.6x</span></div>
       </div>
     </div>
 
@@ -1112,7 +1112,7 @@ Chart.overrides.doughnut.animation = false;
         <div class="op-dist"><div data-an-bar="buy" style="width: 66.7%; background: var(--green);"></div><div data-an-bar="hold" style="width: 30%; background: var(--gold);"></div><div data-an-bar="sell" style="width: 3.3%; background: var(--red);"></div></div>
       </div>
       <div class="op-cell">
-        <span class="op-label">평균 목표주가 · <span data-an="asof">2026-10-11</span></span>
+        <span class="op-label">평균 목표주가 · <span data-an="asof">2026-10-12</span></span>
         <span class="op-val"><span data-an="mean">$235.71</span> <span class="op-sub op-up" data-an="upside">+20.5%</span></span>
       </div>
       <div class="op-cell">
@@ -1821,7 +1821,7 @@ const KLAC_FUNDAMENTAL = {"ticker": "KLAC", "basis": "quarter", "asOf": "2026-06
 //
 // 갱신: python3 v2/build_peer_score.py KLAC --self v2/KLAC_multiples.json --card
 /* VALUATION:BEGIN */
-const KLAC_VALUATION = {"peer": {"score": 24.6, "sector": "Information Technology", "asOf": ["2026-08-27", "2026-09-11"], "priceSession": "2026-10-09", "metrics": [{"metric": "per", "score": 33.3, "rank": 17, "peers": 24}, {"metric": "pbr", "score": 8.7, "rank": 22, "peers": 23}, {"metric": "psr", "score": 25.9, "rank": 21, "peers": 27}, {"metric": "pcr", "score": 26.1, "rank": 18, "peers": 23}, {"metric": "evebitda", "score": 29.2, "rank": 18, "peers": 24}]}, "self": {"score": 5.5, "window": ["2021-10-11", "2026-10-09"], "perBasis": "diluted", "metrics": [{"metric": "per", "score": 5.1, "percentile": 94.9, "current": 53.43, "min": 12.01, "median": 28.77, "max": 85.45, "days": 1255, "currentNote": null}, {"metric": "pbr", "score": 7.5, "percentile": 92.5, "current": 40.24, "min": 10.72, "median": 26.58, "max": 67.6, "days": 1255, "currentNote": null}, {"metric": "psr", "score": 5.1, "percentile": 94.9, "current": 18.82, "min": 4.05, "median": 8.54, "max": 30.09, "days": 1255, "currentNote": null}, {"metric": "pcr", "score": 3.8, "percentile": 96.2, "current": 67.83, "min": 12.42, "median": 27.58, "max": 98.17, "days": 1255, "currentNote": null}, {"metric": "evebitda", "score": 6.0, "percentile": 94.0, "current": 42.42, "min": 8.64, "median": 22.53, "max": 67.58, "days": 1049, "currentNote": null}]}};
+const KLAC_VALUATION = {"peer": {"score": 24.6, "sector": "Information Technology", "asOf": ["2026-08-27", "2026-09-11"], "priceSession": "2026-10-09", "metrics": [{"metric": "per", "score": 33.3, "rank": 17, "peers": 24}, {"metric": "pbr", "score": 8.7, "rank": 22, "peers": 23}, {"metric": "psr", "score": 25.9, "rank": 21, "peers": 27}, {"metric": "pcr", "score": 26.1, "rank": 18, "peers": 23}, {"metric": "evebitda", "score": 29.2, "rank": 18, "peers": 24}]}, "self": {"score": 5.5, "window": ["2021-10-11", "2026-10-09"], "perBasis": "diluted", "metrics": [{"metric": "per", "score": 5.1, "percentile": 94.9, "current": 53.43, "min": 12.01, "median": 28.77, "max": 85.45, "days": 1255, "currentNote": null}, {"metric": "pbr", "score": 7.5, "percentile": 92.5, "current": 40.24, "min": 10.72, "median": 26.58, "max": 67.6, "days": 1255, "currentNote": null}, {"metric": "psr", "score": 5.1, "percentile": 94.9, "current": 18.82, "min": 4.05, "median": 8.54, "max": 30.09, "days": 1255, "currentNote": null}, {"metric": "pcr", "score": 3.8, "percentile": 96.2, "current": 67.83, "min": 12.42, "median": 27.58, "max": 98.17, "days": 1255, "currentNote": null}, {"metric": "evebitda", "score": 6.0, "percentile": 94.0, "current": 42.42, "min": 10.3, "median": 23.85, "max": 67.58, "days": 1049, "currentNote": null}]}};
 /* VALUATION:END */
 
 // ── 종합 평가 자동 판정 (2026-09-25 사용자 결정 · 방향 합산) ──
@@ -2108,7 +2108,7 @@ const KLAC_ACTIVITY = {"ticker": "KLAC", "status": "ok", "asOf": "2026-06-30", "
 // ── 투자포인트 탭: 애널리스트 목표가 (출처·기준일 포함) ──
 // 갱신: StockAnalysis 예측 페이지(stockanalysis.com/stocks/klac/forecast/)의 값과 날짜를 옮긴다.
 // 현재가 대비는 마지막 종가에서 계산한다.
-const KLAC_ANALYST = { asOf: '2026-10-11', source: 'StockAnalysis (의견 집계 · 개별 목표가)', rating: 'Buy', n: 30, nTargets: 21, mean: 235.71, median: 238,
+const KLAC_ANALYST = { asOf: '2026-10-12', source: 'StockAnalysis (의견 집계 · 개별 목표가)', rating: 'Buy', n: 30, nTargets: 21, mean: 235.71, median: 238,
   low: 180, high: 325, strongBuy: 15, buy: 5, hold: 9, sell: 1, strongSell: 0 };
 (function(){
   const A = KLAC_ANALYST, last = (typeof KLAC_DAILY !== 'undefined' && KLAC_DAILY.length) ? KLAC_DAILY[KLAC_DAILY.length - 1] : null;

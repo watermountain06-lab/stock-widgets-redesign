@@ -1095,13 +1095,13 @@ Chart.overrides.doughnut.animation = false;
     <div class="card-title">투자의견 요약</div>
     <div class="op-strip">
       <div class="op-cell">
-        <span class="op-label">애널리스트 <span data-an="n">23명 · 목표가 17</span>명</span>
+        <span class="op-label">애널리스트 <span data-an="n">23명 · 목표가 18</span>명</span>
         <span class="op-val"><span data-an="rating">Buy</span> <span class="op-sub">매수 <span data-an="buy">18</span> · 유지 <span data-an="hold">4</span> · 매도 <span data-an="sell">1</span></span></span>
         <div class="op-dist"><div data-an-bar="buy" style="width: 78.3%; background: var(--green);"></div><div data-an-bar="hold" style="width: 17.4%; background: var(--gold);"></div><div data-an-bar="sell" style="width: 4.3%; background: var(--red);"></div></div>
       </div>
       <div class="op-cell">
-        <span class="op-label">평균 목표주가 · <span data-an="asof">2026-10-11</span></span>
-        <span class="op-val"><span data-an="mean">$120.82</span> <span class="op-sub op-up" data-an="upside">+24.9%</span></span>
+        <span class="op-label">평균 목표주가 · <span data-an="asof">2026-10-12</span></span>
+        <span class="op-val"><span data-an="mean">$121.17</span> <span class="op-sub op-up" data-an="upside">+25.3%</span></span>
       </div>
       <div class="op-cell">
         <span class="op-label">다음 실적</span>
@@ -2150,7 +2150,7 @@ const SCHW_ACTIVITY = {"ticker": "SCHW", "status": "na", "reason": "은행이라
 // ── 투자포인트 탭: 애널리스트 목표가 (출처·기준일 포함) ──
 // 갱신: StockAnalysis 예측 페이지(stockanalysis.com/stocks/schw/forecast/)의 값과 날짜를 옮긴다.
 // 현재가 대비는 마지막 종가에서 계산한다.
-const SCHW_ANALYST = { asOf: '2026-10-11', source: 'StockAnalysis (의견 집계 · 개별 목표가)', rating: 'Buy', n: 23, nTargets: 17, mean: 120.82, median: 120,
+const SCHW_ANALYST = { asOf: '2026-10-12', source: 'StockAnalysis (의견 집계 · 개별 목표가)', rating: 'Buy', n: 23, nTargets: 18, mean: 121.17, median: 125,
   low: 95, high: 145, strongBuy: 11, buy: 7, hold: 4, sell: 1, strongSell: 0 };
 (function(){
   const A = SCHW_ANALYST, last = (typeof SCHW_DAILY !== 'undefined' && SCHW_DAILY.length) ? SCHW_DAILY[SCHW_DAILY.length - 1] : null;

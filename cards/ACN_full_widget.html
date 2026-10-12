@@ -914,7 +914,7 @@ Chart.overrides.doughnut.animation = false;
     <div class="card-title">다음 실적 체크포인트 <span style="color:var(--gold);font-weight:600;">2026년 9월 24일 무렵 (예상) · Q4 FY26</span></div>
     <div style="font-size:12px;color:var(--text2);line-height:1.8;">
       <div style="margin-bottom:8px;"><strong style="color:var(--accent2);">①</strong> 매출 증가율(1년 전 대비)이 최근 흐름(+6.0% → +8.3% → +5.6%)보다 낮아지지 않는지</div>
-      <div style="margin-bottom:8px;"><strong style="color:var(--accent2);">②</strong> GAAP 영업이익률이 1년 전 같은 분기보다 높은지(Q3 FY26 17.0%, 1년 전 16.8%)</div>
+      <div style="margin-bottom:8px;"><strong style="color:var(--accent2);">②</strong> Q4 FY26 GAAP 영업이익률이 1년 전 같은 분기(Q4 FY25 11.6%)보다 높은지(직전 Q3 FY26 17.0%)</div>
     </div>
   </div>
 </div>
@@ -1115,8 +1115,8 @@ Chart.overrides.doughnut.animation = false;
         <div class="op-dist"><div data-an-bar="buy" style="width: 40.7%; background: var(--green);"></div><div data-an-bar="hold" style="width: 59.3%; background: var(--gold);"></div><div data-an-bar="sell" style="width: 0%; background: var(--red);"></div></div>
       </div>
       <div class="op-cell">
-        <span class="op-label">평균 목표주가 · <span data-an="asof">2026-10-11</span></span>
-        <span class="op-val"><span data-an="mean">$222.84</span> <span class="op-sub op-up" data-an="upside">+6.6%</span></span>
+        <span class="op-label">평균 목표주가 · <span data-an="asof">2026-10-12</span></span>
+        <span class="op-val"><span data-an="mean">$224.47</span> <span class="op-sub op-up" data-an="upside">+7.4%</span></span>
       </div>
       <div class="op-cell">
         <span class="op-label">다음 실적</span>
@@ -2104,7 +2104,7 @@ const ACN_ACTIVITY = {"ticker": "ACN", "status": "ok", "asOf": "2026-05-31", "pr
 // ── 투자포인트 탭: 애널리스트 목표가 (출처·기준일 포함) ──
 // 갱신: StockAnalysis 예측 페이지(stockanalysis.com/stocks/acn/forecast/)의 값과 날짜를 옮긴다.
 // 현재가 대비는 마지막 종가에서 계산한다.
-const ACN_ANALYST = { asOf: '2026-10-11', source: 'StockAnalysis (의견 집계 · 개별 목표가)', rating: 'Buy', n: 27, nTargets: 19, mean: 222.84, median: 220,
+const ACN_ANALYST = { asOf: '2026-10-12', source: 'StockAnalysis (의견 집계 · 개별 목표가)', rating: 'Buy', n: 27, nTargets: 19, mean: 224.47, median: 220,
   low: 175, high: 275, strongBuy: 9, buy: 2, hold: 16, sell: 0, strongSell: 0 };
 (function(){
   const A = ACN_ANALYST, last = (typeof ACN_DAILY !== 'undefined' && ACN_DAILY.length) ? ACN_DAILY[ACN_DAILY.length - 1] : null;

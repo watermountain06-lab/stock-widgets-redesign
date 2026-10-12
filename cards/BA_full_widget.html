@@ -915,7 +915,7 @@ Chart.overrides.doughnut.animation = false;
     <div class="card-title">다음 실적 체크포인트 <span style="color:var(--gold);font-weight:600;">2026년 10월 28일 무렵 (예상) · Q3 2026</span></div>
     <div style="font-size:12px;color:var(--text2);line-height:1.8;">
       <div style="margin-bottom:8px;"><strong style="color:var(--accent2);">①</strong> 매출 증가율(1년 전 대비)이 최근 흐름(+57.1% → +14.0% → +8.0%)보다 낮아지지 않는지</div>
-      <div style="margin-bottom:8px;"><strong style="color:var(--accent2);">②</strong> GAAP 영업이익률이 1년 전 같은 분기보다 높은지(Q2 2026 0.6%, 1년 전 −0.8%)</div>
+      <div style="margin-bottom:8px;"><strong style="color:var(--accent2);">②</strong> Q3 2026 GAAP 영업이익률이 1년 전 같은 분기(Q3 2025 −20.5%)보다 높은지(직전 Q2 2026 0.6%)</div>
       <div style="margin-bottom:8px;"><strong style="color:var(--accent2);">③</strong> 차입금 $45.9B이 줄어드는지</div>
     </div>
   </div>
@@ -1106,8 +1106,8 @@ Chart.overrides.doughnut.animation = false;
         <div class="op-dist"><div data-an-bar="buy" style="width: 86.2%; background: var(--green);"></div><div data-an-bar="hold" style="width: 13.8%; background: var(--gold);"></div><div data-an-bar="sell" style="width: 0%; background: var(--red);"></div></div>
       </div>
       <div class="op-cell">
-        <span class="op-label">평균 목표주가 · <span data-an="asof">2026-10-11</span></span>
-        <span class="op-val"><span data-an="mean">$273.53</span> <span class="op-sub op-up" data-an="upside">+43.7%</span></span>
+        <span class="op-label">평균 목표주가 · <span data-an="asof">2026-10-12</span></span>
+        <span class="op-val"><span data-an="mean">$272.35</span> <span class="op-sub op-up" data-an="upside">+43.1%</span></span>
       </div>
       <div class="op-cell">
         <span class="op-label">다음 실적</span>
@@ -2101,7 +2101,7 @@ const BA_ACTIVITY = {"ticker": "BA", "status": "ok", "asOf": "2026-06-30", "prev
 // ── 투자포인트 탭: 애널리스트 목표가 (출처·기준일 포함) ──
 // 갱신: StockAnalysis 예측 페이지(stockanalysis.com/stocks/ba/forecast/)의 값과 날짜를 옮긴다.
 // 현재가 대비는 마지막 종가에서 계산한다.
-const BA_ANALYST = { asOf: '2026-10-11', source: 'StockAnalysis (의견 집계 · 개별 목표가)', rating: 'Buy', n: 29, nTargets: 17, mean: 273.53, median: 275,
+const BA_ANALYST = { asOf: '2026-10-12', source: 'StockAnalysis (의견 집계 · 개별 목표가)', rating: 'Buy', n: 29, nTargets: 17, mean: 272.35, median: 275,
   low: 240, high: 305, strongBuy: 18, buy: 7, hold: 4, sell: 0, strongSell: 0 };
 (function(){
   const A = BA_ANALYST, last = (typeof BA_DAILY !== 'undefined' && BA_DAILY.length) ? BA_DAILY[BA_DAILY.length - 1] : null;
