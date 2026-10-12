@@ -571,7 +571,7 @@ Chart.overrides.doughnut.animation = false;
     </div>
     <div class="logic-box logic-negative" id="wellPeerBox">
       <div class="logic-head"><span class="logic-tag">밸류에이션 <span class="logic-denom">동종업 대비</span></span><span class="logic-verdict" id="wellPeerVerdict">비싼 편</span></div>
-      <div class="logic-score" id="wellPeerScore">11.0<span class="logic-denom">/100</span></div>
+      <div class="logic-score" id="wellPeerScore">9.2<span class="logic-denom">/100</span></div>
     </div>
     <div class="logic-box logic-negative" id="wellSelfBox">
       <div class="logic-head"><span class="logic-tag">밸류에이션 <span class="logic-denom">자기 이력 대비</span></span><span class="logic-verdict" id="wellSelfVerdict">비싼 편</span></div>
@@ -902,9 +902,9 @@ Chart.overrides.doughnut.animation = false;
 · 어떤 일정 성장률로도 현재가에 닿지 않는다
 판정은 그대로 두고, 이 값을 해석할 때 주의할 점만 보여 준다.">⚠ 계산 어려움 2/5</span><div class="vs-pill high" data-vs-pill="dcf" title="기본 내재가치가 0 이하다
 0.7 이하 매우 싸다 · 0.9 이하 싸다 · 1.1 이하 적정 · 1.5 이하 비싸다 · 초과 매우 비싸다">매우 비싸다</div></div>
-      <div class="vs-name" title="S&amp;P500 부동산 종목들보다 배수가 얼마나 낮은가. 높을수록 싸다.">동종업 대비</div><div class="vs-val" data-vc-score="peer">11.0</div><div class="sc-tile low" data-vc="peer" data-m="per">7</div><div class="sc-tile low" data-vc="peer" data-m="pbr">21</div><div class="sc-tile low" data-vc="peer" data-m="psr">14</div><div class="sc-tile low" data-vc="peer" data-m="pcr">13</div><div class="sc-tile low" data-vc="peer" data-m="evebitda">0</div><div class="vs-pill high" data-vs-pill="peer">비싸다</div>
+      <div class="vs-name" title="S&amp;P500 부동산 종목들보다 배수가 얼마나 낮은가. 높을수록 싸다.">동종업 대비</div><div class="vs-val" data-vc-score="peer">9.2</div><div class="sc-tile low" data-vc="peer" data-m="per">7</div><div class="sc-tile low" data-vc="peer" data-m="pbr">24</div><div class="sc-tile low" data-vc="peer" data-m="psr">4</div><div class="sc-tile low" data-vc="peer" data-m="pcr">11</div><div class="sc-tile low" data-vc="peer" data-m="evebitda">0</div><div class="vs-pill high" data-vs-pill="peer">비싸다</div>
     </div></div>
-    <div class="vs-premise">PER 103.9배(5년 중앙값 118.5배)로 자기 이력 22.3점(비싸다), 동종업 11.0점(비싸다)이다. <strong>현금흐름 내재가치(기본)는 음수라 계산할 수 없다</strong>.</div>
+    <div class="vs-premise">PER 103.9배(5년 중앙값 118.5배)로 자기 이력 22.3점(비싸다), 동종업 9.2점(비싸다)이다. <strong>현금흐름 내재가치(기본)는 음수라 계산할 수 없다</strong>.</div>
     <div class="verdict-summary-risk">⚠️ 세 칸이 자기 이력 −1 · 동종업 −1 · 현금흐름 −2, 합계 −4 “고평가”이다. 현금흐름 내재가치(기본)는 음수라 계산할 수 없다. 영업이익률을 100%로 올려도 이 모델로는 현재가에 닿지 않는다(최근 4분기 3.4%). 내재가치에서 차입금·금융리스 $18.2B를 빼고 현금·단기투자 $2.0B를 더한다.</div>
   </div>
 
@@ -1094,7 +1094,7 @@ Chart.overrides.doughnut.animation = false;
         <div class="op-dist"><div data-an-bar="buy" style="width: 81.8%; background: var(--green);"></div><div data-an-bar="hold" style="width: 18.2%; background: var(--gold);"></div><div data-an-bar="sell" style="width: 0%; background: var(--red);"></div></div>
       </div>
       <div class="op-cell">
-        <span class="op-label">평균 목표주가 · <span data-an="asof">2026-10-11</span></span>
+        <span class="op-label">평균 목표주가 · <span data-an="asof">2026-10-12</span></span>
         <span class="op-val"><span data-an="mean">$247.53</span> <span class="op-sub op-up" data-an="upside">+9.8%</span></span>
       </div>
       <div class="op-cell">
@@ -1323,14 +1323,15 @@ const MULTIPLE_DATA = {
     ]
   },
   psr: {
-    title: '리츠 PSR 비교 (AMT 값 없음) · 10/9 종가',
-    unit: 'PSR(TTM)', max: 25, wellValue: null,
+    title: '리츠 PSR 비교 · 10/9 종가',
+    unit: 'PSR(TTM)', max: 20, wellValue: null,
     peers: [
       { name:'VTR', value:6.5, status:'reference' },
-      { name:'DOC', value:17.9, status:'reference' },
+      { name:'DOC', value:4.4, status:'reference' },
       { name:'PLD', value:13.2, status:'reference' },
       { name:'PSA', value:10.4, status:'reference' },
-      { name:'O', value:8.5, status:'reference' }
+      { name:'O', value:8.5, status:'reference' },
+      { name:'AMT', value:7.8, status:'reference' }
     ]
   },
   pcr: {
@@ -1475,7 +1476,7 @@ const DCF_SKEW_NOTE = "이 칸은 보수적으로 잡혀 있다(할인율 10%, 5
 //       python3 v2/build_fundamental_score.py WELL
 const WELL_SCORES = {
   fundamental: 54.9,   // 재무건전성 + 성장·수익성 (밸류에이션 축 제외)
-  peer: 11.0,          // S&P500 부동산 대비 배수 순위 (v2/peer_universe/real_estate.json, PSR 이상값 제외)
+  peer: 9.2,          // S&P500 부동산 대비 배수 순위 (v2/peer_universe/real_estate.json, PSR 이상값 제외)
   selfHistory: 22.3,   // 자기 5년 배수 분포 백분위 (2021-10-11 ~ 2026-10-09)
   asOf: "2026-10-09",
   fundamentalAsOf: "2026-06-30",   // Q2 2026 10-Q
@@ -1793,7 +1794,7 @@ const WELL_FUNDAMENTAL = {"ticker": "WELL", "basis": "quarter", "asOf": "2026-06
 //
 // 갱신: python3 v2/build_peer_score.py WELL --self v2/WELL_multiples.json --card
 /* VALUATION:BEGIN */
-const WELL_VALUATION = {"peer": {"score": 11.0, "sector": "Real Estate (S&P500 29종목)", "asOf": ["2026-10-09", "2026-10-09"], "priceSession": null, "metrics": [{"metric": "per", "score": 7.4, "rank": 26, "peers": 27}, {"metric": "pbr", "score": 20.8, "rank": 20, "peers": 24}, {"metric": "psr", "score": 14.3, "rank": 19, "peers": 21}, {"metric": "pcr", "score": 12.5, "rank": 8, "peers": 8}, {"metric": "evebitda", "score": 0.0, "rank": 19, "peers": 18}]}, "self": {"score": 22.3, "window": ["2021-10-11", "2026-10-09"], "perBasis": "diluted", "metrics": [{"metric": "per", "score": 66.5, "percentile": 33.5, "current": 103.9, "min": 57.84, "median": 118.47, "max": 412.19, "days": 1255, "currentNote": null}, {"metric": "pbr", "score": 7.9, "percentile": 92.1, "current": 3.5, "min": 1.43, "median": 2.26, "max": 4.06, "days": 1255, "currentNote": null}, {"metric": "psr", "score": 16.7, "percentile": 83.3, "current": 12.73, "min": 4.91, "median": 8.69, "max": 15.12, "days": 1255, "currentNote": null}, {"metric": "pcr", "score": 8.4, "percentile": 91.6, "current": 80.44, "min": 27.47, "median": 49.16, "max": 95.0, "days": 1255, "currentNote": null}, {"metric": "evebitda", "score": 12.2, "percentile": 87.8, "current": 61.96, "min": 21.17, "median": 32.76, "max": 74.23, "days": 1255, "currentNote": null}]}};
+const WELL_VALUATION = {"peer": {"score": 9.2, "sector": "Real Estate (S&P500 29종목)", "asOf": ["2026-10-09", "2026-10-09"], "priceSession": null, "metrics": [{"metric": "per", "score": 7.4, "rank": 26, "peers": 27}, {"metric": "pbr", "score": 24.0, "rank": 20, "peers": 25}, {"metric": "psr", "score": 3.7, "rank": 27, "peers": 27}, {"metric": "pcr", "score": 11.1, "rank": 9, "peers": 9}, {"metric": "evebitda", "score": 0.0, "rank": 19, "peers": 18}]}, "self": {"score": 22.3, "window": ["2021-10-11", "2026-10-09"], "perBasis": "diluted", "metrics": [{"metric": "per", "score": 66.5, "percentile": 33.5, "current": 103.9, "min": 57.84, "median": 118.47, "max": 412.19, "days": 1255, "currentNote": null}, {"metric": "pbr", "score": 7.9, "percentile": 92.1, "current": 3.5, "min": 1.43, "median": 2.26, "max": 4.06, "days": 1255, "currentNote": null}, {"metric": "psr", "score": 16.7, "percentile": 83.3, "current": 12.73, "min": 4.91, "median": 8.69, "max": 15.12, "days": 1255, "currentNote": null}, {"metric": "pcr", "score": 8.4, "percentile": 91.6, "current": 80.44, "min": 27.47, "median": 49.16, "max": 95.0, "days": 1255, "currentNote": null}, {"metric": "evebitda", "score": 12.2, "percentile": 87.8, "current": 61.96, "min": 21.17, "median": 32.76, "max": 74.23, "days": 1255, "currentNote": null}]}};
 /* VALUATION:END */
 
 // ── 종합 평가 자동 판정 (2026-09-25 사용자 결정 · 방향 합산) ──
@@ -2080,7 +2081,7 @@ const WELL_ACTIVITY = {"ticker": "WELL", "status": "N/A", "reason": "매출원�
 // ── 투자포인트 탭: 애널리스트 목표가 (출처·기준일 포함) ──
 // 갱신: StockAnalysis 예측 페이지(stockanalysis.com/stocks/well/forecast/)의 값과 날짜를 옮긴다.
 // 현재가 대비는 마지막 종가에서 계산한다.
-const WELL_ANALYST = { asOf: '2026-10-11', source: 'StockAnalysis (의견 집계 · 개별 목표가)', rating: 'Buy', n: 22, nTargets: 17, mean: 247.53, median: 260,
+const WELL_ANALYST = { asOf: '2026-10-12', source: 'StockAnalysis (의견 집계 · 개별 목표가)', rating: 'Buy', n: 22, nTargets: 17, mean: 247.53, median: 260,
   low: 5.96, high: 292, strongBuy: 12, buy: 6, hold: 4, sell: 0, strongSell: 0 };
 (function(){
   const A = WELL_ANALYST, last = (typeof WELL_DAILY !== 'undefined' && WELL_DAILY.length) ? WELL_DAILY[WELL_DAILY.length - 1] : null;

@@ -571,7 +571,7 @@ Chart.overrides.doughnut.animation = false;
     </div>
     <div class="logic-box logic-negative" id="gePeerBox">
       <div class="logic-head"><span class="logic-tag">밸류에이션 <span class="logic-denom">동종업 대비</span></span><span class="logic-verdict" id="gePeerVerdict">비싼 편</span></div>
-      <div class="logic-score" id="gePeerScore">12.8<span class="logic-denom">/100</span></div>
+      <div class="logic-score" id="gePeerScore">12.6<span class="logic-denom">/100</span></div>
     </div>
     <div class="logic-box logic-neutral" id="geSelfBox">
       <div class="logic-head"><span class="logic-tag">밸류에이션 <span class="logic-denom">자기 이력 대비</span></span><span class="logic-verdict" id="geSelfVerdict">중간</span></div>
@@ -899,9 +899,9 @@ Chart.overrides.doughnut.animation = false;
 시나리오 범위: 2.95 ~ 3.97(세 시나리오 최대·최소 기준)
 0.7 이하 매우 싸다 · 0.9 이하 싸다 · 1.1 이하 적정 · 1.5 이하 비싸다 · 초과 매우 비싸다
 이 칸은 보수적으로 잡혀 있다(할인율 10%, 5년 뒤 영구성장 2.5%). S&amp;P500 비금융 종목의 83~91%가 매달 '매우 비싸다'에 들어간다(2024-10~2026-09). 다른 종목과 견주려면 위 비율 숫자를 함께 볼 것.">매우 비싸다</div></div>
-      <div class="vs-name" title="S&amp;P500 산업재 종목들보다 배수가 얼마나 낮은가. 높을수록 싸다.">동종업 대비</div><div class="vs-val" data-vc-score="peer">12.8</div><div class="sc-tile low" data-vc="peer" data-m="per">21</div><div class="sc-tile low" data-vc="peer" data-m="pbr">10</div><div class="sc-tile low" data-vc="peer" data-m="psr">14</div><div class="sc-tile low" data-vc="peer" data-m="pcr">12</div><div class="sc-tile low" data-vc="peer" data-m="evebitda">8</div><div class="vs-pill high" data-vs-pill="peer">비싸다</div>
+      <div class="vs-name" title="S&amp;P500 산업재 종목들보다 배수가 얼마나 낮은가. 높을수록 싸다.">동종업 대비</div><div class="vs-val" data-vc-score="peer">12.6</div><div class="sc-tile low" data-vc="peer" data-m="per">21</div><div class="sc-tile low" data-vc="peer" data-m="pbr">10</div><div class="sc-tile low" data-vc="peer" data-m="psr">13</div><div class="sc-tile low" data-vc="peer" data-m="pcr">12</div><div class="sc-tile low" data-vc="peer" data-m="evebitda">8</div><div class="vs-pill high" data-vs-pill="peer">비싸다</div>
     </div></div>
-    <div class="vs-premise">PER 36.3배(2.2년 중앙값 39.0배)로 자기 이력 68.0점(중간), 동종업 12.8점(비싸다)이다. <strong>현금흐름 내재가치(기본 $104.40)는 현재가의 34%다</strong>.</div>
+    <div class="vs-premise">PER 36.3배(2.2년 중앙값 39.0배)로 자기 이력 68.0점(중간), 동종업 12.6점(비싸다)이다. <strong>현금흐름 내재가치(기본 $104.40)는 현재가의 34%다</strong>.</div>
     <div class="verdict-summary-risk">⚠️ 세 칸이 자기 이력 0 · 동종업 −1 · 현금흐름 −2, 합계 −3 “고평가”이다. 현금흐름 내재가치(기본 $104.40)는 현재가의 34%다. 현재가를 정당화하려면 매출이 5년간 연 40.0% 커야 한다. 내재가치에서 차입금 $19.2B를 빼고 현금·단기투자 $9.3B를 더한다.</div>
   </div>
 
@@ -1078,7 +1078,7 @@ Chart.overrides.doughnut.animation = false;
         <div class="op-dist"><div data-an-bar="buy" style="width: 81.8%; background: var(--green);"></div><div data-an-bar="hold" style="width: 13.6%; background: var(--gold);"></div><div data-an-bar="sell" style="width: 4.5%; background: var(--red);"></div></div>
       </div>
       <div class="op-cell">
-        <span class="op-label">평균 목표주가 · <span data-an="asof">2026-10-11</span></span>
+        <span class="op-label">평균 목표주가 · <span data-an="asof">2026-10-12</span></span>
         <span class="op-val"><span data-an="mean">$402.23</span> <span class="op-sub op-up" data-an="upside">+30.5%</span></span>
       </div>
       <div class="op-cell">
@@ -1284,10 +1284,10 @@ function renderSegmentChart() {
 const MULTIPLE_DATA = {
   per: {
     title: '항공우주·방산 PER 비교 · 10/9 종가',
-    unit: 'PER', max: 80, geValue: null,
+    unit: 'PER', max: 95, geValue: null,
     peers: [
       { name:'RTX', value:32.7, status:'reference' },
-      { name:'BA', value:68.5, status:'reference' },
+      { name:'BA', value:82.4, status:'reference' },
       { name:'TDG', value:33.6, status:'reference' },
       { name:'HWM', value:48.5, status:'reference' },
       { name:'GD', value:20.2, status:'reference' },
@@ -1467,7 +1467,7 @@ const DCF_SKEW_NOTE = "이 칸은 보수적으로 잡혀 있다(할인율 10%, 5
 //       python3 v2/build_fundamental_score.py GE
 const GE_SCORES = {
   fundamental: 57.8,   // 재무건전성 + 성장·수익성 (밸류에이션 축 제외)
-  peer: 12.8,          // S&P500 산업재 대비 배수 순위 (v2/peer_universe/industrials.json)
+  peer: 12.6,          // S&P500 산업재 대비 배수 순위 (v2/peer_universe/industrials.json)
   selfHistory: 68.0,   // 자기 배수 분포 백분위 (버노바 분사 뒤 2024-07-23 ~ 2026-10-09)
   asOf: "2026-10-09",
   fundamentalAsOf: "2026-06-30",   // Q2 2026 10-Q
@@ -1780,7 +1780,7 @@ const GE_FUNDAMENTAL = {"ticker": "GE", "basis": "quarter", "asOf": "2026-06-30"
 //
 // 갱신: python3 v2/build_peer_score.py GE --self v2/GE_multiples.json --card
 /* VALUATION:BEGIN */
-const GE_VALUATION = {"peer": {"score": 12.8, "sector": "Industrials (S&P500 81종목)", "asOf": ["2026-10-09", "2026-10-09"], "priceSession": null, "metrics": [{"metric": "per", "score": 20.8, "rank": 62, "peers": 77}, {"metric": "pbr", "score": 9.5, "rank": 68, "peers": 74}, {"metric": "psr", "score": 14.1, "rank": 68, "peers": 78}, {"metric": "pcr", "score": 12.3, "rank": 65, "peers": 73}, {"metric": "evebitda", "score": 7.5, "rank": 63, "peers": 67}]}, "self": {"score": 68.0, "window": ["2024-07-23", "2026-10-09"], "perBasis": "diluted", "metrics": [{"metric": "per", "score": 70.0, "percentile": 30.0, "current": 36.3, "min": 27.39, "median": 39.0, "max": 47.84, "days": 557, "currentNote": null}, {"metric": "pbr", "score": 20.5, "percentile": 79.5, "current": 18.13, "min": 9.17, "median": 15.3, "max": 22.42, "days": 557, "currentNote": null}, {"metric": "psr", "score": 58.9, "percentile": 41.1, "current": 6.31, "min": 4.63, "median": 6.64, "max": 8.18, "days": 557, "currentNote": null}, {"metric": "pcr", "score": 96.2, "percentile": 3.8, "current": 38.19, "min": 36.52, "median": 45.22, "max": 60.47, "days": 557, "currentNote": null}, {"metric": "evebitda", "score": 94.4, "percentile": 5.6, "current": 32.3, "min": 30.61, "median": 37.66, "max": 49.98, "days": 377, "currentNote": null}]}};
+const GE_VALUATION = {"peer": {"score": 12.6, "sector": "Industrials (S&P500 81종목)", "asOf": ["2026-10-09", "2026-10-09"], "priceSession": null, "metrics": [{"metric": "per", "score": 20.8, "rank": 62, "peers": 77}, {"metric": "pbr", "score": 9.5, "rank": 68, "peers": 74}, {"metric": "psr", "score": 12.8, "rank": 69, "peers": 78}, {"metric": "pcr", "score": 12.3, "rank": 65, "peers": 73}, {"metric": "evebitda", "score": 7.5, "rank": 63, "peers": 67}]}, "self": {"score": 68.0, "window": ["2024-07-23", "2026-10-09"], "perBasis": "diluted", "metrics": [{"metric": "per", "score": 70.0, "percentile": 30.0, "current": 36.3, "min": 27.39, "median": 39.0, "max": 47.84, "days": 557, "currentNote": null}, {"metric": "pbr", "score": 20.5, "percentile": 79.5, "current": 18.13, "min": 9.17, "median": 15.3, "max": 22.42, "days": 557, "currentNote": null}, {"metric": "psr", "score": 58.9, "percentile": 41.1, "current": 6.31, "min": 4.63, "median": 6.64, "max": 8.18, "days": 557, "currentNote": null}, {"metric": "pcr", "score": 96.2, "percentile": 3.8, "current": 38.19, "min": 36.52, "median": 45.22, "max": 60.47, "days": 557, "currentNote": null}, {"metric": "evebitda", "score": 94.4, "percentile": 5.6, "current": 32.3, "min": 30.61, "median": 37.66, "max": 49.98, "days": 377, "currentNote": null}]}};
 /* VALUATION:END */
 
 // ── 종합 평가 자동 판정 (2026-09-25 사용자 결정 · 방향 합산) ──
@@ -2067,7 +2067,7 @@ const GE_ACTIVITY = {"ticker": "GE", "status": "N/A", "reason": "5년 비교 이
 // ── 투자포인트 탭: 애널리스트 목표가 (출처·기준일 포함) ──
 // 갱신: StockAnalysis 예측 페이지(stockanalysis.com/stocks/ge/forecast/)의 값과 날짜를 옮긴다.
 // 현재가 대비는 마지막 종가에서 계산한다.
-const GE_ANALYST = { asOf: '2026-10-11', source: 'StockAnalysis (의견 집계 · 개별 목표가)', rating: 'Buy', n: 22, nTargets: 13, mean: 402.23, median: 400,
+const GE_ANALYST = { asOf: '2026-10-12', source: 'StockAnalysis (의견 집계 · 개별 목표가)', rating: 'Buy', n: 22, nTargets: 13, mean: 402.23, median: 400,
   low: 350, high: 450, strongBuy: 15, buy: 3, hold: 3, sell: 1, strongSell: 0 };
 (function(){
   const A = GE_ANALYST, last = (typeof GE_DAILY !== 'undefined' && GE_DAILY.length) ? GE_DAILY[GE_DAILY.length - 1] : null;

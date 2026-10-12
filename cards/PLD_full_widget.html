@@ -571,7 +571,7 @@ Chart.overrides.doughnut.animation = false;
     </div>
     <div class="logic-box logic-neutral" id="pldPeerBox">
       <div class="logic-head"><span class="logic-tag">밸류에이션 <span class="logic-denom">동종업 대비</span></span><span class="logic-verdict" id="pldPeerVerdict">중간</span></div>
-      <div class="logic-score" id="pldPeerScore">36.8<span class="logic-denom">/100</span></div>
+      <div class="logic-score" id="pldPeerScore">34.9<span class="logic-denom">/100</span></div>
     </div>
     <div class="logic-box logic-neutral" id="pldSelfBox">
       <div class="logic-head"><span class="logic-tag">밸류에이션 <span class="logic-denom">자기 이력 대비</span></span><span class="logic-verdict" id="pldSelfVerdict">중간</span></div>
@@ -901,9 +901,9 @@ Chart.overrides.doughnut.animation = false;
 · 어떤 일정 성장률로도 현재가에 닿지 않는다
 판정은 그대로 두고, 이 값을 해석할 때 주의할 점만 보여 준다.">⚠ 계산 어려움 3/5</span><div class="vs-pill high" data-vs-pill="dcf" title="기본 내재가치가 0 이하다
 0.7 이하 매우 싸다 · 0.9 이하 싸다 · 1.1 이하 적정 · 1.5 이하 비싸다 · 초과 매우 비싸다">매우 비싸다</div></div>
-      <div class="vs-name" title="S&amp;P500 부동산 종목들보다 배수가 얼마나 낮은가. 높을수록 싸다.">동종업 대비</div><div class="vs-val" data-vc-score="peer">36.8</div><div class="sc-tile lost" data-vc="peer" data-m="per">56</div><div class="sc-tile lost" data-vc="peer" data-m="pbr">54</div><div class="sc-tile low" data-vc="peer" data-m="psr">10</div><div class="sc-tile none" data-vc="peer" data-m="pcr">—</div><div class="sc-tile low" data-vc="peer" data-m="evebitda">28</div><div class="vs-pill mid" data-vs-pill="peer">중간</div>
+      <div class="vs-name" title="S&amp;P500 부동산 종목들보다 배수가 얼마나 낮은가. 높을수록 싸다.">동종업 대비</div><div class="vs-val" data-vc-score="peer">34.9</div><div class="sc-tile lost" data-vc="peer" data-m="per">56</div><div class="sc-tile lost" data-vc="peer" data-m="pbr">56</div><div class="sc-tile low" data-vc="peer" data-m="psr">0</div><div class="sc-tile none" data-vc="peer" data-m="pcr">—</div><div class="sc-tile low" data-vc="peer" data-m="evebitda">28</div><div class="vs-pill mid" data-vs-pill="peer">중간</div>
     </div></div>
-    <div class="vs-premise">PER 28.8배(5년 중앙값 33.7배)로 자기 이력 69.5점(중간), 동종업 36.8점(중간)이다. <strong>현금흐름 내재가치(기본)는 음수라 계산할 수 없다</strong>.</div>
+    <div class="vs-premise">PER 28.8배(5년 중앙값 33.7배)로 자기 이력 69.5점(중간), 동종업 34.9점(중간)이다. <strong>현금흐름 내재가치(기본)는 음수라 계산할 수 없다</strong>.</div>
     <div class="verdict-summary-risk">⚠️ 세 칸이 자기 이력 0 · 동종업 0 · 현금흐름 −2, 합계 −2 “적정~고평가”이다. 현금흐름 내재가치(기본)는 음수라 계산할 수 없다. 영업이익률을 100%로 올려도 이 모델로는 현재가에 닿지 않는다(최근 4분기 54.7%). 내재가치에서 차입금 $36.4B를 빼고 현금·단기투자 $1.8B를 더한다.</div>
   </div>
 
@@ -1081,7 +1081,7 @@ Chart.overrides.doughnut.animation = false;
         <div class="op-dist"><div data-an-bar="buy" style="width: 58.8%; background: var(--green);"></div><div data-an-bar="hold" style="width: 41.2%; background: var(--gold);"></div><div data-an-bar="sell" style="width: 0%; background: var(--red);"></div></div>
       </div>
       <div class="op-cell">
-        <span class="op-label">평균 목표주가 · <span data-an="asof">2026-10-11</span></span>
+        <span class="op-label">평균 목표주가 · <span data-an="asof">2026-10-12</span></span>
         <span class="op-val"><span data-an="mean">$158</span> <span class="op-sub op-up" data-an="upside">+22.0%</span></span>
       </div>
       <div class="op-cell">
@@ -1298,31 +1298,35 @@ const MULTIPLE_DATA = {
     ]
   },
   pbr: {
-    title: '리츠 PBR 비교 (SPG 값 없음) · 10/9 종가',
+    title: '리츠 PBR 비교 · 10/9 종가',
     unit: 'PBR', max: 30, pldValue: null,
     peers: [
       { name:'EQIX', value:7.0, status:'reference' },
       { name:'DLR', value:2.4, status:'reference' },
       { name:'PSA', value:5.5, status:'reference' },
       { name:'AMT', value:22.8, status:'reference' },
-      { name:'O', value:1.3, status:'reference' }
+      { name:'O', value:1.3, status:'reference' },
+      { name:'SPG', value:14.6, status:'reference' }
     ]
   },
   psr: {
-    title: '리츠 PSR 비교 (AMT 값 없음·SPG 값 없음) · 10/9 종가',
+    title: '리츠 PSR 비교 · 10/9 종가',
     unit: 'PSR(TTM)', max: 20, pldValue: null,
     peers: [
       { name:'EQIX', value:10.3, status:'reference' },
       { name:'DLR', value:9.8, status:'reference' },
       { name:'PSA', value:10.4, status:'reference' },
-      { name:'O', value:8.5, status:'reference' }
+      { name:'AMT', value:7.8, status:'reference' },
+      { name:'O', value:8.5, status:'reference' },
+      { name:'SPG', value:9.3, status:'reference' }
     ]
   },
   pcr: {
-    title: '리츠 PCR(FCF) 비교 (EQIX 적자·DLR 값 없음·PSA 값 없음·O 값 없음·SPG 값 없음) · 10/9 종가',
+    title: '리츠 PCR(FCF) 비교 (EQIX 적자·DLR 값 없음·PSA 값 없음·O 값 없음) · 10/9 종가',
     unit: 'PCR(FCF)', max: 25, pldValue: null,
     peers: [
-      { name:'AMT', value:21.4, status:'reference' }
+      { name:'AMT', value:21.4, status:'reference' },
+      { name:'SPG', value:20.1, status:'reference' }
     ]
   },
   evebitda: {
@@ -1332,7 +1336,7 @@ const MULTIPLE_DATA = {
       { name:'EQIX', value:27.9, status:'reference' },
       { name:'DLR', value:23.1, status:'reference' },
       { name:'AMT', value:19.3, status:'reference' },
-      { name:'SPG', value:5.8, status:'reference' }
+      { name:'SPG', value:18.8, status:'reference' }
     ]
   }
 };
@@ -1462,7 +1466,7 @@ const DCF_SKEW_NOTE = "이 칸은 보수적으로 잡혀 있다(할인율 10%, 5
 //       python3 v2/build_fundamental_score.py PLD
 const PLD_SCORES = {
   fundamental: 66.9,   // 재무건전성 + 성장·수익성 (밸류에이션 축 제외)
-  peer: 36.8,          // S&P500 부동산 대비 배수 순위 (v2/peer_universe/real_estate.json)
+  peer: 34.9,          // S&P500 부동산 대비 배수 순위 (v2/peer_universe/real_estate.json)
   selfHistory: 69.5,   // 자기 5년 배수 분포 백분위 (2021-10-11 ~ 2026-10-09)
   asOf: "2026-10-09",
   fundamentalAsOf: "2026-06-30",   // Q2 2026 10-Q
@@ -1780,7 +1784,7 @@ const PLD_FUNDAMENTAL = {"ticker": "PLD", "basis": "quarter", "asOf": "2026-06-3
 //
 // 갱신: python3 v2/build_peer_score.py PLD --self v2/PLD_multiples.json --card
 /* VALUATION:BEGIN */
-const PLD_VALUATION = {"peer": {"score": 36.8, "sector": "Real Estate (S&P500 29종목)", "asOf": ["2026-10-09", "2026-10-09"], "priceSession": null, "metrics": [{"metric": "per", "score": 55.6, "rank": 13, "peers": 27}, {"metric": "pbr", "score": 54.2, "rank": 12, "peers": 24}, {"metric": "psr", "score": 9.5, "rank": 20, "peers": 21}, {"metric": "evebitda", "score": 27.8, "rank": 14, "peers": 18}]}, "self": {"score": 69.5, "window": ["2021-10-11", "2026-10-09"], "perBasis": "diluted", "metrics": [{"metric": "per", "score": 73.2, "percentile": 26.8, "current": 28.78, "min": 19.78, "median": 33.72, "max": 70.1, "days": 1255, "currentNote": null}, {"metric": "pbr", "score": 45.7, "percentile": 54.3, "current": 2.25, "min": 1.54, "median": 2.22, "max": 3.83, "days": 1255, "currentNote": null}, {"metric": "psr", "score": 77.4, "percentile": 22.6, "current": 13.15, "min": 10.14, "median": 14.79, "max": 27.1, "days": 1255, "currentNote": null}, {"metric": "evebitda", "score": 81.5, "percentile": 18.5, "current": 20.59, "min": 16.79, "median": 23.18, "max": 35.63, "days": 1255, "currentNote": null}]}};
+const PLD_VALUATION = {"peer": {"score": 34.9, "sector": "Real Estate (S&P500 29종목)", "asOf": ["2026-10-09", "2026-10-09"], "priceSession": null, "metrics": [{"metric": "per", "score": 55.6, "rank": 13, "peers": 27}, {"metric": "pbr", "score": 56.0, "rank": 12, "peers": 25}, {"metric": "psr", "score": 0.0, "rank": 28, "peers": 27}, {"metric": "evebitda", "score": 27.8, "rank": 14, "peers": 18}]}, "self": {"score": 69.5, "window": ["2021-10-11", "2026-10-09"], "perBasis": "diluted", "metrics": [{"metric": "per", "score": 73.2, "percentile": 26.8, "current": 28.78, "min": 19.78, "median": 33.72, "max": 70.1, "days": 1255, "currentNote": null}, {"metric": "pbr", "score": 45.7, "percentile": 54.3, "current": 2.25, "min": 1.54, "median": 2.22, "max": 3.83, "days": 1255, "currentNote": null}, {"metric": "psr", "score": 77.4, "percentile": 22.6, "current": 13.15, "min": 10.14, "median": 14.79, "max": 27.1, "days": 1255, "currentNote": null}, {"metric": "evebitda", "score": 81.5, "percentile": 18.5, "current": 20.59, "min": 16.79, "median": 23.18, "max": 35.63, "days": 1255, "currentNote": null}]}};
 /* VALUATION:END */
 
 // ── 종합 평가 자동 판정 (2026-09-25 사용자 결정 · 방향 합산) ──
@@ -2077,7 +2081,7 @@ const PLD_ACTIVITY = {"ticker": "PLD", "status": "N/A", "reason": "5년 비교 �
 // ── 투자포인트 탭: 애널리스트 목표가 (출처·기준일 포함) ──
 // 갱신: StockAnalysis 예측 페이지(stockanalysis.com/stocks/pld/forecast/)의 값과 날짜를 옮긴다.
 // 현재가 대비는 마지막 종가에서 계산한다.
-const PLD_ANALYST = { asOf: '2026-10-11', source: 'StockAnalysis (의견 집계 · 개별 목표가)', rating: 'Buy', n: 17, nTargets: 17, mean: 158, median: 160,
+const PLD_ANALYST = { asOf: '2026-10-12', source: 'StockAnalysis (의견 집계 · 개별 목표가)', rating: 'Buy', n: 17, nTargets: 17, mean: 158, median: 160,
   low: 135, high: 170, strongBuy: 7, buy: 3, hold: 7, sell: 0, strongSell: 0 };
 (function(){
   const A = PLD_ANALYST, last = (typeof PLD_DAILY !== 'undefined' && PLD_DAILY.length) ? PLD_DAILY[PLD_DAILY.length - 1] : null;

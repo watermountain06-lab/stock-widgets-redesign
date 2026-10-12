@@ -571,7 +571,7 @@ Chart.overrides.doughnut.animation = false;
     </div>
     <div class="logic-box logic-negative" id="bxPeerBox">
       <div class="logic-head"><span class="logic-tag">밸류에이션 <span class="logic-denom">동종업 대비</span></span><span class="logic-verdict" id="bxPeerVerdict">비싼 편</span></div>
-      <div class="logic-score" id="bxPeerScore">23.2<span class="logic-denom">/100</span></div>
+      <div class="logic-score" id="bxPeerScore">20.2<span class="logic-denom">/100</span></div>
     </div>
     <div class="logic-box logic-positive" id="bxSelfBox">
       <div class="logic-head"><span class="logic-tag">밸류에이션 <span class="logic-denom">자기 이력 대비</span></span><span class="logic-verdict" id="bxSelfVerdict">싼 편</span></div>
@@ -901,9 +901,9 @@ Chart.overrides.doughnut.animation = false;
       <div class="vs-name" title="회사가 앞으로 벌어들일 현금만으로 계산한 주당 가치(기본 시나리오).">현금흐름 (내재가치)</div><div class="vs-val" data-vs="dcf">$58</div><div class="vs-note">현재가 <span data-vs="price">$114.29</span> 대비 <strong data-vs="upside">−49.6%</strong> · 기본 시나리오</div><div class="vs-pill-wrap"><div class="vs-pill high" data-vs-pill="dcf" title="현재가 ÷ 기본 내재가치 = 1.98
 시나리오 범위: 1.14 ~ 1.98(세 시나리오 최대·최소 기준)
 0.7 이하 매우 싸다 · 0.9 이하 싸다 · 1.1 이하 적정 · 1.5 이하 비싸다 · 초과 매우 비싸다">매우 비싸다</div></div>
-      <div class="vs-name" title="S&amp;P500 자산운용·수탁은행보다 배수가 얼마나 낮은가. 높을수록 싸다.">동종업 대비</div><div class="vs-val" data-vc-score="peer">23.2</div><div class="sc-tile lost" data-vc="peer" data-m="per">33</div><div class="sc-tile low" data-vc="peer" data-m="pbr">0</div><div class="sc-tile lost" data-vc="peer" data-m="psr">36</div><div class="sc-tile none" data-vc="peer" data-m="pcr">—</div><div class="sc-tile none" data-vc="peer" data-m="evebitda">—</div><div class="vs-pill high" data-vs-pill="peer">비싸다</div>
+      <div class="vs-name" title="S&amp;P500 자산운용·수탁은행보다 배수가 얼마나 낮은가. 높을수록 싸다.">동종업 대비</div><div class="vs-val" data-vc-score="peer">20.2</div><div class="sc-tile lost" data-vc="peer" data-m="per">33</div><div class="sc-tile low" data-vc="peer" data-m="pbr">0</div><div class="sc-tile low" data-vc="peer" data-m="psr">27</div><div class="sc-tile none" data-vc="peer" data-m="pcr">—</div><div class="sc-tile none" data-vc="peer" data-m="evebitda">—</div><div class="vs-pill high" data-vs-pill="peer">비싸다</div>
     </div></div>
-    <div class="vs-premise">PER 25.6배(5년 중앙값 41.1배)로 자기 이력 73.9점(싸다), 동종업 23.2점(비싸다)이다. <strong>현금흐름 내재가치(기본 $57.63)는 현재가의 50%다</strong>.</div>
+    <div class="vs-premise">PER 25.6배(5년 중앙값 41.1배)로 자기 이력 73.9점(싸다), 동종업 20.2점(비싸다)이다. <strong>현금흐름 내재가치(기본 $57.63)는 현재가의 50%다</strong>.</div>
     <div class="verdict-summary-risk">⚠️ 세 칸이 자기 이력 +1 · 동종업 −1 · 현금흐름 −2, 합계 −2 “적정~고평가”이다. 현금흐름 내재가치(기본 $57.63)는 현재가의 50%다. 현재가를 정당화하려면 영업이익률이 88.8%까지 올라야 한다(최근 4분기 50.5%, 5년 중앙값 50.1%). 내재가치에서 차입금 $13.2B를 빼고 현금·단기투자 $2.5B를 더한다.</div>
   </div>
 
@@ -1074,8 +1074,8 @@ Chart.overrides.doughnut.animation = false;
         <div class="op-dist"><div data-an-bar="buy" style="width: 54.2%; background: var(--green);"></div><div data-an-bar="hold" style="width: 45.8%; background: var(--gold);"></div><div data-an-bar="sell" style="width: 0%; background: var(--red);"></div></div>
       </div>
       <div class="op-cell">
-        <span class="op-label">평균 목표주가 · <span data-an="asof">2026-10-11</span></span>
-        <span class="op-val"><span data-an="mean">$143.33</span> <span class="op-sub op-up" data-an="upside">+25.4%</span></span>
+        <span class="op-label">평균 목표주가 · <span data-an="asof">2026-10-12</span></span>
+        <span class="op-val"><span data-an="mean">$142.78</span> <span class="op-sub op-up" data-an="upside">+24.9%</span></span>
       </div>
       <div class="op-cell">
         <span class="op-label">다음 실적</span>
@@ -1453,7 +1453,7 @@ const DCF_RULE_TEXT = '0.7 이하 매우 싸다 · 0.9 이하 싸다 · 1.1 이�
 //       python3 v2/build_fundamental_score.py BX
 const BX_SCORES = {
   fundamental: 69.4,   // 재무건전성 + 성장·수익성 (밸류에이션 축 제외)
-  peer: 23.2,          // S&P500 자산운용·수탁은행 대비 배수 순위 (v2/peer_universe/asset_managers.json)
+  peer: 20.2,          // S&P500 자산운용·수탁은행 대비 배수 순위 (v2/peer_universe/asset_managers.json)
   selfHistory: 73.9,   // 자기 5년 배수 분포 백분위 (2021-10-11 ~ 2026-10-09)
   asOf: "2026-10-09",
   fundamentalAsOf: "2026-06-30",   // Q2 2026 10-Q
@@ -1771,7 +1771,7 @@ const BX_FUNDAMENTAL = {"ticker": "BX", "basis": "quarter", "asOf": "2026-06-30"
 //
 // 갱신: python3 v2/build_peer_score.py BX --self v2/BX_multiples.json --card
 /* VALUATION:BEGIN */
-const BX_VALUATION = {"peer": {"score": 23.2, "sector": "Financials (S&P500 12종목)", "asOf": ["2026-10-09", "2026-10-09"], "priceSession": null, "metrics": [{"metric": "per", "score": 33.3, "rank": 7, "peers": 9}, {"metric": "pbr", "score": 0.0, "rank": 12, "peers": 11}, {"metric": "psr", "score": 36.4, "rank": 8, "peers": 11}]}, "self": {"score": 73.9, "window": ["2021-10-11", "2026-10-09"], "perBasis": "diluted", "metrics": [{"metric": "per", "score": 74.3, "percentile": 25.7, "current": 25.63, "min": 12.23, "median": 41.1, "max": 133.54, "days": 1255, "currentNote": null}, {"metric": "pbr", "score": 68.0, "percentile": 32.0, "current": 9.52, "min": 6.5, "median": 10.98, "max": 20.51, "days": 1255, "currentNote": null}, {"metric": "psr", "score": 73.6, "percentile": 26.4, "current": 5.33, "min": 2.8, "median": 7.93, "max": 16.0, "days": 1255, "currentNote": null}, {"metric": "pcr", "score": 81.8, "percentile": 18.2, "current": 15.64, "min": 9.29, "median": 20.76, "max": 42.4, "days": 1255, "currentNote": null}, {"metric": "evebitda", "score": 72.0, "percentile": 28.0, "current": 11.81, "min": 5.19, "median": 17.48, "max": 70.13, "days": 1255, "currentNote": null}]}};
+const BX_VALUATION = {"peer": {"score": 20.2, "sector": "Financials (S&P500 12종목)", "asOf": ["2026-10-09", "2026-10-09"], "priceSession": null, "metrics": [{"metric": "per", "score": 33.3, "rank": 7, "peers": 9}, {"metric": "pbr", "score": 0.0, "rank": 12, "peers": 11}, {"metric": "psr", "score": 27.3, "rank": 9, "peers": 11}]}, "self": {"score": 73.9, "window": ["2021-10-11", "2026-10-09"], "perBasis": "diluted", "metrics": [{"metric": "per", "score": 74.3, "percentile": 25.7, "current": 25.63, "min": 12.23, "median": 41.1, "max": 133.54, "days": 1255, "currentNote": null}, {"metric": "pbr", "score": 68.0, "percentile": 32.0, "current": 9.52, "min": 6.5, "median": 10.98, "max": 20.51, "days": 1255, "currentNote": null}, {"metric": "psr", "score": 73.6, "percentile": 26.4, "current": 5.33, "min": 2.8, "median": 7.93, "max": 16.0, "days": 1255, "currentNote": null}, {"metric": "pcr", "score": 81.8, "percentile": 18.2, "current": 15.64, "min": 9.29, "median": 20.76, "max": 42.4, "days": 1255, "currentNote": null}, {"metric": "evebitda", "score": 72.0, "percentile": 28.0, "current": 11.81, "min": 5.19, "median": 17.48, "max": 70.13, "days": 1255, "currentNote": null}]}};
 /* VALUATION:END */
 
 // ── 종합 평가 자동 판정 (2026-09-25 사용자 결정 · 방향 합산) ──
@@ -2057,7 +2057,7 @@ const BX_ACTIVITY = {"ticker": "BX", "status": "N/A", "reason": "5년 비교 이
 // ── 투자포인트 탭: 애널리스트 목표가 (출처·기준일 포함) ──
 // 갱신: StockAnalysis 예측 페이지(stockanalysis.com/stocks/bx/forecast/)의 값과 날짜를 옮긴다.
 // 현재가 대비는 마지막 종가에서 계산한다.
-const BX_ANALYST = { asOf: '2026-10-11', source: 'StockAnalysis (의견 집계 · 개별 목표가)', rating: 'Buy', n: 24, nTargets: 18, mean: 143.33, median: 142,
+const BX_ANALYST = { asOf: '2026-10-12', source: 'StockAnalysis (의견 집계 · 개별 목표가)', rating: 'Buy', n: 24, nTargets: 18, mean: 142.78, median: 142,
   low: 119, high: 184, strongBuy: 9, buy: 4, hold: 11, sell: 0, strongSell: 0 };
 (function(){
   const A = BX_ANALYST, last = (typeof BX_DAILY !== 'undefined' && BX_DAILY.length) ? BX_DAILY[BX_DAILY.length - 1] : null;

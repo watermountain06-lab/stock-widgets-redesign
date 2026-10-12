@@ -571,7 +571,7 @@ Chart.overrides.doughnut.animation = false;
     </div>
     <div class="logic-box logic-negative" id="catPeerBox">
       <div class="logic-head"><span class="logic-tag">밸류에이션 <span class="logic-denom">동종업 대비</span></span><span class="logic-verdict" id="catPeerVerdict">비싼 편</span></div>
-      <div class="logic-score" id="catPeerScore">19.1<span class="logic-denom">/100</span></div>
+      <div class="logic-score" id="catPeerScore">18.8<span class="logic-denom">/100</span></div>
     </div>
     <div class="logic-box logic-negative" id="catSelfBox">
       <div class="logic-head"><span class="logic-tag">밸류에이션 <span class="logic-denom">자기 이력 대비</span></span><span class="logic-verdict" id="catSelfVerdict">비싼 편</span></div>
@@ -933,9 +933,9 @@ Chart.overrides.doughnut.animation = false;
 시나리오 범위: 2.34 ~ 2.79(세 시나리오 최대·최소 기준)
 0.7 이하 매우 싸다 · 0.9 이하 싸다 · 1.1 이하 적정 · 1.5 이하 비싸다 · 초과 매우 비싸다
 이 칸은 보수적으로 잡혀 있다(할인율 10%, 5년 뒤 영구성장 2.5%). S&amp;P500 비금융 종목의 83~91%가 매달 '매우 비싸다'에 들어간다(2024-10~2026-09). 다른 종목과 견주려면 위 비율 숫자를 함께 볼 것.">매우 비싸다</div></div>
-      <div class="vs-name" title="S&amp;P500 산업재 종목들보다 배수가 얼마나 낮은가. 높을수록 싸다.">동종업 대비</div><div class="vs-val" data-vc-score="peer">19.1</div><div class="sc-tile low" data-vc="peer" data-m="per">27</div><div class="sc-tile low" data-vc="peer" data-m="pbr">7</div><div class="sc-tile low" data-vc="peer" data-m="psr">28</div><div class="sc-tile low" data-vc="peer" data-m="pcr">15</div><div class="sc-tile low" data-vc="peer" data-m="evebitda">18</div><div class="vs-pill high" data-vs-pill="peer">비싸다</div>
+      <div class="vs-name" title="S&amp;P500 산업재 종목들보다 배수가 얼마나 낮은가. 높을수록 싸다.">동종업 대비</div><div class="vs-val" data-vc-score="peer">18.8</div><div class="sc-tile low" data-vc="peer" data-m="per">27</div><div class="sc-tile low" data-vc="peer" data-m="pbr">7</div><div class="sc-tile low" data-vc="peer" data-m="psr">27</div><div class="sc-tile low" data-vc="peer" data-m="pcr">15</div><div class="sc-tile low" data-vc="peer" data-m="evebitda">18</div><div class="vs-pill high" data-vs-pill="peer">비싸다</div>
     </div></div>
-    <div class="vs-premise">PER 34.5배(5년 중앙값 17.8배)로 자기 이력 11.7점(비싸다), 동종업 19.1점(비싸다)이다. <strong>현금흐름 내재가치(기본 $341.53)는 현재가의 43%다</strong>.</div>
+    <div class="vs-premise">PER 34.5배(5년 중앙값 17.8배)로 자기 이력 11.7점(비싸다), 동종업 18.8점(비싸다)이다. <strong>현금흐름 내재가치(기본 $341.53)는 현재가의 43%다</strong>.</div>
     <div class="verdict-summary-risk">⚠️ 세 칸이 자기 이력 −1 · 동종업 −1 · 현금흐름 −2, 합계 −4 “고평가”이다. 현금흐름 내재가치(기본 $341.53)는 현재가의 43%다. 현재가를 정당화하려면 영업이익률이 39.4%까지 올라야 한다(최근 4분기 17.5%, 5년 중앙값 16.9%). 내재가치에서 차입금 $10.7B를 빼고 현금·단기투자 $6.7B를 더한다.</div>
   </div>
 
@@ -1113,8 +1113,8 @@ Chart.overrides.doughnut.animation = false;
         <div class="op-dist"><div data-an-bar="buy" style="width: 53.6%; background: var(--green);"></div><div data-an-bar="hold" style="width: 39.3%; background: var(--gold);"></div><div data-an-bar="sell" style="width: 7.1%; background: var(--red);"></div></div>
       </div>
       <div class="op-cell">
-        <span class="op-label">평균 목표주가 · <span data-an="asof">2026-10-11</span></span>
-        <span class="op-val"><span data-an="mean">$1007.67</span> <span class="op-sub op-up" data-an="upside">+25.9%</span></span>
+        <span class="op-label">평균 목표주가 · <span data-an="asof">2026-10-12</span></span>
+        <span class="op-val"><span data-an="mean">$999.33</span> <span class="op-sub op-up" data-an="upside">+24.8%</span></span>
       </div>
       <div class="op-cell">
         <span class="op-label">다음 실적</span>
@@ -1503,7 +1503,7 @@ const DCF_SKEW_NOTE = "이 칸은 보수적으로 잡혀 있다(할인율 10%, 5
 //       python3 v2/build_fundamental_score.py CAT
 const CAT_SCORES = {
   fundamental: 52.6,   // 재무건전성 + 성장·수익성 (밸류에이션 축 제외)
-  peer: 19.1,          // S&P500 산업재 대비 배수 순위 (v2/peer_universe/industrials.json)
+  peer: 18.8,          // S&P500 산업재 대비 배수 순위 (v2/peer_universe/industrials.json)
   selfHistory: 11.7,   // 자기 5년 배수 분포 백분위 (2021-10-11 ~ 2026-10-09)
   asOf: "2026-10-09",
   fundamentalAsOf: "2026-06-30",   // Q2 2026 10-Q
@@ -1821,7 +1821,7 @@ const CAT_FUNDAMENTAL = {"ticker": "CAT", "basis": "quarter", "asOf": "2026-06-3
 //
 // 갱신: python3 v2/build_peer_score.py CAT --self v2/CAT_multiples.json --card
 /* VALUATION:BEGIN */
-const CAT_VALUATION = {"peer": {"score": 19.1, "sector": "Industrials (S&P500 81종목)", "asOf": ["2026-10-09", "2026-10-09"], "priceSession": null, "metrics": [{"metric": "per", "score": 27.3, "rank": 57, "peers": 77}, {"metric": "pbr", "score": 6.8, "rank": 70, "peers": 74}, {"metric": "psr", "score": 28.2, "rank": 57, "peers": 78}, {"metric": "pcr", "score": 15.1, "rank": 63, "peers": 73}, {"metric": "evebitda", "score": 17.9, "rank": 56, "peers": 67}]}, "self": {"score": 11.7, "window": ["2021-10-11", "2026-10-09"], "perBasis": "diluted", "metrics": [{"metric": "per", "score": 13.1, "percentile": 86.9, "current": 34.46, "min": 12.42, "median": 17.79, "max": 53.03, "days": 1255, "currentNote": null}, {"metric": "pbr", "score": 8.2, "percentile": 91.8, "current": 18.97, "min": 5.3, "median": 8.35, "max": 26.29, "days": 1255, "currentNote": null}, {"metric": "psr", "score": 12.3, "percentile": 87.7, "current": 4.92, "min": 1.59, "median": 2.42, "max": 6.93, "days": 1255, "currentNote": null}, {"metric": "pcr", "score": 13.2, "percentile": 86.8, "current": 34.4, "min": 11.65, "median": 17.89, "max": 51.73, "days": 1255, "currentNote": null}, {"metric": "evebitda", "score": 11.5, "percentile": 88.5, "current": 24.09, "min": 8.64, "median": 11.83, "max": 35.63, "days": 1095, "currentNote": null}]}};
+const CAT_VALUATION = {"peer": {"score": 18.8, "sector": "Industrials (S&P500 81종목)", "asOf": ["2026-10-09", "2026-10-09"], "priceSession": null, "metrics": [{"metric": "per", "score": 27.3, "rank": 57, "peers": 77}, {"metric": "pbr", "score": 6.8, "rank": 70, "peers": 74}, {"metric": "psr", "score": 26.9, "rank": 58, "peers": 78}, {"metric": "pcr", "score": 15.1, "rank": 63, "peers": 73}, {"metric": "evebitda", "score": 17.9, "rank": 56, "peers": 67}]}, "self": {"score": 11.7, "window": ["2021-10-11", "2026-10-09"], "perBasis": "diluted", "metrics": [{"metric": "per", "score": 13.1, "percentile": 86.9, "current": 34.46, "min": 12.42, "median": 17.79, "max": 53.03, "days": 1255, "currentNote": null}, {"metric": "pbr", "score": 8.2, "percentile": 91.8, "current": 18.97, "min": 5.3, "median": 8.35, "max": 26.29, "days": 1255, "currentNote": null}, {"metric": "psr", "score": 12.3, "percentile": 87.7, "current": 4.92, "min": 1.59, "median": 2.42, "max": 6.93, "days": 1255, "currentNote": null}, {"metric": "pcr", "score": 13.2, "percentile": 86.8, "current": 34.4, "min": 11.65, "median": 17.89, "max": 51.73, "days": 1255, "currentNote": null}, {"metric": "evebitda", "score": 11.5, "percentile": 88.5, "current": 24.09, "min": 8.64, "median": 11.83, "max": 35.63, "days": 1095, "currentNote": null}]}};
 /* VALUATION:END */
 
 // ── 종합 평가 자동 판정 (2026-09-25 사용자 결정 · 방향 합산) ──
@@ -2108,7 +2108,7 @@ const CAT_ACTIVITY = {"ticker": "CAT", "status": "ok", "asOf": "2026-06-30", "pr
 // ── 투자포인트 탭: 애널리스트 목표가 (출처·기준일 포함) ──
 // 갱신: StockAnalysis 예측 페이지(stockanalysis.com/stocks/cat/forecast/)의 값과 날짜를 옮긴다.
 // 현재가 대비는 마지막 종가에서 계산한다.
-const CAT_ANALYST = { asOf: '2026-10-11', source: 'StockAnalysis (의견 집계 · 개별 목표가)', rating: 'Buy', n: 28, nTargets: 18, mean: 1007.67, median: 990,
+const CAT_ANALYST = { asOf: '2026-10-12', source: 'StockAnalysis (의견 집계 · 개별 목표가)', rating: 'Buy', n: 28, nTargets: 18, mean: 999.33, median: 989,
   low: 882, high: 1155, strongBuy: 14, buy: 1, hold: 11, sell: 1, strongSell: 1 };
 (function(){
   const A = CAT_ANALYST, last = (typeof CAT_DAILY !== 'undefined' && CAT_DAILY.length) ? CAT_DAILY[CAT_DAILY.length - 1] : null;

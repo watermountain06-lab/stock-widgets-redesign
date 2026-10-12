@@ -571,7 +571,7 @@ Chart.overrides.doughnut.animation = false;
     </div>
     <div class="logic-box logic-negative" id="etnPeerBox">
       <div class="logic-head"><span class="logic-tag">밸류에이션 <span class="logic-denom">동종업 대비</span></span><span class="logic-verdict" id="etnPeerVerdict">비싼 편</span></div>
-      <div class="logic-score" id="etnPeerScore">17.7<span class="logic-denom">/100</span></div>
+      <div class="logic-score" id="etnPeerScore">17.5<span class="logic-denom">/100</span></div>
     </div>
     <div class="logic-box logic-negative" id="etnSelfBox">
       <div class="logic-head"><span class="logic-tag">밸류에이션 <span class="logic-denom">자기 이력 대비</span></span><span class="logic-verdict" id="etnSelfVerdict">비싼 편</span></div>
@@ -936,9 +936,9 @@ Chart.overrides.doughnut.animation = false;
 시나리오 범위: 6.64 ~ 60.69(세 시나리오 최대·최소 기준)
 0.7 이하 매우 싸다 · 0.9 이하 싸다 · 1.1 이하 적정 · 1.5 이하 비싸다 · 초과 매우 비싸다
 이 칸은 보수적으로 잡혀 있다(할인율 10%, 5년 뒤 영구성장 2.5%). S&amp;P500 비금융 종목의 83~91%가 매달 '매우 비싸다'에 들어간다(2024-10~2026-09). 다른 종목과 견주려면 위 비율 숫자를 함께 볼 것.">매우 비싸다</div></div>
-      <div class="vs-name" title="S&amp;P500 산업재 종목들보다 배수가 얼마나 낮은가. 높을수록 싸다.">동종업 대비</div><div class="vs-val" data-vc-score="peer">17.7</div><div class="sc-tile low" data-vc="peer" data-m="per">10</div><div class="sc-tile lost" data-vc="peer" data-m="pbr">35</div><div class="sc-tile low" data-vc="peer" data-m="psr">23</div><div class="sc-tile low" data-vc="peer" data-m="pcr">10</div><div class="sc-tile low" data-vc="peer" data-m="evebitda">10</div><div class="vs-pill high" data-vs-pill="peer">비싸다</div>
+      <div class="vs-name" title="S&amp;P500 산업재 종목들보다 배수가 얼마나 낮은가. 높을수록 싸다.">동종업 대비</div><div class="vs-val" data-vc-score="peer">17.5</div><div class="sc-tile low" data-vc="peer" data-m="per">10</div><div class="sc-tile lost" data-vc="peer" data-m="pbr">35</div><div class="sc-tile low" data-vc="peer" data-m="psr">22</div><div class="sc-tile low" data-vc="peer" data-m="pcr">10</div><div class="sc-tile low" data-vc="peer" data-m="evebitda">10</div><div class="vs-pill high" data-vs-pill="peer">비싸다</div>
     </div></div>
-    <div class="vs-premise">PER 43.8배(5년 중앙값 32.9배)로 자기 이력 10.7점(비싸다), 동종업 17.7점(비싸다)이다. <strong>현금흐름 내재가치(기본 $55.11)는 현재가의 13%다</strong>.</div>
+    <div class="vs-premise">PER 43.8배(5년 중앙값 32.9배)로 자기 이력 10.7점(비싸다), 동종업 17.5점(비싸다)이다. <strong>현금흐름 내재가치(기본 $55.11)는 현재가의 13%다</strong>.</div>
     <div class="verdict-summary-risk">⚠️ 세 칸이 자기 이력 −1 · 동종업 −1 · 현금흐름 −2, 합계 −4 “고평가”이다. 현금흐름 내재가치(기본 $55.11)는 현재가의 13%다. 현재가를 정당화하려면 영업이익률이 56.6%까지 올라야 한다(최근 4분기 17.7%, 5년 중앙값 17.0%). 내재가치에서 차입금 $20.6B를 빼고 현금·단기투자 $695M를 더한다.</div>
   </div>
 
@@ -1128,8 +1128,8 @@ Chart.overrides.doughnut.animation = false;
         <div class="op-dist"><div data-an-bar="buy" style="width: 82.1%; background: var(--green);"></div><div data-an-bar="hold" style="width: 14.3%; background: var(--gold);"></div><div data-an-bar="sell" style="width: 3.6%; background: var(--red);"></div></div>
       </div>
       <div class="op-cell">
-        <span class="op-label">평균 목표주가 · <span data-an="asof">2026-10-11</span></span>
-        <span class="op-val"><span data-an="mean">$490.45</span> <span class="op-sub op-up" data-an="upside">+14.2%</span></span>
+        <span class="op-label">평균 목표주가 · <span data-an="asof">2026-10-12</span></span>
+        <span class="op-val"><span data-an="mean">$495.27</span> <span class="op-sub op-up" data-an="upside">+15.3%</span></span>
       </div>
       <div class="op-cell">
         <span class="op-label">다음 실적</span>
@@ -1517,7 +1517,7 @@ const DCF_SKEW_NOTE = "이 칸은 보수적으로 잡혀 있다(할인율 10%, 5
 //       python3 v2/build_fundamental_score.py ETN
 const ETN_SCORES = {
   fundamental: 54.7,   // 재무건전성 + 성장·수익성 (밸류에이션 축 제외)
-  peer: 17.7,          // S&P500 산업재 대비 배수 순위 (v2/peer_universe/industrials.json)
+  peer: 17.5,          // S&P500 산업재 대비 배수 순위 (v2/peer_universe/industrials.json)
   selfHistory: 10.7,   // 자기 5년 배수 분포 백분위 (2021-10-11 ~ 2026-10-09)
   asOf: "2026-10-09",
   fundamentalAsOf: "2026-06-30",   // Q2 2026 10-Q
@@ -1835,7 +1835,7 @@ const ETN_FUNDAMENTAL = {"ticker": "ETN", "basis": "quarter", "asOf": "2026-06-3
 //
 // 갱신: python3 v2/build_peer_score.py ETN --self v2/ETN_multiples.json --card
 /* VALUATION:BEGIN */
-const ETN_VALUATION = {"peer": {"score": 17.7, "sector": "Industrials (S&P500 81종목)", "asOf": ["2026-10-09", "2026-10-09"], "priceSession": null, "metrics": [{"metric": "per", "score": 10.4, "rank": 70, "peers": 77}, {"metric": "pbr", "score": 35.1, "rank": 49, "peers": 74}, {"metric": "psr", "score": 23.1, "rank": 61, "peers": 78}, {"metric": "pcr", "score": 9.6, "rank": 67, "peers": 73}, {"metric": "evebitda", "score": 10.4, "rank": 61, "peers": 67}]}, "self": {"score": 10.7, "window": ["2021-10-11", "2026-10-09"], "perBasis": "diluted", "metrics": [{"metric": "per", "score": 2.1, "percentile": 97.9, "current": 43.75, "min": 22.61, "median": 32.88, "max": 46.84, "days": 1255, "currentNote": null}, {"metric": "pbr", "score": 3.7, "percentile": 96.3, "current": 8.24, "min": 3.0, "median": 6.0, "max": 8.82, "days": 1255, "currentNote": null}, {"metric": "psr", "score": 14.7, "percentile": 85.3, "current": 5.56, "min": 2.52, "median": 4.63, "max": 6.12, "days": 1255, "currentNote": null}, {"metric": "pcr", "score": 29.1, "percentile": 70.9, "current": 42.42, "min": 26.25, "median": 39.52, "max": 55.98, "days": 1255, "currentNote": null}, {"metric": "evebitda", "score": 3.9, "percentile": 96.1, "current": 28.86, "min": 17.12, "median": 23.28, "max": 30.67, "days": 1255, "currentNote": null}]}};
+const ETN_VALUATION = {"peer": {"score": 17.5, "sector": "Industrials (S&P500 81종목)", "asOf": ["2026-10-09", "2026-10-09"], "priceSession": null, "metrics": [{"metric": "per", "score": 10.4, "rank": 70, "peers": 77}, {"metric": "pbr", "score": 35.1, "rank": 49, "peers": 74}, {"metric": "psr", "score": 21.8, "rank": 62, "peers": 78}, {"metric": "pcr", "score": 9.6, "rank": 67, "peers": 73}, {"metric": "evebitda", "score": 10.4, "rank": 61, "peers": 67}]}, "self": {"score": 10.7, "window": ["2021-10-11", "2026-10-09"], "perBasis": "diluted", "metrics": [{"metric": "per", "score": 2.1, "percentile": 97.9, "current": 43.75, "min": 22.61, "median": 32.88, "max": 46.84, "days": 1255, "currentNote": null}, {"metric": "pbr", "score": 3.7, "percentile": 96.3, "current": 8.24, "min": 3.0, "median": 6.0, "max": 8.82, "days": 1255, "currentNote": null}, {"metric": "psr", "score": 14.7, "percentile": 85.3, "current": 5.56, "min": 2.52, "median": 4.63, "max": 6.12, "days": 1255, "currentNote": null}, {"metric": "pcr", "score": 29.1, "percentile": 70.9, "current": 42.42, "min": 26.25, "median": 39.52, "max": 55.98, "days": 1255, "currentNote": null}, {"metric": "evebitda", "score": 3.9, "percentile": 96.1, "current": 28.86, "min": 17.12, "median": 23.28, "max": 30.67, "days": 1255, "currentNote": null}]}};
 /* VALUATION:END */
 
 // ── 종합 평가 자동 판정 (2026-09-25 사용자 결정 · 방향 합산) ──
@@ -2122,7 +2122,7 @@ const ETN_ACTIVITY = {"ticker": "ETN", "status": "ok", "asOf": "2026-06-30", "pr
 // ── 투자포인트 탭: 애널리스트 목표가 (출처·기준일 포함) ──
 // 갱신: StockAnalysis 예측 페이지(stockanalysis.com/stocks/etn/forecast/)의 값과 날짜를 옮긴다.
 // 현재가 대비는 마지막 종가에서 계산한다.
-const ETN_ANALYST = { asOf: '2026-10-11', source: 'StockAnalysis (의견 집계 · 개별 목표가)', rating: 'Buy', n: 28, nTargets: 11, mean: 490.45, median: 502,
+const ETN_ANALYST = { asOf: '2026-10-12', source: 'StockAnalysis (의견 집계 · 개별 목표가)', rating: 'Buy', n: 28, nTargets: 11, mean: 495.27, median: 502,
   low: 392, high: 534, strongBuy: 18, buy: 5, hold: 4, sell: 1, strongSell: 0 };
 (function(){
   const A = ETN_ANALYST, last = (typeof ETN_DAILY !== 'undefined' && ETN_DAILY.length) ? ETN_DAILY[ETN_DAILY.length - 1] : null;

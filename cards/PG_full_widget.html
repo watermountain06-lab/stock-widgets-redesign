@@ -571,7 +571,7 @@ Chart.overrides.doughnut.animation = false;
     </div>
     <div class="logic-box logic-neutral" id="pgPeerBox">
       <div class="logic-head"><span class="logic-tag">밸류에이션 <span class="logic-denom">동종업 대비</span></span><span class="logic-verdict" id="pgPeerVerdict">중간</span></div>
-      <div class="logic-score" id="pgPeerScore">35.5<span class="logic-denom">/100</span></div>
+      <div class="logic-score" id="pgPeerScore">35.2<span class="logic-denom">/100</span></div>
     </div>
     <div class="logic-box logic-positive" id="pgSelfBox">
       <div class="logic-head"><span class="logic-tag">밸류에이션 <span class="logic-denom">자기 이력 대비</span></span><span class="logic-verdict" id="pgSelfVerdict">싼 편</span></div>
@@ -936,9 +936,9 @@ Chart.overrides.doughnut.animation = false;
 시나리오 범위: 2.02 ~ 2.21(세 시나리오 최대·최소 기준)
 0.7 이하 매우 싸다 · 0.9 이하 싸다 · 1.1 이하 적정 · 1.5 이하 비싸다 · 초과 매우 비싸다
 이 칸은 보수적으로 잡혀 있다(할인율 10%, 5년 뒤 영구성장 2.5%). S&amp;P500 비금융 종목의 83~91%가 매달 '매우 비싸다'에 들어간다(2024-10~2026-09). 다른 종목과 견주려면 위 비율 숫자를 함께 볼 것.">매우 비싸다</div></div>
-      <div class="vs-name" title="S&amp;P500 필수소비재 종목들보다 배수가 얼마나 낮은가. 높을수록 싸다.">동종업 대비</div><div class="vs-val" data-vc-score="peer">35.5</div><div class="sc-tile lost" data-vc="peer" data-m="per">44</div><div class="sc-tile lost" data-vc="peer" data-m="pbr">42</div><div class="sc-tile low" data-vc="peer" data-m="psr">15</div><div class="sc-tile lost" data-vc="peer" data-m="pcr">33</div><div class="sc-tile lost" data-vc="peer" data-m="evebitda">43</div><div class="vs-pill mid" data-vs-pill="peer">중간</div>
+      <div class="vs-name" title="S&amp;P500 필수소비재 종목들보다 배수가 얼마나 낮은가. 높을수록 싸다.">동종업 대비</div><div class="vs-val" data-vc-score="peer">35.2</div><div class="sc-tile lost" data-vc="peer" data-m="per">46</div><div class="sc-tile lost" data-vc="peer" data-m="pbr">40</div><div class="sc-tile low" data-vc="peer" data-m="psr">15</div><div class="sc-tile lost" data-vc="peer" data-m="pcr">32</div><div class="sc-tile lost" data-vc="peer" data-m="evebitda">43</div><div class="vs-pill mid" data-vs-pill="peer">중간</div>
     </div></div>
-    <div class="vs-premise">PER 22.8배(5년 중앙값 25.7배)로 자기 이력 82.7점(싸다), 동종업 35.5점(중간)이다. <strong>현금흐름 내재가치(기본 $74.76)는 현재가의 49%다</strong>.</div>
+    <div class="vs-premise">PER 22.8배(5년 중앙값 25.7배)로 자기 이력 82.7점(싸다), 동종업 35.2점(중간)이다. <strong>현금흐름 내재가치(기본 $74.76)는 현재가의 49%다</strong>.</div>
     <div class="verdict-summary-risk">⚠️ 세 칸이 자기 이력 +1 · 동종업 0 · 현금흐름 −2, 합계 −1 “적정~고평가”이다. 현금흐름 내재가치(기본 $74.76)는 현재가의 49%다. 현재가를 정당화하려면 영업이익률이 41.9%까지 올라야 한다(최근 4분기 22.7%, 5년 중앙값 22.4%). 내재가치에서 차입금 $34.1B를 빼고 현금·단기투자 $9.9B를 더한다.</div>
   </div>
 
@@ -1114,7 +1114,7 @@ Chart.overrides.doughnut.animation = false;
         <div class="op-dist"><div data-an-bar="buy" style="width: 56%; background: var(--green);"></div><div data-an-bar="hold" style="width: 44%; background: var(--gold);"></div><div data-an-bar="sell" style="width: 0%; background: var(--red);"></div></div>
       </div>
       <div class="op-cell">
-        <span class="op-label">평균 목표주가 · <span data-an="asof">2026-10-11</span></span>
+        <span class="op-label">평균 목표주가 · <span data-an="asof">2026-10-12</span></span>
         <span class="op-val"><span data-an="mean">$159.37</span> <span class="op-sub op-up" data-an="upside">+5.4%</span></span>
       </div>
       <div class="op-cell">
@@ -1502,7 +1502,7 @@ const DCF_SKEW_NOTE = "이 칸은 보수적으로 잡혀 있다(할인율 10%, 5
 //       python3 v2/build_fundamental_score.py PG
 const PG_SCORES = {
   fundamental: 49.6,   // 재무건전성 + 성장·수익성 (밸류에이션 축 제외)
-  peer: 35.5,          // S&P500 필수소비재 대비 배수 순위 (v2/peer_universe/consumer_staples.json)
+  peer: 35.2,          // S&P500 필수소비재 대비 배수 순위 (v2/peer_universe/consumer_staples.json)
   selfHistory: 82.7,   // 자기 5년 배수 분포 백분위 (2021-10-11 ~ 2026-10-09)
   asOf: "2026-10-09",
   fundamentalAsOf: "2026-06-30",   // FY2026 10-K
@@ -1820,7 +1820,7 @@ const PG_FUNDAMENTAL = {"ticker": "PG", "basis": "quarter", "asOf": "2026-06-30"
 //
 // 갱신: python3 v2/build_peer_score.py PG --self v2/PG_multiples.json --card
 /* VALUATION:BEGIN */
-const PG_VALUATION = {"peer": {"score": 35.5, "sector": "Consumer Staples (S&P500 34종목)", "asOf": ["2026-10-09", "2026-10-09"], "priceSession": null, "metrics": [{"metric": "per", "score": 44.4, "rank": 16, "peers": 27}, {"metric": "pbr", "score": 41.7, "rank": 15, "peers": 24}, {"metric": "psr", "score": 15.4, "rank": 23, "peers": 26}, {"metric": "pcr", "score": 33.3, "rank": 17, "peers": 24}, {"metric": "evebitda", "score": 42.9, "rank": 13, "peers": 21}]}, "self": {"score": 82.7, "window": ["2021-10-11", "2026-10-09"], "perBasis": "diluted", "metrics": [{"metric": "per", "score": 80.8, "percentile": 19.2, "current": 22.84, "min": 20.15, "median": 25.7, "max": 30.98, "days": 1255, "currentNote": null}, {"metric": "pbr", "score": 84.0, "percentile": 16.0, "current": 6.47, "min": 5.96, "median": 7.52, "max": 8.76, "days": 1255, "currentNote": null}, {"metric": "psr", "score": 83.2, "percentile": 16.8, "current": 4.04, "min": 3.69, "median": 4.4, "max": 5.15, "days": 1255, "currentNote": null}, {"metric": "pcr", "score": 79.8, "percentile": 20.2, "current": 23.21, "min": 21.59, "median": 24.66, "max": 31.05, "days": 1255, "currentNote": null}, {"metric": "evebitda", "score": 85.9, "percentile": 14.1, "current": 16.48, "min": 14.64, "median": 18.25, "max": 20.68, "days": 1073, "currentNote": null}]}};
+const PG_VALUATION = {"peer": {"score": 35.2, "sector": "Consumer Staples (S&P500 34종목)", "asOf": ["2026-10-09", "2026-10-09"], "priceSession": null, "metrics": [{"metric": "per", "score": 46.2, "rank": 15, "peers": 26}, {"metric": "pbr", "score": 40.0, "rank": 16, "peers": 25}, {"metric": "psr", "score": 14.8, "rank": 24, "peers": 27}, {"metric": "pcr", "score": 32.0, "rank": 18, "peers": 25}, {"metric": "evebitda", "score": 42.9, "rank": 13, "peers": 21}]}, "self": {"score": 82.7, "window": ["2021-10-11", "2026-10-09"], "perBasis": "diluted", "metrics": [{"metric": "per", "score": 80.8, "percentile": 19.2, "current": 22.84, "min": 20.15, "median": 25.7, "max": 30.98, "days": 1255, "currentNote": null}, {"metric": "pbr", "score": 84.0, "percentile": 16.0, "current": 6.47, "min": 5.96, "median": 7.52, "max": 8.76, "days": 1255, "currentNote": null}, {"metric": "psr", "score": 83.2, "percentile": 16.8, "current": 4.04, "min": 3.69, "median": 4.4, "max": 5.15, "days": 1255, "currentNote": null}, {"metric": "pcr", "score": 79.8, "percentile": 20.2, "current": 23.21, "min": 21.59, "median": 24.66, "max": 31.05, "days": 1255, "currentNote": null}, {"metric": "evebitda", "score": 85.9, "percentile": 14.1, "current": 16.48, "min": 14.64, "median": 18.25, "max": 20.68, "days": 1073, "currentNote": null}]}};
 /* VALUATION:END */
 
 // ── 종합 평가 자동 판정 (2026-09-25 사용자 결정 · 방향 합산) ──
@@ -2107,7 +2107,7 @@ const PG_ACTIVITY = {"ticker": "PG", "status": "ok", "asOf": "2026-06-30", "prev
 // ── 투자포인트 탭: 애널리스트 목표가 (출처·기준일 포함) ──
 // 갱신: StockAnalysis 예측 페이지(stockanalysis.com/stocks/pg/forecast/)의 값과 날짜를 옮긴다.
 // 현재가 대비는 마지막 종가에서 계산한다.
-const PG_ANALYST = { asOf: '2026-10-11', source: 'StockAnalysis (의견 집계 · 개별 목표가)', rating: 'Buy', n: 25, nTargets: 19, mean: 159.37, median: 162,
+const PG_ANALYST = { asOf: '2026-10-12', source: 'StockAnalysis (의견 집계 · 개별 목표가)', rating: 'Buy', n: 25, nTargets: 19, mean: 159.37, median: 162,
   low: 143, high: 177, strongBuy: 8, buy: 6, hold: 11, sell: 0, strongSell: 0 };
 (function(){
   const A = PG_ANALYST, last = (typeof PG_DAILY !== 'undefined' && PG_DAILY.length) ? PG_DAILY[PG_DAILY.length - 1] : null;

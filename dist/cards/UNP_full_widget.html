@@ -541,7 +541,7 @@ Chart.overrides.doughnut.animation = false;
     </div>
     <div class="meta-item">
       <span class="meta-label">현재가 요구 영업이익률 (최근 4분기 40.0%)</span>
-      <span class="meta-value" id="unpDcfReq" style="font-size: 22px; color: var(--red);">72.5%</span>
+      <span class="meta-value" id="unpDcfReq" style="font-size: 22px; color: var(--red);">74.0%</span>
     </div>
     <div class="meta-item">
       <span class="meta-label" id="unpConfidenceLabel">밴드 적중률 (777/1180일, 하단우세)</span>
@@ -563,7 +563,7 @@ Chart.overrides.doughnut.animation = false;
   <div class="logic-grid" id="unpLogicGrid">
     <div class="logic-box logic-info">
       <div class="logic-head"><span class="logic-tag">내재가치 <span class="logic-denom">현금흐름</span></span><span class="logic-verdict" id="unpDcfVerdict">매우 비싸다</span></div>
-      <div class="logic-score" id="unpDcfBox">$118<span class="logic-denom"> · 보수 $109 · 낙관 $109</span></div>
+      <div class="logic-score" id="unpDcfBox">$115<span class="logic-denom"> · 보수 $109 · 낙관 $109</span></div>
     </div>
     <div class="logic-box logic-neutral" id="unpFundBox">
       <div class="logic-head"><span class="logic-tag">기본적 분석 <span class="logic-denom">재무제표</span></span><span class="logic-verdict" id="unpFundVerdict">보통</span></div>
@@ -571,7 +571,7 @@ Chart.overrides.doughnut.animation = false;
     </div>
     <div class="logic-box logic-neutral" id="unpPeerBox">
       <div class="logic-head"><span class="logic-tag">밸류에이션 <span class="logic-denom">동종업 대비</span></span><span class="logic-verdict" id="unpPeerVerdict">중간</span></div>
-      <div class="logic-score" id="unpPeerScore">44.3<span class="logic-denom">/100</span></div>
+      <div class="logic-score" id="unpPeerScore">44.1<span class="logic-denom">/100</span></div>
     </div>
     <div class="logic-box logic-neutral" id="unpSelfBox">
       <div class="logic-head"><span class="logic-tag">밸류에이션 <span class="logic-denom">자기 이력 대비</span></span><span class="logic-verdict" id="unpSelfVerdict">중간</span></div>
@@ -681,12 +681,12 @@ Chart.overrides.doughnut.animation = false;
         <tr>
           <td class="scn-name scn-low">보수</td>
           <td class="big scn-low" data-dcf-value="low">$109.05</td><td style="color: var(--red);" data-dcf-upside="low">−60.8%</td>
-          <td class="story">매출이 5년 성장률의 절반(연 2.5%)로 시작해 2.5%로 식고, 영업이익률이 5년 중앙값 40.0%로 간다.</td>
+          <td class="story">5년 성장률의 절반(연 1.9%)이 영구성장률 2.5%보다 낮아 5년 내내 2.5%로 두고, 영업이익률이 5년 중앙값 40.1%로 간다.</td>
         </tr>
         <tr>
           <td class="scn-name scn-base">기본</td>
-          <td class="big scn-base" data-dcf-value="base">$118.05</td><td style="color: var(--red);" data-dcf-upside="base">−57.6%</td>
-          <td class="story">매출이 5년 성장률(연 5.1%)로 시작해 2.5%로 식고, 영업이익률이 최근 2년 중앙값 40.1%로 간다.</td>
+          <td class="big scn-base" data-dcf-value="base">$115.18</td><td style="color: var(--red);" data-dcf-upside="base">−58.6%</td>
+          <td class="story">매출이 5년 성장률(연 3.9%)로 시작해 2.5%로 식고, 영업이익률이 최근 2년 중앙값 40.1%로 간다.</td>
         </tr>
         <tr>
           <td class="scn-name scn-high">낙관</td>
@@ -695,7 +695,7 @@ Chart.overrides.doughnut.animation = false;
         </tr>
       </tbody>
     </table></div>
-    <div class="note">세 값은 확률이 아니라, 과거 실적에서 서로 다른 가정을 뽑아 계산한 결과다. 세 시나리오는 $108.94~$118.05다. 영업이익률은 최근 4분기 40.0%, 2년 중앙값 40.1%, 5년 중앙값 40.0%를 쓴다. 시나리오 순서가 이름과 다르다 — 가정이 서로 엇갈린다: 보수(성장 연 2.5%·이익률 40.0%), 기본(5.1%·40.1%), 낙관(2.5%·40.0%).</div>
+    <div class="note">세 값은 확률이 아니라, 과거 실적에서 서로 다른 가정을 뽑아 계산한 결과다. 세 시나리오는 $108.94~$115.18다. 영업이익률은 최근 4분기 40.0%, 2년 중앙값 40.1%, 5년 중앙값 40.1%를 쓴다. 시나리오 순서가 이름과 다르다 — 가정이 서로 엇갈린다: 보수(성장 연 2.5%·이익률 40.1%), 기본(3.9%·40.1%), 낙관(2.5%·40.0%).</div>
     <div class="note" data-dcf-nonop hidden></div>
     <div class="reverse">—</div>
   </div>
@@ -708,7 +708,7 @@ Chart.overrides.doughnut.animation = false;
       <div class="knob"><span class="knob-l">할인율 <span class="knob-d" data-knob-default="wacc">(10%)</span></span><span class="knob-btns" data-knob="wacc"></span></div>
       <div class="knob"><span class="knob-l">영구성장 <span class="knob-d" data-knob-default="term">(2.5%)</span></span><span class="knob-btns" data-knob="term"></span></div>
     </div>
-    <div class="pick-result"><span style="color: rgb(14, 165, 233);" id="dcfPickValue">주당 $118</span><span style="color: var(--red);" id="dcfPickUpside">현재가 대비 −57.6%</span></div>
+    <div class="pick-result"><span style="color: rgb(14, 165, 233);" id="dcfPickValue">주당 $115</span><span style="color: var(--red);" id="dcfPickUpside">현재가 대비 −58.6%</span></div>
     <div class="ruler" id="dcfRuler"></div>
   </div>
 </div>
@@ -898,14 +898,14 @@ Chart.overrides.doughnut.animation = false;
     <div class="vs-table-wrap"><div class="vs-table" id="valComp">
       <div></div><div></div><div class="vc-head">PER</div><div class="vc-head">PBR</div><div class="vc-head">PSR</div><div class="vc-head">PCR</div><div class="vc-head">EV/EBITDA</div><div></div>
       <div class="vs-name" title="지난 5년 UNP 자신의 배수보다 지금이 얼마나 낮은가. 높을수록 싸다.">자기 이력 대비</div><div class="vs-val" data-vc-score="self">41.8</div><div class="sc-tile low" data-vc="self" data-m="per">29</div><div class="sc-tile" data-vc="self" data-m="pbr">91</div><div class="sc-tile low" data-vc="self" data-m="psr">16</div><div class="sc-tile lost" data-vc="self" data-m="pcr">43</div><div class="sc-tile low" data-vc="self" data-m="evebitda">30</div><div class="vs-pill mid" data-vs-pill="self">중간</div>
-      <div class="vs-name" title="회사가 앞으로 벌어들일 현금만으로 계산한 주당 가치(기본 시나리오).">현금흐름 (내재가치)</div><div class="vs-val" data-vs="dcf">$118</div><div class="vs-note">현재가 <span data-vs="price">$278.34</span> 대비 <strong data-vs="upside">−57.6%</strong> · 기본 시나리오</div><div class="vs-pill-wrap"><div class="vs-pill high" data-vs-pill="dcf" title="현재가 ÷ 기본 내재가치 = 2.36
-시나리오 범위: 2.36 ~ 2.55(세 시나리오 최대·최소 기준)
+      <div class="vs-name" title="회사가 앞으로 벌어들일 현금만으로 계산한 주당 가치(기본 시나리오).">현금흐름 (내재가치)</div><div class="vs-val" data-vs="dcf">$115</div><div class="vs-note">현재가 <span data-vs="price">$278.34</span> 대비 <strong data-vs="upside">−58.6%</strong> · 기본 시나리오</div><div class="vs-pill-wrap"><div class="vs-pill high" data-vs-pill="dcf" title="현재가 ÷ 기본 내재가치 = 2.42
+시나리오 범위: 2.42 ~ 2.55(세 시나리오 최대·최소 기준)
 0.7 이하 매우 싸다 · 0.9 이하 싸다 · 1.1 이하 적정 · 1.5 이하 비싸다 · 초과 매우 비싸다
 이 칸은 보수적으로 잡혀 있다(할인율 10%, 5년 뒤 영구성장 2.5%). S&amp;P500 비금융 종목의 83~91%가 매달 '매우 비싸다'에 들어간다(2024-10~2026-09). 다른 종목과 견주려면 위 비율 숫자를 함께 볼 것.">매우 비싸다</div></div>
-      <div class="vs-name" title="S&amp;P500 산업재 종목들보다 배수가 얼마나 낮은가. 높을수록 싸다.">동종업 대비</div><div class="vs-val" data-vc-score="peer">44.3</div><div class="sc-tile" data-vc="peer" data-m="per">71</div><div class="sc-tile lost" data-vc="peer" data-m="pbr">37</div><div class="sc-tile low" data-vc="peer" data-m="psr">12</div><div class="sc-tile lost" data-vc="peer" data-m="pcr">41</div><div class="sc-tile lost" data-vc="peer" data-m="evebitda">61</div><div class="vs-pill mid" data-vs-pill="peer">중간</div>
+      <div class="vs-name" title="S&amp;P500 산업재 종목들보다 배수가 얼마나 낮은가. 높을수록 싸다.">동종업 대비</div><div class="vs-val" data-vc-score="peer">44.1</div><div class="sc-tile" data-vc="peer" data-m="per">71</div><div class="sc-tile lost" data-vc="peer" data-m="pbr">37</div><div class="sc-tile low" data-vc="peer" data-m="psr">10</div><div class="sc-tile lost" data-vc="peer" data-m="pcr">41</div><div class="sc-tile lost" data-vc="peer" data-m="evebitda">61</div><div class="vs-pill mid" data-vs-pill="peer">중간</div>
     </div></div>
-    <div class="vs-premise">PER 22.5배(5년 중앙값 21.2배)로 자기 이력 41.8점(중간), 동종업 44.3점(중간)이다. <strong>현금흐름 내재가치(기본 $118.05)는 현재가의 42%다</strong>.</div>
-    <div class="verdict-summary-risk">⚠️ 세 칸이 자기 이력 0 · 동종업 0 · 현금흐름 −2, 합계 −2 “적정~고평가”이다. 현금흐름 내재가치(기본 $118.05)는 현재가의 42%다. 현재가를 정당화하려면 영업이익률이 72.5%까지 올라야 한다(최근 4분기 40.0%, 5년 중앙값 40.0%). 내재가치에서 차입금 $30.3B를 빼고 현금·단기투자 $2.1B를 더한다.</div>
+    <div class="vs-premise">PER 22.5배(5년 중앙값 21.2배)로 자기 이력 41.8점(중간), 동종업 44.1점(중간)이다. <strong>현금흐름 내재가치(기본 $115.18)는 현재가의 41%다</strong>.</div>
+    <div class="verdict-summary-risk">⚠️ 세 칸이 자기 이력 0 · 동종업 0 · 현금흐름 −2, 합계 −2 “적정~고평가”이다. 현금흐름 내재가치(기본 $115.18)는 현재가의 41%다. 현재가를 정당화하려면 영업이익률이 74.0%까지 올라야 한다(최근 4분기 40.0%, 5년 중앙값 40.1%). 내재가치에서 차입금 $30.3B를 빼고 현금·단기투자 $2.1B를 더한다.</div>
   </div>
 
   <div class="grid-2">
@@ -944,8 +944,8 @@ Chart.overrides.doughnut.animation = false;
             <span class="hist-badge bad" data-hist="badge">5년 중 상위 16%</span>
           </div>
         </div>
-        <div class="val-track"><div class="val-fill hist-fill bad" data-hist="fill" style="width: 83.9%;"></div></div>
-        <div class="hist-labels"><span data-hist="min">최저 4.5x</span><span data-hist="median">중앙 5.8x</span><span data-hist="max">최고 8.2x</span></div>
+        <div class="val-track"><div class="val-fill hist-fill bad" data-hist="fill" style="width: 83.7%;"></div></div>
+        <div class="hist-labels"><span data-hist="min">최저 4.6x</span><span data-hist="median">중앙 5.9x</span><span data-hist="max">최고 8.1x</span></div>
       </div>
 
       <div class="val-item" data-metric="pcr" onclick="selectMultiple('pcr')">
@@ -989,7 +989,7 @@ Chart.overrides.doughnut.animation = false;
   <div class="card">
     <div class="card-title">종합 해석</div>
     <div class="verdict-summary-head">지배적 내러티브 · Q2 2026 매출 $6.9B(+11.5%), 영업이익률 40.3%(1년 전 41.0%). 주가는 1년 새 +20%<span class="tag">배수 중간·매출 성장 빨라짐</span></div>
-    <div class="verdict-summary-counter">⚠️ 세 칸이 자기 이력 0 · 동종업 0 · 현금흐름 −2, 합계 −2 “적정~고평가”이다. 현금흐름 내재가치(기본 $118.05)는 현재가의 42%다.</div>
+    <div class="verdict-summary-counter">⚠️ 세 칸이 자기 이력 0 · 동종업 0 · 현금흐름 −2, 합계 −2 “적정~고평가”이다. 현금흐름 내재가치(기본 $115.18)는 현재가의 41%다.</div>
     <div class="verdict-summary-next">🔍 다음 확인 포인트 · 2026년 10월 22일 무렵 (예상) Q3 2026 실적 공시.</div>
   </div>
 
@@ -1084,8 +1084,8 @@ Chart.overrides.doughnut.animation = false;
     </div>
     <div class="bb-box">
       <div class="bb-title bb-bear">🐻 Bear 요인</div>
-      <div class="bb-row bear"><span class="bb-icon">▼</span><span class="bb-head">내재가치</span><span class="bb-text">현금흐름 내재가치(기본 $118.05)는 현재가의 42%.</span></div>
-      <div class="bb-row bear"><span class="bb-icon">▼</span><span class="bb-head">성장</span><span class="bb-text">3년 매출 성장률 연 0.9%, 5년 연 5.1%보다 낮다.</span></div>
+      <div class="bb-row bear"><span class="bb-icon">▼</span><span class="bb-head">내재가치</span><span class="bb-text">현금흐름 내재가치(기본 $115.18)는 현재가의 41%.</span></div>
+      <div class="bb-row bear"><span class="bb-icon">▼</span><span class="bb-head">성장</span><span class="bb-text">3년 매출 성장률 연 0.9%, 5년 연 3.9%보다 낮다.</span></div>
     </div>
   </div>
 
@@ -1098,7 +1098,7 @@ Chart.overrides.doughnut.animation = false;
         <div class="op-dist"><div data-an-bar="buy" style="width: 72%; background: var(--green);"></div><div data-an-bar="hold" style="width: 24%; background: var(--gold);"></div><div data-an-bar="sell" style="width: 4%; background: var(--red);"></div></div>
       </div>
       <div class="op-cell">
-        <span class="op-label">평균 목표주가 · <span data-an="asof">2026-10-11</span></span>
+        <span class="op-label">평균 목표주가 · <span data-an="asof">2026-10-12</span></span>
         <span class="op-val"><span data-an="mean">$331.74</span> <span class="op-sub op-up" data-an="upside">+19.2%</span></span>
       </div>
       <div class="op-cell">
@@ -1436,7 +1436,7 @@ const UNP_MA120 = [218.43,218.392,218.328,218.301,218.296,218.294,218.304,218.35
 // 종합 평가는 시스템이 정한다 — 아래 VALUATION 블록 뒤의 자동 판정이 채운다(2026-09-25).
 let UNP_VERDICT = '계산 중';
 
-const UNP_DCF = {"low": 109.05, "base": 118.05, "high": 108.94, "requiredGrowth": 0.2859, "baseEquivGrowth": 0.0395, "reqMode": "margin", "requiredMargin": 0.7254, "marginNow": 0.4003, "growth5y": 0.0508, "nonopPerShare": 0.0, "s2cFallback": false, "asOf": "2026-10-09", "hard": [], "hardDetail": {"roic": 0.1647, "tax": 0.2292, "nonopShare": 0.0}, "tvShare": 0.7117};   // build_dcf_block.py
+const UNP_DCF = {"low": 109.05, "base": 115.18, "high": 108.94, "requiredGrowth": 0.2859, "baseEquivGrowth": 0.0328, "reqMode": "margin", "requiredMargin": 0.74, "marginNow": 0.4003, "growth5y": 0.0388, "nonopPerShare": 0.0, "s2cFallback": false, "asOf": "2026-10-09", "hard": [], "hardDetail": {"roic": 0.1647, "tax": 0.2292, "nonopShare": 0.0}, "tvShare": 0.7037};   // build_dcf_block.py
 // 현금흐름 판정 5단계 — 헤더 색·요약 칸·밸류에이션 알약이 모두 이 함수 하나를 쓴다(2026-09-25).
 // 현재가 ÷ 기본 내재가치: ≤0.7 매우 싸다 · ≤0.9 싸다 · ≤1.1 적정 · ≤1.5 비싸다 · 초과 매우 비싸다.
 // 보수~낙관이 현재가를 사이에 두면 '시나리오별 갈림'을 붙인다(Fable: NVDA 0.38~1.46).
@@ -1489,7 +1489,7 @@ const DCF_SKEW_NOTE = "이 칸은 보수적으로 잡혀 있다(할인율 10%, 5
 //       python3 v2/build_fundamental_score.py UNP
 const UNP_SCORES = {
   fundamental: 48.2,   // 재무건전성 + 성장·수익성 (밸류에이션 축 제외)
-  peer: 44.3,          // S&P500 산업재 대비 배수 순위 (v2/peer_universe/industrials.json)
+  peer: 44.1,          // S&P500 산업재 대비 배수 순위 (v2/peer_universe/industrials.json)
   selfHistory: 41.8,   // 자기 5년 배수 분포 백분위 (2021-10-11 ~ 2026-10-09)
   asOf: "2026-10-09",
   fundamentalAsOf: "2026-06-30",   // Q2 2026 10-Q
@@ -1590,7 +1590,7 @@ const UNP_SCORES = {
 //
 // 갱신: python3 v2/build_dcf_grid.py UNP
 /* DCF_GRID:BEGIN */
-const UNP_DCF_GRID = {"waccs": [0.08, 0.09, 0.1, 0.11, 0.12], "terms": [0.015, 0.02, 0.025, 0.03, 0.035], "default": [0.1, 0.025], "values": {"보수": [[147.51, 122.6, 103.44, 88.25, 75.89], [153.86, 126.65, 106.09, 89.99, 77.03], [161.3, 131.27, 109.05, 91.91, 78.27], [171.55, 137.65, 113.17, 94.62, 80.05], [184.05, 145.17, 117.93, 97.7, 82.04]], "기본": [[158.6, 132.06, 111.66, 95.47, 82.31], [165.58, 136.58, 114.68, 97.53, 83.72], [173.72, 141.72, 118.05, 99.78, 85.24], [183.36, 147.62, 121.82, 102.27, 86.9], [194.99, 154.49, 126.1, 105.02, 88.7]], "낙관": [[144.86, 120.57, 101.89, 87.07, 75.02], [152.37, 125.51, 105.22, 89.34, 76.54], [161.12, 131.13, 108.94, 91.82, 78.2], [171.47, 137.58, 113.12, 94.58, 80.0], [183.96, 145.1, 117.87, 97.64, 81.99]]}};
+const UNP_DCF_GRID = {"waccs": [0.08, 0.09, 0.1, 0.11, 0.12], "terms": [0.015, 0.02, 0.025, 0.03, 0.035], "default": [0.1, 0.025], "values": {"보수": [[146.08, 121.51, 102.62, 87.64, 75.45], [152.51, 125.63, 105.32, 89.43, 76.62], [161.27, 131.25, 109.05, 91.92, 78.28], [171.64, 137.72, 113.23, 94.68, 80.09], [184.15, 145.25, 117.99, 97.75, 82.09]], "기본": [[154.59, 128.8, 108.97, 93.23, 80.44], [161.39, 133.2, 111.91, 95.24, 81.81], [169.3, 138.19, 115.18, 97.43, 83.29], [178.67, 143.93, 118.85, 99.84, 84.9], [189.97, 150.61, 123.02, 102.52, 86.66]], "낙관": [[144.86, 120.57, 101.89, 87.07, 75.02], [152.37, 125.51, 105.22, 89.34, 76.54], [161.12, 131.13, 108.94, 91.82, 78.2], [171.47, 137.58, 113.12, 94.58, 80.0], [183.96, 145.1, 117.87, 97.64, 81.99]]}};
 /* DCF_GRID:END */
 (function(){
   const D = UNP_DCF, G = (typeof UNP_DCF_GRID !== 'undefined') ? UNP_DCF_GRID : null;
@@ -1807,7 +1807,7 @@ const UNP_FUNDAMENTAL = {"ticker": "UNP", "basis": "quarter", "asOf": "2026-06-3
 //
 // 갱신: python3 v2/build_peer_score.py UNP --self v2/UNP_multiples.json --card
 /* VALUATION:BEGIN */
-const UNP_VALUATION = {"peer": {"score": 44.3, "sector": "Industrials (S&P500 81종목)", "asOf": ["2026-10-09", "2026-10-09"], "priceSession": null, "metrics": [{"metric": "per", "score": 71.4, "rank": 23, "peers": 77}, {"metric": "pbr", "score": 36.5, "rank": 48, "peers": 74}, {"metric": "psr", "score": 11.5, "rank": 70, "peers": 78}, {"metric": "pcr", "score": 41.1, "rank": 44, "peers": 73}, {"metric": "evebitda", "score": 61.2, "rank": 27, "peers": 67}]}, "self": {"score": 41.8, "window": ["2021-10-11", "2026-10-09"], "perBasis": "diluted", "metrics": [{"metric": "per", "score": 29.4, "percentile": 70.6, "current": 22.52, "min": 16.57, "median": 21.25, "max": 27.81, "days": 1255, "currentNote": null}, {"metric": "pbr", "score": 90.9, "percentile": 9.1, "current": 8.0, "min": 7.42, "median": 9.42, "max": 12.9, "days": 1255, "currentNote": null}, {"metric": "psr", "score": 16.1, "percentile": 83.9, "current": 6.51, "min": 4.49, "median": 5.84, "max": 8.15, "days": 1255, "currentNote": null}, {"metric": "pcr", "score": 43.1, "percentile": 56.9, "current": 25.42, "min": 19.37, "median": 24.86, "max": 32.82, "days": 1255, "currentNote": null}, {"metric": "evebitda", "score": 29.5, "percentile": 70.5, "current": 15.33, "min": 12.11, "median": 14.57, "max": 17.87, "days": 1255, "currentNote": null}]}};
+const UNP_VALUATION = {"peer": {"score": 44.1, "sector": "Industrials (S&P500 81종목)", "asOf": ["2026-10-09", "2026-10-09"], "priceSession": null, "metrics": [{"metric": "per", "score": 71.4, "rank": 23, "peers": 77}, {"metric": "pbr", "score": 36.5, "rank": 48, "peers": 74}, {"metric": "psr", "score": 10.3, "rank": 71, "peers": 78}, {"metric": "pcr", "score": 41.1, "rank": 44, "peers": 73}, {"metric": "evebitda", "score": 61.2, "rank": 27, "peers": 67}]}, "self": {"score": 41.8, "window": ["2021-10-11", "2026-10-09"], "perBasis": "diluted", "metrics": [{"metric": "per", "score": 29.4, "percentile": 70.6, "current": 22.52, "min": 16.57, "median": 21.25, "max": 27.81, "days": 1255, "currentNote": null}, {"metric": "pbr", "score": 90.9, "percentile": 9.1, "current": 8.0, "min": 7.42, "median": 9.42, "max": 12.9, "days": 1255, "currentNote": null}, {"metric": "psr", "score": 16.3, "percentile": 83.7, "current": 6.51, "min": 4.57, "median": 5.86, "max": 8.08, "days": 1255, "currentNote": null}, {"metric": "pcr", "score": 43.1, "percentile": 56.9, "current": 25.42, "min": 19.37, "median": 24.86, "max": 32.82, "days": 1255, "currentNote": null}, {"metric": "evebitda", "score": 29.5, "percentile": 70.5, "current": 15.33, "min": 12.11, "median": 14.57, "max": 17.87, "days": 1255, "currentNote": null}]}};
 /* VALUATION:END */
 
 // ── 종합 평가 자동 판정 (2026-09-25 사용자 결정 · 방향 합산) ──
@@ -2094,7 +2094,7 @@ const UNP_ACTIVITY = {"ticker": "UNP", "status": "N/A", "reason": "매출원가 
 // ── 투자포인트 탭: 애널리스트 목표가 (출처·기준일 포함) ──
 // 갱신: StockAnalysis 예측 페이지(stockanalysis.com/stocks/unp/forecast/)의 값과 날짜를 옮긴다.
 // 현재가 대비는 마지막 종가에서 계산한다.
-const UNP_ANALYST = { asOf: '2026-10-11', source: 'StockAnalysis (의견 집계 · 개별 목표가)', rating: 'Buy', n: 25, nTargets: 19, mean: 331.74, median: 333,
+const UNP_ANALYST = { asOf: '2026-10-12', source: 'StockAnalysis (의견 집계 · 개별 목표가)', rating: 'Buy', n: 25, nTargets: 19, mean: 331.74, median: 333,
   low: 294, high: 363, strongBuy: 15, buy: 3, hold: 6, sell: 1, strongSell: 0 };
 (function(){
   const A = UNP_ANALYST, last = (typeof UNP_DAILY !== 'undefined' && UNP_DAILY.length) ? UNP_DAILY[UNP_DAILY.length - 1] : null;
