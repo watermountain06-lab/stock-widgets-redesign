@@ -71,42 +71,38 @@
       + '<span class="vg-q-end vg-q-high" style="left:' + x(aHi) + '%">' + money(aHi) + '</span>';
     return out + '</div>';
   }
-  // 막대 위 한 줄: 당시 예상밴드와 그 기간(진입일과 다른 해면 연도까지). 밴드가 없으면 노랑이 무엇인지 적는다.
+  // 막대 위 한 줄: 진입일에 유효했던 예상밴드와 노랑을 잰 기간(진입일과 다른 해면 연도까지).
   function bandInfo(s){
     var b = s.band, y = s.entryDate.slice(0, 4);
     function d(v){ return v.slice(0, 4) === y ? v.slice(5).replace('-', '/') : v.slice(2).replace(/-/g, '.'); }
-    if (!b) return '<span class="vg-q-info">당시 예상밴드 없음 · 노랑은 그 분기 종가 범위</span>';
+    if (!b) return '<span class="vg-q-info">예상밴드 없음</span>';
     // 날짜는 노랑을 실제로 잰 기간이다. 아직 새 체크포인트가 없는 밴드는 카드의 최신 종가 날짜까지 쟀고, 예상 자체는
     // 다음 실적 반영까지 유효하다(ACN은 10/01 실적 뒤에도 10-K를 기다려 열려 있다 - Codex·Fable).
-    return '<span class="vg-q-info"><b>당시 예상 ' + money(b.low) + '~' + money(b.high) + '</b> · ' + d(b.from) + '~' + d(b.to) + (b.open ? ' · 예상은 다음 실적 반영까지' : '') + '</span>';
+    return '<span class="vg-q-info"><b>예상 ' + money(b.low) + '~' + money(b.high) + '</b> · ' + d(b.from) + '~' + d(b.to) + '</span>';
   }
-  // 진입가 대비 등락: 오르면 초록, 내리면 회색(상단 게이지와 같은 두 색).
-  function change(label, v){
-    if (v == null) return '';
-    return '<span class="vg-dialog-gap' + (v < 0 ? ' is-over' : '') + '">' + label + ' ' + (v < 0 ? '−' : '+') + Math.abs(v * 100).toFixed(1) + '%</span>';
+  // 진입가 대비 등락 한 칸: 위 작은 라벨, 아래 큰 숫자. 오르면 초록, 내리면 회색(상단 게이지와 같은 두 색).
+  // v가 문자열이면(분기 마지막 날 진입) 회색 글자로 그대로 적는다. 반올림해 0.0%면 부호 없이 회색('−0.0%' 방지).
+  function stat(label, v){
+    var r = typeof v === 'number' ? Math.round(v * 1000) / 10 : null;
+    var text = r == null ? v : (r < 0 ? '−' : r > 0 ? '+' : '') + Math.abs(r).toFixed(1) + '%';
+    return '<span class="vg-stat"><small>' + label + '</small><b class="vg-dialog-gap' + (r > 0 ? '' : ' is-over') + '">' + text + '</b></span>';
   }
   // 분기 막대를 누르면 '오늘의 발견'과 같은 대화상자에 그 분기의 종목을 보여 준다(대화상자는 index.html의 것을 같이 쓴다).
   function openQuarter(h){
     var dialog = document.getElementById('discovery-dialog');
     if (!dialog) return;
     var label = h.quarter.replace(/^(\d{4})Q(\d)$/, '$1년 $2분기');
-    // 일일 기록이 시작된 분기에만 시작일을 적는다(그 뒤 분기는 처음부터 매일 기록).
-    var startsHere = V.liveFrom && h.quarter === V.liveFrom.slice(0, 4) + 'Q' + (Math.floor((Number(V.liveFrom.slice(5, 7)) - 1) / 3) + 1);
     document.getElementById('discovery-title').textContent = label + ' 적정~저평가 이하' + (h.running ? ' (진행 중)' : '');
-    // 2026년 3분기까지는 월말 판정(재현), 그 뒤는 매일 판정(일일 기록) - 관측 빈도가 달라 막대끼리 그대로 비교되지 않는다.
-    // 범례는 설명 아래 한 줄. '오늘의 발견'이 같은 대화상자를 열 때 textContent로 덮어 저절로 사라진다.
-    document.getElementById('discovery-note').innerHTML = esc('그 분기에 한 번이라도 종합 판정이 적정~저평가 이하였던 종목 · '
-      + (h.daily ? '매일 판정 기준' + (startsHere ? '(' + V.liveFrom.replace(/-/g, '.') + ' 기록 시작부터)' : '') + ', 금융 등 시점 재현에 없던 종목 포함' : '월말 판정 기준(시점 재현)')
-      + ' · 진입가는 그 분기에 처음 그렇게 판정된 날의 종가 · 분기 말·현재 등락은 달력 분기 말·카드의 최신 종가라 노랑 기간 밖일 수 있음 · 가격 축은 종목마다 다름 · 추적 ' + h.total + '종목 중')
-      + '<span class="vg-legend"><span><i class="vg-key-act"></i>실제 종가 최저~최고(예상과 같은 기간, 진입 전 포함)</span><span><i class="vg-key-band"></i>당시 예상밴드(진입일 기준, 카드 백테스트)</span>'
-      + '<span><i class="vg-key-entry"></i>진입가</span><span><i class="vg-key-cur"></i>현재가</span></span>';
+    // 설명 문장 없이 범례 한 줄만(2026-10-13 사용자: 글자 정리). '오늘의 발견'이 같은 대화상자를 열 때 textContent로 덮어 저절로 사라진다.
+    document.getElementById('discovery-note').innerHTML = '<span class="vg-legend"><span><i class="vg-key-act"></i>실제 종가</span><span><i class="vg-key-band"></i>분기 예상밴드</span>'
+      + '<span><i class="vg-key-entry"></i>진입가</span><span><i class="vg-key-cur"></i>현재가</span><span class="vg-legend-note">등락은 진입가 대비</span></span>';
     document.getElementById('discovery-position').textContent = h.under + '개 종목';
     document.getElementById('discovery-grid').innerHTML = h.stocks.map(function(s){
       // 끝난 분기인데 분기 말 등락이 없으면 그 분기 마지막 날에 들어온 것이다.
-      var end = s.endChange == null ? (h.running ? '' : '<span class="vg-dialog-gap is-over">분기 말 진입</span>') : change('분기 말', s.endChange);
-      var parts = [end, change('현재', s.change)].filter(Boolean).join(' · ');
+      var end = h.running ? '' : stat('분기 말', s.endChange == null ? '진입' : s.endChange);
+      var now = s.change == null ? '' : stat('현재', s.change);
       return '<a class="discovery-card" href="cards/' + esc(s.ticker) + '_full_widget.html"><img src="logos/' + s.ticker.toLowerCase() + '.png" alt=""><span><strong>' + esc(s.ticker) + '</strong><small>' + esc(s.name) + '</small></span>'
-        + '<span class="discovery-quote"><strong class="vg-dialog-change">' + parts + '</strong><small>진입가 대비</small></span>'
+        + '<span class="discovery-quote vg-stats">' + end + now + '</span>'
         + bandInfo(s) + quarterBar(s) + '</a>';
     }).join('');
     dialog.showModal();
