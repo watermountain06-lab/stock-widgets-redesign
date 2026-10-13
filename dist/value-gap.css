@@ -32,9 +32,6 @@
 .vg-history button{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:0;min-width:0;padding:4px 0;border:0;border-radius:6px;background:transparent;font:inherit;font-size:9.5px;color:var(--text3);cursor:pointer}
 .vg-history button:hover:not(:disabled),.vg-history button:focus-visible{background:color-mix(in srgb,var(--vg-good) 10%,transparent)}
 .vg-history button:disabled{cursor:default}
-.vg-dialog-gap{color:#1f8a5b}
-:root[data-theme="dark"] .vg-dialog-gap{color:#4cc38a}
-.vg-dialog-gap.is-over,:root[data-theme="dark"] .vg-dialog-gap.is-over{color:var(--text2)}  /* 분기 팝업: 진입가보다 내림 - 상단 게이지와 같은 회색 */
 .vg-history .vg-bar{flex:none;width:70%;min-height:2px;border-radius:2px 2px 0 0;background:color-mix(in srgb,var(--vg-good) 55%,transparent)}
 .vg-history button b{font-size:10.5px;color:var(--text);margin-top:2px}
 /* 좁은 칸(약 800px 이하 화면, 모바일): 이름 아래에 막대 */
@@ -57,7 +54,7 @@
 .vg-q-range{position:absolute;top:0;bottom:0;box-sizing:border-box;border-radius:999px;background:var(--q-range);border:1px solid var(--q-range-line)}
 .vg-q-buy{position:absolute;top:-5px;bottom:-5px;width:2px;margin-left:-1px;background:var(--q-buy)}
 .vg-q-cur{position:absolute;top:50%;width:12px;height:12px;margin:-6px 0 0 -6px;border-radius:50%;background:var(--q-cur);border:2px solid var(--panel)}
-.vg-q span[class*="-label"]{position:absolute;line-height:14px;transform:translateX(-50%);white-space:nowrap;color:var(--text2)}
+.vg-q span[class*="-label"]{position:absolute;line-height:14px;transform:translateX(calc(-50% + var(--nudge,0px)));white-space:nowrap;color:var(--text2)}
 .vg-q-buy-label{top:6px}
 .vg-q-cur-label{top:6px;font-weight:700;color:var(--text)!important}.vg-q-cur-label.is-low{top:22px}
 .vg-q-end{position:absolute;top:58px;line-height:14px;white-space:nowrap;color:var(--text3)}
@@ -65,7 +62,6 @@
 .vg-q-high{transform:translateX(-100%)}.vg-q-high.is-out{transform:translateX(4px)}
 /* 범례: 분기 팝업 제목 아래 한 줄(좁으면 줄바꿈) */
 .vg-legend{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:11px;color:var(--text2)}
-.vg-legend>.vg-legend-note{color:var(--text3)}
 .vg-legend>span{display:inline-flex;align-items:center;gap:6px}
 .vg-legend i{display:inline-block;flex:none}
 .vg-key-act{width:18px;height:8px;border-radius:4px;background:#e2b12f;border:1px solid #a67f14}
@@ -76,7 +72,9 @@
 :root[data-theme="dark"] .vg-key-band{background:rgba(63,138,102,.4);border-color:#8cc4a9}
 :root[data-theme="dark"] .vg-key-entry{background:#d1d5db}
 :root[data-theme="dark"] .vg-key-cur{background:#f9fafb}
-/* 분기 팝업 카드 오른쪽: 분기 말·현재 두 칸(위 작은 라벨, 아래 큰 숫자) */
-.discovery-quote.vg-stats{display:flex;gap:16px}
-.vg-stat small{font-size:10px!important}
-.vg-stat b{display:block;font-size:16px;font-weight:700;line-height:1.2;font-variant-numeric:tabular-nums}
+/* 분기 팝업 카드 오른쪽: 분기 말·현재 두 줄(왼쪽 라벨, 오른쪽 숫자). 색은 줄마다 고정 - 분기 말은 예상밴드 초록, 현재는 본문색 */
+.discovery-quote.vg-stats{display:grid;grid-template-columns:auto auto;align-items:baseline;gap:2px 10px}
+.vg-stats small{font-size:10px!important;text-align:left}
+.vg-stats b{font-size:15px;font-weight:700;line-height:1.25;font-variant-numeric:tabular-nums}
+.vg-stat-end{color:#2f7553}:root[data-theme="dark"] .vg-stat-end{color:#8cc4a9}
+.vg-stat-now{color:var(--text)}

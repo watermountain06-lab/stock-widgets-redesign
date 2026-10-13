@@ -53,13 +53,13 @@
     var lo = Math.min.apply(null, vals) * 0.96, hi = Math.max.apply(null, vals) * 1.04;
     function x(v){ return ((v - lo) / (hi - lo) * 100).toFixed(1); }
     function lx(v){ return Math.max(14, Math.min(86, Number(x(v)))); }
-    var day = s.entryDate.slice(5).replace('-', '/');
+    var day = ymd(s.entryDate);
     // 진입가와 현재가 라벨이 겹칠 만큼 가까우면 현재가를 한 줄 아래로.
     // (좁은 화면은 openQuarter가 실제 글자 폭으로 한 번 더 잰다.)
     var curRow = s.current != null && Math.abs(lx(s.entryPrice) - lx(s.current)) < 34 ? ' is-low' : '';
     var out = '<div class="vg-q" aria-label="' + (b ? '당시 예상밴드 ' + money(b.low) + '~' + money(b.high) + ', 같은 기간 실제 ' : '분기 주가 ')
       + money(aLo) + '~' + money(aHi) + ', ' + day + ' 진입가 ' + money(s.entryPrice) + ', 현재가 ' + (s.current != null ? money(s.current) : '없음') + '">';
-    out += '<span class="vg-q-buy-label" style="left:' + lx(s.entryPrice) + '%">진입가 ' + day + ' ' + money(s.entryPrice) + '</span>';
+    out += '<span class="vg-q-buy-label" style="left:' + lx(s.entryPrice) + '%">진입가 ' + money(s.entryPrice) + ' (' + day + ')</span>';
     if (s.current != null) out += '<span class="vg-q-cur-label' + curRow + '" data-row="' + (curRow ? 'low' : 'top') + '" style="left:' + lx(s.current) + '%">현재가 ' + money(s.current) + '</span>';
     out += '<span class="vg-q-track">';
     if (b) out += '<span class="vg-q-band" style="left:' + x(b.low) + '%;width:' + (x(b.high) - x(b.low)).toFixed(1) + '%"></span>';
@@ -71,21 +71,22 @@
       + '<span class="vg-q-end vg-q-high" style="left:' + x(aHi) + '%">' + money(aHi) + '</span>';
     return out + '</div>';
   }
-  // 막대 위 한 줄: 진입일에 유효했던 예상밴드와 노랑을 잰 기간(진입일과 다른 해면 연도까지).
+  // 팝업 날짜는 모두 YY/MM/DD 한 형식(2026-10-13 사용자).
+  function ymd(v){ return v.slice(2).replace(/-/g, '/'); }
+  // 막대 위 한 줄: 진입일에 유효했던 예상밴드와 노랑을 잰 기간.
   function bandInfo(s){
-    var b = s.band, y = s.entryDate.slice(0, 4);
-    function d(v){ return v.slice(0, 4) === y ? v.slice(5).replace('-', '/') : v.slice(2).replace(/-/g, '.'); }
+    var b = s.band;
     if (!b) return '<span class="vg-q-info">예상밴드 없음</span>';
     // 날짜는 노랑을 실제로 잰 기간이다. 아직 새 체크포인트가 없는 밴드는 카드의 최신 종가 날짜까지 쟀고, 예상 자체는
     // 다음 실적 반영까지 유효하다(ACN은 10/01 실적 뒤에도 10-K를 기다려 열려 있다 - Codex·Fable).
-    return '<span class="vg-q-info"><b>예상 ' + money(b.low) + '~' + money(b.high) + '</b> · ' + d(b.from) + '~' + d(b.to) + '</span>';
+    return '<span class="vg-q-info"><b>예상 ' + money(b.low) + '~' + money(b.high) + '</b> (' + ymd(b.from) + '~' + ymd(b.to) + ')</span>';
   }
-  // 진입가 대비 등락 한 칸: 위 작은 라벨, 아래 큰 숫자. 오르면 초록, 내리면 회색(상단 게이지와 같은 두 색).
-  // v가 문자열이면(분기 마지막 날 진입) 회색 글자로 그대로 적는다. 반올림해 0.0%면 부호 없이 회색('−0.0%' 방지).
-  function stat(label, v){
-    var r = typeof v === 'number' ? Math.round(v * 1000) / 10 : null;
-    var text = r == null ? v : (r < 0 ? '−' : r > 0 ? '+' : '') + Math.abs(r).toFixed(1) + '%';
-    return '<span class="vg-stat"><small>' + label + '</small><b class="vg-dialog-gap' + (r > 0 ? '' : ' is-over') + '">' + text + '</b></span>';
+  // 진입가 대비 등락 한 줄: 왼쪽 라벨, 오른쪽 숫자. 색은 오르내림과 관계없이 줄마다 고정(분기 말 = 예상밴드 초록, 현재 = 본문색).
+  // v가 문자열이면(분기 마지막 날 진입) 그대로 적는다. 반올림해 0.0%면 부호 없이('−0.0%' 방지).
+  function stat(kind, label, v){
+    var a = typeof v === 'number' ? Math.abs(v * 100).toFixed(1) : null;
+    var text = a == null ? v : (a === '0.0' ? '' : v < 0 ? '−' : '+') + a + '%';
+    return '<small>' + label + '</small><b class="vg-stat-' + kind + '">' + text + '</b>';
   }
   // 분기 막대를 누르면 '오늘의 발견'과 같은 대화상자에 그 분기의 종목을 보여 준다(대화상자는 index.html의 것을 같이 쓴다).
   function openQuarter(h){
@@ -94,13 +95,13 @@
     var label = h.quarter.replace(/^(\d{4})Q(\d)$/, '$1년 $2분기');
     document.getElementById('discovery-title').textContent = label + ' 적정~저평가 이하' + (h.running ? ' (진행 중)' : '');
     // 설명 문장 없이 범례 한 줄만(2026-10-13 사용자: 글자 정리). '오늘의 발견'이 같은 대화상자를 열 때 textContent로 덮어 저절로 사라진다.
-    document.getElementById('discovery-note').innerHTML = '<span class="vg-legend"><span><i class="vg-key-act"></i>실제 종가</span><span><i class="vg-key-band"></i>분기 예상밴드</span>'
-      + '<span><i class="vg-key-entry"></i>진입가</span><span><i class="vg-key-cur"></i>현재가</span><span class="vg-legend-note">등락은 진입가 대비</span></span>';
+    document.getElementById('discovery-note').innerHTML = '<span class="vg-legend"><span><i class="vg-key-act"></i>실제 종가</span><span><i class="vg-key-band"></i>당시 예상 범위</span>'
+      + '<span><i class="vg-key-entry"></i>진입가</span><span><i class="vg-key-cur"></i>현재가</span></span>';
     document.getElementById('discovery-position').textContent = h.under + '개 종목';
     document.getElementById('discovery-grid').innerHTML = h.stocks.map(function(s){
       // 끝난 분기인데 분기 말 등락이 없으면 그 분기 마지막 날에 들어온 것이다.
-      var end = h.running ? '' : stat('분기 말', s.endChange == null ? '진입' : s.endChange);
-      var now = s.change == null ? '' : stat('현재', s.change);
+      var end = h.running ? '' : stat('end', '분기 말', s.endChange == null ? '진입' : s.endChange);
+      var now = s.change == null ? '' : stat('now', '현재', s.change);
       return '<a class="discovery-card" href="cards/' + esc(s.ticker) + '_full_widget.html"><img src="logos/' + s.ticker.toLowerCase() + '.png" alt=""><span><strong>' + esc(s.ticker) + '</strong><small>' + esc(s.name) + '</small></span>'
         + '<span class="discovery-quote vg-stats">' + end + now + '</span>'
         + bandInfo(s) + quarterBar(s) + '</a>';
@@ -116,6 +117,15 @@
       var bl = q.querySelector('.vg-q-buy-label'), cl = q.querySelector('.vg-q-cur-label');
       if (cl) cl.classList.toggle('is-low', cl.dataset.row === 'low');
       q.querySelectorAll('.vg-q-end').forEach(function(e){ e.classList.remove('is-out'); });
+      // 라벨이 칸 밖으로 나가면(좁은 화면, 막대 끝 근처) 안쪽으로 민다.
+      var qb = q.getBoundingClientRect();
+      [bl, cl].forEach(function(l){
+        if (!l) return;
+        l.style.removeProperty('--nudge');
+        var r = l.getBoundingClientRect();
+        if (r.left < qb.left) l.style.setProperty('--nudge', (qb.left - r.left) + 'px');
+        else if (r.right > qb.right) l.style.setProperty('--nudge', (qb.right - r.right) + 'px');
+      });
       if (bl && cl && !cl.classList.contains('is-low')) {
         var r1 = bl.getBoundingClientRect(), r2 = cl.getBoundingClientRect();
         if (r1.right + 6 > r2.left && r2.right + 6 > r1.left) cl.classList.add('is-low');
