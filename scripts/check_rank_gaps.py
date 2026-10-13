@@ -40,7 +40,7 @@ from pathlib import Path
 HERE = Path(__file__).resolve().parent
 DEFAULT_DATA = Path.home() / "Workspace/stock-widgets-preview/site_data/stocks.json"
 CACHE = HERE / "rank_gap_filer_cache.json"
-LIST_URL = "https://stockanalysis.com/list/biggest-companies/"
+LIST_URL = "https://stockanalysis.com/list/sp-500-stocks/"
 SEC_UA = {"User-Agent": "stock-widgets research gptjhss@gmail.com"}
 BROWSER_UA = {"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
                             "AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0 Safari/537.36"}
@@ -54,16 +54,18 @@ NOT_US_EXCHANGE = {"2222.SR", "005930.KS"}
 
 
 def listing():
+    """S&P500 구성 종목을 시총 순으로(페이지에 내장된 데이터 — 503종목 전부). 카드 순위의 기준은 S&P500 시총 순이다.
+
+    2026-10-13: 예전 biggest-companies 표는 전 세계 상위 100개만 담고(100위 $188B) 표 열 배치도 바뀌어,
+    첫 줄의 시총을 못 읽고 바로 멈추며 "no gaps"를 냈다(VLO 93위·SPGI 97위가 빠져 있었다).
+    """
     req = urllib.request.Request(LIST_URL, headers=BROWSER_UA)
     html = urllib.request.urlopen(req, timeout=60).read().decode("utf-8", "replace")
-    rows = []
-    for r in re.findall(r"<tr[^>]*>(.*?)</tr>", html, re.S):
-        c = [re.sub(r"<[^>]+>", "", x).strip() for x in re.findall(r"<td[^>]*>(.*?)</td>", r, re.S)]
-        if len(c) >= 5 and c[0].isdigit():
-            rows.append({"rank": int(c[0]), "ticker": c[1], "name": c[2], "cap": c[3], "price": c[4]})
-    if not rows:
-        sys.exit("could not parse the ranking page - its markup changed")
-    return rows
+    rows = [{"rank": int(n), "ticker": tk, "name": nm, "cap": f"{float(mc) / 1e9:.2f}B", "price": px}
+            for n, tk, nm, mc, px in re.findall(r'\{no:(\d+),s:"([^"]+)",n:"([^"]*)",marketCap:([0-9.e+]+),[^}]*?price:([0-9.]+)', html)]
+    if len(rows) < 400:
+        sys.exit(f"could not parse the S&P500 list - got {len(rows)} rows (markup changed?)")
+    return sorted(rows, key=lambda r: r["rank"])
 
 
 def to_billions(s):
