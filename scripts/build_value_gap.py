@@ -13,9 +13,10 @@ statistics skeptic, Codex, Fable):
   - A quarterly count of cards whose verdict was 적정~저평가 or cheaper at least once in the
     quarter (2026-10-13; was cards under their 기준가), so a day with none reads as the usual
     state rather than as a broken page. Replay month-ends through 2026Q3, daily verdicts after.
+    Each card in a quarter is shown against its 진입가 (first cheap close in the quarter).
 
 Sources (read only): preview v2 cards through v2/research/extract_card_verdicts.js, the
-{T}_DCF block of each card for `hard`, v2/{T}_dcf_track.json, v2/research/verdict_replay_panel.json
+{T}_DCF block of each card for `hard`, v2/research/verdict_replay_panel.json
 and the git history of v2/daily_status.json. Names come from this
 repo's stock-data.js, so run build_home.py first.
 
@@ -27,6 +28,7 @@ import re
 import subprocess
 import sys
 from collections import defaultdict
+from datetime import date, timedelta
 from pathlib import Path
 
 REPO = Path(__file__).resolve().parents[1]
@@ -59,25 +61,26 @@ def dcf_hard(t):
 QUARTER_END = {1: "03-31", 2: "06-30", 3: "09-30", 4: "12-31"}
 
 
-def quarter_range(t, quarter, cache={}):
-    """Lowest low and highest high over the calendar quarter, from the same daily series
-    dcf_track priced its points with (build_multiple_history.history_daily - for SKHY the
-    KRX shares converted to one ADR in dollars, not the ADR itself). An unfinished quarter
-    runs to the last bar."""
+def quarter_bars(t, quarter, as_of, cache={}):
+    """Daily bars [date, open, high, low, close] over the calendar quarter, the cards' own
+    traded closes (build_multiple_history.load_daily). Not history_daily: for SKHY that swaps
+    all but the last bar for KRX shares converted to dollars, which sit ~20% under the ADR, so
+    an entry price from it against today's ADR close read +27% in four sessions. An unfinished
+    quarter runs to the last bar on or before as_of (the page's 종가 date)."""
     if t not in cache:
         if str(PREVIEW_V2) not in sys.path:
             sys.path.insert(0, str(PREVIEW_V2))
         import build_multiple_history as bmh
-        cache[t] = bmh.history_daily(t, bmh.load_daily(t))
+        cache[t] = sorted(bmh.load_daily(t))
     y, n = quarter.split("Q")
     lo, hi = f"{y}-{(int(n) - 1) * 3 + 1:02d}-01", f"{y}-{QUARTER_END[int(n)]}"
-    bars = [b for b in cache[t] if lo <= b[0] <= hi]
-    if not bars:
-        return None, None
-    return round(min(b[3] for b in bars), 2), round(max(b[2] for b in bars), 2)
+    return [b for b in cache[t] if lo <= b[0] <= min(hi, as_of)]
 
 
 REPLAY_FIRST = "2024-07"  # 2024Q2 has only its June month-end in the replay panel
+# User decision 2026-10-13: replay through 2026Q3, the daily record from 2026Q4 - fixed here, so
+# extending the replay panel later cannot quietly swap a daily quarter for month-ends (Codex).
+REPLAY_LAST, LIVE_FIRST = "2026Q3", "2026Q4"
 
 
 def replay_verdicts(cards):
@@ -98,14 +101,16 @@ def replay_verdicts(cards):
         vr.assign(rows)
     out = defaultdict(list)
     for r in rows:
-        if r["t"] in cards and r["m"] >= REPLAY_FIRST and r.get("g_V0"):
-            out[(quarter_of(r["d"]), r["t"])].append((r["d"], r["g_V0"], r))
+        if r["t"] in cards and r["m"] >= REPLAY_FIRST and quarter_of(r["d"]) <= REPLAY_LAST and r.get("g_V0"):
+            out[(quarter_of(r["d"]), r["t"])].append((r["d"], r["g_V0"]))
     return out
 
 
-def live_verdicts(as_of, first_quarter):
+def live_verdicts(as_of, first_quarter, cards):
     """{(quarter, ticker): [(session, verdict)]} from the daily_status history (the record the
-    Tracking tab uses), for quarters after the replay panel ends."""
+    Tracking tab uses), for quarters after the replay panel ends, and its first session. The
+    record starts 2026-10-06, so 2026Q4's entries can be no earlier than that. Only today's
+    cards, as in the replay."""
     sys.path.insert(0, str(REPO / "scripts"))
     from build_tracking import sessions
     state, _ = sessions(as_of)
@@ -113,61 +118,63 @@ def live_verdicts(as_of, first_quarter):
     for s, v in state.items():
         if quarter_of(s) >= first_quarter:
             for t, g in v.items():
-                out[(quarter_of(s), t)].append((s, g, None))
-    return out
+                if t in cards:
+                    out[(quarter_of(s), t)].append((s, g))
+    return out, min(state)
 
 
 def quarter_of(day):
     return f"{day[:4]}Q{(int(day[5:7]) - 1) // 3 + 1}"
 
 
-def history(name, current, cards, as_of):
+def history(name, current, as_of):
     """Per calendar quarter: cards whose v2 verdict was 적정~저평가 or cheaper at least once in
     that quarter (2026-10-13 user decision - the count used to be price <= 0.9 x DCF base, a
     single judge the user does not trust on its own).
 
     Through 2026Q3 the verdicts are the replay's month-ends; from 2026Q4 the cards' own daily
-    verdicts. Each listed card still shows where its price sat against the 기준가 at its last
-    dcf_track point in the quarter, so the popup reads the same as before - a card can now be
-    above its 기준가 (positive gap).
+    verdicts. Each listed card shows its 진입가 - the close on the first month-end (replay) or
+    session (daily) in that quarter with a cheap verdict - and how the quarter's last close
+    (finished quarters only) and today's close compare with it (2026-10-13 user decisions).
     """
-    seen = replay_verdicts(cards)
-    last_replay = max(q for q, _ in seen)
-    seen.update(live_verdicts(as_of, f"{int(last_replay[:4]) + (last_replay[-1] == '4')}Q{int(last_replay[-1]) % 4 + 1}"))
-    track = {}  # (quarter, ticker) -> last dcf_track point
-    for f in sorted(PREVIEW_V2.glob("*_dcf_track.json")):
-        d = json.loads(f.read_text(encoding="utf-8"))
-        for p in d["points"]:
-            if p.get("base") is None or p.get("price") is None or p["base"] <= 0:
-                continue
-            key = (quarter_of(p["date"]), d["ticker"])
-            if key not in track or p["date"] > track[key]["date"]:
-                track[key] = p
+    seen = replay_verdicts(set(current))
+    live, live_from = live_verdicts(as_of, LIVE_FIRST, set(current))
+    seen.update(live)
+    running = quarter_of(as_of)
     q = defaultdict(lambda: {"total": 0, "stocks": []})
     for (quarter, t), marks in sorted(seen.items()):
         q[quarter]["total"] += 1
-        hits = [m for m in marks if m[1] in CHEAP]
+        hits = sorted(m[:2] for m in marks if m[1] in CHEAP)
         if not hits:
             continue
-        p = track.get((quarter, t))
-        if p is None:  # no dcf_track point that quarter: the replay row of the last cheap month-end,
-            r = max(hits)[2]  # or for the running quarter the card as it stands
-            c = cards.get(t, {}) if r is None else {"date": r["d"], "price": r.get("px_then", r["px"]), "base": r.get("base")}
-            p = c.get("base") and c["base"] > 0 and c.get("price") and c
-            if not p:
-                raise SystemExit(f"{t} {quarter}: cheap verdict but no 기준가 to show")
-        buy = round(p["base"] * BUY_FACTOR, 2)
-        low, high = quarter_range(t, quarter)
-        q[quarter]["stocks"].append({"ticker": t, "name": name.get(t, t), "date": p["date"],
-                                     "verdict": max(hits)[1],
-                                     "price": round(p["price"], 2), "buyPrice": buy,
-                                     "gap": round(p["price"] / buy - 1, 4),
-                                     "low": low, "high": high, "current": current.get(t)})
+        day, verdict = hits[0]
+        bars = quarter_bars(t, quarter, as_of)
+        at = [b for b in bars if b[0] == day]
+        if not at:
+            raise SystemExit(f"{t} {quarter}: no daily bar on its entry {day}")
+        entry = round(at[0][4], 2)
+        # 분기 말 only for a finished quarter whose last bar is its last week (a gap would read as
+        # the quarter's end), and not when the entry is that bar - the change would be 0 by construction.
+        end = None
+        if quarter < running:
+            y, n = quarter.split("Q")
+            if bars[-1][0] < (date.fromisoformat(f"{y}-{QUARTER_END[int(n)]}") - timedelta(days=7)).isoformat():
+                raise SystemExit(f"{t} {quarter}: daily bars stop at {bars[-1][0]}, before the quarter's last week")
+            if bars[-1][0] > day:
+                end = round(bars[-1][4], 2)
+        cur = current.get(t)
+        q[quarter]["stocks"].append({"ticker": t, "name": name.get(t, t), "verdict": verdict,
+                                     "entryDate": day, "entryPrice": entry,
+                                     "endPrice": end, "endChange": round(end / entry - 1, 4) if end else None,
+                                     "current": cur, "change": round(cur / entry - 1, 4) if cur else None,
+                                     "low": round(min(b[3] for b in bars), 2),
+                                     "high": round(max(b[2] for b in bars), 2)})
     out = []
     for k, v in sorted(q.items()):
-        v["stocks"].sort(key=lambda s: s["gap"])
-        out.append({"quarter": k, "under": len(v["stocks"]), "total": v["total"], "stocks": v["stocks"]})
-    return out
+        v["stocks"].sort(key=lambda s: (s["entryDate"], s["ticker"]))
+        out.append({"quarter": k, "under": len(v["stocks"]), "total": v["total"],
+                    "running": k == running, "daily": k >= LIVE_FIRST, "stocks": v["stocks"]})
+    return out, live_from
 
 
 def build():
@@ -195,9 +202,9 @@ def build():
         })
     rows.sort(key=lambda r: r["gap"])
     data = {"asOf": max(dates) if dates else None, "buyFactor": BUY_FACTOR,
-            "stocks": rows,
-            "history": history(name, {k: v.get("price") for k, v in verdicts.items()}, verdicts,
-                               re.search(r'"asOf":\s*"([\d-]+)"', (REPO / "stock-data.js").read_text(encoding="utf-8"))[1])}
+            "stocks": rows}
+    as_of = re.search(r'"asOf":\s*"([\d-]+)"', (REPO / "stock-data.js").read_text(encoding="utf-8"))[1]
+    data["history"], data["liveFrom"] = history(name, {k: v.get("price") for k, v in verdicts.items()}, as_of)
     return ("// Generated by scripts/build_value_gap.py from preview v2 cards. Do not edit.\n"
             "window.ValueGap=" + json.dumps(data, ensure_ascii=False) + ";\n")
 

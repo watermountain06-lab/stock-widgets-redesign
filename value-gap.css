@@ -34,7 +34,7 @@
 .vg-history button:disabled{cursor:default}
 .vg-dialog-gap{color:#1f8a5b}
 :root[data-theme="dark"] .vg-dialog-gap{color:#4cc38a}
-.vg-dialog-gap.is-over,:root[data-theme="dark"] .vg-dialog-gap.is-over{color:var(--text2)}  /* 판정으로 들어왔지만 기준가보다 비쌈 - 상단 게이지와 같은 회색 */
+.vg-dialog-gap.is-over,:root[data-theme="dark"] .vg-dialog-gap.is-over{color:var(--text2)}  /* 분기 팝업: 진입가보다 내림 - 상단 게이지와 같은 회색 */
 .vg-history .vg-bar{flex:none;width:70%;min-height:2px;border-radius:2px 2px 0 0;background:color-mix(in srgb,var(--vg-good) 55%,transparent)}
 .vg-history button b{font-size:10.5px;color:var(--text);margin-top:2px}
 /* 좁은 칸(약 800px 이하 화면, 모바일): 이름 아래에 막대 */
@@ -59,4 +59,4 @@
 .vg-q-low{transform:none}.vg-q-low.is-out{transform:translateX(calc(-100% - 4px))}
 .vg-q-high{transform:translateX(-100%)}.vg-q-high.is-out{transform:translateX(4px)}
 .vg-q-cur-label{top:56px;font-weight:700;color:var(--text)!important}
-.discovery-quote .vg-dialog-gap+small{font-size:10px}
+.discovery-quote .vg-dialog-change+small{font-size:10px}

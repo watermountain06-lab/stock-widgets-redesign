@@ -35,7 +35,7 @@
   }
   var list = V.stocks.length
     ? '<div class="vg-viewport"><ul class="vg-list">' + V.stocks.map(row).join('') + '</ul></div>'
-    : '<p class="vg-empty">오늘은 v2 판정이 적정~저평가 이상인 종목이 없습니다.</p>';
+    : '<p class="vg-empty">오늘은 v2 판정이 적정~저평가 이하인 종목이 없습니다.</p>';
   // 관측 종목이 가장 많은 분기의 절반도 안 되는 분기(추적 시작 무렵)는 분모가 달라 뺀다.
   var fullest = Math.max.apply(null, V.history.map(function(h){ return h.total; }).concat([1]));
   var shown = V.history.filter(function(h){ return h.total >= fullest / 2; });
@@ -44,18 +44,19 @@
     return '<li><button type="button" data-vg-quarter="' + i + '"' + (h.under ? '' : ' disabled') + ' aria-haspopup="dialog" aria-label="' + h.quarter + ' 적정~저평가 이하 ' + h.under + '종목 (' + h.total + '종목 중)">'
       + '<span class="vg-bar" style="height:' + Math.round(h.under / max * 24) + 'px"></span><b>' + h.under + '</b><small>' + h.quarter.replace(/^20/, '').replace('Q', '.Q') + '</small></button></li>';
   }).join('');
-  // 팝업 카드의 가로 막대: 그 분기 주가 범위(띠, 양 끝 아래에 최저·최고가), 기준가(세로선, 위 라벨),
-  // 현재가(점, 아래 둘째 줄 라벨). 값이 없으면(분기 일봉 없음 등) 그 요소만 뺀다.
+  // 팝업 카드의 가로 막대: 그 분기 주가 범위(띠, 양 끝 아래에 최저·최고가), 진입가(세로선, 위 라벨 - 그 분기에
+  // 처음 적정~저평가 이하로 판정된 날의 종가), 현재가(점, 아래 둘째 줄 라벨). 값이 없으면 그 요소만 뺀다.
   function quarterBar(s){
-    var vals = [s.low, s.high, s.buyPrice, s.current].filter(function(v){ return typeof v === 'number'; });
+    var vals = [s.low, s.high, s.entryPrice, s.current].filter(function(v){ return typeof v === 'number'; });
     var lo = Math.min.apply(null, vals) * 0.96, hi = Math.max.apply(null, vals) * 1.04;
     function x(v){ return ((v - lo) / (hi - lo) * 100).toFixed(1); }
     function lx(v){ return Math.max(12, Math.min(88, Number(x(v)))); }
-    var out = '<div class="vg-q" aria-label="분기 주가 ' + (s.low != null ? money(s.low) + '~' + money(s.high) : '없음') + ', 기준가 ' + money(s.buyPrice) + ', 현재가 ' + (s.current != null ? money(s.current) : '없음') + '">';
-    out += '<span class="vg-q-buy-label" style="left:' + lx(s.buyPrice) + '%">기준가 ' + money(s.buyPrice) + '</span>';
+    var day = s.entryDate.slice(5).replace('-', '/');
+    var out = '<div class="vg-q" aria-label="분기 주가 ' + (s.low != null ? money(s.low) + '~' + money(s.high) : '없음') + ', ' + day + ' 진입가 ' + money(s.entryPrice) + ', 현재가 ' + (s.current != null ? money(s.current) : '없음') + '">';
+    out += '<span class="vg-q-buy-label" style="left:' + lx(s.entryPrice) + '%">진입가 ' + day + ' ' + money(s.entryPrice) + '</span>';
     out += '<span class="vg-q-track">';
     if (s.low != null) out += '<span class="vg-q-range" style="left:' + x(s.low) + '%;width:' + (x(s.high) - x(s.low)).toFixed(1) + '%"></span>';
-    out += '<span class="vg-q-buy" style="left:' + x(s.buyPrice) + '%"></span>';
+    out += '<span class="vg-q-buy" style="left:' + x(s.entryPrice) + '%"></span>';
     if (s.current != null) out += '<span class="vg-q-cur" style="left:' + x(s.current) + '%"></span>';
     out += '</span>';
     if (s.low != null) out += '<span class="vg-q-end vg-q-low" style="left:' + x(s.low) + '%">' + money(s.low) + '</span>'
@@ -63,17 +64,30 @@
     if (s.current != null) out += '<span class="vg-q-cur-label" style="left:' + lx(s.current) + '%">현재가 ' + money(s.current) + '</span>';
     return out + '</div>';
   }
+  // 진입가 대비 등락: 오르면 초록, 내리면 회색(상단 게이지와 같은 두 색).
+  function change(label, v){
+    if (v == null) return '';
+    return '<span class="vg-dialog-gap' + (v < 0 ? ' is-over' : '') + '">' + label + ' ' + (v < 0 ? '−' : '+') + Math.abs(v * 100).toFixed(1) + '%</span>';
+  }
   // 분기 막대를 누르면 '오늘의 발견'과 같은 대화상자에 그 분기의 종목을 보여 준다(대화상자는 index.html의 것을 같이 쓴다).
   function openQuarter(h){
     var dialog = document.getElementById('discovery-dialog');
     if (!dialog) return;
     var label = h.quarter.replace(/^(\d{4})Q(\d)$/, '$1년 $2분기');
-    document.getElementById('discovery-title').textContent = label + ' 적정~저평가 이하';
-    document.getElementById('discovery-note').textContent = '그 분기에 한 번이라도 종합 판정이 적정~저평가 이하였던 종목 · 기준가는 그 분기 마지막 공시 기준 · 추적 ' + h.total + '종목 중';
+    // 일일 기록이 시작된 분기에만 시작일을 적는다(그 뒤 분기는 처음부터 매일 기록).
+    var startsHere = V.liveFrom && h.quarter === V.liveFrom.slice(0, 4) + 'Q' + (Math.floor((Number(V.liveFrom.slice(5, 7)) - 1) / 3) + 1);
+    document.getElementById('discovery-title').textContent = label + ' 적정~저평가 이하' + (h.running ? ' (진행 중)' : '');
+    // 2026년 3분기까지는 월말 판정(재현), 그 뒤는 매일 판정(일일 기록) - 관측 빈도가 달라 막대끼리 그대로 비교되지 않는다.
+    document.getElementById('discovery-note').textContent = '그 분기에 한 번이라도 종합 판정이 적정~저평가 이하였던 종목 · '
+      + (h.daily ? '매일 판정 기준' + (startsHere ? '(' + V.liveFrom.replace(/-/g, '.') + ' 기록 시작부터)' : '') + ', 금융 등 시점 재현에 없던 종목 포함' : '월말 판정 기준(시점 재현)')
+      + ' · 진입가는 그 분기에 처음 그렇게 판정된 날의 종가 · 추적 ' + h.total + '종목 중';
     document.getElementById('discovery-position').textContent = h.under + '개 종목';
     document.getElementById('discovery-grid').innerHTML = h.stocks.map(function(s){
+      // 끝난 분기인데 분기 말 등락이 없으면 그 분기 마지막 날에 들어온 것이다.
+      var end = s.endChange == null ? (h.running ? '' : '<span class="vg-dialog-gap is-over">분기 말 진입</span>') : change('분기 말', s.endChange);
+      var parts = [end, change('현재', s.change)].filter(Boolean).join(' · ');
       return '<a class="discovery-card" href="cards/' + esc(s.ticker) + '_full_widget.html"><img src="logos/' + s.ticker.toLowerCase() + '.png" alt=""><span><strong>' + esc(s.ticker) + '</strong><small>' + esc(s.name) + '</small></span>'
-        + '<span class="discovery-quote"><strong class="vg-dialog-gap' + (s.gap > 0 ? ' is-over' : '') + '">' + (s.gap <= 0 ? '−' : '+') + Math.abs(s.gap * 100).toFixed(1) + '%</strong><small>당시 기준가 대비</small></span>'
+        + '<span class="discovery-quote"><strong class="vg-dialog-change">' + parts + '</strong><small>진입가 대비</small></span>'
         + quarterBar(s) + '</a>';
     }).join('');
     dialog.showModal();
