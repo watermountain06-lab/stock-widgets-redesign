@@ -46,17 +46,33 @@
 }
 /* 한 열로 쌓이는 화면(700px 이하)에서는 '오늘의 발견' 메뉴를 먼저 보이고 이 칸은 그 아래로 */
 @media(max-width:700px){.home-feature .value-gap{order:2;margin-top:8px}}
-/* 분기 팝업 카드의 가로 막대(대화상자는 .value-gap 밖이라 색을 따로 둔다) */
-.vg-q{--q-range:#8cc4a9;--q-buy:#5b5d6b;--q-cur:#1d1d27;position:relative;flex-basis:100%;height:72px;margin-top:4px;border-top:1px solid var(--border2);font-size:10.5px}
-:root[data-theme="dark"] .vg-q{--q-range:#3f8a66;--q-buy:#a5a9bd;--q-cur:#ececf5}
-.vg-q-track{position:absolute;left:0;right:0;top:26px;height:8px;border-radius:999px;background:color-mix(in srgb,var(--text3) 20%,transparent)}
-.vg-q-range{position:absolute;top:0;bottom:0;border-radius:999px;background:var(--q-range)}
-.vg-q-buy{position:absolute;top:-6px;bottom:-6px;width:2px;margin-left:-1px;background:var(--q-buy)}
+/* 분기 팝업 카드의 가로 막대(대화상자는 .value-gap 밖이라 색을 따로 둔다). 2026-10-13 시안: 뒤 예상밴드(반투명 초록, 점선),
+   앞 실제(노랑 앰버 - 카드의 '주의' 금색 #F0C040과 구분), 진입가 선이 두 띠를 관통 (Fable 색안) */
+.vg-q{--q-range:#e2b12f;--q-range-line:#a67f14;--q-band:rgba(140,196,169,.35);--q-band-line:#3f8a66;--q-band-text:#2f7553;--q-buy:#374151;--q-cur:#111827;position:relative;flex-basis:100%;height:86px;margin-top:2px;border-top:1px solid var(--border2);font-size:10.5px}
+:root[data-theme="dark"] .vg-q,:root[data-theme="dark"] .vg-q-info{--q-range:#e3b548;--q-range-line:#e3b548;--q-band:rgba(63,138,102,.4);--q-band-line:#8cc4a9;--q-band-text:#8cc4a9;--q-buy:#d1d5db;--q-cur:#f9fafb}
+.vg-q-info{--q-band-text:#2f7553;flex-basis:100%;font-size:11px;color:var(--text3)}
+.vg-q-info b{font-weight:600;color:var(--q-band-text)}
+.vg-q-track{position:absolute;left:0;right:0;top:43px;height:8px;border-radius:999px;background:color-mix(in srgb,var(--text3) 18%,transparent)}
+.vg-q-band{position:absolute;top:-3px;height:14px;box-sizing:border-box;border-radius:4px;background:var(--q-band);border:1px dashed var(--q-band-line)}
+.vg-q-range{position:absolute;top:0;bottom:0;box-sizing:border-box;border-radius:999px;background:var(--q-range);border:1px solid var(--q-range-line)}
+.vg-q-buy{position:absolute;top:-5px;bottom:-5px;width:2px;margin-left:-1px;background:var(--q-buy)}
 .vg-q-cur{position:absolute;top:50%;width:12px;height:12px;margin:-6px 0 0 -6px;border-radius:50%;background:var(--q-cur);border:2px solid var(--panel)}
-.vg-q span[class$="-label"]{position:absolute;line-height:14px;transform:translateX(-50%);white-space:nowrap;color:var(--text2)}
+.vg-q span[class*="-label"]{position:absolute;line-height:14px;transform:translateX(-50%);white-space:nowrap;color:var(--text2)}
 .vg-q-buy-label{top:6px}
-.vg-q-end{position:absolute;top:40px;line-height:14px;white-space:nowrap;color:var(--text3)}
+.vg-q-cur-label{top:6px;font-weight:700;color:var(--text)!important}.vg-q-cur-label.is-low{top:22px}
+.vg-q-end{position:absolute;top:58px;line-height:14px;white-space:nowrap;color:var(--text3)}
 .vg-q-low{transform:none}.vg-q-low.is-out{transform:translateX(calc(-100% - 4px))}
 .vg-q-high{transform:translateX(-100%)}.vg-q-high.is-out{transform:translateX(4px)}
-.vg-q-cur-label{top:56px;font-weight:700;color:var(--text)!important}
+/* 범례: 분기 팝업 설명 아래 한 줄(좁으면 줄바꿈) */
+.vg-legend{display:flex;flex-wrap:wrap;gap:4px 14px;margin-top:8px;font-size:11px;color:var(--text2)}
+.vg-legend>span{display:inline-flex;align-items:center;gap:6px}
+.vg-legend i{display:inline-block;flex:none}
+.vg-key-act{width:18px;height:8px;border-radius:4px;background:#e2b12f;border:1px solid #a67f14}
+.vg-key-band{width:18px;height:12px;border-radius:4px;background:rgba(140,196,169,.35);border:1px dashed #3f8a66}
+.vg-key-entry{width:2px;height:14px;background:#374151}
+.vg-key-cur{width:10px;height:10px;border-radius:50%;background:#111827}
+:root[data-theme="dark"] .vg-key-act{background:#e3b548;border-color:#e3b548}
+:root[data-theme="dark"] .vg-key-band{background:rgba(63,138,102,.4);border-color:#8cc4a9}
+:root[data-theme="dark"] .vg-key-entry{background:#d1d5db}
+:root[data-theme="dark"] .vg-key-cur{background:#f9fafb}
 .discovery-quote .vg-dialog-change+small{font-size:10px}

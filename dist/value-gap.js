@@ -44,25 +44,41 @@
     return '<li><button type="button" data-vg-quarter="' + i + '"' + (h.under ? '' : ' disabled') + ' aria-haspopup="dialog" aria-label="' + h.quarter + ' 적정~저평가 이하 ' + h.under + '종목 (' + h.total + '종목 중)">'
       + '<span class="vg-bar" style="height:' + Math.round(h.under / max * 24) + 'px"></span><b>' + h.under + '</b><small>' + h.quarter.replace(/^20/, '').replace('Q', '.Q') + '</small></button></li>';
   }).join('');
-  // 팝업 카드의 가로 막대: 그 분기 주가 범위(띠, 양 끝 아래에 최저·최고가), 진입가(세로선, 위 라벨 - 그 분기에
-  // 처음 적정~저평가 이하로 판정된 날의 종가), 현재가(점, 아래 둘째 줄 라벨). 값이 없으면 그 요소만 뺀다.
+  // 팝업 카드의 가로 막대(2026-10-13 시안): 뒤에 진입일에 유효했던 카드 예상밴드(반투명 초록, 점선), 앞에 그 밴드와
+  // 같은 기간의 실제 최저~최고(노랑) - 밴드가 없는 카드는 노랑만, 그 분기 범위로. 진입가는 두 띠를 관통하는 세로선,
+  // 현재가는 점. 진입가·현재가 라벨은 위, 실제 양 끝은 아래. 축은 카드마다 다르다(모든 값 + 4% 여백).
   function quarterBar(s){
-    var vals = [s.low, s.high, s.entryPrice, s.current].filter(function(v){ return typeof v === 'number'; });
+    var b = s.band, aLo = b ? b.actualLow : s.low, aHi = b ? b.actualHigh : s.high;
+    var vals = [aLo, aHi, s.entryPrice, s.current].concat(b ? [b.low, b.high] : []).filter(function(v){ return typeof v === 'number'; });
     var lo = Math.min.apply(null, vals) * 0.96, hi = Math.max.apply(null, vals) * 1.04;
     function x(v){ return ((v - lo) / (hi - lo) * 100).toFixed(1); }
-    function lx(v){ return Math.max(12, Math.min(88, Number(x(v)))); }
+    function lx(v){ return Math.max(14, Math.min(86, Number(x(v)))); }
     var day = s.entryDate.slice(5).replace('-', '/');
-    var out = '<div class="vg-q" aria-label="분기 주가 ' + (s.low != null ? money(s.low) + '~' + money(s.high) : '없음') + ', ' + day + ' 진입가 ' + money(s.entryPrice) + ', 현재가 ' + (s.current != null ? money(s.current) : '없음') + '">';
+    // 진입가와 현재가 라벨이 겹칠 만큼 가까우면 현재가를 한 줄 아래로.
+    // (좁은 화면은 openQuarter가 실제 글자 폭으로 한 번 더 잰다.)
+    var curRow = s.current != null && Math.abs(lx(s.entryPrice) - lx(s.current)) < 34 ? ' is-low' : '';
+    var out = '<div class="vg-q" aria-label="' + (b ? '당시 예상밴드 ' + money(b.low) + '~' + money(b.high) + ', 같은 기간 실제 ' : '분기 주가 ')
+      + money(aLo) + '~' + money(aHi) + ', ' + day + ' 진입가 ' + money(s.entryPrice) + ', 현재가 ' + (s.current != null ? money(s.current) : '없음') + '">';
     out += '<span class="vg-q-buy-label" style="left:' + lx(s.entryPrice) + '%">진입가 ' + day + ' ' + money(s.entryPrice) + '</span>';
+    if (s.current != null) out += '<span class="vg-q-cur-label' + curRow + '" data-row="' + (curRow ? 'low' : 'top') + '" style="left:' + lx(s.current) + '%">현재가 ' + money(s.current) + '</span>';
     out += '<span class="vg-q-track">';
-    if (s.low != null) out += '<span class="vg-q-range" style="left:' + x(s.low) + '%;width:' + (x(s.high) - x(s.low)).toFixed(1) + '%"></span>';
+    if (b) out += '<span class="vg-q-band" style="left:' + x(b.low) + '%;width:' + (x(b.high) - x(b.low)).toFixed(1) + '%"></span>';
+    out += '<span class="vg-q-range" style="left:' + x(aLo) + '%;width:' + (x(aHi) - x(aLo)).toFixed(1) + '%"></span>';
     out += '<span class="vg-q-buy" style="left:' + x(s.entryPrice) + '%"></span>';
     if (s.current != null) out += '<span class="vg-q-cur" style="left:' + x(s.current) + '%"></span>';
     out += '</span>';
-    if (s.low != null) out += '<span class="vg-q-end vg-q-low" style="left:' + x(s.low) + '%">' + money(s.low) + '</span>'
-      + '<span class="vg-q-end vg-q-high" style="left:' + x(s.high) + '%">' + money(s.high) + '</span>';
-    if (s.current != null) out += '<span class="vg-q-cur-label" style="left:' + lx(s.current) + '%">현재가 ' + money(s.current) + '</span>';
+    out += '<span class="vg-q-end vg-q-low" style="left:' + x(aLo) + '%">' + money(aLo) + '</span>'
+      + '<span class="vg-q-end vg-q-high" style="left:' + x(aHi) + '%">' + money(aHi) + '</span>';
     return out + '</div>';
+  }
+  // 막대 위 한 줄: 당시 예상밴드와 그 기간(진입일과 다른 해면 연도까지). 밴드가 없으면 노랑이 무엇인지 적는다.
+  function bandInfo(s){
+    var b = s.band, y = s.entryDate.slice(0, 4);
+    function d(v){ return v.slice(0, 4) === y ? v.slice(5).replace('-', '/') : v.slice(2).replace(/-/g, '.'); }
+    if (!b) return '<span class="vg-q-info">당시 예상밴드 없음 · 노랑은 그 분기 종가 범위</span>';
+    // 날짜는 노랑을 실제로 잰 기간이다. 아직 새 체크포인트가 없는 밴드는 카드의 최신 종가 날짜까지 쟀고, 예상 자체는
+    // 다음 실적 반영까지 유효하다(ACN은 10/01 실적 뒤에도 10-K를 기다려 열려 있다 - Codex·Fable).
+    return '<span class="vg-q-info"><b>당시 예상 ' + money(b.low) + '~' + money(b.high) + '</b> · ' + d(b.from) + '~' + d(b.to) + (b.open ? ' · 예상은 다음 실적 반영까지' : '') + '</span>';
   }
   // 진입가 대비 등락: 오르면 초록, 내리면 회색(상단 게이지와 같은 두 색).
   function change(label, v){
@@ -78,9 +94,12 @@
     var startsHere = V.liveFrom && h.quarter === V.liveFrom.slice(0, 4) + 'Q' + (Math.floor((Number(V.liveFrom.slice(5, 7)) - 1) / 3) + 1);
     document.getElementById('discovery-title').textContent = label + ' 적정~저평가 이하' + (h.running ? ' (진행 중)' : '');
     // 2026년 3분기까지는 월말 판정(재현), 그 뒤는 매일 판정(일일 기록) - 관측 빈도가 달라 막대끼리 그대로 비교되지 않는다.
-    document.getElementById('discovery-note').textContent = '그 분기에 한 번이라도 종합 판정이 적정~저평가 이하였던 종목 · '
+    // 범례는 설명 아래 한 줄. '오늘의 발견'이 같은 대화상자를 열 때 textContent로 덮어 저절로 사라진다.
+    document.getElementById('discovery-note').innerHTML = esc('그 분기에 한 번이라도 종합 판정이 적정~저평가 이하였던 종목 · '
       + (h.daily ? '매일 판정 기준' + (startsHere ? '(' + V.liveFrom.replace(/-/g, '.') + ' 기록 시작부터)' : '') + ', 금융 등 시점 재현에 없던 종목 포함' : '월말 판정 기준(시점 재현)')
-      + ' · 진입가는 그 분기에 처음 그렇게 판정된 날의 종가 · 추적 ' + h.total + '종목 중';
+      + ' · 진입가는 그 분기에 처음 그렇게 판정된 날의 종가 · 분기 말·현재 등락은 달력 분기 말·카드의 최신 종가라 노랑 기간 밖일 수 있음 · 가격 축은 종목마다 다름 · 추적 ' + h.total + '종목 중')
+      + '<span class="vg-legend"><span><i class="vg-key-act"></i>실제 종가 최저~최고(예상과 같은 기간, 진입 전 포함)</span><span><i class="vg-key-band"></i>당시 예상밴드(진입일 기준, 카드 백테스트)</span>'
+      + '<span><i class="vg-key-entry"></i>진입가</span><span><i class="vg-key-cur"></i>현재가</span></span>';
     document.getElementById('discovery-position').textContent = h.under + '개 종목';
     document.getElementById('discovery-grid').innerHTML = h.stocks.map(function(s){
       // 끝난 분기인데 분기 말 등락이 없으면 그 분기 마지막 날에 들어온 것이다.
@@ -88,11 +107,23 @@
       var parts = [end, change('현재', s.change)].filter(Boolean).join(' · ');
       return '<a class="discovery-card" href="cards/' + esc(s.ticker) + '_full_widget.html"><img src="logos/' + s.ticker.toLowerCase() + '.png" alt=""><span><strong>' + esc(s.ticker) + '</strong><small>' + esc(s.name) + '</small></span>'
         + '<span class="discovery-quote"><strong class="vg-dialog-change">' + parts + '</strong><small>진입가 대비</small></span>'
-        + quarterBar(s) + '</a>';
+        + bandInfo(s) + quarterBar(s) + '</a>';
     }).join('');
     dialog.showModal();
-    // 최저·최고가는 띠 안쪽 끝에 맞춰 적고, 띠가 짧아 둘이 겹치면 바깥쪽으로 벌린다(칸 밖으로 나가면 다시 안쪽).
+    fitLabels(dialog);
+  }
+  // 최저·최고가는 띠 안쪽 끝에 맞춰 적고, 띠가 짧아 둘이 겹치면 바깥쪽으로 벌린다(칸 밖으로 나가면 다시 안쪽).
+  // 팝업을 연 채 창 폭이 바뀌어도 다시 잰다(Codex) - 막대마다 처음 정한 줄(data-row)에서 다시 시작한다.
+  function fitLabels(dialog){
     dialog.querySelectorAll('.vg-q').forEach(function(q){
+      // 진입가·현재가 라벨이 실제로 겹치면(좁은 화면) 현재가를 한 줄 아래로(Codex).
+      var bl = q.querySelector('.vg-q-buy-label'), cl = q.querySelector('.vg-q-cur-label');
+      if (cl) cl.classList.toggle('is-low', cl.dataset.row === 'low');
+      q.querySelectorAll('.vg-q-end').forEach(function(e){ e.classList.remove('is-out'); });
+      if (bl && cl && !cl.classList.contains('is-low')) {
+        var r1 = bl.getBoundingClientRect(), r2 = cl.getBoundingClientRect();
+        if (r1.right + 6 > r2.left && r2.right + 6 > r1.left) cl.classList.add('is-low');
+      }
       var lo = q.querySelector('.vg-q-low'), hi = q.querySelector('.vg-q-high');
       if (!lo || !hi) return;
       var a = lo.getBoundingClientRect(), b = hi.getBoundingClientRect(), box = q.getBoundingClientRect();
@@ -102,6 +133,8 @@
       if (hi.getBoundingClientRect().right > box.right) hi.classList.remove('is-out');
     });
   }
+  var qDialog = document.getElementById('discovery-dialog');
+  if (qDialog && window.ResizeObserver) new ResizeObserver(function(){ if (qDialog.open && qDialog.querySelector('.vg-q')) fitLabels(qDialog); }).observe(qDialog);
   root.addEventListener('click', function(e){
     var b = e.target.closest('[data-vg-quarter]');
     if (b && !b.disabled) openQuarter(shown[Number(b.dataset.vgQuarter)]);

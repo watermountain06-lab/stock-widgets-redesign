@@ -16,7 +16,8 @@ statistics skeptic, Codex, Fable):
     Each card in a quarter is shown against its 진입가 (first cheap close in the quarter).
 
 Sources (read only): preview v2 cards through v2/research/extract_card_verdicts.js, the
-{T}_DCF block of each card for `hard`, v2/research/verdict_replay_panel.json
+{T}_DCF block of each card for `hard`, its {T}_BACKTEST (예상밴드) and {T}_VALUATION (perNA)
+blocks, v2/research/verdict_replay_panel.json
 and the git history of v2/daily_status.json. Names come from this
 repo's stock-data.js, so run build_home.py first.
 
@@ -24,6 +25,7 @@ Usage: python3 scripts/build_value_gap.py [--check]
 """
 import argparse
 import json
+import math
 import re
 import subprocess
 import sys
@@ -50,31 +52,83 @@ def names():
 
 
 def dcf_hard(t):
-    html = (PREVIEW_V2 / f"{t}_full_widget.html").read_text(encoding="utf-8")
-    key = f"const {t}_DCF = "
-    if key not in html:
-        return []
-    block = json.JSONDecoder().raw_decode(html, html.index(key) + len(key))[0]
-    return block.get("hard") or []
+    return (card_block(t, "DCF") or {}).get("hard") or []
 
 
 QUARTER_END = {1: "03-31", 2: "06-30", 3: "09-30", 4: "12-31"}
 
 
-def quarter_bars(t, quarter, as_of, cache={}):
-    """Daily bars [date, open, high, low, close] over the calendar quarter, the cards' own
-    traded closes (build_multiple_history.load_daily). Not history_daily: for SKHY that swaps
-    all but the last bar for KRX shares converted to dollars, which sit ~20% under the ADR, so
-    an entry price from it against today's ADR close read +27% in four sessions. An unfinished
-    quarter runs to the last bar on or before as_of (the page's 종가 date)."""
+def card_block(t, name):
+    """A `const {T}_<name> = {...}` JSON block of the preview card, or None."""
+    html = (PREVIEW_V2 / f"{t}_full_widget.html").read_text(encoding="utf-8")
+    key = f"const {t}_{name} = "
+    if key not in html:
+        return None
+    return json.JSONDecoder().raw_decode(html, html.index(key) + len(key))[0]
+
+
+def band_on(t, day, upto, cache={}):
+    """The card's 예상밴드 in force on `day`: the latest 예상밴드 백테스트 checkpoint on or before it
+    (2026-10-13 user decisions - the band on the 진입일, as the Tracking tab's band_on), with the
+    span it covers and the actual closing low~high over that same span, so the two are compared
+    on one span, not on the calendar quarter. None for a card without bands (PER not meaningful,
+    or none published by then).
+
+    A closed checkpoint runs to the day before the next earnings and its realized range is the
+    card's (closes from the checkpoint day through period_end_date - recomputing it that way from
+    load_daily matched all 30 closed bands, 2026-10-13). An open one's period_end_date is only the
+    day the card's backtest was last refreshed, so its range is recomputed the same way through
+    `upto`, the date of the card's own 현재가; otherwise today's price could sit outside an open
+    range (ACN: 214.87 > 212.30, Codex and Fable). Ending on the card's price date rather than
+    stock-data's asOf keeps the two the same close even when one card was not rebuilt that day. The checkpoints are the card's own backtest as it stands today, not a
+    point-in-time record."""
+    if t not in cache:
+        val = card_block(t, "VALUATION") or {}
+        cache[t] = [] if val.get("perNA") else (card_block(t, "BACKTEST") or [])
+    cps = [c for c in cache[t] if c["checkpoint_date"] <= day]
+    if not cps:
+        return None
+    c = max(cps, key=lambda c: c["checkpoint_date"])
+    # No checkpoint has empty band values today (0 of 1,764, 2026-10-13), so a gap is a data
+    # error, never a reason to fall back quietly to the quarter range (Codex).
+    nums = [c.get(k) for k in ("predicted_low", "predicted_high", "realized_price_low", "realized_price_high")]
+    if not all(isinstance(v, (int, float)) and math.isfinite(v) for v in nums) or nums[0] > nums[1] or nums[2] > nums[3]:
+        raise SystemExit(f"{t} {c['checkpoint_date']}: incomplete 예상밴드 checkpoint {nums}")
+    out = {"from": c["checkpoint_date"], "to": c.get("period_end_date"), "open": bool(c.get("is_open")),
+           "low": round(nums[0], 2), "high": round(nums[1], 2),
+           "actualLow": round(nums[2], 2), "actualHigh": round(nums[3], 2)}
+    if out["open"]:
+        closes = [b for b in daily(t) if c["checkpoint_date"] <= b[0] <= upto]
+        # the open range must end on the card's price date, the same close as the popup's 현재가
+        if not closes or closes[-1][0] != upto:
+            raise SystemExit(f"{t}: open 예상밴드 range ends {closes[-1][0] if closes else None}, not on its price date {upto}")
+        out["to"] = closes[-1][0]
+        out["actualLow"] = round(min(b[4] for b in closes), 2)
+        out["actualHigh"] = round(max(b[4] for b in closes), 2)
+    elif not out["from"] <= day <= out["to"]:
+        raise SystemExit(f"{t}: entry {day} falls in no 예상밴드 period (last ended {out['to']})")
+    return out
+
+
+def daily(t, cache={}):
+    """The card's own traded daily bars [date, open, high, low, close], sorted
+    (build_multiple_history.load_daily). Not history_daily: for SKHY that swaps all but the last
+    bar for KRX shares converted to dollars, which sit ~20% under the ADR, so an entry price from
+    it against today's ADR close read +27% in four sessions."""
     if t not in cache:
         if str(PREVIEW_V2) not in sys.path:
             sys.path.insert(0, str(PREVIEW_V2))
         import build_multiple_history as bmh
         cache[t] = sorted(bmh.load_daily(t))
+    return cache[t]
+
+
+def quarter_bars(t, quarter, as_of):
+    """daily(t) over the calendar quarter; an unfinished quarter runs to the last bar on or
+    before as_of (the page's 종가 date)."""
     y, n = quarter.split("Q")
     lo, hi = f"{y}-{(int(n) - 1) * 3 + 1:02d}-01", f"{y}-{QUARTER_END[int(n)]}"
-    return [b for b in cache[t] if lo <= b[0] <= min(hi, as_of)]
+    return [b for b in daily(t) if lo <= b[0] <= min(hi, as_of)]
 
 
 REPLAY_FIRST = "2024-07"  # 2024Q2 has only its June month-end in the replay panel
@@ -127,7 +181,7 @@ def quarter_of(day):
     return f"{day[:4]}Q{(int(day[5:7]) - 1) // 3 + 1}"
 
 
-def history(name, current, as_of):
+def history(name, current, as_of, priced):
     """Per calendar quarter: cards whose v2 verdict was 적정~저평가 or cheaper at least once in
     that quarter (2026-10-13 user decision - the count used to be price <= 0.9 x DCF base, a
     single judge the user does not trust on its own).
@@ -162,13 +216,19 @@ def history(name, current, as_of):
                 raise SystemExit(f"{t} {quarter}: daily bars stop at {bars[-1][0]}, before the quarter's last week")
             if bars[-1][0] > day:
                 end = round(bars[-1][4], 2)
+        # a card whose price is older than the entry would turn "진입가 대비 현재" into a change from
+        # before the entry, and cut the entry out of an open band's range (Fable)
+        if priced.get(t) and priced[t] < day:
+            raise SystemExit(f"{t} {quarter}: card price date {priced[t]} is before its entry {day}")
         cur = current.get(t)
         q[quarter]["stocks"].append({"ticker": t, "name": name.get(t, t), "verdict": verdict,
-                                     "entryDate": day, "entryPrice": entry,
+                                     "entryDate": day, "entryPrice": entry, "band": band_on(t, day, priced.get(t) or as_of),
                                      "endPrice": end, "endChange": round(end / entry - 1, 4) if end else None,
                                      "current": cur, "change": round(cur / entry - 1, 4) if cur else None,
-                                     "low": round(min(b[3] for b in bars), 2),
-                                     "high": round(max(b[2] for b in bars), 2)})
+                                     # the quarter's closing low~high: the yellow band when the card has no 예상밴드
+                                     # (closes, like the band's actual range - Fable)
+                                     "low": round(min(b[4] for b in bars), 2),
+                                     "high": round(max(b[4] for b in bars), 2)})
     out = []
     for k, v in sorted(q.items()):
         v["stocks"].sort(key=lambda s: (s["entryDate"], s["ticker"]))
@@ -204,7 +264,8 @@ def build():
     data = {"asOf": max(dates) if dates else None, "buyFactor": BUY_FACTOR,
             "stocks": rows}
     as_of = re.search(r'"asOf":\s*"([\d-]+)"', (REPO / "stock-data.js").read_text(encoding="utf-8"))[1]
-    data["history"], data["liveFrom"] = history(name, {k: v.get("price") for k, v in verdicts.items()}, as_of)
+    data["history"], data["liveFrom"] = history(name, {k: v.get("price") for k, v in verdicts.items()}, as_of,
+                                                {k: v.get("date") for k, v in verdicts.items()})
     return ("// Generated by scripts/build_value_gap.py from preview v2 cards. Do not edit.\n"
             "window.ValueGap=" + json.dumps(data, ensure_ascii=False) + ";\n")
 
