@@ -41,7 +41,7 @@
   var shown = V.history.filter(function(h){ return h.total >= fullest / 2; });
   var max = Math.max.apply(null, shown.map(function(h){ return h.under; }).concat([1]));
   var hist = shown.map(function(h, i){
-    return '<li><button type="button" data-vg-quarter="' + i + '"' + (h.under ? '' : ' disabled') + ' aria-haspopup="dialog" aria-label="' + h.quarter + ' 기준가 아래 ' + h.under + '종목 (' + h.total + '종목 중)">'
+    return '<li><button type="button" data-vg-quarter="' + i + '"' + (h.under ? '' : ' disabled') + ' aria-haspopup="dialog" aria-label="' + h.quarter + ' 적정~저평가 이하 ' + h.under + '종목 (' + h.total + '종목 중)">'
       + '<span class="vg-bar" style="height:' + Math.round(h.under / max * 24) + 'px"></span><b>' + h.under + '</b><small>' + h.quarter.replace(/^20/, '').replace('Q', '.Q') + '</small></button></li>';
   }).join('');
   // 팝업 카드의 가로 막대: 그 분기 주가 범위(띠, 양 끝 아래에 최저·최고가), 기준가(세로선, 위 라벨),
@@ -68,12 +68,12 @@
     var dialog = document.getElementById('discovery-dialog');
     if (!dialog) return;
     var label = h.quarter.replace(/^(\d{4})Q(\d)$/, '$1년 $2분기');
-    document.getElementById('discovery-title').textContent = label + ' 기준가 아래';
-    document.getElementById('discovery-note').textContent = '그 분기 당시의 주가와, 그때까지의 공시로 계산한 기준가 기준 · 추적 ' + h.total + '종목 중';
+    document.getElementById('discovery-title').textContent = label + ' 적정~저평가 이하';
+    document.getElementById('discovery-note').textContent = '그 분기에 한 번이라도 종합 판정이 적정~저평가 이하였던 종목 · 기준가는 그 분기 마지막 공시 기준 · 추적 ' + h.total + '종목 중';
     document.getElementById('discovery-position').textContent = h.under + '개 종목';
     document.getElementById('discovery-grid').innerHTML = h.stocks.map(function(s){
       return '<a class="discovery-card" href="cards/' + esc(s.ticker) + '_full_widget.html"><img src="logos/' + s.ticker.toLowerCase() + '.png" alt=""><span><strong>' + esc(s.ticker) + '</strong><small>' + esc(s.name) + '</small></span>'
-        + '<span class="discovery-quote"><strong class="vg-dialog-gap">' + '−' + Math.abs(s.gap * 100).toFixed(1) + '%</strong><small>당시 기준가 대비</small></span>'
+        + '<span class="discovery-quote"><strong class="vg-dialog-gap' + (s.gap > 0 ? ' is-over' : '') + '">' + (s.gap <= 0 ? '−' : '+') + Math.abs(s.gap * 100).toFixed(1) + '%</strong><small>당시 기준가 대비</small></span>'
         + quarterBar(s) + '</a>';
     }).join('');
     dialog.showModal();
@@ -95,7 +95,7 @@
   root.innerHTML = '<div class="vg-head"><p class="feature-kicker">VALUE CHECK</p><span class="vg-asof num">' + (V.asOf ? V.asOf.replace(/-/g, '.') + ' 종가' : '') + '</span></div>'
     + '<h2>매수 기준가와의 거리</h2>'
     + list
-    + '<div class="vg-history"><p>분기별 기준가 아래 종목 수 <small>막대를 누르면 종목 보기</small></p><ol>' + hist + '</ol></div>';
+    + '<div class="vg-history"><p>분기별 적정~저평가 이하 종목 수 <small>막대를 누르면 종목 보기</small></p><ol>' + hist + '</ol></div>';
 
   // 종목이 VISIBLE개를 넘으면 시장 지표처럼 저절로 넘긴다 - 단, 세로로 한 줄씩 끊어서(2026-10-08 사용자 결정).
   // 1초마다(2026-10-08 사용자 요청, 처음엔 3.5초) 0.5초 동안 한 줄 올리고 맨 위 줄을 맨 아래로 옮긴다. 마우스·포커스가 있거나, 탭이 가려졌거나,

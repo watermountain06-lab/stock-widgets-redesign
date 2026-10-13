@@ -10,11 +10,13 @@ statistics skeptic, Codex, Fable):
     forecast: the DCF ratio's rank IC is +0.014 [-0.023, +0.054] on the point-in-time panel
     (verdict_replay_result.json), so no "upside %" or base/optimistic target is shown.
     보수·낙관 are left out too - 47 of 99 cards break the low <= base <= high order.
-  - A quarterly count of cards that were under their 기준가, from preview's dcf_track files,
-    so a day with none reads as the usual state rather than as a broken page.
+  - A quarterly count of cards whose verdict was 적정~저평가 or cheaper at least once in the
+    quarter (2026-10-13; was cards under their 기준가), so a day with none reads as the usual
+    state rather than as a broken page. Replay month-ends through 2026Q3, daily verdicts after.
 
 Sources (read only): preview v2 cards through v2/research/extract_card_verdicts.js, the
-{T}_DCF block of each card for `hard`, and v2/{T}_dcf_track.json. Names come from this
+{T}_DCF block of each card for `hard`, v2/{T}_dcf_track.json, v2/research/verdict_replay_panel.json
+and the git history of v2/daily_status.json. Names come from this
 repo's stock-data.js, so run build_home.py first.
 
 Usage: python3 scripts/build_value_gap.py [--check]
@@ -75,32 +77,92 @@ def quarter_range(t, quarter, cache={}):
     return round(min(b[3] for b in bars), 2), round(max(b[2] for b in bars), 2)
 
 
-def history(name, current):
-    """Per calendar quarter: cards whose price was at or under 0.9 x base, of those with a base.
+REPLAY_FIRST = "2024-07"  # 2024Q2 has only its June month-end in the replay panel
 
-    Each card counts once per quarter, at its last point in that quarter - a card with two
-    points in one quarter used to be counted twice (2026Q1 had 91 of 90 tracked cards).
-    The cards under the line are listed so the homepage can show them on click.
+
+def replay_verdicts(cards):
+    """{(quarter, ticker): [(month-end, verdict)]} from preview's point-in-time replay
+    (v2/research/verdict_replay_panel.json, 2024-06~2026-09 month-ends): the v2 rule recomputed
+    each month-end with only what was filed by then. Financials, ASML, TSM, SKHY, GEV, SNDK and
+    SPCX are not in the panel, so 81 of the cards are covered."""
+    import contextlib
+    import io
+    research = str(PREVIEW_V2 / "research")
+    for path in (research, str(PREVIEW_V2)):
+        if path not in sys.path:
+            sys.path.insert(0, path)
+    with contextlib.redirect_stdout(io.StringIO()):
+        import verdict_replay as vr
+        rows = json.loads((PREVIEW_V2 / "research/verdict_replay_panel.json").read_text(encoding="utf-8"))["rows"]
+        vr.peer_scores(rows)  # peers are the whole S&P500 sector, so score before narrowing to cards
+        vr.assign(rows)
+    out = defaultdict(list)
+    for r in rows:
+        if r["t"] in cards and r["m"] >= REPLAY_FIRST and r.get("g_V0"):
+            out[(quarter_of(r["d"]), r["t"])].append((r["d"], r["g_V0"], r))
+    return out
+
+
+def live_verdicts(as_of, first_quarter):
+    """{(quarter, ticker): [(session, verdict)]} from the daily_status history (the record the
+    Tracking tab uses), for quarters after the replay panel ends."""
+    sys.path.insert(0, str(REPO / "scripts"))
+    from build_tracking import sessions
+    state, _ = sessions(as_of)
+    out = defaultdict(list)
+    for s, v in state.items():
+        if quarter_of(s) >= first_quarter:
+            for t, g in v.items():
+                out[(quarter_of(s), t)].append((s, g, None))
+    return out
+
+
+def quarter_of(day):
+    return f"{day[:4]}Q{(int(day[5:7]) - 1) // 3 + 1}"
+
+
+def history(name, current, cards, as_of):
+    """Per calendar quarter: cards whose v2 verdict was 적정~저평가 or cheaper at least once in
+    that quarter (2026-10-13 user decision - the count used to be price <= 0.9 x DCF base, a
+    single judge the user does not trust on its own).
+
+    Through 2026Q3 the verdicts are the replay's month-ends; from 2026Q4 the cards' own daily
+    verdicts. Each listed card still shows where its price sat against the 기준가 at its last
+    dcf_track point in the quarter, so the popup reads the same as before - a card can now be
+    above its 기준가 (positive gap).
     """
-    last = {}  # (quarter, ticker) -> point
+    seen = replay_verdicts(cards)
+    last_replay = max(q for q, _ in seen)
+    seen.update(live_verdicts(as_of, f"{int(last_replay[:4]) + (last_replay[-1] == '4')}Q{int(last_replay[-1]) % 4 + 1}"))
+    track = {}  # (quarter, ticker) -> last dcf_track point
     for f in sorted(PREVIEW_V2.glob("*_dcf_track.json")):
         d = json.loads(f.read_text(encoding="utf-8"))
         for p in d["points"]:
-            if p.get("base") is None or p.get("price") is None:
+            if p.get("base") is None or p.get("price") is None or p["base"] <= 0:
                 continue
-            key = (f"{p['date'][:4]}Q{(int(p['date'][5:7]) - 1) // 3 + 1}", d["ticker"])
-            if key not in last or p["date"] > last[key]["date"]:
-                last[key] = p
+            key = (quarter_of(p["date"]), d["ticker"])
+            if key not in track or p["date"] > track[key]["date"]:
+                track[key] = p
     q = defaultdict(lambda: {"total": 0, "stocks": []})
-    for (quarter, t), p in sorted(last.items()):
+    for (quarter, t), marks in sorted(seen.items()):
         q[quarter]["total"] += 1
-        if p["base"] > 0 and p["price"] / p["base"] <= BUY_FACTOR:
-            buy = round(p["base"] * BUY_FACTOR, 2)
-            low, high = quarter_range(t, quarter)
-            q[quarter]["stocks"].append({"ticker": t, "name": name.get(t, t), "date": p["date"],
-                                         "price": round(p["price"], 2), "buyPrice": buy,
-                                         "gap": round(p["price"] / buy - 1, 4),
-                                         "low": low, "high": high, "current": current.get(t)})
+        hits = [m for m in marks if m[1] in CHEAP]
+        if not hits:
+            continue
+        p = track.get((quarter, t))
+        if p is None:  # no dcf_track point that quarter: the replay row of the last cheap month-end,
+            r = max(hits)[2]  # or for the running quarter the card as it stands
+            c = cards.get(t, {}) if r is None else {"date": r["d"], "price": r.get("px_then", r["px"]), "base": r.get("base")}
+            p = c.get("base") and c["base"] > 0 and c.get("price") and c
+            if not p:
+                raise SystemExit(f"{t} {quarter}: cheap verdict but no 기준가 to show")
+        buy = round(p["base"] * BUY_FACTOR, 2)
+        low, high = quarter_range(t, quarter)
+        q[quarter]["stocks"].append({"ticker": t, "name": name.get(t, t), "date": p["date"],
+                                     "verdict": max(hits)[1],
+                                     "price": round(p["price"], 2), "buyPrice": buy,
+                                     "gap": round(p["price"] / buy - 1, 4),
+                                     "low": low, "high": high, "current": current.get(t)})
     out = []
     for k, v in sorted(q.items()):
         v["stocks"].sort(key=lambda s: s["gap"])
@@ -133,7 +195,9 @@ def build():
         })
     rows.sort(key=lambda r: r["gap"])
     data = {"asOf": max(dates) if dates else None, "buyFactor": BUY_FACTOR,
-            "stocks": rows, "history": history(name, {k: v.get("price") for k, v in verdicts.items()})}
+            "stocks": rows,
+            "history": history(name, {k: v.get("price") for k, v in verdicts.items()}, verdicts,
+                               re.search(r'"asOf":\s*"([\d-]+)"', (REPO / "stock-data.js").read_text(encoding="utf-8"))[1])}
     return ("// Generated by scripts/build_value_gap.py from preview v2 cards. Do not edit.\n"
             "window.ValueGap=" + json.dumps(data, ensure_ascii=False) + ";\n")
 
