@@ -72,7 +72,7 @@ SPCX는 심볼/상장 검증 전이므로 수집하지 않습니다. 시가총�
 
 preview(`~/Workspace/stock-widgets-preview`)가 매일 갱신한 카드와 숫자를 이 저장소로 가져오는 순서다.
 
-**자동 승격(2026-10-14 사용자 결정).** `.github/workflows/auto_promote.yml`이 매일 뉴욕 06:03(서머타임 중 한국 19:03, 표준시 중 20:03)에 아래 1·2·4~9번을 `scripts/auto_promote.sh`로 돌리고 push한다. 저장소 변수 `AUTO_PROMOTE`가 `on`일 때만 돈다 — 멈추려면 `gh variable set AUTO_PROMOTE -b off -R watermountain06-lab/stock-widgets-redesign`(또는 GitHub Settings → Secrets and variables → Actions → Variables). 다음 경우에는 올리지 않고 실패로 끝나 메일이 온다: preview에 실패한 카드가 있을 때, 이 저장소에 없는 새 종목 카드가 있을 때(3번 로고·홈 순위 확인 뒤 손으로 승격), 테스트가 실패할 때, 정해진 파일 밖이 바뀌었을 때. 스위치를 끈 동안이나 새 종목이 들어올 때는 예전처럼 사용자 승인을 받아 손으로 승격한다.
+**자동 승격(2026-10-14 사용자 결정).** `.github/workflows/auto_promote.yml`이 매일 뉴욕 06:03(서머타임 중 한국 19:03, 표준시 중 20:03)에 아래 1·2·4~9번을 `scripts/auto_promote.sh`로 돌리고 push한다. 저장소 변수 `AUTO_PROMOTE`가 `on`일 때만 돈다 — 멈추려면 `gh variable set AUTO_PROMOTE -b off -R watermountain06-lab/stock-widgets-redesign`(또는 GitHub Settings → Secrets and variables → Actions → Variables). 다음 경우에는 올리지 않고 실패로 끝나 메일이 온다: preview에 실패한 카드가 있을 때, 테스트가 실패할 때, 정해진 파일 밖이 바뀌었을 때. preview에만 있는 새 종목 카드는 멈추지 않고 건너뛴다(`PROMOTE_SKIP_NEW=1`, `scripts/live_set.py`; 2026-10-14 사용자 결정) — 홈·카드 순위 링크·매수 기준가·Tracking 모두 이 저장소에 카드가 있는 종목만 쓴다. 새 종목은 3번 로고·홈 순위를 확인한 뒤 사용자 승인을 받아 손으로 승격하고, 그다음 날부터 자동 승격이 함께 갱신한다. 스위치를 끈 동안에도 예전처럼 손으로 승격한다.
 
 1. `python3 scripts/sync_cards.py` (카드 복사)
 2. `python3 scripts/fix_backbar_chain.py --cards-dir "$PWD/cards"` (카드 위 이전/다음 링크와 "시총 N위" 라벨을 순위표대로 다시 맞춤)

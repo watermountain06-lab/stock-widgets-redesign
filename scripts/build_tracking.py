@@ -35,6 +35,7 @@ from pathlib import Path
 REPO = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(REPO / "scripts"))
 from build_home import band_position  # noqa: E402
+from live_set import live_tickers  # noqa: E402
 
 PREVIEW = Path.home() / "Workspace/stock-widgets-preview"
 STATUS = "v2/daily_status.json"
@@ -153,6 +154,10 @@ def build():
             r = json.JSONDecoder().raw_decode(line)[0]
             names[r["ticker"]] = r["name"]
     state, changes = sessions(as_of)
+    live = live_tickers()   # 자동 승격이면 라이브에 아직 없는 새 종목은 뺀다
+    if live is not None:
+        state = {s: {t: v for t, v in d.items() if t in live} for s, d in state.items()}
+        changes = {s: {t: c for t, c in d.items() if t in live} for s, d in changes.items()}
     days = sorted(state)
     if not days:
         raise SystemExit("no v2 sessions in daily_status history")

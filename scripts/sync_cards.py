@@ -20,6 +20,8 @@ import argparse
 import sys
 from pathlib import Path
 
+from live_set import live_tickers
+
 REPO = Path(__file__).resolve().parents[1]
 PREVIEW = Path.home() / "Workspace/stock-widgets-preview"
 DEST = REPO / "cards"
@@ -38,11 +40,15 @@ def main():
     if not src_files:
         sys.exit(f"no cards found in {PREVIEW}")
 
-    new, updated, unchanged, skipped = [], [], [], []
+    live = live_tickers()   # 자동 승격(PROMOTE_SKIP_NEW=1)이면 이 저장소에 이미 있는 카드만
+    new, updated, unchanged, skipped, not_live = [], [], [], [], []
     for src in src_files:
         ticker = src.name.replace("_full_widget.html", "")
         if ticker in skip:
             skipped.append(ticker)
+            continue
+        if live is not None and ticker not in live:
+            not_live.append(ticker)
             continue
         body = src.read_text(encoding="utf-8")
         if body.count(SRC_LINK) != 1:
@@ -70,6 +76,8 @@ def main():
     print(f"unchanged {len(unchanged)}")
     if skipped:
         print(f"skipped (in flight) {len(skipped)}: {' '.join(skipped)}")
+    if not_live:
+        print(f"skipped (new, not live yet) {len(not_live)}: {' '.join(not_live)}")
     if orphans:
         print(f"NOT IN PREVIEW, left alone {len(orphans)}: {' '.join(orphans)}")
     if args.check and (new or updated):

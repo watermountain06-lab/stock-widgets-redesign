@@ -31,6 +31,9 @@ import subprocess
 import sys
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from live_set import live_tickers  # noqa: E402
+
 REPO = Path(__file__).resolve().parents[1]
 PREVIEW_HOME = Path.home() / "Workspace/stock-widgets-preview/index.html"
 OUT = REPO / "stock-data.js"
@@ -49,7 +52,7 @@ META_SOURCE = "저장 시세·공시 분석"
 VALUATION = {"적정~저평가": "undervalued", "저평가": "undervalued", "초저평가": "deep-value"}
 
 
-def card_bands():
+def card_bands(only=None):
     """Each card's current '예상밴드 백테스트' band (the open checkpoint), via node.
 
     The cards hold BACKTEST as JSON in some files and as a JS object literal in others,
@@ -61,7 +64,7 @@ def card_bands():
     except (OSError, subprocess.CalledProcessError) as e:
         raise BuildError(f"cannot read the cards' bands: {e}") from e
     bands = json.loads(out)
-    bad = sorted(t for t, v in bands.items() if "error" in v)
+    bad = sorted(t for t, v in bands.items() if "error" in v and (only is None or t in only))
     if bad:
         raise BuildError(f"band extraction failed for: {', '.join(bad)}")
     return bands
@@ -117,6 +120,11 @@ def preview_data():
         raise BuildError(f"cannot read DATA/META from {PREVIEW_HOME}: {e}") from e
     if not rows:
         raise BuildError("preview's homepage lists no tickers")
+    live = live_tickers()
+    if live is not None:
+        # 자동 승격: 라이브에 아직 없는 새 종목은 빼고, 순위는 카드 순위 링크(fix_backbar_chain)와 같게 1부터 다시 잇는다
+        kept = sorted((r for r in rows if r["ticker"] in live), key=lambda r: r["rank"])   # 나열 순서에 기대지 않는다(Fable)
+        rows = [dict(r, rank=i + 1) for i, r in enumerate(kept)]
     return rows, meta, macro
 
 
@@ -219,7 +227,9 @@ def main():
         rows, meta, macro = preview_data()
         check_assets(rows)
         cur = OUT.read_text(encoding="utf-8")
-        new = splice(cur, rows, meta, macro, card_bands())
+        # 밴드 추출 오류는 자동 승격(새 종목 건너뛰기)일 때만 라이브 종목으로 좁혀 본다 — 손 승격은 예전처럼 전부(Codex)
+        only = {r["ticker"] for r in rows} if live_tickers() is not None else None
+        new = splice(cur, rows, meta, macro, card_bands(only))
     except BuildError as e:
         sys.exit(f"build_home: {e}")
 

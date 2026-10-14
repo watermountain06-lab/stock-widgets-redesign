@@ -3,7 +3,7 @@ name: Auto-promote preview
 # preview(stock-widgets-preview)가 매일 만든 카드·숫자를 이 라이브 저장소로 하루 한 번 자동 승격한다(2026-10-14 사용자 결정).
 # 멈춤 스위치: 저장소 변수 AUTO_PROMOTE — "on"일 때만 돈다. 끄기: gh variable set AUTO_PROMOTE -b off -R watermountain06-lab/stock-widgets-redesign
 #   (또는 GitHub 저장소 Settings → Secrets and variables → Actions → Variables에서 값을 off로). 끈 동안은 예전처럼 손으로 승격한다.
-# 실패 카드·새 종목·테스트 실패면 올리지 않고 실패로 끝난다(GitHub이 메일로 알림). 단계는 scripts/auto_promote.sh.
+# 실패 카드·테스트 실패면 올리지 않고 실패로 끝난다(GitHub이 메일로 알림). 이 저장소에 없는 새 종목은 건너뛴다(손 승격 대기). 단계는 scripts/auto_promote.sh.
 
 on:
   schedule:

@@ -33,6 +33,9 @@ from collections import defaultdict
 from datetime import date, timedelta
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from live_set import live_tickers  # noqa: E402
+
 REPO = Path(__file__).resolve().parents[1]
 PREVIEW_V2 = Path.home() / "Workspace/stock-widgets-preview/v2"
 OUT = REPO / "value-data.js"
@@ -241,6 +244,9 @@ def build():
     out = subprocess.run(["node", str(PREVIEW_V2 / "research/extract_card_verdicts.js")],
                          capture_output=True, text=True, check=True).stdout
     verdicts = json.loads(out)
+    live = live_tickers()   # 자동 승격이면 라이브에 아직 없는 새 종목은 뺀다
+    if live is not None:
+        verdicts = {t: v for t, v in verdicts.items() if t in live}
     name = names()
     rows, dates = [], set()
     for t, v in verdicts.items():

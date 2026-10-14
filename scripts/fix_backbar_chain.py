@@ -26,6 +26,8 @@ import re
 import sys
 from pathlib import Path
 
+from live_set import live_tickers
+
 PREVIEW = Path.home() / "Workspace/stock-widgets-preview"
 BLOCK = re.compile(r'( *)<div class="back-bar-right">.*?</div>', re.S)
 TOGGLE = re.compile(r'<button id="theme-toggle".*?</button>', re.S)   # v2 카드의 밝게/어둡게 스위치(2026-10-07) — 다시 쓸 때 지우지 않는다
@@ -52,6 +54,9 @@ def main():
 
     data = json.loads((PREVIEW / "site_data/stocks.json").read_text(encoding="utf-8"))
     order = [t["ticker"] for t in sorted(data["tickers"], key=lambda x: x["cardRank"])]
+    live = live_tickers()   # 자동 승격이면 라이브에 아직 없는 새 종목을 빼고 순위를 잇는다
+    if live is not None:
+        order = [t for t in order if t in live]
 
     labels, texts = {}, {}
     for t in order:
