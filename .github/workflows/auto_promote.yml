@@ -7,20 +7,48 @@ name: Auto-promote preview
 
 on:
   schedule:
-    - cron: "17 6 * * *"   # 매일 06:17 UTC = 한국 15:17 — preview 매일 실행(한국 낮 12시 무렵)과 토요일 주간 실행(일요일 새벽) 뒤
+    # 뉴욕 06:03(2026-10-14 사용자 결정; 정각은 GitHub가 가장 많이 밀리고 건너뛴다). GitHub cron은 UTC뿐이라
+    # 서머타임(EDT, 10:03 UTC)과 표준시(EST, 11:03 UTC)를 둘 다 걸고, when 작업이 그날 뉴욕 시각에 맞는 쪽만 통과시킨다.
+    # preview의 09:23 UTC 재시도 뒤, 13:41 UTC 재시도와 뉴욕 개장 전이다.
+    - cron: "3 10 * * *"
+    - cron: "3 11 * * *"
   workflow_dispatch:
 
 permissions:
   contents: write
   pages: write
 
-concurrency:
-  group: auto-promote
-  cancel-in-progress: false
-
 jobs:
-  promote:
+  when:
     if: vars.AUTO_PROMOTE == 'on'
+    runs-on: ubuntu-latest
+    outputs:
+      go: ${{ steps.tz.outputs.go }}
+    steps:
+      - id: tz
+        env:
+          CRON: ${{ github.event.schedule }}
+        run: |
+          # (스위치가 on일 때) 수동 실행은 늘 통과. 예약 실행은 뉴욕 UTC 오프셋이 그 cron과 맞을 때만(-0400 ↔ 10시, -0500 ↔ 11시).
+          # 시작이 몇 시간 밀려도 오프셋으로 고르므로 하루 한 번만 돈다.
+          # cron은 시(hour) 칸만 본다 — 분이나 서식을 바꿔도 비교가 깨지지 않게(Fable)
+          OFF=$(TZ=America/New_York date +%z)
+          case "$OFF" in -0400|-0500) ;; *) echo "뉴욕 오프셋을 못 읽음: $OFF"; exit 1;; esac   # 조용히 0회 되지 않게(Fable)
+          HOUR=$(echo "$CRON" | awk '{print $2}')
+          go=false
+          if [ -z "$CRON" ]; then go=true
+          elif [ "$HOUR" = "10" ] && [ "$OFF" = "-0400" ]; then go=true
+          elif [ "$HOUR" = "11" ] && [ "$OFF" = "-0500" ]; then go=true
+          fi
+          echo "cron='$CRON' 뉴욕 오프셋 $OFF → go=$go"
+          echo "go=$go" >> "$GITHUB_OUTPUT"
+  promote:
+    needs: when
+    if: needs.when.outputs.go == 'true'
+    # 워크플로 단위로 두면 건너뛸 cron의 실행이 대기 중인 진짜 실행을 밀어낸다 — 통과한 작업에만 건다(Codex)
+    concurrency:
+      group: auto-promote
+      cancel-in-progress: false
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
