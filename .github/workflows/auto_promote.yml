@@ -1,0 +1,55 @@
+name: Auto-promote preview
+
+# preview(stock-widgets-preview)가 매일 만든 카드·숫자를 이 라이브 저장소로 하루 한 번 자동 승격한다(2026-10-14 사용자 결정).
+# 멈춤 스위치: 저장소 변수 AUTO_PROMOTE — "on"일 때만 돈다. 끄기: gh variable set AUTO_PROMOTE -b off -R watermountain06-lab/stock-widgets-redesign
+#   (또는 GitHub 저장소 Settings → Secrets and variables → Actions → Variables에서 값을 off로). 끈 동안은 예전처럼 손으로 승격한다.
+# 실패 카드·새 종목·테스트 실패면 올리지 않고 실패로 끝난다(GitHub이 메일로 알림). 단계는 scripts/auto_promote.sh.
+
+on:
+  schedule:
+    - cron: "17 6 * * *"   # 매일 06:17 UTC = 한국 15:17 — preview 매일 실행(한국 낮 12시 무렵)과 토요일 주간 실행(일요일 새벽) 뒤
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pages: write
+
+concurrency:
+  group: auto-promote
+  cancel-in-progress: false
+
+jobs:
+  promote:
+    if: vars.AUTO_PROMOTE == 'on'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - name: Fetch preview (full history — Tracking reads its daily_status history)
+        run: git clone --quiet https://github.com/watermountain06-lab/stock-widgets-preview.git "$HOME/Workspace/stock-widgets-preview"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - name: Promote
+        run: bash scripts/auto_promote.sh
+      - name: Push
+        id: push
+        run: |
+          if [ -z "$(git log origin/main..HEAD --oneline)" ]; then echo "올릴 커밋 없음"; exit 0; fi
+          pushed=false
+          for i in 1 2 3; do
+            if git pull --rebase && git push; then pushed=true; break; fi
+            git rebase --abort 2>/dev/null || true   # 시장 뉴스 작업과 같은 방식(충돌한 rebase를 남기지 않는다)
+            sleep $((i * 20))
+          done
+          [ "$pushed" = true ] || { echo "push 실패"; exit 1; }
+          echo "pushed=true" >> "$GITHUB_OUTPUT"
+      # Actions 토큰으로 한 push는 Pages 빌드를 띄우지 않을 수 있어 직접 요청한다(market_news.yml과 같은 방식)
+      - name: Request a Pages build
+        if: steps.push.outputs.pushed == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh api -X POST "repos/${{ github.repository }}/pages/builds"
