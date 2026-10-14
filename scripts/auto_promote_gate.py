@@ -29,9 +29,18 @@ else:
     lag = []
     for f in sorted(PV.glob("*_full_widget.html")):
         t = f.name.replace("_full_widget.html", "")
-        m = re.search(r"const " + re.escape(t) + r"_DAILY = \[.*?\[\"(\d{4}-\d{2}-\d{2})\"[^\[\]]*\]\];", f.read_text(encoding="utf-8"), re.S)
-        if not m or m.group(1) != ps:
-            lag.append(f"{t}({m.group(1) if m else '없음'})")
+        # DAILY 배열만 떼어 JSON으로 읽는다 — 정규식으로 끝을 찾으면 뒤 배열의 날짜를 읽을 수 있다(Codex)
+        h = f.read_text(encoding="utf-8")
+        k = h.find(f"const {t}_DAILY = ")
+        last = None
+        if k >= 0:
+            try:
+                rows, _ = json.JSONDecoder().raw_decode(h, k + len(f"const {t}_DAILY = "))
+                last = rows[-1][0] if rows else None
+            except (ValueError, IndexError, TypeError):
+                last = None
+        if last != ps:
+            lag.append(f"{t}({last or '없음'})")
     if lag:
         why.append(f"마지막 종가가 {ps}가 아닌 카드 {len(lag)}장: {' '.join(lag[:10])}")
     if ls and ps < max(ls):
