@@ -51,7 +51,8 @@ If you're unsure whether something is "why the number looks that way" (keep) vs.
 
 S&P500 시총 71위부터는 루트 카드 없이 preview의 v2 카드만 만든다(2026-10-01 사용자 결정). 2026-10-07부터 v2 카드가 preview 홈과 매일 실행에 들어가 있고, 2026-10-10부터 AUTO 카드(새 공시 자동 반영)다 — 새 카드도 홈 등록·공시 기준표·AUTO까지 한 번에 한다. 이 경로는 아래 Step 0~6(redesign에서 한 장씩 손으로 채우던 방식)이 아니라 **preview `v2/newcards/`의 도구**로 만든다 — 순서·점검 목록·옵션은 그 폴더의 `README.md`가 원본이다. 이 플레이북의 원칙(숫자를 지어내지 않기, 배열을 손으로 치지 않기, 탭마다 Codex·브라우저 검토, 판단은 마무리 보고에 기록)은 그대로 적용한다.
 
-- **흐름**(자세한 순서·명령은 README): 순위(`scripts/check_rank_gaps.py`, 카드 순위는 목록 끝 번호) → 등록·meta·일봉 → **공시 기준표 먼저**(`sec_approved.json`, `preflight.py`) → `build.py T --data --asof <세션>` → 점검 → cfg(AUTO 키 표) → 부문 지도(`seg_map_propose` → 원문 대조) → `build.py T --asof` → 현행 백테스트(`build_backtest_pre` → `refresh_backtest`) → 브라우저·Codex·Fable·Codex 2차 → `preflight.py --after` → 홈 등록(`pipeline/add_v2_ticker.py`·`fetch_prices --write`·`sync_v2_home`·`build_index`·`validate`) → `daily_price.py T` → 기록.
+- **경계(2026-10-14 사용자 결정)**: 종류별 처리는 그 종목만의 준비(cfg·종목별 표)로만 한다 — 기존 카드는 바뀌지 않는다. 공통 틀·엔진 버그는 묻지 않고 바로 고친 뒤 바뀐 기존 카드 범위를 결과 보고에 적는다. 판정 계산 규칙은 한 종목에만 적용하지 않고 사전 등록 테스트로 전 카드에 한 번에. 이 스킬은 판별·안내만 하고, 처리 자체는 저장소 안(매일 실행이 같게 돌도록)에 둔다.
+- **흐름**(자세한 순서·명령은 README): 순위(`scripts/check_rank_gaps.py`, 카드 순위는 목록 끝 번호) → 등록·meta·일봉 → **공시 기준표 먼저**(`sec_approved.json`, `preflight.py`) → `build.py T --data --asof <세션>` → **종류 판별**(README "종류별 경로": 일반·은행·보험·영업이익 줄 없음·회사 고유 태그·분사 보류·자본 음수·지분법·외국 발행사·다중 클래스) → 점검 → cfg(AUTO 키 표) → 부문 지도(`seg_map_propose` → 원문 대조) → `build.py T --asof` → 현행 백테스트(`build_backtest_pre` → `refresh_backtest`) → 브라우저·Codex·Fable·Codex 2차 → `preflight.py --after` → 홈 등록(`pipeline/add_v2_ticker.py` — 가격도 카드 종가로 채움, `fetch_prices --tickers`는 쓰지 않는다 · `sync_v2_home`·`build_index`·`validate`) → `daily_price.py T` → 기록.
 - **SEC 요약 데이터(companyfacts)가 최신 10-Q를 늦게 싣는 종목이 잦다**(ABT·WELL·NEE, 10월 초 기준). 인라인 XBRL 보충(`BUILD['overlay']`) 뒤에 배열·백테스트를 만들어야 최신 EPS가 들어간다.
 - **엔진 숫자는 늘 10-Q 표와 대조한다** — 이번 12장에서 1년 안 만기 차입금 누락(ETN·T·UNP), 멈춘 단기투자 태그(T·MCD·PFE), 영업이익 줄 없음(ETN·PFE·WELL), 매출 태그 재정의·반올림(PFE·NEE), 주식 수 단위 오류(MCD)가 나왔다. 대부분 경고 없이 조용히 틀린다.
 - **분사 종목**(Yahoo `events.splits`에 1.45 미만 비율): 자기 이력은 재작성 숫자가 처음 공시된 날부터, 최근 4분기 합이 모두 분사 뒤여야 한다(WDC·T).
@@ -227,7 +228,7 @@ the coordinator merges it into the shared file first.
 
 ## Step 5b — Join preview's daily pipeline (added 2026-09-11, required for every new card)
 
-> **v2 카드(2026-10-13):** 홈 목록 항목(stocks.json)·가격(`fetch_prices.py --tickers T --write`)·`build_index`·`validate_site_data`는 여전히 필요하지만 `pipeline/add_v2_ticker.py`와 `sync_v2_home.py`로 한다(README 11). `update_cards.py` 통과·valuation_base·tech_state 항목은 v2 카드에 해당 없다(update_cards가 v2 카드를 건너뛴다).
+> **v2 카드(2026-10-13, 10-14 고침):** 홈 목록 항목(stocks.json)·가격(`add_v2_ticker.py`가 카드 종가로 — `fetch_prices.py --tickers`는 나머지 종목을 stale로 바꾼다)·`build_index`·`validate_site_data`는 여전히 필요하지만 `pipeline/add_v2_ticker.py`와 `sync_v2_home.py`로 한다(README 11). `update_cards.py` 통과·valuation_base·tech_state 항목은 v2 카드에 해당 없다(update_cards가 v2 카드를 건너뛴다).
 
 Since 2026-09-11 `stock-widgets-preview` updates itself after every US close (GitHub Actions `.github/workflows/daily_refresh.yml`, 18:00 New York / 07:00 Seoul, Mon–Fri). `site_data/stocks.json` is the homepage's source of truth — `pipeline/build_index.py` renders `index.html` from it, so **never hand-edit the DATA rows between `/*STOCKS_DATA_START*/…/*STOCKS_DATA_END*/` again** — and `pipeline/update_cards.py` rewrites every listed card's price layer (DAILY/MA arrays, header, chart summary, tech scorecard, MA box, as-of label). A new card has to join that pipeline in the same commit that adds it:
 
