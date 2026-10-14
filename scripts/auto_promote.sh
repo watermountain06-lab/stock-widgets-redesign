@@ -1,7 +1,7 @@
 #!/bin/bash
 # preview → 라이브 자동 승격(2026-10-14 사용자 결정). .github/workflows/auto_promote.yml이 하루 한 번 부른다.
 # 손 승격(README "라이브 승격 순서")과 같은 단계를 돌리고, 아래 경우에는 올리지 않고 실패로 끝낸다(GitHub이 메일로 알림):
-#   - preview 마지막 실행에 실패한 카드가 있다(v2/daily_status.json "failed")
+#   - preview 마지막 실행이 안 끝났거나 실패한 카드가 있다, 실행·홈·카드 세션이 어긋난다, 라이브보다 오래됐다(auto_promote_gate.py)
 #   - preview에 이 저장소에 없는 새 종목 카드가 있다(로고·홈 순위 확인이 필요 — 손으로 승격)
 #   - 승격 뒤 사이트 테스트가 실패한다
 #   - 승격 단계가 정해진 파일 밖을 바꿨다
@@ -15,11 +15,9 @@ cd "$(dirname "$0")/.."
 PV="$HOME/Workspace/stock-widgets-preview"
 [ -d "$PV" ] || { echo "preview 저장본 없음: $PV"; exit 2; }
 
-# 관문 1: preview 실패 카드
+# 관문 1: preview 실행이 끝났고 실패 카드가 없으며, 실행·홈·카드의 세션이 같고 라이브보다 오래되지 않았다(scripts/auto_promote_gate.py)
+python3 scripts/auto_promote_gate.py
 SESSION=$(python3 -c "import json;print(json.load(open('$PV/v2/daily_status.json')).get('session',''))")
-FAILED=$(python3 -c "import json;print(' '.join(json.load(open('$PV/v2/daily_status.json')).get('failed') or []))")
-echo "preview 세션 $SESSION"
-if [ -n "$FAILED" ]; then echo "멈춤: preview에 실패한 카드가 있다 — $FAILED"; exit 1; fi
 
 # 관문 2: 새 종목(이 저장소에 카드가 없는 preview 카드)
 CHECK=$(python3 scripts/sync_cards.py --check || true)   # --check는 뒤처졌으면 0이 아닌 값으로 끝난다
@@ -50,6 +48,5 @@ if [ -n "$OTHER" ]; then echo "멈춤: 승격 단계가 정해진 파일 밖을 
 
 git add cards dist stock-data.js value-data.js stock-news.js tracking-data.js
 if git diff --cached --quiet; then echo "변경 없음"; exit 0; fi
-git -c user.name="github-actions[bot]" -c user.email="41898282+github-actions[bot]@users.noreply.github.com" \
-  commit -q -m "Auto-promote preview session $SESSION"
+git commit -q -m "Auto-promote preview session $SESSION"
 echo "커밋: $(git log --oneline -1)"

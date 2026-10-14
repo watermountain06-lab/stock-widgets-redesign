@@ -33,6 +33,12 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: "20"
+      - name: Setup
+        run: |
+          pip install --quiet numpy scipy   # build_value_gap가 preview의 verdict_replay.py를 읽는다(numpy·scipy, Codex)
+          # rebase(시장 뉴스 push와 겹칠 때)에도 쓰이므로 작업 전체에 작성자를 둔다(Codex)
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
       - name: Promote
         run: bash scripts/auto_promote.sh
       - name: Push
