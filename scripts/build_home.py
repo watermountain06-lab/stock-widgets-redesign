@@ -122,9 +122,12 @@ def preview_data():
         raise BuildError("preview's homepage lists no tickers")
     live = live_tickers()
     if live is not None:
-        # 자동 승격: 라이브에 아직 없는 새 종목은 빼고, 순위는 카드 순위 링크(fix_backbar_chain)와 같게 1부터 다시 잇는다
-        kept = sorted((r for r in rows if r["ticker"] in live), key=lambda r: r["rank"])   # 나열 순서에 기대지 않는다(Fable)
-        rows = [dict(r, rank=i + 1) for i, r in enumerate(kept)]
+        rows = [r for r in rows if r["ticker"] in live]   # 자동 승격: 라이브에 아직 없는 새 종목은 뺀다
+    # 순위는 그날 시가총액 순(2026-10-15 사용자 결정: 주가·등락률처럼 시총 순위도 매일 바뀐 대로 보여 준다).
+    # preview의 rank는 카드를 만든 순서라 고정돼 있었다. 카드의 "시총 N위"와 이전/다음 링크(fix_backbar_chain)도 이 순서를 쓴다.
+    if any(not isinstance(r.get("marketCap"), (int, float)) or r["marketCap"] <= 0 for r in rows):
+        raise BuildError("a homepage row has no positive marketCap - cannot rank by market cap")
+    rows = [dict(r, rank=i + 1) for i, r in enumerate(sorted(rows, key=lambda r: (-r["marketCap"], r["ticker"])))]
     return rows, meta, macro
 
 

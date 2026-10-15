@@ -17,15 +17,21 @@ Usage: python3 scripts/sync_cards.py [--check] [--exclude TICKER ...]
   --exclude  skip a card being written by something else right now
 """
 import argparse
+import re
 import sys
 from pathlib import Path
 
+from build_home import BuildError, preview_data
 from live_set import live_tickers
 
 REPO = Path(__file__).resolve().parents[1]
 PREVIEW = Path.home() / "Workspace/stock-widgets-preview"
 DEST = REPO / "cards"
 SRC_LINK = '<a class="back-bar-left" href="index.html">'
+# 카드가 스스로 밝히는 시총 순위(상단 표시줄 + 소개 문장 등). 상단 표시줄의 숫자가 그 카드 자신의 순위이고, 같은 숫자의
+# 언급만 자기 순위다(다른 카드를 인용한 순위는 그대로 둔다 — preview fix_card_rank_text.py와 같은 규칙).
+BACKBAR = re.compile(r'<span class="back-bar-current">[^<]*?시총 (\d+)위')
+MENTION = re.compile(r"시총 (\d+)위")
 DST_LINK = '<a class="back-bar-left" href="../index.html">'
 
 
@@ -39,6 +45,11 @@ def main():
     src_files = sorted(PREVIEW.glob("*_full_widget.html"))
     if not src_files:
         sys.exit(f"no cards found in {PREVIEW}")
+    # 2026-10-15 사용자 결정: 카드의 "시총 N위"는 그날 시가총액 순(홈과 같은 순서, build_home.preview_data)
+    try:
+        rank = {r["ticker"]: r["rank"] for r in preview_data()[0]}
+    except BuildError as e:
+        sys.exit(f"sync_cards: {e}")
 
     live = live_tickers()   # 자동 승격(PROMOTE_SKIP_NEW=1)이면 이 저장소에 이미 있는 카드만
     new, updated, unchanged, skipped, not_live = [], [], [], [], []
@@ -54,6 +65,12 @@ def main():
         if body.count(SRC_LINK) != 1:
             sys.exit(f"{src.name}: expected exactly 1 back-bar home link, found {body.count(SRC_LINK)}")
         body = body.replace(SRC_LINK, DST_LINK)
+        if ticker in rank:
+            bb = BACKBAR.search(body)
+            if not bb:
+                sys.exit(f"{src.name}: no back-bar rank label, so its own rank cannot be identified")
+            stated, want = int(bb.group(1)), rank[ticker]
+            body = MENTION.sub(lambda m: f"시총 {want}위" if int(m.group(1)) == stated else m.group(0), body)
         dst = DEST / src.name
         if not dst.exists():
             new.append(ticker)

@@ -11,7 +11,8 @@ card from AMD onward unreachable going forward. Walking 다음 from rank 1
 reached 15 of 54 cards.
 
 Rather than patch two more neighbours by hand each time, this regenerates the
-whole chain from stocks.json's cardRank order, which is the thing the chain is
+whole chain from the homepage's rank order (since 2026-10-15: that day's market
+cap, the same order build_home.py writes), which is the thing the chain is
 supposed to mirror. Run it after adding a ticker, or with --check in a
 verification pass.
 
@@ -21,14 +22,12 @@ not always the file's ticker - BRKB's card calls itself BRK.B.
 Usage: python3 scripts/fix_backbar_chain.py [--check] [--cards-dir DIR]
 """
 import argparse
-import json
 import re
 import sys
 from pathlib import Path
 
-from live_set import live_tickers
+from build_home import BuildError, preview_data
 
-PREVIEW = Path.home() / "Workspace/stock-widgets-preview"
 BLOCK = re.compile(r'( *)<div class="back-bar-right">.*?</div>', re.S)
 TOGGLE = re.compile(r'<button id="theme-toggle".*?</button>', re.S)   # v2 카드의 밝게/어둡게 스위치(2026-10-07) — 다시 쓸 때 지우지 않는다
 LABEL = re.compile(r'<span class="back-bar-current">(.*?) · 시총 (\d+)위</span>')
@@ -48,15 +47,16 @@ def build(indent, prev, label, rank, nxt, labels, toggle=""):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--check", action="store_true")
-    ap.add_argument("--cards-dir", default=str(PREVIEW))
+    # 기본은 이 저장소 cards/ — 순서가 시총순이라 preview 카드(고정 순위)에 쓰면 preview 홈과 어긋난다(Codex)
+    ap.add_argument("--cards-dir", default=str(Path(__file__).resolve().parents[1] / "cards"))
     args = ap.parse_args()
     cards = Path(args.cards_dir)
 
-    data = json.loads((PREVIEW / "site_data/stocks.json").read_text(encoding="utf-8"))
-    order = [t["ticker"] for t in sorted(data["tickers"], key=lambda x: x["cardRank"])]
-    live = live_tickers()   # 자동 승격이면 라이브에 아직 없는 새 종목을 빼고 순위를 잇는다
-    if live is not None:
-        order = [t for t in order if t in live]
+    # 홈과 같은 순서: 그날 시가총액 순(2026-10-15 사용자 결정), 자동 승격이면 라이브에 있는 종목만(build_home.preview_data)
+    try:
+        order = [r["ticker"] for r in preview_data()[0]]
+    except BuildError as e:
+        sys.exit(f"fix_backbar_chain: {e}")
 
     labels, texts = {}, {}
     for t in order:
