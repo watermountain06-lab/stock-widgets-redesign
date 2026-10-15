@@ -17,7 +17,16 @@ PV="$HOME/Workspace/stock-widgets-preview"
 [ -d "$PV" ] || { echo "preview 저장본 없음: $PV"; exit 2; }
 
 # 관문 1: preview 실행이 끝났고 실패 카드가 없으며, 실행·홈·카드의 세션이 같고 라이브보다 오래되지 않았다(scripts/auto_promote_gate.py)
-python3 scripts/auto_promote_gate.py
+# preview가 아직 갱신 중이면(관문 종료 코드 3) 15분마다 preview를 다시 받아 최대 3시간 기다린다(2026-10-15 사용자 결정).
+# 실패 카드처럼 기다려도 안 풀리는 이유(코드 1)는 바로 멈춘다. DRY는 기다리지 않는다.
+TRIES=12; [ -n "$DRY" ] && TRIES=0
+for i in $(seq 0 "$TRIES"); do
+  rc=0; python3 scripts/auto_promote_gate.py || rc=$?
+  [ "$rc" = 0 ] && break
+  if [ "$rc" != 3 ] || [ "$i" = "$TRIES" ]; then exit 1; fi
+  echo "15분 뒤 다시 본다 ($((i + 1))/$TRIES)"; sleep 900
+  git -C "$PV" pull -q --ff-only || echo "preview 받기 실패 — 15분 뒤 다시"   # 한 번의 네트워크 오류로 기다린 시간을 버리지 않는다(Fable)
+done
 SESSION=$(python3 -c "import json;print(json.load(open('$PV/v2/daily_status.json')).get('session',''))")
 
 # 새 종목(이 저장소에 카드가 없는 preview 카드)은 건너뛴다 — 무엇을 건너뛰는지만 찍는다

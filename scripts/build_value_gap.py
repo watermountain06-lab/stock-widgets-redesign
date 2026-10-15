@@ -21,7 +21,7 @@ blocks, v2/research/verdict_replay_panel.json
 and the git history of v2/daily_status.json. Names come from this
 repo's stock-data.js, so run build_home.py first.
 
-Usage: python3 scripts/build_value_gap.py [--check]
+Usage: python3 scripts/build_value_gap.py [--check] [--refresh-replay]
 """
 import argparse
 import json
@@ -140,11 +140,28 @@ REPLAY_FIRST = "2024-07"  # 2024Q2 has only its June month-end in the replay pan
 REPLAY_LAST, LIVE_FIRST = "2026Q3", "2026Q4"
 
 
+REPLAY_SNAPSHOT = REPO / "scripts/verdict_replay_through_2026Q3.json"
+
+
 def replay_verdicts(cards):
     """{(quarter, ticker): [(month-end, verdict)]} from preview's point-in-time replay
     (v2/research/verdict_replay_panel.json, 2024-06~2026-09 month-ends): the v2 rule recomputed
     each month-end with only what was filed by then. Financials, ASML, TSM, SKHY, GEV, SNDK and
-    SPCX are not in the panel, so 81 of the cards are covered."""
+    SPCX are not in the panel, so 81 of the cards are covered.
+
+    Read from a snapshot in this repo (REPLAY_SNAPSHOT): the panel is a 5.7 MB research file preview
+    keeps out of git, so the Actions auto-promotion could not read it (2026-10-15). The replay is
+    fixed through REPLAY_LAST, so the snapshot does not go stale; rewrite it with --refresh-replay
+    only if the panel or the v2 rule is recomputed."""
+    out = defaultdict(list)
+    for t, d, g in json.loads(REPLAY_SNAPSHOT.read_text(encoding="utf-8"))["rows"]:
+        if t in cards:
+            out[(quarter_of(d), t)].append((d, g))
+    return out
+
+
+def refresh_replay_snapshot():
+    """Recompute the replay from preview's local panel (verdict_replay.py, numpy/scipy) and write REPLAY_SNAPSHOT."""
     import contextlib
     import io
     research = str(PREVIEW_V2 / "research")
@@ -156,11 +173,12 @@ def replay_verdicts(cards):
         rows = json.loads((PREVIEW_V2 / "research/verdict_replay_panel.json").read_text(encoding="utf-8"))["rows"]
         vr.peer_scores(rows)  # peers are the whole S&P500 sector, so score before narrowing to cards
         vr.assign(rows)
-    out = defaultdict(list)
-    for r in rows:
-        if r["t"] in cards and r["m"] >= REPLAY_FIRST and quarter_of(r["d"]) <= REPLAY_LAST and r.get("g_V0"):
-            out[(quarter_of(r["d"]), r["t"])].append((r["d"], r["g_V0"]))
-    return out
+    keep = sorted([r["t"], r["d"], r["g_V0"]] for r in rows
+                  if r["m"] >= REPLAY_FIRST and quarter_of(r["d"]) <= REPLAY_LAST and r.get("g_V0"))
+    REPLAY_SNAPSHOT.write_text(json.dumps({"from": "preview v2/research/verdict_replay_panel.json via verdict_replay.py",
+                                           "first": REPLAY_FIRST, "last": REPLAY_LAST, "rows": keep},
+                                          ensure_ascii=False, separators=(",", ":")) + "\n", encoding="utf-8")
+    print(f"Wrote {REPLAY_SNAPSHOT} ({len(keep)} month-end verdicts)")
 
 
 def live_verdicts(as_of, first_quarter, cards):
@@ -279,7 +297,10 @@ def build():
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--check", action="store_true")
+    ap.add_argument("--refresh-replay", action="store_true", help="rewrite the replay snapshot from preview's local panel")
     a = ap.parse_args()
+    if a.refresh_replay:
+        refresh_replay_snapshot()
     text = build()
     if a.check:
         if not OUT.exists() or OUT.read_text(encoding="utf-8") != text:

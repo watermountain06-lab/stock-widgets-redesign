@@ -50,7 +50,7 @@ jobs:
       group: auto-promote
       cancel-in-progress: false
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 240   # preview 갱신이 끝나기를 최대 3시간 기다린다(scripts/auto_promote.sh)
     steps:
       - uses: actions/checkout@v4
       - name: Fetch preview (full history — Tracking reads its daily_status history)
