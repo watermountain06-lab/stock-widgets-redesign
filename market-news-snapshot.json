@@ -2,31 +2,139 @@
   "all": {
     "provider": "Google News RSS",
     "topic": "all",
-    "updatedAt": "2026-10-16T16:25:39.853165+00:00",
+    "updatedAt": "2026-10-17T15:20:02.746273+00:00",
     "articles": [
       {
-        "title": "U.S. Stocks Mixed as Investors Pare Rate-Hike Bets",
-        "url": "https://news.google.com/rss/articles/CBMioAFBVV95cUxOejZOQXlJbWJ1MWdyZ3pkaDZPbW5YTk9qMHlYOXdaU29XX182REZFdzMxZE42X2ZNb1FDSXZkLVNYZTZrV0NOS2RzcExEdThSQm5rUUpEYUs2STZiMmFRaGkxakVTd3BHX0RqblIzRmhoX014TC1KT0ZGNVRETmJmZ3JCNGVWOF8wX2lEVmN2VWJRV0VBZ3ZRV0Y3QmIxYlhR?oc=5",
-        "source": "WSJ",
-        "publishedAt": "2026-10-16T15:02:00+00:00"
+        "title": "Which company has the world’s highest earnings? The answer may surprise you",
+        "url": "https://news.google.com/rss/articles/CBMiygFBVV95cUxPeFdxUHF0ZTFqXzJ3R2U5TFNKV1JuR0RfS05ORnBlQlpMLURaa2FwakFzd2tib3ZRZnVYbl83YnU3TkFGUzBjZl9VUHQ1MnRxR0tiM2tiZGladlN6ZGRRWjgzTkZYdy1wbHNoVWhUQXZXekhkN21odzFCTnNEQ3Z5bjVoNjl4QUhXaVk2Y1Y0eDBDZFFaLVBNLWI5Rjh0NkJfSzMwUVNudVE4WmRob213cW5OWnpRdmRsZ0huRENFbXpLdnZWT0pLNGtB?oc=5",
+        "source": "Investing.com",
+        "publishedAt": "2026-10-17T13:15:35+00:00"
       },
       {
-        "title": "Stock Market Today (Oct. 16, 2026): S&P 500 edges higher as tech stocks struggle",
-        "url": "https://news.google.com/rss/articles/CBMif0FVX3lxTFBXM0JtQld5Nm5FcHRWME14bWZWanVJUVJxNzR2ZzRHbko1aHlJSFgxR1ZKa0NiRXNQS3NpeERJN21oTU8zdE9qdDRQR2RUaU1JQm5USENLT3QtdWxtSWxGNWlmMDVzQS0yaGw2R2NZMlRtV2NtcnVPSllXY3UzT1E?oc=5",
-        "source": "Yahoo Finance Singapore",
-        "publishedAt": "2026-10-16T14:11:32+00:00"
+        "title": "META_TITLE_QUOTE",
+        "url": "https://news.google.com/rss/articles/CBMiTkFVX3lxTE9vUTlrYlk4cXZYeW54em1yNXRpVEZBYWJUYmM4Q0lpU3FQeWwxMGczZE85V2E1dnBFcmowUjRRN1V3N0xaamdsblRMaVpMdw?oc=5",
+        "source": "Yahoo",
+        "publishedAt": "2026-10-17T12:11:22+00:00"
       },
       {
-        "title": "Could Palantir Stock Create Life-Changing Wealth for Patient Investors?",
-        "url": "https://news.google.com/rss/articles/CBMingFBVV95cUxQYXZ3c0w0YWZLOGRSRTM4WXlPWEYxTmtCbXY3bkRldUpqRzdvOTc3Qm93cWJHNVg5YVJPelh5MFJZVU1pdkd1cXAzZzNEdTZGZXNHYU85bXBvdkhkaWl4QWg0QXBlUEo4RGMyVnlQRmp2YXpwRjQ1Nm81XzdTS3RJbkhOQkFGRk51WUJFWnZPMERhaTZPd1p1N1V4SVlIZw?oc=5",
+        "title": "Yahoo Finance - Stock Market Live, Quotes, Business & Finance News",
+        "url": "https://news.google.com/rss/articles/CBMiP0FVX3lxTFBBTy1pM1poaEROWTVTNDVTYVdvTDZEWmM1VDhGdlUzWW1OUXNvQ3RmZTVZQ3BGVlhvbTlWNFNhUQ?oc=5",
         "source": "Yahoo Finance",
-        "publishedAt": "2026-10-16T14:00:02+00:00"
+        "publishedAt": "2026-10-17T12:10:14+00:00"
       },
       {
-        "title": "Tesla pops, tech heads for losing week: AlphaCheck",
-        "url": "https://news.google.com/rss/articles/CBMiqAFBVV95cUxQMmpiN1dXVzZmNUhudWFxUmV0NW5BUnJJcjZGdnBCbGl5M3A1U3h2WUlzX1RtRmJIc0dnVTBYa2ZCQzVVNFFvSkJXd0JMMl9oLU9MbUN2ZW9paWdadUF6OW4xbW8xN0F4cVJFVHQwWXQtN2h5N2tBeVNubmMyTFlWOVd2a1lUQVlqNFRzMjV2bnR1OGU0RHlxWWhOc29Jc3czZGxQXzFNNTM?oc=5",
+        "title": "Chip index SOX posts longest losing streak since 2008 as AI worries deepen",
+        "url": "https://news.google.com/rss/articles/CBMiywFBVV95cUxNVzhSaEg5Q3lqQm8ydS1TSXpBTkFna0g4b2JVMmY2dENpeEIyUS1ISWZpcG9XQVlTQkxzRGs2cW5yYno5b2htYzRWT24xYVlqcUJTS194SWZ0MTlaS29STDJEbTZSckNCS2hpMUxRZlZQQl9FZk5mVU5Pd2VKaEdMZUVENm54Yk9od2hhRzBQSVgzVkVnTzVXdHN0aFhXSkxtd1FzQlJaMFFRNGJHN1V4MHZVQVpjajVZRy1rdWplc0FjbG1tOTRSTUF3TQ?oc=5",
+        "source": "Investing.com",
+        "publishedAt": "2026-10-17T12:06:45+00:00"
+      },
+      {
+        "title": "Citi sees resilient demand for Chinese AI IPOs despite valuation concerns",
+        "url": "https://news.google.com/rss/articles/CBMiygFBVV95cUxNUndLdDdwY01NSUZGQmk2MUtRZzY4dTFBS3g2bTR6UTVRV1RvclFZdWdSOGVlV2o1bUpPejh6WGg3NWxBRU1abmRPcWppaU1DR1NnTGR6S1prOWt4ZGlHU0YtVW0tdEpFR0lvTWlVc3dhRWpKaENSb21iZER3cDJyRnh6dVIzUDc0SWwtdmpDZ3N3Q2o5WTNfQ1hXYnl1WEdCUG41YnBTRWRKX3hZWERVNGFGVzZOR01uSU1HQkxNS3NrRFAteE5lYXl3?oc=5",
+        "source": "Investing.com",
+        "publishedAt": "2026-10-17T08:43:47+00:00"
+      },
+      {
+        "title": "President Donald Trump Claims Gasoline Prices Will \"Drop Like a Rock\" When the Iran War Ends, but He's Completely Missed the Bigger Picture",
+        "url": "https://news.google.com/rss/articles/CBMipgFBVV95cUxOWERVZ2lPOVhVT0ZpNjNDdWdnY0theW0tZVBUS09WRUMycW9kRm9uRWtpNkRlNGR6N3pyV0RBOWFwZjFHZHpMUS16M3d0b2dMVFo0TngteHRvQVRYSEc2MEpRc0toSkFDSTV6UzRvODZ4aFJYT2luTWFub19WY3dnYURUYmZvdEFxOUxmaHVtUDk0MU45X0Z1a1R6X2VCaV9sYmF0UUln?oc=5",
         "source": "Yahoo Finance",
-        "publishedAt": "2026-10-16T13:58:20+00:00"
+        "publishedAt": "2026-10-17T08:26:01+00:00"
+      },
+      {
+        "title": "Here’s how a stock market crash could help you retire years early",
+        "url": "https://news.google.com/rss/articles/CBMihAFBVV95cUxOeExSOTc2dUNNUEhsUUJUeEhyT0RkTVVhQ082bzF0OWdQbl9BWF9tRlhLbUhNcGo4ZEZXY28tdXh1bVh5bjFkVkJ6M1hpMHc0T1RnYWVFa051RDBVaWJhZlBBQV9uUUNQanZ4c0hCOEN1em1DZ1pwZG9ocGNjTHpOZ1VVQWc?oc=5",
+        "source": "Yahoo Finance UK",
+        "publishedAt": "2026-10-17T06:51:00+00:00"
+      },
+      {
+        "title": "The dress rehearsal for an AI reckoning",
+        "url": "https://news.google.com/rss/articles/CBMihAFBVV95cUxNekpZRjVEYnZWajdJb1RXT2NtWnU2OExJUWxNMlJ3WVNUNmlrb0tCeXBPNFpybmNpX1JUYTJVXzY1bXpSZ2NFWjZkWlFMQ3pGRkdBT2xDZFFCZ0dIdWx6M053YTh0VTFwYWVCNEFoVDljd3NIOS1oWm5CLThneTh0SXRfRUI?oc=5",
+        "source": "Financial Times",
+        "publishedAt": "2026-10-17T04:00:54+00:00"
+      },
+      {
+        "title": "This earnings season, what CEOs say matters more than what they’ve done",
+        "url": "https://news.google.com/rss/articles/CBMicEFVX3lxTFBQMDR6YlNfZjk4VGkwMU1LRUt2UDlkX2lyVFV0YTdkemQ5clNIZkhGbTNPcDN2Z3EyUWZieUdZVXFlaUx0RjNacWxNQ1hOQlRWcmFPc2hjZEVfeDBicVdNZ3E3bmhFbmJaT24wMjV4RGc?oc=5",
+        "source": "Financial Times",
+        "publishedAt": "2026-10-17T04:00:30+00:00"
+      },
+      {
+        "title": "Stocks are risky right now — but so are all the alternatives",
+        "url": "https://news.google.com/rss/articles/CBMicEFVX3lxTE9qbkZMNFl5RVRLNUJqLVUxYmdBbFp0NjJjdldzNUI1V2N0S19aSmZsMG5ualpoRU5vcUFCdWd3LTVXcndoR1lTUkFrZldEcUxqbXQ3alE1cldkeVpaWDJIRmdMU2g4QUhqek5mZUJUeEM?oc=5",
+        "source": "Financial Times",
+        "publishedAt": "2026-10-17T04:00:02+00:00"
+      },
+      {
+        "title": "META_TITLE_QUOTE",
+        "url": "https://news.google.com/rss/articles/CBMiTkFVX3lxTE5oRWFDOUk5RnFwTHd2QWxnZnYwNXZRTEtYaDRVUXZZVEJrSW5aWGdPZ1BwSFJtQ2RXWGY2OGJiTzU5MGZrbjZhUlNQdGZmUQ?oc=5",
+        "source": "Yahoo Finance",
+        "publishedAt": "2026-10-17T03:12:23+00:00"
+      },
+      {
+        "title": "CoreWeave stock plunges 12%, but Wall Street analyst says buy the dip",
+        "url": "https://news.google.com/rss/articles/CBMinAFBVV95cUxQWmtPUUxmSDY5MzZlTFZNbmN3OEl5NUEzNk42VnFqUXJzSmtTT0wzejFHRkkydUVRdDdycnlHaVVGUnk3NUVLMl9VYWlzczFWdE1qR1VydVJleWtScklzczRRU1RNcUNDbW5ndmV1WENtWWtxOGFQb3c1RFZRQVZxa2hrbi1ET2J5Vy1IcjVLVGlycGNzeVloejEyemQ?oc=5",
+        "source": "Yahoo Finance",
+        "publishedAt": "2026-10-16T22:39:27+00:00"
+      },
+      {
+        "title": "Stock Market Today, Oct. 16: Tech Stocks Plunge as AI Software Valuations Reverse",
+        "url": "https://news.google.com/rss/articles/CBMilAFBVV95cUxPMzlNZEN3WEdOTUszOTVwSzVCLXM3NC1Qc2Z4cm5SdVV6TjlCMDd2VlE0aXp4bWt5RkNoNG83c3puT3lUUTM4UnVXSWpFWGU0OUh1SGZodVAxUXREcjROaEFxblhXZmpEQTVKY2VWT05jVXlyUjVaZWJTRkg0Q2h3Wk8tRlB4ZFhGRFJoZ2pVUW5yX2xG?oc=5",
+        "source": "Yahoo Finance",
+        "publishedAt": "2026-10-16T22:09:48+00:00"
+      },
+      {
+        "title": "As AI rally wobbles, stock market’s spotlight turns to earnings By Reuters",
+        "url": "https://news.google.com/rss/articles/CBMiugFBVV95cUxQcl9zMGJ6U21sRGdyTlMtSVpmVUpVRnY0bzk5cWdxWjZUd2lWS29qcF9GekZxTFBjZHoyY1RWUTRya05fVWJ2bVdpNFRzcW1Xd3A4YmdNdkt1UWpEYnRPY2dETXNWSkIwcGlIYTREeVZEWkE4Mjg2NGFPRk9HVDVfMEJMZENhdDRPV09GMEtmVWVrT2VfR3c2UjFyNVhNSHBDb0daXy1tV0pDMXlVUmZKSmY0TlRramZyQVE?oc=5",
+        "source": "Investing.com",
+        "publishedAt": "2026-10-16T22:03:43+00:00"
+      },
+      {
+        "title": "Stock Market Today, Oct. 16: Apple Edges Higher on iPhone Duo Preorder Surge",
+        "url": "https://news.google.com/rss/articles/CBMilAFBVV95cUxQNzZHajh5RVlUeDFUY1Q5OUdyaV9HYmxHcDVGSW5HSjYyTDdLaVpQd3FVXzh0XzNnZXVsWkV2T005cTBHSDR2ZVROb2dHUnpmQk1RYlVxVzBKWVNxS1VKV0xQZzM0aHFQZmpRZy1hS0xyWm1qTjU3OS1SMTB5bVdwYjNxaXlQWEpEZDU3VE9zaGVYd1gw?oc=5",
+        "source": "Yahoo Finance",
+        "publishedAt": "2026-10-16T21:49:34+00:00"
+      },
+      {
+        "title": "Major earnings reports are due next week, but strong results may not be enough to quell market fears",
+        "url": "https://news.google.com/rss/articles/CBMiigFBVV95cUxNMDB5eUJodTlUZTZQNzNYdFhCVWFOWUdRZk5ENkFRNll3OEE0RjJkb0tMUzZRMkJYNktERG5pN1ZmR1JTUW1FczQ0UmQwSGRza2xUeUsyTndRajd0aVU3dXRTaE1nVkFKalpJZm9yMVVNWUJpYi1vUGp2VEJwQl85dmNzY0ExV015MGc?oc=5",
+        "source": "CNBC",
+        "publishedAt": "2026-10-16T19:39:38+00:00"
+      },
+      {
+        "title": "Palantir's record breakout unravels as software stocks shed $260 billion",
+        "url": "https://news.google.com/rss/articles/CBMixgFBVV95cUxNSXJobDgweVN4Yk0xRFJMQk5EeXlYRUtnTVUtdDFsNzZLTnl2QW10M2RRamVxQXpJcmdxVFVoSWVUSW04MDhEU2pZZHFjalBUTFpud05DS2pSX1FqWGtrUWxaVmxtbVRhSGJvTEgwVFgtYm9TckpjZ1BicXEtZVZ4cEFwakZkaHE3dGpJeXpjYUFxY2t6Zm1wQXZqNUlZRmZTUzJxZVFpYWlFR1ozUmw0Tm9aYl9tcjk3OVZMbm1rWTliemMtcUE?oc=5",
+        "source": "Yahoo Finance",
+        "publishedAt": "2026-10-16T17:43:07+00:00"
+      },
+      {
+        "title": "Why Is CoreWeave Stock Falling Today?",
+        "url": "https://news.google.com/rss/articles/CBMinwFBVV95cUxNQ18ycHRJQmJSUmN3YTRZSGNJWFpYX2FMS1hoY2YxQU9LTHA2UEtOeWlTdkpYWXFXRkNsd1VwT3ozX2dtZ3ZZY05idGthR0JzOHVPOTFBNW1pVlZKMmJXUjJ5OTNVTzNiZUZxQW8wR0ZGMHpZSUZxamUtWnZETHFWWW9HVl9rTkZLUEh6TEVuV20zUWFTUVhubGt1STJLd28?oc=5",
+        "source": "Yahoo Finance",
+        "publishedAt": "2026-10-16T17:21:01+00:00"
+      },
+      {
+        "title": "The Next Stock Market Crash Could Start With Just 3 Companies",
+        "url": "https://news.google.com/rss/articles/CBMiggFBVV95cUxQX3VSb3RtWnIydFB6dnZUbjctZ1ZIdVVxQVlvMVlkVTdGS1loV3AzNld6bGFWWDFPLUYydXNnS0hySURtbWotYnQ1OFZ5c2JfVFU4c1U1WGVqUkdHY28tdldEc0tSaFp5a3JpNGt6Uk9YbkFwMjh1UGIwRVdKUi1fSU1B?oc=5",
+        "source": "Yahoo Finance",
+        "publishedAt": "2026-10-16T17:06:28+00:00"
+      },
+      {
+        "title": "Stock Market Midday, Oct. 16: Tech Stocks Slide as Investors Rotate Into Defensive Sectors",
+        "url": "https://news.google.com/rss/articles/CBMilgFBVV95cUxQSlQ2aFVEMVA4QnI0Zl9HU0xkU25xa3FaTDlkWnVIaTUzLXFGUV9sV3lMWXlVM19zVmdEcXJoQW1kZVYwUzNVdUt0TDluRHY4OGpDcWl5Y25la3pRazVaSXRIM1o1cjhyY1dDM09zT2diYnI4S2lycXlIS2hnN1cyYXppc1JfYXQ1YVNIc0U1b2kxaEtKWnc?oc=5",
+        "source": "Yahoo Finance",
+        "publishedAt": "2026-10-16T16:35:43+00:00"
+      },
+      {
+        "title": "Stocks struggle to bounce back from AI angst-fuelled rout",
+        "url": "https://news.google.com/rss/articles/CBMipAFBVV95cUxPWmYxVlpsTnpEYkhzRkR0V3l0cTIyX2JKc1Zvb1pOeXc0RFpUb1JuT0t5WmhSWFJIaV8yNWpRcVNMWUpvUUVqallPOU00YXFiVzlCWUJqQlRWV0F6LTg5RzRzYlFIMXpQaXhQSV91QkFtclp1LWljTFZmSjFLZlZybjExUGhUVnZrT29RbGctRnBuRG1HQmphSzFyRVlPb3NqSlktYw?oc=5",
+        "source": "Yahoo Finance",
+        "publishedAt": "2026-10-16T16:01:29+00:00"
+      },
+      {
+        "title": "Strategy stock falls as Michael Saylor's bitcoin giant faces index-level threat",
+        "url": "https://news.google.com/rss/articles/CBMi2gFBVV95cUxQR242MmNRTnFjbm1fbWdzZDJnODhmSjc2aVpNS2VLYWVWQm9Xa2pqU2hUWDU2MzRXQ2dRQVlXTnJheFdvMTI5ZzJpTTBjOTNHenFvNWtZdlZaQ0VCdlpfamp2TkhkWi1Ndy1VdVBzaVRKUkQ3YTlyNFZrYzh6cGNId2Y2R2F1MW0zVll4TnVwZDhhbkJpQUdnNzNaRUM5UnlyRG5HUU05STlsamt6NWVZRzJ3M1ZXMTIzbXBxVHFKeU9xRVd6dm1KNVYyZUlTTmJpMDlEVlQtNnVKUQ?oc=5",
+        "source": "Yahoo Finance",
+        "publishedAt": "2026-10-16T14:49:34+00:00"
       },
       {
         "title": "Our top 10 things to watch in the stock market Friday",
@@ -35,16 +143,10 @@
         "publishedAt": "2026-10-16T13:19:30+00:00"
       },
       {
-        "title": "Wall St set for muted open as tech wobble persists; Tesla gains",
-        "url": "https://news.google.com/rss/articles/CBMilgFBVV95cUxQc0xJZDhoTHdCbXFuWjRsZGlQVHlDbUgwNWNQbTNXamJDWmlqaEkxc2pRV1FjVzRWU2lwbGl0elNTY2YzcGNCTUtTTFhuOWl5ZngydHpNTHlpSDNaSzZ3ellNUDVELUd1Wkp5QkxLZHV5LVItMTR1bGlVdU9ZN0ZhalZ0VFRJeTRpMTVmNk9HMXpqT29tQ1E?oc=5",
+        "title": "META_TITLE_QUOTE",
+        "url": "https://news.google.com/rss/articles/CBMiTkFVX3lxTE9xUkhVQWwwajZlWkxJNzUyWVB3bWZoazBrbGVaS0RlMjRaVVdBaGtOajVZYmU3cXlGZUkwUjVWbk5hU04wN1hjYUU2UGM4Zw?oc=5",
         "source": "Yahoo Finance",
-        "publishedAt": "2026-10-16T13:03:20+00:00"
-      },
-      {
-        "title": "CoreWeave stock sinks in pre-market as AI financing worries linger",
-        "url": "https://news.google.com/rss/articles/CBMiwAFBVV95cUxNaVNBdkVwbEpGX01QajlWRXBiWXJUcXk5TkNvVjNDZkxfLXJvS2hYY1duT0locUJubnRLLXl6bzE5YjVMSW1FQUlsVEE4NE1xN2ZHZzhaYk5FVVRaWDA4NjV3dDZKZW1PTkpzSjhfSVp6U21Kamh6d0ZEMmhxQXJXMjdMWVpTd3VMbEZnUWQybzlncGppcHhkdjAwV0U5UEtPZHBwZnlZU2F1Z2JxX09LYnRaSGMxNWk4MGszUUU2UWI?oc=5",
-        "source": "Yahoo Finance",
-        "publishedAt": "2026-10-16T12:43:45+00:00"
+        "publishedAt": "2026-10-16T13:10:41+00:00"
       },
       {
         "title": "Tesla's Roadster reveal, Apple and Meta team up, Nike's India push and more in Morning Squawk",
@@ -53,22 +155,10 @@
         "publishedAt": "2026-10-16T12:38:58+00:00"
       },
       {
-        "title": "Yahoo Finance - Stock Market Live, Quotes, Business & Finance News",
-        "url": "https://news.google.com/rss/articles/CBMiP0FVX3lxTFBBTy1pM1poaEROWTVTNDVTYVdvTDZEWmM1VDhGdlUzWW1OUXNvQ3RmZTVZQ3BGVlhvbTlWNFNhUQ?oc=5",
+        "title": "S&P 500 Correction Risk Grows as Index Rally Lacks Broad Participation",
+        "url": "https://news.google.com/rss/articles/CBMilwFBVV95cUxNTUtBMkg1eFdvb0NscTdidU8yN002NTVqYW1OVG42TmM0M0RnaGc3UjBlRndOaGFqN084ZU1tODdiNUVaLUpxRE5VLU5nUndqZndGVHNQWndLcklWM1V2Y21RU0xMMjRoNW1wWERJZnp0Q3Z2Q3MyZG91aWRDd0I4M2t3UWplVE9RYnVjUmVncDlZVFpWVEtR?oc=5",
         "source": "Yahoo Finance",
-        "publishedAt": "2026-10-16T11:53:04+00:00"
-      },
-      {
-        "title": "Stocks rise as tech bounces after rout over AI worries",
-        "url": "https://news.google.com/rss/articles/CBMipAFBVV95cUxPWmYxVlpsTnpEYkhzRkR0V3l0cTIyX2JKc1Zvb1pOeXc0RFpUb1JuT0t5WmhSWFJIaV8yNWpRcVNMWUpvUUVqallPOU00YXFiVzlCWUJqQlRWV0F6LTg5RzRzYlFIMXpQaXhQSV91QkFtclp1LWljTFZmSjFLZlZybjExUGhUVnZrT29RbGctRnBuRG1HQmphSzFyRVlPb3NqSlktYw?oc=5",
-        "source": "Yahoo Finance",
-        "publishedAt": "2026-10-16T11:30:58+00:00"
-      },
-      {
-        "title": "Stocks rise as tech bounces after rout over AI worries",
-        "url": "https://news.google.com/rss/articles/CBMihgFBVV95cUxPekxXQVI0UEFxRXdOQlByUWZfQW5iY0JDbkFXTmRRNDJlM1JKVG96b2xtblNINnVMTjh3X2RfeTA2V3pLTDd6ME80alRFU3JUVVp6WmFoRUtaeUg2cUpSaVZOZU5KQmJzMUJEMEFsb2hJYV9BSDNNS0wzeWxpcGNFeWtqbkltQQ?oc=5",
-        "source": "Yahoo Finance Singapore",
-        "publishedAt": "2026-10-16T11:30:58+00:00"
+        "publishedAt": "2026-10-16T12:18:00+00:00"
       },
       {
         "title": "The US economy is facing 2 hot wars heating up at a bad time for the White House",
@@ -77,10 +167,16 @@
         "publishedAt": "2026-10-16T11:01:05+00:00"
       },
       {
-        "title": "The US economy is facing two hot wars heating up at a bad time for the White House",
-        "url": "https://news.google.com/rss/articles/CBMi1AFBVV95cUxQaFpBQm9OaXl6TTljcG9tMVBkdXVpMlNUaENFOVVZcmF5NmlWY0ttZk9uVmFXTmdHVWNzYUF3bGVuZ2tnUWRFbUp0eklTX3diTHZSczQ2X1pVWHlLWVVEcjRTcld3TlBocEktTWMyckUwZ0JQSlhwT2VzTExNNzZjNXMtd2VfQ1JHT1lLbE5lWTVuTkNXeHdXSTQ2LXBEZ3hhWTQ5eEt0SEszOFg5OVdRUmJ2NDU5Ny1VNnpLcG9FV0tTeXl0TEZwY2phZEtyTWNfU1BRbw?oc=5",
-        "source": "Yahoo Finance",
-        "publishedAt": "2026-10-16T11:01:05+00:00"
+        "title": "Indonesia stocks plunge after MSCI says market could be cut from indices",
+        "url": "https://news.google.com/rss/articles/CBMihAFBVV95cUxPZnU4YTEwTkF0aUpWOTQ4YWFQem9tVUhiN2w3ZnBrX2VEckE4aktXUnJySWhBR1FjR3QybndOc1JXQzd2SnAxNGdtVTZJVlJCTzdJc3VrMWdPVmFaY2ViLWh3OTZkMUd4NzRxZ0dsX2wzalFPWnMtYUJjeGpCMEhFYlhUODk?oc=5",
+        "source": "Financial Times",
+        "publishedAt": "2026-10-16T10:16:34+00:00"
+      },
+      {
+        "title": "Big Tech stocks suffer biggest weekly drop since ‘liberation day’",
+        "url": "https://news.google.com/rss/articles/CBMihAFBVV95cUxQeW9yUE1obkVWN1d0NzMtcm91X3BOSHNDQUxxemwweVdhdDZocXFKbEJqcHpORk5yaGpqNzNjUVpPeDJRaDdXSnYtQUZPRXp0cXhkX0c4V2tzVXg4Y2RSNXlhQ015a2lONUY0SFJocHdEdDQ3RGpyNWxvazhyQ3VaSEtpVXA?oc=5",
+        "source": "Financial Times",
+        "publishedAt": "2026-10-16T10:08:02+00:00"
       },
       {
         "title": "Banks are pulling back as AI's massive debt pile disconnects from economic reality",
@@ -104,31 +200,25 @@
         "title": "Stock Market: Will S&P 500 Open Up or Down Today?",
         "url": "https://news.google.com/rss/articles/CBMikgFBVV95cUxNMVQ1VkZFdWhTQ19aa2o5Z1NQM1FtaW11dzMxWXdqRE1QdmQtNTg4YTdYNGFsU2lSekhFeHhkWVNQSndPN1EtUTRtTDNBY3R5QmRwVlJiMTV5c2JlUFdlXzY5SE1JXy1yaDNMck1wUU1mT1Z6ZkZKNl9JWWdDM1VYTXZhN3J2a0c0Zk1BYkZ5ODM0QQ?oc=5",
         "source": "Yahoo Finance",
-        "publishedAt": "2026-10-16T06:24:14+00:00"
+        "publishedAt": "2026-10-16T06:24:00+00:00"
       },
       {
-        "title": "Hiding from the everything trade",
-        "url": "https://news.google.com/rss/articles/CBMihAFBVV95cUxQTU5QLWhlY0F3LVBISUJGQmlxYXh0V09ZU1FsdWVfamhmNHFzN0hRVFFxcmdzazRsdXlIbFlncnNkanZPdkZGWWQwZzE4amFwb1J4MTJHNW05QTlXVEVEZ0UwalZRU3YxVGQ4TndzdjlUT1l0UTRvalZ6Z2hLU0QyUUZOUy0?oc=5",
-        "source": "Financial Times",
-        "publishedAt": "2026-10-16T05:30:43+00:00"
+        "title": "Stocks rebound after tech sell-off and Indonesia shares sink on market downgrade warning",
+        "url": "https://news.google.com/rss/articles/CBMiogFBVV95cUxORThJY2FVVmxPQk9pME9WbWhwZUR3TFVGcG1HekRzc2tfc3lhc2V3QmVIVjhrT3BpTjVsX3pzTmU1WHBQeVF6cmpZNG9YcTBySTJXVVpYS3VweGtKeUNSM3NZZ2RJQTVPc3BOZ1lhbHc5QUlZZEFWT29pc29mUlZRMXZ5YXpXQl9hNU84MnRVOVJ6R0hIS3ZWVmFfakQtU2V4cWc?oc=5",
+        "source": "Yahoo Finance",
+        "publishedAt": "2026-10-16T06:08:17+00:00"
       },
       {
-        "title": "So. About next year’s earnings . . .",
-        "url": "https://news.google.com/rss/articles/CBMicEFVX3lxTFA4M1dmTXRHamE3NDFYN2dFX0VjVjNKMTFVM0VxRGw0cWRXcWVEZEI4ZTdYOFU2UXR1WGpVRWJGLTBGTS1jRENsc3dZZ3R5VjZ2c1hTa2g1UXBza3dWOXdZVzlEZzBCR1IyNFBrejgtNnQ?oc=5",
-        "source": "Financial Times",
-        "publishedAt": "2026-10-16T05:00:08+00:00"
+        "title": "Fed's Warsh surprised by world economy's 'resilience'",
+        "url": "https://news.google.com/rss/articles/CBMiogFBVV95cUxPSkdXWjZfdVRaaGhvdEFmd0lvQ2ZZQzRlZE4xQmx2aWpmakFwY1Y3NDBRUG1ib2tZZTVRNk1MS3NZdjZsTHl4eDNxbnk0bGhBYTJDMHVScmU3dW9zNmNJajdrUDUzaXFiUVkwMElEM3JnRmhiTnZTbFQxb2p4cEJ6UW13SFhOeV9sRGJrTU92bUhrTy1HWU9mVjBfMkwxV19zMkE?oc=5",
+        "source": "Yahoo Finance",
+        "publishedAt": "2026-10-16T05:33:00+00:00"
       },
       {
         "title": "The data centre IPO debacle that sparked a market meltdown",
         "url": "https://news.google.com/rss/articles/CBMihAFBVV95cUxOSmk5ejd0SFBvajRsVWlCUWR2OFpiT0dfLUtrQ0NlOFo3MlJZR2IxM2JCZ3I1V2tMNUk5OGpGOWJ0VllLR1Bycm5GZmJhOHlCTVVTcTJRSGx6STlObHJmN3RrcmZ2cUFKaW4zR2kySHZERFBLQzRuQmdjN19MbF80bWw2WFM?oc=5",
         "source": "Financial Times",
-        "publishedAt": "2026-10-16T04:54:52+00:00"
-      },
-      {
-        "title": "Elon Musk agrees to settle lawsuits over 2024 election lottery By Reuters",
-        "url": "https://news.google.com/rss/articles/CBMiuwFBVV95cUxNbGFsXy1qRElCTmxoNlpOMzNjQmNVNmZoSmVJSGNnTEVhRnR0LURScWxTLXhpd1U2WmFKWkhjMW9VTDdsZmRjN3hJYmV3eGdpOE5vQlJqaEhOUTd6S0J5SV9kNFVsMGRwXzBrVm1sLU5uZ2NnWXJOMkRUbUx0aVJ0YXFTRWItYTNNWWRyRDRsQUpab3V5RTdjN0xMMFRfWl9lRmlyLXdYb3gwWnIwWEw4b0NRUDZjU0RscFJJ?oc=5",
-        "source": "Investing.com",
-        "publishedAt": "2026-10-16T04:12:33+00:00"
+        "publishedAt": "2026-10-16T04:56:58+00:00"
       },
       {
         "title": "Wall Street’s AI wobbles",
@@ -137,112 +227,22 @@
         "publishedAt": "2026-10-16T04:01:15+00:00"
       },
       {
-        "title": "Nasdaq opens lower as tech stocks face pressure from AI jitters, S&P and Dow up",
+        "title": "UK government courted UBS over London HQ move",
+        "url": "https://news.google.com/rss/articles/CBMihAFBVV95cUxNdF9vaThHUkhJc3lYOWE2S09mTl8xQzBEc1hEUG9YSjEta09MYURlcDh1S041RnhINmhKOWFhSFEwaVJzR1FFRFVfTU1aYzl0RENtMVVYbFo5c3JNQ3FJa3JmOXpJSXdhUF9VZXpqT3hILUdwbGpIcDh0bVlDeWhrRGN6VlI?oc=5",
+        "source": "Financial Times",
+        "publishedAt": "2026-10-16T04:01:15+00:00"
+      },
+      {
+        "title": "Nasdaq notches worst week since late June with a 4.5% slide as AI trade suffers",
         "url": "https://news.google.com/rss/articles/CBMivgFBVV95cUxQQ0ZOeFhSUTFRYmo1VjU2Ym5WV0xqQU5hNjI5WkhJRHE4ZjRiX3hqZ0tyV0tQMm41dHhLa2pZS3VUTUNnVldSZTNKcGU5cU1xT1VOZE1hd2IyZndFWktuMERIQ056SnljSDRNX1hlUDBQR3d6UndoSFpOcHpDbTluWXpsVEVlbUZoaTM5UFNpZUEzM3BpX2FtMUR6R1JWVTJsQ180eTBrTHFYc1RmQzBLUG1mbHVXSDlYM2VycDhB?oc=5",
         "source": "Investing.com",
         "publishedAt": "2026-10-16T01:11:44+00:00"
       },
       {
-        "title": "Indonesia stocks plunge after MSCI says market could be cut from indices",
-        "url": "https://news.google.com/rss/articles/CBMihAFBVV95cUxPZnU4YTEwTkF0aUpWOTQ4YWFQem9tVUhiN2w3ZnBrX2VEckE4aktXUnJySWhBR1FjR3QybndOc1JXQzd2SnAxNGdtVTZJVlJCTzdJc3VrMWdPVmFaY2ViLWh3OTZkMUd4NzRxZ0dsX2wzalFPWnMtYUJjeGpCMEhFYlhUODk?oc=5",
+        "title": "Treasuries rally as investors seek shelter from AI turbulence",
+        "url": "https://news.google.com/rss/articles/CBMihAFBVV95cUxPYUozTHM0dkZqb01wNmhUc2twRnYzMk8yOTV5V2YwSW5ndGRjN0lwNDdNUGFWbHRrU0kwWEp4OGJUNXp4djlDQnE4eXNDdy1BVk1WTUNMV1RCUWtGN3FOcmx0NHFRRkRIY3IzYzEwandjV0FTNlRfbnNZbkxvbDMtNEgzWE4?oc=5",
         "source": "Financial Times",
-        "publishedAt": "2026-10-16T00:44:30+00:00"
-      },
-      {
-        "title": "FirstFT: G7 plan simulated AI attacks on banks",
-        "url": "https://news.google.com/rss/articles/CBMihAFBVV95cUxNLWw4X2lMUTBhOXdMZ0lSNXdjTTU3dkFPamJRRjlCY1BGR010SVhXMThpdnpEYzhQejdPRlMzUFVCNF9VcmV1cG5STllfZ3NPUDktSEEteERLY0liN3VabzZqMzVTRzJTYllNdFJmX1h0M05mNzdfSEhkOExoaUFUdmRnVE4?oc=5",
-        "source": "Financial Times",
-        "publishedAt": "2026-10-15T21:57:14+00:00"
-      },
-      {
-        "title": "The Fed still has little control over the 2 biggest inflation drivers",
-        "url": "https://news.google.com/rss/articles/CBMixAFBVV95cUxNRVdBUTNZWFdzN18za0drN0dZUDZXU1ZaSVpXd1RqS0d1aENfb0xHMHl4VnRiS3g3SXVSVHpGT04xNzgyU3o1aWdfa1FETnp5bThVVXBsdTJaaDRONDgyNkRhRmRoVk41TDFCMDJjbzBGWTl4NUFhWkFjYWo1eVNwcG90OFc1R0hGS3k5dkRzQThQbUtyQlBCTWJ4YmhDNzRfN1FFVGwxbEtBa2c3STQ3dndMUDhvZHVLZl8tX3M3b3NBd2Vl?oc=5",
-        "source": "Yahoo Finance",
-        "publishedAt": "2026-10-15T17:47:00+00:00"
-      },
-      {
-        "title": "Democrats have an edge in midterm polls on the economy. That doesn't mean their ratings are good.",
-        "url": "https://news.google.com/rss/articles/CBMi5gFBVV95cUxQbFVEZWhLeEZvLV9IUEMzbUFkbktfTUpHM0ZtUmVkbzRDYmdiLXk4Z1hyQW15MWYyVzBpdU9GekdKeWlOSGMwdHNFTi1ZY0NaV0Z6aS0zSzh0bEU3NTQ3Mi1hQlo1cms1YUFGaWJpRFZyd0czMTl4VUctWmQtQl85VXBqdENBNllnTXpMM0w4ZE9Za1hsVzU5UDlCcUZ4aUMxcWhLX1pJNGVPXzRONllJcC14X3VXcU9sMUhUanhGOVBKTm9uT3pYTXFnSng3NnRDdXN1QVFRNFo5cUFMbkFFU213Y2FBUQ?oc=5",
-        "source": "Yahoo Finance",
-        "publishedAt": "2026-10-15T17:34:34+00:00"
-      },
-      {
-        "title": "Chicago Fed’s Goolsbee says the stock market isn’t propping up consumer spending. It’s strong on its own.",
-        "url": "https://news.google.com/rss/articles/CBMi7gFBVV95cUxNRFpIUS14eW1NQTMxaWpZd01QLU95dGkyT0hhOE55eEprdEE4MmJlT2lldmVLR0wycURrbFZaZEpmUmV6eF9XdGxQRGdZNExsaEFJbzBFMTlWX19INUxHU00zQS10Y09BSGg3Q0QxMGlSQWMyb3dPYzJza29IQzZka19Wb1d0RFhsVmo0MF8ycnRoY1gtQVVHOWRGdDlXSzRxVUFlbUpMaWxYVmhWV2kwTzlmMHZ3a3gtaVhaNm1zRmFOYzVXZkpWOEFrLXA3MmNSQzZDT2x2Y3FzNWhnc05KUmUxT0YyTmVQQzRhQjhB?oc=5",
-        "source": "Yahoo Finance",
-        "publishedAt": "2026-10-15T17:13:52+00:00"
-      },
-      {
-        "title": "A lot changed in stock market in just a few months. The single biggest risk did not",
-        "url": "https://news.google.com/rss/articles/CBMic0FVX3lxTE8xSHVzX3JOTGhFdHo0c3ZQOXdvMG42NTl4WHRyNjB4Qm5jNGw0eFMySUowdHlwdU9zQ3hvZnk5WWR3dHotMWVmaFpTdGlJSENCeUtmWmw2bFk5Y3lYY05ub2hhU0tiOWh6LUFpSGxrSU5fUknSAXhBVV95cUxPZ2t4WmlBVGNvREtBbDUta21OUE1FOVRubEk0azhrZUwyUy00LUFwN1dySTliOTREdzZqblh4TWRYTmozZFRKcEtXMGZTN3JaMG9zd2J5TGFSS0JucThwNUdSd2xCRGpWQU8tcVNGRjhuNVRaZ2NqdEI?oc=5",
-        "source": "CNBC",
-        "publishedAt": "2026-10-15T17:12:33+00:00"
-      },
-      {
-        "title": "Hong Kong, remade in Beijing’s image, rebounds as a global financial center",
-        "url": "https://news.google.com/rss/articles/CBMitwFBVV95cUxQcDlYcGR0cVBSU3R0UkNYOEtuTXFsZWZnM1RReXQxRnY1and6eklBVHJPTExzZFRIWk1xSTdJWWh4Ym5Ec0dhVHN2NThndHBpcndDTjR4N1JIamdsaktfNzJvWW43Nktnd1VDRHdWRDZtOHNQaWdYdWd1X183aHZSZVd2M3pUSk9BemRMNVRlTThxOFJmcnlhMDh3QjRVWXFfZzFRNll3UmNMNk9CU2JIcTdGS050Qjg?oc=5",
-        "source": "The Washington Post",
-        "publishedAt": "2026-10-15T17:00:00+00:00"
-      },
-      {
-        "title": "Risk of an AI crunch for stock markets is rising",
-        "url": "https://news.google.com/rss/articles/CBMihAFBVV95cUxNaVIwTUZjREZmbElVN2VsVXhEWDR4M3RZRW1nUUZjYTZaOVpDR205YzhYdlh1TnpJOXRCdXBPcndTak0xek9XNWF3WVpldnoxUG1rcWJ6MW9idjRxcWRRbU50N0piTElMLU5adVluSHEyMmEwZnhSc1N5N2dIQTJHMXhqWjY?oc=5",
-        "source": "Financial Times",
-        "publishedAt": "2026-10-15T16:53:57+00:00"
-      },
-      {
-        "title": "Why is Nike stock rallying today?",
-        "url": "https://news.google.com/rss/articles/CBMimgFBVV95cUxPX3hneGxLSHNrQ2hKdkRlbTAxVjFUd0VRaEhxZ3ZBN0VFMlNzWEpQOVg3eE5XQ1dZazJhOGZ6Y29IV21XWFZzZ1g4NXp0QnJPY2h2UTZ5dmwxcHhLb3RSVDhzVzVIaXFWcWt5TkU1QWZlYmVjTVB6S2o1MklnTUpzT0wwTHo4QzVsRjRINC1JTGpfenBOLTJiU3pB?oc=5",
-        "source": "Investing.com",
-        "publishedAt": "2026-10-15T14:26:49+00:00"
-      },
-      {
-        "title": "Stock Market Today (Oct. 15, 2026): Dow edges higher as tech sell-off pivots",
-        "url": "https://news.google.com/rss/articles/CBMilAFBVV95cUxOOGw4VXVWdHRkWnlJQjF6cVA2Q19BNXV5aFAzYjVxZmNZOEROblpMM3N0WTJNQ0ZGWWMwYllQRkUtZnFLV3IyWnVCNklxWllJNFV1b21uUkZ3b0hsVGRiQmZFdUU3Q185Z2JfeU9KVTE4cmwyd0RtTGM4ME9sQUJYMjVhak5CTDA0VW9feXdpdzlXY1lZ?oc=5",
-        "source": "Yahoo Finance",
-        "publishedAt": "2026-10-15T14:04:29+00:00"
-      },
-      {
-        "title": "Meta Platforms, Inc. (META) Stock Price, News, Quote & History",
-        "url": "https://news.google.com/rss/articles/CBMiTkFVX3lxTE9xUkhVQWwwajZlWkxJNzUyWVB3bWZoazBrbGVaS0RlMjRaVVdBaGtOajVZYmU3cXlGZUkwUjVWbk5hU04wN1hjYUU2UGM4Zw?oc=5",
-        "source": "Yahoo Finance",
-        "publishedAt": "2026-10-15T13:09:55+00:00"
-      },
-      {
-        "title": "Jim Cramer's top 10 things to watch in the stock market Thursday",
-        "url": "https://news.google.com/rss/articles/CBMitAFBVV95cUxNcjd5UEZqYXcxc29YTU9jaFk5WTFuZ2tGaXdjMkc3WF9lLThrOXNQQl93cFNHZVctSnF5WjZ6UUxoa3FFSFZiTjZpcDFGTWZ0VGxGOEpoNkpMNFpIRGVsSldUZ3Y3MHBTM29jTjgxcF9IZXVFamhQa0dtR05SMXNnbV9DVUdMSGh2WnFERWNGcnpXdEI2QWs1ZkZJb3c2UUVjY0dFZW1HRW03clZQZksyRTZsNkM?oc=5",
-        "source": "CNBC",
-        "publishedAt": "2026-10-15T12:54:30+00:00"
-      },
-      {
-        "title": "U.S. Treasury dismisses IMF debt warning and 'messy' forecasting",
-        "url": "https://news.google.com/rss/articles/CBMicEFVX3lxTFBZY1NUZjhHeVA2REtJMEQ5MUFyTzVOWXBBNFZWMDdPOFZONHFBcFFzS3lVampLYWNvQUhXZ05HV3Y0cm9UekVaSmttaU1idDZOWHlZWjdiejRXYkF3aUpCejZRenBfY2lwM1ZBLXJ4ZjbSAXZBVV95cUxQMEdwUVpTdThmSlZuaDVQS1d5cXliTEY4ZmxWN3hCcjlJOWRIckc4Q0dOejU5Z25iZGo5VXlONmFyc2VtUW80Ql8yT0dnazVWRkl1R21Xc1RLSjF0NDh2SmZxakRVYWx6NmljUE80Ymw1QVN1V1d3?oc=5",
-        "source": "CNBC",
-        "publishedAt": "2026-10-15T12:40:58+00:00"
-      },
-      {
-        "title": "Wall Street's latest AI spook, Netflix layoffs, 'good debt' and more in Morning Squawk",
-        "url": "https://news.google.com/rss/articles/CBMiiwFBVV95cUxOU0JxOEZBeDdndzFPa2t0Z1pDYTNYaVZ1SHBqX1k3TTFIWWNkbkdxNVVrbzcxa2UyTkEwcU5XUjd2SE9SeVpzX1hFSGctay1kbXlFTHBYWkNaZkJsWWN5NXdQVnBQLXd2dnV0NzJsTWN2OE9Tb2ZsRFVSR2pnQkpRTUZfWlQ4ZE9IVE9V0gGQAUFVX3lxTFBGR3Y4VEVsemxabFZZOXlONDNkRHpRcXJaaF9yUEhHVGVvMnZST2JGNjJja3hXTGxJaExVeGo1aXA0UDVscmxtN1RVNURnR0VXNWwtSUdVYzdrTHA2NGJzWWtTX2VVcVRzQWhtQTA5TmFRZFhoYVNEcU9HVEcxQ0dTRV9IRzhYODlXZTY4WXdERw?oc=5",
-        "source": "CNBC",
-        "publishedAt": "2026-10-15T12:32:10+00:00"
-      },
-      {
-        "title": "Suddenly, Wall Street is worried that the U.S. economy is more ‘vulnerable’ than it looks",
-        "url": "https://news.google.com/rss/articles/CBMikgFBVV95cUxQMC1PZ0JGN3Q3cTJndzdNMl9QdDNmblNkQ1RfbkVvQnllNWc1bWVPVmdmTDZQQUQ3YkVhUWdyTnFnZG9wVlRMQXlzaG9QNEFwVS13bl9ERkZpWHBtM3M4dlBWN0xVdlRsdXNjMWtLLWNPbUtvSklxbVd0YVQ2YmRTWkZkc19SdzFmeGU5UW5vZkJEUQ?oc=5",
-        "source": "Yahoo Finance",
-        "publishedAt": "2026-10-15T10:19:21+00:00"
-      },
-      {
-        "title": "Analysis: Why a $2 trillion deficit and 5% Treasury yields are becoming America's biggest economic challenge",
-        "url": "https://news.google.com/rss/articles/CBMigwFBVV95cUxQalhWcWlzMjVxa3JBblh4aUhxR0FkWGFlWHNQZkxWSndTdVRGS1JXS1daZzEwSDRtSmJ2cU5aRjdrb000NlFITjZPeFAyZDZqYUhuQmNBbmdiNzJtaGY0bVktV3NyU1hILVJ0VTg3dExIb3pNT21hREF3VVllenF3RHpMMNIBiAFBVV95cUxNdjhXc18yU0dxVnRCcHFGV2wyX1hSUmE4ZnRiNHp2UmV3dzV3dmN5cS1VTHJNbVRpZTFhT1RUOUtZd25JdUtBMU9iWlROZHBkWk05NUZmWlZyU01zcEpIMDBrREk5cFRhRHNhd01ZSGxBNVdTdnVsUDFSREQ0aGV4WEhQemFjNFB3?oc=5",
-        "source": "CNBC",
-        "publishedAt": "2026-10-15T09:30:06+00:00"
-      },
-      {
-        "title": "Treasury yields slide as investors flee to safety of bonds amid tech rout",
-        "url": "https://news.google.com/rss/articles/CBMihwFBVV95cUxPTG9TMW5xNVlWX1Z1M2tfVmlrX09EZkoxQjFSTFBoWjRBVkE5WTlHYnM2T0hGM3hqSjVHdjZxUHR4ZXhiYmRGYlhyQ3U0ZnR6UEVIUVFSVGt5cUNMQWxQZTVsY0cyUEhjaVdaZl9sY05OdzNkeEk0VHNJb0hZUzZaSGd6TUxyOXfSAYwBQVVfeXFMTkpIcEhpSzBodHBTMk9lMjdSZnVSTnY0M0xzSEhYVmVJbC11ZTF3U1lIekRJWnVQZWRoQVlpRm1DcnFDaWtlWnBGU3czWnRPLVlMaHZsdkdPNEk2cTdOclVSOXN3NzdzY0FmaXhDbVFxaWRZUDh3SE56YjRKWjlFQlE1YmNJSi1fVlVSaTM?oc=5",
-        "source": "CNBC",
-        "publishedAt": "2026-10-15T07:52:47+00:00"
+        "publishedAt": "2026-10-15T20:20:36+00:00"
       }
     ],
     "stale": false
@@ -250,8 +250,38 @@
   "rates": {
     "provider": "Google News RSS",
     "topic": "rates",
-    "updatedAt": "2026-10-16T16:25:40.449467+00:00",
+    "updatedAt": "2026-10-17T15:20:03.314239+00:00",
     "articles": [
+      {
+        "title": "Major Cryptocurrencies Mostly Higher as Dollar Eases",
+        "url": "https://news.google.com/rss/articles/CBMisAFBVV95cUxPVmxkcm5VeURLM1hlZXFIV2M0QzVZRFZrLWJEUWdPMjZ1QnNXVGFQbFhyZ1ZkRzVZeUFBVUZ5bjNIQ1BkMEJfbjVFb3ZBUV9uVUIyVEdaMlJGdGZwTThpNXhRUW5JenhhZVhJYm9VNGhDX3AxbHV1NVRHUkIwOFVoU2dvczE2eW0yOVFNNUJFOW05aVpQc0JRRjJXblNOS1ljQTh4OE9ybVFnMmxRTWh0QQ?oc=5",
+        "source": "WSJ",
+        "publishedAt": "2026-10-16T18:32:00+00:00"
+      },
+      {
+        "title": "Yields on Treasurys, European Government Bonds Edge Higher",
+        "url": "https://news.google.com/rss/articles/CBMiggFBVV95cUxQaTh2LXo3TUR2cXpfSTI2QlNFNGQwVlNtM0FMQW9EZ1ctdGZmSXd1WFpnTnN2a3VKTHdHdmNaLXlEd21pdnJWdEZOZ0MxV2dnZ29LZ1RoZXlRS2x5V2JLazF1a1puX2NjM1h0ai1fdXRFal9hTDZLMDNBSEk2SHJnc1BR?oc=5",
+        "source": "WSJ",
+        "publishedAt": "2026-10-16T18:21:00+00:00"
+      },
+      {
+        "title": "How meeting 6 times a year instead of 8 could arm the Fed with more data",
+        "url": "https://news.google.com/rss/articles/CBMi0gFBVV95cUxNdWlxbTdsRjdxaC1lQ2JBSV9vRWQyWWJqY280M1A5U0tEMWMyMzRUQ2JCU05ZclU2ZzNhN21ZUWRhdDRHMjhqc3N3OFBDVFV3QkJRSXRJRFo3NHRxN0QwdDgzMGZ2WDduNmVVdUZaV3lnT0c5NXhtMXc3cWVfYzAwYTE5bmc5dzFLSVhIYnFEN1pzSTZBQjBOc2dYb2N5emZ5dFBXc1pXODJERWg4NzBmcExDSjFhbmZEekN5UUN4TzJqSDRRTG9kWnVDUkJoMjh2Mnc?oc=5",
+        "source": "Yahoo Finance",
+        "publishedAt": "2026-10-16T18:05:28+00:00"
+      },
+      {
+        "title": "US import prices increase; post largest annual gain in more than four years By Reuters",
+        "url": "https://news.google.com/rss/articles/CBMirgFBVV95cUxNSnRBUTR2dUVhdkNydGlYc05qaTlNbHA4Q1hTSjlNdVZRUldPenZ4LTFaR3pqMXNJUHMtSURiNlRjdGNQMktpNW9ZS3owamlmUjNTcEdaaTRESXhwMzBMSVJ4Mm1FVEVpaWwxOXBiRjBPOUlSWkFXUGRNZHdyZTQyOGt3MW9mLUVDMVV0dF9Ta0d5WDRiNXJaSHB3eVVwa3FQVTdoZ3d5R3JaMU55ZlE?oc=5",
+        "source": "Investing.com",
+        "publishedAt": "2026-10-16T17:38:04+00:00"
+      },
+      {
+        "title": "Modest Rate Hike Unlikely to Curb Auto Demand, Though Dealers Face EPS Risks, UBS Says",
+        "url": "https://news.google.com/rss/articles/CBMimwFBVV95cUxPTDdGTHFsWnhEb2FQUlRrVXZISW9panlKeDhqX25nM1lpQWd4bWFsUWhzblZMa1JXWURUR1V4NldQY1hYSUU2NGY5bklacnRBZmJUVVhIbFNmbHVVOFpockhiWDFNdE93U1JhRnJvM3hXSGZTajBWaXMxRkxpZnFuTXM1ZWd6UUl3QUNQVmhOQnBaU0lhX2h6VUlPYw?oc=5",
+        "source": "Yahoo Finance",
+        "publishedAt": "2026-10-16T16:56:56+00:00"
+      },
       {
         "title": "Analysis: Everyone expects the Fed to hold rates in October. Kevin Warsh could surprise us all",
         "url": "https://news.google.com/rss/articles/CBMimAFBVV95cUxNZFl6VlNnRU5TX2V4NEx3eEEwWDhfZGMxS3FsUVd2Z0FMZzJLcnNfOEQ1Z2xxYmc5Nk1SYVNFQkhQeFZiX21fdFJTOWZ4aEhvTU1mQTRIdEFYMms2Q093RS0xMURjb3RwTVNfQXp0cVhjTHpGUEdENzBHeERCYW84dnRkRE1DVjRuTXo5c3M5aEkzOXNkMnlFX9IBngFBVV95cUxQUjQ0SjZBMDNsSDI4cDdJVTgtUFlVdnlhQXN4ZjViU2R2bWdobHQ4RDM2cDVIc1J5RGJwOXZsNnRUQTh6QkFyVEFjbUc0blFvNUE4M2tZN1NnRTJhbnVLa1AxYkk3R0xCTUpQN1dRV0dNckx2NzFXZktaLW1QOXlCMVJmN1FfWjJNZmJma3hQcGZvQUF6NkNaZGwySWtmQQ?oc=5",
@@ -259,16 +289,10 @@
         "publishedAt": "2026-10-16T15:38:44+00:00"
       },
       {
-        "title": "U.S. Stocks Mixed as Investors Pare Rate-Hike Bets",
-        "url": "https://news.google.com/rss/articles/CBMioAFBVV95cUxOejZOQXlJbWJ1MWdyZ3pkaDZPbW5YTk9qMHlYOXdaU29XX182REZFdzMxZE42X2ZNb1FDSXZkLVNYZTZrV0NOS2RzcExEdThSQm5rUUpEYUs2STZiMmFRaGkxakVTd3BHX0RqblIzRmhoX014TC1KT0ZGNVRETmJmZ3JCNGVWOF8wX2lEVmN2VWJRV0VBZ3ZRV0Y3QmIxYlhR?oc=5",
-        "source": "WSJ",
-        "publishedAt": "2026-10-16T15:02:00+00:00"
-      },
-      {
-        "title": "Euro Unlikely to Sustain Gains Amid French Risks",
-        "url": "https://news.google.com/rss/articles/CBMisAFBVV95cUxPVmxkcm5VeURLM1hlZXFIV2M0QzVZRFZrLWJEUWdPMjZ1QnNXVGFQbFhyZ1ZkRzVZeUFBVUZ5bjNIQ1BkMEJfbjVFb3ZBUV9uVUIyVEdaMlJGdGZwTThpNXhRUW5JenhhZVhJYm9VNGhDX3AxbHV1NVRHUkIwOFVoU2dvczE2eW0yOVFNNUJFOW05aVpQc0JRRjJXblNOS1ljQTh4OE9ybVFnMmxRTWh0QQ?oc=5",
-        "source": "WSJ",
-        "publishedAt": "2026-10-16T13:17:00+00:00"
+        "title": "Trump has failed to listen to voters on inflation",
+        "url": "https://news.google.com/rss/articles/CBMicEFVX3lxTE5qWldwNEZHeC1ieHp1ek8xSTBNemtEbTdYOFBvSW1MSnpjaS1nNkJ2QXZzdGdnN0xxQzFZWkI3SzVtZEotVGZhaWQyZDZJRlh1MXpNQXZncHIweG5WUm1pTDd3NEJGcVpfRWRZR2lHaTg?oc=5",
+        "source": "Financial Times",
+        "publishedAt": "2026-10-16T14:58:28+00:00"
       },
       {
         "title": "U.S. yields edge up after rally as markets digest AI debt worries",
@@ -289,31 +313,19 @@
         "publishedAt": "2026-10-16T10:47:01+00:00"
       },
       {
-        "title": "Treasuries head for best week since February as AI jitters halt bond rout",
-        "url": "https://news.google.com/rss/articles/CBMihAFBVV95cUxQeW9yUE1obkVWN1d0NzMtcm91X3BOSHNDQUxxemwweVdhdDZocXFKbEJqcHpORk5yaGpqNzNjUVpPeDJRaDdXSnYtQUZPRXp0cXhkX0c4V2tzVXg4Y2RSNXlhQ015a2lONUY0SFJocHdEdDQ3RGpyNWxvazhyQ3VaSEtpVXA?oc=5",
-        "source": "Financial Times",
-        "publishedAt": "2026-10-16T10:08:02+00:00"
+        "title": "Warsh signals steady Fed outlook despite inflation jump",
+        "url": "https://news.google.com/rss/articles/CBMingFBVV95cUxPeUViLVJBanlWSWpCTFZsdGVWbUh5THUxWV9ROVI2STQ5Vk5HTUN6R3ZKZnlsbGRmdE1mMkJzazZZR0Y1OFV0T2liNm41eXlra2FTNnh5VmVqM3hXWHVUNS05TkNvcDVkc3p3VnZxOFpBcTNjMWlYOGJwS2ptR0wxbXZoTEhyQ1VNSU5rUVlWN2dGTVJEem9YR3U0VmpsZw?oc=5",
+        "source": "Yahoo Finance",
+        "publishedAt": "2026-10-16T10:25:29+00:00"
       },
       {
-        "title": "Key Moments From Kevin Warsh’s Speech to the IMF",
-        "url": "https://news.google.com/rss/articles/CBMiogFBVV95cUxORnpKVU16UFh4NDdkaENsa09hUE1rT2IyeWhwb2JyMVZMQm8yLWN5b0lXdEZPa1ZjS2JjN2ZsRzB4RDJocEpyeE1Za01PdFROdzdueUNzZU1BTExzRjZQejJWR1dpeEpJV3o4Zmo2cUdJMHdkbTdvbW9odnBoTk9nT1BiVlNrZ29QSzhhUjMtOTlMN21pQ2loNFRxdnVjMTZjUlE?oc=5",
+        "title": "Key Moments From Kevin Warsh’s IMF Appearance",
+        "url": "https://news.google.com/rss/articles/CBMijgFBVV95cUxOWlBnQnZEdTJBRy1zSGhVZzktYUFobE9TUEo4dm90ODN1aGx2SVB2WkpGNEpYTmRWSlAyRU9vWXhIV1FfVUtiTDE2VjNsZ0dkdldGT1prVkFZd3A3Tmh4LUN1X1REVUg5OVZxN0cwZXdXRU1lbGVmVkZ3dWVEeHBCejJabkF5WDZ4MXJSdXJR?oc=5",
         "source": "WSJ",
         "publishedAt": "2026-10-16T10:08:00+00:00"
       },
       {
-        "title": "Fed's Warsh surprised by world economy's 'resilience'",
-        "url": "https://news.google.com/rss/articles/CBMijAFBVV95cUxOVTNjblV1bWQ1MjEtSVlmRmRqaUxpWHU1ZjRna1ZFUEszdmVLdUxrY1B4Q1kyZmRmZHhBQVVKMW1NQzNmOWVSVTYycFhsQV9wNXJOTzh1V1VKVHRqcWxIcF80bHNxMm5yUGItWm9ORUItLS1abU5lWkxmanZlOXlRZ0tlUGVDMHlHc0dpRg?oc=5",
-        "source": "Yahoo Finance UK",
-        "publishedAt": "2026-10-16T10:01:17+00:00"
-      },
-      {
-        "title": "Gold inches higher as dollar softens, investors eye Fed rate outlook By Investing.com",
-        "url": "https://news.google.com/rss/articles/CBMi0AFBVV95cUxQdE9jd3VBclQ4RHZBNGRxSDg4MnBObGZyUTlTd3lNQnZ6RS1wNXpUeDllTHRWX094LVJRd2lsLXd0WnBDMmJhUDdzMjlyTGI0ZWdzeXo3M3NnY252Sm5aLU1fdUw4VFFlZTJSUHBUNy1MOVBFZGduTDFpQU9LUDl4OVhQVGdWWmFjVGpCNHhmUWZOaEVuQllxbVNWTDl3RXlzVG4zVmtaUmhMSy1HcFRaaVVfYmNsUDdHNlM0QTBhVWVnQm85VU5IbElRMEVfanJw?oc=5",
-        "source": "Investing.com",
-        "publishedAt": "2026-10-16T09:31:35+00:00"
-      },
-      {
-        "title": "U.S. Treasury yields rise as traders wrap up volatile week",
+        "title": "U.S. Treasury yields waver as traders wrap up volatile week",
         "url": "https://news.google.com/rss/articles/CBMijgFBVV95cUxPQ3ZnTU9MUERYTzl6eGItMjJjaEFxem1TLTBFWURnMW1SemQtT0ZJaVM1WGdjUTJYT3g4Mm9MbkcySWtldVAtdHZkMWdhZ1hsbm9aSnI5aGxucjhCWGkyOW5rX3dTS0ZNN3hfVUpsZGhpS1Zjd0VXX2JMS29EREVYWm1RakR5ck5sUF9kV1Rn0gGTAUFVX3lxTE1hbkRwT3FCNk45VmZaT1dTcHVXQ0R5MHhlcFNRdjcyeXJKLUJoNndRWmg3QlJwUVlVNkJFT3NPN3A2UzFGYWxsNmVtOTFENm5yTnRCUkk4SXE4TEZHS05EQWU4c1ZfY1NXQjdMa1lzTHpTSUU0MG5hUWVaS2xfOGFFUG40amZldnFDV3ZGMVptOW1TYw?oc=5",
         "source": "CNBC",
         "publishedAt": "2026-10-16T08:03:01+00:00"
@@ -325,10 +337,22 @@
         "publishedAt": "2026-10-16T06:43:11+00:00"
       },
       {
+        "title": "Fed's Warsh surprised by world economy's 'resilience'",
+        "url": "https://news.google.com/rss/articles/CBMiogFBVV95cUxPSkdXWjZfdVRaaGhvdEFmd0lvQ2ZZQzRlZE4xQmx2aWpmakFwY1Y3NDBRUG1ib2tZZTVRNk1MS3NZdjZsTHl4eDNxbnk0bGhBYTJDMHVScmU3dW9zNmNJajdrUDUzaXFiUVkwMElEM3JnRmhiTnZTbFQxb2p4cEJ6UW13SFhOeV9sRGJrTU92bUhrTy1HWU9mVjBfMkwxV19zMkE?oc=5",
+        "source": "Yahoo Finance",
+        "publishedAt": "2026-10-16T05:33:00+00:00"
+      },
+      {
+        "title": "Gold set for a weekly drop as traders assess Fed signals",
+        "url": "https://news.google.com/rss/articles/CBMilAFBVV95cUxQUmp0MmJxZE9FMVNQTHdJU0JOOFcwNzlNMkJCSElPMEtyRVdNa0wxdWdaOW5rWTRITGhYUHNnMnVTMmJuR3IzMl93bzV5T0llRktGTVdZekY2TXowbHFVeElhUVFrb3UtMDNkVmJXWW1JYXl5TzFYNnlVc1VOcndJZVdfU1lPNHlnQk8yN2pER2ZLS0wt0gGaAUFVX3lxTFBIajdGOXZfVW9mVExJVEhzR1A3VFk3MnllcFB5SGJ0OXpZemR3OEI4UEtCZUdUOVV3RTdQcHRFc2hhVDZsQWk1d0JTbl84aFZXVDFaVGdMOEdPTGFpcEFXemZpZHVnNHVMZzVNM2JOZzlBRmROWjlDbWI0ejhuS1ZzMnU5Q3NGdUkyQVB0RHpiNEYzT2ZqcXQwWnc?oc=5",
+        "source": "CNBC",
+        "publishedAt": "2026-10-16T05:11:43+00:00"
+      },
+      {
         "title": "Warsh Avoids Signal on October Rate Move",
         "url": "https://news.google.com/rss/articles/CBMimAFBVV95cUxQaThqQ25PaWtHbG1VbkprR2Q4dXNOa3F1VDBDcVItS0dtRnBXQlVRS19VMFJ3YXdVVHlHWlFnZURQa3U4czRYQVJubmp2dXlGOHdneVU4cWp2YlVVdHlPNlh5dEo4V3k4Ri1KVHNaRmdLaDk1WDNYcVhEU1JxUzNsaDJPcGVuS0xsLUFJVG1yUjNUa24wRkdjVQ?oc=5",
         "source": "WSJ",
-        "publishedAt": "2026-10-16T05:23:29+00:00"
+        "publishedAt": "2026-10-16T04:41:00+00:00"
       },
       {
         "title": "‘Early days’ to see full effect of energy prices on inflation, BoE’s Bailey says",
@@ -337,28 +361,40 @@
         "publishedAt": "2026-10-16T04:37:24+00:00"
       },
       {
-        "title": "WSJ Dollar Index Falls 0.32% to 97.26",
-        "url": "https://news.google.com/rss/articles/CBMixgFBVV95cUxObHRUb1A2YkVRQUxWcmFJaVg3SWswNkxLcG05Z0tCUDE0TTFKQWpYblRLRXFSajZNTWZaNU95MmU5M1VZTUNIMEwwSnpmWU1zQU9JX2UxRFJWQUxseVhWX28xSDZFTEZFXy1tV25venpCY3kwT0pzX0MyNnowMkxwdDZncFcySE9OU2FzYzRsbVBTeFIzQnJtV19BNExkSUtCZmFzUGFwQ282S1JzWTljQmZkQU9USWZnNENzOTJtRmtScXlwaHc?oc=5",
-        "source": "WSJ",
-        "publishedAt": "2026-10-16T04:08:29+00:00"
-      },
-      {
         "title": "Fed's Warsh withholds rate signal, praises recent global tightening",
         "url": "https://news.google.com/rss/articles/CBMilwFBVV95cUxPbGxzSlg5TFdlNlE5TkVoRWVLNFVqbXJuamxaRHRfd0tZbnp0aDRXREgtMHg0aDFVWC16V1BuRXJHODltRlJfWHpaRkFPV0ZMZy14OU5JVGNRaXZ3clJfYUdZdDVnaE5wblItNmRWbUotWFpORWMxNk5Kd1h6NlY2VHNRSTdsSkhaYUhIVURTcFJ6Uk5sdExn0gGcAUFVX3lxTE5fZ0p3aTI2eFQyanZ4TmtGV2hkM29JS21sTlBXZkRfdGZjbFE5aGRJcVVBOXI5d2FlRURrMDFZbVEzY19rRFQ4alJwR0JXbk1fN1dSanpLRG00WGRIWnZZUnpCR19WRnMtUmpkNUZJb1VVRFF1QzRFM3p6ZGcwUWlKaUE1elFxRWlNNl9TTEZWZkR6UWlqa0xxdlNOYg?oc=5",
         "source": "CNBC",
         "publishedAt": "2026-10-16T04:08:27+00:00"
       },
       {
-        "title": "Nasdaq futures edge lower as AI spending, Fed rate concerns weigh",
-        "url": "https://news.google.com/rss/articles/CBMimAFBVV95cUxNemJYUmdaN19naFptR3ZmeDdtMU9aX1BLeFNlSTR6Y0NsV3FabEZYamcwemZfRUExLTQ2enR6VVVpX1lSSWxVUGt1U3BFZHVmZ1Y2TDlYS29MaFZJNjAwTGVWNEJGZXNIblc0MjA2Z1dGbVFib2lIUjVhVVFwMUtXZ2ZOX3hZbDVoYU9vV1RxcW9KLThMZDVjeQ?oc=5",
+        "title": "Fed’s Warsh Announces Productivity, Jobs Task Force Hearing",
+        "url": "https://news.google.com/rss/articles/CBMipAFBVV95cUxNSjkzaFYxNGlnTXNvdGxHSnJmQllzSjByRjVOaEo5RzVBWGhyWUVUalJ2SDVkQXB0ZW1zMHppZGNwU3FnRktiM19QdGxtNGJVc3I5YWctOUprMWlHa2M4X3NCb2kwXzltVzEtWU1OVkdpRWd0RVpIbk1LN2hraXFpNXItWFlaNHRmcHNYa0J3MFF6SXJBdV8wTjUyMmROdjFxRW9XTQ?oc=5",
         "source": "Yahoo Finance",
-        "publishedAt": "2026-10-16T01:40:00+00:00"
+        "publishedAt": "2026-10-16T04:05:00+00:00"
+      },
+      {
+        "title": "Dollar heads for weekly loss as Fed hike bets fade, AI jitters linger",
+        "url": "https://news.google.com/rss/articles/CBMingFBVV95cUxPczlNd1hmazBlOTR5MWVjVXRCbFVmQkxaUlZpdm9iN3pxcXd2bjhqbmd1ajhULUFyVmVZMERfYy1WSUZXbWYtZF9ocWlvaDNfS1NRU3I5dmhNQzl3SmU0X3N3ZE5MS05ZanFVQ2hWQTJYOEdmX3RMeThKTWtnWW9VckpZMDNkM0NPOW80NEtmQndXQ0IxVWItVzY3ME5yUdIBowFBVV95cUxNbzEyVVNFbXg3bEFDbldJaDZfRWp4a3lpU0ppNGZ1VFByUVROMDdJcDFDZ1RSZ2ZzX2JwSDk5dXVsTVlaRjA0QlhSd1FZV0pjNmN3U19ZLXJlSXEzOVkwQkpsb3hFSFlEOFR2NUo4SjI3V0otNjBsc1pwNEx3U2JfQnJGb2ZDMGh2SjhiMDB2ODJBNHZDWHpQdjh2R0xEU3B6Y3Aw?oc=5",
+        "source": "CNBC",
+        "publishedAt": "2026-10-16T01:27:00+00:00"
+      },
+      {
+        "title": "Oil Prices, Fed on Bank Indonesia’s Radar Ahead of Next Meeting",
+        "url": "https://news.google.com/rss/articles/CBMiowFBVV95cUxNT0hsUTgzTGhlRUVKZjlIVW5fYTcxRmUxaWpGZXkyOVhucmItRGNNTXpmN08yRWtEeG9IRjI4T1VaZVM5M0F0d0dCNjVxOWJVTmJPZ0NzQXpXX2lheE5nbHpDQzl0NlppT2ZIRUxuVHpuZGFTWkk4eTBVWGVIenZvVkVwYkFZQ1FUaHEtdHYyTWoxTUxPdmk3S1ptbENwMVFKUG9Z?oc=5",
+        "source": "WSJ",
+        "publishedAt": "2026-10-15T23:52:00+00:00"
       },
       {
         "title": "The Fed Is Fighting Inflation Again. History Says Trouble, but This Time Might Be Different.",
         "url": "https://news.google.com/rss/articles/CBMiowFBVV95cUxQblJWTENtOEVUSTQ3U29qWWxJY1UwQlF3blhLUVFSYXhya2JxZmtlXy1mTHlCRmpiSVF1SzkwaW9EelJwbzl5X29fZ2VMWWtvNm9fOXdBdEVFNnR5Mk96Z0pKN2RnUUw4dzBmb0lLNXo2YUoxVEszaE1TZ2dQNjhaRXdZcmZCcm80Y0tTaEEyNjVwSG5NcUQta1Jkejd0YTRKcXQw?oc=5",
         "source": "Yahoo Finance",
         "publishedAt": "2026-10-15T23:01:00+00:00"
+      },
+      {
+        "title": "WSJ Dollar Index Falls 0.32% to 97.26",
+        "url": "https://news.google.com/rss/articles/CBMixgFBVV95cUxObHRUb1A2YkVRQUxWcmFJaVg3SWswNkxLcG05Z0tCUDE0TTFKQWpYblRLRXFSajZNTWZaNU95MmU5M1VZTUNIMEwwSnpmWU1zQU9JX2UxRFJWQUxseVhWX28xSDZFTEZFXy1tV25venpCY3kwT0pzX0MyNnowMkxwdDZncFcySE9OU2FzYzRsbVBTeFIzQnJtV19BNExkSUtCZmFzUGFwQ282S1JzWTljQmZkQU9USWZnNENzOTJtRmtScXlwaHc?oc=5",
+        "source": "WSJ",
+        "publishedAt": "2026-10-15T21:47:00+00:00"
       },
       {
         "title": "UBS now expects a third Fed rate hike after hot September inflation print",
@@ -371,12 +407,6 @@
         "url": "https://news.google.com/rss/articles/CBMijwFBVV95cUxPT2ZYa1ZPdzd5UjF4VUF4YnlPNnRyTzVRdkMyMkpOaF9mMEhzQk4wMDZWNEVvTlRzekI4Mm1ac0pOWUpOVksxYUFPNjJkRWI4UTlOT0FKdTBsT2pGeFNEY1JScHVsQUF2cEFKVmc3MHNFRzlZemgwdFZQdUl0ZHR3dFU3SEg5WGpobUpObWNwRQ?oc=5",
         "source": "Investing.com",
         "publishedAt": "2026-10-15T16:42:47+00:00"
-      },
-      {
-        "title": "Economists: Hot PPI shows Fed's work is not done",
-        "url": "https://news.google.com/rss/articles/CBMiggFBVV95cUxOb01IeGE0M04zdDFRdmFsVms0cWw5Nkx4RG9YTFdtSzNLNVc2TV9vUWZFdDhDQkNWcUJSWG5FT3NPWS1KRVpoZXp2cEhPcTdFYmFJSVVnRFBaa1plWmRJanR3YS1DYUhxNzRaSnhRcVZqYXRlc1dvTVBjM3l5RlRMNlZR0gGHAUFVX3lxTFBHU3JuM3lUd1N6Q29uclNoSTJQY09yUkpTZ0d6elZLX1dLWFNZYUlpclBTTm54cDBDZ3R2V0ZPTUtDcTZLUno4LUNjTF90S0NHZlJzbTRiY3lPVDJic1J1Zlh2NGMtb1V4azVBdmtSM2sxZHhCYmFRNnR3QkNwWjFRTDA0dVE4Yw?oc=5",
-        "source": "CNBC",
-        "publishedAt": "2026-10-15T15:37:59+00:00"
       },
       {
         "title": "Wholesale prices bubbled higher in September, keeping a rate hike on the table",
@@ -409,22 +439,16 @@
         "publishedAt": "2026-10-15T10:59:22+00:00"
       },
       {
-        "title": "Warsh's quest for quiet Fed gets vocal pushback",
-        "url": "https://news.google.com/rss/articles/CBMilwFBVV95cUxQMEJqdXJEY1l6OExITlRxUlJiTGNQVnhqNm5QemxrVzFnbjcwSkxxV1FFZjdmT2JQRWktNVMyanRLRFhKOEZNclpYTzJKLU80M0dUMjExVEIxRlNmMG5QZ0dNS0JaTGdZejZSQlFkS1JfYXlDUC13RHlXMmQyZmsyakl3N0I2cS1LaTNSTWdPYjF3QlBtWm1j?oc=5",
-        "source": "Yahoo Finance",
-        "publishedAt": "2026-10-15T10:17:15+00:00"
-      },
-      {
         "title": "Dollar retreats from 18-month high despite strong inflation data",
         "url": "https://news.google.com/rss/articles/CBMitwFBVV95cUxNS3RhaFpXd1N0Q0w4VVdpWXU5WkEzV3dYM1pqM19hWHFRTjVMQ1c1YVNMejc2enVRWG1PY2RibV9FSllOTkg2eXRGalZoUGRmMk0tQlJPWFNJV1p3eEduZnhxUm0yaHdhUE1RTHdjeUF2NDlUUkJLYW4tWEdWbHUtdUN5VHRLRDdVZVMxRDNjVGlPZFdqQnNWUHIxUXA0bnkzT3hyc3pxcjJiRzZLUXZLNU41LTdFRDTSAbwBQVVfeXFMT2V2NzVUaUpqMTVVM0w0YWRfVHRveVJNNXFWZkdOeTBnZjlBV2JaMExQaDQ4T2tnWF92ZEFHVklBUk9YdGNhQ2tTX2Q5WWNFUVhST1c3bEVacG52XzJfazVISFBXaWpPU1dSdnFKalE3RnVkbHNaYk91LXJ5U082YlRleXM5QmZxenNIeGV0ZHNiUlE3cHNSbW03UUFPWGNyRzhmVDN4TUJfR0ZQcFpTaVlEb1prMGxMV2ZPQUM?oc=5",
         "source": "CNBC",
         "publishedAt": "2026-10-15T10:09:35+00:00"
       },
       {
-        "title": "Rising Rates Threaten Wall Street’s Golden Goose in Trading",
-        "url": "https://news.google.com/rss/articles/CBMipgFBVV95cUxOS1FoNS1HT2FMZ3QtNVlILUJYTjhPMXoyYUEzRTg1Yy1CaEgwOHVVNkNsYjMwWTY3SzQ1cVBEamJ0RXh1MUJ4UWZaS2R4MVZrVmx2R0FleExRRUU4MzgzV1hQWXpMTDNGek84cXJPMXdTOFhhdzhyNXVDazY5cTN2WVVUdEplM2pvNmVyWk5IN3ppRTBIZHR6Z3FSNnpZMjhiV1VweXp3?oc=5",
-        "source": "WSJ",
-        "publishedAt": "2026-10-15T09:30:00+00:00"
+        "title": "Can robust TSMC earnings help settle AI jitters?",
+        "url": "https://news.google.com/rss/articles/CBMingFBVV95cUxOcnpHTFBQWnZCdHZ6cEtoM21NOEV1R2tPaHJEZUcycWUwRFlYYVJNQ1NYdUFONElBc3Z4SWZpUFQ2c2hIOUZ5bkhsOE8xZ0dsVlVUbUtBMVJOWU9TRTNaTkl4dW9YcHRlSjl1YUFzYXdLYjFxaXk3YTNWb3ZLMmwwbjNzLWhDNFdzVmtGRlVMTExFZjVLal92QUtQdGxOQQ?oc=5",
+        "source": "Investing.com",
+        "publishedAt": "2026-10-15T09:42:36+00:00"
       },
       {
         "title": "Global chipmakers sink as inflation data fuels rate-hike fears, AI rout",
@@ -451,46 +475,22 @@
         "publishedAt": "2026-10-15T04:01:34+00:00"
       },
       {
-        "title": "Tech stock lead rout after US inflation fuels rate hike bets",
-        "url": "https://news.google.com/rss/articles/CBMikgFBVV95cUxPaDYzd3ZtcnE5U2VyQVlNYlE5WGxDeElZc0VnbUNjV2t3cTlhT25pSG9CYkRtVVVjbTNmR1lpT0tWM3FIRDJNSXgzQnV5S0ZZSUR6UjRUcDd6TjJuVmdrOWU0Q3RCeDQyVjhTczNqdzRJMzlNYlM1UC1KZUpjb0wweEN3OVVhOVdrbjNQeWZxMTI1UQ?oc=5",
-        "source": "Yahoo Finance",
-        "publishedAt": "2026-10-15T02:53:00+00:00"
-      },
-      {
         "title": "Gold prices climb as U.S. bond rally weighs on dollar, overshadows hot PPI report",
         "url": "https://news.google.com/rss/articles/CBMiwwFBVV95cUxPQzBFM0lFYklZU0s1bU92MU9EemRNUmkwekY1dHl5TkdZLVRFOXR4Tm52b0dpek1ZR2laY1VPUFpzYnlsVGR0cUlMZDM0WFBfRFZfblUyN0hRNGtrU1NYZklXTXktdTM3V2FGcHhmSFhLSUdFbzVhQkhHcnhFVS1sS3M1aGV0ZVk4OFFkMkxRX1U2SVRvWURxdlFhUmFtYzl3S3lVR0ZuQkM4bVVVR283ak9xdmpCWFRwU1IxTDV3b21MMXM?oc=5",
         "source": "Investing.com",
         "publishedAt": "2026-10-15T01:58:22+00:00"
       },
       {
+        "title": "Chip Rout Deepens as Rate Fears Collide With AI Funding Woes",
+        "url": "https://news.google.com/rss/articles/CBMikwFBVV95cUxPQWZkUElRZ2l4UEIyM1lKOTNrcmttSUp4d2RNWFpWSExzclU4WFl4Y0I4cV9NWGw1SXNxSm5UV0lFVTB1NkRFcjBweWNCdnRyVFBWT3VOaGQzenhDdlNqOUNWU0daSUEteTlFU2xSakZNSTNvX09vbUoyZ055ajlTUmJIV1FWa1RqNGVfQnFfMV9CLVU?oc=5",
+        "source": "Yahoo Finance",
+        "publishedAt": "2026-10-15T00:27:00+00:00"
+      },
+      {
         "title": "Prices increased sharply in September in last inflation report ahead of elections",
         "url": "https://news.google.com/rss/articles/CBMitwFBVV95cUxQNDN2VFVqajVYaktjTE5GTmFOVE1ZSmRYNW1kQjBKQV8wdWFraFJfZHJUZVRvRGNjNVdsa0xsUDJlNFdDMXBvdFJ4cU1SWkZwOGRoVzhVZ3pBT1p1Q3RSOUV1aHNfdWRDOHNsY2MwSEtublVxYkIwZVZiXzNLckswWVY1Yl9JdVlGRncyMGppTFFucTgzeDM1UG5QQ3hoUkhQTFhZQUN6WU9jNDQ5TXNVbnFRdFZaNWM?oc=5",
         "source": "The Washington Post",
         "publishedAt": "2026-10-14T22:01:43+00:00"
-      },
-      {
-        "title": "U.S. Stocks Fall on Hot Inflation Report, AI Sell-Off",
-        "url": "https://news.google.com/rss/articles/CBMimwFBVV95cUxOanVqOHEyMkpxVE84VV9QV1hDdUp2bDVQTDd6elh1TmswZVY1NFhXYTlHMlJGWDh3QjR6R0VjZ29KZndKWm1PbDFUX1RZWXUwR0JkcVUxaWdHVUNZVmphTnBpV2VJQ0Y5emJfS3ppUXh6WVIydHB4MGpSZ2VKNUExVUNKdm85bWthUzNSSGgzZm5DRG9TYjZ5THdxYw?oc=5",
-        "source": "WSJ",
-        "publishedAt": "2026-10-14T21:32:00+00:00"
-      },
-      {
-        "title": "Nasdaq ends sharply lower as hot inflation data stirs rate-hike worries",
-        "url": "https://news.google.com/rss/articles/CBMikAFBVV95cUxOaDBmaW4tZmgyRnVGRWhpV0tQYlpic3Y2a1gyRm53Z1hFTXhRRWN5ZGNyb0laZjZHZ0hGd2piUkxiOUg1aWJoODB2X3N6d0Rwb3NkSjV6cGR0eDZ5dkJLOW9qanEtY0JINksxdnVBdDliZTlvU2R2WWwza0NQclNTWTFUSGtjQUE3a1NKTUFpYWs?oc=5",
-        "source": "Yahoo Finance",
-        "publishedAt": "2026-10-14T20:41:25+00:00"
-      },
-      {
-        "title": "Nasdaq ends sharply lower as hot inflation data stirs rate-hike worries By Reuters",
-        "url": "https://news.google.com/rss/articles/CBMirwFBVV95cUxPNHRIX3JxLXdyT1Y2enh1ZXB6b3dLX2VXUFJ3d2k0NmhLQUFKb0doVTFiQ2VaQmlLQi11UVBHdmRNVjRuMnFUaE9LdUNITE1iZ1lTWDNydk1hRWluR3otUkdwblVwNUFfcmxNVlJoRG8zVHUxSFM3R3BtZkhzWlhGRzFrRUJwZnpidVlZYWh5YS13X1pfb0JvTENwUjhlSDNOVlBEZ2Z3U3U3MTEtYWUw?oc=5",
-        "source": "Investing.com",
-        "publishedAt": "2026-10-14T20:34:06+00:00"
-      },
-      {
-        "title": "Dollar hits 18-month high, then cools as investors await patient Fed",
-        "url": "https://news.google.com/rss/articles/CBMipAFBVV95cUxNdEF3d1otQl9JV3VwNDlBSFkydzMyOWFQN2xCa2VKVE8tcTJ2bWJtTUxTVWVUNk5aNXFyYnhDWGtMdlBwUFVwWm9NZUtwMEltQ3BkeFlDYm05dG9fOWJfdzlqV21SbUhLcHdpdkdfbjdud3RnMG4wVFZUekJ1WWt6VVRoMk96R0g0dy00QlZPaVR5SmxtWlJVSjg1Vk52SmVwLW9BTg?oc=5",
-        "source": "Yahoo Finance",
-        "publishedAt": "2026-10-14T20:31:23+00:00"
       }
     ],
     "stale": false
@@ -498,13 +498,157 @@
   "fx": {
     "provider": "Google News RSS",
     "topic": "fx",
-    "updatedAt": "2026-10-16T16:25:40.950739+00:00",
+    "updatedAt": "2026-10-17T15:20:03.858771+00:00",
     "articles": [
+      {
+        "title": "Which company has the world’s highest earnings? The answer may surprise you",
+        "url": "https://news.google.com/rss/articles/CBMiygFBVV95cUxPeFdxUHF0ZTFqXzJ3R2U5TFNKV1JuR0RfS05ORnBlQlpMLURaa2FwakFzd2tib3ZRZnVYbl83YnU3TkFGUzBjZl9VUHQ1MnRxR0tiM2tiZGladlN6ZGRRWjgzTkZYdy1wbHNoVWhUQXZXekhkN21odzFCTnNEQ3Z5bjVoNjl4QUhXaVk2Y1Y0eDBDZFFaLVBNLWI5Rjh0NkJfSzMwUVNudVE4WmRob213cW5OWnpRdmRsZ0huRENFbXpLdnZWT0pLNGtB?oc=5",
+        "source": "Investing.com",
+        "publishedAt": "2026-10-17T13:15:35+00:00"
+      },
+      {
+        "title": "Chip index SOX posts longest losing streak since 2008 as AI worries deepen",
+        "url": "https://news.google.com/rss/articles/CBMiywFBVV95cUxNVzhSaEg5Q3lqQm8ydS1TSXpBTkFna0g4b2JVMmY2dENpeEIyUS1ISWZpcG9XQVlTQkxzRGs2cW5yYno5b2htYzRWT24xYVlqcUJTS194SWZ0MTlaS29STDJEbTZSckNCS2hpMUxRZlZQQl9FZk5mVU5Pd2VKaEdMZUVENm54Yk9od2hhRzBQSVgzVkVnTzVXdHN0aFhXSkxtd1FzQlJaMFFRNGJHN1V4MHZVQVpjajVZRy1rdWplc0FjbG1tOTRSTUF3TQ?oc=5",
+        "source": "Investing.com",
+        "publishedAt": "2026-10-17T12:06:45+00:00"
+      },
+      {
+        "title": "Why oil prices could be poised for a 'super spike': Analyst",
+        "url": "https://news.google.com/rss/articles/CBMisgFBVV95cUxQWm5YZmdHT0ZrWGV3eVA4Nk9HUjQ2VktEM3RvVVM1cUhWWi1tVzFhZ28xcmlZVVFGZ2hVTzFJNWNRblJ3YzljWlBEYVpyaEZ5OVFwTWM3aHEwS2M1RDdibHJxaERadmk3U2NOZk56blVNM092UWRIaThndmZYQnBlYzB5Vkd1S01PaTBmMHo5djdVZHU1Q1J6ODZ6b0tMMElzOEhPVWtqSVFvWE45dkF4MTN3?oc=5",
+        "source": "Yahoo Finance",
+        "publishedAt": "2026-10-17T11:59:27+00:00"
+      },
+      {
+        "title": "Yahoo Finance - Stock Market Live, Quotes, Business & Finance News",
+        "url": "https://news.google.com/rss/articles/CBMiP0FVX3lxTFBBTy1pM1poaEROWTVTNDVTYVdvTDZEWmM1VDhGdlUzWW1OUXNvQ3RmZTVZQ3BGVlhvbTlWNFNhUQ?oc=5",
+        "source": "Yahoo Finance",
+        "publishedAt": "2026-10-17T11:57:02+00:00"
+      },
+      {
+        "title": "META_TITLE_QUOTE",
+        "url": "https://news.google.com/rss/articles/CBMiTkFVX3lxTFBpVTJIYnhWcW1kNFFKTHNoajhPeE9zSW9lTElhZkZvcEo3MExtQnpIZjBRek95cWJ0XzRKMzBtMHh0Ty1SYVRESUxfRTJ4Zw?oc=5",
+        "source": "Yahoo Finance",
+        "publishedAt": "2026-10-17T10:11:36+00:00"
+      },
+      {
+        "title": "German minister seeks debt brake exemption to maintain Ukraine aid",
+        "url": "https://news.google.com/rss/articles/CBMiugFBVV95cUxOZEFCbVcwcGVXY0pzSk1wRzlSdW5fX3lHd2puV3B3Tldlbms5a3VpMXpvTWFfcFpQOU1GOVhxQUVkTUNfdFNYOFNiMUR3MERGSWVZNE1QRzdOb1dOSWpTai1XaW9nVXBmU0xLaFdDYWxnV2lLVkxCRVMxd3liOEs3cDVIazVjRzdmSFVnRFZ2eG1PWHpkU2VoemRpcXBseEZ0cV9YTWlOQXppSUREQlRWZXhrUGhTenNhZlE?oc=5",
+        "source": "Investing.com",
+        "publishedAt": "2026-10-17T10:03:07+00:00"
+      },
+      {
+        "title": "President Donald Trump Claims Gasoline Prices Will \"Drop Like a Rock\" When the Iran War Ends, but He's Completely Missed the Bigger Picture",
+        "url": "https://news.google.com/rss/articles/CBMipgFBVV95cUxOWERVZ2lPOVhVT0ZpNjNDdWdnY0theW0tZVBUS09WRUMycW9kRm9uRWtpNkRlNGR6N3pyV0RBOWFwZjFHZHpMUS16M3d0b2dMVFo0TngteHRvQVRYSEc2MEpRc0toSkFDSTV6UzRvODZ4aFJYT2luTWFub19WY3dnYURUYmZvdEFxOUxmaHVtUDk0MU45X0Z1a1R6X2VCaV9sYmF0UUln?oc=5",
+        "source": "Yahoo Finance",
+        "publishedAt": "2026-10-17T08:26:01+00:00"
+      },
+      {
+        "title": "UK-U.S. relations strained as Trump shifts stance on Russia-Ukraine war",
+        "url": "https://news.google.com/rss/articles/CBMiuwFBVV95cUxQSHZnZnZSTFpXTmZUN01KaDhGeENIVlp6RFppcEE3NE44bUx6Z01pNERMTHBuUERtTFFUeFNxOHlUMEVCcUFIWnZvUVlfSjRlNHJDcWkwQUQtUmpTanloZUNzUXVvVmQzNWo1Und6bHJLckVDck9QRmhuNGx6dTZqb0ZuRVZNcU0xZ09DZ1d6TlRGTDBvYTRqbU5QTFJjMEhDR3JBQk9ZTnk5ZlRVZmFyTVRhZThzUWllcDhz?oc=5",
+        "source": "Investing.com",
+        "publishedAt": "2026-10-17T07:23:50+00:00"
+      },
+      {
+        "title": "iShares Bitcoin Trust ETF (IBIT) Stock Price, News, Quote & History",
+        "url": "https://news.google.com/rss/articles/CBMiUkFVX3lxTE8zdVh2bVo0bDFzNGdLOUJkYVBxMW1Fa0pkcnZyTHktRnFaZ0hIWWFCdXR6cHlGZm9mOERJeG1vbU9HZmVqVE9hbmVXREZtQTUwOXc?oc=5",
+        "source": "Yahoo! Finance Canada",
+        "publishedAt": "2026-10-17T06:53:16+00:00"
+      },
+      {
+        "title": "EUR USD Technical Analysis",
+        "url": "https://news.google.com/rss/articles/CBMiZEFVX3lxTE90TzVkMEtENktkRVJFN3QxV0tYbVZJS0ozMTE5b0F6ekxwNjRFYTFveFhVZWRhbGJuWFRpU0JiUnpsa2FsbEZ5c0ZNeHJiZnc5TldpNmM1NGJPMFhlNUFkYWNjSlk?oc=5",
+        "source": "Investing.com",
+        "publishedAt": "2026-10-17T06:38:19+00:00"
+      },
+      {
+        "title": "META_TITLE_QUOTE",
+        "url": "https://news.google.com/rss/articles/CBMiTkFVX3lxTE02aDBpUWN4ZVp0ajliNXhvdWpuVWc1Z1B4eEVyUUFmN2RoazgzbUlUaU9kR1JTU2Q0bVR6ck45M2szN28wUWVmcmRoZlRnQQ?oc=5",
+        "source": "Yahoo Finance",
+        "publishedAt": "2026-10-17T05:36:29+00:00"
+      },
+      {
+        "title": "EUR USD Chart",
+        "url": "https://news.google.com/rss/articles/CBMiX0FVX3lxTE5JSWlTWEE5ai1xbXdCS0s4eUpDdWRGUElyY3l2bTZXQ2dJY3haanlZV0pNdHp1RTNLRXQzUHZvXzkybFJqUUxXQ3dfVFYzcTFLZnRJWGlHb1A3YXFabmRn?oc=5",
+        "source": "Investing.com",
+        "publishedAt": "2026-10-17T03:16:54+00:00"
+      },
+      {
+        "title": "META_TITLE_QUOTE",
+        "url": "https://news.google.com/rss/articles/CBMiTkFVX3lxTE5oRWFDOUk5RnFwTHd2QWxnZnYwNXZRTEtYaDRVUXZZVEJrSW5aWGdPZ1BwSFJtQ2RXWGY2OGJiTzU5MGZrbjZhUlNQdGZmUQ?oc=5",
+        "source": "Yahoo Finance",
+        "publishedAt": "2026-10-17T03:12:23+00:00"
+      },
+      {
+        "title": "GBP/USD Streaming Chart",
+        "url": "https://news.google.com/rss/articles/CBMiX0FVX3lxTE5qYWpPY19jRkY3U0RBX3gzcDRpU01MTVVYTHk5VzdOcjREdmZMd1NjejhXOGIxLVdEOVptdnUyWWtXcXVyTHpGWGk0YTctRXdHR29oZWppcC1SRlVMX3BF?oc=5",
+        "source": "Investing.com",
+        "publishedAt": "2026-10-17T02:56:29+00:00"
+      },
+      {
+        "title": "Brazil’s Flavio Bolsonaro pledges fiscal adjustment, rejects cuts to social spending By Reuters",
+        "url": "https://news.google.com/rss/articles/CBMizwFBVV95cUxQQUQtRXg4enVKRWcxajdUb19kcFl5bFNLajdIRlhCQzY0Um5DVmVkZWV6ZmYtWVdXdF9sNWNrRFNISDJGWUpjVFJQZnNxT1d2cW1YNWR0aV9WMl9YbVBMdzEzLXVQSzVheHpsWWFlX3F4UnEwNS1mNVNTSGVhNWVUMUswaG5sR3lsYmV5TmNlM2tZMGo0N1E4WXhabG5xMkhLeWlVMVpKaEZmSTctQ2pTM3lQNHZObDBCRllJRXAzNl81OHIzMjlfSUZXS1A1V3c?oc=5",
+        "source": "Investing.com",
+        "publishedAt": "2026-10-17T02:34:55+00:00"
+      },
+      {
+        "title": "Iran war: Missiles target Saudi oil hub as Yemen conflict escalates",
+        "url": "https://news.google.com/rss/articles/CBMiugFBVV95cUxNTUR5UWotOXJCZlpvZ08yMERqRW92RnpmMWVmOTJDMnIwMkJkNzhYd0F3YVpxRnVlUGEzTWFFbTczeUVadlhGVWg3X3B3MlFHWldzb1BwYXNpWlIxbjZXQ29qMFdyQUh0TG5TbjQ0clBiTnJOVU41Z3lwOFpPYkkxdEZNc2lVNEhXaWNqMnhlWkZpb3hhMjV2MXJCUXJjWXZieEZXNGxuMHlnd2JxdGZvM2t4OVl3UkdrV1E?oc=5",
+        "source": "Investing.com",
+        "publishedAt": "2026-10-16T23:41:51+00:00"
+      },
+      {
+        "title": "Oil Futures Rise on Middle East, Russia-Ukraine Concerns",
+        "url": "https://news.google.com/rss/articles/CBMitgFBVV95cUxNQlhVbW1hN3VaS2xQWTRNVHc1MGNIektPR0wzd2V5LWEtcmtZUXRSY1ZWYjJjSUVZZElTaFV4c0VfSnJhbHhBdGlHbjE4bkZDN0lfTnNxLXFxeFR3bnVqY21tSl9YdkZHTlY4VjYwYTVxZmFZV181ZHo0RXVFOEw0UDJoVXNYbWpfT1d2cHUza0FBekFXZzRRMTZlUkJYd2RUSlFxWEhLTHVRNjVZRk9xa0JhQzl0UQ?oc=5",
+        "source": "WSJ",
+        "publishedAt": "2026-10-16T20:01:00+00:00"
+      },
+      {
+        "title": "Is Anthropic worth $2 trillion? How about $1.5 trillion?",
+        "url": "https://news.google.com/rss/articles/CBMisAFBVV95cUxNWW9rSnhWc20ySjNzdks3VnpxdWtMeVR5aWx0MlY4UzZUaDgyN3dIWnh1aE51MVlTb2hnNU81YU1BUHNVME1USTBTUDhkOTl1QzJtZHk0dDdjaHhtM09FUUlIZFBHQnlIUmEyY1hOeEFva2ZpenlWTUdKUWpWR2I5RjFKNldqV3hfYlpnenotaTgyTU9oajRtTFpHcnRlRXVibVQ1S0V0VktLTUpqOS0xNA?oc=5",
+        "source": "Yahoo Finance",
+        "publishedAt": "2026-10-16T19:25:00+00:00"
+      },
+      {
+        "title": "Major Cryptocurrencies Mostly Higher as Dollar Eases",
+        "url": "https://news.google.com/rss/articles/CBMisAFBVV95cUxPVmxkcm5VeURLM1hlZXFIV2M0QzVZRFZrLWJEUWdPMjZ1QnNXVGFQbFhyZ1ZkRzVZeUFBVUZ5bjNIQ1BkMEJfbjVFb3ZBUV9uVUIyVEdaMlJGdGZwTThpNXhRUW5JenhhZVhJYm9VNGhDX3AxbHV1NVRHUkIwOFVoU2dvczE2eW0yOVFNNUJFOW05aVpQc0JRRjJXblNOS1ljQTh4OE9ybVFnMmxRTWh0QQ?oc=5",
+        "source": "WSJ",
+        "publishedAt": "2026-10-16T18:32:00+00:00"
+      },
+      {
+        "title": "Tech Stocks Slump as Nasdaq Faces Weekly Loss",
+        "url": "https://news.google.com/rss/articles/CBMioAFBVV95cUxOejZOQXlJbWJ1MWdyZ3pkaDZPbW5YTk9qMHlYOXdaU29XX182REZFdzMxZE42X2ZNb1FDSXZkLVNYZTZrV0NOS2RzcExEdThSQm5rUUpEYUs2STZiMmFRaGkxakVTd3BHX0RqblIzRmhoX014TC1KT0ZGNVRETmJmZ3JCNGVWOF8wX2lEVmN2VWJRV0VBZ3ZRV0Y3QmIxYlhR?oc=5",
+        "source": "WSJ",
+        "publishedAt": "2026-10-16T18:18:00+00:00"
+      },
+      {
+        "title": "Hot Inflation Hits Gold, but Safe-Haven Buyers Fight Back",
+        "url": "https://news.google.com/rss/articles/CBMinwFBVV95cUxPeWo1MDF4SXhidW1uR29FSGVhaEVXZnRGM1pJb0Rqa2RNY0tpcjd1alBqSEY3bEl0anFXNXZ3dnp4SlZfN2pTbkpRY1FMdGk0UU1ZdGVVdWctN0VCWHktcWFVWk5vUkdJdkRoZHpoSTRVWGVNbUlhNkVXM1RuZ2h1bzVLUnBhOGl6THE1bk9Zb2FiNk56azRTTnhzNzlyYTA?oc=5",
+        "source": "Yahoo Finance",
+        "publishedAt": "2026-10-16T17:42:05+00:00"
+      },
+      {
+        "title": "US import prices increase; post largest annual gain in more than four years By Reuters",
+        "url": "https://news.google.com/rss/articles/CBMirgFBVV95cUxNSnRBUTR2dUVhdkNydGlYc05qaTlNbHA4Q1hTSjlNdVZRUldPenZ4LTFaR3pqMXNJUHMtSURiNlRjdGNQMktpNW9ZS3owamlmUjNTcEdaaTRESXhwMzBMSVJ4Mm1FVEVpaWwxOXBiRjBPOUlSWkFXUGRNZHdyZTQyOGt3MW9mLUVDMVV0dF9Ta0d5WDRiNXJaSHB3eVVwa3FQVTdoZ3d5R3JaMU55ZlE?oc=5",
+        "source": "Investing.com",
+        "publishedAt": "2026-10-16T17:38:04+00:00"
+      },
       {
         "title": "Canadian dollar heads for weekly gain as U.S. dollar retreats By Investing.com",
         "url": "https://news.google.com/rss/articles/CBMirAFBVV95cUxPRjdKeG5VcFlzTlkxSmFEdjBVX2JLa2lfQ25mZG0zZzJmWmhTQmkyd0MyaktVNmpMa05NNExDbTROMFpIMmhiQW5abnB3emN3cDNsa214X1M1M0RzeXFjM3ZwQVRrY2kybGE4R3lBb0s3TXR2enlhdll1LXNnWEViQnBfcUsydlhFeFAzRUw4MEtOZUM2RnZicWZLTk9BOXI4MVpLR2t1Qm5jT1dw?oc=5",
         "source": "Investing.com Nigeria",
-        "publishedAt": "2026-10-16T15:59:08+00:00"
+        "publishedAt": "2026-10-16T17:03:06+00:00"
+      },
+      {
+        "title": "Gold’s CPI Selloff Looks More Like a Rate-Fear Overreaction Than a Trend Break",
+        "url": "https://news.google.com/rss/articles/CBMivgFBVV95cUxPSDFneGZ1bG91c1JCOEJfRnBtcjVrSVFJY2k0Ymt3TURFbkZtLVRsRFByU2ZDM213WnZxTjJHU2MybUhXQUtsRVVlaGQ0RVJqSnNMNDB0bk4tUzBiVFhVS3c2Zm91U0tPSHRaeE5uSVdELUx5Y0Y3UUdlVTVZcWNmSk5BRjRTZTFPbmlsSDRIaVRJQ3dvVEFCOThDdjk1Y1dPZWxOcW9SUFVnMlJjSEJndXdHMUZycm91SnE3UUpR?oc=5",
+        "source": "Investing.com",
+        "publishedAt": "2026-10-16T16:43:43+00:00"
+      },
+      {
+        "title": "Canadian dollar heads for weekly gain as U.S. dollar retreats",
+        "url": "https://news.google.com/rss/articles/CBMipAFBVV95cUxNOGdnY2FYb1lmcldJeTl2Y1U0N21qV2hYRTlSdW9fckNOVm05ZFAwOUxmc3BsXy16WGstQkFxSExhMF8zeHYzOG1wTmlsQWg5THQwdjU4bHphWWNqQjdNOWVOYnpXek1MOXJkTU9DeGpJN0M5b05SYlRrWm9mc0JOdGVfWTlVb1VTeFFaNkpCQ0MxS2ZueUN0WjhLc185RnlTeUFMXw?oc=5",
+        "source": "Yahoo Finance",
+        "publishedAt": "2026-10-16T16:24:14+00:00"
       },
       {
         "title": "Canadian dollar heads for weekly gain as U.S. dollar retreats",
@@ -519,34 +663,34 @@
         "publishedAt": "2026-10-16T14:47:37+00:00"
       },
       {
-        "title": "NVIDIA Corporation (NVDA) Stock Price, News, Quote & History",
-        "url": "https://news.google.com/rss/articles/CBMiTkFVX3lxTFBpVTJIYnhWcW1kNFFKTHNoajhPeE9zSW9lTElhZkZvcEo3MExtQnpIZjBRek95cWJ0XzRKMzBtMHh0Ty1SYVRESUxfRTJ4Zw?oc=5",
-        "source": "Yahoo Finance",
-        "publishedAt": "2026-10-16T14:43:45+00:00"
-      },
-      {
-        "title": "Oil Slips as Traders Weigh IEA Reserve Releases, Hormuz Risks",
-        "url": "https://news.google.com/rss/articles/CBMitgFBVV95cUxNQlhVbW1hN3VaS2xQWTRNVHc1MGNIektPR0wzd2V5LWEtcmtZUXRSY1ZWYjJjSUVZZElTaFV4c0VfSnJhbHhBdGlHbjE4bkZDN0lfTnNxLXFxeFR3bnVqY21tSl9YdkZHTlY4VjYwYTVxZmFZV181ZHo0RXVFOEw0UDJoVXNYbWpfT1d2cHUza0FBekFXZzRRMTZlUkJYd2RUSlFxWEhLTHVRNjVZRk9xa0JhQzl0UQ?oc=5",
-        "source": "WSJ",
-        "publishedAt": "2026-10-16T13:43:30+00:00"
-      },
-      {
-        "title": "Gold Futures Snap Two-Week Losing Streak",
-        "url": "https://news.google.com/rss/articles/CBMipgFBVV95cUxQZ01xVTVIdXpHcTFCb0FPVGFydmZWS01ScTF2WE9wR2NQYlNhcVJuWlVWZTFZNnlwbVVPOFI0RnhILUgtYkRnTUk4bGh1a2Rma2JUOG5nVURGZ2NIMlRCTk5KZXV2Q0lrV25FbnA1cnl4SnhhUE9qU3pVdnlGXzBwWGdMLXFxUW5lRjE1cWpkMkhxdngwVFBmRW03VjVRY3B0NTVjZ2d3?oc=5",
-        "source": "WSJ",
-        "publishedAt": "2026-10-16T13:33:37+00:00"
-      },
-      {
-        "title": "Euro Unlikely to Sustain Gains Amid French Risks",
-        "url": "https://news.google.com/rss/articles/CBMisAFBVV95cUxPVmxkcm5VeURLM1hlZXFIV2M0QzVZRFZrLWJEUWdPMjZ1QnNXVGFQbFhyZ1ZkRzVZeUFBVUZ5bjNIQ1BkMEJfbjVFb3ZBUV9uVUIyVEdaMlJGdGZwTThpNXhRUW5JenhhZVhJYm9VNGhDX3AxbHV1NVRHUkIwOFVoU2dvczE2eW0yOVFNNUJFOW05aVpQc0JRRjJXblNOS1ljQTh4OE9ybVFnMmxRTWh0QQ?oc=5",
-        "source": "WSJ",
-        "publishedAt": "2026-10-16T13:17:00+00:00"
-      },
-      {
-        "title": "U.S. yields edge up after rally as markets digest AI debt worries",
-        "url": "https://news.google.com/rss/articles/CBMitgFBVV95cUxPZWlvNS1ReXprMTd3YTFPWFhJRURlR1Q0Z0pjWmJLMzZXaWQ1ejVDeU5JMlhCZG1GRFRvZWk2V0VkVUR0VHZscWd3UzFKVzhadUUzamFmOWtLa2MyYlpwRmN6alJibzJSYWlPeVoxdXNaTDJwa0psTGg5MHgzajl4bERBX1VYWFd3b2d6WUQ1M2VreUtpVl9JRjR1cTc5czZlcUp5VHlwNnlWbDB3MzNuMC15eS1OZw?oc=5",
+        "title": "Bitcoin rebounds to near $82k but set for second week in red",
+        "url": "https://news.google.com/rss/articles/CBMiswFBVV95cUxNdzlOMVY0SklieWh1blRadHBfcW14WmhlNE50QUh4NGxZekJmTldUNEJrbzZMWW93ZkxYN0dRSExkQVBRSHpMZ3F6b0N3Vzl0ZDg3LUVTd3NPS2RUUERGSjRZRzRaUTNaZmpZZ0RJcElBZXFGNzhaN3B3QmVkTGEzRGtKV0U4cmRwdV9PZjFEWUlmc0NfQzhjUE1DNjVDOHBfVnhPRGFmR0hvdzg0allXTnNEYw?oc=5",
         "source": "Investing.com",
-        "publishedAt": "2026-10-16T12:27:58+00:00"
+        "publishedAt": "2026-10-16T14:42:29+00:00"
+      },
+      {
+        "title": "How to value anything with one simple question",
+        "url": "https://news.google.com/rss/articles/CBMihAFBVV95cUxNbEdGSlFUUzVtbjFyWkw1SG9waG1xR3hVcThhVEJDVGJXM1EzSDJDcHY3b0NnSmh4TWxlVzJoV2l5d2RmU1BnQzJZZVBQaWE1bmJUUm8zbmJPbG4tVzRNeldmaWM3cGFiZm5JRjREeFMyZ1FObnBkWkdFZHN6bE1wN3d1ZXo?oc=5",
+        "source": "Financial Times",
+        "publishedAt": "2026-10-16T13:57:01+00:00"
+      },
+      {
+        "title": "U.S. Import Prices Rose in September",
+        "url": "https://news.google.com/rss/articles/CBMifEFVX3lxTFBvY0pENi1Vd3gtMEpFdThIUFVhalZlLXhYSkxnQVhGRXNIb0FxSl9UcUxCRHBWU2IwUlEyazlhVno0WUlOelFGWXU5Mk9jeXFQV2pQM3BkV1JiVGVKY0pWeWVRRTNlWXNVaUpRSkVxamh5cHNHclc3cEFDNG8?oc=5",
+        "source": "WSJ",
+        "publishedAt": "2026-10-16T13:09:00+00:00"
+      },
+      {
+        "title": "META_TITLE_QUOTE",
+        "url": "https://news.google.com/rss/articles/CBMiTkFVX3lxTE5wLXdlSm5MT0hsWEI2RjNWUHB6R3FYWEYzbi0ydDM4NGFScjNIZmYwYlpGQzRVWmdrVHJHcnRJdFdrMkxFczJqYnE2VFNWQQ?oc=5",
+        "source": "Yahoo Finance",
+        "publishedAt": "2026-10-16T13:08:53+00:00"
+      },
+      {
+        "title": "Bank of Japan Must Ensure Underlying Inflation Doesn’t Go Above 2%, Ueda Says",
+        "url": "https://news.google.com/rss/articles/CBMixgFBVV95cUxQSWZaejJENjlkZjR2dmxXVmdKNGdpNk94S1laVWQtbEo1ajU1R1pxR21WU0Y3c3BFc1BKODZvNmxNdnVXeGd0bl9hZGg1NXRnWElSVHI0V0ZmdkdzSk9zU1NNSGZzNDNpNlRaRlRfTjJyc3M4dWlSc0RiR01OTGN2OEVWbkNNZy1RTDRIUGNaZWs1T2JDRktWM2NKODRMSnNoZmplSTdHbWFpMkJIOEZLTUNjMzBtdEVmTWcwNDIyMmtnT2tKMUE?oc=5",
+        "source": "WSJ",
+        "publishedAt": "2026-10-16T12:39:00+00:00"
       },
       {
         "title": "European Defense Stocks Rally, Boosted by Project Bromo Report",
@@ -567,178 +711,34 @@
         "publishedAt": "2026-10-16T11:02:00+00:00"
       },
       {
-        "title": "Stay risk-off as higher real yields and AI volatility threaten stocks: Hartnett",
-        "url": "https://news.google.com/rss/articles/CBMizwFBVV95cUxPZjR4VzZtUEJMaUdjcm8ySDhDYmRyZUpEMVRnLUZvR3EyRkJ6a3puQ21hd2JuaUlKdVJzU0I0TS1SenBWdjZwcndiWnp4Y0ctUWhTZkg3YnZseGNJcEhkOEVuN0k2RmpyT3M2MklrSG5SMFMzUjR6NTF3cG5kbUNUZ05ZS3lwTERjdFJoeFVqSnJHbkNCdFpjQzlVVnE5ZnRhLUwzYzkwS01mQnNDRXlCRURIdWo4bkstSHNneFJrY2E2WDJiOUtQT01fRDVMSjQ?oc=5",
-        "source": "Investing.com",
-        "publishedAt": "2026-10-16T10:37:38+00:00"
+        "title": "Markets News, Oct. 16, 2026: Nasdaq, S&P 500 End Lower, Post Weekly Losses; AI Stocks Fall; Dow Logs Weekly Gain",
+        "url": "https://news.google.com/rss/articles/CBMikwFBVV95cUxOel9iZDlVS285cUtjLWYyX3ZpQUI2QlJNM3djMXFoRWNGZlFYRnpVV0U1RmVkUl9RRFVjS2NBeUJMSS1nSDFNS29ESDNYSWRfXzdvWkNLbmxucEJTdzkyM1VDMjN5RGFkeElKQmJNdUItNUtfalBfQVF0cGYtREJkVlRVMmVGekJUbVpwQW1aWVNUeVE?oc=5",
+        "source": "Yahoo Finance",
+        "publishedAt": "2026-10-16T10:38:00+00:00"
       },
       {
-        "title": "Treasuries head for best week since February as AI jitters halt bond rout",
+        "title": "Big Tech stocks suffer biggest weekly drop since ‘liberation day’",
         "url": "https://news.google.com/rss/articles/CBMihAFBVV95cUxQeW9yUE1obkVWN1d0NzMtcm91X3BOSHNDQUxxemwweVdhdDZocXFKbEJqcHpORk5yaGpqNzNjUVpPeDJRaDdXSnYtQUZPRXp0cXhkX0c4V2tzVXg4Y2RSNXlhQ015a2lONUY0SFJocHdEdDQ3RGpyNWxvazhyQ3VaSEtpVXA?oc=5",
         "source": "Financial Times",
         "publishedAt": "2026-10-16T10:08:02+00:00"
       },
       {
-        "title": "Dollar heads for weekly fall as investors gauge AI selloff impact By Reuters",
-        "url": "https://news.google.com/rss/articles/CBMisAFBVV95cUxNOEdLanhPMVNtTUdUSC05MFJmdFp2dUdKdXA5Q2ZfRUJlMlZXUHpJYmlRZjB4dXVkRDRJX2pnMmY5NnRpZ0drQzUteUFkaUR5N2ZmbndYLUhaWUxrbTk0dXJYRWdENmhENWk4d0dDZTdBMzFzeEF4WEQtd1QyaXR0b2FjQ3ZnTjdVLWJ6anNLSkljVDFPMGxPVUhwQmc5SmxyQ3paREdmTWxXZURvd182LQ?oc=5",
+        "title": "Dollar snaps 4-week Rally; Indonesian rupiah hits July lows on MSCI threat",
+        "url": "https://news.google.com/rss/articles/CBMiwwFBVV95cUxQcmhyTkJqU0RYMVdIbjQwWmJYUmlkbF9JeDg0T2ZzeDg1Ykp5bk4tMjlTVjR3Q0hyMU5XM2RVV2taNDdkZHMxMExIS3pIQWM1aHl0WG1idm1VZTlNcHJBTHJoOER1SVlORmt5eFNxS0ItTFJCM2tfRFpIMXIxNTFLYTNta0FtQWtVVzBPNnpQMWJjbjJSTzU4ZWFTSjB4OF8xU2wwN0RvaE9KUVZzN1lMNmtoNFpRb0JEeHBTLV9WcGVCUTA?oc=5",
         "source": "Investing.com",
-        "publishedAt": "2026-10-16T10:07:38+00:00"
+        "publishedAt": "2026-10-16T09:40:10+00:00"
       },
       {
-        "title": "Gold inches higher as dollar softens, investors eye Fed rate outlook By Investing.com",
-        "url": "https://news.google.com/rss/articles/CBMi0AFBVV95cUxQdE9jd3VBclQ4RHZBNGRxSDg4MnBObGZyUTlTd3lNQnZ6RS1wNXpUeDllTHRWX094LVJRd2lsLXd0WnBDMmJhUDdzMjlyTGI0ZWdzeXo3M3NnY252Sm5aLU1fdUw4VFFlZTJSUHBUNy1MOVBFZGduTDFpQU9LUDl4OVhQVGdWWmFjVGpCNHhmUWZOaEVuQllxbVNWTDl3RXlzVG4zVmtaUmhMSy1HcFRaaVVfYmNsUDdHNlM0QTBhVWVnQm85VU5IbElRMEVfanJw?oc=5",
-        "source": "Investing.com",
-        "publishedAt": "2026-10-16T09:31:35+00:00"
+        "title": "Euro gets much-needed reprieve as AI wobbles rock the dollar",
+        "url": "https://news.google.com/rss/articles/CBMioAFBVV95cUxQMlJUaGxFV0FUOWhjamxRX0xWcTZKQ0tHamRjZV9UWng2VFBiWFpJM0ZPU2YyUl9rVGR2cmwwQkVUZEhfU3hTbUFMSkdhV1BWS1p4WEdSaU5XeUo3RHd4OXR3M0JTRjNmeUNZUlgtNUVXVXVha3M3SXJsSFZmd3lqQ3lJNU81dUh1YjhmUXg2QWdDQy1PUm1CRUJiSEdoZ2Zy?oc=5",
+        "source": "Yahoo Finance",
+        "publishedAt": "2026-10-16T05:34:59+00:00"
       },
       {
-        "title": "Gold Rises on Softer U.S. Dollar",
-        "url": "https://news.google.com/rss/articles/CBMirAFBVV95cUxNVE1wbXpia1hJYU4xY3Y1UVU4eDRDY0MzWXEwRHpHR0c4SGMxNkJqRHdQR1ZqdE9UUWRrU3lxc3c3enhLY0dwUmJGR0x1ZC1DdGRmTkFMaS15Q3cwVEhialJ3RmZvZU5qeUIwSkRSZzVwWHNGOHUxU2JMVXVxd2EyQmN1Q2ZYU0VWdEgzMDA1ZzNBeXFxM0xESXhpQWRKVC1aV19ScHdzNWVXM0RJ?oc=5",
-        "source": "WSJ",
-        "publishedAt": "2026-10-16T08:35:00+00:00"
-      },
-      {
-        "title": "Bitcoin rebounds to $82k but set for second week in red",
-        "url": "https://news.google.com/rss/articles/CBMiswFBVV95cUxNdzlOMVY0SklieWh1blRadHBfcW14WmhlNE50QUh4NGxZekJmTldUNEJrbzZMWW93ZkxYN0dRSExkQVBRSHpMZ3F6b0N3Vzl0ZDg3LUVTd3NPS2RUUERGSjRZRzRaUTNaZmpZZ0RJcElBZXFGNzhaN3B3QmVkTGEzRGtKV0U4cmRwdV9PZjFEWUlmc0NfQzhjUE1DNjVDOHBfVnhPRGFmR0hvdzg0allXTnNEYw?oc=5",
-        "source": "Investing.com",
-        "publishedAt": "2026-10-16T06:36:35+00:00"
-      },
-      {
-        "title": "Indonesia stocks suffer biggest daily slump since 1998 as MSCI weighs downgrade",
-        "url": "https://news.google.com/rss/articles/CBMi0gFBVV95cUxNbHVIS3gwb29ETHVxUGpHSTBKalN6cnNDSi1KMTdXSUoyRVBIYkJGdDVsc3Q2Z3NaY1FuWll6U0MtazRvTVpKSE9UbnA3TWNsdzBKdGk2TFFhUmMxXzViMFNfM2gyeXloMUNmc0xIRHY4UnBSR3Q1U3RQOWVOdHZqSnlQbzd3bTdkc2V0UkpvbmdfcXB6dEV2RF9FSHVKdEdHTllfZzBuSHJ1WGFGa2kzXy1JOThVeXFQTWs4MVdtMV8tVWtkcFNadEcwTG1fTmxRWlE?oc=5",
-        "source": "Investing.com",
-        "publishedAt": "2026-10-16T04:22:37+00:00"
-      },
-      {
-        "title": "WSJ Dollar Index Falls 0.32% to 97.26",
-        "url": "https://news.google.com/rss/articles/CBMixgFBVV95cUxObHRUb1A2YkVRQUxWcmFJaVg3SWswNkxLcG05Z0tCUDE0TTFKQWpYblRLRXFSajZNTWZaNU95MmU5M1VZTUNIMEwwSnpmWU1zQU9JX2UxRFJWQUxseVhWX28xSDZFTEZFXy1tV25venpCY3kwT0pzX0MyNnowMkxwdDZncFcySE9OU2FzYzRsbVBTeFIzQnJtV19BNExkSUtCZmFzUGFwQ282S1JzWTljQmZkQU9USWZnNENzOTJtRmtScXlwaHc?oc=5",
-        "source": "WSJ",
-        "publishedAt": "2026-10-16T04:08:29+00:00"
-      },
-      {
-        "title": "European stocks rise, dollar set for weekly loss after yields drop By Reuters",
+        "title": "Stocks slip as dollar heads for weekly loss By Reuters",
         "url": "https://news.google.com/rss/articles/CBMi3gFBVV95cUxPb2ROQzBiN1d1VWlWTm41RmhrN1JkVmx2Rkd3ZEZoMXZEWnkwT0tCcl9WbUsxWE9oaXJXb0J2OUtPRWVUdFVicDRtLWJ3Wm43VmVHbUVLRmV3alpnOFdLeDVKR3FDTGxBUk5EeEsyQXRDR2w1V29maDBlcDM3YUtYbVNqRFZQYkljUVZHOFd4UnNDaUgtYVNPQ19UUUxGaEhEVU12dTFMZ1VPTVc1b3A3bDhFR3djMDNiSFcwZTVzM2ZvZ2lxdWU0a0kzd0hfaEVTVGE3S3pXcVljaEpBQmc?oc=5",
         "source": "Investing.com",
         "publishedAt": "2026-10-16T03:00:08+00:00"
-      },
-      {
-        "title": "Nasdaq opens lower as tech stocks face pressure from AI jitters, S&P and Dow up",
-        "url": "https://news.google.com/rss/articles/CBMivgFBVV95cUxQQ0ZOeFhSUTFRYmo1VjU2Ym5WV0xqQU5hNjI5WkhJRHE4ZjRiX3hqZ0tyV0tQMm41dHhLa2pZS3VUTUNnVldSZTNKcGU5cU1xT1VOZE1hd2IyZndFWktuMERIQ056SnljSDRNX1hlUDBQR3d6UndoSFpOcHpDbTluWXpsVEVlbUZoaTM5UFNpZUEzM3BpX2FtMUR6R1JWVTJsQ180eTBrTHFYc1RmQzBLUG1mbHVXSDlYM2VycDhB?oc=5",
-        "source": "Investing.com",
-        "publishedAt": "2026-10-16T01:11:44+00:00"
-      },
-      {
-        "title": "India's rupee forecast to weaken toward 100-per-dollar level even as RBI pushes back",
-        "url": "https://news.google.com/rss/articles/CBMid0FVX3lxTE9HcUxuY0hCWW8zeVdCNkl5S1pOSFJtTGV1Zkl1YUtmMllkVVE4Qnl4XzZzM25RRE9xNExFdFZaQmI2T1l4QVQ2NzhYay1TNGRVOVBVTy1UN3ZHaEJJTWVHWFNtakFtMFpLWnNKLWtqbnJtc3QtUVg40gF8QVVfeXFMUE02NGRjOW5NTDlaYTJUWHVTT2hxLWdQNmlDekpON2JTRi1jN29fYmpFQzA3cXVkRGk4OHVOVUdaSXQxVEdMVW1ZNXBiNGJRcVZTMU5ueHJUdk1ZQUxleVNnZ2J3UThsRENRYlptTHZ6MENmZ0FYOXBua09tbQ?oc=5",
-        "source": "CNBC",
-        "publishedAt": "2026-10-16T00:54:00+00:00"
-      },
-      {
-        "title": "Global stocks flat as AI and rate fears hit tech",
-        "url": "https://news.google.com/rss/articles/CBMilAFBVV95cUxOeTRzUk5SRExJbm1EUXdJWG9JaXdKSEdtX29rb0k3ZkRTRFZIeHRxb0xMcm00eUF0NzhCS1owVkp4OWQ2eHF2dWl3aVpPak85emN3eGdqX1hEOW0zNjVlTWs3eGVUSlFUME1fVHVXRTFtNEZ4aVBZS1pSQmJnOVdHZTNZQkQwMnowenVWaW9PVFZnSG5i?oc=5",
-        "source": "Yahoo Finance",
-        "publishedAt": "2026-10-15T21:19:22+00:00"
-      },
-      {
-        "title": "Brunello Cucinelli Nudges Up 2026 View, Bucking Luxury’s Weak Trends",
-        "url": "https://news.google.com/rss/articles/CBMisAFBVV95cUxPY290MC1lVlBFQnJfN3RUSkJ3dF8tNGdzTTJ6dGowOGJjbV9qT2xscjRVUE84NGkycGNRZGtvQlBtbC1wZFdTT1Z0eWZLZ0puRHlMMFJlaDRkMUNUdG02VmtpS01Lc2JqaEVPU0Z4Y2FrSWtDd01iU1YzdjUzMGVxU3RCYi15YWd5ekpNZGFSazVVaDBXanVHVHBnMElYSTJXWVdYVzlFT19meGxkSXp1Zw?oc=5",
-        "source": "WSJ",
-        "publishedAt": "2026-10-15T16:31:00+00:00"
-      },
-      {
-        "title": "Gold Futures Extend Gains As U.S. Yields, Dollar Decline",
-        "url": "https://news.google.com/rss/articles/CBMihwFBVV95cUxQZjlBVXEzZUh4cUI1WTktUW03SFRJM2ZRcG9iSTJZWDJyYjhlUTJWb29sUFh5SWdrUVh5a1BrSC1sTHpsTWpKNXdZZUNLRU9KUWo4eTFLdXJCYmtQYkI5SlN0RGF3SWpTVmY2cUhFLTZJQVRQZzBVYjNvR1pNOWx3Z1pXMmx6dlU?oc=5",
-        "source": "WSJ",
-        "publishedAt": "2026-10-15T16:10:00+00:00"
-      },
-      {
-        "title": "Week Ahead for FX, Bonds: U.S. Inflation Data in Focus",
-        "url": "https://news.google.com/rss/articles/CBMipwFBVV95cUxQQmlZQ2ZqUDhpS2pheVNOZTBWSUhPMGNNbWJIcEVkdDRJUFpEOHhTUmY3OWN2R095YUR5ZXIyUXN5RWw2MzA2OVgzeXNlTThTRVh1WTJZLVRoREl6T3g4UlVUN3JMLWFKRmpBZzFqMEtWVDdGb2FrdGlfR2QwZ0ItQ3NXRVVBb1RGOWZjVDZpTmpabnpqeTFXbWpnN1ZkSmoxRDQ0dVZMQQ?oc=5",
-        "source": "WSJ",
-        "publishedAt": "2026-10-15T13:22:44+00:00"
-      },
-      {
-        "title": "Dollar retreats from 18-month peaks despite hotter U.S. producer prices",
-        "url": "https://news.google.com/rss/articles/CBMixgFBVV95cUxPY2JlN3BFbUhBSFhoekhHRXpLcFdudk5tczd2ZkQ2eF9mcm9WRnppRU9WalBKTmFORF9tTG9zZGpyUjVwYXR5MHRnNkdnNUM5RnlZemxlTGFnSHdiUl9NVFQtaTQzQ2J4ZmNzSTNOQjZWSXc1d3c2NWI2U2luMXpncFVQbEJGelJKX1lCSFI5dTFYV2J6dmhqdDJia2FtamhUdVRjME9XcjdNaVdHaDFWamNGN3JiNXhDN21NLWI0Y21TaDRXYUE?oc=5",
-        "source": "Investing.com",
-        "publishedAt": "2026-10-15T13:18:04+00:00"
-      },
-      {
-        "title": "Taiwan Semiconductor Q3 Earnings & Revenues Top Estimates, Margins Up",
-        "url": "https://news.google.com/rss/articles/CBMiqgFBVV95cUxNYnh1ekxMdGN1c2JWMzNkNnVmS0JOOVN4d3J0R1hFOFU1UWlGSGpMM0NKdERBTm1WV1g4VWZvRVhqcXVWZ2lQOUdJa2dISGdnMUxkeHJwdEFaS01aZ1Q5Sktod1VHN05sbldSMGJaNXFqZVJJRUFmNmNyV19STVRlWlppd0dqOXNISjZMdUJaSHZ5N1o3dnV1RjMyRHFneW9KNXByQThuQWFQZw?oc=5",
-        "source": "Yahoo Finance",
-        "publishedAt": "2026-10-15T13:18:00+00:00"
-      },
-      {
-        "title": "Euro slides to fresh lows against US dollar and British pound despite ECB rate hikes",
-        "url": "https://news.google.com/rss/articles/CBMihgFBVV95cUxNeXdCYllmakxtUThLY09YS1Z0Z05HTEMzY0N4NTZQdGdpdlp0ZTM4dzdIRmVhV1l0OEQ1MGo2WG5IOFNpRkhzNVVuc0xnZWFwM1pTOXpuZXQ3NjFreVlHUGN3VXU0NVVtMy16cTFpeVotTzhWMlVNYVQ3eU5DeDRVMHFiTldHZw?oc=5",
-        "source": "Yahoo Finance UK",
-        "publishedAt": "2026-10-15T12:33:53+00:00"
-      },
-      {
-        "title": "Euro slides to fresh lows against US dollar and British pound despite ECB rate hikes",
-        "url": "https://news.google.com/rss/articles/CBMihgFBVV95cUxNNkdmeGFTQUtGdW5mMlBMX1RPOFNIVzRqdkVkbmRLUmVVck5FdFh3anA3bDhpa2NZcVlkVU15T3JvWS1Fc2RETEFjLWNMeUpKcTlybHk1NEFMbU4yQ1VQdnJSZzdPOFN1dExBYzZKNDlramFaYjQzejJYb1R2UDNvNW1HTUw1dw?oc=5",
-        "source": "Yahoo Finance Singapore",
-        "publishedAt": "2026-10-15T12:33:53+00:00"
-      },
-      {
-        "title": "USD/PHP (PHP=X) live rate, chart and news",
-        "url": "https://news.google.com/rss/articles/CBMiVkFVX3lxTE9JZk80STdKRmZwemkxSWFSNWpuV3RsZ3B4VGFuY2lpS1BUQUE4a0J5THpJZkUwQlpsOVJEc2o4WlVxbE9uLTBrbXpUYXFjVTYzYWRFV2p3?oc=5",
-        "source": "Yahoo Finance Singapore",
-        "publishedAt": "2026-10-15T06:09:42+00:00"
-      },
-      {
-        "title": "WSJ Dollar Index Rises 0.23% to 97.57",
-        "url": "https://news.google.com/rss/articles/CBMinwFBVV95cUxNWHV6dXFtSkhHdG54MWN6OUpLdmdYTUZJZ0RJSGVNLVVkZ0VtSHQyU1o1TXI0V3FUcFBGTWotWjl1S0xSOGhlRzlVWURXdndFemFnVkQzd3k2UDdiR0ttNlRYbFJPSGc3WXVNdXRXTHNocVM2N3hVVDZ5aHNvZVpVMUxuLVlxNTlQYU9ZT3JqbTkxZXBSMlJqcS1FU0sxRW8?oc=5",
-        "source": "WSJ",
-        "publishedAt": "2026-10-14T22:57:00+00:00"
-      },
-      {
-        "title": "Dollar hits 18-month high, then cools as investors await patient Fed",
-        "url": "https://news.google.com/rss/articles/CBMipAFBVV95cUxNdEF3d1otQl9JV3VwNDlBSFkydzMyOWFQN2xCa2VKVE8tcTJ2bWJtTUxTVWVUNk5aNXFyYnhDWGtMdlBwUFVwWm9NZUtwMEltQ3BkeFlDYm05dG9fOWJfdzlqV21SbUhLcHdpdkdfbjdud3RnMG4wVFZUekJ1WWt6VVRoMk96R0g0dy00QlZPaVR5SmxtWlJVSjg1Vk52SmVwLW9BTg?oc=5",
-        "source": "Yahoo Finance",
-        "publishedAt": "2026-10-14T20:31:23+00:00"
-      },
-      {
-        "title": "Precious Metals Sink As U.S. CPI Numbers Give Dollar A Lift",
-        "url": "https://news.google.com/rss/articles/CBMinAFBVV95cUxNZkFOakhIMVpZZ2dCUmlwZFoyX1cwV28zLXZMam1sVGtDRVZseExJQmNiMDdfQkxUaW8zd19mZHpoc3NkSTlxRHVGNFpOZDIweVd2c1lrQ2VHakpwSk4wUk9nVnlNR2ZEMnoyMEJMMFhQWmNPeVBuNWhVN1A2VmdGejNiRjhQRmp0ZUdLajF3MTg1MHlDbUxZbWFuRTc?oc=5",
-        "source": "WSJ",
-        "publishedAt": "2026-10-14T18:11:00+00:00"
-      },
-      {
-        "title": "Dollar Strengthens on Hot Inflation Data, Higher Treasury Yields",
-        "url": "https://news.google.com/rss/articles/CBMisAFBVV95cUxQbEx1Q0FoZmpVSGRtUnE4U2hYRGtNeHpEanFrRUM4UFZRUC10NUh5WmZyUWQ3SUJjTUEzb19YR1JFUXZXQ2pnYlpRbk5fWGVJUEdKZUxTQ1UwRXFmSkhpRy1QOGZGb0d2YlhiTlRMSjlwSGI5c2RDeXZTaDFDbGR3Qm1LdktxaHRzeFZRMElqLVRqZ2hrd0w4NjhwbXJKY3lVNUVodUs0RHB1a2dJLUc2Nw?oc=5",
-        "source": "WSJ",
-        "publishedAt": "2026-10-14T16:06:00+00:00"
-      },
-      {
-        "title": "USD/JPY: US Dollar Remains Fundamentally Supported With All Eyes on CPI",
-        "url": "https://news.google.com/rss/articles/CBMitAFBVV95cUxOLUZFOWFaMlBwMHJUai12NDhYSDhPTk1WYjVNaDV0eTNlaFlENTlyM3pmdHVqODhjbk4xTXdtaVh0dTNvSDFubVhaUzRzdHBzQTNFTElycXliV2x3LXp1bWp2VnNVajMydmVjZ3RPdkdOTmd5TmxSRkdWLXhUd2pzUXNmbzF2dFR1Y2pOSzRUZmxQRUFvM2ViOUdwOFEwSm1ha2tjYkJLVXJWSFd4UExCVGJhU0Y?oc=5",
-        "source": "Investing.com",
-        "publishedAt": "2026-10-14T12:33:35+00:00"
-      },
-      {
-        "title": "US Dollar Rises Early Wednesday Ahead of Consumer Prices, Beige Book",
-        "url": "https://news.google.com/rss/articles/CBMiogFBVV95cUxOX3VfQTNKdTBMTGlwUmEzeU5hbWVMSTQzYXA0bDZ0Wk01QkNsbm9Kb2s0R0RtaFJCTmI5Smpmd1VaaFJDUk1xcUROUE1DX1ZYLWhsOGhKLTFYOU9LaExJUXhfZVRZN3o0NHdaZlFCLURjZ0p6S01PeERNZk1oZnFjNjhmSzdIYTdvQmV2VWNPMmVxcnotSlNnRGR6elBQTmNvX0E?oc=5",
-        "source": "Yahoo Finance",
-        "publishedAt": "2026-10-14T11:38:43+00:00"
-      },
-      {
-        "title": "EUR/USD (EURUSD=X) live rate, chart and news",
-        "url": "https://news.google.com/rss/articles/CBMiWkFVX3lxTE5MVm5mak5jUHN2V1ktajNpZjdHRjVKUlFWLTZsTWtROWp6M2xWU2xaM3Y2NHZOVDRKLXl6UkxaYmJJeVFsQ3dsWUE1Mmlsa2tCNkNZaEJseTF5Zw?oc=5",
-        "source": "Yahoo Finance UK",
-        "publishedAt": "2026-10-14T10:37:53+00:00"
-      },
-      {
-        "title": "Natural Gas Spot US Dollar (XNG USD) Analysis",
-        "url": "https://news.google.com/rss/articles/CBMiZEFVX3lxTE5zLTMwVFJONjltUXJZcFdwcUFYTkVKbG5CWVpCOG93ejZrOHlmUFppaDBQNF95T0FHQkUyRFkyTkFCNzFBR2cwNm9TeXFlSHdES1RRYzdsOVRhWXZQTGo2Q0kyUGk?oc=5",
-        "source": "Investing.com",
-        "publishedAt": "2026-10-14T05:54:06+00:00"
-      },
-      {
-        "title": "US Dollar Price Forecast: DXY Tests 101.93, Can EUR/USD and GBP/USD Break Higher?",
-        "url": "https://news.google.com/rss/articles/CBMingFBVV95cUxOS0hKX1ZTXzlqcW5kWjlIendtZjFtM3paVnV2blNKYXMwNXdfMUoxenJac0NXdmNXR0JDRnpzLVVJSGRBeC1PYi1UTTFHVHF4dFQ0LWNNYlZ4dXBwaWI5dXVNVjNGZjdBcnhPclZzUmZRUm9MY2JTX0dod2VBQ0gwTmxad3V1ODN3MTlSRnI5LThReVBhMVlGQjJCY3A1UQ?oc=5",
-        "source": "Yahoo Finance",
-        "publishedAt": "2026-10-14T05:37:00+00:00"
       }
     ],
     "stale": false
@@ -746,8 +746,50 @@
   "economy": {
     "provider": "Google News RSS",
     "topic": "economy",
-    "updatedAt": "2026-10-16T16:25:41.508634+00:00",
+    "updatedAt": "2026-10-17T15:20:04.378740+00:00",
     "articles": [
+      {
+        "title": "ECB's Lagarde says bond selloff will slow inflation",
+        "url": "https://news.google.com/rss/articles/CBMikAFBVV95cUxPMXNPdlExOVZlYThyNEhmbk5DOWdWdlRFY2U2LUxiOFg4Q0xnMWlsSG5seFdSWHdSUU8wdEo0LUV4dzRoeV9hUFp2clZmV0hGemJkWVdRSzQtSktjSzhvZGVOS2NJa2o3ZXN4QVpNS2dIc2ZXUW8zVnNubl9BcUcwS2EtRjZYSDdZczd6Ql9vLUbSAZYBQVVfeXFMT0d2NTN6YlU0NXlmR0FpaWw2OU8yWnlyWXlkM3M4bHFvSjU3M3lmSjhfN0JaOUZ0UDdMTVgtdlE4enI0bWU2YWpyOGhpSnVkZU1pdktYQWtDMEdLdFVnY2ZfQ2lkZHhkcGlUdUtuemxqeXhFYXphTWdvYi1jYlBaZGRobnhwWEdfVmVtYS02WDhMdEw0THhR?oc=5",
+        "source": "CNBC",
+        "publishedAt": "2026-10-17T10:52:54+00:00"
+      },
+      {
+        "title": "President Donald Trump Claims Gasoline Prices Will \"Drop Like a Rock\" When the Iran War Ends, but He's Completely Missed the Bigger Picture",
+        "url": "https://news.google.com/rss/articles/CBMipgFBVV95cUxOWERVZ2lPOVhVT0ZpNjNDdWdnY0theW0tZVBUS09WRUMycW9kRm9uRWtpNkRlNGR6N3pyV0RBOWFwZjFHZHpMUS16M3d0b2dMVFo0TngteHRvQVRYSEc2MEpRc0toSkFDSTV6UzRvODZ4aFJYT2luTWFub19WY3dnYURUYmZvdEFxOUxmaHVtUDk0MU45X0Z1a1R6X2VCaV9sYmF0UUln?oc=5",
+        "source": "Yahoo Finance",
+        "publishedAt": "2026-10-17T08:26:01+00:00"
+      },
+      {
+        "title": "‘Inflation will make people poor’: Airlines brace for years of pain",
+        "url": "https://news.google.com/rss/articles/CBMihAFBVV95cUxQTnJ5RXgtVlFXdjBVa1BDZ1ZuM3p1SDZOZmVWazFwUTVMWXFwWU5qeDVReXZKbEJtRTBraVVtMHdHZkRZTGswc1lyaWxZU0IxajQtLWFiX21yNXdCYnA4ZkJzbFJKckZpSFJucnp6alhsc05XWm9BeW9XOVZQcl9QbnQ5NTM?oc=5",
+        "source": "Financial Times",
+        "publishedAt": "2026-10-17T04:01:09+00:00"
+      },
+      {
+        "title": "What is behind the surprising resilience of the UK economy?",
+        "url": "https://news.google.com/rss/articles/CBMihAFBVV95cUxOYm5XSktFX29zRjJSZnJpYTU3a2E5cG9LeDFxSGhMVVBnQ1VPVzdOc3Y1bmdPR2RsOGFXUjFMeTBTeVNNN1RKMnFqbXFQc3AtQ2M5YXpjT0NTdkc4RVpSRXJxX1NGWHMxOFFtcWluMmVGZjlENFktQ1RHRk1IVzNqdGh0dXM?oc=5",
+        "source": "Financial Times",
+        "publishedAt": "2026-10-17T04:00:54+00:00"
+      },
+      {
+        "title": "Hot Inflation Hits Gold, but Safe-Haven Buyers Fight Back",
+        "url": "https://news.google.com/rss/articles/CBMinwFBVV95cUxPeWo1MDF4SXhidW1uR29FSGVhaEVXZnRGM1pJb0Rqa2RNY0tpcjd1alBqSEY3bEl0anFXNXZ3dnp4SlZfN2pTbkpRY1FMdGk0UU1ZdGVVdWctN0VCWHktcWFVWk5vUkdJdkRoZHpoSTRVWGVNbUlhNkVXM1RuZ2h1bzVLUnBhOGl6THE1bk9Zb2FiNk56azRTTnhzNzlyYTA?oc=5",
+        "source": "Yahoo Finance",
+        "publishedAt": "2026-10-16T17:42:05+00:00"
+      },
+      {
+        "title": "US import prices increase; post largest annual gain in more than four years By Reuters",
+        "url": "https://news.google.com/rss/articles/CBMirgFBVV95cUxNSnRBUTR2dUVhdkNydGlYc05qaTlNbHA4Q1hTSjlNdVZRUldPenZ4LTFaR3pqMXNJUHMtSURiNlRjdGNQMktpNW9ZS3owamlmUjNTcEdaaTRESXhwMzBMSVJ4Mm1FVEVpaWwxOXBiRjBPOUlSWkFXUGRNZHdyZTQyOGt3MW9mLUVDMVV0dF9Ta0d5WDRiNXJaSHB3eVVwa3FQVTdoZ3d5R3JaMU55ZlE?oc=5",
+        "source": "Investing.com",
+        "publishedAt": "2026-10-16T17:38:04+00:00"
+      },
+      {
+        "title": "US import prices increase; post largest annual gain in more than four years",
+        "url": "https://news.google.com/rss/articles/CBMimwFBVV95cUxQSWdkdTM1NTFnVFAxczE0RU8wNnJrcUtzNjFxTFRocUJSVWF2ak03ZnZHalhpUi1nQkRwV0pHdUR6Q0xKYmZYNnB0dlpaVXdpTEprdWQ1ZW5PQjYtRmRCcFFmbU1CeEJ1ZFdVc3hVMVc1Mll6OU5PV2dWVGh3eGQzVUNqYnhseU55UUdWT1JzYWJJNFNUZmFaXzYySQ?oc=5",
+        "source": "Yahoo Finance",
+        "publishedAt": "2026-10-16T16:08:18+00:00"
+      },
       {
         "title": "Trump has failed to listen to voters on inflation",
         "url": "https://news.google.com/rss/articles/CBMicEFVX3lxTE5qWldwNEZHeC1ieHp1ek8xSTBNemtEbTdYOFBvSW1MSnpjaS1nNkJ2QXZzdGdnN0xxQzFZWkI3SzVtZEotVGZhaWQyZDZJRlh1MXpNQXZncHIweG5WUm1pTDd3NEJGcVpfRWRZR2lHaTg?oc=5",
@@ -755,22 +797,28 @@
         "publishedAt": "2026-10-16T14:58:28+00:00"
       },
       {
-        "title": "US import prices increase; post largest annual gain in more than four years",
-        "url": "https://news.google.com/rss/articles/CBMimwFBVV95cUxQSWdkdTM1NTFnVFAxczE0RU8wNnJrcUtzNjFxTFRocUJSVWF2ak03ZnZHalhpUi1nQkRwV0pHdUR6Q0xKYmZYNnB0dlpaVXdpTEprdWQ1ZW5PQjYtRmRCcFFmbU1CeEJ1ZFdVc3hVMVc1Mll6OU5PV2dWVGh3eGQzVUNqYnhseU55UUdWT1JzYWJJNFNUZmFaXzYySQ?oc=5",
-        "source": "Yahoo Finance",
-        "publishedAt": "2026-10-16T13:46:01+00:00"
-      },
-      {
-        "title": "U.S. Import Prices Rose in September",
-        "url": "https://news.google.com/rss/articles/CBMifEFVX3lxTFBvY0pENi1Vd3gtMEpFdThIUFVhalZlLXhYSkxnQVhGRXNIb0FxSl9UcUxCRHBWU2IwUlEyazlhVno0WUlOelFGWXU5Mk9jeXFQV2pQM3BkV1JiVGVKY0pWeWVRRTNlWXNVaUpRSkVxamh5cHNHclc3cEFDNG8?oc=5",
+        "title": "Week Ahead for FX, Bonds: U.S., European PMI Data in Focus",
+        "url": "https://news.google.com/rss/articles/CBMilgFBVV95cUxQWTI3Z250aW5hV2FtV3I1UUxfdUprc3RJSmk0d01WZXY1ZmRQc1NiTFpWRHZHX2d0WTFhX3BVZ2xtU2VweXBLeG9PeDNYOVlDTGpmbXB5dkhmclpVcTMyVlJ5d1I4TVhwWGI3QVpSNEJzY216UHVDYlNSR3djZHk4YjdyRlV2ZDhTQTZVRF9McXRHTnJZcnc?oc=5",
         "source": "WSJ",
-        "publishedAt": "2026-10-16T13:09:00+00:00"
+        "publishedAt": "2026-10-16T14:15:00+00:00"
       },
       {
-        "title": "The US economy is facing two hot wars heating up at a bad time for the White House",
-        "url": "https://news.google.com/rss/articles/CBMi1AFBVV95cUxQaFpBQm9OaXl6TTljcG9tMVBkdXVpMlNUaENFOVVZcmF5NmlWY0ttZk9uVmFXTmdHVWNzYUF3bGVuZ2tnUWRFbUp0eklTX3diTHZSczQ2X1pVWHlLWVVEcjRTcld3TlBocEktTWMyckUwZ0JQSlhwT2VzTExNNzZjNXMtd2VfQ1JHT1lLbE5lWTVuTkNXeHdXSTQ2LXBEZ3hhWTQ5eEt0SEszOFg5OVdRUmJ2NDU5Ny1VNnpLcG9FV0tTeXl0TEZwY2phZEtyTWNfU1BRbw?oc=5",
+        "title": "Bank of Japan Must Ensure Underlying Inflation Doesn’t Go Above 2%, Ueda Says",
+        "url": "https://news.google.com/rss/articles/CBMixgFBVV95cUxQSWZaejJENjlkZjR2dmxXVmdKNGdpNk94S1laVWQtbEo1ajU1R1pxR21WU0Y3c3BFc1BKODZvNmxNdnVXeGd0bl9hZGg1NXRnWElSVHI0V0ZmdkdzSk9zU1NNSGZzNDNpNlRaRlRfTjJyc3M4dWlSc0RiR01OTGN2OEVWbkNNZy1RTDRIUGNaZWs1T2JDRktWM2NKODRMSnNoZmplSTdHbWFpMkJIOEZLTUNjMzBtdEVmTWcwNDIyMmtnT2tKMUE?oc=5",
+        "source": "WSJ",
+        "publishedAt": "2026-10-16T12:39:00+00:00"
+      },
+      {
+        "title": "The US economy is facing 2 hot wars heating up at a bad time for the White House",
+        "url": "https://news.google.com/rss/articles/CBMi0gFBVV95cUxNcDBDS1plWE8ybHdGREFUbmdnc2MzTHFtcUNpREtmbkFfQlpGSjZ4SnVtWmNZa3VQMTlsZDB3UGVyNUQ1b01rUnJzdTd5azhDUXZaVjBzeERyOXlQbGJBa1h2QlRabEFnZDhPS0h1SWRGRkRSS2NBTHRzbG5YcVhLbnA2c21ueEFqelFCTG5aWGRnTU5wbVl0bjZDNXhmZGRUSVU3LThOYktKREoxaUktUjJsOFlKdDVYdmdPQW9OT2Z2cHBrb0FTbnVNQUt3MVNGcFE?oc=5",
         "source": "Yahoo Finance",
         "publishedAt": "2026-10-16T11:01:05+00:00"
+      },
+      {
+        "title": "Warsh signals steady Fed outlook despite inflation jump",
+        "url": "https://news.google.com/rss/articles/CBMingFBVV95cUxPeUViLVJBanlWSWpCTFZsdGVWbUh5THUxWV9ROVI2STQ5Vk5HTUN6R3ZKZnlsbGRmdE1mMkJzazZZR0Y1OFV0T2liNm41eXlra2FTNnh5VmVqM3hXWHVUNS05TkNvcDVkc3p3VnZxOFpBcTNjMWlYOGJwS2ptR0wxbXZoTEhyQ1VNSU5rUVlWN2dGTVJEem9YR3U0VmpsZw?oc=5",
+        "source": "Yahoo Finance",
+        "publishedAt": "2026-10-16T10:25:29+00:00"
       },
       {
         "title": "Key Moments From Kevin Warsh’s IMF Appearance",
@@ -789,6 +837,12 @@
         "url": "https://news.google.com/rss/articles/CBMihAFBVV95cUxPSkowQ1I4RlFmbDVzQTBjVXJMdzlqamF3bnhidDJOTlc4VnBVT1F3VDE3cExoQzRJWWdsU1Uxc2F6Q3dmWlRBR01DNXhRV05KdGMwT1RacVVGNXFoMHlOVTJGbmVweHp5dzZGRUFEV1pDcWV2MlEtY21nMEY0WEE2SzEwclg?oc=5",
         "source": "Financial Times",
         "publishedAt": "2026-10-16T06:43:11+00:00"
+      },
+      {
+        "title": "Warsh Avoids Signal on October Rate Move",
+        "url": "https://news.google.com/rss/articles/CBMimAFBVV95cUxQaThqQ25PaWtHbG1VbkprR2Q4dXNOa3F1VDBDcVItS0dtRnBXQlVRS19VMFJ3YXdVVHlHWlFnZURQa3U4czRYQVJubmp2dXlGOHdneVU4cWp2YlVVdHlPNlh5dEo4V3k4Ri1KVHNaRmdLaDk1WDNYcVhEU1JxUzNsaDJPcGVuS0xsLUFJVG1yUjNUa24wRkdjVQ?oc=5",
+        "source": "WSJ",
+        "publishedAt": "2026-10-16T04:41:00+00:00"
       },
       {
         "title": "‘Early days’ to see full effect of energy prices on inflation, BoE’s Bailey says",
@@ -825,12 +879,6 @@
         "url": "https://news.google.com/rss/articles/CBMixwFBVV95cUxQVHpmUnkwb1hrcFVSZHJyWXFiNzhpR1BLVXlmZ194WUQ0X0hzZHFGTGZPSGtOQXFmaURndUtlU1ZhYUNOdzUwUHJraG5yZ0laQnJpN3g0VXhvN3ZjeUlLdVRSRXJJUHZDeUVMVlJGUkN2MHNwa1d0bWVZOUNzN1kySS1RaXBmOEM5am1FZXU2UlJpMjVDY09BTE41UWpHNF9tQTF1c3ZvZXpZdXI5SnYtZUZ6eUpZVEMyVUNiN25idFFIbkNiN0Yw?oc=5",
         "source": "WSJ",
         "publishedAt": "2026-10-15T16:02:00+00:00"
-      },
-      {
-        "title": "Economists: Hot PPI shows Fed's work is not done",
-        "url": "https://news.google.com/rss/articles/CBMiggFBVV95cUxOb01IeGE0M04zdDFRdmFsVms0cWw5Nkx4RG9YTFdtSzNLNVc2TV9vUWZFdDhDQkNWcUJSWG5FT3NPWS1KRVpoZXp2cEhPcTdFYmFJSVVnRFBaa1plWmRJanR3YS1DYUhxNzRaSnhRcVZqYXRlc1dvTVBjM3l5RlRMNlZR0gGHAUFVX3lxTFBHU3JuM3lUd1N6Q29uclNoSTJQY09yUkpTZ0d6elZLX1dLWFNZYUlpclBTTm54cDBDZ3R2V0ZPTUtDcTZLUno4LUNjTF90S0NHZlJzbTRiY3lPVDJic1J1Zlh2NGMtb1V4azVBdmtSM2sxZHhCYmFRNnR3QkNwWjFRTDA0dVE4Yw?oc=5",
-        "source": "CNBC",
-        "publishedAt": "2026-10-15T15:37:59+00:00"
       },
       {
         "title": "Wholesale Inflation Hit Four-Year High in September",
@@ -911,6 +959,12 @@
         "publishedAt": "2026-10-15T02:00:23+00:00"
       },
       {
+        "title": "Americans have seen no real wage growth on average during Trump’s second term",
+        "url": "https://news.google.com/rss/articles/CBMiwwFBVV95cUxNcXd5T0FhaGtUR01tSlZKb3prVTgxLVQtcFAtWXdUTUtYMTlLaUZGNEJCMHVHX2dJdVRyX2Rtd081YWY2Wkh6SkJjSUUwVHZDT3lBd2RsNXMxRzRCalN2ZGJCbzYwMjktMjJLR1UxbGdLYmtIV3l2a0g4SWt4QnB5dFo2dkJFcUxLdDhJbVpPQWFPNXZYckRoRXg3b1k2QldFQ3RDd051QlRxeXNTV3ZQbWdUNE1RbnQwUWFKTmtzS1h3WDQ?oc=5",
+        "source": "The Washington Post",
+        "publishedAt": "2026-10-15T02:00:00+00:00"
+      },
+      {
         "title": "Gold prices climb as U.S. bond rally weighs on dollar, overshadows hot PPI report",
         "url": "https://news.google.com/rss/articles/CBMiwwFBVV95cUxPQzBFM0lFYklZU0s1bU92MU9EemRNUmkwekY1dHl5TkdZLVRFOXR4Tm52b0dpek1ZR2laY1VPUFpzYnlsVGR0cUlMZDM0WFBfRFZfblUyN0hRNGtrU1NYZklXTXktdTM3V2FGcHhmSFhLSUdFbzVhQkhHcnhFVS1sS3M1aGV0ZVk4OFFkMkxRX1U2SVRvWURxdlFhUmFtYzl3S3lVR0ZuQkM4bVVVR283ak9xdmpCWFRwU1IxTDV3b21MMXM?oc=5",
         "source": "Investing.com",
@@ -923,70 +977,16 @@
         "publishedAt": "2026-10-14T22:01:43+00:00"
       },
       {
+        "title": "Opinion | Inflation Keeps Biting Real Wages",
+        "url": "https://news.google.com/rss/articles/CBMipAFBVV95cUxQRGlmYWFwWFJKd2pseEZsZ0Z3MWFPU1VVSjN2c1AyS0Z3eUR6RmxYS1hiZEhIQ3FlTFBaLUxIS1Bpb1JBRHFjT3dqbXN1ek9xNWFwbkZyNERIeTJfX04tYV9OelZ5bkNmd3ZrVzJ1aEtmN0w4S1ZqTFpmNG9Qekc4eXAteDhpX2RSanI5OUxsMk43cUhkaW1rbzN4MFEycUlfMU0yWQ?oc=5",
+        "source": "WSJ",
+        "publishedAt": "2026-10-14T21:56:00+00:00"
+      },
+      {
         "title": "U.S. Stocks Fall on Hot Inflation Report, AI Sell-Off",
         "url": "https://news.google.com/rss/articles/CBMimwFBVV95cUxOanVqOHEyMkpxVE84VV9QV1hDdUp2bDVQTDd6elh1TmswZVY1NFhXYTlHMlJGWDh3QjR6R0VjZ29KZndKWm1PbDFUX1RZWXUwR0JkcVUxaWdHVUNZVmphTnBpV2VJQ0Y5emJfS3ppUXh6WVIydHB4MGpSZ2VKNUExVUNKdm85bWthUzNSSGgzZm5DRG9TYjZ5THdxYw?oc=5",
         "source": "WSJ",
         "publishedAt": "2026-10-14T21:32:00+00:00"
-      },
-      {
-        "title": "Nasdaq ends sharply lower as hot inflation data stirs rate-hike worries By Reuters",
-        "url": "https://news.google.com/rss/articles/CBMirwFBVV95cUxPNHRIX3JxLXdyT1Y2enh1ZXB6b3dLX2VXUFJ3d2k0NmhLQUFKb0doVTFiQ2VaQmlLQi11UVBHdmRNVjRuMnFUaE9LdUNITE1iZ1lTWDNydk1hRWluR3otUkdwblVwNUFfcmxNVlJoRG8zVHUxSFM3R3BtZkhzWlhGRzFrRUJwZnpidVlZYWh5YS13X1pfb0JvTENwUjhlSDNOVlBEZ2Z3U3U3MTEtYWUw?oc=5",
-        "source": "Investing.com",
-        "publishedAt": "2026-10-14T20:34:06+00:00"
-      },
-      {
-        "title": "As inflation rises, more than 40 percent say they struggle to pay for basic necessities: Pew",
-        "url": "https://news.google.com/rss/articles/CBMikwFBVV95cUxOVmM0cE5MaHZXNC1GbkVaMTVmM2tLczJHekJZOU5TUV83TXQxRmNFZ0FvQTVmdm8tMzFtWUtyTUo0QTF6Sldwc0VMUm1TQmoyaHFQMVJQYUZZZW13dVdvYWZ1cFdfdEpnbWhIdXY2ODRxWTVDMW56SDR0c2JhVS1vM2ZUb1cteWxYWFVDbmM0cTZZU1E?oc=5",
-        "source": "Yahoo Finance",
-        "publishedAt": "2026-10-14T20:20:45+00:00"
-      },
-      {
-        "title": "Bond Yields Fall From Inflation-Driven Highs",
-        "url": "https://news.google.com/rss/articles/CBMigAFBVV95cUxObzBfdEVoY3JmTmNLSG5NSEhHNEF3T0Z5OXpzWlkyVlpaZkFFQjhuZGtnNERXWVJMYUxfSEZyUk1pdVY3c2ZNT2M1VkN5cVc0eTVkWWEwTjhuT1E2Rkt3VUNJVUtaNmhMNXExR0VOenJKVzJFTWlIZm9TWXZCT3hrQg?oc=5",
-        "source": "WSJ",
-        "publishedAt": "2026-10-14T20:05:00+00:00"
-      },
-      {
-        "title": "Update: US Equity Indexes Drop as Big-Tech Sinks After Hot Inflation Report Lifts Odds of Fed-Rate Increases",
-        "url": "https://news.google.com/rss/articles/CBMijAFBVV95cUxNWWlPYzZOYy1kbGJlNWZBaElnSmdMRUVQRlozVDFtXzhWWC1IdGFLMEQxc2JJU0tmOW0xRTZQX3NXVVpBMzJQcElGS1pyQmVnZDlwcG9BZFFuRExuTFdGOXlRdFVwa25MckRKOExVTndNQk9xT1JIUUV2V2tockh3dmVNaG4xOUVuTDJPLQ?oc=5",
-        "source": "Yahoo Finance",
-        "publishedAt": "2026-10-14T19:48:56+00:00"
-      },
-      {
-        "title": "US chip stocks slide as inflation and AI debt fears unsettle investors",
-        "url": "https://news.google.com/rss/articles/CBMihAFBVV95cUxNV010dndEUEEtbWpidDZDc3dSbk1wMnNqdmV6V1QxN3VqektkZ2dlY010cVhrOXgzQkJrRWhxdXk1WVg4VlBId2lTNVFMRXowVTlBZGJKeHhpWDhjOER6NlZmdGZFWnc1SmhVSTRvTzJpbmdfTmk1d2xYWHg1N0VFUXFTaUY?oc=5",
-        "source": "Financial Times",
-        "publishedAt": "2026-10-14T19:33:09+00:00"
-      },
-      {
-        "title": "New Numbers Show Just How Badly Trump Wrecked the Economy",
-        "url": "https://news.google.com/rss/articles/CBMikAFBVV95cUxNTXJ4UVU3anhvY01Ba2JQT1NDMzE3d3FBdHpUQW5QcEZyeFlQNkliOG5sdDdjLURIUHQ4ajVBclZHczVtOEtwS0pDRmJrVnc2SllaRkZET0FRME1Zb2tubjBhczQxWVZNenJWZ2FBUjFPNHhxSVlENVVXdDVEQmZWNmxwWmZlcTdITGZCaDZDTEM?oc=5",
-        "source": "Yahoo Finance",
-        "publishedAt": "2026-10-14T19:15:13+00:00"
-      },
-      {
-        "title": "Fed’s Beige Book Shows Price Pressures May Be Intensifying",
-        "url": "https://news.google.com/rss/articles/CBMiqgFBVV95cUxNdFAyR29VRUEyVURBTHFnWkEyay1WNlF3aEJkUHFuWFBzTmduc3BRdzBVeDhPZ1VHZi1VMllCOUthemR4NEpJdlVGUUlkaGIzeUxrS1lpNV9MSmFiWmdPQXp4emYyOVhVVS1Ob1lRaGJfT1FJT1JMX01hZDFNNUp3cWk5OEdHd19MVDI4dlA3ZVpsNFI2V0wwSm5SVG1GMWZBejdySzhNRGlXZw?oc=5",
-        "source": "WSJ",
-        "publishedAt": "2026-10-14T19:06:00+00:00"
-      },
-      {
-        "title": "Precious Metals Sink As U.S. CPI Numbers Give Dollar A Lift",
-        "url": "https://news.google.com/rss/articles/CBMinAFBVV95cUxNZkFOakhIMVpZZ2dCUmlwZFoyX1cwV28zLXZMam1sVGtDRVZseExJQmNiMDdfQkxUaW8zd19mZHpoc3NkSTlxRHVGNFpOZDIweVd2c1lrQ2VHakpwSk4wUk9nVnlNR2ZEMnoyMEJMMFhQWmNPeVBuNWhVN1A2VmdGejNiRjhQRmp0ZUdLajF3MTg1MHlDbUxZbWFuRTc?oc=5",
-        "source": "WSJ",
-        "publishedAt": "2026-10-14T18:11:00+00:00"
-      },
-      {
-        "title": "US consumer inflation hotter than expected as midterms loom",
-        "url": "https://news.google.com/rss/articles/CBMiogFBVV95cUxNWVdBcWFNWlJkbEFCbHNDX29WRDJvTW9Ra0VVZVBMNHA2Y25URnBzVVhsN0VmeW43S1ltcjFqT3VWM200NWFWd2Vfc2E0bnhEY21WVS1zQkcxTVZGNjJHbU5EdHFEUDhPd0V1WHRJNlE0cHp1cm1EU21oZmFZX20xclJubXF0LXVWY29SWDhKN05sMmlmdWdob1lpZmNBUDZDZ1E?oc=5",
-        "source": "Yahoo Finance",
-        "publishedAt": "2026-10-14T18:06:04+00:00"
-      },
-      {
-        "title": "US stocks sink as inflation gets worse",
-        "url": "https://news.google.com/rss/articles/CBMiggFBVV95cUxQTmhBa0oxS0M0dk1SUEREUzNsTGdnVUp5WFF4MXk3ekhVTzlJdXR3elNBNGloUVJlS25RQXc4ZG5MdVhqM2F1YUFoWGlvMW8wTG1xZTRadjAxRTZtVGdqdjh5OWZZMzBEMkc2bGxLSi1NZlhJRUotMmpBTHNnSGVzam1R?oc=5",
-        "source": "Yahoo! Finance Canada",
-        "publishedAt": "2026-10-14T17:23:13+00:00"
       }
     ],
     "stale": false
@@ -994,8 +994,44 @@
   "jobs": {
     "provider": "Google News RSS",
     "topic": "jobs",
-    "updatedAt": "2026-10-16T16:25:41.998990+00:00",
+    "updatedAt": "2026-10-17T15:20:04.877112+00:00",
     "articles": [
+      {
+        "title": "StatCan: Paycheques rise slower than prices. What the national average raise of 2.3% really buys you",
+        "url": "https://news.google.com/rss/articles/CBMijwFBVV95cUxOaEJVWE9rVFdOS2pQeWdGU1c1Y3F1eW1QTEZoLU5YcEEwS041U09YajRPdzBQUlBTVDZ1QXlwSnpvd19iTFMxOU9xenJROEtuQ0RsMFRVaWJ2bk5OVFl5SUJHaVZUajFveWdHQVM1Z2dVa3dGbWVtRUNIV1dNc1NYQW1YRFZwcUVWaHlrYl9YMA?oc=5",
+        "source": "Yahoo! Finance Canada",
+        "publishedAt": "2026-10-17T10:30:00+00:00"
+      },
+      {
+        "title": "Big earnings reports, homebuilding and the mood of consumers up front next week",
+        "url": "https://news.google.com/rss/articles/CBMikAFBVV95cUxONmNBRFliOVZCS1kyM0ZReW5hR2JUTnVpVldhWlIxUU1PQ3phRXQ5VURYNmdYX0RFOXFudmxYdHBBeGVJNzdWejVWNFJib0N3SjBmNTRwVnFRaUhOZjV6NFNmTjBWUlJvSlFnMDZSVDM1VS1aSHY5bGZYbHZPNXFjVDJiT3QwazBVZ2N6MDR5UDc?oc=5",
+        "source": "Yahoo! Finance Canada",
+        "publishedAt": "2026-10-17T08:01:49+00:00"
+      },
+      {
+        "title": "Automatic Data Processing, Inc. (ADP) latest stock news and headlines",
+        "url": "https://news.google.com/rss/articles/CBMiV0FVX3lxTE1VdDdyRUVRVVJyd01tTHJXQ2R1eDc4VWgzZldhT2Y0emxEeVhUZ3RPT0N4dFRjdXFaNkFjNm9VTE1iQ21fdHZleGRHRllQa3JvZG1FVFBCbw?oc=5",
+        "source": "Yahoo Finance Australia",
+        "publishedAt": "2026-10-17T02:34:56+00:00"
+      },
+      {
+        "title": "Canada Lost 68,000 Jobs in September: The October 28 Rate Call Just Got Harder",
+        "url": "https://news.google.com/rss/articles/CBMifEFVX3lxTE1aY0gzemFUV0hSZm1xYnBBZTM1MlpMWkxmZnR4dkFmMDNkNjNRZW1DcDV5RjktenNwM1VHeWpCNGZ2UjB1TzNWbm03V2NmM2hsSmkxcjUxUGMzeVZjbUpPZFBxNWJyaFlMajhSeDJ5MWpZd3Z3N3VYRk9ldzc?oc=5",
+        "source": "Yahoo! Finance Canada",
+        "publishedAt": "2026-10-17T01:15:00+00:00"
+      },
+      {
+        "title": "Surviving Unemployment: What to Do if You Are or May Be Laid Off",
+        "url": "https://news.google.com/rss/articles/CBMiogFBVV95cUxPcHc2RWZsYU5vaUxRbmJDRUY3RWtjZkdOUzJGSFJFWXNiQ1A4MW41M1VuV3VfUi1Ga2phWlRBZjlzOXAxYnQwRHlwb3dIWkZYOXo2YzBsZmV0Tm9zTUxQdndxZG93VU9MelM5UVNHcmJrLW1WZFphdmthZUwzQ2VzOVpRTWVVLUsxSHJvQkFnN1MxcDRuSWVsSG4xeTBXYVBscGc?oc=5",
+        "source": "Yahoo Finance",
+        "publishedAt": "2026-10-16T21:36:35+00:00"
+      },
+      {
+        "title": "California job market gains strength as fall hiring picks up",
+        "url": "https://news.google.com/rss/articles/CBMimgFBVV95cUxQbWI5bUNzcjZLRHotN3MyTmtvV0MyLTVRdVR2LTRUaHBkNlhweUZwYlM4YTFQUEp1dGVfSThFLTVBNHR6c1UwSXBOaW1YeFRGNGxXbnhoLVNTUTJ3SWdCbkVfMXVIWnlXX1ZOQjRJbjBQeU5oaW1rR1NnbkRDclR1bExITUMzMi1ZTEFmZ2Mydk0tRmdDb0tmU2xB?oc=5",
+        "source": "Yahoo Finance",
+        "publishedAt": "2026-10-16T18:28:11+00:00"
+      },
       {
         "title": "Democrats eyeing the presidency can’t stop talking about this issue",
         "url": "https://news.google.com/rss/articles/CBMivwFBVV95cUxNMTl4a3I1RTR4WjFYT1lZa3o3bWF6M1A0NXVqa1NIM1FJNlk5VGsyVnNuSEtiUmNVd1hSTXlHeVkwcEdoS0hYUk9yQ1ItaUFYcXZNa2hKa0pjUnZaQjdwb0Judm1sSWlXaXFaNTVHZUNTZE9aQ3lEX0pNZW9DczZUeUxUQUJwcEZ4ZkdMQjJxeXNDdTZhVlRJendDZ0ZjU1ZoSzZKSWpOdmhORkNGTERsc1c2dDVtRTdLci1KeVJVcw?oc=5",
@@ -1003,10 +1039,34 @@
         "publishedAt": "2026-10-16T16:00:00+00:00"
       },
       {
-        "title": "Seeking Less Harmful Alternatives to Central Bank Rate Rises",
-        "url": "https://news.google.com/rss/articles/CBMiswFBVV95cUxQOHMtWDVXRkxJblRXWElJd2dNS25VZE9SS0g4X0FUN3FOSlB3RmRyTlQ2ZWJoYjFRWThRb3BGU2x0Z3BzV25ZTG05c3A3bVZ3UUxpdzk0dVQwQm5DWFl0UWtFdktVY3RnTkExUnBCbnZONHE1TFF1bC1qUkxqeEx6Q1Iwa1VBb0xOemo2S3NrVlh3TFFER0EzYm1Wb3dmNlNaNHIzVUc3ZTlyODZwd1RuUE5Kbw?oc=5",
+        "title": "Welfare reform is possible: we did it before, we can do it again",
+        "url": "https://news.google.com/rss/articles/CBMihAFBVV95cUxPWE1mTUVaTWZuT0NMVTU2cGx0b28zMzJudkNBU0JCbTUwYXZUck9KN2h2UV9aT2JqODVOTUtTVDNjek9WV2o1OTJxNXh4Z1RNem9mWFVyS3UxbnA3bnFrTGpZQXBHdUJXRXFRSjFtbFRsSkwxMzI0cXk0NnVhbk1HZWdGQjI?oc=5",
+        "source": "Financial Times",
+        "publishedAt": "2026-10-16T15:53:23+00:00"
+      },
+      {
+        "title": "Minimum wage freeze ‘could create 100,000 jobs’",
+        "url": "https://news.google.com/rss/articles/CBMingFBVV95cUxQUHkwZTBLdEplSVhjWmNjMVE0VFczb19RMDlCWWI5UkJndDJ5XzJKTlY3cVJFNzZiTWFNWW5qb0VuaTdGcGdxLXV5bnNULUZiVFhJWkppZVZrdTdxWnh1Sk9Edm13YW9VQjNLMEhUbGVtX3VLN2hZSk1XbWlHSU9oUVlsWGVmcVQ4RkxLckxUaWdKTS1LMlNtcU5OVDhZZw?oc=5",
+        "source": "Yahoo Finance",
+        "publishedAt": "2026-10-16T15:36:17+00:00"
+      },
+      {
+        "title": "Investors Prepare for Data Dump That Will Determine Canada’s Rate Path",
+        "url": "https://news.google.com/rss/articles/CBMijwFBVV95cUxNQWp5XzAxZ0E5YkRTNTRidHlxQWJGVTh3ODBIZUtWVHA4bWVGS0dFZUZ4aVhNVWhwXy1YSzFqWXRZQlc2VjVZbkEwTzRIMFAtN2w5SEJrMDJXWjB0VVkyNUh5ako0X0lfU2xWWkVobVZwby1sT2dPdzJ3b3BTcnZRTkh0REhzNlU0NFFsQkRrWQ?oc=5",
+        "source": "Yahoo Finance UK",
+        "publishedAt": "2026-10-16T14:00:40+00:00"
+      },
+      {
+        "title": "What to Look Out for in Economic Data This Week",
+        "url": "https://news.google.com/rss/articles/CBMijwFBVV95cUxPMUp1bXdJSzlMUndpYXlhT2VEeElsM3RvWVk1U3BvY1liRF9iOWNja2dYM0kxSUR0dlV5bDdNTWIxb2lHeVRXS1djUUgzLVZScVhuWWJVejhLd056ZzNBMlZIb1NrUWk5bnZaVVZnZzFOV0E4bk1nT1JzaEJJWFNhNFNIN1N1TDBkWXRQdU9LNA?oc=5",
+        "source": "Yahoo Finance",
+        "publishedAt": "2026-10-16T13:54:00+00:00"
+      },
+      {
+        "title": "Eurozone",
+        "url": "https://news.google.com/rss/articles/CBMiVkFVX3lxTFBPRmdybFJhMFY0c0hLQkZvS04xS2R4T3B3NXdpLXR6bTViY1Nld3lPMUxXbmoxN2oyTkZ0RjAxYTIwZmZrTFNEcWxsUHJBREx6TzBpUVRn?oc=5",
         "source": "WSJ",
-        "publishedAt": "2026-10-16T10:00:29+00:00"
+        "publishedAt": "2026-10-16T12:01:23+00:00"
       },
       {
         "title": "Sweden's jobless rate falls to 8.1% in September",
@@ -1045,16 +1105,16 @@
         "publishedAt": "2026-10-15T22:46:00+00:00"
       },
       {
+        "title": "Former commerce secretary says AI is supporting economic growth — for now",
+        "url": "https://news.google.com/rss/articles/CBMilgFBVV95cUxOeTNzcHhObFR3NVZEVE42ejdsallXNG9qVHc4bFlxZDlMSHRyZkVGUUotRl9mOUZMY0w5TndNXzBVbHhxU2tadmNUbFdWRjlqSFVhM1ZXMEY4dnpIbTZYYUh0aUxvZVhCdEhvNTFIYTlQV0p3QUdQTktPVkU2dmdpWlp2N210WUs0Q24xNnNmcGtjOWZqaFE?oc=5",
+        "source": "Yahoo Finance",
+        "publishedAt": "2026-10-15T21:50:48+00:00"
+      },
+      {
         "title": "Lose a Job at 55 With $400,000 in a 401(k) and the Plan Will Let You Withdraw Penalty-Free Starting Now. Roll It Into an IRA, as Most Advisors Suggest, and the Same Withdrawals Cost 10% for the Next Four and a Half Years",
         "url": "https://news.google.com/rss/articles/CBMikgFBVV95cUxOaWExaUhDOTdFc1B6VmxOXzZUamFpQW9aZTBBNy11eFp6Q0xzQURodmFIRVV2X3hwci1JclE2aTVmUnhkVzdlcWlPeVBhVE9BZnNCSHFFSlVSYVpKV2I5NGpENDVfY01lZ3JmMV9vYzI4X0w5ZktMYUM3RkJHZ1JvZi1uelVDRlJTR2RLWTRudlNIQQ?oc=5",
         "source": "Yahoo Finance",
         "publishedAt": "2026-10-15T19:13:21+00:00"
-      },
-      {
-        "title": "US consumers are muscling through higher prices, but for how long?",
-        "url": "https://news.google.com/rss/articles/CBMi1gFBVV95cUxNLVB5TGxTcDBuNFEzbU5qaVhwZ05FLTgwYk82Yk12ajB3MUVINWtEMkRXQ1Nab0xDU1lqQUhtTXZvNHpBSXViZ0tpZ3phOUx2TUlpMkxPUElUaUIyZUZPRUJhb3lGc2hKZnhOZDl3eUQ4Vl8zQ1ZjMXFYZ0dleW1yMW1YbXRneFJlaEhRRlN4QXpUaE1xai1wdEtLbjN5QlF3NlpBamZNTTl1VGhkYnZwLUNzNWpaZkNVWEQtLWdQM0dLQlVvVjliNnlVUmFiOV9yUGNYeTFR?oc=5",
-        "source": "The Washington Post",
-        "publishedAt": "2026-10-15T18:24:23+00:00"
       },
       {
         "title": "Nevada unemployment falls to 4.7% in September as labor force shrinks again",
@@ -1085,6 +1145,12 @@
         "url": "https://news.google.com/rss/articles/CBMisAFBVV95cUxQNmFlVmlwaHY0ZEdneEE1Zk1aTnB1Tk1LNG1ERWdBTEVsQTVIdE1fdndQRi1Ya3ZxZGZYVFFxQzl6cC0xMFFzX1FRNFp3OWdrQlFNT3dIYl9BSE96WkVXT0dDeW9mZ0FfczZuUmJudmpZZlpDSXhMaFlfTGswRnZwTy1zRjBYSlBaTFdlV192U3h1bzNPRkp4eFV1TGlJTFJia1ZqY3VuQ01UeEt3UUk2Ng?oc=5",
         "source": "Investing.com Australia",
         "publishedAt": "2026-10-15T15:10:20+00:00"
+      },
+      {
+        "title": "AI Boom Shields Select Few Nations as Economic Pain Sweeps Globe",
+        "url": "https://news.google.com/rss/articles/CBMirAFBVV95cUxPQ2VRd3NEcWRqVnNXUDdWSXZiNTl3TEI1eXhDZ2xldXNFUVY4UXdQN2ZZbHlhQm52QUlpMjNodlFMWUZ5cnIwV2pnSUVLR25jY1VaZ3dRZkgySmM1ckZSaVROZkJzU1gtTE1HUXlnMWlic2w1c2pEM2FjVHQxVnZ1aGNCd2F0QVJldVJmT2YzMHFIZ0NnT25LV2FHN1A3VlhMS014bkR6aHpGTGRl?oc=5",
+        "source": "WSJ",
+        "publishedAt": "2026-10-15T14:46:00+00:00"
       },
       {
         "title": "The number of Americans filing for jobless aid remain at historically low levels below 200,000",
@@ -1123,6 +1189,12 @@
         "publishedAt": "2026-10-15T12:30:01+00:00"
       },
       {
+        "title": "META_TITLE_QUOTE",
+        "url": "https://news.google.com/rss/articles/CBMiTEFVX3lxTE1tdzBXemZnWVdRbWVDeU1ORTFEWHhyVTBvVGlmMHV5Nm1hckJrN3ZUaUY1NmhoRnlaeGlMQkVXZHRDWjJIN0JCZ3pYQ0o?oc=5",
+        "source": "Yahoo Finance",
+        "publishedAt": "2026-10-15T11:38:04+00:00"
+      },
+      {
         "title": "India's September unemployment rate at 5 %",
         "url": "https://news.google.com/rss/articles/CBMimgFBVV95cUxONUJqZHpaZ3VPMjAwUWthMS1jZVRnTlhjVnVmcmh6a3Y3NXZhSFM3VXp5bFdyZTRjdURJNnJwRllicl9PLThDemFQeGlxOS1fcEg4VWNtOHduZ0xtSXBjcEJPSnJKbzgtNEhlWUNRUEQwZE1VTFNvYUt4MzRCUkxKSVNyLUVET013S0NIcGI3UnptdmxhTkFQZlNn?oc=5",
         "source": "Yahoo Finance",
@@ -1139,18 +1211,6 @@
         "url": "https://news.google.com/rss/articles/CBMikgFBVV95cUxQMC1PZ0JGN3Q3cTJndzdNMl9QdDNmblNkQ1RfbkVvQnllNWc1bWVPVmdmTDZQQUQ3YkVhUWdyTnFnZG9wVlRMQXlzaG9QNEFwVS13bl9ERkZpWHBtM3M4dlBWN0xVdlRsdXNjMWtLLWNPbUtvSklxbVd0YVQ2YmRTWkZkc19SdzFmeGU5UW5vZkJEUQ?oc=5",
         "source": "Yahoo Finance",
         "publishedAt": "2026-10-15T10:19:21+00:00"
-      },
-      {
-        "title": "Young New Yorkers are facing a tough job market — and a college degree may not make a difference",
-        "url": "https://news.google.com/rss/articles/CBMihgFBVV95cUxQX2dwODBYSm0wYmpvOF9QeFlwd3AwY1pIakhVZ2VINUVhZkIwY3hId0paSG1mOGtvZUJ1NG5SU1VlTVlqdnlkVVNBalJRUEZxSFhUeksyS3V6U0VGNDV5VFBUbVBuTWVCVXFVRHBOOVhKYXc1TjJnUFFad0JVQ1FIaGdrSnBkUQ?oc=5",
-        "source": "Yahoo Finance UK",
-        "publishedAt": "2026-10-15T09:00:01+00:00"
-      },
-      {
-        "title": "Dutch jobless rate remains stable at 4% in September",
-        "url": "https://news.google.com/rss/articles/CBMilgFBVV95cUxNcHEwaGZ6QnJZUEhaRzdxLU9JZlM3a2RVcGgwOUtVcjdmVXpNT2hEeDRiR0tUcTVLTEdEUDlIY05pbTJEMk1HRmR5Y2c0QUlRd21jaHhxWXI3YW5VYjM5TmJ6ZXNac2UtT3U2QlBhWExPUHBWT2xDcU1oa1JqMzMzbFRnV0g4a05IcG9CQS1zZTNlaG5CMVE?oc=5",
-        "source": "Yahoo Finance",
-        "publishedAt": "2026-10-15T07:33:20+00:00"
       },
       {
         "title": "Weak jobs data rescues ASX from tech rout",
@@ -1175,66 +1235,6 @@
         "url": "https://news.google.com/rss/articles/CBMitgFBVV95cUxPMEhYTE8wUzJMUEYzSFpYd1gyN0RlVTkwMWhWejFlbE1Vel9rc1Fua245Nk5MSDhzVVFfZ2lzcDlrblZzTHBRajFYOElEcmd1WVlrNjNqU1FvZEdrR3pqY2ZSckw1X0dndDBydUY1UFBlWFVxa0xkUUZjRkd6TnZTWkd1NndXeTlfMElmcVhUZlRDYkgtOWFIYXE2cGxITllVcjNIcHF0eUJzMjEzSTN4bGpPR1Yydw?oc=5",
         "source": "Yahoo Finance",
         "publishedAt": "2026-10-15T02:09:00+00:00"
-      },
-      {
-        "title": "Australia sheds 39,300 jobs in September, making RBA hike a closer call",
-        "url": "https://news.google.com/rss/articles/CBMilwFBVV95cUxPZjNoT0YtWmtIVGpBTkx1a2NlUFlDMllSUElXelZESHBnd0NKNHN6UTdjdG5qa19LWWY4NnQxblFiZ0VXc3dLRXllU0ZHS2F3WWVnOUVJZDYtcVVLY2VsTm1lbjNVVmhaYlpndnZXaTNYWE5Ub3JfY0VScTR4cFVXNkpJYzFmQ3JIdk1nVzZLSzVBcUU4RGkw?oc=5",
-        "source": "Yahoo Finance",
-        "publishedAt": "2026-10-15T01:30:00+00:00"
-      },
-      {
-        "title": "What the new jobless rate means for you",
-        "url": "https://news.google.com/rss/articles/CBMidkFVX3lxTE0zcUc4QTVOYUkwU2ZmTWtEUWRpRHdzSDBZSC1VeEw2bkFmZGk3Tm1EZDJSRzBwZGRTN0lxUXJ3RmRHa24tUTlzTjE4WUFiQVM5M1Q5UkQzWUpiN2FnMFkzb3pQOU5LdEZLd3VkWTc0NW83dkpqVnc?oc=5",
-        "source": "Yahoo Finance Australia",
-        "publishedAt": "2026-10-15T00:52:00+00:00"
-      },
-      {
-        "title": "Friday’s Jobs Report Could Move Your Mortgage Rate: What to Do Before It Lands",
-        "url": "https://news.google.com/rss/articles/CBMihAFBVV95cUxQU1owLVZWcF9OaGJrRXhUbEpQRUxTMnRDbmdGbWs4RXloaUphc3hZc19Gb0ZiYVpZNXV5QU5YTmVVXzhvUk42c3RxVGFoN2RCRVVsdDdwRFRwSlV0VVNPQkZFUUNROUppWjhPUUY3emlpSmlvcnFveGRNVkxiWFhNZGlkNXA?oc=5",
-        "source": "Yahoo! Finance Canada",
-        "publishedAt": "2026-10-15T00:15:00+00:00"
-      },
-      {
-        "title": "Labor Market Stalls—‘Job Hugging’ Trend Continues Amid Hiring and Firing Standstill",
-        "url": "https://news.google.com/rss/articles/CBMikwFBVV95cUxQRlA3RnlWV1h1Um1aYkIxQVBOalROcTF4bmV5a0c0X0w2eWd3QmNNTGIzMUJXbXdYWUExeXZoc253OGF6dlBaTDJxZkFwUXphUVdFd3BVMHJkUHl1N0UxX0twVEM3WFFEeWV6S1RBM3h4WlBiTW0wZmFRTkF0VVN3RkF3azYtZUZDaVJ0Y0ZFZGNnTzA?oc=5",
-        "source": "Yahoo Finance",
-        "publishedAt": "2026-10-14T20:40:31+00:00"
-      },
-      {
-        "title": "Bond Yields Fall From Inflation-Driven Highs",
-        "url": "https://news.google.com/rss/articles/CBMigAFBVV95cUxObzBfdEVoY3JmTmNLSG5NSEhHNEF3T0Z5OXpzWlkyVlpaZkFFQjhuZGtnNERXWVJMYUxfSEZyUk1pdVY3c2ZNT2M1VkN5cVc0eTVkWWEwTjhuT1E2Rkt3VUNJVUtaNmhMNXExR0VOenJKVzJFTWlIZm9TWXZCT3hrQg?oc=5",
-        "source": "WSJ",
-        "publishedAt": "2026-10-14T20:05:00+00:00"
-      },
-      {
-        "title": "Broad Pickup in Prices Lifted Inflation to 3.7% in September",
-        "url": "https://news.google.com/rss/articles/CBMifEFVX3lxTE02QXFXcTctZDVRVG5UVWk5bWJKZkJnNUp3RjVxQUoyVmtOdTZGdTZ6R1hYdXVRMDlSeTc2a3RVdG1LYnFaeDF2Q1p5aWJYMEhPUHdOajk2ckY4azd0TnI0SGM1N2g1SUhyN1ppbDlkOWdEbndCdFVyTEtBVnU?oc=5",
-        "source": "WSJ",
-        "publishedAt": "2026-10-14T16:32:00+00:00"
-      },
-      {
-        "title": "Automatic Data Processing, Inc. (ADP) latest stock news and headlines",
-        "url": "https://news.google.com/rss/articles/CBMiV0FVX3lxTE1VdDdyRUVRVVJyd01tTHJXQ2R1eDc4VWgzZldhT2Y0emxEeVhUZ3RPT0N4dFRjdXFaNkFjNm9VTE1iQ21fdHZleGRHRllQa3JvZG1FVFBCbw?oc=5",
-        "source": "Yahoo Finance Australia",
-        "publishedAt": "2026-10-14T15:46:42+00:00"
-      },
-      {
-        "title": "BlackRock’s Larry Fink Says Data Centers ‘Are Not The Problem’ – Moratorium Would Trigger US Recession",
-        "url": "https://news.google.com/rss/articles/CBMikgFBVV95cUxQbHgtNXhkTmptNjVMZDdGSEYxR0xlb1haZFVaZzhXWTBIbkszU0FHTG1aSUlYRUQ5dzZsRDZIMEI5eU9ldjNJanc1V0ZyNmFXS0hpY3JFOGR5LUxJT0p5NWxmaWt1Q1p6RndOa3l6anVLOENxcVBwdlVxS0JjdnI3VWhLZWZwYmJmZWFCcHNpcjE2Zw?oc=5",
-        "source": "Yahoo Finance",
-        "publishedAt": "2026-10-14T15:44:57+00:00"
-      },
-      {
-        "title": "Fed rate hike call seen tight as inflation heats up",
-        "url": "https://news.google.com/rss/articles/CBMikgFBVV95cUxNN0s5SkNXSVYyNnQ1Y1NCU3h3Z0F1MktRQnNvQlhsZkRKYUpDWUM2aEZ2dG9LcGRsVW9tNlQwTldPMDcxZlpFS1dTLWYzYlBtSTk2Sk04ZFVvMnRMY1ZfYkhvbVFqakhEdl9PckdkS1RDN1VvOUd4VnQySy1Ya3BjRlBNRUE3WDEzWXJ3QzhFbkQ1Zw?oc=5",
-        "source": "Yahoo Finance",
-        "publishedAt": "2026-10-14T14:22:09+00:00"
-      },
-      {
-        "title": "GE Vernova Inc. (GEV) Stock Price, News, Quote & History",
-        "url": "https://news.google.com/rss/articles/CBMiUEFVX3lxTE01czRmT05mbjloUERIeUkxMjVyWVRxUWt5ZkhIMEd3ZXZmaFdualN2Z1d0alJTUnhrS04xdXNuMUduaTNNMjZtT2dJNnZVNncx?oc=5",
-        "source": "Yahoo! Finance Canada",
-        "publishedAt": "2026-10-14T14:10:31+00:00"
       }
     ],
     "stale": false
@@ -1242,8 +1242,188 @@
   "companies": {
     "provider": "Google News RSS",
     "topic": "companies",
-    "updatedAt": "2026-10-16T16:25:42.576831+00:00",
+    "updatedAt": "2026-10-17T15:20:05.453731+00:00",
     "articles": [
+      {
+        "title": "Which company has the world’s highest earnings? The answer may surprise you",
+        "url": "https://news.google.com/rss/articles/CBMiygFBVV95cUxPeFdxUHF0ZTFqXzJ3R2U5TFNKV1JuR0RfS05ORnBlQlpMLURaa2FwakFzd2tib3ZRZnVYbl83YnU3TkFGUzBjZl9VUHQ1MnRxR0tiM2tiZGladlN6ZGRRWjgzTkZYdy1wbHNoVWhUQXZXekhkN21odzFCTnNEQ3Z5bjVoNjl4QUhXaVk2Y1Y0eDBDZFFaLVBNLWI5Rjh0NkJfSzMwUVNudVE4WmRob213cW5OWnpRdmRsZ0huRENFbXpLdnZWT0pLNGtB?oc=5",
+        "source": "Investing.com",
+        "publishedAt": "2026-10-17T13:15:35+00:00"
+      },
+      {
+        "title": "These tech stocks are a buy ahead of their earnings reports, Bank of America says",
+        "url": "https://news.google.com/rss/articles/CBMikwFBVV95cUxPSUxGQXNoaUVFWEEweEtSZWo2RHVaZ2lsZjk2ZWVVZWEwTUFTZXJ2SFVmM1JoWWRzcXRUNkF4Z0tTSlZZemI3LVVVeW53Zl9Ndy10Z196N3Y0UjZpa0x0Q0UtODdQMmx0TlczSUdzSkRDYlhMTHJGeTQ0bVByMU05cmhJTjh4RElqWlg0T1UwLW56VFU?oc=5",
+        "source": "CNBC",
+        "publishedAt": "2026-10-17T12:49:53+00:00"
+      },
+      {
+        "title": "Yahoo Finance - Stock Market Live, Quotes, Business & Finance News",
+        "url": "https://news.google.com/rss/articles/CBMiP0FVX3lxTFBBTy1pM1poaEROWTVTNDVTYVdvTDZEWmM1VDhGdlUzWW1OUXNvQ3RmZTVZQ3BGVlhvbTlWNFNhUQ?oc=5",
+        "source": "Yahoo Finance",
+        "publishedAt": "2026-10-17T11:57:02+00:00"
+      },
+      {
+        "title": "JPMorgan Sees Wider Corporate Earnings Growth Supporting Q3 Equity Market Outlook",
+        "url": "https://news.google.com/rss/articles/CBMikAFBVV95cUxQTnJFMVA3MVFBOGhpMU5YazZiWDVtNGFtNlEtOGVMY2U0a2k3ODhNNmttQ3dvRWNlTFVCbU1UXzV3YTFHeFNoY3MzYVlVbXdfM180d09ITUdZZjBoTmctcjZNeE1iLUtxZThxZnVtYV9OblVWMEYxeTA2UV90WmVFd1d2MHdDMXRndzlOeEV4aUE?oc=5",
+        "source": "Yahoo Finance UK",
+        "publishedAt": "2026-10-17T11:43:00+00:00"
+      },
+      {
+        "title": "Nvidia’s CEO Says “All of This Is Going to Pass” After Tech Lost $1 Trillion in a Day",
+        "url": "https://news.google.com/rss/articles/CBMilgFBVV95cUxNZGZEQ0JvTzRSdEFDNUUtWTlJVFNUNmpjZEFBX3A5bTNuekxoOTQwSFdfankzYnRjd2xubWdhdVFCU19BNWVQMGZJOVlEdlU2RVAxaUZrd2N6eHRmeXNwdjU5VVUwQXAtV0czQ243eXVWY0MyRGI2RjlyZzdlYS11andGSUVhTk5tdDhSd2N6em9xcmlSRHc?oc=5",
+        "source": "Yahoo Finance",
+        "publishedAt": "2026-10-17T11:15:15+00:00"
+      },
+      {
+        "title": "Best Buy Co., Inc. (BBY) Stock Price, News, Quote & History",
+        "url": "https://news.google.com/rss/articles/CBMiTEFVX3lxTFBfa2gtUWFPbUs0X19qVlgtWlRGb25mM0d5cmZ3RTdHRkZMY2RUazg3Y0hxR3lsVTg0VC1lY1ppX3NKWm01NzJ5WEEzenQ?oc=5",
+        "source": "Yahoo Finance",
+        "publishedAt": "2026-10-17T10:53:25+00:00"
+      },
+      {
+        "title": "Sandisk Stock Is Still Up 488% This Year Despite a 40% Drop. Is It a Buy Now?",
+        "url": "https://news.google.com/rss/articles/CBMinAFBVV95cUxNY2JEbHB2U1dRcV9WMGEzUzJNSE4zTjNvbWlheUJEcUVzb2hQVC1BVEg2WG9JOVZoZUNZMGh6TFFyTXpHRU9MTHR3ZVdPRXk2bUhCUFNYNnJlR3BWZTlSM3JFVnplMDdKMGZqeTFncXd2WXdGcjdVb1dVOWVfZEdQbTVFRDMzSkl3MHktdUFmbmhkdDVkdVhZdEZYQy0?oc=5",
+        "source": "Yahoo Finance",
+        "publishedAt": "2026-10-17T10:42:02+00:00"
+      },
+      {
+        "title": "META_TITLE_QUOTE",
+        "url": "https://news.google.com/rss/articles/CBMiTkFVX3lxTE9pUnVuQ3AzSDN2ZjNaRU14NEpwR0tOZTJibGx3TGlrM050RW9UdHRSMWZJX0RUcE9TZDU5QkJkWU5SYS1zNW9rR1pTZDRCZw?oc=5",
+        "source": "Yahoo Finance",
+        "publishedAt": "2026-10-17T10:29:11+00:00"
+      },
+      {
+        "title": "It’s Too Late for Small Fixes at Pepsi",
+        "url": "https://news.google.com/rss/articles/CBMigAFBVV95cUxQRXJtYlJ2NXRjMDdlVDBfY3lSbHNKZmpIWUthcURSbmltUzlNODdIU2JOdDhBYnplU2R5bkwtZzdUMWR1Mi10bDFjNVlCSGlfR3RjN09kTGZDbmlMUWs1TloySVV2UXlzMVhVNXNPdDU5a19tNzlIa0wwTHFlV2RaUA?oc=5",
+        "source": "WSJ",
+        "publishedAt": "2026-10-17T09:30:00+00:00"
+      },
+      {
+        "title": "META_TITLE_QUOTE",
+        "url": "https://news.google.com/rss/articles/CBMiTkFVX3lxTFBpVTJIYnhWcW1kNFFKTHNoajhPeE9zSW9lTElhZkZvcEo3MExtQnpIZjBRek95cWJ0XzRKMzBtMHh0Ty1SYVRESUxfRTJ4Zw?oc=5",
+        "source": "Yahoo Finance",
+        "publishedAt": "2026-10-17T06:08:43+00:00"
+      },
+      {
+        "title": "META_TITLE_QUOTE",
+        "url": "https://news.google.com/rss/articles/CBMiTkFVX3lxTE02aDBpUWN4ZVp0ajliNXhvdWpuVWc1Z1B4eEVyUUFmN2RoazgzbUlUaU9kR1JTU2Q0bVR6ck45M2szN28wUWVmcmRoZlRnQQ?oc=5",
+        "source": "Yahoo Finance",
+        "publishedAt": "2026-10-17T05:36:29+00:00"
+      },
+      {
+        "title": "CoreWeave Stock Faces A Debt Funding Test",
+        "url": "https://news.google.com/rss/articles/CBMioAFBVV95cUxPUEp6QTBfWnVuZkxiT2FIWEdmSTJ1MTkzRjV1TUllT0RwcHR3VWx1UFVlc0g1ZHNvNzFneUY2LXRLTXpqeFk2blotczB6RDEwQWFnNVJfRFV5RVBOdVZaeWtFei1EU2tZUW14MVdCOTFQTkY5TnVPU2VZX0h0WkxmTmhtNW0zQTVaM2dNckRKYlp6S0dnd2ZCdEVVeHNPQ3k2?oc=5",
+        "source": "Yahoo Finance",
+        "publishedAt": "2026-10-17T05:18:00+00:00"
+      },
+      {
+        "title": "This earnings season, what CEOs say matters more than what they’ve done",
+        "url": "https://news.google.com/rss/articles/CBMicEFVX3lxTFBQMDR6YlNfZjk4VGkwMU1LRUt2UDlkX2lyVFV0YTdkemQ5clNIZkhGbTNPcDN2Z3EyUWZieUdZVXFlaUx0RjNacWxNQ1hOQlRWcmFPc2hjZEVfeDBicVdNZ3E3bmhFbmJaT24wMjV4RGc?oc=5",
+        "source": "Financial Times",
+        "publishedAt": "2026-10-17T04:00:54+00:00"
+      },
+      {
+        "title": "Stocks are risky right now — but so are all the alternatives",
+        "url": "https://news.google.com/rss/articles/CBMicEFVX3lxTE9qbkZMNFl5RVRLNUJqLVUxYmdBbFp0NjJjdldzNUI1V2N0S19aSmZsMG5ualpoRU5vcUFCdWd3LTVXcndoR1lTUkFrZldEcUxqbXQ3alE1cldkeVpaWDJIRmdMU2g4QUhqek5mZUJUeEM?oc=5",
+        "source": "Financial Times",
+        "publishedAt": "2026-10-17T04:00:02+00:00"
+      },
+      {
+        "title": "NVIDIA Corporation (NVDA) Stock Price, News, Quote & History",
+        "url": "https://news.google.com/rss/articles/CBMiUkFVX3lxTE51M3YyYUhDNzU1Y2Rjb1RZakJNc2s1NWlnbHBYS1RWTTJyNnpzNUFiUEVJQmRoSElldkd0Z3Bva0s1UURoUFpJcDVxZnRJZXdDcGc?oc=5",
+        "source": "Yahoo! Finance Canada",
+        "publishedAt": "2026-10-17T03:00:41+00:00"
+      },
+      {
+        "title": "META_TITLE_QUOTE",
+        "url": "https://news.google.com/rss/articles/CBMiTkFVX3lxTE5oRWFDOUk5RnFwTHd2QWxnZnYwNXZRTEtYaDRVUXZZVEJrSW5aWGdPZ1BwSFJtQ2RXWGY2OGJiTzU5MGZrbjZhUlNQdGZmUQ?oc=5",
+        "source": "Yahoo Finance",
+        "publishedAt": "2026-10-17T02:25:09+00:00"
+      },
+      {
+        "title": "Exchange Income Corporation (EIF.TO) Stock Price, News, Quote & History",
+        "url": "https://news.google.com/rss/articles/CBMiVEFVX3lxTE14NG9mMDdJR0hRenJubjFGZlJDNDY0cVVMM3hJWWZxWGRCSFVxTUpRRzh2cVNFSGtDRzZGMFJXQ0d6M3RKWEpOOGs1QW1fUTNEaHdzYQ?oc=5",
+        "source": "Yahoo! Finance Canada",
+        "publishedAt": "2026-10-17T02:20:24+00:00"
+      },
+      {
+        "title": "Prediction: Alphabet Will Be a Larger Company Than Apple by the End of 2027",
+        "url": "https://news.google.com/rss/articles/CBMiqAFBVV95cUxQRlpKcjFLM3ZtV3FaY0dHNkZHQm1MRUE2dkNEalNtUnM1RHJ6SDYxdHJ0U25jWTQyX1A3MVJyXzg1TVdES01QbjVZV1VHc3ZPNlFCb0txVDVHN1FOQXZRcDJSbVVEenFoNTJsVzNoOW50bXd1VGdPeFJaWldwZkttc1gtN3FWVFJUclREdGVLalpQc2czb0hFSmdITVVMcV9VS3djVDFDaUc?oc=5",
+        "source": "Yahoo Finance",
+        "publishedAt": "2026-10-16T23:29:00+00:00"
+      },
+      {
+        "title": "CoreWeave stock plunges 12%, but Wall Street analyst says buy the dip",
+        "url": "https://news.google.com/rss/articles/CBMinAFBVV95cUxQWmtPUUxmSDY5MzZlTFZNbmN3OEl5NUEzNk42VnFqUXJzSmtTT0wzejFHRkkydUVRdDdycnlHaVVGUnk3NUVLMl9VYWlzczFWdE1qR1VydVJleWtScklzczRRU1RNcUNDbW5ndmV1WENtWWtxOGFQb3c1RFZRQVZxa2hrbi1ET2J5Vy1IcjVLVGlycGNzeVloejEyemQ?oc=5",
+        "source": "Yahoo Finance",
+        "publishedAt": "2026-10-16T22:39:27+00:00"
+      },
+      {
+        "title": "Taiwan Semiconductor Posts Record Q3 Results: Time to Buy the Dip?",
+        "url": "https://news.google.com/rss/articles/CBMiowFBVV95cUxQek9jRE5qdVY3WFdqR25lYXZkeEp0Q0tjNUlBRnpUVHZ0VnhzZXUycjdvcC05bERrWFprbVdZaFVfWjZHOHNuN1Vqb19DQUtqSjdoSUczQkQweEtHNEJydXZMTWxqTVpRZnZQLVdkWWRCTk9DZEtKU08tZHlLbFpIZE9zdV9YUVd4eC0wNHM0ZUhLZ3FjSzdaeWlSUEZhbm40UjFz?oc=5",
+        "source": "Yahoo Finance",
+        "publishedAt": "2026-10-16T22:36:00+00:00"
+      },
+      {
+        "title": "Charles Schwab (SCHW) Stock Slips After Strong Q3 Earnings Report",
+        "url": "https://news.google.com/rss/articles/CBMinAFBVV95cUxOMnJEYm1CNzA3cnQweHpLQ3RNeEFTOWU3UDJ4OW1Da2pCOVUyQlNKTEN4MVB4b1VMVUdwQVh6emJUSU42TXQ5Tm83MWNLckVuMzBQV1UwbUlzekF0X0FXcGNWYWJ0VEhjN0ZueVMwbjEzbml4SjBlN2QwQ0RFeENfTnRMcVRWaU5UdmFZMkdqN2F6Z2cySUpCRmdjX1c?oc=5",
+        "source": "Yahoo Finance",
+        "publishedAt": "2026-10-16T22:15:05+00:00"
+      },
+      {
+        "title": "Genuine Parts Company (GPC) Stock Price, News, Quote & History",
+        "url": "https://news.google.com/rss/articles/CBMiUEFVX3lxTE1ZbUF5LUZkSThWTVhVMHFXVWhCWDV5SXkydFZzdmViYzF5bU9VRlFrcmJCQldzQUJRN2wxUnp2TXpnUFI4X3dLQ1U1V1Z5d2NM?oc=5",
+        "source": "Yahoo! Finance Canada",
+        "publishedAt": "2026-10-16T21:02:14+00:00"
+      },
+      {
+        "title": "Empire Company Limited (EMP-A.TO) Stock Price, News, Quote & History",
+        "url": "https://news.google.com/rss/articles/CBMiV0FVX3lxTE40ckRISjN1Y2VpYU1CWWZZbkFVTzdxZE5jZXRNWkQ5NzFZSGpOc2lncGw2dmRKMF9lY3lGTzVhcVNPRmx2NjJzMVpMX1JNbksyR1E3ejd0OA?oc=5",
+        "source": "Yahoo! Finance Canada",
+        "publishedAt": "2026-10-16T20:30:59+00:00"
+      },
+      {
+        "title": "Major earnings reports are due next week, but strong results may not be enough to quell market fears",
+        "url": "https://news.google.com/rss/articles/CBMiigFBVV95cUxNMDB5eUJodTlUZTZQNzNYdFhCVWFOWUdRZk5ENkFRNll3OEE0RjJkb0tMUzZRMkJYNktERG5pN1ZmR1JTUW1FczQ0UmQwSGRza2xUeUsyTndRajd0aVU3dXRTaE1nVkFKalpJZm9yMVVNWUJpYi1vUGp2VEJwQl85dmNzY0ExV015MGc?oc=5",
+        "source": "CNBC",
+        "publishedAt": "2026-10-16T19:39:38+00:00"
+      },
+      {
+        "title": "Apple’s $1,999 iPhone Duo puts the company's status-symbol power to the test",
+        "url": "https://news.google.com/rss/articles/CBMidEFVX3lxTE8tei1ZbW5OOGttanlpQXl4bk14Vzlvc3N5TENlNjktQ01QY09LWDg1VTZlcVNXQ2UzUENJQWNEU3o2LVRXNjlFMWhFdWdFdVVIRUpFeWtlcFNkS1hXcU5Ia3JSblBvNnV5RUNnTklHTHluSTNf0gF6QVVfeXFMTlJzMGJSUzR2endKUFpzcTVCbzJGNWY3eUdxY1huNFUzNlZCUXNrYnl6djFaRzFwS3Z4emZ0b0dYbkJaWERNZHpGdGFlYkNUR2xNQ29pdlAwSWUyZnE1RUhTY0thN2ZLUzlRdm44Q2xpX3FtQnBra05kY0E?oc=5",
+        "source": "CNBC",
+        "publishedAt": "2026-10-16T18:52:02+00:00"
+      },
+      {
+        "title": "We're downgrading this retail stock after a big comeback. Plus, AI names slide again",
+        "url": "https://news.google.com/rss/articles/CBMizAFBVV95cUxOZlFzOHNtZTQyTENUcDVQeVlNWXAtTjlVd2pVZDFIdmtuYVJsZWhjcjlESmMxclRMaHMwR1pzRmx0eTE0bXdESy1SeVBqc3ZTTDNiN0xyRHZJenhHTUZUZWJTbzhDYndkcmFlWXdKbWlMbkwwMmFDakRQaXNZLThlVEdRdmZlVTBHZlN3N1g3Sll1QXh2ZzgwdnRzc0VNd3V3VVBsTm1IUW13VEVtNkFvMmdmVUpIdkkxaFI5UEV3a3ZnS3JLV3d1dVdQVzY?oc=5",
+        "source": "CNBC",
+        "publishedAt": "2026-10-16T18:46:19+00:00"
+      },
+      {
+        "title": "Palantir's record breakout unravels as software stocks shed $260 billion",
+        "url": "https://news.google.com/rss/articles/CBMixgFBVV95cUxNSXJobDgweVN4Yk0xRFJMQk5EeXlYRUtnTVUtdDFsNzZLTnl2QW10M2RRamVxQXpJcmdxVFVoSWVUSW04MDhEU2pZZHFjalBUTFpud05DS2pSX1FqWGtrUWxaVmxtbVRhSGJvTEgwVFgtYm9TckpjZ1BicXEtZVZ4cEFwakZkaHE3dGpJeXpjYUFxY2t6Zm1wQXZqNUlZRmZTUzJxZVFpYWlFR1ozUmw0Tm9aYl9tcjk3OVZMbm1rWTliemMtcUE?oc=5",
+        "source": "Yahoo Finance",
+        "publishedAt": "2026-10-16T17:43:07+00:00"
+      },
+      {
+        "title": "Valvoline (VVV) Stock May Trade Above Fair Value On Earnings",
+        "url": "https://news.google.com/rss/articles/CBMimgFBVV95cUxOaFROTzZpR0RaRWt2czREWEJPZWRTSmhLVFFXek05TDFFNlRPMXh6cmYzNUVCeElxNUlsYV9tclV4OW85NnM2MWd5ZEdvZl82aF9GTTFwX2RfR3d3bzc3RlFaMG16cm5JNmx1ajZXVGEtQnZlWGhzUWk0SDdmWVpwT0RNcks0bnRTUklnbmhZTVVQcnY3bXNhUE5B?oc=5",
+        "source": "Yahoo Finance",
+        "publishedAt": "2026-10-16T17:12:36+00:00"
+      },
+      {
+        "title": "Should You Hold on to Cerebras Stock Despite Its 25% One-Month Dip?",
+        "url": "https://news.google.com/rss/articles/CBMimwFBVV95cUxQTHdNQ0I3QmM3alNfSlRBR2t0UkZXUlYyTm50Z2JnY2diSV90SjJ0RDVpNmZrZG5rTl9zOWxsSlpHNERCZjU5aXhySmdWT3l5aEs5UmJ4NGs1ajJBejJ2LXpudGY1S3hlQnkya3ZnOHZpVHJyUWpXdzR4cG9iUS1lWjQtWVE4ZFlMVkloWXQ4TUR4Y1FhR0JycVNvSQ?oc=5",
+        "source": "Yahoo Finance",
+        "publishedAt": "2026-10-16T17:02:00+00:00"
+      },
+      {
+        "title": "Stocks making the biggest moves midday: CoreWeave, Moog, J.B. Hunt, Alcoa & more",
+        "url": "https://news.google.com/rss/articles/CBMimAFBVV95cUxOck9PdFcyc1RkOUJmNFR4RC1EZTNLelJmbGJmeEM2M2NEREl2eXJORGFxc2tZY3BjanhydTZyaC1EN292U1NlN3lZbWJrQkNBdjhWNmtWMWpsa3lPUEVPYW92OG9jMXoxMmpWN3dqaVhSdVIwLUFsQ2VLTTE3T0JiUm9Sa1JPdHdjcUtheHBDX2c4ZmlDWnFqbw?oc=5",
+        "source": "CNBC",
+        "publishedAt": "2026-10-16T16:29:16+00:00"
+      },
       {
         "title": "What we want to see when Capital One and Meta report earnings next week",
         "url": "https://news.google.com/rss/articles/CBMiwAFBVV95cUxPSWRCXzlmcnhyMkhOc3BTSFhvSmw1VlAxNzlfV1YyS0JMNFJMTjF2Y29GNFJvdmZJT294Ui15UjJFSWxKUVlpeFpJNGtpSGJTSFVTWTNYd3BSZERkdnljMi1iSmtrX2Z4eklIeGc2V3ppc3RYb0xqbWtvVUFfNHJQR2dnQzkyZ2RRYkRRZ2xOMTF0ak90dTdLNkxxX1JBaklfeXZXNmpoMzJPOTRUSUdfZTFxRXljM1JSNTRiR2tHVGs?oc=5",
@@ -1251,238 +1431,58 @@
         "publishedAt": "2026-10-16T16:06:29+00:00"
       },
       {
-        "title": "NVIDIA Corporation (NVDA) Stock Price, News, Quote & History",
-        "url": "https://news.google.com/rss/articles/CBMiTkFVX3lxTFBpVTJIYnhWcW1kNFFKTHNoajhPeE9zSW9lTElhZkZvcEo3MExtQnpIZjBRek95cWJ0XzRKMzBtMHh0Ty1SYVRESUxfRTJ4Zw?oc=5",
+        "title": "Top Midday Stories: CoreWeave Co-Founders Said to Sell $3.3 Billion in Shares Since IPO; SpaceX Starshield Slowdown Order in Ukraine Reportedly Came From White House",
+        "url": "https://news.google.com/rss/articles/CBMinAFBVV95cUxPMFBTUDUya0VDZ3FOTGpiRkRta2t6bDVTZXhEb0ZUS1kyRzJWT08zazA5Ykw1djZNUUxTdTJTTWtsRDJHWW15eldhMHhXZElHeHZrRXhjWms0dEVfaHZjMURGdHlTc190YjJ3ekc5UWdjbVRrNk11QVlaOTBoclJMdnJZbndScjAxZWR3U3ZyNzFlbmJ4aHhCaS1oOHc?oc=5",
         "source": "Yahoo Finance",
-        "publishedAt": "2026-10-16T14:43:45+00:00"
+        "publishedAt": "2026-10-16T15:54:58+00:00"
       },
       {
-        "title": "Could Palantir Stock Create Life-Changing Wealth for Patient Investors?",
-        "url": "https://news.google.com/rss/articles/CBMingFBVV95cUxQYXZ3c0w0YWZLOGRSRTM4WXlPWEYxTmtCbXY3bkRldUpqRzdvOTc3Qm93cWJHNVg5YVJPelh5MFJZVU1pdkd1cXAzZzNEdTZGZXNHYU85bXBvdkhkaWl4QWg0QXBlUEo4RGMyVnlQRmp2YXpwRjQ1Nm81XzdTS3RJbkhOQkFGRk51WUJFWnZPMERhaTZPd1p1N1V4SVlIZw?oc=5",
+        "title": "2 Tech Stocks to Buy Now and Hold for a Decade (Hint: 1 Isn't in the AI Trade)",
+        "url": "https://news.google.com/rss/articles/CBMijwFBVV95cUxPcFlLOGNWV3R1aHZaTkJVMjAxRjgtcy0tOWpWMllIb1MzYVFFbEhNX25tcmV0QUNPd1FpdFBHUVpNNjgwQkJJNTFzc3NSQUNkbFQzVUVmU0ZVLUhxU0RGRnVtdnl4WjN4RHNNOGJhdkxaNWVzdEEtS3BLbC00aEJMQmJzS3p6ZGtCMkgwSm9pNA?oc=5",
         "source": "Yahoo Finance",
-        "publishedAt": "2026-10-16T14:00:02+00:00"
+        "publishedAt": "2026-10-16T15:37:00+00:00"
       },
       {
-        "title": "Netflix stock sinks as executive shake-up aims to revive viewership growth",
-        "url": "https://news.google.com/rss/articles/CBMi1AFBVV95cUxQRkFtMlpWU3dPT1Fhdmo3QW5DR05JTDlReDkwNmpPcGp4cmRVN2hNSllaZUxPZmRsQXhfR3R3cHd2OWdrX2p0N2pVSllEbmNGU1RqVU9BTVBGNURaOTRSb2lxYzhXOW1NTVdfTTMtNlI3NUV3YWRDaGYyVXlnV252ZnEtZk9RZ0cycUUzaTVucU9sZXR2bW1ib2tKTUJ6RFJsamRFVVBwWUI5elZHbjZuY21uOWNEdk82UGw1ZUN2Ql9fek9qajBpenZIQmZCeS02LTVLSg?oc=5",
+        "title": "Will Intel (INTC) Beat Estimates Again in Its Next Earnings Report?",
+        "url": "https://news.google.com/rss/articles/CBMinAFBVV95cUxNU2lyWTdSV0I0WVVWX3E3N1AxOXZCeUI1bmRCRUlxWGNpMVllSmpLRUhJLS1mWUFoUkR6QjQxYTY5eDJpR0ZRNlVLSXUtUTNXbXpGVzU5b2hSSzkyY1gxSG9hNTEzOVlIYmFCN1FhS1p4TWQzcFd5c29FZVB6UnZRMm94cGFjMGtZVzR5QzY2RmwycVAySTBxeklWd0s?oc=5",
         "source": "Yahoo Finance",
-        "publishedAt": "2026-10-16T13:28:37+00:00"
+        "publishedAt": "2026-10-16T15:10:04+00:00"
       },
       {
-        "title": "Ericsson Shares Surge on Strong Sales of Network Gear",
-        "url": "https://news.google.com/rss/articles/CBMivgFBVV95cUxONW0xR3FuM1hMZ3J2NUpXcGoxTE5VbjA2elMtZmhqckJIMEt2RmxtSkxpa25YLS02VU42QlZKUDdWa004TWYzWFdNVWpkUkxFakxkYklrLWNuNVgzUjRRSW9MS3VaMEZIVjFidnJQVkJIelMwTF9Td0hWWE1HSHlLWnVSaVYxdmVqQ3VaTVZtd1d3cHdoWGhSS1pNNGh1WUJ5WUxMVk5oXzhHT01ubUZ4a3BTajhNUy1WOWgtR2hB?oc=5",
-        "source": "WSJ",
-        "publishedAt": "2026-10-16T13:23:36+00:00"
-      },
-      {
-        "title": "European Shares Extend Gains as Corporate Earnings Strengthen and Bond Yields Ease: DAX, CAC, FTSE100",
-        "url": "https://news.google.com/rss/articles/CBMikAFBVV95cUxQX0tZd2FtdXRaMldMMVhqdnJvRlhFNnlGb3F0SXNuZFVwdFFrWXQtbHNHTjdXSnVGa2J5b2lvZXUxSXpaa1NqYkhEcTROZjB1N3BsZHViZTFHand3RHRGRXZVSGxUbGdoMlJTV3FoVDRENjFMOXkwXzZKRGE0dkQtbEpHTTBQREI3NlUxcTRVSG0?oc=5",
-        "source": "Yahoo Finance UK",
-        "publishedAt": "2026-10-16T13:10:03+00:00"
-      },
-      {
-        "title": "Western Digital Pre-Q1 Earnings: Buy the Stock Now or Wait for Results?",
-        "url": "https://news.google.com/rss/articles/CBMinAFBVV95cUxNdUJ6Sld4Zk0tTU53clplZnJrbVlqLTFYMTdYNWd2dkk4cFFKMGtLSW03aWtMRGNoX3h5WFgwNml2Z0M5RTROSzFHOFVBanRvZHF4U2F2bXlab3RjejZjVXBiZGN1LXVJSk8yc0JHY3FUTjNpUkdNbVViZ044VlFhRHVlUDJCZlVRZHg1UGdvV3hGOUtPTUpvMjQ5RFo?oc=5",
+        "title": "Q3 Auto Earnings Preview: 4 Stocks Set to Beat Estimates",
+        "url": "https://news.google.com/rss/articles/CBMilgFBVV95cUxNSV9CTjRyQkhHZGVSZWQ5SU9tdEtZcmVweV95WVRiV2NydVY1ay1aREtTQXBHaks4Tm9qLTlYVkc4U2w2OVBETG1wbzN6YzdIRHczaVFmMDNwSjdaaFdySUhqUFJpQ2trZEpmS0tTUDV1WEp0RUtqaHpKNlZyRzAtYkxxeHJKd25sS2diV0huaDl3Tk1rYUE?oc=5",
         "source": "Yahoo Finance",
-        "publishedAt": "2026-10-16T13:04:00+00:00"
+        "publishedAt": "2026-10-16T14:29:00+00:00"
       },
       {
-        "title": "Tesla’s Flying Roadster Fuels SpaceX Merger Speculation, But Analysts Question Earnings Impact",
-        "url": "https://news.google.com/rss/articles/CBMioAFBVV95cUxPaHFod1ZXLUY4dEtrcENRS25vOXZHcGQ2WHhVWjhYTDAxRDZySzkwWGtpUm82X0FnRG1TTFJkcXdiMmltM3pWdnZPc0VnRHJ6TUZOclVPZGkxMVNUckR0ZnJtVmZFSFU5WVQzTENtaVRyM2FiRlNldjJ6UnpXTjlYbkJqbkZ4ckNpWjFHMTNhdHZJN0lHZDcyS1J5Sm1CZUdI?oc=5",
+        "title": "AGNC Investment to Report Q3 Earnings: What's in the Cards?",
+        "url": "https://news.google.com/rss/articles/CBMioAFBVV95cUxQUzZ3b2ZHOWQzRHZHM2hYaXpna09HWGRMVHdhRDdFS3pSSWJfU0ctUV9Cd2ZweVl2bkpUZ0pUcWNGNzFBRzNKY29nRzNpXzF0VUwzYW42YmQ4b3p2SlR0ZHRscTZRR3BDQ0FUTVBIV0FzckFjdTNlYTdfQjlNUm1iNTlPanc2WUxlQTlPNEZWVy1USERTM0puTmdhOHMzQXF3?oc=5",
         "source": "Yahoo Finance",
-        "publishedAt": "2026-10-16T12:54:46+00:00"
+        "publishedAt": "2026-10-16T13:58:00+00:00"
       },
       {
-        "title": "Tesla, Inc. (TSLA) Stock Price, News, Quote & History",
-        "url": "https://news.google.com/rss/articles/CBMiTkFVX3lxTE5mbWY1cHQ5MEJvWUhYRWtaWjBMdEVIMlB0cnRkdFpKNDRCMjVIWlJmWDVxdE5jUlhkWGFHeU9DSDFGamNwR2ROYmx6NDhZZw?oc=5",
+        "title": "Netflix stock falls as executive shake-up aims to revive viewership growth",
+        "url": "https://news.google.com/rss/articles/CBMi1AFBVV95cUxOOGV3ZzNjRDVFLUNJYW9MZ3J3TTlpSkhkSWhhXzR0MThxalF5WVR0VkN4dTBLWGw2dmo5dk43WnhIRkRDMDd6MXU3emIzemNwM29tS25udTV2dklDaGNGbTFOYjVIYWYwaWFDTTV3N3FBb29PWjhmYzIyV0FWTUlQYnk5WS1mQ2laQXpUMUZoa0dmOTNhRlNfeU15R3NMcTY5ZnpUQ3BIU3dLbU9zWU9GeXo1bnY1dWRyVXhiUE1vWFVRaTB3ODRLSGZpa2dSRGx2aTgtNw?oc=5",
         "source": "Yahoo Finance",
-        "publishedAt": "2026-10-16T12:53:05+00:00"
+        "publishedAt": "2026-10-16T13:52:28+00:00"
       },
       {
-        "title": "Danaher Gears Up to Post Q3 Earnings: What Lies Ahead for the Stock?",
-        "url": "https://news.google.com/rss/articles/CBMimwFBVV95cUxQbG1BMVpYaEpJeG5PWUF5THZsRVVoajY0RGtHdDdPcDlNdHE2WlNuLXNDNjJFQ1ZVQWhIbmEySUJxZDhqQjczSGJaT0w4VU5NbDhzT3BPamhyX3JidEZPRmIyRDNiR09mdTRDQWRJTHZQUmVMdnV5bVAteTJnaVNNenhlSUViU3JEZ3YzaW5zaHBFSUQtdmlFd2xUUQ?oc=5",
+        "title": "Earnings Calendar and Analysis for This Week",
+        "url": "https://news.google.com/rss/articles/CBMiowFBVV95cUxObERWb3J6WkNFaktWLUdJSFc5NldRblBMcGd5ZDlUaGVHeHhpcXd6WndUR05lcW9sOWQ2RDY5TVUtVFNQSkFQRUs0QnhwWG5PemJVMU9aVVlVczFXdm9WY2o5aElhYUgtdFdSWnJxb0lZRUdHWW9CUF9MSnBzS3VlMTd5dUFULVdBQnBzZGRJSm9WY0ZwX2Mxc3RjcXFNQXNjVzN3?oc=5",
         "source": "Yahoo Finance",
-        "publishedAt": "2026-10-16T12:41:00+00:00"
+        "publishedAt": "2026-10-16T13:38:26+00:00"
       },
       {
-        "title": "PepsiCo just lost KFC to Coca-Cola. Here's how much it could sting financially.",
-        "url": "https://news.google.com/rss/articles/CBMi1wFBVV95cUxQZ3U3RHh4am9YUjZ2SDRGSjNQN2UyLVhGNDBSR2lEalJ6aV93YTFYRzhkamlhM0QzSlZJTGllTHFNQkdZTWhXYkY3UkhUWXpyWmd2bXdtdFlCTVJVdFlMcXNnS0ZNVWM2LVRzRWllcXNERllMSmxUVTM2SmJMWFRXQzZwNFVLU1NDQzVlanJZT2trXzZzSVNvWl9DbjUzNU9UV25qSEJqcGtFd05DYjR1TzEyXzMzVW1LQ3lqUVU4VHFXV1U3NnZuTW5kTEloSUloOFY3M1lIaw?oc=5",
+        "title": "META_TITLE_QUOTE",
+        "url": "https://news.google.com/rss/articles/CBMiTkFVX3lxTFBodmRCeC0wZV9YdVZiWTlpQ0RYUW1hNTZ3cm9ZbEUyZk1Bd0RFLUVEQmVxMlhManRzOTFoMXRmUDFTdWtGQ01ObkxKYndVUQ?oc=5",
+        "source": "Yahoo",
+        "publishedAt": "2026-10-16T13:35:02+00:00"
+      },
+      {
+        "title": "META_TITLE_QUOTE",
+        "url": "https://news.google.com/rss/articles/CBMiTkFVX3lxTE9xUkhVQWwwajZlWkxJNzUyWVB3bWZoazBrbGVaS0RlMjRaVVdBaGtOajVZYmU3cXlGZUkwUjVWbk5hU04wN1hjYUU2UGM4Zw?oc=5",
         "source": "Yahoo Finance",
-        "publishedAt": "2026-10-16T12:33:41+00:00"
-      },
-      {
-        "title": "Here is What to Know Beyond Why Micron Technology, Inc. (MU) is a Trending Stock",
-        "url": "https://news.google.com/rss/articles/CBMinwFBVV95cUxQOFM1NW9lT1EwakNaTm5XNGplZjd2em1JVVJTdFFiczllMEoxMDNidnNXWUd1a1FfNVdncU5QUzdadWRHaGxnY0w3UUZwRzlYT01jRHRWY3lYVkZtbnBYdGZPbFNSVFBSeEFMb2dYXy10V1dqc0FHTFRvdHRPbDlzdmdROHo2Mmw3UE8tVUl0ZW5tUFE0TThYZUdyemdNSHM?oc=5",
-        "source": "Yahoo Finance",
-        "publishedAt": "2026-10-16T12:00:08+00:00"
-      },
-      {
-        "title": "Barrick Mining Corporation (B) Stock Price, News, Quote & History",
-        "url": "https://news.google.com/rss/articles/CBMiSkFVX3lxTE5MeG5jV2pEOHdTdW9ZYjR5NGxkTWx1UFJhVW9fenVVTVFNeENxMndTN19KcF9NVVFKaGsxZWRGb3RmNFpTdXRVWGhn?oc=5",
-        "source": "Yahoo Finance",
-        "publishedAt": "2026-10-16T11:59:56+00:00"
-      },
-      {
-        "title": "Yahoo Finance - Stock Market Live, Quotes, Business & Finance News",
-        "url": "https://news.google.com/rss/articles/CBMiP0FVX3lxTFBBTy1pM1poaEROWTVTNDVTYVdvTDZEWmM1VDhGdlUzWW1OUXNvQ3RmZTVZQ3BGVlhvbTlWNFNhUQ?oc=5",
-        "source": "Yahoo Finance",
-        "publishedAt": "2026-10-16T11:53:04+00:00"
-      },
-      {
-        "title": "Travelers Profit Ticks Up on Investment Gains",
-        "url": "https://news.google.com/rss/articles/CBMilwFBVV95cUxNTjBkQUYzSjJKbHo5WmtPNHBQenhQOGNXc3RJVlNWYVNReFpUZnJzc0lvRGtTTUVSaUxHbUwyT2pfRWdCT2o3YzBRajc3T01NU1prdjhNUDdSa1AzVm90b2xMR1U0Z2lIbUo1OE1peVQtWkNncjdZQnZpYkx1TFhuRXYzMUVSUDZuRTM0VFBpSkRvSE9hMi0w?oc=5",
-        "source": "WSJ",
-        "publishedAt": "2026-10-16T11:44:00+00:00"
-      },
-      {
-        "title": "Tesla stock pops after unveiling Roadster with compressed air thrusters for limited flight",
-        "url": "https://news.google.com/rss/articles/CBMi6gFBVV95cUxQSXZvZEl6TGJvaXBRcVFxQkxRdUN5WHR0aUw4QnpTWThicjhSTm4yaFFGbmpuanpCVE1NeDJkc2pMZjdYX1hlMHlGMm1RdUFMTUx4cHluWXk0TGJFZFB4bVNOT1RldWtfWEZHUjRfejd0a244elJHWWJ2MVk4YWEzMWtSdG1CSGNwUHRIQy01OWlzb0lPeDZPWmlCMFJkTTg3bUlZR1dmWi1VYmFkR1RGenFTZllrbi1nMkRhRWYzcUlwU0FPTkFia2ZxUW5KMUlBMTdvYURMZG5lQ3Y1TEZTazU1QVYwMy1mNkE?oc=5",
-        "source": "Yahoo Finance",
-        "publishedAt": "2026-10-16T11:41:53+00:00"
-      },
-      {
-        "title": "PG&E to Report Q3 Earnings: What's in the Cards for the Stock?",
-        "url": "https://news.google.com/rss/articles/CBMikgFBVV95cUxPeVI4dlNKVUJzbXhrenJsZllvMHV0SlMyWnppNGhQdWlBeGpsQjFRUnRPek1JeEZudjh2Ni1sV05McnQzcjdteXM3aTg1aE5KUUoyb2ZZRUFheDFVVHJ5ZVhLWkx6QzRSMHFxdjdRX0QtNS1OREhOVzFPd3hzYW14TDBWUXdVaFZXOHh1NFlDWDJCQQ?oc=5",
-        "source": "Yahoo Finance",
-        "publishedAt": "2026-10-16T11:29:00+00:00"
-      },
-      {
-        "title": "Tesla Roadster probably won't drive an earnings beat, but the big unveil did achieve 2 things",
-        "url": "https://news.google.com/rss/articles/CBMi6wFBVV95cUxPWnZwZkVzZmhpUmtaM3E4aVRDRVRnX0FkSHcxN0FYY21lTmhfQXQxbzl6eHdqLWlnejBOclN0TVZzc0NmNklaMEtKZDFfLW5iM1BnSnZfQU9YUEl1cXo5V1RvXzduYWNKYkNWV2N4R2JPSF9mZ3EtSnl5b2N6U3ZvQUxTR2s1U3pyTllIUUhlUk1TeW1QNTk4R1ZIUFUtMWlXdXpDM2Rmd2pSWjJaWFdEZnc4RmRPSmJfclRnVks2YnUxSjdmZ1VwMUdGVVk0X0RjYUI0ZGF0cnBCNUI3N3dCM2VsUVoyYnEzaVQ4?oc=5",
-        "source": "Yahoo Finance",
-        "publishedAt": "2026-10-16T11:17:46+00:00"
-      },
-      {
-        "title": "Applied Digital Corporation (APLD) Stock Price, News, Quote & History",
-        "url": "https://news.google.com/rss/articles/CBMiTkFVX3lxTE1mQ3BBeUVUajRRSGFkZS1ycmhZeTRhaWJaSEFqQ0tWbk5VWmhwVXAyRGdBX3JGelplTkVENDBoYzhmUWlKd1MwMVNKMkJoUQ?oc=5",
-        "source": "Yahoo Finance",
-        "publishedAt": "2026-10-16T11:11:12+00:00"
-      },
-      {
-        "title": "Should LMT Shares Be Added to Your Portfolio Ahead of Q3 Earnings?",
-        "url": "https://news.google.com/rss/articles/CBMingFBVV95cUxPVmNPeXpmakJ2NlBRVjdXay1GM1BSaGtKM1dtWmdGQnFuLTdpcmNQN2lRTnVhY2p2amF2VzdkVjh0M1YxVFhVbXZZUXpUVXZlbHdlVGx0YVhnT3dGY2w3c2U2TlB4VDhTV2ZLM3Y4V1lldDhIQ3hJbS1CU0tFRThZZXlfUS11aFpaNXcxbmFpNFRfT1JXUjhpb1hzLVNxdw?oc=5",
-        "source": "Yahoo Finance",
-        "publishedAt": "2026-10-16T11:09:00+00:00"
-      },
-      {
-        "title": "Nvidia CEO Jensen Huang addresses CoreWeave stock plunge: 'I'm optimistic'",
-        "url": "https://news.google.com/rss/articles/CBMixgFBVV95cUxQU3RweTh1THdrck1qLURYMnJEVW03ZzdxNTIwZTVRVjV3MS1YM0E1V2VOblNmdzIzdUU2RXRVSGx3WGV2XzhudDVWeHo3REtZaHRyWk94ZDBrSzhoTy1RRWROaUxIcXZnQmdkRW5OWVVOdEJzQjN1U3pQZmdkVElaWEwxbkxDbndxalNabnV4MHYxSGYtTVdIN3VjZ2ZYVExQc2gyLXlxV0ZfamNMWWJCQkhaSFhqemhZeUJxOGxNYWYxYi1Rb2c?oc=5",
-        "source": "Yahoo Finance",
-        "publishedAt": "2026-10-16T09:58:05+00:00"
-      },
-      {
-        "title": "Micron Stock Is 25% Below Its June Record. Is It a Buy Now?",
-        "url": "https://news.google.com/rss/articles/CBMilgFBVV95cUxOTGN6Q2ZkRHEwTnJPVDE2QVEtTlVwSUxfdkZlMnBoRGJZYjFyS0NPOG5Pb054TDJQaDhDMEJ6TkNMT2M3NkVqT210Y24tRjRjU1g4cWZORFZhUWdPdFUyRzJidENQdFVQSHI1V2hMYkhCdWZWck5UTXhhSXFCTWh1N3pmaC1Nc1Y4U3BqN2FtNFJjVEZaYWc?oc=5",
-        "source": "Yahoo Finance",
-        "publishedAt": "2026-10-16T07:57:02+00:00"
-      },
-      {
-        "title": "Tesla’s $250,000 Roadster Deposit: Is It a Rounding Error at 186x Earnings?",
-        "url": "https://news.google.com/rss/articles/CBMimwFBVV95cUxNNG1SVjB5NDY2NHQ3ems4d0Y2M2RHSkEwREZlRkU2ZVIxYTBXb3lJUGtSZktiM2ZtdlJPTFgyZG5WdmpNZ3dRSFF1bzBlTmhINkdPRGhVR0huZnUzSDNlTWkyT0FsRUliY01WVTAwT193UDlheDBqbVRRYXZwRTEwT1JFY2FnZGRuaS0xVkRoOEJHbmVNMEg2Yi05WQ?oc=5",
-        "source": "Yahoo Finance",
-        "publishedAt": "2026-10-16T07:24:47+00:00"
-      },
-      {
-        "title": "Taiwan Semiconductor Manufacturing Company Limited (TSM) Stock Price, News, Quote & History",
-        "url": "https://news.google.com/rss/articles/CBMiUEFVX3lxTE1ESjBlRGpDQXhyQTFJSTNwY08zMnRrcVpJNTJlUkJpU0twRFF0M0FDT2sxempYcW96azJ0VUEtNkxXUjVOX2pGZ0ZHcnkwak13?oc=5",
-        "source": "Yahoo! Finance Canada",
-        "publishedAt": "2026-10-16T05:26:17+00:00"
-      },
-      {
-        "title": "How Earnings Beat Will Impact Microsoft (MSFT) Stock",
-        "url": "https://news.google.com/rss/articles/CBMiogFBVV95cUxQSmRPNkRTT0Z2SUczb0Z4YjdZWVB2Z2x6TXBSSi1lMlN6VGtINVdUWjV2dU5xY0IzbzZOMHQwcV9nSXczRmlOREN6Zi1aUlg1LU9ETk9Bb3JZV1JQaDN1bmxHdm5JWFcxblNuQ2ZmWE5PUF9LZDJ6bE9YaWtzN1R1UWtNWlU2U0l4TnVFMHptNnFuVExtRUQwLVdoU0NxTGNtY2c?oc=5",
-        "source": "Yahoo Finance",
-        "publishedAt": "2026-10-16T04:29:00+00:00"
-      },
-      {
-        "title": "Lenders Are Getting Nervous About CoreWeave. I'd Still Buy Nvidia Stock.",
-        "url": "https://news.google.com/rss/articles/CBMiowFBVV95cUxNQkg3RHU2NXczb3RIaFRkNEdmMlprWHJDNHhpY0duckgzTkNzMW1VSnYwaUlRN1dNVGNsMWNlN3NCaGJ5RVMya1BseXI1QnI0RTBBTFNTcWtGM1F3UXRJWnBPcFZaOUdvTWNhMXdDQnZVZHJmSmJjN1JZZ2kxVWVSYWRGdUtRTUpRMEFpSXkteVRMMFFhOElzaEp4TGZ2Q2xDYmM4?oc=5",
-        "source": "Yahoo Finance",
-        "publishedAt": "2026-10-16T04:06:00+00:00"
-      },
-      {
-        "title": "Hybe shares jump 10% as K-pop sensation BTS' tour lifts earnings hopes",
-        "url": "https://news.google.com/rss/articles/CBMieEFVX3lxTE8zcXExRExKR3lBd013NVhsX3paR1BtVGd4OHItNnduTF9sRjhnNG9TQmEwOXhHWGxxZWlEdGp6eDlkRlJibEtja2xtUEpyaTkxT1JDWmdyUzBHUHZhOWcxbGJiLTB4elVBSUkwVzNIcTk3RUZpUkJXT9IBfkFVX3lxTE8tX2xKX1BadU1XYUhGbU8zWGQyRFU1SGE0M3NOZkhRVm1tSUFJZU5LcHRWcnJyQ3NObGczNmZYZG1yX1htemsxNnpWWDFHTjhVM2pqeGFBczNrZHFMcjdiR1FtYWhhSHY2MTFZeFR4RFo0alJaRGtLUWtYdGFDQQ?oc=5",
-        "source": "CNBC",
-        "publishedAt": "2026-10-16T03:53:00+00:00"
-      },
-      {
-        "title": "Empire Company Limited (EMP-A.TO) Stock Price, News, Quote & History",
-        "url": "https://news.google.com/rss/articles/CBMiV0FVX3lxTE40ckRISjN1Y2VpYU1CWWZZbkFVTzdxZE5jZXRNWkQ5NzFZSGpOc2lncGw2dmRKMF9lY3lGTzVhcVNPRmx2NjJzMVpMX1JNbksyR1E3ejd0OA?oc=5",
-        "source": "Yahoo! Finance Canada",
-        "publishedAt": "2026-10-16T01:04:39+00:00"
-      },
-      {
-        "title": "NRG Energy (NRG) Stock Looks Reasonably Priced For Its Current Earnings",
-        "url": "https://news.google.com/rss/articles/CBMilgFBVV95cUxPSXk2NEp6dWZtUy1fSm02WFRqS0dCNHJFenZUemlwSlUteTZseDIwYjN1bDBvdnpEVWFKSXBpRThqaWdfRC13cV8zRzU4U1ZHQ0FnU2I3Z2ZOcUZUWDRaWVdLX1ZKVHpwLWdpdFhQUVFOUVA0TUVWWW9SNzY5Y3BPMEpPMHVCSGRIeUstdjltdExRUVFJOXc?oc=5",
-        "source": "Yahoo Finance",
-        "publishedAt": "2026-10-16T00:16:00+00:00"
-      },
-      {
-        "title": "Trip.com Group Limited (TCOM) Stock Price, News, Quote & History",
-        "url": "https://news.google.com/rss/articles/CBMiTkFVX3lxTE83aHNiakxROUlzR2JnVFdMX1JkNlhoV3JiY0NLOW1ab2YtdERmc1dPRFpNTTZhU3RXOWstM2xhdnZKbFdWZC1lRzNPLTY4QQ?oc=5",
-        "source": "Yahoo Finance",
-        "publishedAt": "2026-10-15T21:53:55+00:00"
-      },
-      {
-        "title": "The TJX Companies, Inc. (TJX) Stock Price, News, Quote & History",
-        "url": "https://news.google.com/rss/articles/CBMiTEFVX3lxTE9ESHFjdlJ5bDhxS1NNNGNXcXVlT1JULXE1b0QzR1JpNEprX3lIdFVraUt2cnhmSnRReVJBYmNpNDYwSVljdVhLNHVSZ2w?oc=5",
-        "source": "Yahoo Finance",
-        "publishedAt": "2026-10-15T20:53:08+00:00"
-      },
-      {
-        "title": "Stocks making the biggest moves after hours: Interactive Brokers, J.B. Hunt, Alcoa and more",
-        "url": "https://news.google.com/rss/articles/CBMimAFBVV95cUxNd2ZkWklxX2dqYzZXS1VFYVpXTGdMSEd6RHZNb0FaQkpIVUpPYlZKYTF5dVFnQ2hpTmRZcnkxTXpvOFNLdExTQXgzR3gtdVhCenNHbk1XOTNPSVZRekp3a2VvcDBuQVBOQzU5WmljRVp3aVcteEExYXhfcENQWG5HQms3VWF2cmFPRkxpTHVxUm0tUUQycDc3Uw?oc=5",
-        "source": "CNBC",
-        "publishedAt": "2026-10-15T20:48:50+00:00"
-      },
-      {
-        "title": "Here's our monthly update on our 32 stocks, including 2 more names to buy",
-        "url": "https://news.google.com/rss/articles/CBMivwFBVV95cUxNdWowMHM5Wk51SUtRS3VFbmxBa0N2Yk9UYTVGN0E5Um1UbkJaUW9zZVRxN2tjdDI1X3Nja29TVVJuZDFvTmZGQXFxV0dDVHdMamdOcG1PaFJPZkZLb3BLdWFGNVJrOV9HMXhJUWxXWVZiTTM3N0psUjNxcE94RHAyT2ZXVlZNdzZveDlXWWN1RWZQeUNUX2pJa2dpd0FDakhBV19Tem9sUXA0SXZEVnZ3ZnMtRmlFV0NEdm9jeVdnUQ?oc=5",
-        "source": "CNBC",
-        "publishedAt": "2026-10-15T19:08:05+00:00"
-      },
-      {
-        "title": "This semiconductor stock is not for the faint of heart. Here's why I see opportunity",
-        "url": "https://news.google.com/rss/articles/CBMiekFVX3lxTE5WSEs2ZDl5dkFHQ3NGc1VJdlB4X1hzemhBSnVYbzdnZDF1T2lfRHltcmJwdXBzZUpDMk1fc0dCUG5oMWZSWUN0Nk9IWV80U1FHdVpnVUp1V0dCRnpKR004Vi05Z0s3SXB1djN1dDVXcU50bV9VekVWczdB?oc=5",
-        "source": "CNBC",
-        "publishedAt": "2026-10-15T18:30:01+00:00"
-      },
-      {
-        "title": "Better Home & Finance Holding Company (BETR) Stock Price, News, Quote & History",
-        "url": "https://news.google.com/rss/articles/CBMiUkFVX3lxTE9tQldZUVBZV2YySHdYa0VvSXNoR3cyRmtpRW1sTHE0Y3NxdUhSYWVzbmtEd1N4cDNpMElROTJZeEJUbzVoZWw4SmtOTzJwaGxCZUE?oc=5",
-        "source": "Yahoo! Finance Canada",
-        "publishedAt": "2026-10-15T18:29:32+00:00"
-      },
-      {
-        "title": "BNY stock pops on strong earnings — showing exactly why we like this bank in this market",
-        "url": "https://news.google.com/rss/articles/CBMi0wFBVV95cUxPTU1TNjJyYW4zZV9aUkpGLVJ3LW1idXVUMzNyalN2Qm1ZUVdjUmV6U2pLTGZHYXBmRkNNRzJULWJLdlBOa0FSOElWbDVVdHNCRGp2a1RlbkZtT1JHQVNPa0VxMnlFcHFZemhUbWpmWkU3Z0JscW5Ea0ZCNm4tYWVXZVUxako1YjRmcC1TQ25IbVJDNWdzSV9JeFZQQXFvVnFVZ1ROZnEyRFdIYjl6LXFjeF80U3h0dXhnUHNPVzlxekRQeUpuUmR5blE0TU1yOXE2b2l3?oc=5",
-        "source": "CNBC",
-        "publishedAt": "2026-10-15T18:16:41+00:00"
-      },
-      {
-        "title": "Figure Technology Solutions, Inc. (FIGR) Stock Price, News, Quote & History",
-        "url": "https://news.google.com/rss/articles/CBMiTkFVX3lxTE9TeWNDMV9rcjc4NkF6ZFNLZDBmajZvRG8wTFZCc1NLVnJrbElicEdEYUkzLTE3Q05USU0zbERzM0VoV1FSNUtkNlRTRklrQQ?oc=5",
-        "source": "Yahoo Finance",
-        "publishedAt": "2026-10-15T18:09:01+00:00"
-      },
-      {
-        "title": "On Holding AG (ONON) Stock Price, News, Quote & History",
-        "url": "https://news.google.com/rss/articles/CBMiTkFVX3lxTFBOQWFnNDVOS3lUdHU1SV9yNnVZUHpGX2pXT1ZOMXRtN0JhQXpiTjY4ODBOQ3hNdlZEWHllM19qNDY0ZmxEei1MSG5nZDFPQQ?oc=5",
-        "source": "Yahoo Finance",
-        "publishedAt": "2026-10-15T18:07:18+00:00"
-      },
-      {
-        "title": "Here are the stocks reporting next week that have a history of earnings beats and big share gains",
-        "url": "https://news.google.com/rss/articles/CBMimgFBVV95cUxNVHIxMGdIS1JnZ3l6aVp3Vl9rTFRKOVNaU29CSHFvaWhuVktkclJMRjAxU1BZOW5QWkZHMEFiVXRqSUFEdWhoOUVFTHhIQnM4ZE9PVEVwSFE0VFlZeGpqVG45TFBqeDlXY0Y4b2Z3VWFzUDZUZk5GelpqQ2d5a1lWcnNORjJkbGV0VF9pNjFuTWN3WUpXdFcwNUNR?oc=5",
-        "source": "CNBC",
-        "publishedAt": "2026-10-15T17:50:38+00:00"
-      },
-      {
-        "title": "Why FMC Corporation Stock Just Crashed",
-        "url": "https://news.google.com/rss/articles/CBMimwFBVV95cUxQMGFEMkxWTkNSRk84SHJhdDhZMWpoSERFWGktR2xfZXBKVjZiOUpJR0IxTzV3ZkRadHJZXzM2WnBxR3JVRTNwN3F5S01wS2VFeTRGLVE5OEE1UHNKLVBLWXQ5Z08tcVhfYU9wQTdnWHhIOVlzbjloU3I0OGVmRE96eXYwc0VpTmhESHV2cHNfcGcyQVA3Z2tpUDN5Yw?oc=5",
-        "source": "Yahoo Finance",
-        "publishedAt": "2026-10-15T16:15:12+00:00"
+        "publishedAt": "2026-10-16T13:10:41+00:00"
       }
     ],
     "stale": false
