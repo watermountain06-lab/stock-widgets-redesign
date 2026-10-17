@@ -1291,13 +1291,13 @@ function selectFundPeriod(period) {
 function renderSegmentChart() {
   const ctx = document.getElementById('segmentPieChart');
   if (!ctx) return;
-  const total = 13343;
+  const total = 13343.0;
   new Chart(ctx,{
     type:'doughnut',
     data:{
       labels:["북미", "유럽·중동·아프리카", "중남미", "병입 투자", "아시아태평양"],
       datasets:[{
-        data:[5405, 3087, 1839, 1525, 1487],
+        data:[5405.0, 3087.0, 1839.0, 1525.0, 1487.0],
         backgroundColor:["#f40009", "#3b82f6", "#f7b600", "#9b59b6", "#1fa463"],
         borderColor:'#8a8d9e',
         borderWidth:2
@@ -2092,7 +2092,7 @@ const KO_ACTIVITY = {"ticker": "KO", "status": "ok", "asOf": "2026-07-03", "prev
     const pct = v => (v / span * 100).toFixed(1) + '%';
     if (!noAp) bar.querySelectorAll('.tl-marker, .tl-marker-label').forEach(el => { el.style.left = pct(A.now.dpo); });
     const ml = bar.querySelector('.tl-marker-label');
-    if (!noAp) ml.textContent = `매입채무 지급 ${d1(A.now.dpo)}일`;
+    if (!noAp) ml.textContent = `매입채무 지급 ${d1(A.now.dpo)}일`; else ml.style.display = 'none';   // 매입채무 미공시면 틀(NVDA)의 51.8일이 남았다(ABBV·ASML·KO·PEP·FCX, Codex 2026-10-17)
     // 오른쪽 끝(음수 CCC면 지급일이 눈금 끝)에서는 라벨을 왼쪽으로 붙여 잘리지 않게 한다.
     ml.style.transform = A.now.dpo / span > 0.85 ? 'translateX(-100%)' : 'translateX(-50%)';
     const cs = bar.querySelector('.tl-ccc-span');
