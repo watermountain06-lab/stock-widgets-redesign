@@ -262,7 +262,7 @@ def build():
     out = subprocess.run(["node", str(PREVIEW_V2 / "research/extract_card_verdicts.js")],
                          capture_output=True, text=True, check=True).stdout
     verdicts = json.loads(out)
-    live = live_tickers()   # 자동 승격이면 라이브에 아직 없는 새 종목은 뺀다
+    live = live_tickers()   # 라이브에는 그날 시총 상위 100만(scripts/live_set.py)
     if live is not None:
         verdicts = {t: v for t, v in verdicts.items() if t in live}
     name = names()

@@ -154,7 +154,7 @@ def build():
             r = json.JSONDecoder().raw_decode(line)[0]
             names[r["ticker"]] = r["name"]
     state, changes = sessions(as_of)
-    live = live_tickers()   # 자동 승격이면 라이브에 아직 없는 새 종목은 뺀다
+    live = live_tickers()   # 라이브에는 그날 시총 상위 100만(scripts/live_set.py)
     if live is not None:
         state = {s: {t: v for t, v in d.items() if t in live} for s, d in state.items()}
         changes = {s: {t: c for t, c in d.items() if t in live} for s, d in changes.items()}

@@ -18,7 +18,7 @@ from live_set import live_tickers  # noqa: E402
 PV = Path.home() / "Workspace/stock-widgets-preview"
 LIVE = Path(__file__).resolve().parents[1] / "stock-data.js"
 st = json.loads((PV / "v2/daily_status.json").read_text(encoding="utf-8"))
-live = live_tickers()   # 새 종목 건너뛰기(PROMOTE_SKIP_NEW=1)면 라이브에 있는 카드만 본다 — 만드는 중인 새 카드가 막지 않게
+live = live_tickers()   # 그날 시총 상위 100만 본다(scripts/live_set.py) — 상위 100 밖에서 만드는 중인 새 카드가 막지 않게
 why, wait = [], []   # wait: 기다리면 풀리는 이유(preview 갱신 중)
 if not st.get("finished") or not st.get("started") or st["finished"] < st["started"]:
     wait.append(f"preview 실행이 끝나지 않았다(started {st.get('started')}, finished {st.get('finished')})")

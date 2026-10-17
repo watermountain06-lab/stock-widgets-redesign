@@ -122,7 +122,7 @@ def preview_data():
         raise BuildError("preview's homepage lists no tickers")
     live = live_tickers()
     if live is not None:
-        rows = [r for r in rows if r["ticker"] in live]   # 자동 승격: 라이브에 아직 없는 새 종목은 뺀다
+        rows = [r for r in rows if r["ticker"] in live]   # 라이브에는 그날 시총 상위 100만(scripts/live_set.py)
     # 순위는 그날 시가총액 순(2026-10-15 사용자 결정: 주가·등락률처럼 시총 순위도 매일 바뀐 대로 보여 준다).
     # preview의 rank는 카드를 만든 순서라 고정돼 있었다. 카드의 "시총 N위"와 이전/다음 링크(fix_backbar_chain)도 이 순서를 쓴다.
     if any(not isinstance(r.get("marketCap"), (int, float)) or r["marketCap"] <= 0 for r in rows):
@@ -230,7 +230,7 @@ def main():
         rows, meta, macro = preview_data()
         check_assets(rows)
         cur = OUT.read_text(encoding="utf-8")
-        # 밴드 추출 오류는 자동 승격(새 종목 건너뛰기)일 때만 라이브 종목으로 좁혀 본다 — 손 승격은 예전처럼 전부(Codex)
+        # 밴드 추출 오류는 라이브에 올릴 종목(상위 100)에서만 본다
         only = {r["ticker"] for r in rows} if live_tickers() is not None else None
         new = splice(cur, rows, meta, macro, card_bands(only))
     except BuildError as e:

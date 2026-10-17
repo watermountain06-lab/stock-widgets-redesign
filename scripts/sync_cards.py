@@ -12,12 +12,17 @@ link to the homepage: preview serves cards from the repo root, this repo serves
 them from cards/. Everything else - prices, MA arrays, tech score, as-of
 labels, the valuation tab - is whatever preview's pipeline last wrote.
 
+Only the live set is copied: that day's top 100 by market cap (scripts/live_set.py,
+2026-10-17 user decision). A card here that has dropped out of the set is removed, and a
+ticker that has entered it gets its card and, if missing, its logo from preview's logos/.
+
 Usage: python3 scripts/sync_cards.py [--check] [--exclude TICKER ...]
   --check    report what would change, write nothing
   --exclude  skip a card being written by something else right now
 """
 import argparse
 import re
+import shutil
 import sys
 from pathlib import Path
 
@@ -51,7 +56,7 @@ def main():
     except BuildError as e:
         sys.exit(f"sync_cards: {e}")
 
-    live = live_tickers()   # 자동 승격(PROMOTE_SKIP_NEW=1)이면 이 저장소에 이미 있는 카드만
+    live = live_tickers()   # 그날 시총 상위 100(scripts/live_set.py)
     new, updated, unchanged, skipped, not_live = [], [], [], [], []
     for src in src_files:
         ticker = src.name.replace("_full_widget.html", "")
@@ -82,6 +87,25 @@ def main():
         if not args.check:
             dst.write_text(body, encoding="utf-8")
 
+    # 상위 100에서 빠진 종목의 카드는 지운다(2026-10-17 사용자 결정: 라이브에는 100위까지만). preview에 없는 카드는
+    # 아래 orphans로 따로 알린다 — 지우지 않는다.
+    removed = sorted(p.name.replace("_full_widget.html", "") for p in DEST.glob("*_full_widget.html")
+                     if (PREVIEW / p.name).exists() and p.name.replace("_full_widget.html", "") not in live
+                     and p.name.replace("_full_widget.html", "") not in skip)
+    if not args.check:
+        for t in removed:
+            (DEST / f"{t}_full_widget.html").unlink()
+
+    # 새로 들어온 종목의 로고(없으면 build_home이 멈춘다). 있는 로고는 덮어쓰지 않는다.
+    logos = []
+    for t in sorted(live):
+        dst_logo = REPO / "logos" / f"{t.lower()}.png"
+        src_logo = PREVIEW / "logos" / f"{t.lower()}.png"
+        if not dst_logo.exists() and src_logo.exists():
+            logos.append(t)
+            if not args.check:
+                shutil.copy2(src_logo, dst_logo)
+
     # a card here with no preview copy is not an error - it may be mid-build -
     # but it will not be updated by anything, so say so out loud
     orphans = sorted(p.name.replace("_full_widget.html", "") for p in DEST.glob("*_full_widget.html")
@@ -94,10 +118,13 @@ def main():
     if skipped:
         print(f"skipped (in flight) {len(skipped)}: {' '.join(skipped)}")
     if not_live:
-        print(f"skipped (new, not live yet) {len(not_live)}: {' '.join(not_live)}")
+        print(f"not in the top 100 {len(not_live)}: {' '.join(not_live)}")
+    print(f"{'would remove' if args.check else 'removed'} {len(removed)}: {' '.join(removed) or '-'}")
+    if logos:
+        print(f"{'would copy logo' if args.check else 'copied logo'} {len(logos)}: {' '.join(logos)}")
     if orphans:
         print(f"NOT IN PREVIEW, left alone {len(orphans)}: {' '.join(orphans)}")
-    if args.check and (new or updated):
+    if args.check and (new or updated or removed or logos):
         sys.exit(1)
 
 

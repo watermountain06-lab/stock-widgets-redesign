@@ -17,7 +17,9 @@ def build():
     for name in PUBLIC:
         shutil.copy2(ROOT / name, target / name)
     for name in ['cards', 'logos']:
-        shutil.copytree(ROOT / name, target / name, dirs_exist_ok=True)
+        # 지운 카드(상위 100에서 빠진 종목, scripts/live_set.py)가 dist에 남지 않도록 통째로 다시 만든다
+        shutil.rmtree(target / name, ignore_errors=True)
+        shutil.copytree(ROOT / name, target / name)
     print('Built complete static site in dist')
 
 if __name__ == '__main__':
