@@ -1117,7 +1117,7 @@ Chart.overrides.doughnut.animation = false;
         <div class="op-dist"><div data-an-bar="buy" style="width: 96.7%; background: var(--green);"></div><div data-an-bar="hold" style="width:3.3%;background:var(--gold);"></div><div data-an-bar="sell" style="width: 0%; background: var(--red);"></div></div>
       </div>
       <div class="op-cell">
-        <span class="op-label">평균 목표주가 · <span data-an="asof">2026-10-13</span></span>
+        <span class="op-label">평균 목표주가 · <span data-an="asof">2026-10-17</span></span>
         <span class="op-val"><span data-an="mean">$330.41</span> <span class="op-sub op-up" data-an="upside">+32.2%</span></span>
       </div>
       <div class="op-cell">
@@ -1293,13 +1293,13 @@ function selectFundPeriod(period) {
 function renderSegmentChart() {
   const ctx = document.getElementById('segmentPieChart');
   if (!ctx) return;
-  const total = 200606;
+  const total = 200606.0;
   new Chart(ctx,{
     type:'doughnut',
     data:{
       labels:["북미", "AWS", "해외"],
       datasets:[{
-        data:[116177, 42232, 42197],
+        data:[116177.0, 42232.0, 42197],
         backgroundColor:["#ffb74d", "#3b82f6", "#8a6d3b"],
         borderColor:'#8a8d9e',
         borderWidth:2
@@ -2103,7 +2103,7 @@ const AMZN_ACTIVITY = {"ticker": "AMZN", "status": "ok", "asOf": "2026-06-30", "
 // ── 투자포인트 탭: 애널리스트 목표가 (출처·기준일 포함) ──
 // 갱신: StockAnalysis 예측 페이지(stockanalysis.com/stocks/amzn/forecast/)의 값과 날짜를 옮긴다.
 // 현재가 대비는 마지막 종가에서 계산한다.
-const AMZN_ANALYST = { asOf: '2026-10-13', source: 'StockAnalysis (의견 집계 · 개별 목표가)', rating: 'Strong Buy', n: 60, nTargets: 46, mean: 330.41, median: 329,
+const AMZN_ANALYST = { asOf: '2026-10-17', source: 'StockAnalysis (의견 집계 · 개별 목표가)', rating: 'Strong Buy', n: 60, nTargets: 46, mean: 330.41, median: 329,
   low: 230, high: 400, strongBuy: 42, buy: 16, hold: 2, sell: 0, strongSell: 0 };
 (function(){
   const A = AMZN_ANALYST, last = (typeof AMZN_DAILY !== 'undefined' && AMZN_DAILY.length) ? AMZN_DAILY[AMZN_DAILY.length - 1] : null;

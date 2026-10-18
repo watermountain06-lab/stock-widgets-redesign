@@ -571,7 +571,7 @@ Chart.overrides.doughnut.animation = false;
     </div>
     <div class="logic-box logic-negative" id="tjxPeerBox">
       <div class="logic-head"><span class="logic-tag">밸류에이션 <span class="logic-denom">동종업 대비</span></span><span class="logic-verdict" id="tjxPeerVerdict">비싼 편</span></div>
-      <div class="logic-score" id="tjxPeerScore">28.2<span class="logic-denom">/100</span></div>
+      <div class="logic-score" id="tjxPeerScore">28.4<span class="logic-denom">/100</span></div>
     </div>
     <div class="logic-box logic-neutral" id="tjxSelfBox">
       <div class="logic-head"><span class="logic-tag">밸류에이션 <span class="logic-denom">자기 이력 대비</span></span><span class="logic-verdict" id="tjxSelfVerdict">중간</span></div>
@@ -933,9 +933,9 @@ Chart.overrides.doughnut.animation = false;
 시나리오 범위: 1.70 ~ 2.09(세 시나리오 최대·최소 기준)
 0.7 이하 매우 싸다 · 0.9 이하 싸다 · 1.1 이하 적정 · 1.5 이하 비싸다 · 초과 매우 비싸다
 이 칸은 보수적으로 잡혀 있다(할인율 10%, 5년 뒤 영구성장 2.5%). S&amp;P500 비금융 종목의 83~91%가 매달 '매우 비싸다'에 들어간다(2024-10~2026-09). 다른 종목과 견주려면 위 비율 숫자를 함께 볼 것.">매우 비싸다</div></div>
-      <div class="vs-name" title="S&amp;P500 경기소비재 종목들보다 배수가 얼마나 낮은가. 높을수록 싸다.">동종업 대비</div><div class="vs-val" data-vc-score="peer">28.2</div><div class="sc-tile low" data-vc="peer" data-m="per">26</div><div class="sc-tile low" data-vc="peer" data-m="pbr">23</div><div class="sc-tile lost" data-vc="peer" data-m="psr">40</div><div class="sc-tile low" data-vc="peer" data-m="pcr">26</div><div class="sc-tile low" data-vc="peer" data-m="evebitda">27</div><div class="vs-pill high" data-vs-pill="peer">비싸다</div>
+      <div class="vs-name" title="S&amp;P500 경기소비재 종목들보다 배수가 얼마나 낮은가. 높을수록 싸다.">동종업 대비</div><div class="vs-val" data-vc-score="peer">28.4</div><div class="sc-tile low" data-vc="peer" data-m="per">29</div><div class="sc-tile low" data-vc="peer" data-m="pbr">19</div><div class="sc-tile lost" data-vc="peer" data-m="psr">40</div><div class="sc-tile low" data-vc="peer" data-m="pcr">26</div><div class="sc-tile low" data-vc="peer" data-m="evebitda">29</div><div class="vs-pill high" data-vs-pill="peer">비싸다</div>
     </div></div>
-    <div class="vs-premise">PER 27.3배(5년 중앙값 28.0배)로 자기 이력 55.6점(중간), 동종업 28.2점(비싸다)이다. <strong>현금흐름 내재가치(기본 $79.30)는 현재가의 54%다</strong>.</div>
+    <div class="vs-premise">PER 27.3배(5년 중앙값 28.0배)로 자기 이력 55.6점(중간), 동종업 28.4점(비싸다)이다. <strong>현금흐름 내재가치(기본 $79.30)는 현재가의 54%다</strong>.</div>
     <div class="verdict-summary-risk">⚠️ 세 칸이 자기 이력 0 · 동종업 −1 · 현금흐름 −2, 합계 −3 “고평가”이다. 현금흐름 내재가치(기본 $79.30)는 현재가의 54%다. 현재가를 정당화하려면 매출이 5년간 연 22.5% 커야 한다. 내재가치에서 차입금 $2.9B를 빼고 현금·단기투자 $6.0B를 더한다.</div>
   </div>
 
@@ -1005,7 +1005,7 @@ Chart.overrides.doughnut.animation = false;
     </div>
 
     <div class="card" style="display:flex;flex-direction:column;">
-      <div class="card-title"><span id="multipleCompareTitle">소매 6곳 PER 비교 (점수는 S&amp;P500 경기소비재 기준) · 10/9 종가(TJX 막대는 10/16)</span></div>
+      <div class="card-title"><span id="multipleCompareTitle">소매 6곳 PER 비교 (점수는 S&amp;P500 경기소비재 기준) · 10/16 종가</span></div>
       <div class="chart-wrap" style="flex:1;min-height:230px;">
         <canvas id="multipleChart"></canvas>
       </div>
@@ -1098,7 +1098,7 @@ Chart.overrides.doughnut.animation = false;
         <div class="op-dist"><div data-an-bar="buy" style="width: 81.8%; background: var(--green);"></div><div data-an-bar="hold" style="width: 18.2%; background: var(--gold);"></div><div data-an-bar="sell" style="width: 0%; background: var(--red);"></div></div>
       </div>
       <div class="op-cell">
-        <span class="op-label">평균 목표주가 · <span data-an="asof">2026-10-13</span></span>
+        <span class="op-label">평균 목표주가 · <span data-an="asof">2026-10-17</span></span>
         <span class="op-val"><span data-an="mean">$170.75</span> <span class="op-sub op-up" data-an="upside">+15.9%</span></span>
       </div>
       <div class="op-cell">
@@ -1274,13 +1274,13 @@ function selectFundPeriod(period) {
 function renderSegmentChart() {
   const ctx = document.getElementById('segmentPieChart');
   if (!ctx) return;
-  const total = 15180;
+  const total = 15180.0;
   new Chart(ctx,{
     type:'doughnut',
     data:{
       labels:["Marmaxx (미국)", "HomeGoods (미국)", "TJX International", "TJX Canada"],
       datasets:[{
-        data:[9109, 2507, 2094, 1470],
+        data:[9109.0, 2507.0, 2094.0, 1470.0],
         backgroundColor:["#c8102e", "#f59e0b", "#0072c6", "#22c55e"],
         borderColor:'#8a8d9e',
         borderWidth:2
@@ -1303,62 +1303,62 @@ function renderSegmentChart() {
 // ══════ #valuation ══════
 const MULTIPLE_DATA = {
   per: {
-    title: '소매 6곳 PER 비교 (점수는 S&P500 경기소비재 기준) · 10/9 종가(TJX 막대는 10/16)',
+    title: '소매 6곳 PER 비교 (점수는 S&P500 경기소비재 기준) · 10/16 종가',
     unit: 'PER', max: 35, tjxValue: null,
     peers: [
-      { name:'ROST', value:26.9, status:'reference' },
-      { name:'HD', value:20.4, status:'reference' },
-      { name:'LOW', value:15.7, status:'reference' },
-      { name:'TSCO', value:17.6, status:'reference' },
-      { name:'BBY', value:14.5, status:'reference' },
-      { name:'ULTA', value:20.8, status:'reference' }
+      { name:'ROST', value:28.7, status:'reference' },
+      { name:'HD', value:21.7, status:'reference' },
+      { name:'LOW', value:16.7, status:'reference' },
+      { name:'TSCO', value:17.4, status:'reference' },
+      { name:'BBY', value:15.4, status:'reference' },
+      { name:'ULTA', value:21.6, status:'reference' }
     ]
   },
   pbr: {
-    title: '소매 PBR 비교 (LOW 값 없음) · 10/9 종가(TJX 막대는 10/16)',
+    title: '소매 PBR 비교 (LOW 값 없음) · 10/16 종가',
     unit: 'PBR', max: 25, tjxValue: null,
     peers: [
-      { name:'ROST', value:10.5, status:'reference' },
-      { name:'HD', value:17.5, status:'reference' },
-      { name:'TSCO', value:6.7, status:'reference' },
-      { name:'BBY', value:5.7, status:'reference' },
-      { name:'ULTA', value:9.2, status:'reference' }
+      { name:'ROST', value:11.2, status:'reference' },
+      { name:'HD', value:18.6, status:'reference' },
+      { name:'TSCO', value:6.6, status:'reference' },
+      { name:'BBY', value:6.1, status:'reference' },
+      { name:'ULTA', value:9.6, status:'reference' }
     ]
   },
   psr: {
-    title: '소매 PSR 비교 · 10/9 종가(TJX 막대는 10/16)',
+    title: '소매 PSR 비교 · 10/16 종가',
     unit: 'PSR(TTM)', max: 5, tjxValue: null,
     peers: [
-      { name:'ROST', value:2.9, status:'reference' },
-      { name:'HD', value:1.7, status:'reference' },
-      { name:'LOW', value:1.1, status:'reference' },
+      { name:'ROST', value:3.1, status:'reference' },
+      { name:'HD', value:1.8, status:'reference' },
+      { name:'LOW', value:1.2, status:'reference' },
       { name:'TSCO', value:1.1, status:'reference' },
-      { name:'BBY', value:0.4, status:'reference' },
-      { name:'ULTA', value:1.9, status:'reference' }
+      { name:'BBY', value:0.5, status:'reference' },
+      { name:'ULTA', value:2.0, status:'reference' }
     ]
   },
   pcr: {
-    title: '소매 PCR(FCF) 비교 · 10/9 종가(TJX 막대는 10/16)',
-    unit: 'PCR(FCF)', max: 70, tjxValue: null,
+    title: '소매 PCR(FCF) 비교 · 10/16 종가',
+    unit: 'PCR(FCF)', max: 65, tjxValue: null,
     peers: [
-      { name:'ROST', value:25.5, status:'reference' },
-      { name:'HD', value:19.2, status:'reference' },
-      { name:'LOW', value:14.9, status:'reference' },
-      { name:'TSCO', value:57.2, status:'reference' },
-      { name:'BBY', value:10.3, status:'reference' },
-      { name:'ULTA', value:21.2, status:'reference' }
+      { name:'ROST', value:27.1, status:'reference' },
+      { name:'HD', value:20.5, status:'reference' },
+      { name:'LOW', value:15.8, status:'reference' },
+      { name:'TSCO', value:56.3, status:'reference' },
+      { name:'BBY', value:11.0, status:'reference' },
+      { name:'ULTA', value:22.1, status:'reference' }
     ]
   },
   evebitda: {
-    title: '소매 EV/EBITDA 비교 · 10/9 종가(TJX 막대는 10/16)',
+    title: '소매 EV/EBITDA 비교 · 10/16 종가',
     unit: 'EV/EBITDA', max: 25, tjxValue: null,
     peers: [
-      { name:'ROST', value:18.3, status:'reference' },
-      { name:'HD', value:14.3, status:'reference' },
-      { name:'LOW', value:11.1, status:'reference' },
-      { name:'TSCO', value:12.9, status:'reference' },
-      { name:'BBY', value:8.0, status:'reference' },
-      { name:'ULTA', value:13.8, status:'reference' }
+      { name:'ROST', value:19.5, status:'reference' },
+      { name:'HD', value:15.1, status:'reference' },
+      { name:'LOW', value:11.8, status:'reference' },
+      { name:'TSCO', value:12.7, status:'reference' },
+      { name:'BBY', value:8.5, status:'reference' },
+      { name:'ULTA', value:14.3, status:'reference' }
     ]
   }
 };
@@ -1488,7 +1488,7 @@ const DCF_SKEW_NOTE = "이 칸은 보수적으로 잡혀 있다(할인율 10%, 5
 //       python3 v2/build_fundamental_score.py TJX
 const TJX_SCORES = {
   fundamental: 50.1,   // 재무건전성 + 성장·수익성 (밸류에이션 축 제외)
-  peer: 28.2,          // S&P500 경기소비재 대비 배수 순위 (v2/peer_universe/consumer_discretionary.json)
+  peer: 28.4,          // S&P500 경기소비재 대비 배수 순위 (v2/peer_universe/consumer_discretionary.json)
   selfHistory: 55.6,   // 자기 5년 배수 분포 백분위 (2021-10-18 ~ 2026-10-16)
   asOf: "2026-10-16",
   fundamentalAsOf: "2026-08-01",   // Q2 FY27 10-Q
@@ -1801,7 +1801,7 @@ const TJX_FUNDAMENTAL = {"ticker": "TJX", "basis": "quarter", "asOf": "2026-08-0
 //
 // 갱신: python3 v2/build_peer_score.py TJX --self v2/TJX_multiples.json --card
 /* VALUATION:BEGIN */
-const TJX_VALUATION = {"peer": {"score": 28.2, "sector": "Consumer Discretionary (S&P500 47종목)", "asOf": ["2026-10-09", "2026-10-09"], "priceSession": null, "metrics": [{"metric": "per", "score": 26.2, "rank": 32, "peers": 42}, {"metric": "pbr", "score": 22.6, "rank": 25, "peers": 31}, {"metric": "psr", "score": 40.0, "rank": 25, "peers": 40}, {"metric": "pcr", "score": 25.6, "rank": 30, "peers": 39}, {"metric": "evebitda", "score": 26.5, "rank": 26, "peers": 34}]}, "self": {"score": 55.6, "window": ["2021-10-18", "2026-10-16"], "perBasis": "diluted", "metrics": [{"metric": "per", "score": 60.2, "percentile": 39.8, "current": 27.28, "min": 20.31, "median": 27.98, "max": 35.7, "days": 1255, "currentNote": null}, {"metric": "pbr", "score": 66.4, "percentile": 33.6, "current": 15.22, "min": 10.77, "median": 16.07, "max": 19.22, "days": 1255, "currentNote": null}, {"metric": "psr", "score": 20.9, "percentile": 79.1, "current": 2.6, "min": 1.31, "median": 2.12, "max": 3.05, "days": 1255, "currentNote": null}, {"metric": "pcr", "score": 74.5, "percentile": 25.5, "current": 27.58, "min": 16.66, "median": 33.92, "max": 129.03, "days": 1255, "currentNote": null}, {"metric": "evebitda", "score": 55.9, "percentile": 44.1, "current": 18.45, "min": 13.18, "median": 18.68, "max": 23.82, "days": 1087, "currentNote": null}]}};
+const TJX_VALUATION = {"peer": {"score": 28.4, "sector": "Consumer Discretionary (S&P500 47종목)", "asOf": ["2026-10-16", "2026-10-16"], "priceSession": null, "metrics": [{"metric": "per", "score": 28.6, "rank": 31, "peers": 42}, {"metric": "pbr", "score": 19.4, "rank": 26, "peers": 31}, {"metric": "psr", "score": 40.0, "rank": 25, "peers": 40}, {"metric": "pcr", "score": 25.6, "rank": 30, "peers": 39}, {"metric": "evebitda", "score": 28.6, "rank": 26, "peers": 35}]}, "self": {"score": 55.6, "window": ["2021-10-18", "2026-10-16"], "perBasis": "diluted", "metrics": [{"metric": "per", "score": 60.2, "percentile": 39.8, "current": 27.28, "min": 20.31, "median": 27.98, "max": 35.7, "days": 1255, "currentNote": null}, {"metric": "pbr", "score": 66.4, "percentile": 33.6, "current": 15.22, "min": 10.77, "median": 16.07, "max": 19.22, "days": 1255, "currentNote": null}, {"metric": "psr", "score": 20.9, "percentile": 79.1, "current": 2.6, "min": 1.31, "median": 2.12, "max": 3.05, "days": 1255, "currentNote": null}, {"metric": "pcr", "score": 74.5, "percentile": 25.5, "current": 27.58, "min": 16.66, "median": 33.92, "max": 129.03, "days": 1255, "currentNote": null}, {"metric": "evebitda", "score": 55.9, "percentile": 44.1, "current": 18.45, "min": 13.18, "median": 18.68, "max": 23.82, "days": 1087, "currentNote": null}]}};
 /* VALUATION:END */
 
 // ── 종합 평가 자동 판정 (2026-09-25 사용자 결정 · 방향 합산) ──
@@ -2088,7 +2088,7 @@ const TJX_ACTIVITY = {"ticker": "TJX", "status": "ok", "asOf": "2026-08-01", "pr
 // ── 투자포인트 탭: 애널리스트 목표가 (출처·기준일 포함) ──
 // 갱신: StockAnalysis 예측 페이지(stockanalysis.com/stocks/tjx/forecast/)의 값과 날짜를 옮긴다.
 // 현재가 대비는 마지막 종가에서 계산한다.
-const TJX_ANALYST = { asOf: '2026-10-13', source: 'StockAnalysis (의견 집계 · 개별 목표가)', rating: 'Buy', n: 22, nTargets: 16, mean: 170.75, median: 175,
+const TJX_ANALYST = { asOf: '2026-10-17', source: 'StockAnalysis (의견 집계 · 개별 목표가)', rating: 'Buy', n: 22, nTargets: 16, mean: 170.75, median: 175,
   low: 140, high: 198, strongBuy: 14, buy: 4, hold: 4, sell: 0, strongSell: 0 };
 (function(){
   const A = TJX_ANALYST, last = (typeof TJX_DAILY !== 'undefined' && TJX_DAILY.length) ? TJX_DAILY[TJX_DAILY.length - 1] : null;

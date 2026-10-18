@@ -1116,7 +1116,7 @@ Chart.overrides.doughnut.animation = false;
         <div class="op-dist"><div data-an-bar="buy" style="width: 48%; background: var(--green);"></div><div data-an-bar="hold" style="width: 44%; background: var(--gold);"></div><div data-an-bar="sell" style="width: 8%; background: var(--red);"></div></div>
       </div>
       <div class="op-cell">
-        <span class="op-label">평균 목표주가 · <span data-an="asof">2026-10-13</span></span>
+        <span class="op-label">평균 목표주가 · <span data-an="asof">2026-10-17</span></span>
         <span class="op-val"><span data-an="mean">$252.57</span> <span class="op-sub op-up" data-an="upside">+8.8%</span></span>
       </div>
       <div class="op-cell">
@@ -1292,13 +1292,13 @@ function selectFundPeriod(period) {
 function renderSegmentChart() {
   const ctx = document.getElementById('segmentPieChart');
   if (!ctx) return;
-  const total = 17162;
+  const total = 17162.0;
   new Chart(ctx,{
     type:'doughnut',
     data:{
       labels:["소프트웨어", "컨설팅", "인프라", "금융·기타"],
       datasets:[{
-        data:[7761, 5327, 3835, 239],
+        data:[7761.0, 5327.0, 3835.0, 239],
         backgroundColor:["#0f6eb4", "#5aa9e6", "#94a3b8", "#d4a017"],
         borderColor:'#8a8d9e',
         borderWidth:2
@@ -2110,7 +2110,7 @@ const IBM_ACTIVITY = {"ticker": "IBM", "status": "ok", "asOf": "2026-06-30", "pr
 // ── 투자포인트 탭: 애널리스트 목표가 (출처·기준일 포함) ──
 // 갱신: StockAnalysis 예측 페이지(stockanalysis.com/stocks/ibm/forecast/)의 값과 날짜를 옮긴다.
 // 현재가 대비는 마지막 종가에서 계산한다.
-const IBM_ANALYST = { asOf: '2026-10-13', source: 'StockAnalysis (의견 집계 · 개별 목표가)', rating: 'Buy', n: 25, nTargets: 21, mean: 252.57, median: 250,
+const IBM_ANALYST = { asOf: '2026-10-17', source: 'StockAnalysis (의견 집계 · 개별 목표가)', rating: 'Buy', n: 25, nTargets: 21, mean: 252.57, median: 250,
   low: 190, high: 350, strongBuy: 9, buy: 3, hold: 11, sell: 1, strongSell: 1 };
 (function(){
   const A = IBM_ANALYST, last = (typeof IBM_DAILY !== 'undefined' && IBM_DAILY.length) ? IBM_DAILY[IBM_DAILY.length - 1] : null;

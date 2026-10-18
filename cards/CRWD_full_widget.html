@@ -880,11 +880,11 @@ Chart.overrides.doughnut.animation = false;
           <div style="display:flex;align-items:center;gap:7px;font-size:11px;color:var(--text2);white-space:nowrap;"><span style="width:8px;height:8px;border-radius:50%;background:#e01f3d;display:inline-block;flex-shrink:0;"></span>미국 <strong style="color:var(--text);">$0.95B · 64.9%</strong></div>
           <div style="display:flex;align-items:center;gap:7px;font-size:11px;color:var(--text2);white-space:nowrap;"><span style="width:8px;height:8px;border-radius:50%;background:#5aa9e6;display:inline-block;flex-shrink:0;"></span>유럽·중동·아프리카 <strong style="color:var(--text);">$0.26B · 17.9%</strong></div>
           <div style="display:flex;align-items:center;gap:7px;font-size:11px;color:var(--text2);white-space:nowrap;"><span style="width:8px;height:8px;border-radius:50%;background:#94a3b8;display:inline-block;flex-shrink:0;"></span>아시아·태평양 <strong style="color:var(--text);">$0.16B · 10.7%</strong></div>
-          <div style="display:flex;align-items:center;gap:7px;font-size:11px;color:var(--text2);white-space:nowrap;"><span style="width:8px;height:8px;border-radius:50%;background:#d4a017;display:inline-block;flex-shrink:0;"></span>기타 <strong style="color:var(--text);">$0.10B · 6.5%</strong></div>
+          <div style="display:flex;align-items:center;gap:7px;font-size:11px;color:var(--text2);white-space:nowrap;"><span style="width:8px;height:8px;border-radius:50%;background:#d4a017;display:inline-block;flex-shrink:0;"></span>기타 <strong style="color:var(--text);">$0.09B · 6.4%</strong></div>
         </div>
       </div>
 
-      <div class="yoy-footnote" style="margin-top:14px;">1년 전 같은 분기보다 미국 +21.5%, 유럽·중동·아프리카 +40.4%, 아시아·태평양 +33.9%, 기타 +21.8% · 출처: <a href="https://www.sec.gov/Archives/edgar/data/1535527/000153552726000031/crwd-20260731.htm" target="_blank" rel="noopener">Q2 FY27 10-Q 부문 표 (SEC) →</a></div>
+      <div class="yoy-footnote" style="margin-top:14px;">1년 전 같은 분기보다 미국 +21.6%, 유럽·중동·아프리카 +40.0%, 아시아·태평양 +34.4%, 기타 +21.1% · 출처: <a href="https://www.sec.gov/Archives/edgar/data/1535527/000153552726000031/crwd-20260731.htm" target="_blank" rel="noopener">Q2 FY27 10-Q 부문 표 (SEC) →</a></div>
     </div>
 
     <div class="card" style="margin-bottom:0;">
@@ -1121,13 +1121,13 @@ Chart.overrides.doughnut.animation = false;
     <div class="card-title">투자의견 요약</div>
     <div class="op-strip">
       <div class="op-cell">
-        <span class="op-label">애널리스트 <span data-an="n">53명 · 목표가 39</span>명</span>
+        <span class="op-label">애널리스트 <span data-an="n">53명 · 목표가 40</span>명</span>
         <span class="op-val"><span data-an="rating">Buy</span> <span class="op-sub">매수 <span data-an="buy">40</span> · 유지 <span data-an="hold">12</span> · 매도 <span data-an="sell">1</span></span></span>
         <div class="op-dist"><div data-an-bar="buy" style="width: 75.5%; background: var(--green);"></div><div data-an-bar="hold" style="width: 22.6%; background: var(--gold);"></div><div data-an-bar="sell" style="width: 1.9%; background: var(--red);"></div></div>
       </div>
       <div class="op-cell">
-        <span class="op-label">평균 목표주가 · <span data-an="asof">2026-10-13</span></span>
-        <span class="op-val"><span data-an="mean">$250.60</span> <span class="op-sub op-up" data-an="upside">+10.2%</span></span>
+        <span class="op-label">평균 목표주가 · <span data-an="asof">2026-10-17</span></span>
+        <span class="op-val"><span data-an="mean">$255.39</span> <span class="op-sub op-up" data-an="upside">+12.3%</span></span>
       </div>
       <div class="op-cell">
         <span class="op-label">다음 실적</span>
@@ -1302,13 +1302,13 @@ function selectFundPeriod(period) {
 function renderSegmentChart() {
   const ctx = document.getElementById('segmentPieChart');
   if (!ctx) return;
-  const total = 1471;
+  const total = 1470.9;
   new Chart(ctx,{
     type:'doughnut',
     data:{
       labels:["미국", "유럽·중동·아프리카", "아시아·태평양", "기타"],
       datasets:[{
-        data:[954, 264, 158, 95],
+        data:[954.5, 263.7, 157.9, 94.8],
         backgroundColor:["#e01f3d", "#5aa9e6", "#94a3b8", "#d4a017"],
         borderColor:'#8a8d9e',
         borderWidth:2
@@ -2129,8 +2129,8 @@ const CRWD_ACTIVITY = {"ticker": "CRWD", "status": "ok", "asOf": "2026-07-31", "
 // ── 투자포인트 탭: 애널리스트 목표가 (출처·기준일 포함) ──
 // 갱신: StockAnalysis 예측 페이지(stockanalysis.com/stocks/crwd/forecast/)의 값과 날짜를 옮긴다.
 // 현재가 대비는 마지막 종가에서 계산한다.
-const CRWD_ANALYST = { asOf: '2026-10-13', source: 'StockAnalysis (의견 집계 · 개별 목표가)', rating: 'Buy', n: 53, nTargets: 39, mean: 250.6, median: 250,
-  low: 125, high: 425, strongBuy: 30, buy: 10, hold: 12, sell: 0, strongSell: 1 };
+const CRWD_ANALYST = { asOf: '2026-10-17', source: 'StockAnalysis (의견 집계 · 개별 목표가)', rating: 'Buy', n: 53, nTargets: 40, mean: 255.39, median: 250,
+  low: 125, high: 425, strongBuy: 30, buy: 10, hold: 12, sell: 1, strongSell: 0 };
 (function(){
   const A = CRWD_ANALYST, last = (typeof CRWD_DAILY !== 'undefined' && CRWD_DAILY.length) ? CRWD_DAILY[CRWD_DAILY.length - 1] : null;
   const put = (k, t) => document.querySelectorAll(`#invest [data-an="${k}"]`).forEach(el => { el.textContent = t; });

@@ -1088,8 +1088,8 @@ Chart.overrides.doughnut.animation = false;
         <div class="op-dist"><div data-an-bar="buy" style="width: 91.9%; background: var(--green);"></div><div data-an-bar="hold" style="width: 8.1%; background: var(--gold);"></div><div data-an-bar="sell" style="width: 0%; background: var(--red);"></div></div>
       </div>
       <div class="op-cell">
-        <span class="op-label">평균 목표주가 · <span data-an="asof">2026-10-13</span></span>
-        <span class="op-val"><span data-an="mean">$430.38</span> <span class="op-sub op-up" data-an="upside">+26.4%</span></span>
+        <span class="op-label">평균 목표주가 · <span data-an="asof">2026-10-17</span></span>
+        <span class="op-val"><span data-an="mean">$431.15</span> <span class="op-sub op-up" data-an="upside">+26.6%</span></span>
       </div>
       <div class="op-cell">
         <span class="op-label">다음 실적</span>
@@ -1264,13 +1264,13 @@ function selectFundPeriod(period) {
 function renderSegmentChart() {
   const ctx = document.getElementById('segmentPieChart');
   if (!ctx) return;
-  const total = 119796;
+  const total = 119796.0;
   new Chart(ctx,{
     type:'doughnut',
     data:{
       labels:["검색 등", "Google Cloud", "구독·플랫폼·기기", "YouTube 광고", "네트워크", "기타(Other Bets·헤지)"],
       datasets:[{
-        data:[63271, 24768, 12911, 11055, 7303, 488],
+        data:[63271.0, 24768.0, 12911.0, 11055.0, 7303.0, 488],
         backgroundColor:["#7c6ad6", "#3b82f6", "#7c6ad6", "#7c6ad6", "#9a9cab", "#8a8d9e"],
         borderColor:'#8a8d9e',
         borderWidth:2
@@ -2069,7 +2069,7 @@ const GOOGL_ACTIVITY = {"ticker": "GOOGL", "status": "stale", "asOf": "2023-09-3
 // ── 투자포인트 탭: 애널리스트 목표가 (출처·기준일 포함) ──
 // 갱신: StockAnalysis 예측 페이지(stockanalysis.com/stocks/googl/forecast/)의 값과 날짜를 옮긴다.
 // 현재가 대비는 마지막 종가에서 계산한다.
-const GOOGL_ANALYST = { asOf: '2026-10-13', source: 'StockAnalysis (의견 집계 · 개별 목표가)', rating: 'Strong Buy', n: 62, nTargets: 34, mean: 430.38, median: 430,
+const GOOGL_ANALYST = { asOf: '2026-10-17', source: 'StockAnalysis (의견 집계 · 개별 목표가)', rating: 'Strong Buy', n: 62, nTargets: 34, mean: 431.15, median: 435,
   low: 355, high: 515, strongBuy: 44, buy: 13, hold: 5, sell: 0, strongSell: 0 };
 (function(){
   const A = GOOGL_ANALYST, last = (typeof GOOGL_DAILY !== 'undefined' && GOOGL_DAILY.length) ? GOOGL_DAILY[GOOGL_DAILY.length - 1] : null;

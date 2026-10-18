@@ -1114,13 +1114,13 @@ Chart.overrides.doughnut.animation = false;
     <div class="card-title">투자의견 요약</div>
     <div class="op-strip">
       <div class="op-cell">
-        <span class="op-label">애널리스트 <span data-an="n">44명 · 목표가 28</span>명</span>
+        <span class="op-label">애널리스트 <span data-an="n">44명 · 목표가 29</span>명</span>
         <span class="op-val"><span data-an="rating">Buy</span> <span class="op-sub">매수 <span data-an="buy">25</span> · 유지 <span data-an="hold">13</span> · 매도 <span data-an="sell">6</span></span></span>
         <div class="op-dist"><div data-an-bar="buy" style="width: 56.8%; background: var(--green);"></div><div data-an-bar="hold" style="width: 29.5%; background: var(--gold);"></div><div data-an-bar="sell" style="width: 13.6%; background: var(--red);"></div></div>
       </div>
       <div class="op-cell">
-        <span class="op-label">평균 목표주가 · <span data-an="asof">2026-10-13</span></span>
-        <span class="op-val"><span data-an="mean">$337.77</span> <span class="op-sub op-down" data-an="upside">−1.7%</span></span>
+        <span class="op-label">평균 목표주가 · <span data-an="asof">2026-10-17</span></span>
+        <span class="op-val"><span data-an="mean">$334.75</span> <span class="op-sub op-down" data-an="upside">−2.5%</span></span>
       </div>
       <div class="op-cell">
         <span class="op-label">다음 실적</span>
@@ -1295,13 +1295,13 @@ function selectFundPeriod(period) {
 function renderSegmentChart() {
   const ctx = document.getElementById('segmentPieChart');
   if (!ctx) return;
-  const total = 109417;
+  const total = 109417.0;
   new Chart(ctx,{
     type:'doughnut',
     data:{
       labels:["iPhone", "Services", "Mac", "Wearables·Home·Acc.", "iPad"],
       datasets:[{
-        data:[54252, 30739, 10352, 7883, 6191],
+        data:[54252.0, 30739.0, 10352.0, 7883.0, 6191.0],
         backgroundColor:["#7c6ad6", "#3b82f6", "#7c6ad6", "#7c6ad6", "#9a9cab"],
         borderColor:'#8a8d9e',
         borderWidth:2
@@ -2105,7 +2105,7 @@ const AAPL_ACTIVITY = {"ticker": "AAPL", "status": "ok", "asOf": "2026-06-27", "
 // ── 투자포인트 탭: 애널리스트 목표가 (출처·기준일 포함) ──
 // 갱신: StockAnalysis 예측 페이지(stockanalysis.com/stocks/aapl/forecast/)의 값과 날짜를 옮긴다.
 // 현재가 대비는 마지막 종가에서 계산한다.
-const AAPL_ANALYST = { asOf: '2026-10-13', source: 'StockAnalysis (의견 집계 · 개별 목표가)', rating: 'Buy', n: 44, nTargets: 28, mean: 337.77, median: 355,
+const AAPL_ANALYST = { asOf: '2026-10-17', source: 'StockAnalysis (의견 집계 · 개별 목표가)', rating: 'Buy', n: 44, nTargets: 29, mean: 334.75, median: 350,
   low: 245, high: 400, strongBuy: 19, buy: 6, hold: 13, sell: 3, strongSell: 3 };
 (function(){
   const A = AAPL_ANALYST, last = (typeof AAPL_DAILY !== 'undefined' && AAPL_DAILY.length) ? AAPL_DAILY[AAPL_DAILY.length - 1] : null;

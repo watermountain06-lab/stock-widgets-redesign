@@ -571,7 +571,7 @@ Chart.overrides.doughnut.animation = false;
     </div>
     <div class="logic-box logic-negative" id="gildPeerBox">
       <div class="logic-head"><span class="logic-tag">밸류에이션 <span class="logic-denom">동종업 대비</span></span><span class="logic-verdict" id="gildPeerVerdict">비싼 편</span></div>
-      <div class="logic-score" id="gildPeerScore">28.1<span class="logic-denom">/100</span></div>
+      <div class="logic-score" id="gildPeerScore">29.1<span class="logic-denom">/100</span></div>
     </div>
     <div class="logic-box logic-negative" id="gildSelfBox">
       <div class="logic-head"><span class="logic-tag">밸류에이션 <span class="logic-denom">자기 이력 대비</span></span><span class="logic-verdict" id="gildSelfVerdict">비싼 편</span></div>
@@ -933,9 +933,9 @@ Chart.overrides.doughnut.animation = false;
       <div class="vs-name" title="회사가 앞으로 벌어들일 현금만으로 계산한 주당 가치(기본 시나리오).">현금흐름 (내재가치)</div><div class="vs-val" data-vs="dcf">$32</div><div class="vs-note">현재가 <span data-vs="price">$156.19</span> 대비 <strong data-vs="upside">−79.2%</strong> · 기본 시나리오</div><div class="vs-pill-wrap"><div class="vs-pill high" data-vs-pill="dcf" title="현재가 ÷ 기본 내재가치 = 4.81
 0.7 이하 매우 싸다 · 0.9 이하 싸다 · 1.1 이하 적정 · 1.5 이하 비싸다 · 초과 매우 비싸다
 이 칸은 보수적으로 잡혀 있다(할인율 10%, 5년 뒤 영구성장 2.5%). S&amp;P500 비금융 종목의 83~91%가 매달 '매우 비싸다'에 들어간다(2024-10~2026-09). 다른 종목과 견주려면 위 비율 숫자를 함께 볼 것.">매우 비싸다</div></div>
-      <div class="vs-name" title="S&amp;P500 헬스케어 종목들보다 배수가 얼마나 낮은가. 높을수록 싸다.">동종업 대비</div><div class="vs-val" data-vc-score="peer">28.1</div><div class="sc-tile none" data-vc="peer" data-m="per">—</div><div class="sc-tile low" data-vc="peer" data-m="pbr">10</div><div class="sc-tile low" data-vc="peer" data-m="psr">26</div><div class="sc-tile" data-vc="peer" data-m="pcr">77</div><div class="sc-tile low" data-vc="peer" data-m="evebitda">0</div><div class="vs-pill high" data-vs-pill="peer">비싸다</div>
+      <div class="vs-name" title="S&amp;P500 헬스케어 종목들보다 배수가 얼마나 낮은가. 높을수록 싸다.">동종업 대비</div><div class="vs-val" data-vc-score="peer">29.1</div><div class="sc-tile none" data-vc="peer" data-m="per">—</div><div class="sc-tile low" data-vc="peer" data-m="pbr">10</div><div class="sc-tile low" data-vc="peer" data-m="psr">26</div><div class="sc-tile" data-vc="peer" data-m="pcr">80</div><div class="sc-tile low" data-vc="peer" data-m="evebitda">0</div><div class="vs-pill high" data-vs-pill="peer">비싸다</div>
     </div></div>
-    <div class="vs-premise">PBR 16.4배(5년 중앙값 5.0배)로 자기 이력 5.8점(비싸다), 동종업 28.1점(비싸다)이다. <strong>현금흐름 내재가치(기본 $32.47)는 현재가의 21%다</strong>.</div>
+    <div class="vs-premise">PBR 16.4배(5년 중앙값 5.0배)로 자기 이력 5.8점(비싸다), 동종업 29.1점(비싸다)이다. <strong>현금흐름 내재가치(기본 $32.47)는 현재가의 21%다</strong>.</div>
     <div class="verdict-summary-risk">⚠️ 세 칸이 자기 이력 −1 · 동종업 −1 · 현금흐름 −2, 합계 −4 “고평가”이다. 현금흐름 내재가치(기본 $32.47)는 현재가의 21%다. 현재가를 정당화하려면 영업이익률이 68.9%까지 올라야 한다(최근 4분기 −8.2%, 5년 중앙값 28.0%). 내재가치에서 차입금 $26.2B를 빼고 현금·단기투자 $3.2B를 더한다.</div>
   </div>
 
@@ -1005,7 +1005,7 @@ Chart.overrides.doughnut.animation = false;
     </div>
 
     <div class="card" style="display:flex;flex-direction:column;">
-      <div class="card-title"><span id="multipleCompareTitle">대형 바이오·제약 PER 비교 (점수는 S&amp;P500 헬스케어 기준) · 10/9 종가(GILD 막대는 10/16)</span></div>
+      <div class="card-title"><span id="multipleCompareTitle">대형 바이오·제약 PER 비교 (점수는 S&amp;P500 헬스케어 기준) · 10/16 종가</span></div>
       <div class="chart-wrap" style="flex:1;min-height:230px;">
         <canvas id="multipleChart"></canvas>
       </div>
@@ -1125,8 +1125,8 @@ Chart.overrides.doughnut.animation = false;
         <div class="op-dist"><div data-an-bar="buy" style="width: 78.6%; background: var(--green);"></div><div data-an-bar="hold" style="width: 17.9%; background: var(--gold);"></div><div data-an-bar="sell" style="width: 3.6%; background: var(--red);"></div></div>
       </div>
       <div class="op-cell">
-        <span class="op-label">평균 목표주가 · <span data-an="asof">2026-10-13</span></span>
-        <span class="op-val"><span data-an="mean">$161.05</span> <span class="op-sub op-up" data-an="upside">+3.1%</span></span>
+        <span class="op-label">평균 목표주가 · <span data-an="asof">2026-10-17</span></span>
+        <span class="op-val"><span data-an="mean">$161.14</span> <span class="op-sub op-up" data-an="upside">+3.2%</span></span>
       </div>
       <div class="op-cell">
         <span class="op-label">다음 실적</span>
@@ -1301,13 +1301,13 @@ function selectFundPeriod(period) {
 function renderSegmentChart() {
   const ctx = document.getElementById('segmentPieChart');
   if (!ctx) return;
-  const total = 7802;
+  const total = 7802.0;
   new Chart(ctx,{
     type:'doughnut',
     data:{
       labels:["HIV", "간질환", "항암(Trodelvy·세포치료)", "기타 제품(Veklury 포함)", "로열티·계약 수익"],
       datasets:[{
-        data:[5693, 876, 872, 185, 176],
+        data:[5693.0, 876.0, 872.0, 185.0, 176.0],
         backgroundColor:["#c4122f", "#f59e0b", "#a78bfa", "#94a3b8", "#5aa9e6"],
         borderColor:'#8a8d9e',
         borderWidth:2
@@ -1330,61 +1330,61 @@ function renderSegmentChart() {
 // ══════ #valuation ══════
 const MULTIPLE_DATA = {
   per: {
-    title: '대형 바이오·제약 PER 비교 (점수는 S&P500 헬스케어 기준) · 10/9 종가(GILD 막대는 10/16)',
+    title: '대형 바이오·제약 PER 비교 (점수는 S&P500 헬스케어 기준) · 10/16 종가',
     unit: 'PER', max: 50, gildValue: null,
     peers: [
-      { name:'ABBV', value:41.0, status:'reference' },
-      { name:'AMGN', value:25.8, status:'reference' },
-      { name:'VRTX', value:29.7, status:'reference' },
-      { name:'BMY', value:13.0, status:'reference' },
-      { name:'REGN', value:18.5, status:'reference' }
+      { name:'ABBV', value:42.3, status:'reference' },
+      { name:'AMGN', value:26.9, status:'reference' },
+      { name:'VRTX', value:29.1, status:'reference' },
+      { name:'BMY', value:13.1, status:'reference' },
+      { name:'REGN', value:19.6, status:'reference' }
     ]
   },
   pbr: {
-    title: '대형 바이오·제약 PBR 비교 (ABBV 값 없음) · 10/9 종가(GILD 막대는 10/16)',
+    title: '대형 바이오·제약 PBR 비교 (ABBV 값 없음) · 10/16 종가',
     unit: 'PBR', max: 25, gildValue: null,
     peers: [
-      { name:'AMGN', value:19.2, status:'reference' },
-      { name:'VRTX', value:6.4, status:'reference' },
-      { name:'BMY', value:5.4, status:'reference' },
+      { name:'AMGN', value:20.0, status:'reference' },
+      { name:'VRTX', value:6.3, status:'reference' },
+      { name:'BMY', value:5.5, status:'reference' },
       { name:'MRK', value:8.6, status:'reference' },
-      { name:'REGN', value:2.2, status:'reference' }
+      { name:'REGN', value:2.4, status:'reference' }
     ]
   },
   psr: {
-    title: '대형 바이오·제약 PSR 비교 · 10/9 종가(GILD 막대는 10/16)',
+    title: '대형 바이오·제약 PSR 비교 · 10/16 종가',
     unit: 'PSR(TTM)', max: 15, gildValue: null,
     peers: [
-      { name:'ABBV', value:7.6, status:'reference' },
-      { name:'AMGN', value:5.9, status:'reference' },
-      { name:'VRTX', value:10.3, status:'reference' },
+      { name:'ABBV', value:7.8, status:'reference' },
+      { name:'AMGN', value:6.1, status:'reference' },
+      { name:'VRTX', value:10.1, status:'reference' },
       { name:'BMY', value:2.5, status:'reference' },
       { name:'MRK', value:5.4, status:'reference' },
-      { name:'REGN', value:4.5, status:'reference' }
+      { name:'REGN', value:4.8, status:'reference' }
     ]
   },
   pcr: {
-    title: '대형 바이오·제약 PCR(FCF) 비교 · 10/9 종가(GILD 막대는 10/16)',
+    title: '대형 바이오·제약 PCR(FCF) 비교 · 10/16 종가',
     unit: 'PCR(FCF)', max: 40, gildValue: null,
     peers: [
-      { name:'ABBV', value:26.8, status:'reference' },
-      { name:'AMGN', value:22.0, status:'reference' },
-      { name:'VRTX', value:34.1, status:'reference' },
-      { name:'BMY', value:10.6, status:'reference' },
+      { name:'ABBV', value:27.7, status:'reference' },
+      { name:'AMGN', value:23.0, status:'reference' },
+      { name:'VRTX', value:33.4, status:'reference' },
+      { name:'BMY', value:10.7, status:'reference' },
       { name:'MRK', value:22.4, status:'reference' },
-      { name:'REGN', value:18.7, status:'reference' }
+      { name:'REGN', value:19.9, status:'reference' }
     ]
   },
   evebitda: {
-    title: '대형 바이오·제약 EV/EBITDA 비교 · 10/9 종가(GILD 막대는 10/16)',
+    title: '대형 바이오·제약 EV/EBITDA 비교 · 10/16 종가',
     unit: 'EV/EBITDA', max: 40, gildValue: null,
     peers: [
-      { name:'ABBV', value:22.4, status:'reference' },
-      { name:'AMGN', value:16.7, status:'reference' },
-      { name:'VRTX', value:24.7, status:'reference' },
-      { name:'BMY', value:10.4, status:'reference' },
-      { name:'MRK', value:31.1, status:'reference' },
-      { name:'REGN', value:14.8, status:'reference' }
+      { name:'ABBV', value:23.0, status:'reference' },
+      { name:'AMGN', value:17.3, status:'reference' },
+      { name:'VRTX', value:24.2, status:'reference' },
+      { name:'BMY', value:10.5, status:'reference' },
+      { name:'MRK', value:31.2, status:'reference' },
+      { name:'REGN', value:15.8, status:'reference' }
     ]
   }
 };
@@ -1514,7 +1514,7 @@ const DCF_SKEW_NOTE = "이 칸은 보수적으로 잡혀 있다(할인율 10%, 5
 //       python3 v2/build_fundamental_score.py GILD
 const GILD_SCORES = {
   fundamental: 33.5,   // 재무건전성 + 성장·수익성 (밸류에이션 축 제외)
-  peer: 28.1,          // S&P500 헬스케어 대비 배수 순위 (v2/peer_universe/health_care.json)
+  peer: 29.1,          // S&P500 헬스케어 대비 배수 순위 (v2/peer_universe/health_care.json)
   selfHistory: 5.8,   // 자기 5년 배수 분포 백분위 (2021-10-18 ~ 2026-10-16)
   asOf: "2026-10-16",
   fundamentalAsOf: "2026-06-30",   // Q2 2026 10-Q
@@ -1832,7 +1832,7 @@ const GILD_FUNDAMENTAL = {"ticker": "GILD", "basis": "quarter", "asOf": "2026-06
 //
 // 갱신: python3 v2/build_peer_score.py GILD --self v2/GILD_multiples.json --card
 /* VALUATION:BEGIN */
-const GILD_VALUATION = {"peer": {"score": 28.1, "sector": "Health Care (S&P500 59종목)", "asOf": ["2026-10-09", "2026-10-09"], "priceSession": null, "metrics": [{"metric": "pbr", "score": 9.6, "rank": 48, "peers": 52}, {"metric": "psr", "score": 26.3, "rank": 43, "peers": 57}, {"metric": "pcr", "score": 76.5, "rank": 13, "peers": 51}, {"metric": "evebitda", "score": 0.0, "rank": 52, "peers": 51}]}, "self": {"score": 5.8, "window": ["2021-10-18", "2026-10-16"], "perBasis": "diluted", "metrics": [{"metric": "per", "score": null, "percentile": 100.0, "current": null, "min": 10.37, "median": 19.69, "max": 1244.33, "days": 1204, "currentNote": "per_na"}, {"metric": "pbr", "score": 0.2, "percentile": 99.8, "current": 16.37, "min": 3.45, "median": 4.98, "max": 16.5, "days": 1255, "currentNote": null}, {"metric": "psr", "score": 1.0, "percentile": 99.0, "current": 6.36, "min": 2.64, "median": 3.74, "max": 6.65, "days": 1255, "currentNote": null}, {"metric": "pcr", "score": 22.0, "percentile": 78.0, "current": 14.96, "min": 6.72, "median": 12.17, "max": 21.1, "days": 1255, "currentNote": null}, {"metric": "evebitda", "score": 0.0, "percentile": 100.0, "current": null, "min": 7.5, "median": 12.41, "max": 42.48, "days": 1029, "currentNote": "negative"}]}, "perNA": {"netMargin": -0.1064, "rule": "최근 4분기 GAAP 순이익률 < 2% 또는 적자"}};
+const GILD_VALUATION = {"peer": {"score": 29.1, "sector": "Health Care (S&P500 59종목)", "asOf": ["2026-10-16", "2026-10-16"], "priceSession": null, "metrics": [{"metric": "pbr", "score": 9.6, "rank": 48, "peers": 52}, {"metric": "psr", "score": 26.3, "rank": 43, "peers": 57}, {"metric": "pcr", "score": 80.4, "rank": 11, "peers": 51}, {"metric": "evebitda", "score": 0.0, "rank": 52, "peers": 51}]}, "self": {"score": 5.8, "window": ["2021-10-18", "2026-10-16"], "perBasis": "diluted", "metrics": [{"metric": "per", "score": null, "percentile": 100.0, "current": null, "min": 10.37, "median": 19.69, "max": 1244.33, "days": 1204, "currentNote": "per_na"}, {"metric": "pbr", "score": 0.2, "percentile": 99.8, "current": 16.37, "min": 3.45, "median": 4.98, "max": 16.5, "days": 1255, "currentNote": null}, {"metric": "psr", "score": 1.0, "percentile": 99.0, "current": 6.36, "min": 2.64, "median": 3.74, "max": 6.65, "days": 1255, "currentNote": null}, {"metric": "pcr", "score": 22.0, "percentile": 78.0, "current": 14.96, "min": 6.72, "median": 12.17, "max": 21.1, "days": 1255, "currentNote": null}, {"metric": "evebitda", "score": 0.0, "percentile": 100.0, "current": null, "min": 7.5, "median": 12.41, "max": 42.48, "days": 1029, "currentNote": "negative"}]}, "perNA": {"netMargin": -0.1064, "rule": "최근 4분기 GAAP 순이익률 < 2% 또는 적자"}};
 /* VALUATION:END */
 
 // ── 종합 평가 자동 판정 (2026-09-25 사용자 결정 · 방향 합산) ──
@@ -2119,7 +2119,7 @@ const GILD_ACTIVITY = {"ticker": "GILD", "status": "ok", "asOf": "2026-06-30", "
 // ── 투자포인트 탭: 애널리스트 목표가 (출처·기준일 포함) ──
 // 갱신: StockAnalysis 예측 페이지(stockanalysis.com/stocks/gild/forecast/)의 값과 날짜를 옮긴다.
 // 현재가 대비는 마지막 종가에서 계산한다.
-const GILD_ANALYST = { asOf: '2026-10-13', source: 'StockAnalysis (의견 집계 · 개별 목표가)', rating: 'Buy', n: 28, nTargets: 22, mean: 161.05, median: 165,
+const GILD_ANALYST = { asOf: '2026-10-17', source: 'StockAnalysis (의견 집계 · 개별 목표가)', rating: 'Buy', n: 28, nTargets: 22, mean: 161.14, median: 165,
   low: 126, high: 180, strongBuy: 16, buy: 6, hold: 5, sell: 1, strongSell: 0 };
 (function(){
   const A = GILD_ANALYST, last = (typeof GILD_DAILY !== 'undefined' && GILD_DAILY.length) ? GILD_DAILY[GILD_DAILY.length - 1] : null;

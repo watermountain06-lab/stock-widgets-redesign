@@ -1121,13 +1121,13 @@ Chart.overrides.doughnut.animation = false;
     <div class="card-title">투자의견 요약</div>
     <div class="op-strip">
       <div class="op-cell">
-        <span class="op-label">애널리스트 <span data-an="n">21명 · 목표가 8</span>명</span>
+        <span class="op-label">애널리스트 <span data-an="n">21명 · 목표가 9</span>명</span>
         <span class="op-val"><span data-an="rating">Strong Buy</span> <span class="op-sub">매수 <span data-an="buy">20</span> · 유지 <span data-an="hold">1</span> · 매도 <span data-an="sell">0</span></span></span>
         <div class="op-dist"><div data-an-bar="buy" style="width: 95.2%; background: var(--green);"></div><div data-an-bar="hold" style="width: 4.8%; background: var(--gold);"></div><div data-an-bar="sell" style="width: 0%; background: var(--red);"></div></div>
       </div>
       <div class="op-cell">
-        <span class="op-label">평균 목표주가 · <span data-an="asof">2026-10-13</span></span>
-        <span class="op-val"><span data-an="mean">$883</span> <span class="op-sub op-up" data-an="upside">+114.0%</span></span>
+        <span class="op-label">평균 목표주가 · <span data-an="asof">2026-10-17</span></span>
+        <span class="op-val"><span data-an="mean">$558.22</span> <span class="op-sub op-up" data-an="upside">+35.3%</span></span>
       </div>
       <div class="op-cell">
         <span class="op-label">다음 실적</span>
@@ -2106,8 +2106,8 @@ const TSM_ACTIVITY = {"ticker": "TSM", "status": "ok", "asOf": "2026-06-30", "pr
 // ── 투자포인트 탭: 애널리스트 목표가 (출처·기준일 포함) ──
 // 갱신: StockAnalysis 예측 페이지(stockanalysis.com/stocks/tsm/forecast/)의 값과 날짜를 옮긴다.
 // 현재가 대비는 마지막 종가에서 계산한다.
-const TSM_ANALYST = { asOf: '2026-10-13', source: 'StockAnalysis (의견 집계 · 개별 목표가)', rating: 'Strong Buy', n: 21, nTargets: 8, mean: 883, median: 554,
-  low: 440, high: 3260, strongBuy: 14, buy: 6, hold: 1, sell: 0, strongSell: 0 };
+const TSM_ANALYST = { asOf: '2026-10-17', source: 'StockAnalysis (의견 집계 · 개별 목표가)', rating: 'Strong Buy', n: 21, nTargets: 9, mean: 558.22, median: 560,
+  low: 440, high: 670, strongBuy: 14, buy: 6, hold: 1, sell: 0, strongSell: 0 };
 (function(){
   const A = TSM_ANALYST, last = (typeof TSM_DAILY !== 'undefined' && TSM_DAILY.length) ? TSM_DAILY[TSM_DAILY.length - 1] : null;
   const put = (k, t) => document.querySelectorAll(`#invest [data-an="${k}"]`).forEach(el => { el.textContent = t; });

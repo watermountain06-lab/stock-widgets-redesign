@@ -1114,12 +1114,12 @@ Chart.overrides.doughnut.animation = false;
     <div class="op-strip">
       <div class="op-cell">
         <span class="op-label">애널리스트 <span data-an="n">29명 · 목표가 22</span>명</span>
-        <span class="op-val"><span data-an="rating">Buy</span> <span class="op-sub">매수 <span data-an="buy">20</span> · 유지 <span data-an="hold">8</span> · 매도 <span data-an="sell">1</span></span></span>
-        <div class="op-dist"><div data-an-bar="buy" style="width: 69%; background: var(--green);"></div><div data-an-bar="hold" style="width: 27.6%; background: var(--gold);"></div><div data-an-bar="sell" style="width: 3.4%; background: var(--red);"></div></div>
+        <span class="op-val"><span data-an="rating">Buy</span> <span class="op-sub">매수 <span data-an="buy">19</span> · 유지 <span data-an="hold">10</span> · 매도 <span data-an="sell">0</span></span></span>
+        <div class="op-dist"><div data-an-bar="buy" style="width: 65.5%; background: var(--green);"></div><div data-an-bar="hold" style="width: 34.5%; background: var(--gold);"></div><div data-an-bar="sell" style="width: 0%; background: var(--red);"></div></div>
       </div>
       <div class="op-cell">
-        <span class="op-label">평균 목표주가 · <span data-an="asof">2026-10-13</span></span>
-        <span class="op-val"><span data-an="mean">$577.91</span> <span class="op-sub op-up" data-an="upside">+27.9%</span></span>
+        <span class="op-label">평균 목표주가 · <span data-an="asof">2026-10-17</span></span>
+        <span class="op-val"><span data-an="mean">$576.59</span> <span class="op-sub op-up" data-an="upside">+27.6%</span></span>
       </div>
       <div class="op-cell">
         <span class="op-label">다음 실적</span>
@@ -1294,13 +1294,13 @@ function selectFundPeriod(period) {
 function renderSegmentChart() {
   const ctx = document.getElementById('segmentPieChart');
   if (!ctx) return;
-  const total = 46971;
+  const total = 46971.0;
   new Chart(ctx,{
     type:'doughnut',
     data:{
       labels:["AI 최적화 서버", "PC 등 클라이언트(CSG)", "일반 서버·네트워킹", "스토리지", "기타"],
       datasets:[{
-        data:[16401, 15034, 10531, 4850, 155],
+        data:[16401.0, 15034.0, 10531.0, 4850.0, 155.0],
         backgroundColor:["#007db8", "#f7b600", "#6cb4ea", "#9b59b6", "#94a3b8"],
         borderColor:'#8a8d9e',
         borderWidth:2
@@ -2114,8 +2114,8 @@ const DELL_ACTIVITY = {"ticker": "DELL", "status": "ok", "asOf": "2026-07-31", "
 // ── 투자포인트 탭: 애널리스트 목표가 (출처·기준일 포함) ──
 // 갱신: StockAnalysis 예측 페이지(stockanalysis.com/stocks/dell/forecast/)의 값과 날짜를 옮긴다.
 // 현재가 대비는 마지막 종가에서 계산한다.
-const DELL_ANALYST = { asOf: '2026-10-13', source: 'StockAnalysis (의견 집계 · 개별 목표가)', rating: 'Buy', n: 29, nTargets: 22, mean: 577.91, median: 600,
-  low: 290, high: 735, strongBuy: 14, buy: 6, hold: 8, sell: 1, strongSell: 0 };
+const DELL_ANALYST = { asOf: '2026-10-17', source: 'StockAnalysis (의견 집계 · 개별 목표가)', rating: 'Buy', n: 29, nTargets: 22, mean: 576.59, median: 600,
+  low: 290, high: 735, strongBuy: 14, buy: 5, hold: 10, sell: 0, strongSell: 0 };
 (function(){
   const A = DELL_ANALYST, last = (typeof DELL_DAILY !== 'undefined' && DELL_DAILY.length) ? DELL_DAILY[DELL_DAILY.length - 1] : null;
   const put = (k, t) => document.querySelectorAll(`#invest [data-an="${k}"]`).forEach(el => { el.textContent = t; });

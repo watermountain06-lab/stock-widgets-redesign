@@ -1123,7 +1123,7 @@ Chart.overrides.doughnut.animation = false;
         <div class="op-dist"><div data-an-bar="buy" style="width: 94%; background: var(--green);"></div><div data-an-bar="hold" style="width: 6%; background: var(--gold);"></div><div data-an-bar="sell" style="width: 0%; background: var(--red);"></div></div>
       </div>
       <div class="op-cell">
-        <span class="op-label">평균 목표주가 · <span data-an="asof">2026-10-13</span></span>
+        <span class="op-label">평균 목표주가 · <span data-an="asof">2026-10-17</span></span>
         <span class="op-val"><span data-an="mean">$519.07</span> <span class="op-sub op-up" data-an="upside">+57.9%</span></span>
       </div>
       <div class="op-cell">
@@ -1299,13 +1299,13 @@ function selectFundPeriod(period) {
 function renderSegmentChart() {
   const ctx = document.getElementById('segmentPieChart');
   if (!ctx) return;
-  const total = 29591;
+  const total = 29591.0;
   new Chart(ctx,{
     type:'doughnut',
     data:{
       labels:["반도체 솔루션", "인프라 소프트웨어"],
       datasets:[{
-        data:[20839, 8752],
+        data:[20839.0, 8752.0],
         backgroundColor:["#7c6ad6", "#3b82f6"],
         borderColor:'#8a8d9e',
         borderWidth:2
@@ -2108,7 +2108,7 @@ const AVGO_ACTIVITY = {"ticker": "AVGO", "status": "ok", "asOf": "2026-08-02", "
 // ── 투자포인트 탭: 애널리스트 목표가 (출처·기준일 포함) ──
 // 갱신: StockAnalysis 예측 페이지(stockanalysis.com/stocks/avgo/forecast/)의 값과 날짜를 옮긴다.
 // 현재가 대비는 마지막 종가에서 계산한다.
-const AVGO_ANALYST = { asOf: '2026-10-13', source: 'StockAnalysis (의견 집계 · 개별 목표가)', rating: 'Strong Buy', n: 50, nTargets: 29, mean: 519.07, median: 520,
+const AVGO_ANALYST = { asOf: '2026-10-17', source: 'StockAnalysis (의견 집계 · 개별 목표가)', rating: 'Strong Buy', n: 50, nTargets: 29, mean: 519.07, median: 520,
   low: 350, high: 630, strongBuy: 40, buy: 7, hold: 3, sell: 0, strongSell: 0 };
 (function(){
   const A = AVGO_ANALYST, last = (typeof AVGO_DAILY !== 'undefined' && AVGO_DAILY.length) ? AVGO_DAILY[AVGO_DAILY.length - 1] : null;

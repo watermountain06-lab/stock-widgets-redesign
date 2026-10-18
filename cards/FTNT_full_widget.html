@@ -1101,8 +1101,8 @@ Chart.overrides.doughnut.animation = false;
         <div class="op-dist"><div data-an-bar="buy" style="width: 20.5%; background: var(--green);"></div><div data-an-bar="hold" style="width: 68.2%; background: var(--gold);"></div><div data-an-bar="sell" style="width: 11.4%; background: var(--red);"></div></div>
       </div>
       <div class="op-cell">
-        <span class="op-label">평균 목표주가 · <span data-an="asof">2026-10-13</span></span>
-        <span class="op-val"><span data-an="mean">$166.16</span> <span class="op-sub op-down" data-an="upside">−1.8%</span></span>
+        <span class="op-label">평균 목표주가 · <span data-an="asof">2026-10-17</span></span>
+        <span class="op-val"><span data-an="mean">$168.56</span> <span class="op-sub op-down" data-an="upside">−0.3%</span></span>
       </div>
       <div class="op-cell">
         <span class="op-label">다음 실적</span>
@@ -1277,13 +1277,13 @@ function selectFundPeriod(period) {
 function renderSegmentChart() {
   const ctx = document.getElementById('segmentPieChart');
   if (!ctx) return;
-  const total = 2048;
+  const total = 2047.9;
   new Chart(ctx,{
     type:'doughnut',
     data:{
       labels:["서비스", "제품"],
       datasets:[{
-        data:[1275, 773],
+        data:[1274.9, 773.0],
         backgroundColor:["#da291c", "#f06a5f"],
         borderColor:'#8a8d9e',
         borderWidth:2
@@ -2086,7 +2086,7 @@ const FTNT_ACTIVITY = {"ticker": "FTNT", "status": "ok", "asOf": "2026-06-30", "
 // ── 투자포인트 탭: 애널리스트 목표가 (출처·기준일 포함) ──
 // 갱신: StockAnalysis 예측 페이지(stockanalysis.com/stocks/ftnt/forecast/)의 값과 날짜를 옮긴다.
 // 현재가 대비는 마지막 종가에서 계산한다.
-const FTNT_ANALYST = { asOf: '2026-10-13', source: 'StockAnalysis (의견 집계 · 개별 목표가)', rating: 'Hold', n: 44, nTargets: 32, mean: 166.16, median: 175,
+const FTNT_ANALYST = { asOf: '2026-10-17', source: 'StockAnalysis (의견 집계 · 개별 목표가)', rating: 'Hold', n: 44, nTargets: 32, mean: 168.56, median: 175,
   low: 102, high: 225, strongBuy: 8, buy: 1, hold: 30, sell: 2, strongSell: 3 };
 (function(){
   const A = FTNT_ANALYST, last = (typeof FTNT_DAILY !== 'undefined' && FTNT_DAILY.length) ? FTNT_DAILY[FTNT_DAILY.length - 1] : null;

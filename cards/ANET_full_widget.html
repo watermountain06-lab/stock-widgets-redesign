@@ -877,12 +877,12 @@ Chart.overrides.doughnut.animation = false;
           <canvas id="segmentPieChart"></canvas>
         </div>
         <div style="display:flex;flex-direction:column;gap:9px;">
-          <div style="display:flex;align-items:center;gap:7px;font-size:11px;color:var(--text2);white-space:nowrap;"><span style="width:8px;height:8px;border-radius:50%;background:#0f6eb4;display:inline-block;flex-shrink:0;"></span>제품 <strong style="color:var(--text);">$2.60B · 85.8%</strong></div>
+          <div style="display:flex;align-items:center;gap:7px;font-size:11px;color:var(--text2);white-space:nowrap;"><span style="width:8px;height:8px;border-radius:50%;background:#0f6eb4;display:inline-block;flex-shrink:0;"></span>제품 <strong style="color:var(--text);">$2.61B · 85.8%</strong></div>
           <div style="display:flex;align-items:center;gap:7px;font-size:11px;color:var(--text2);white-space:nowrap;"><span style="width:8px;height:8px;border-radius:50%;background:#94a3b8;display:inline-block;flex-shrink:0;"></span>서비스 <strong style="color:var(--text);">$0.43B · 14.2%</strong></div>
         </div>
       </div>
 
-      <div class="yoy-footnote" style="margin-top:14px;">1년 전 같은 분기보다 제품 +38.8%, 서비스 +31.1% · 출처: <a href="https://www.sec.gov/Archives/edgar/data/1596532/000159653226000175/anet-20260630.htm" target="_blank" rel="noopener">Q2 2026 10-Q 부문 표 (SEC) →</a></div>
+      <div class="yoy-footnote" style="margin-top:14px;">1년 전 같은 분기보다 제품 +38.8%, 서비스 +31.3% · 출처: <a href="https://www.sec.gov/Archives/edgar/data/1596532/000159653226000175/anet-20260630.htm" target="_blank" rel="noopener">Q2 2026 10-Q 부문 표 (SEC) →</a></div>
     </div>
 
     <div class="card" style="margin-bottom:0;">
@@ -1099,7 +1099,7 @@ Chart.overrides.doughnut.animation = false;
         <div class="op-dist"><div data-an-bar="buy" style="width: 96.9%; background: var(--green);"></div><div data-an-bar="hold" style="width: 3.1%; background: var(--gold);"></div><div data-an-bar="sell" style="width: 0%; background: var(--red);"></div></div>
       </div>
       <div class="op-cell">
-        <span class="op-label">평균 목표주가 · <span data-an="asof">2026-10-13</span></span>
+        <span class="op-label">평균 목표주가 · <span data-an="asof">2026-10-17</span></span>
         <span class="op-val"><span data-an="mean">$241.26</span> <span class="op-sub op-up" data-an="upside">+36.3%</span></span>
       </div>
       <div class="op-cell">
@@ -1275,13 +1275,13 @@ function selectFundPeriod(period) {
 function renderSegmentChart() {
   const ctx = document.getElementById('segmentPieChart');
   if (!ctx) return;
-  const total = 3035;
+  const total = 3035.7;
   new Chart(ctx,{
     type:'doughnut',
     data:{
       labels:["제품", "서비스"],
       datasets:[{
-        data:[2605, 430],
+        data:[2605.2, 430.5],
         backgroundColor:["#0f6eb4", "#94a3b8"],
         borderColor:'#8a8d9e',
         borderWidth:2
@@ -2088,7 +2088,7 @@ const ANET_ACTIVITY = {"ticker": "ANET", "status": "ok", "asOf": "2026-06-30", "
 // ── 투자포인트 탭: 애널리스트 목표가 (출처·기준일 포함) ──
 // 갱신: StockAnalysis 예측 페이지(stockanalysis.com/stocks/anet/forecast/)의 값과 날짜를 옮긴다.
 // 현재가 대비는 마지막 종가에서 계산한다.
-const ANET_ANALYST = { asOf: '2026-10-13', source: 'StockAnalysis (의견 집계 · 개별 목표가)', rating: 'Strong Buy', n: 32, nTargets: 19, mean: 241.26, median: 250,
+const ANET_ANALYST = { asOf: '2026-10-17', source: 'StockAnalysis (의견 집계 · 개별 목표가)', rating: 'Strong Buy', n: 32, nTargets: 19, mean: 241.26, median: 250,
   low: 164, high: 289, strongBuy: 24, buy: 7, hold: 1, sell: 0, strongSell: 0 };
 (function(){
   const A = ANET_ANALYST, last = (typeof ANET_DAILY !== 'undefined' && ANET_DAILY.length) ? ANET_DAILY[ANET_DAILY.length - 1] : null;

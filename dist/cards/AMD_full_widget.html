@@ -1127,7 +1127,7 @@ Chart.overrides.doughnut.animation = false;
         <div class="op-dist"><div data-an-bar="buy" style="width: 80%; background: var(--green);"></div><div data-an-bar="hold" style="width: 20%; background: var(--gold);"></div><div data-an-bar="sell" style="width: 0%; background: var(--red);"></div></div>
       </div>
       <div class="op-cell">
-        <span class="op-label">평균 목표주가 · <span data-an="asof">2026-10-13</span></span>
+        <span class="op-label">평균 목표주가 · <span data-an="asof">2026-10-17</span></span>
         <span class="op-val"><span data-an="mean">$626.33</span> <span class="op-sub op-up" data-an="upside">+18.5%</span></span>
       </div>
       <div class="op-cell">
@@ -1303,13 +1303,13 @@ function selectFundPeriod(period) {
 function renderSegmentChart() {
   const ctx = document.getElementById('segmentPieChart');
   if (!ctx) return;
-  const total = 11536;
+  const total = 11536.0;
   new Chart(ctx,{
     type:'doughnut',
     data:{
       labels:["데이터센터", "클라이언트", "임베디드", "게이밍"],
       datasets:[{
-        data:[6718, 3062, 977, 779],
+        data:[6718.0, 3062.0, 977.0, 779.0],
         backgroundColor:["#ed1c24", "#f97316", "#8a8fa8", "#3b82f6"],
         borderColor:'#8a8d9e',
         borderWidth:2
@@ -2119,7 +2119,7 @@ const AMD_ACTIVITY = {"ticker": "AMD", "status": "ok", "asOf": "2026-06-27", "pr
 // ── 투자포인트 탭: 애널리스트 목표가 (출처·기준일 포함) ──
 // 갱신: StockAnalysis 예측 페이지(stockanalysis.com/stocks/amd/forecast/)의 값과 날짜를 옮긴다.
 // 현재가 대비는 마지막 종가에서 계산한다.
-const AMD_ANALYST = { asOf: '2026-10-13', source: 'StockAnalysis (의견 집계 · 개별 목표가)', rating: 'Strong Buy', n: 55, nTargets: 33, mean: 626.33, median: 641,
+const AMD_ANALYST = { asOf: '2026-10-17', source: 'StockAnalysis (의견 집계 · 개별 목표가)', rating: 'Strong Buy', n: 55, nTargets: 33, mean: 626.33, median: 641,
   low: 250, high: 1250, strongBuy: 39, buy: 5, hold: 11, sell: 0, strongSell: 0 };
 (function(){
   const A = AMD_ANALYST, last = (typeof AMD_DAILY !== 'undefined' && AMD_DAILY.length) ? AMD_DAILY[AMD_DAILY.length - 1] : null;

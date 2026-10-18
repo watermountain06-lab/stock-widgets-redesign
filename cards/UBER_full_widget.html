@@ -571,7 +571,7 @@ Chart.overrides.doughnut.animation = false;
     </div>
     <div class="logic-box logic-neutral" id="uberPeerBox">
       <div class="logic-head"><span class="logic-tag">밸류에이션 <span class="logic-denom">동종업 대비</span></span><span class="logic-verdict" id="uberPeerVerdict">중간</span></div>
-      <div class="logic-score" id="uberPeerScore">54.1<span class="logic-denom">/100</span></div>
+      <div class="logic-score" id="uberPeerScore">55.1<span class="logic-denom">/100</span></div>
     </div>
     <div class="logic-box logic-positive" id="uberSelfBox">
       <div class="logic-head"><span class="logic-tag">밸류에이션 <span class="logic-denom">자기 이력 대비</span></span><span class="logic-verdict" id="uberSelfVerdict">싼 편</span></div>
@@ -899,9 +899,9 @@ Chart.overrides.doughnut.animation = false;
 시나리오 범위: 2.14 ~ 14.72(세 시나리오 최대·최소 기준)
 0.7 이하 매우 싸다 · 0.9 이하 싸다 · 1.1 이하 적정 · 1.5 이하 비싸다 · 초과 매우 비싸다
 이 칸은 보수적으로 잡혀 있다(할인율 10%, 5년 뒤 영구성장 2.5%). S&amp;P500 비금융 종목의 83~91%가 매달 '매우 비싸다'에 들어간다(2024-10~2026-09). 다른 종목과 견주려면 위 비율 숫자를 함께 볼 것.">매우 비싸다</div></div>
-      <div class="vs-name" title="S&amp;P500 산업재 종목들보다 배수가 얼마나 낮은가. 높을수록 싸다.">동종업 대비</div><div class="vs-val" data-vc-score="peer">54.1</div><div class="sc-tile lost" data-vc="peer" data-m="per">40</div><div class="sc-tile lost" data-vc="peer" data-m="pbr">55</div><div class="sc-tile lost" data-vc="peer" data-m="psr">62</div><div class="sc-tile" data-vc="peer" data-m="pcr">84</div><div class="sc-tile low" data-vc="peer" data-m="evebitda">30</div><div class="vs-pill mid" data-vs-pill="peer">중간</div>
+      <div class="vs-name" title="S&amp;P500 산업재 종목들보다 배수가 얼마나 낮은가. 높을수록 싸다.">동종업 대비</div><div class="vs-val" data-vc-score="peer">55.1</div><div class="sc-tile lost" data-vc="peer" data-m="per">43</div><div class="sc-tile lost" data-vc="peer" data-m="pbr">55</div><div class="sc-tile lost" data-vc="peer" data-m="psr">62</div><div class="sc-tile" data-vc="peer" data-m="pcr">87</div><div class="sc-tile low" data-vc="peer" data-m="evebitda">29</div><div class="vs-pill mid" data-vs-pill="peer">중간</div>
     </div></div>
-    <div class="vs-premise">PER 31.4배(2.9년 중앙값 38.1배)로 자기 이력 89.2점(싸다), 동종업 54.1점(중간)이다. <strong>현금흐름 내재가치(기본 $29.31)는 현재가의 42%다</strong>.</div>
+    <div class="vs-premise">PER 31.4배(2.9년 중앙값 38.1배)로 자기 이력 89.2점(싸다), 동종업 55.1점(중간)이다. <strong>현금흐름 내재가치(기본 $29.31)는 현재가의 42%다</strong>.</div>
     <div class="verdict-summary-risk">⚠️ 세 칸이 자기 이력 +1 · 동종업 0 · 현금흐름 −2, 합계 −1 “적정~고평가”이다. 현금흐름 내재가치(기본 $29.31)는 현재가의 42%다. 현재가를 정당화하려면 매출이 5년간 연 37.1% 커야 한다. 내재가치에서 차입금·금융리스 $12.9B를 빼고 현금·단기투자 $5.4B를 더한다.</div>
   </div>
 
@@ -971,7 +971,7 @@ Chart.overrides.doughnut.animation = false;
     </div>
 
     <div class="card" style="display:flex;flex-direction:column;">
-      <div class="card-title"><span id="multipleCompareTitle">운송 6곳 PER 비교 (점수는 S&amp;P500 산업재 기준) · 10/9 종가(UBER 막대는 10/16)</span></div>
+      <div class="card-title"><span id="multipleCompareTitle">운송 6곳 PER 비교 (점수는 S&amp;P500 산업재 기준) · 10/16 종가</span></div>
       <div class="chart-wrap" style="flex:1;min-height:230px;">
         <canvas id="multipleChart"></canvas>
       </div>
@@ -1078,7 +1078,7 @@ Chart.overrides.doughnut.animation = false;
         <div class="op-dist"><div data-an-bar="buy" style="width: 82%; background: var(--green);"></div><div data-an-bar="hold" style="width: 16%; background: var(--gold);"></div><div data-an-bar="sell" style="width: 2%; background: var(--red);"></div></div>
       </div>
       <div class="op-cell">
-        <span class="op-label">평균 목표주가 · <span data-an="asof">2026-10-13</span></span>
+        <span class="op-label">평균 목표주가 · <span data-an="asof">2026-10-17</span></span>
         <span class="op-val"><span data-an="mean">$103.72</span> <span class="op-sub op-up" data-an="upside">+47.4%</span></span>
       </div>
       <div class="op-cell">
@@ -1254,13 +1254,13 @@ function selectFundPeriod(period) {
 function renderSegmentChart() {
   const ctx = document.getElementById('segmentPieChart');
   if (!ctx) return;
-  const total = 14191;
+  const total = 14191.0;
   new Chart(ctx,{
     type:'doughnut',
     data:{
       labels:["모빌리티", "배달", "화물"],
       datasets:[{
-        data:[7363, 5245, 1583],
+        data:[7363.0, 5245.0, 1583.0],
         backgroundColor:["#1f1f1f", "#22c55e", "#f59e0b"],
         borderColor:'#8a8d9e',
         borderWidth:2
@@ -1283,63 +1283,63 @@ function renderSegmentChart() {
 // ══════ #valuation ══════
 const MULTIPLE_DATA = {
   per: {
-    title: '운송 6곳 PER 비교 (점수는 S&P500 산업재 기준) · 10/9 종가(UBER 막대는 10/16)',
+    title: '운송 6곳 PER 비교 (점수는 S&P500 산업재 기준) · 10/16 종가',
     unit: 'PER', max: 45, uberValue: null,
     peers: [
-      { name:'UNP', value:22.5, status:'reference' },
-      { name:'CSX', value:27.3, status:'reference' },
-      { name:'FDX', value:15.7, status:'reference' },
-      { name:'UPS', value:17.6, status:'reference' },
-      { name:'DAL', value:13.7, status:'reference' },
-      { name:'ODFL', value:35.0, status:'reference' }
+      { name:'UNP', value:23.4, status:'reference' },
+      { name:'CSX', value:28.1, status:'reference' },
+      { name:'FDX', value:15.8, status:'reference' },
+      { name:'UPS', value:18.1, status:'reference' },
+      { name:'DAL', value:15.1, status:'reference' },
+      { name:'ODFL', value:36.1, status:'reference' }
     ]
   },
   pbr: {
-    title: '운송 PBR 비교 · 10/9 종가(UBER 막대는 10/16)',
+    title: '운송 PBR 비교 · 10/16 종가',
     unit: 'PBR', max: 10, uberValue: null,
     peers: [
-      { name:'UNP', value:8.0, status:'reference' },
-      { name:'CSX', value:6.2, status:'reference' },
+      { name:'UNP', value:8.3, status:'reference' },
+      { name:'CSX', value:6.4, status:'reference' },
       { name:'FDX', value:2.2, status:'reference' },
-      { name:'UPS', value:4.5, status:'reference' },
-      { name:'DAL', value:2.5, status:'reference' },
-      { name:'ODFL', value:8.3, status:'reference' }
+      { name:'UPS', value:4.6, status:'reference' },
+      { name:'DAL', value:2.2, status:'reference' },
+      { name:'ODFL', value:8.6, status:'reference' }
     ]
   },
   psr: {
-    title: '운송 PSR 비교 · 10/9 종가(UBER 막대는 10/16)',
+    title: '운송 PSR 비교 · 10/16 종가',
     unit: 'PSR(TTM)', max: 10, uberValue: null,
     peers: [
-      { name:'UNP', value:6.5, status:'reference' },
-      { name:'CSX', value:6.0, status:'reference' },
+      { name:'UNP', value:6.8, status:'reference' },
+      { name:'CSX', value:6.2, status:'reference' },
       { name:'FDX', value:0.7, status:'reference' },
       { name:'UPS', value:0.8, status:'reference' },
-      { name:'DAL', value:0.8, status:'reference' },
-      { name:'ODFL', value:6.7, status:'reference' }
+      { name:'DAL', value:0.7, status:'reference' },
+      { name:'ODFL', value:7.0, status:'reference' }
     ]
   },
   pcr: {
-    title: '운송 PCR(FCF) 비교 · 10/9 종가(UBER 막대는 10/16)',
-    unit: 'PCR(FCF)', max: 40, uberValue: null,
+    title: '운송 PCR(FCF) 비교 · 10/16 종가',
+    unit: 'PCR(FCF)', max: 45, uberValue: null,
     peers: [
-      { name:'UNP', value:25.4, status:'reference' },
-      { name:'CSX', value:31.3, status:'reference' },
-      { name:'FDX', value:13.5, status:'reference' },
-      { name:'UPS', value:12.4, status:'reference' },
-      { name:'DAL', value:13.8, status:'reference' },
-      { name:'ODFL', value:33.9, status:'reference' }
+      { name:'UNP', value:26.4, status:'reference' },
+      { name:'CSX', value:32.2, status:'reference' },
+      { name:'FDX', value:13.6, status:'reference' },
+      { name:'UPS', value:12.8, status:'reference' },
+      { name:'DAL', value:12.7, status:'reference' },
+      { name:'ODFL', value:34.9, status:'reference' }
     ]
   },
   evebitda: {
-    title: '운송 EV/EBITDA 비교 · 10/9 종가(UBER 막대는 10/16)',
+    title: '운송 EV/EBITDA 비교 · 10/16 종가',
     unit: 'EV/EBITDA', max: 25, uberValue: null,
     peers: [
-      { name:'UNP', value:15.3, status:'reference' },
-      { name:'CSX', value:14.4, status:'reference' },
-      { name:'FDX', value:9.9, status:'reference' },
-      { name:'UPS', value:9.6, status:'reference' },
-      { name:'DAL', value:8.5, status:'reference' },
-      { name:'ODFL', value:20.7, status:'reference' }
+      { name:'UNP', value:15.8, status:'reference' },
+      { name:'CSX', value:14.8, status:'reference' },
+      { name:'FDX', value:10.0, status:'reference' },
+      { name:'UPS', value:9.8, status:'reference' },
+      { name:'DAL', value:8.1, status:'reference' },
+      { name:'ODFL', value:21.3, status:'reference' }
     ]
   }
 };
@@ -1469,7 +1469,7 @@ const DCF_SKEW_NOTE = "이 칸은 보수적으로 잡혀 있다(할인율 10%, 5
 //       python3 v2/build_fundamental_score.py UBER
 const UBER_SCORES = {
   fundamental: 59.2,   // 재무건전성 + 성장·수익성 (밸류에이션 축 제외)
-  peer: 54.1,          // S&P500 산업재 대비 배수 순위 (v2/peer_universe/industrials.json)
+  peer: 55.1,          // S&P500 산업재 대비 배수 순위 (v2/peer_universe/industrials.json)
   selfHistory: 89.2,   // 자기 5년 배수 분포 백분위 (2021-10-18 ~ 2026-10-16)
   asOf: "2026-10-16",
   fundamentalAsOf: "2026-06-30",   // Q2 2026 10-Q
@@ -1782,7 +1782,7 @@ const UBER_FUNDAMENTAL = {"ticker": "UBER", "basis": "quarter", "asOf": "2026-06
 //
 // 갱신: python3 v2/build_peer_score.py UBER --self v2/UBER_multiples.json --card
 /* VALUATION:BEGIN */
-const UBER_VALUATION = {"peer": {"score": 54.1, "sector": "Industrials (S&P500 81종목)", "asOf": ["2026-10-09", "2026-10-09"], "priceSession": null, "metrics": [{"metric": "per", "score": 40.3, "rank": 47, "peers": 77}, {"metric": "pbr", "score": 55.4, "rank": 34, "peers": 74}, {"metric": "psr", "score": 61.5, "rank": 31, "peers": 78}, {"metric": "pcr", "score": 83.6, "rank": 13, "peers": 73}, {"metric": "evebitda", "score": 29.9, "rank": 48, "peers": 67}]}, "self": {"score": 89.2, "window": ["2021-10-18", "2026-10-16"], "perBasis": "diluted", "metrics": [{"metric": "per", "score": 87.0, "percentile": 13.0, "current": 31.41, "min": 28.63, "median": 38.13, "max": 149.34, "days": 738, "currentNote": null}, {"metric": "pbr", "score": 88.8, "percentile": 11.2, "current": 5.26, "min": 3.8, "median": 8.61, "max": 17.41, "days": 1255, "currentNote": null}, {"metric": "psr", "score": 73.7, "percentile": 26.3, "current": 2.6, "min": 1.68, "median": 3.38, "max": 7.3, "days": 1255, "currentNote": null}, {"metric": "pcr", "score": 98.4, "percentile": 1.6, "current": 14.2, "min": 13.7, "median": 32.24, "max": 188.21, "days": 1055, "currentNote": null}, {"metric": "evebitda", "score": 98.0, "percentile": 2.0, "current": 20.56, "min": 19.88, "median": 67.16, "max": 361.41, "days": 806, "currentNote": null}]}};
+const UBER_VALUATION = {"peer": {"score": 55.1, "sector": "Industrials (S&P500 81종목)", "asOf": ["2026-10-16", "2026-10-16"], "priceSession": null, "metrics": [{"metric": "per", "score": 42.9, "rank": 45, "peers": 77}, {"metric": "pbr", "score": 55.4, "rank": 34, "peers": 74}, {"metric": "psr", "score": 61.5, "rank": 31, "peers": 78}, {"metric": "pcr", "score": 86.5, "rank": 11, "peers": 74}, {"metric": "evebitda", "score": 29.0, "rank": 50, "peers": 69}]}, "self": {"score": 89.2, "window": ["2021-10-18", "2026-10-16"], "perBasis": "diluted", "metrics": [{"metric": "per", "score": 87.0, "percentile": 13.0, "current": 31.41, "min": 28.63, "median": 38.13, "max": 149.34, "days": 738, "currentNote": null}, {"metric": "pbr", "score": 88.8, "percentile": 11.2, "current": 5.26, "min": 3.8, "median": 8.61, "max": 17.41, "days": 1255, "currentNote": null}, {"metric": "psr", "score": 73.7, "percentile": 26.3, "current": 2.6, "min": 1.68, "median": 3.38, "max": 7.3, "days": 1255, "currentNote": null}, {"metric": "pcr", "score": 98.4, "percentile": 1.6, "current": 14.2, "min": 13.7, "median": 32.24, "max": 188.21, "days": 1055, "currentNote": null}, {"metric": "evebitda", "score": 98.0, "percentile": 2.0, "current": 20.56, "min": 19.88, "median": 67.16, "max": 361.41, "days": 806, "currentNote": null}]}};
 /* VALUATION:END */
 
 // ── 종합 평가 자동 판정 (2026-09-25 사용자 결정 · 방향 합산) ──
@@ -2069,7 +2069,7 @@ const UBER_ACTIVITY = {"ticker": "UBER", "status": "N/A", "reason": "5년 비교
 // ── 투자포인트 탭: 애널리스트 목표가 (출처·기준일 포함) ──
 // 갱신: StockAnalysis 예측 페이지(stockanalysis.com/stocks/uber/forecast/)의 값과 날짜를 옮긴다.
 // 현재가 대비는 마지막 종가에서 계산한다.
-const UBER_ANALYST = { asOf: '2026-10-13', source: 'StockAnalysis (의견 집계 · 개별 목표가)', rating: 'Buy', n: 50, nTargets: 32, mean: 103.72, median: 105,
+const UBER_ANALYST = { asOf: '2026-10-17', source: 'StockAnalysis (의견 집계 · 개별 목표가)', rating: 'Buy', n: 50, nTargets: 32, mean: 103.72, median: 105,
   low: 72, high: 125, strongBuy: 32, buy: 9, hold: 8, sell: 0, strongSell: 1 };
 (function(){
   const A = UBER_ANALYST, last = (typeof UBER_DAILY !== 'undefined' && UBER_DAILY.length) ? UBER_DAILY[UBER_DAILY.length - 1] : null;

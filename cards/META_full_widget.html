@@ -1117,13 +1117,13 @@ Chart.overrides.doughnut.animation = false;
     <div class="card-title">투자의견 요약</div>
     <div class="op-strip">
       <div class="op-cell">
-        <span class="op-label">애널리스트 <span data-an="n">63명 · 목표가 42</span>명</span>
+        <span class="op-label">애널리스트 <span data-an="n">63명 · 목표가 43</span>명</span>
         <span class="op-val"><span data-an="rating">Strong Buy</span> <span class="op-sub">매수 <span data-an="buy">55</span> · 유지 <span data-an="hold">7</span> · 매도 <span data-an="sell">1</span></span></span>
         <div class="op-dist"><div data-an-bar="buy" style="width: 87.3%; background: var(--green);"></div><div data-an-bar="hold" style="width: 11.1%; background: var(--gold);"></div><div data-an-bar="sell" style="width:1.6%;background:var(--red);"></div></div>
       </div>
       <div class="op-cell">
-        <span class="op-label">평균 목표주가 · <span data-an="asof">2026-10-13</span></span>
-        <span class="op-val"><span data-an="mean">$808.07</span> <span class="op-sub op-up" data-an="upside">+13.9%</span></span>
+        <span class="op-label">평균 목표주가 · <span data-an="asof">2026-10-17</span></span>
+        <span class="op-val"><span data-an="mean">$829.72</span> <span class="op-sub op-up" data-an="upside">+17.0%</span></span>
       </div>
       <div class="op-cell">
         <span class="op-label">다음 실적</span>
@@ -1298,13 +1298,13 @@ function selectFundPeriod(period) {
 function renderSegmentChart() {
   const ctx = document.getElementById('segmentPieChart');
   if (!ctx) return;
-  const total = 60801;
+  const total = 60801.0;
   new Chart(ctx,{
     type:'doughnut',
     data:{
       labels:["광고", "기타(앱 부문)", "Reality Labs"],
       datasets:[{
-        data:[59363, 1007, 431],
+        data:[59363.0, 1007.0, 431.0],
         backgroundColor:["#1877F2", "#f97316", "#8a8fa8"],
         borderColor:'#8a8d9e',
         borderWidth:2
@@ -2107,7 +2107,7 @@ const META_ACTIVITY = {"ticker": "META", "status": "ok", "asOf": "2026-06-30", "
 // ── 투자포인트 탭: 애널리스트 목표가 (출처·기준일 포함) ──
 // 갱신: StockAnalysis 예측 페이지(stockanalysis.com/stocks/meta/forecast/)의 값과 날짜를 옮긴다.
 // 현재가 대비는 마지막 종가에서 계산한다.
-const META_ANALYST = { asOf: '2026-10-13', source: 'StockAnalysis (의견 집계 · 개별 목표가)', rating: 'Strong Buy', n: 63, nTargets: 42, mean: 808.07, median: 810,
+const META_ANALYST = { asOf: '2026-10-17', source: 'StockAnalysis (의견 집계 · 개별 목표가)', rating: 'Strong Buy', n: 63, nTargets: 43, mean: 829.72, median: 850,
   low: 580, high: 1000, strongBuy: 47, buy: 8, hold: 7, sell: 0, strongSell: 1 };
 (function(){
   const A = META_ANALYST, last = (typeof META_DAILY !== 'undefined' && META_DAILY.length) ? META_DAILY[META_DAILY.length - 1] : null;

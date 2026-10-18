@@ -1119,7 +1119,7 @@ Chart.overrides.doughnut.animation = false;
         <div class="op-dist"><div data-an-bar="buy" style="width: 43.2%; background: var(--green);"></div><div data-an-bar="hold" style="width: 47.7%; background: var(--gold);"></div><div data-an-bar="sell" style="width: 9.1%; background: var(--red);"></div></div>
       </div>
       <div class="op-cell">
-        <span class="op-label">평균 목표주가 · <span data-an="asof">2026-10-13</span></span>
+        <span class="op-label">평균 목표주가 · <span data-an="asof">2026-10-17</span></span>
         <span class="op-val"><span data-an="mean">$403.87</span> <span class="op-sub op-up" data-an="upside">+13.9%</span></span>
       </div>
       <div class="op-cell">
@@ -1295,13 +1295,13 @@ function selectFundPeriod(period) {
 function renderSegmentChart() {
   const ctx = document.getElementById('segmentPieChart');
   if (!ctx) return;
-  const total = 28236;
+  const total = 28236.0;
   new Chart(ctx,{
     type:'doughnut',
     data:{
       labels:["자동차", "서비스·기타", "에너지 발전·저장"],
       datasets:[{
-        data:[20516, 4581, 3139],
+        data:[20516.0, 4581.0, 3139.0],
         backgroundColor:["#E31937", "#3b82f6", "#1fa463"],
         borderColor:'#8a8d9e',
         borderWidth:2
@@ -2115,7 +2115,7 @@ const TSLA_ACTIVITY = {"ticker": "TSLA", "status": "ok", "asOf": "2026-06-30", "
 // ── 투자포인트 탭: 애널리스트 목표가 (출처·기준일 포함) ──
 // 갱신: StockAnalysis 예측 페이지(stockanalysis.com/stocks/tsla/forecast/)의 값과 날짜를 옮긴다.
 // 현재가 대비는 마지막 종가에서 계산한다.
-const TSLA_ANALYST = { asOf: '2026-10-13', source: 'StockAnalysis (의견 집계 · 개별 목표가)', rating: 'Buy', n: 44, nTargets: 25, mean: 403.87, median: 415,
+const TSLA_ANALYST = { asOf: '2026-10-17', source: 'StockAnalysis (의견 집계 · 개별 목표가)', rating: 'Buy', n: 44, nTargets: 25, mean: 403.87, median: 415,
   low: 24.86, high: 550, strongBuy: 15, buy: 4, hold: 21, sell: 2, strongSell: 2 };
 (function(){
   const A = TSLA_ANALYST, last = (typeof TSLA_DAILY !== 'undefined' && TSLA_DAILY.length) ? TSLA_DAILY[TSLA_DAILY.length - 1] : null;

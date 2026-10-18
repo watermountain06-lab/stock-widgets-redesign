@@ -879,12 +879,12 @@ Chart.overrides.doughnut.animation = false;
         <div style="display:flex;flex-direction:column;gap:9px;">
           <div style="display:flex;align-items:center;gap:7px;font-size:11px;color:var(--text2);white-space:nowrap;"><span style="width:8px;height:8px;border-radius:50%;background:#0067b9;display:inline-block;flex-shrink:0;"></span>산업용 <strong style="color:var(--text);">$1.97B · 49.0%</strong></div>
           <div style="display:flex;align-items:center;gap:7px;font-size:11px;color:var(--text2);white-space:nowrap;"><span style="width:8px;height:8px;border-radius:50%;background:#22c55e;display:inline-block;flex-shrink:0;"></span>자동차 <strong style="color:var(--text);">$1.00B · 24.8%</strong></div>
-          <div style="display:flex;align-items:center;gap:7px;font-size:11px;color:var(--text2);white-space:nowrap;"><span style="width:8px;height:8px;border-radius:50%;background:#a78bfa;display:inline-block;flex-shrink:0;"></span>통신 <strong style="color:var(--text);">$0.66B · 16.3%</strong></div>
+          <div style="display:flex;align-items:center;gap:7px;font-size:11px;color:var(--text2);white-space:nowrap;"><span style="width:8px;height:8px;border-radius:50%;background:#a78bfa;display:inline-block;flex-shrink:0;"></span>통신 <strong style="color:var(--text);">$0.65B · 16.3%</strong></div>
           <div style="display:flex;align-items:center;gap:7px;font-size:11px;color:var(--text2);white-space:nowrap;"><span style="width:8px;height:8px;border-radius:50%;background:#f59e0b;display:inline-block;flex-shrink:0;"></span>소비자 <strong style="color:var(--text);">$0.40B · 9.9%</strong></div>
         </div>
       </div>
 
-      <div class="yoy-footnote" style="margin-top:14px;">1년 전 같은 분기보다 산업용 +53%, 자동차 +16.5%, 통신 +85%, 소비자 +5.9% · 출처: <a href="https://www.sec.gov/Archives/edgar/data/6281/000000628126000073/adi-20260801.htm" target="_blank" rel="noopener">Q3 FY26 10-Q 부문 표 (SEC) →</a></div>
+      <div class="yoy-footnote" style="margin-top:14px;">1년 전 같은 분기보다 산업용 +53%, 자동차 +16.5%, 통신 +84%, 소비자 +5.8% · 출처: <a href="https://www.sec.gov/Archives/edgar/data/6281/000000628126000073/adi-20260801.htm" target="_blank" rel="noopener">Q3 FY26 10-Q 부문 표 (SEC) →</a></div>
     </div>
 
     <div class="card" style="margin-bottom:0;">
@@ -1127,7 +1127,7 @@ Chart.overrides.doughnut.animation = false;
         <div class="op-dist"><div data-an-bar="buy" style="width: 88.2%; background: var(--green);"></div><div data-an-bar="hold" style="width: 11.8%; background: var(--gold);"></div><div data-an-bar="sell" style="width: 0%; background: var(--red);"></div></div>
       </div>
       <div class="op-cell">
-        <span class="op-label">평균 목표주가 · <span data-an="asof">2026-10-13</span></span>
+        <span class="op-label">평균 목표주가 · <span data-an="asof">2026-10-17</span></span>
         <span class="op-val"><span data-an="mean">$478.41</span> <span class="op-sub op-up" data-an="upside">+21.0%</span></span>
       </div>
       <div class="op-cell">
@@ -1303,13 +1303,13 @@ function selectFundPeriod(period) {
 function renderSegmentChart() {
   const ctx = document.getElementById('segmentPieChart');
   if (!ctx) return;
-  const total = 4022;
+  const total = 4021.8;
   new Chart(ctx,{
     type:'doughnut',
     data:{
       labels:["산업용", "자동차", "통신", "소비자"],
       datasets:[{
-        data:[1972, 998, 655, 397],
+        data:[1971.9, 998.2, 654.5, 397.2],
         backgroundColor:["#0067b9", "#22c55e", "#a78bfa", "#f59e0b"],
         borderColor:'#8a8d9e',
         borderWidth:2
@@ -2120,7 +2120,7 @@ const ADI_ACTIVITY = {"ticker": "ADI", "status": "ok", "asOf": "2026-08-01", "pr
 // ── 투자포인트 탭: 애널리스트 목표가 (출처·기준일 포함) ──
 // 갱신: StockAnalysis 예측 페이지(stockanalysis.com/stocks/adi/forecast/)의 값과 날짜를 옮긴다.
 // 현재가 대비는 마지막 종가에서 계산한다.
-const ADI_ANALYST = { asOf: '2026-10-13', source: 'StockAnalysis (의견 집계 · 개별 목표가)', rating: 'Strong Buy', n: 34, nTargets: 22, mean: 478.41, median: 474,
+const ADI_ANALYST = { asOf: '2026-10-17', source: 'StockAnalysis (의견 집계 · 개별 목표가)', rating: 'Strong Buy', n: 34, nTargets: 22, mean: 478.41, median: 474,
   low: 405, high: 675, strongBuy: 24, buy: 6, hold: 4, sell: 0, strongSell: 0 };
 (function(){
   const A = ADI_ANALYST, last = (typeof ADI_DAILY !== 'undefined' && ADI_DAILY.length) ? ADI_DAILY[ADI_DAILY.length - 1] : null;

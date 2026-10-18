@@ -1107,13 +1107,13 @@ Chart.overrides.doughnut.animation = false;
     <div class="card-title">투자의견 요약</div>
     <div class="op-strip">
       <div class="op-cell">
-        <span class="op-label">애널리스트 <span data-an="n">49명 · 목표가 36</span>명</span>
-        <span class="op-val"><span data-an="rating">Strong Buy</span> <span class="op-sub">매수 <span data-an="buy">45</span> · 유지 <span data-an="hold">2</span> · 매도 <span data-an="sell">2</span></span></span>
-        <div class="op-dist"><div data-an-bar="buy" style="width: 91.8%; background: var(--green);"></div><div data-an-bar="hold" style="width: 4.1%; background: var(--gold);"></div><div data-an-bar="sell" style="width: 4.1%; background: var(--red);"></div></div>
+        <span class="op-label">애널리스트 <span data-an="n">49명 · 목표가 35</span>명</span>
+        <span class="op-val"><span data-an="rating">Strong Buy</span> <span class="op-sub">매수 <span data-an="buy">44</span> · 유지 <span data-an="hold">3</span> · 매도 <span data-an="sell">2</span></span></span>
+        <div class="op-dist"><div data-an-bar="buy" style="width: 89.8%; background: var(--green);"></div><div data-an-bar="hold" style="width: 6.1%; background: var(--gold);"></div><div data-an-bar="sell" style="width: 4.1%; background: var(--red);"></div></div>
       </div>
       <div class="op-cell">
-        <span class="op-label">평균 목표주가 · <span data-an="asof">2026-10-13</span></span>
-        <span class="op-val"><span data-an="mean">$147.08</span> <span class="op-sub op-up" data-an="upside">+3.6%</span></span>
+        <span class="op-label">평균 목표주가 · <span data-an="asof">2026-10-17</span></span>
+        <span class="op-val"><span data-an="mean">$151.60</span> <span class="op-sub op-up" data-an="upside">+6.8%</span></span>
       </div>
       <div class="op-cell">
         <span class="op-label">다음 실적</span>
@@ -1288,13 +1288,13 @@ function selectFundPeriod(period) {
 function renderSegmentChart() {
   const ctx = document.getElementById('segmentPieChart');
   if (!ctx) return;
-  const total = 3987;
+  const total = 3987.0;
   new Chart(ctx,{
     type:'doughnut',
     data:{
       labels:["구독", "전문 서비스·기타"],
       datasets:[{
-        data:[3877, 110],
+        data:[3877.0, 110.0],
         backgroundColor:["#7c6ad6", "#7c6ad6"],
         borderColor:'#8a8d9e',
         borderWidth:2
@@ -2102,8 +2102,8 @@ const NOW_ACTIVITY = {"ticker": "NOW", "status": "ok", "asOf": "2026-06-30", "pr
 // ── 투자포인트 탭: 애널리스트 목표가 (출처·기준일 포함) ──
 // 갱신: StockAnalysis 예측 페이지(stockanalysis.com/stocks/now/forecast/)의 값과 날짜를 옮긴다.
 // 현재가 대비는 마지막 종가에서 계산한다.
-const NOW_ANALYST = { asOf: '2026-10-13', source: 'StockAnalysis (의견 집계 · 개별 목표가)', rating: 'Strong Buy', n: 49, nTargets: 36, mean: 147.08, median: 150,
-  low: 72, high: 248, strongBuy: 35, buy: 10, hold: 2, sell: 1, strongSell: 1 };
+const NOW_ANALYST = { asOf: '2026-10-17', source: 'StockAnalysis (의견 집계 · 개별 목표가)', rating: 'Strong Buy', n: 49, nTargets: 35, mean: 151.6, median: 157,
+  low: 72, high: 248, strongBuy: 35, buy: 9, hold: 3, sell: 1, strongSell: 1 };
 (function(){
   const A = NOW_ANALYST, last = (typeof NOW_DAILY !== 'undefined' && NOW_DAILY.length) ? NOW_DAILY[NOW_DAILY.length - 1] : null;
   const put = (k, t) => document.querySelectorAll(`#invest [data-an="${k}"]`).forEach(el => { el.textContent = t; });

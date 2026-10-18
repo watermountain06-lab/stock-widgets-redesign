@@ -560,7 +560,7 @@ Chart.overrides.doughnut.animation = false;
     </div>
     <div class="logic-box logic-neutral" id="cofPeerBox">
       <div class="logic-head"><span class="logic-tag">밸류에이션 <span class="logic-denom">동종업 대비</span></span><span class="logic-verdict" id="cofPeerVerdict">중간</span></div>
-      <div class="logic-score" id="cofPeerScore">31.8<span class="logic-denom">/100</span></div>
+      <div class="logic-score" id="cofPeerScore">27.9<span class="logic-denom">/100</span></div>
     </div>
     <div class="logic-box logic-neutral" id="cofSelfBox">
       <div class="logic-head"><span class="logic-tag">밸류에이션 <span class="logic-denom">자기 이력 대비</span></span><span class="logic-verdict" id="cofSelfVerdict">중간</span></div>
@@ -934,7 +934,7 @@ Chart.overrides.doughnut.animation = false;
 판정은 그대로 두고, 이 값을 해석할 때 주의할 점만 보여 준다.">⚠ 모형 신호 2/3</span><div class="vs-pill high" data-vs-pill="dcf" title="현재가 ÷ 기본 내재가치 = 1.60
 시나리오 범위: 1.18 ~ 1.60(세 시나리오 최대·최소 기준)
 0.7 이하 매우 싸다 · 0.9 이하 싸다 · 1.1 이하 적정 · 1.5 이하 비싸다 · 초과 매우 비싸다">매우 비싸다</div></div>
-      <div class="vs-name" title="S&amp;P500 은행(대형·지역) 대비 P/TBV·PER 순위. 높을수록 싸다. 두 배수가 같은 방향일 때만 표를 준다. 참고 — 같은 사업 모델(카드·소비자금융) 카드: AXP P/TBV 7.64배·PER 19.1배(판정에 쓰지 않음, 사전 등록 10-2).">동종업 대비</div><div class="vs-val" data-vc-score="peer">31.8</div><div class="sc-tile lost" data-vc="peer" data-m="per">39</div><div class="sc-tile low" data-vc="peer" data-m="pbr">25</div><div class="sc-tile none" data-vc="peer" data-m="psr">—</div><div class="sc-tile none" data-vc="peer" data-m="pcr">—</div><div class="sc-tile none" data-vc="peer" data-m="evebitda">—</div><div class="vs-pill mid" data-vs-pill="peer">중간</div>
+      <div class="vs-name" title="S&amp;P500 은행(대형·지역) 대비 P/TBV·PER 순위. 높을수록 싸다. 두 배수가 같은 방향일 때만 표를 준다. 참고 — 같은 사업 모델(카드·소비자금융) 카드: AXP P/TBV 7.64배·PER 19.0배(판정에 쓰지 않음, 사전 등록 10-2).">동종업 대비</div><div class="vs-val" data-vc-score="peer">27.9</div><div class="sc-tile lost" data-vc="peer" data-m="per">31</div><div class="sc-tile low" data-vc="peer" data-m="pbr">25</div><div class="sc-tile none" data-vc="peer" data-m="psr">—</div><div class="sc-tile none" data-vc="peer" data-m="pcr">—</div><div class="sc-tile none" data-vc="peer" data-m="evebitda">—</div><div class="vs-pill mid" data-vs-pill="peer">중간</div>
     </div></div>
     <div class="vs-premise">P/TBV 2.05배는 자기 5년 이력의 위쪽(상위 15%)이고 S&P500 은행 13곳(본인 포함) 중 비싼 쪽부터 4번째다. <strong>초과이익모형 기본 가치 $126은 현재가의 62%</strong>로, 지금 가격은 ROE 12.1%가 5년 이어진다는 값이다(최근 4분기 9.6%, GAAP).</div>
     <div class="verdict-summary-risk">⚠️ 현재가 ÷ 기본 가치가 1.60로 "매우 비싸다"다. 세 칸이 자기 이력 0 · 동종업 0 · 초과이익 −2로 종합 평가는 적정~고평가다.</div>
@@ -1007,7 +1007,7 @@ Chart.overrides.doughnut.animation = false;
     </div>
 
     <div class="card" style="display:flex;flex-direction:column;">
-      <div class="card-title"><span id="multipleCompareTitle">S&amp;P500 은행 PER 비교 · 10/9 종가</span></div>
+      <div class="card-title"><span id="multipleCompareTitle">S&amp;P500 은행 PER 비교 · 10/16 종가</span></div>
       <div class="chart-wrap" style="flex:1;min-height:230px;">
         <canvas id="multipleChart"></canvas>
       </div>
@@ -1101,7 +1101,7 @@ Chart.overrides.doughnut.animation = false;
         <div class="op-dist"><div data-an-bar="buy" style="width: 79.2%; background: var(--green);"></div><div data-an-bar="hold" style="width: 20.8%; background: var(--gold);"></div><div data-an-bar="sell" style="width: 0%; background: var(--red);"></div></div>
       </div>
       <div class="op-cell">
-        <span class="op-label">평균 목표주가 · <span data-an="asof">2026-10-13</span></span>
+        <span class="op-label">평균 목표주가 · <span data-an="asof">2026-10-17</span></span>
         <span class="op-val"><span data-an="mean">$254.47</span> <span class="op-sub op-up" data-an="upside">+26.1%</span></span>
       </div>
       <div class="op-cell">
@@ -1306,77 +1306,77 @@ function renderSegmentChart() {
 // 은행 동종업(peer_universe/banks.json, 은행 사전 등록 §3)에서 고른 6곳. 값이 없는 은행은 뺀다.
 const MULTIPLE_DATA = {
   "per": {
-    "title": "S&P500 은행 PER 비교 · 10/9 종가",
+    "title": "S&P500 은행 PER 비교 · 10/16 종가",
     "unit": "PER(TTM)",
     "max": 25,
     "cofValue": null,
     "peers": [
       {
         "name": "JPM",
-        "value": 14.26,
+        "value": 14.55,
         "status": "reference"
       },
       {
         "name": "USB",
-        "value": 11.39,
+        "value": 11.72,
         "status": "reference"
       },
       {
         "name": "FITB",
-        "value": 17.34,
+        "value": 17.25,
         "status": "reference"
       },
       {
         "name": "RF",
-        "value": 10.99,
+        "value": 11.16,
         "status": "reference"
       },
       {
         "name": "MTB",
-        "value": 11.51,
+        "value": 11.4,
         "status": "reference"
       },
       {
         "name": "HBAN",
-        "value": 11.78,
+        "value": 11.75,
         "status": "reference"
       }
     ]
   },
   "pbr": {
-    "title": "S&P500 은행 P/TBV 비교 · 10/9 종가 (PNC는 유형자본을 만들 수 없음)",
+    "title": "S&P500 은행 P/TBV 비교 · 10/16 종가 (PNC는 유형자본을 만들 수 없음)",
     "unit": "P/TBV",
     "max": 4,
     "cofValue": null,
     "peers": [
       {
         "name": "JPM",
-        "value": 2.97,
+        "value": 3.03,
         "status": "reference"
       },
       {
         "name": "USB",
-        "value": 2.1,
+        "value": 2.16,
         "status": "reference"
       },
       {
         "name": "FITB",
-        "value": 2.18,
+        "value": 2.17,
         "status": "reference"
       },
       {
         "name": "RF",
-        "value": 1.98,
+        "value": 2.02,
         "status": "reference"
       },
       {
         "name": "MTB",
-        "value": 1.85,
+        "value": 1.84,
         "status": "reference"
       },
       {
         "name": "HBAN",
-        "value": 1.6,
+        "value": 1.59,
         "status": "reference"
       }
     ]
@@ -1525,7 +1525,7 @@ const DCF_RULE_TEXT = '0.7 이하 매우 싸다 · 0.9 이하 싸다 · 1.1 이�
 //       python3 v2/build_fundamental_score.py COF
 const COF_SCORES = {
   fundamental: null,   // 은행 — 일반 재무비율 산식이 맞지 않아 매기지 않는다
-  peer: 31.8,          // S&P500 은행 대비 P/TBV·PER 순위 평균(표시용). 표는 두 배수가 같은 방향일 때만
+  peer: 27.9,          // S&P500 은행 대비 P/TBV·PER 순위 평균(표시용). 표는 두 배수가 같은 방향일 때만
   selfHistory: 28.6,   // P/TBV·PER 자기 5년 백분위 평균(표시용)
   asOf: "2026-10-16",
   fundamentalAsOf: "2026-06-30",   // Q2 2026 10-Q (2026-07-28 공시)
@@ -1839,7 +1839,7 @@ const COF_FUNDAMENTAL = {"ticker": "COF", "basis": "quarter", "asOf": "2026-06-3
 //
 // 갱신: python3 v2/build_peer_score.py COF --self v2/COF_multiples.json --card
 /* VALUATION:BEGIN */
-const COF_VALUATION = {"peer": {"score": 31.8, "rule": "both", "sector": "Financials (S&P500 은행)", "asOf": ["2026-10-16", "2026-10-16"], "metrics": [{"metric": "per", "score": 38.5, "rank": 9, "peers": 13}, {"metric": "pbr", "score": 25.0, "rank": 10, "peers": 12}]}, "self": {"score": 28.6, "rule": "both", "naNote": "은행에 해당 없음", "window": ["2021-10-18", "2026-10-16"], "metrics": [{"metric": "per", "score": 42.5, "percentile": 57.5, "current": 12.48, "min": 3.99, "median": 11.05, "max": 117.82, "days": 1255, "gapDays": 0}, {"metric": "pbr", "score": 14.6, "percentile": 85.4, "current": 2.05, "min": 0.95, "median": 1.48, "max": 2.62, "days": 1255, "gapDays": 0}]}};
+const COF_VALUATION = {"peer": {"score": 27.9, "rule": "both", "sector": "Financials (S&P500 은행)", "asOf": ["2026-10-16", "2026-10-16"], "metrics": [{"metric": "per", "score": 30.8, "rank": 10, "peers": 13}, {"metric": "pbr", "score": 25.0, "rank": 10, "peers": 12}]}, "self": {"score": 28.6, "rule": "both", "naNote": "은행에 해당 없음", "window": ["2021-10-18", "2026-10-16"], "metrics": [{"metric": "per", "score": 42.5, "percentile": 57.5, "current": 12.48, "min": 3.99, "median": 11.05, "max": 117.82, "days": 1255, "gapDays": 0}, {"metric": "pbr", "score": 14.6, "percentile": 85.4, "current": 2.05, "min": 0.95, "median": 1.48, "max": 2.62, "days": 1255, "gapDays": 0}]}};
 /* VALUATION:END */
 
 // ── 종합 평가 자동 판정 (2026-09-25 사용자 결정 · 방향 합산) ──
@@ -2151,7 +2151,7 @@ const COF_ACTIVITY = {"ticker": "COF", "status": "na", "reason": "은행이라 �
 // ── 투자포인트 탭: 애널리스트 목표가 (출처·기준일 포함) ──
 // 갱신: StockAnalysis 예측 페이지(stockanalysis.com/stocks/cof/forecast/)의 값과 날짜를 옮긴다.
 // 현재가 대비는 마지막 종가에서 계산한다.
-const COF_ANALYST = { asOf: '2026-10-13', source: 'StockAnalysis (의견 집계 · 개별 목표가)', rating: 'Buy', n: 24, nTargets: 19, mean: 254.47, median: 259,
+const COF_ANALYST = { asOf: '2026-10-17', source: 'StockAnalysis (의견 집계 · 개별 목표가)', rating: 'Buy', n: 24, nTargets: 19, mean: 254.47, median: 259,
   low: 219, high: 300, strongBuy: 14, buy: 5, hold: 5, sell: 0, strongSell: 0 };
 (function(){
   const A = COF_ANALYST, last = (typeof COF_DAILY !== 'undefined' && COF_DAILY.length) ? COF_DAILY[COF_DAILY.length - 1] : null;

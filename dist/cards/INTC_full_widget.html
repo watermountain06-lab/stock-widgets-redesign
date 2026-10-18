@@ -1122,7 +1122,7 @@ Chart.overrides.doughnut.animation = false;
         <div class="op-dist"><div data-an-bar="buy" style="width: 30.6%; background: var(--green);"></div><div data-an-bar="hold" style="width: 65.3%; background: var(--gold);"></div><div data-an-bar="sell" style="width: 4.1%; background: var(--red);"></div></div>
       </div>
       <div class="op-cell">
-        <span class="op-label">평균 목표주가 · <span data-an="asof">2026-10-13</span></span>
+        <span class="op-label">평균 목표주가 · <span data-an="asof">2026-10-17</span></span>
         <span class="op-val"><span data-an="mean">$116.30</span> <span class="op-sub op-up" data-an="upside">+29.4%</span></span>
       </div>
       <div class="op-cell">
@@ -1298,13 +1298,13 @@ function selectFundPeriod(period) {
 function renderSegmentChart() {
   const ctx = document.getElementById('segmentPieChart');
   if (!ctx) return;
-  const total = 16128;
+  const total = 16128.0;
   new Chart(ctx,{
     type:'doughnut',
     data:{
       labels:["클라이언트·피지컬 AI (CCPG)", "데이터센터·AI (DCAI)", "파운드리 외부·기타(Mobileye 등, 내부 거래 제거 후)"],
       datasets:[{
-        data:[8877, 6262, 989],
+        data:[8877.0, 6262.0, 989],
         backgroundColor:["#0071c5", "#00c7fd", "#8a8fa8"],
         borderColor:'#8a8d9e',
         borderWidth:2
@@ -2117,7 +2117,7 @@ const INTC_ACTIVITY = {"ticker": "INTC", "status": "ok", "asOf": "2026-06-27", "
 // ── 투자포인트 탭: 애널리스트 목표가 (출처·기준일 포함) ──
 // 갱신: StockAnalysis 예측 페이지(stockanalysis.com/stocks/intc/forecast/)의 값과 날짜를 옮긴다.
 // 현재가 대비는 마지막 종가에서 계산한다.
-const INTC_ANALYST = { asOf: '2026-10-13', source: 'StockAnalysis (의견 집계 · 개별 목표가)', rating: 'Buy', n: 49, nTargets: 33, mean: 116.3, median: 114,
+const INTC_ANALYST = { asOf: '2026-10-17', source: 'StockAnalysis (의견 집계 · 개별 목표가)', rating: 'Buy', n: 49, nTargets: 33, mean: 116.3, median: 114,
   low: 71, high: 200, strongBuy: 14, buy: 1, hold: 32, sell: 1, strongSell: 1 };
 (function(){
   const A = INTC_ANALYST, last = (typeof INTC_DAILY !== 'undefined' && INTC_DAILY.length) ? INTC_DAILY[INTC_DAILY.length - 1] : null;

@@ -883,7 +883,7 @@ Chart.overrides.doughnut.animation = false;
         </div>
       </div>
 
-      <div class="yoy-footnote" style="margin-top:14px;">1년 전 같은 분기보다 반도체 공정 제어 +13.2%, PCB·부품 검사 +56%, 특수 반도체 공정 +12.7% · 출처: <a href="https://www.sec.gov/Archives/edgar/data/319201/000031920126000027/klac-20260630.htm" target="_blank" rel="noopener">FY2026 10-K 부문 표 (SEC) →</a></div>
+      <div class="yoy-footnote" style="margin-top:14px;">1년 전 같은 분기보다 반도체 공정 제어 +13.2%, PCB·부품 검사 +56%, 특수 반도체 공정 +12.5% · 출처: <a href="https://www.sec.gov/Archives/edgar/data/319201/000031920126000027/klac-20260630.htm" target="_blank" rel="noopener">FY2026 10-K 부문 표 (SEC) →</a></div>
     </div>
 
     <div class="card" style="margin-bottom:0;">
@@ -1112,7 +1112,7 @@ Chart.overrides.doughnut.animation = false;
         <div class="op-dist"><div data-an-bar="buy" style="width: 66.7%; background: var(--green);"></div><div data-an-bar="hold" style="width: 33.3%; background: var(--gold);"></div><div data-an-bar="sell" style="width: 0%; background: var(--red);"></div></div>
       </div>
       <div class="op-cell">
-        <span class="op-label">평균 목표주가 · <span data-an="asof">2026-10-13</span></span>
+        <span class="op-label">평균 목표주가 · <span data-an="asof">2026-10-17</span></span>
         <span class="op-val"><span data-an="mean">$235.71</span> <span class="op-sub op-up" data-an="upside">+42.2%</span></span>
       </div>
       <div class="op-cell">
@@ -1288,13 +1288,13 @@ function selectFundPeriod(period) {
 function renderSegmentChart() {
   const ctx = document.getElementById('segmentPieChart');
   if (!ctx) return;
-  const total = 3658;
+  const total = 3657.6000000000004;
   new Chart(ctx,{
     type:'doughnut',
     data:{
       labels:["반도체 공정 제어", "PCB·부품 검사", "특수 반도체 공정"],
       datasets:[{
-        data:[3257, 241, 160],
+        data:[3256.8, 241.1, 159.7],
         backgroundColor:["#0f6eb4", "#94a3b8", "#c8102e"],
         borderColor:'#8a8d9e',
         borderWidth:2
@@ -2108,7 +2108,7 @@ const KLAC_ACTIVITY = {"ticker": "KLAC", "status": "ok", "asOf": "2026-06-30", "
 // ── 투자포인트 탭: 애널리스트 목표가 (출처·기준일 포함) ──
 // 갱신: StockAnalysis 예측 페이지(stockanalysis.com/stocks/klac/forecast/)의 값과 날짜를 옮긴다.
 // 현재가 대비는 마지막 종가에서 계산한다.
-const KLAC_ANALYST = { asOf: '2026-10-13', source: 'StockAnalysis (의견 집계 · 개별 목표가)', rating: 'Buy', n: 30, nTargets: 21, mean: 235.71, median: 238,
+const KLAC_ANALYST = { asOf: '2026-10-17', source: 'StockAnalysis (의견 집계 · 개별 목표가)', rating: 'Buy', n: 30, nTargets: 21, mean: 235.71, median: 238,
   low: 180, high: 325, strongBuy: 15, buy: 5, hold: 10, sell: 0, strongSell: 0 };
 (function(){
   const A = KLAC_ANALYST, last = (typeof KLAC_DAILY !== 'undefined' && KLAC_DAILY.length) ? KLAC_DAILY[KLAC_DAILY.length - 1] : null;

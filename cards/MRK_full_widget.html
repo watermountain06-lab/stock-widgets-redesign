@@ -571,7 +571,7 @@ Chart.overrides.doughnut.animation = false;
     </div>
     <div class="logic-box logic-negative" id="mrkPeerBox">
       <div class="logic-head"><span class="logic-tag">밸류에이션 <span class="logic-denom">동종업 대비</span></span><span class="logic-verdict" id="mrkPeerVerdict">비싼 편</span></div>
-      <div class="logic-score" id="mrkPeerScore">21.1<span class="logic-denom">/100</span></div>
+      <div class="logic-score" id="mrkPeerScore">23.0<span class="logic-denom">/100</span></div>
     </div>
     <div class="logic-box logic-negative" id="mrkSelfBox">
       <div class="logic-head"><span class="logic-tag">밸류에이션 <span class="logic-denom">자기 이력 대비</span></span><span class="logic-verdict" id="mrkSelfVerdict">비싼 편</span></div>
@@ -934,9 +934,9 @@ Chart.overrides.doughnut.animation = false;
       <div class="vs-name" title="회사가 앞으로 벌어들일 현금만으로 계산한 주당 가치(기본 시나리오).">현금흐름 (내재가치)</div><div class="vs-val" data-vs="dcf">$46</div><div class="vs-note">현재가 <span data-vs="price">$145.95</span> 대비 <strong data-vs="upside">−68.6%</strong> · 기본 시나리오</div><div class="vs-pill-wrap"><div class="vs-pill high" data-vs-pill="dcf" title="현재가 ÷ 기본 내재가치 = 3.18
 0.7 이하 매우 싸다 · 0.9 이하 싸다 · 1.1 이하 적정 · 1.5 이하 비싸다 · 초과 매우 비싸다
 이 칸은 보수적으로 잡혀 있다(할인율 10%, 5년 뒤 영구성장 2.5%). S&amp;P500 비금융 종목의 83~91%가 매달 '매우 비싸다'에 들어간다(2024-10~2026-09). 다른 종목과 견주려면 위 비율 숫자를 함께 볼 것.">매우 비싸다</div></div>
-      <div class="vs-name" title="S&amp;P500 헬스케어 종목들보다 배수가 얼마나 낮은가. 높을수록 싸다.">동종업 대비</div><div class="vs-val" data-vc-score="peer">21.1</div><div class="sc-tile low" data-vc="peer" data-m="per">0</div><div class="sc-tile low" data-vc="peer" data-m="pbr">19</div><div class="sc-tile lost" data-vc="peer" data-m="psr">35</div><div class="sc-tile lost" data-vc="peer" data-m="pcr">41</div><div class="sc-tile low" data-vc="peer" data-m="evebitda">10</div><div class="vs-pill high" data-vs-pill="peer">비싸다</div>
+      <div class="vs-name" title="S&amp;P500 헬스케어 종목들보다 배수가 얼마나 낮은가. 높을수록 싸다.">동종업 대비</div><div class="vs-val" data-vc-score="peer">23.0</div><div class="sc-tile low" data-vc="peer" data-m="per">0</div><div class="sc-tile low" data-vc="peer" data-m="pbr">19</div><div class="sc-tile lost" data-vc="peer" data-m="psr">37</div><div class="sc-tile lost" data-vc="peer" data-m="pcr">45</div><div class="sc-tile low" data-vc="peer" data-m="evebitda">14</div><div class="vs-pill high" data-vs-pill="peer">비싸다</div>
     </div></div>
-    <div class="vs-premise">PER 116.8배(5년 중앙값 20.3배)로 자기 이력 14.4점(비싸다), 동종업 21.1점(비싸다)이다. <strong>현금흐름 내재가치(기본 $45.87)는 현재가의 31%다</strong>.</div>
+    <div class="vs-premise">PER 116.8배(5년 중앙값 20.3배)로 자기 이력 14.4점(비싸다), 동종업 23.0점(비싸다)이다. <strong>현금흐름 내재가치(기본 $45.87)는 현재가의 31%다</strong>.</div>
     <div class="verdict-summary-risk">⚠️ 세 칸이 자기 이력 −1 · 동종업 −1 · 현금흐름 −2, 합계 −4 “고평가”이다. 현금흐름 내재가치(기본 $45.87)는 현재가의 31%다. 현재가를 정당화하려면 영업이익률이 58.6%까지 올라야 한다(최근 4분기 9.6%, 5년 중앙값 26.9%). 내재가치에서 차입금 $53.9B를 빼고 현금·단기투자 $7.1B를 더한다.</div>
   </div>
 
@@ -1006,7 +1006,7 @@ Chart.overrides.doughnut.animation = false;
     </div>
 
     <div class="card" style="display:flex;flex-direction:column;">
-      <div class="card-title"><span id="multipleCompareTitle">대형 제약 PER 비교 · 10/9 종가(MRK 막대는 10/16)</span></div>
+      <div class="card-title"><span id="multipleCompareTitle">대형 제약 PER 비교 · 10/16 종가</span></div>
       <div class="chart-wrap" style="flex:1;min-height:230px;">
         <canvas id="multipleChart"></canvas>
       </div>
@@ -1096,13 +1096,13 @@ Chart.overrides.doughnut.animation = false;
     <div class="card-title">투자의견 요약</div>
     <div class="op-strip">
       <div class="op-cell">
-        <span class="op-label">애널리스트 <span data-an="n">27명 · 목표가 23</span>명</span>
+        <span class="op-label">애널리스트 <span data-an="n">27명 · 목표가 22</span>명</span>
         <span class="op-val"><span data-an="rating">Buy</span> <span class="op-sub">매수 <span data-an="buy">19</span> · 유지 <span data-an="hold">8</span> · 매도 <span data-an="sell">0</span></span></span>
         <div class="op-dist"><div data-an-bar="buy" style="width: 70.4%; background: var(--green);"></div><div data-an-bar="hold" style="width: 29.6%; background: var(--gold);"></div><div data-an-bar="sell" style="width: 0%; background: var(--red);"></div></div>
       </div>
       <div class="op-cell">
-        <span class="op-label">평균 목표주가 · <span data-an="asof">2026-10-13</span></span>
-        <span class="op-val"><span data-an="mean">$160.09</span> <span class="op-sub op-up" data-an="upside">+9.7%</span></span>
+        <span class="op-label">평균 목표주가 · <span data-an="asof">2026-10-17</span></span>
+        <span class="op-val"><span data-an="mean">$159</span> <span class="op-sub op-up" data-an="upside">+8.9%</span></span>
       </div>
       <div class="op-cell">
         <span class="op-label">다음 실적</span>
@@ -1277,13 +1277,13 @@ function selectFundPeriod(period) {
 function renderSegmentChart() {
   const ctx = document.getElementById('segmentPieChart');
   if (!ctx) return;
-  const total = 16607;
+  const total = 16607.0;
   new Chart(ctx,{
     type:'doughnut',
     data:{
       labels:["키트루다(QLEX 포함)", "그 밖의 의약품·백신", "동물 건강", "기타"],
       datasets:[{
-        data:[8367, 6393, 1775, 72],
+        data:[8367.0, 6393, 1775.0, 72.0],
         backgroundColor:["#00857c", "#3b82f6", "#f7b600", "#9b59b6"],
         borderColor:'#8a8d9e',
         borderWidth:2
@@ -1306,62 +1306,62 @@ function renderSegmentChart() {
 // ══════ #valuation ══════
 const MULTIPLE_DATA = {
   per: {
-    title: '대형 제약 PER 비교 · 10/9 종가(MRK 막대는 10/16)',
+    title: '대형 제약 PER 비교 · 10/16 종가',
     unit: 'PER', max: 135, mrkValue: null,
     peers: [
-      { name:'LLY', value:39.6, status:'reference' },
-      { name:'JNJ', value:30.4, status:'reference' },
-      { name:'ABBV', value:41.0, status:'reference' },
-      { name:'PFE', value:37.2, status:'reference' },
-      { name:'BMY', value:13.0, status:'reference' },
-      { name:'AMGN', value:25.8, status:'reference' }
+      { name:'LLY', value:42.2, status:'reference' },
+      { name:'JNJ', value:29.7, status:'reference' },
+      { name:'ABBV', value:42.3, status:'reference' },
+      { name:'PFE', value:38.9, status:'reference' },
+      { name:'BMY', value:13.1, status:'reference' },
+      { name:'AMGN', value:26.9, status:'reference' }
     ]
   },
   pbr: {
-    title: '대형 제약 PBR 비교 (ABBV 값 없음) · 10/9 종가(MRK 막대는 10/16)',
+    title: '대형 제약 PBR 비교 (ABBV 값 없음) · 10/16 종가',
     unit: 'PBR', max: 40, mrkValue: null,
     peers: [
-      { name:'LLY', value:31.0, status:'reference' },
-      { name:'JNJ', value:7.4, status:'reference' },
-      { name:'PFE', value:1.9, status:'reference' },
-      { name:'BMY', value:5.4, status:'reference' },
-      { name:'AMGN', value:19.2, status:'reference' }
+      { name:'LLY', value:33.1, status:'reference' },
+      { name:'JNJ', value:7.2, status:'reference' },
+      { name:'PFE', value:2.0, status:'reference' },
+      { name:'BMY', value:5.5, status:'reference' },
+      { name:'AMGN', value:20.0, status:'reference' }
     ]
   },
   psr: {
-    title: '대형 제약 PSR 비교 · 10/9 종가(MRK 막대는 10/16)',
+    title: '대형 제약 PSR 비교 · 10/16 종가',
     unit: 'PSR(TTM)', max: 20, mrkValue: null,
     peers: [
-      { name:'LLY', value:13.2, status:'reference' },
-      { name:'JNJ', value:6.4, status:'reference' },
-      { name:'ABBV', value:7.6, status:'reference' },
-      { name:'PFE', value:2.5, status:'reference' },
+      { name:'LLY', value:14.1, status:'reference' },
+      { name:'JNJ', value:6.3, status:'reference' },
+      { name:'ABBV', value:7.8, status:'reference' },
+      { name:'PFE', value:2.6, status:'reference' },
       { name:'BMY', value:2.5, status:'reference' },
-      { name:'AMGN', value:5.9, status:'reference' }
+      { name:'AMGN', value:6.1, status:'reference' }
     ]
   },
   pcr: {
-    title: '대형 제약 PCR(FCF) 비교 · 10/9 종가(MRK 막대는 10/16)',
-    unit: 'PCR(FCF)', max: 70, mrkValue: null,
+    title: '대형 제약 PCR(FCF) 비교 · 10/16 종가',
+    unit: 'PCR(FCF)', max: 75, mrkValue: null,
     peers: [
-      { name:'LLY', value:57.8, status:'reference' },
-      { name:'JNJ', value:28.3, status:'reference' },
-      { name:'ABBV', value:26.8, status:'reference' },
-      { name:'PFE', value:14.7, status:'reference' },
-      { name:'BMY', value:10.6, status:'reference' },
-      { name:'AMGN', value:22.0, status:'reference' }
+      { name:'LLY', value:61.6, status:'reference' },
+      { name:'JNJ', value:27.7, status:'reference' },
+      { name:'ABBV', value:27.7, status:'reference' },
+      { name:'PFE', value:15.3, status:'reference' },
+      { name:'BMY', value:10.7, status:'reference' },
+      { name:'AMGN', value:23.0, status:'reference' }
     ]
   },
   evebitda: {
-    title: '대형 제약 EV/EBITDA 비교 · 10/9 종가(MRK 막대는 10/16)',
+    title: '대형 제약 EV/EBITDA 비교 · 10/16 종가',
     unit: 'EV/EBITDA', max: 40, mrkValue: null,
     peers: [
-      { name:'LLY', value:30.7, status:'reference' },
-      { name:'JNJ', value:19.6, status:'reference' },
-      { name:'ABBV', value:22.4, status:'reference' },
-      { name:'PFE', value:10.6, status:'reference' },
-      { name:'BMY', value:10.4, status:'reference' },
-      { name:'AMGN', value:16.7, status:'reference' }
+      { name:'LLY', value:32.7, status:'reference' },
+      { name:'JNJ', value:19.2, status:'reference' },
+      { name:'ABBV', value:23.0, status:'reference' },
+      { name:'PFE', value:10.9, status:'reference' },
+      { name:'BMY', value:10.5, status:'reference' },
+      { name:'AMGN', value:17.3, status:'reference' }
     ]
   }
 };
@@ -1491,7 +1491,7 @@ const DCF_SKEW_NOTE = "이 칸은 보수적으로 잡혀 있다(할인율 10%, 5
 //       python3 v2/build_fundamental_score.py MRK
 const MRK_SCORES = {
   fundamental: 33.0,   // 재무건전성 + 성장·수익성 (밸류에이션 축 제외)
-  peer: 21.1,          // S&P500 헬스케어 대비 배수 순위 (v2/peer_universe/health_care.json)
+  peer: 23.0,          // S&P500 헬스케어 대비 배수 순위 (v2/peer_universe/health_care.json)
   selfHistory: 14.4,   // 자기 5년 배수 분포 백분위 (2021-10-18 ~ 2026-10-16)
   asOf: "2026-10-16",
   fundamentalAsOf: "2026-06-30",   // Q2 2026 10-Q
@@ -1809,7 +1809,7 @@ const MRK_FUNDAMENTAL = {"ticker": "MRK", "basis": "quarter", "asOf": "2026-06-3
 //
 // 갱신: python3 v2/build_peer_score.py MRK --self v2/MRK_multiples.json --card
 /* VALUATION:BEGIN */
-const MRK_VALUATION = {"peer": {"score": 21.1, "sector": "Health Care (S&P500 59종목)", "asOf": ["2026-10-09", "2026-10-09"], "priceSession": null, "metrics": [{"metric": "per", "score": 0.0, "rank": 48, "peers": 47}, {"metric": "pbr", "score": 19.2, "rank": 43, "peers": 52}, {"metric": "psr", "score": 35.1, "rank": 38, "peers": 57}, {"metric": "pcr", "score": 41.2, "rank": 31, "peers": 51}, {"metric": "evebitda", "score": 10.0, "rank": 46, "peers": 50}]}, "self": {"score": 14.4, "window": ["2021-10-18", "2026-10-16"], "perBasis": "diluted", "metrics": [{"metric": "per", "score": 10.9, "percentile": 89.1, "current": 116.76, "min": 10.68, "median": 20.3, "max": 942.5, "days": 1255, "currentNote": null}, {"metric": "pbr", "score": 3.3, "percentile": 96.7, "current": 8.59, "min": 3.82, "median": 5.83, "max": 9.2, "days": 1255, "currentNote": null}, {"metric": "psr", "score": 4.1, "percentile": 95.9, "current": 5.41, "min": 2.89, "median": 4.4, "max": 5.8, "days": 1255, "currentNote": null}, {"metric": "pcr", "score": 41.0, "percentile": 59.0, "current": 22.42, "min": 10.67, "median": 20.77, "max": 53.16, "days": 1255, "currentNote": null}, {"metric": "evebitda", "score": 12.9, "percentile": 87.1, "current": 31.17, "min": 8.54, "median": 14.94, "max": 58.37, "days": 1241, "currentNote": null}]}};
+const MRK_VALUATION = {"peer": {"score": 23.0, "sector": "Health Care (S&P500 59종목)", "asOf": ["2026-10-16", "2026-10-16"], "priceSession": null, "metrics": [{"metric": "per", "score": 0.0, "rank": 50, "peers": 49}, {"metric": "pbr", "score": 19.2, "rank": 43, "peers": 52}, {"metric": "psr", "score": 36.8, "rank": 37, "peers": 57}, {"metric": "pcr", "score": 45.1, "rank": 29, "peers": 51}, {"metric": "evebitda", "score": 14.0, "rank": 44, "peers": 50}]}, "self": {"score": 14.4, "window": ["2021-10-18", "2026-10-16"], "perBasis": "diluted", "metrics": [{"metric": "per", "score": 10.9, "percentile": 89.1, "current": 116.76, "min": 10.68, "median": 20.3, "max": 942.5, "days": 1255, "currentNote": null}, {"metric": "pbr", "score": 3.3, "percentile": 96.7, "current": 8.59, "min": 3.82, "median": 5.83, "max": 9.2, "days": 1255, "currentNote": null}, {"metric": "psr", "score": 4.1, "percentile": 95.9, "current": 5.41, "min": 2.89, "median": 4.4, "max": 5.8, "days": 1255, "currentNote": null}, {"metric": "pcr", "score": 41.0, "percentile": 59.0, "current": 22.42, "min": 10.67, "median": 20.77, "max": 53.16, "days": 1255, "currentNote": null}, {"metric": "evebitda", "score": 12.9, "percentile": 87.1, "current": 31.17, "min": 8.54, "median": 14.94, "max": 58.37, "days": 1241, "currentNote": null}]}};
 /* VALUATION:END */
 
 // ── 종합 평가 자동 판정 (2026-09-25 사용자 결정 · 방향 합산) ──
@@ -2096,7 +2096,7 @@ const MRK_ACTIVITY = {"ticker": "MRK", "status": "ok", "asOf": "2026-06-30", "pr
 // ── 투자포인트 탭: 애널리스트 목표가 (출처·기준일 포함) ──
 // 갱신: StockAnalysis 예측 페이지(stockanalysis.com/stocks/mrk/forecast/)의 값과 날짜를 옮긴다.
 // 현재가 대비는 마지막 종가에서 계산한다.
-const MRK_ANALYST = { asOf: '2026-10-13', source: 'StockAnalysis (의견 집계 · 개별 목표가)', rating: 'Buy', n: 27, nTargets: 23, mean: 160.09, median: 165,
+const MRK_ANALYST = { asOf: '2026-10-17', source: 'StockAnalysis (의견 집계 · 개별 목표가)', rating: 'Buy', n: 27, nTargets: 22, mean: 159, median: 165,
   low: 105, high: 180, strongBuy: 14, buy: 5, hold: 8, sell: 0, strongSell: 0 };
 (function(){
   const A = MRK_ANALYST, last = (typeof MRK_DAILY !== 'undefined' && MRK_DAILY.length) ? MRK_DAILY[MRK_DAILY.length - 1] : null;

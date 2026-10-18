@@ -571,7 +571,7 @@ Chart.overrides.doughnut.animation = false;
     </div>
     <div class="logic-box logic-neutral" id="xomPeerBox">
       <div class="logic-head"><span class="logic-tag">밸류에이션 <span class="logic-denom">동종업 대비</span></span><span class="logic-verdict" id="xomPeerVerdict">중간</span></div>
-      <div class="logic-score" id="xomPeerScore">36.1<span class="logic-denom">/100</span></div>
+      <div class="logic-score" id="xomPeerScore">36.4<span class="logic-denom">/100</span></div>
     </div>
     <div class="logic-box logic-negative" id="xomSelfBox">
       <div class="logic-head"><span class="logic-tag">밸류에이션 <span class="logic-denom">자기 이력 대비</span></span><span class="logic-verdict" id="xomSelfVerdict">비싼 편</span></div>
@@ -901,9 +901,9 @@ Chart.overrides.doughnut.animation = false;
 시나리오 범위: 1.55 ~ 2.05(세 시나리오 최대·최소 기준)
 0.7 이하 매우 싸다 · 0.9 이하 싸다 · 1.1 이하 적정 · 1.5 이하 비싸다 · 초과 매우 비싸다
 이 칸은 보수적으로 잡혀 있다(할인율 10%, 5년 뒤 영구성장 2.5%). S&amp;P500 비금융 종목의 83~91%가 매달 '매우 비싸다'에 들어간다(2024-10~2026-09). 다른 종목과 견주려면 위 비율 숫자를 함께 볼 것.">매우 비싸다</div></div>
-      <div class="vs-name" title="S&amp;P500 에너지 21종목보다 배수가 얼마나 낮은가. 높을수록 싸다.">동종업 대비</div><div class="vs-val" data-vc-score="peer">36.1</div><div class="sc-tile low" data-vc="peer" data-m="per">26</div><div class="sc-tile lost" data-vc="peer" data-m="pbr">30</div><div class="sc-tile lost" data-vc="peer" data-m="psr">63</div><div class="sc-tile low" data-vc="peer" data-m="pcr">14</div><div class="sc-tile lost" data-vc="peer" data-m="evebitda">47</div><div class="vs-pill mid" data-vs-pill="peer">중간</div>
+      <div class="vs-name" title="S&amp;P500 에너지 21종목보다 배수가 얼마나 낮은가. 높을수록 싸다.">동종업 대비</div><div class="vs-val" data-vc-score="peer">36.4</div><div class="sc-tile low" data-vc="peer" data-m="per">26</div><div class="sc-tile lost" data-vc="peer" data-m="pbr">30</div><div class="sc-tile lost" data-vc="peer" data-m="psr">63</div><div class="sc-tile low" data-vc="peer" data-m="pcr">19</div><div class="sc-tile lost" data-vc="peer" data-m="evebitda">44</div><div class="vs-pill mid" data-vs-pill="peer">중간</div>
     </div></div>
-    <div class="vs-premise">PER 23.0배(4.6년 중앙값 14.0배)로 자기 이력 4.7점(비싸다), 동종업 36.1점(중간)이다. <strong>현금흐름 내재가치(기본 $115.31)는 현재가의 64%다</strong>.</div>
+    <div class="vs-premise">PER 23.0배(4.6년 중앙값 14.0배)로 자기 이력 4.7점(비싸다), 동종업 36.4점(중간)이다. <strong>현금흐름 내재가치(기본 $115.31)는 현재가의 64%다</strong>.</div>
     <div class="verdict-summary-risk">⚠️ 세 칸이 자기 이력 −1 · 동종업 0 · 현금흐름 −2, 합계 −3 “고평가”이다. 현금흐름 내재가치(기본 $115.31)는 현재가의 64%다. 현재가를 정당화하려면 매출이 5년간 연 18.0% 커야 한다. 내재가치에서 차입금 $42.4B를 빼고 현금·단기투자 $10.6B를 더한다.</div>
   </div>
 
@@ -973,7 +973,7 @@ Chart.overrides.doughnut.animation = false;
     </div>
 
     <div class="card" style="display:flex;flex-direction:column;">
-      <div class="card-title"><span id="multipleCompareTitle">석유 메이저·E&amp;P PER 비교 · 10/9 종가(XOM 막대는 10/16)</span></div>
+      <div class="card-title"><span id="multipleCompareTitle">석유 메이저·E&amp;P PER 비교 · 10/16 종가</span></div>
       <div class="chart-wrap" style="flex:1;min-height:230px;">
         <canvas id="multipleChart"></canvas>
       </div>
@@ -1087,8 +1087,8 @@ Chart.overrides.doughnut.animation = false;
         <div class="op-dist"><div data-an-bar="buy" style="width: 36%; background: var(--green);"></div><div data-an-bar="hold" style="width: 64%; background: var(--gold);"></div><div data-an-bar="sell" style="width: 0%; background: var(--red);"></div></div>
       </div>
       <div class="op-cell">
-        <span class="op-label">평균 목표주가 · <span data-an="asof">2026-10-13</span></span>
-        <span class="op-val"><span data-an="mean">$170.62</span> <span class="op-sub op-down" data-an="upside">−4.7%</span></span>
+        <span class="op-label">평균 목표주가 · <span data-an="asof">2026-10-17</span></span>
+        <span class="op-val"><span data-an="mean">$171.19</span> <span class="op-sub op-down" data-an="upside">−4.4%</span></span>
       </div>
       <div class="op-cell">
         <span class="op-label">다음 실적</span>
@@ -1263,13 +1263,13 @@ function selectFundPeriod(period) {
 function renderSegmentChart() {
   const ctx = document.getElementById('segmentPieChart');
   if (!ctx) return;
-  const total = 114503;
+  const total = 114503.0;
   new Chart(ctx,{
     type:'doughnut',
     data:{
       labels:["에너지 제품(정제·연료)", "업스트림(원유·가스)", "화학 제품", "특수 제품(윤활유 등)"],
       datasets:[{
-        data:[89608, 12680, 6887, 5328],
+        data:[89608.0, 12680.0, 6887.0, 5328.0],
         backgroundColor:["#e31937", "#0c479d", "#3b82f6", "#f7b600"],
         borderColor:'#8a8d9e',
         borderWidth:2
@@ -1292,58 +1292,60 @@ function renderSegmentChart() {
 // ══════ #valuation ══════
 const MULTIPLE_DATA = {
   per: {
-    title: '석유 메이저·E&P PER 비교 · 10/9 종가(XOM 막대는 10/16)',
+    title: '석유 메이저·E&P PER 비교 · 10/16 종가',
     unit: 'PER', max: 30, xomValue: null,
     peers: [
-      { name:'CVX', value:20.4, status:'reference' },
-      { name:'COP', value:17.7, status:'reference' },
-      { name:'EOG', value:11.5, status:'reference' },
-      { name:'OXY', value:9.3, status:'reference' },
-      { name:'SLB', value:23.9, status:'reference' },
-      { name:'PSX', value:15.9, status:'reference' }
+      { name:'CVX', value:21.6, status:'reference' },
+      { name:'COP', value:19.4, status:'reference' },
+      { name:'EOG', value:12.3, status:'reference' },
+      { name:'OXY', value:9.7, status:'reference' },
+      { name:'SLB', value:24.1, status:'reference' },
+      { name:'PSX', value:16.7, status:'reference' }
     ]
   },
   pbr: {
-    title: '석유 메이저·E&P PBR 비교 · 10/9 종가(XOM 막대는 10/16)',
+    title: '석유 메이저·E&P PBR 비교 · 10/16 종가',
     unit: 'PBR', max: 5, xomValue: null,
     peers: [
-      { name:'CVX', value:2.2, status:'reference' },
-      { name:'COP', value:2.5, status:'reference' },
-      { name:'EOG', value:2.4, status:'reference' },
-      { name:'OXY', value:1.4, status:'reference' },
+      { name:'CVX', value:2.3, status:'reference' },
+      { name:'COP', value:2.7, status:'reference' },
+      { name:'EOG', value:2.6, status:'reference' },
+      { name:'OXY', value:1.5, status:'reference' },
       { name:'SLB', value:2.8, status:'reference' },
-      { name:'PSX', value:3.5, status:'reference' }
+      { name:'PSX', value:3.7, status:'reference' }
     ]
   },
   psr: {
-    title: '석유 메이저·E&P PSR 비교 · 10/9 종가(XOM 막대는 10/16)',
+    title: '석유 메이저·E&P PSR 비교 · 10/16 종가',
     unit: 'PSR(TTM)', max: 5, xomValue: null,
     peers: [
-      { name:'CVX', value:1.9, status:'reference' },
-      { name:'COP', value:2.5, status:'reference' },
-      { name:'EOG', value:2.9, status:'reference' },
-      { name:'OXY', value:2.8, status:'reference' },
+      { name:'CVX', value:2.1, status:'reference' },
+      { name:'COP', value:2.8, status:'reference' },
+      { name:'EOG', value:3.1, status:'reference' },
+      { name:'OXY', value:2.9, status:'reference' },
       { name:'SLB', value:2.0, status:'reference' },
-      { name:'PSX', value:0.7, status:'reference' }
+      { name:'PSX', value:0.8, status:'reference' }
     ]
   },
   pcr: {
-    title: '석유 메이저·E&P PCR(FCF) 비교 (EOG 값 없음·PSX 값 없음) · 10/9 종가(XOM 막대는 10/16)',
+    title: '석유 메이저·E&P PCR(FCF) 비교 (EOG 값 없음) · 10/16 종가',
     unit: 'PCR(FCF)', max: 30, xomValue: null,
     peers: [
-      { name:'CVX', value:15.5, status:'reference' },
-      { name:'COP', value:16.0, status:'reference' },
-      { name:'OXY', value:11.3, status:'reference' },
-      { name:'SLB', value:15.1, status:'reference' }
+      { name:'CVX', value:16.5, status:'reference' },
+      { name:'COP', value:17.5, status:'reference' },
+      { name:'OXY', value:11.7, status:'reference' },
+      { name:'SLB', value:15.3, status:'reference' },
+      { name:'PSX', value:18.3, status:'reference' }
     ]
   },
   evebitda: {
-    title: '석유 메이저·E&P EV/EBITDA 비교 (OXY 값 없음·SLB 값 없음·PSX 값 없음) · 10/9 종가(XOM 막대는 10/16)',
+    title: '석유 메이저·E&P EV/EBITDA 비교 (OXY 값 없음·SLB 값 없음) · 10/16 종가',
     unit: 'EV/EBITDA', max: 15, xomValue: null,
     peers: [
-      { name:'CVX', value:8.2, status:'reference' },
-      { name:'COP', value:6.5, status:'reference' },
-      { name:'EOG', value:5.9, status:'reference' }
+      { name:'CVX', value:8.7, status:'reference' },
+      { name:'COP', value:7.0, status:'reference' },
+      { name:'EOG', value:6.3, status:'reference' },
+      { name:'PSX', value:10.7, status:'reference' }
     ]
   }
 };
@@ -1473,7 +1475,7 @@ const DCF_SKEW_NOTE = "이 칸은 보수적으로 잡혀 있다(할인율 10%, 5
 //       python3 v2/build_fundamental_score.py XOM
 const XOM_SCORES = {
   fundamental: 51.8,   // 재무건전성 + 성장·수익성 (밸류에이션 축 제외)
-  peer: 36.1,          // S&P500 에너지 21종목 대비 배수 순위 (v2/peer_universe/energy.json)
+  peer: 36.4,          // S&P500 에너지 21종목 대비 배수 순위 (v2/peer_universe/energy.json)
   selfHistory: 4.7,   // 자기 5년 배수 분포 백분위 (2021-10-18 ~ 2026-10-16)
   asOf: "2026-10-16",
   fundamentalAsOf: "2026-06-30",   // Q2 2026 10-Q
@@ -1786,7 +1788,7 @@ const XOM_FUNDAMENTAL = {"ticker": "XOM", "basis": "quarter", "asOf": "2026-06-3
 //
 // 갱신: python3 v2/build_peer_score.py XOM --self v2/XOM_multiples.json --card
 /* VALUATION:BEGIN */
-const XOM_VALUATION = {"peer": {"score": 36.1, "sector": "Energy (S&P500 21종목)", "asOf": ["2026-10-09", "2026-10-09"], "priceSession": null, "metrics": [{"metric": "per", "score": 26.3, "rank": 15, "peers": 19}, {"metric": "pbr", "score": 30.0, "rank": 15, "peers": 20}, {"metric": "psr", "score": 63.2, "rank": 8, "peers": 19}, {"metric": "pcr", "score": 14.3, "rank": 13, "peers": 14}, {"metric": "evebitda", "score": 46.7, "rank": 9, "peers": 15}]}, "self": {"score": 4.7, "window": ["2021-10-18", "2026-10-16"], "perBasis": "diluted", "metrics": [{"metric": "per", "score": 6.9, "percentile": 93.1, "current": 23.01, "min": 6.83, "median": 14.0, "max": 27.37, "days": 1167, "currentNote": null}, {"metric": "pbr", "score": 0.1, "percentile": 99.9, "current": 2.84, "min": 1.56, "median": 2.13, "max": 2.84, "days": 1255, "currentNote": null}, {"metric": "psr", "score": 1.1, "percentile": 98.9, "current": 2.0, "min": 0.96, "median": 1.31, "max": 2.15, "days": 1255, "currentNote": null}, {"metric": "pcr", "score": 10.4, "percentile": 89.6, "current": 24.09, "min": 6.96, "median": 14.12, "max": 35.85, "days": 1255, "currentNote": null}, {"metric": "evebitda", "score": 5.2, "percentile": 94.8, "current": 10.31, "min": 4.05, "median": 6.91, "max": 11.84, "days": 1255, "currentNote": null}]}};
+const XOM_VALUATION = {"peer": {"score": 36.4, "sector": "Energy (S&P500 21종목)", "asOf": ["2026-10-16", "2026-10-16"], "priceSession": null, "metrics": [{"metric": "per", "score": 26.3, "rank": 15, "peers": 19}, {"metric": "pbr", "score": 30.0, "rank": 15, "peers": 20}, {"metric": "psr", "score": 63.2, "rank": 8, "peers": 19}, {"metric": "pcr", "score": 18.8, "rank": 14, "peers": 16}, {"metric": "evebitda", "score": 43.8, "rank": 10, "peers": 16}]}, "self": {"score": 4.7, "window": ["2021-10-18", "2026-10-16"], "perBasis": "diluted", "metrics": [{"metric": "per", "score": 6.9, "percentile": 93.1, "current": 23.01, "min": 6.83, "median": 14.0, "max": 27.37, "days": 1167, "currentNote": null}, {"metric": "pbr", "score": 0.1, "percentile": 99.9, "current": 2.84, "min": 1.56, "median": 2.13, "max": 2.84, "days": 1255, "currentNote": null}, {"metric": "psr", "score": 1.1, "percentile": 98.9, "current": 2.0, "min": 0.96, "median": 1.31, "max": 2.15, "days": 1255, "currentNote": null}, {"metric": "pcr", "score": 10.4, "percentile": 89.6, "current": 24.09, "min": 6.96, "median": 14.12, "max": 35.85, "days": 1255, "currentNote": null}, {"metric": "evebitda", "score": 5.2, "percentile": 94.8, "current": 10.31, "min": 4.05, "median": 6.91, "max": 11.84, "days": 1255, "currentNote": null}]}};
 /* VALUATION:END */
 
 // ── 종합 평가 자동 판정 (2026-09-25 사용자 결정 · 방향 합산) ──
@@ -2073,7 +2075,7 @@ const XOM_ACTIVITY = {"ticker": "XOM", "status": "N/A", "reason": "매출원가 
 // ── 투자포인트 탭: 애널리스트 목표가 (출처·기준일 포함) ──
 // 갱신: StockAnalysis 예측 페이지(stockanalysis.com/stocks/xom/forecast/)의 값과 날짜를 옮긴다.
 // 현재가 대비는 마지막 종가에서 계산한다.
-const XOM_ANALYST = { asOf: '2026-10-13', source: 'StockAnalysis (의견 집계 · 개별 목표가)', rating: 'Buy', n: 25, nTargets: 21, mean: 170.62, median: 172,
+const XOM_ANALYST = { asOf: '2026-10-17', source: 'StockAnalysis (의견 집계 · 개별 목표가)', rating: 'Buy', n: 25, nTargets: 21, mean: 171.19, median: 172,
   low: 142, high: 185, strongBuy: 6, buy: 3, hold: 16, sell: 0, strongSell: 0 };
 (function(){
   const A = XOM_ANALYST, last = (typeof XOM_DAILY !== 'undefined' && XOM_DAILY.length) ? XOM_DAILY[XOM_DAILY.length - 1] : null;

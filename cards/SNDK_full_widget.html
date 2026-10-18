@@ -1081,7 +1081,7 @@ Chart.overrides.doughnut.animation = false;
         <div class="op-dist"><div data-an-bar="buy" style="width: 84%; background: var(--green);"></div><div data-an-bar="hold" style="width: 12%; background: var(--gold);"></div><div data-an-bar="sell" style="width: 4%; background: var(--red);"></div></div>
       </div>
       <div class="op-cell">
-        <span class="op-label">평균 목표주가 · <span data-an="asof">2026-10-13</span></span>
+        <span class="op-label">평균 목표주가 · <span data-an="asof">2026-10-17</span></span>
         <span class="op-val"><span data-an="mean">$2174.47</span> <span class="op-sub op-up" data-an="upside">+67.4%</span></span>
       </div>
       <div class="op-cell">
@@ -1257,13 +1257,13 @@ function selectFundPeriod(period) {
 function renderSegmentChart() {
   const ctx = document.getElementById('segmentPieChart');
   if (!ctx) return;
-  const total = 8965;
+  const total = 8965.0;
   new Chart(ctx,{
     type:'doughnut',
     data:{
       labels:["엣지(PC·모바일·기기)", "데이터센터", "소비자"],
       datasets:[{
-        data:[5432, 2977, 556],
+        data:[5432.0, 2977.0, 556.0],
         backgroundColor:["#c8102e", "#0f6eb4", "#94a3b8"],
         borderColor:'#8a8d9e',
         borderWidth:2
@@ -2077,7 +2077,7 @@ const SNDK_ACTIVITY = {"ticker": "SNDK", "status": "N/A", "reason": "5년 비교
 // ── 투자포인트 탭: 애널리스트 목표가 (출처·기준일 포함) ──
 // 갱신: StockAnalysis 예측 페이지(stockanalysis.com/stocks/sndk/forecast/)의 값과 날짜를 옮긴다.
 // 현재가 대비는 마지막 종가에서 계산한다.
-const SNDK_ANALYST = { asOf: '2026-10-13', source: 'StockAnalysis (의견 집계 · 개별 목표가)', rating: 'Buy', n: 25, nTargets: 19, mean: 2174.47, median: 2200,
+const SNDK_ANALYST = { asOf: '2026-10-17', source: 'StockAnalysis (의견 집계 · 개별 목표가)', rating: 'Buy', n: 25, nTargets: 19, mean: 2174.47, median: 2200,
   low: 1470, high: 3000, strongBuy: 17, buy: 4, hold: 3, sell: 1, strongSell: 0 };
 (function(){
   const A = SNDK_ANALYST, last = (typeof SNDK_DAILY !== 'undefined' && SNDK_DAILY.length) ? SNDK_DAILY[SNDK_DAILY.length - 1] : null;

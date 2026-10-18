@@ -851,7 +851,7 @@ Chart.overrides.doughnut.animation = false;
         </div>
       </div>
 
-      <div class="yoy-footnote" style="margin-top:14px;">1년 전 같은 분기보다 시니어 주택 운영 매출 +51%, 임대 수익 −5.1%, 이자 수익 +24.2%, 기타 −28.1% · 출처: <a href="https://www.sec.gov/Archives/edgar/data/766704/000076670426000030/well-20260630.htm" target="_blank" rel="noopener">Q2 2026 10-Q 부문 표 (SEC) →</a></div>
+      <div class="yoy-footnote" style="margin-top:14px;">1년 전 같은 분기보다 시니어 주택 운영 매출 +51%, 임대 수익 −5.1%, 이자 수익 +24.6%, 기타 −29.6% · 출처: <a href="https://www.sec.gov/Archives/edgar/data/766704/000076670426000030/well-20260630.htm" target="_blank" rel="noopener">Q2 2026 10-Q 부문 표 (SEC) →</a></div>
     </div>
 
     <div class="card" style="margin-bottom:0;">
@@ -974,7 +974,7 @@ Chart.overrides.doughnut.animation = false;
     </div>
 
     <div class="card" style="display:flex;flex-direction:column;">
-      <div class="card-title"><span id="multipleCompareTitle">리츠 6곳 PER 비교 (점수는 S&amp;P500 부동산 기준) · 10/9 종가(WELL 막대는 10/16)</span></div>
+      <div class="card-title"><span id="multipleCompareTitle">리츠 6곳 PER 비교 (점수는 S&amp;P500 부동산 기준) · 10/16 종가</span></div>
       <div class="chart-wrap" style="flex:1;min-height:230px;">
         <canvas id="multipleChart"></canvas>
       </div>
@@ -1089,13 +1089,13 @@ Chart.overrides.doughnut.animation = false;
     <div class="card-title">투자의견 요약</div>
     <div class="op-strip">
       <div class="op-cell">
-        <span class="op-label">애널리스트 <span data-an="n">22명 · 목표가 17</span>명</span>
+        <span class="op-label">애널리스트 <span data-an="n">22명 · 목표가 16</span>명</span>
         <span class="op-val"><span data-an="rating">Buy</span> <span class="op-sub">매수 <span data-an="buy">18</span> · 유지 <span data-an="hold">4</span> · 매도 <span data-an="sell">0</span></span></span>
         <div class="op-dist"><div data-an-bar="buy" style="width: 81.8%; background: var(--green);"></div><div data-an-bar="hold" style="width: 18.2%; background: var(--gold);"></div><div data-an-bar="sell" style="width: 0%; background: var(--red);"></div></div>
       </div>
       <div class="op-cell">
-        <span class="op-label">평균 목표주가 · <span data-an="asof">2026-10-13</span></span>
-        <span class="op-val"><span data-an="mean">$247.53</span> <span class="op-sub op-up" data-an="upside">+5.4%</span></span>
+        <span class="op-label">평균 목표주가 · <span data-an="asof">2026-10-17</span></span>
+        <span class="op-val"><span data-an="mean">$243.81</span> <span class="op-sub op-up" data-an="upside">+3.8%</span></span>
       </div>
       <div class="op-cell">
         <span class="op-label">다음 실적</span>
@@ -1270,13 +1270,13 @@ function selectFundPeriod(period) {
 function renderSegmentChart() {
   const ctx = document.getElementById('segmentPieChart');
   if (!ctx) return;
-  const total = 3546;
+  const total = 3545.5;
   new Chart(ctx,{
     type:'doughnut',
     data:{
       labels:["시니어 주택 운영 매출", "임대 수익", "이자 수익", "기타"],
       datasets:[{
-        data:[2985, 461, 77, 23],
+        data:[2984.9, 460.6, 77.4, 22.6],
         backgroundColor:["#00837c", "#3fb8af", "#a78bfa", "#94a3b8"],
         borderColor:'#8a8d9e',
         borderWidth:2
@@ -1299,54 +1299,54 @@ function renderSegmentChart() {
 // ══════ #valuation ══════
 const MULTIPLE_DATA = {
   per: {
-    title: '리츠 6곳 PER 비교 (점수는 S&P500 부동산 기준) · 10/9 종가(WELL 막대는 10/16)',
-    unit: 'PER', max: 175, wellValue: null,
+    title: '리츠 6곳 PER 비교 (점수는 S&P500 부동산 기준) · 10/16 종가',
+    unit: 'PER', max: 185, wellValue: null,
     peers: [
-      { name:'VTR', value:151.9, status:'reference' },
-      { name:'DOC', value:53.7, status:'reference' },
-      { name:'PLD', value:28.8, status:'reference' },
-      { name:'PSA', value:27.7, status:'reference' },
-      { name:'O', value:39.5, status:'reference' },
-      { name:'AMT', value:25.0, status:'reference' }
+      { name:'VTR', value:159.0, status:'reference' },
+      { name:'DOC', value:54.2, status:'reference' },
+      { name:'PLD', value:27.9, status:'reference' },
+      { name:'PSA', value:28.5, status:'reference' },
+      { name:'O', value:40.9, status:'reference' },
+      { name:'AMT', value:25.4, status:'reference' }
     ]
   },
   pbr: {
-    title: '리츠 PBR 비교 · 10/9 종가(WELL 막대는 10/16)',
+    title: '리츠 PBR 비교 · 10/16 종가',
     unit: 'PBR', max: 30, wellValue: null,
     peers: [
-      { name:'VTR', value:2.9, status:'reference' },
-      { name:'DOC', value:1.6, status:'reference' },
+      { name:'VTR', value:3.0, status:'reference' },
+      { name:'DOC', value:1.7, status:'reference' },
       { name:'PLD', value:2.2, status:'reference' },
-      { name:'PSA', value:5.5, status:'reference' },
+      { name:'PSA', value:5.7, status:'reference' },
       { name:'O', value:1.3, status:'reference' },
-      { name:'AMT', value:22.8, status:'reference' }
+      { name:'AMT', value:23.2, status:'reference' }
     ]
   },
   psr: {
-    title: '리츠 PSR 비교 · 10/9 종가(WELL 막대는 10/16)',
+    title: '리츠 PSR 비교 · 10/16 종가',
     unit: 'PSR(TTM)', max: 20, wellValue: null,
     peers: [
-      { name:'VTR', value:6.5, status:'reference' },
+      { name:'VTR', value:6.8, status:'reference' },
       { name:'DOC', value:4.4, status:'reference' },
-      { name:'PLD', value:13.2, status:'reference' },
-      { name:'PSA', value:10.4, status:'reference' },
-      { name:'O', value:8.5, status:'reference' },
-      { name:'AMT', value:7.8, status:'reference' }
+      { name:'PLD', value:12.8, status:'reference' },
+      { name:'PSA', value:10.7, status:'reference' },
+      { name:'O', value:8.8, status:'reference' },
+      { name:'AMT', value:7.9, status:'reference' }
     ]
   },
   pcr: {
-    title: '리츠 PCR(FCF) 비교 (VTR 값 없음·DOC 값 없음·PLD 값 없음·PSA 값 없음·O 값 없음) · 10/9 종가(WELL 막대는 10/16)',
+    title: '리츠 PCR(FCF) 비교 (VTR 값 없음·DOC 값 없음·PLD 값 없음·PSA 값 없음·O 값 없음) · 10/16 종가',
     unit: 'PCR(FCF)', max: 100, wellValue: null,
     peers: [
-      { name:'AMT', value:21.4, status:'reference' }
+      { name:'AMT', value:21.8, status:'reference' }
     ]
   },
   evebitda: {
-    title: '리츠 EV/EBITDA 비교 (VTR 값 없음·DOC 값 없음·PSA 값 없음·O 값 없음) · 10/9 종가(WELL 막대는 10/16)',
+    title: '리츠 EV/EBITDA 비교 (VTR 값 없음·DOC 값 없음·PSA 값 없음·O 값 없음) · 10/16 종가',
     unit: 'EV/EBITDA', max: 75, wellValue: null,
     peers: [
-      { name:'PLD', value:20.6, status:'reference' },
-      { name:'AMT', value:19.3, status:'reference' }
+      { name:'PLD', value:20.1, status:'reference' },
+      { name:'AMT', value:19.5, status:'reference' }
     ]
   }
 };
@@ -1794,7 +1794,7 @@ const WELL_FUNDAMENTAL = {"ticker": "WELL", "basis": "quarter", "asOf": "2026-06
 //
 // 갱신: python3 v2/build_peer_score.py WELL --self v2/WELL_multiples.json --card
 /* VALUATION:BEGIN */
-const WELL_VALUATION = {"peer": {"score": 8.5, "sector": "Real Estate (S&P500 29종목)", "asOf": ["2026-10-09", "2026-10-09"], "priceSession": null, "metrics": [{"metric": "per", "score": 7.4, "rank": 26, "peers": 27}, {"metric": "pbr", "score": 24.0, "rank": 20, "peers": 25}, {"metric": "psr", "score": 0.0, "rank": 28, "peers": 27}, {"metric": "pcr", "score": 11.1, "rank": 9, "peers": 9}, {"metric": "evebitda", "score": 0.0, "rank": 19, "peers": 18}]}, "self": {"score": 17.5, "window": ["2021-10-18", "2026-10-16"], "perBasis": "diluted", "metrics": [{"metric": "per", "score": 61.4, "percentile": 38.6, "current": 108.23, "min": 57.84, "median": 118.47, "max": 412.19, "days": 1255, "currentNote": null}, {"metric": "pbr", "score": 4.1, "percentile": 95.9, "current": 3.65, "min": 1.43, "median": 2.26, "max": 4.06, "days": 1255, "currentNote": null}, {"metric": "psr", "score": 8.7, "percentile": 91.3, "current": 13.26, "min": 4.91, "median": 8.71, "max": 15.12, "days": 1255, "currentNote": null}, {"metric": "pcr", "score": 4.0, "percentile": 96.0, "current": 83.79, "min": 27.47, "median": 49.32, "max": 95.0, "days": 1255, "currentNote": null}, {"metric": "evebitda", "score": 9.2, "percentile": 90.8, "current": 64.3, "min": 21.17, "median": 32.76, "max": 74.23, "days": 1255, "currentNote": null}]}};
+const WELL_VALUATION = {"peer": {"score": 8.5, "sector": "Real Estate (S&P500 29종목)", "asOf": ["2026-10-16", "2026-10-16"], "priceSession": null, "metrics": [{"metric": "per", "score": 7.4, "rank": 26, "peers": 27}, {"metric": "pbr", "score": 24.0, "rank": 20, "peers": 25}, {"metric": "psr", "score": 0.0, "rank": 28, "peers": 27}, {"metric": "pcr", "score": 11.1, "rank": 9, "peers": 9}, {"metric": "evebitda", "score": 0.0, "rank": 19, "peers": 18}]}, "self": {"score": 17.5, "window": ["2021-10-18", "2026-10-16"], "perBasis": "diluted", "metrics": [{"metric": "per", "score": 61.4, "percentile": 38.6, "current": 108.23, "min": 57.84, "median": 118.47, "max": 412.19, "days": 1255, "currentNote": null}, {"metric": "pbr", "score": 4.1, "percentile": 95.9, "current": 3.65, "min": 1.43, "median": 2.26, "max": 4.06, "days": 1255, "currentNote": null}, {"metric": "psr", "score": 8.7, "percentile": 91.3, "current": 13.26, "min": 4.91, "median": 8.71, "max": 15.12, "days": 1255, "currentNote": null}, {"metric": "pcr", "score": 4.0, "percentile": 96.0, "current": 83.79, "min": 27.47, "median": 49.32, "max": 95.0, "days": 1255, "currentNote": null}, {"metric": "evebitda", "score": 9.2, "percentile": 90.8, "current": 64.3, "min": 21.17, "median": 32.76, "max": 74.23, "days": 1255, "currentNote": null}]}};
 /* VALUATION:END */
 
 // ── 종합 평가 자동 판정 (2026-09-25 사용자 결정 · 방향 합산) ──
@@ -2081,8 +2081,8 @@ const WELL_ACTIVITY = {"ticker": "WELL", "status": "N/A", "reason": "매출원�
 // ── 투자포인트 탭: 애널리스트 목표가 (출처·기준일 포함) ──
 // 갱신: StockAnalysis 예측 페이지(stockanalysis.com/stocks/well/forecast/)의 값과 날짜를 옮긴다.
 // 현재가 대비는 마지막 종가에서 계산한다.
-const WELL_ANALYST = { asOf: '2026-10-13', source: 'StockAnalysis (의견 집계 · 개별 목표가)', rating: 'Buy', n: 22, nTargets: 17, mean: 247.53, median: 260,
-  low: 5.96, high: 292, strongBuy: 12, buy: 6, hold: 4, sell: 0, strongSell: 0 };
+const WELL_ANALYST = { asOf: '2026-10-17', source: 'StockAnalysis (의견 집계 · 개별 목표가)', rating: 'Buy', n: 22, nTargets: 16, mean: 243.81, median: 260,
+  low: 5.96, high: 275, strongBuy: 12, buy: 6, hold: 4, sell: 0, strongSell: 0 };
 (function(){
   const A = WELL_ANALYST, last = (typeof WELL_DAILY !== 'undefined' && WELL_DAILY.length) ? WELL_DAILY[WELL_DAILY.length - 1] : null;
   const put = (k, t) => document.querySelectorAll(`#invest [data-an="${k}"]`).forEach(el => { el.textContent = t; });

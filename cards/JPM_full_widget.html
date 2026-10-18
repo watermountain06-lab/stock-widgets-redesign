@@ -1009,7 +1009,7 @@ Chart.overrides.doughnut.animation = false;
     </div>
 
     <div class="card" style="display:flex;flex-direction:column;">
-      <div class="card-title"><span id="multipleCompareTitle">S&amp;P500 은행 PER 비교 · 10/9 종가</span></div>
+      <div class="card-title"><span id="multipleCompareTitle">S&amp;P500 은행 PER 비교 · 10/16 종가</span></div>
       <div class="chart-wrap" style="flex:1;min-height:230px;">
         <canvas id="multipleChart"></canvas>
       </div>
@@ -1099,13 +1099,13 @@ Chart.overrides.doughnut.animation = false;
     <div class="card-title">투자의견 요약</div>
     <div class="op-strip">
       <div class="op-cell">
-        <span class="op-label">애널리스트 <span data-an="n">25명 · 목표가 17</span>명</span>
-        <span class="op-val"><span data-an="rating">Buy</span> <span class="op-sub">매수 <span data-an="buy">13</span> · 유지 <span data-an="hold">12</span> · 매도 <span data-an="sell">0</span></span></span>
-        <div class="op-dist"><div data-an-bar="buy" style="width: 52%; background: var(--green);"></div><div data-an-bar="hold" style="width: 48%; background: var(--gold);"></div><div data-an-bar="sell" style="width: 0%; background: var(--red);"></div></div>
+        <span class="op-label">애널리스트 <span data-an="n">26명 · 목표가 17</span>명</span>
+        <span class="op-val"><span data-an="rating">Buy</span> <span class="op-sub">매수 <span data-an="buy">15</span> · 유지 <span data-an="hold">11</span> · 매도 <span data-an="sell">0</span></span></span>
+        <div class="op-dist"><div data-an-bar="buy" style="width: 57.7%; background: var(--green);"></div><div data-an-bar="hold" style="width: 42.3%; background: var(--gold);"></div><div data-an-bar="sell" style="width: 0%; background: var(--red);"></div></div>
       </div>
       <div class="op-cell">
-        <span class="op-label">평균 목표주가 · <span data-an="asof">2026-10-13</span></span>
-        <span class="op-val"><span data-an="mean">$375</span> <span class="op-sub op-up" data-an="upside">+10.4%</span></span>
+        <span class="op-label">평균 목표주가 · <span data-an="asof">2026-10-17</span></span>
+        <span class="op-val"><span data-an="mean">$375.35</span> <span class="op-sub op-up" data-an="upside">+10.5%</span></span>
       </div>
       <div class="op-cell">
         <span class="op-label">다음 실적</span>
@@ -1309,77 +1309,77 @@ function renderSegmentChart() {
 // 은행 동종업(peer_universe/banks.json, 은행 사전 등록 §3)에서 고른 6곳. 값이 없는 은행은 뺀다.
 const MULTIPLE_DATA = {
   "per": {
-    "title": "S&P500 은행 PER 비교 · 10/9 종가",
+    "title": "S&P500 은행 PER 비교 · 10/16 종가",
     "unit": "PER(TTM)",
     "max": 25,
     "jpmValue": null,
     "peers": [
       {
         "name": "BAC",
-        "value": 12.52,
+        "value": 11.8,
         "status": "reference"
       },
       {
         "name": "USB",
-        "value": 11.39,
+        "value": 11.72,
         "status": "reference"
       },
       {
         "name": "MTB",
-        "value": 11.51,
+        "value": 11.4,
         "status": "reference"
       },
       {
         "name": "CFG",
-        "value": 13.82,
+        "value": 13.77,
         "status": "reference"
       },
       {
         "name": "RF",
-        "value": 10.99,
+        "value": 11.16,
         "status": "reference"
       },
       {
         "name": "FITB",
-        "value": 17.34,
+        "value": 17.25,
         "status": "reference"
       }
     ]
   },
   "pbr": {
-    "title": "S&P500 은행 P/TBV 비교 · 10/9 종가 (PNC는 유형자본을 만들 수 없음)",
+    "title": "S&P500 은행 P/TBV 비교 · 10/16 종가 (PNC는 유형자본을 만들 수 없음)",
     "unit": "P/TBV",
     "max": 4,
     "jpmValue": null,
     "peers": [
       {
         "name": "BAC",
-        "value": 1.86,
+        "value": 1.75,
         "status": "reference"
       },
       {
         "name": "USB",
-        "value": 2.1,
+        "value": 2.16,
         "status": "reference"
       },
       {
         "name": "MTB",
-        "value": 1.85,
+        "value": 1.84,
         "status": "reference"
       },
       {
         "name": "CFG",
-        "value": 1.71,
+        "value": 1.7,
         "status": "reference"
       },
       {
         "name": "RF",
-        "value": 1.98,
+        "value": 2.02,
         "status": "reference"
       },
       {
         "name": "FITB",
-        "value": 2.18,
+        "value": 2.17,
         "status": "reference"
       }
     ]
@@ -2154,8 +2154,8 @@ const JPM_ACTIVITY = {"ticker": "JPM", "status": "na", "reason": "은행이라 �
 // ── 투자포인트 탭: 애널리스트 목표가 (출처·기준일 포함) ──
 // 갱신: StockAnalysis 예측 페이지(stockanalysis.com/stocks/jpm/forecast/)의 값과 날짜를 옮긴다.
 // 현재가 대비는 마지막 종가에서 계산한다.
-const JPM_ANALYST = { asOf: '2026-10-13', source: 'StockAnalysis (의견 집계 · 개별 목표가)', rating: 'Buy', n: 25, nTargets: 17, mean: 375, median: 375,
-  low: 305, high: 436, strongBuy: 9, buy: 4, hold: 12, sell: 0, strongSell: 0 };
+const JPM_ANALYST = { asOf: '2026-10-17', source: 'StockAnalysis (의견 집계 · 개별 목표가)', rating: 'Buy', n: 26, nTargets: 17, mean: 375.35, median: 375,
+  low: 312, high: 425, strongBuy: 10, buy: 5, hold: 11, sell: 0, strongSell: 0 };
 (function(){
   const A = JPM_ANALYST, last = (typeof JPM_DAILY !== 'undefined' && JPM_DAILY.length) ? JPM_DAILY[JPM_DAILY.length - 1] : null;
   const put = (k, t) => document.querySelectorAll(`#invest [data-an="${k}"]`).forEach(el => { el.textContent = t; });

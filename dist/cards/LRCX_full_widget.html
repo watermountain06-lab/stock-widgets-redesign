@@ -1071,7 +1071,7 @@ Chart.overrides.doughnut.animation = false;
         <div class="op-dist"><div data-an-bar="buy" style="width: 82.9%; background: var(--green);"></div><div data-an-bar="hold" style="width: 17.1%; background: var(--gold);"></div><div data-an-bar="sell" style="width: 0%; background: var(--red);"></div></div>
       </div>
       <div class="op-cell">
-        <span class="op-label">평균 목표주가 · <span data-an="asof">2026-10-13</span></span>
+        <span class="op-label">평균 목표주가 · <span data-an="asof">2026-10-17</span></span>
         <span class="op-val"><span data-an="mean">$390.96</span> <span class="op-sub op-up" data-an="upside">+48.1%</span></span>
       </div>
       <div class="op-cell">
@@ -1247,13 +1247,13 @@ function selectFundPeriod(period) {
 function renderSegmentChart() {
   const ctx = document.getElementById('segmentPieChart');
   if (!ctx) return;
-  const total = 6722;
+  const total = 6722.200000000001;
   new Chart(ctx,{
     type:'doughnut',
     data:{
       labels:["시스템(신규 장비)", "고객지원·기타(서비스·부품·업그레이드)"],
       datasets:[{
-        data:[4250, 2472],
+        data:[4249.8, 2472.4],
         backgroundColor:["#7c6ad6", "#f7b600"],
         borderColor:'#8a8d9e',
         borderWidth:2
@@ -2066,7 +2066,7 @@ const LRCX_ACTIVITY = {"ticker": "LRCX", "status": "stale", "asOf": "2025-06-29"
 // ── 투자포인트 탭: 애널리스트 목표가 (출처·기준일 포함) ──
 // 갱신: StockAnalysis 예측 페이지(stockanalysis.com/stocks/lrcx/forecast/)의 값과 날짜를 옮긴다.
 // 현재가 대비는 마지막 종가에서 계산한다.
-const LRCX_ANALYST = { asOf: '2026-10-13', source: 'StockAnalysis (의견 집계 · 개별 목표가)', rating: 'Strong Buy', n: 35, nTargets: 25, mean: 390.96, median: 385,
+const LRCX_ANALYST = { asOf: '2026-10-17', source: 'StockAnalysis (의견 집계 · 개별 목표가)', rating: 'Strong Buy', n: 35, nTargets: 25, mean: 390.96, median: 385,
   low: 275, high: 700, strongBuy: 25, buy: 4, hold: 6, sell: 0, strongSell: 0 };
 (function(){
   const A = LRCX_ANALYST, last = (typeof LRCX_DAILY !== 'undefined' && LRCX_DAILY.length) ? LRCX_DAILY[LRCX_DAILY.length - 1] : null;

@@ -1091,13 +1091,13 @@ Chart.overrides.doughnut.animation = false;
     <div class="card-title">투자의견 요약</div>
     <div class="op-strip">
       <div class="op-cell">
-        <span class="op-label">애널리스트 <span data-an="n">51명 · 목표가 31</span>명</span>
-        <span class="op-val"><span data-an="rating">Buy</span> <span class="op-sub">매수 <span data-an="buy">35</span> · 유지 <span data-an="hold">15</span> · 매도 <span data-an="sell">1</span></span></span>
-        <div class="op-dist"><div data-an-bar="buy" style="width: 68.6%; background: var(--green);"></div><div data-an-bar="hold" style="width: 29.4%; background: var(--gold);"></div><div data-an-bar="sell" style="width: 2%; background: var(--red);"></div></div>
+        <span class="op-label">애널리스트 <span data-an="n">52명 · 목표가 32</span>명</span>
+        <span class="op-val"><span data-an="rating">Buy</span> <span class="op-sub">매수 <span data-an="buy">35</span> · 유지 <span data-an="hold">15</span> · 매도 <span data-an="sell">2</span></span></span>
+        <div class="op-dist"><div data-an-bar="buy" style="width: 67.3%; background: var(--green);"></div><div data-an-bar="hold" style="width: 28.8%; background: var(--gold);"></div><div data-an-bar="sell" style="width: 3.8%; background: var(--red);"></div></div>
       </div>
       <div class="op-cell">
-        <span class="op-label">평균 목표주가 · <span data-an="asof">2026-10-13</span></span>
-        <span class="op-val"><span data-an="mean">$93.35</span> <span class="op-sub op-up" data-an="upside">+32.4%</span></span>
+        <span class="op-label">평균 목표주가 · <span data-an="asof">2026-10-17</span></span>
+        <span class="op-val"><span data-an="mean">$91.06</span> <span class="op-sub op-up" data-an="upside">+29.1%</span></span>
       </div>
       <div class="op-cell">
         <span class="op-label">다음 실적</span>
@@ -1272,13 +1272,13 @@ function selectFundPeriod(period) {
 function renderSegmentChart() {
   const ctx = document.getElementById('segmentPieChart');
   if (!ctx) return;
-  const total = 12560;
+  const total = 12560.0;
   new Chart(ctx,{
     type:'doughnut',
     data:{
       labels:["미국·캐나다(UCAN)", "유럽·중동·아프리카(EMEA)", "중남미(LATAM)", "아시아·태평양(APAC)"],
       datasets:[{
-        data:[5432, 4034, 1584, 1510],
+        data:[5431.7, 4033.5, 1584.3, 1510.5],
         backgroundColor:["#e50914", "#b20710", "#f5a623", "#94a3b8"],
         borderColor:'#8a8d9e',
         borderWidth:2
@@ -2076,8 +2076,8 @@ const NFLX_ACTIVITY = {"ticker": "NFLX", "status": "N/A", "reason": "5년 비교
 // ── 투자포인트 탭: 애널리스트 목표가 (출처·기준일 포함) ──
 // 갱신: StockAnalysis 예측 페이지(stockanalysis.com/stocks/nflx/forecast/)의 값과 날짜를 옮긴다.
 // 현재가 대비는 마지막 종가에서 계산한다.
-const NFLX_ANALYST = { asOf: '2026-10-13', source: 'StockAnalysis (의견 집계 · 개별 목표가)', rating: 'Buy', n: 51, nTargets: 31, mean: 93.35, median: 92,
-  low: 57, high: 135, strongBuy: 28, buy: 7, hold: 15, sell: 0, strongSell: 1 };
+const NFLX_ANALYST = { asOf: '2026-10-17', source: 'StockAnalysis (의견 집계 · 개별 목표가)', rating: 'Buy', n: 52, nTargets: 32, mean: 91.06, median: 90,
+  low: 57, high: 125, strongBuy: 28, buy: 7, hold: 15, sell: 0, strongSell: 2 };
 (function(){
   const A = NFLX_ANALYST, last = (typeof NFLX_DAILY !== 'undefined' && NFLX_DAILY.length) ? NFLX_DAILY[NFLX_DAILY.length - 1] : null;
   const put = (k, t) => document.querySelectorAll(`#invest [data-an="${k}"]`).forEach(el => { el.textContent = t; });

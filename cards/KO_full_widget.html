@@ -1007,7 +1007,7 @@ Chart.overrides.doughnut.animation = false;
     </div>
 
     <div class="card" style="display:flex;flex-direction:column;">
-      <div class="card-title"><span id="multipleCompareTitle">음료·식품 대형주 PER 비교 · 10/9 종가(KO 막대는 10/16)</span></div>
+      <div class="card-title"><span id="multipleCompareTitle">음료·식품 대형주 PER 비교 · 10/16 종가</span></div>
       <div class="chart-wrap" style="flex:1;min-height:230px;">
         <canvas id="multipleChart"></canvas>
       </div>
@@ -1110,13 +1110,13 @@ Chart.overrides.doughnut.animation = false;
     <div class="card-title">투자의견 요약</div>
     <div class="op-strip">
       <div class="op-cell">
-        <span class="op-label">애널리스트 <span data-an="n">24명 · 목표가 16</span>명</span>
+        <span class="op-label">애널리스트 <span data-an="n">24명 · 목표가 17</span>명</span>
         <span class="op-val"><span data-an="rating">Buy</span> <span class="op-sub">매수 <span data-an="buy">19</span> · 유지 <span data-an="hold">4</span> · 매도 <span data-an="sell">1</span></span></span>
         <div class="op-dist"><div data-an-bar="buy" style="width: 79.2%; background: var(--green);"></div><div data-an-bar="hold" style="width: 16.7%; background: var(--gold);"></div><div data-an-bar="sell" style="width: 4.2%; background: var(--red);"></div></div>
       </div>
       <div class="op-cell">
-        <span class="op-label">평균 목표주가 · <span data-an="asof">2026-10-13</span></span>
-        <span class="op-val"><span data-an="mean">$95.88</span> <span class="op-sub op-up" data-an="upside">+2.1%</span></span>
+        <span class="op-label">평균 목표주가 · <span data-an="asof">2026-10-17</span></span>
+        <span class="op-val"><span data-an="mean">$97.06</span> <span class="op-sub op-up" data-an="upside">+3.4%</span></span>
       </div>
       <div class="op-cell">
         <span class="op-label">다음 실적</span>
@@ -1320,63 +1320,63 @@ function renderSegmentChart() {
 // ══════ #valuation ══════
 const MULTIPLE_DATA = {
   per: {
-    title: '음료·식품 대형주 PER 비교 · 10/9 종가(KO 막대는 10/16)',
+    title: '음료·식품 대형주 PER 비교 · 10/16 종가',
     unit: 'PER', max: 50, koValue: null,
     peers: [
-      { name:'PEP', value:15.8, status:'reference' },
-      { name:'MDLZ', value:22.1, status:'reference' },
-      { name:'PG', value:22.8, status:'reference' },
-      { name:'KDP', value:32.1, status:'reference' },
-      { name:'MNST', value:40.4, status:'reference' },
-      { name:'WMT', value:40.3, status:'reference' }
+      { name:'PEP', value:17.2, status:'reference' },
+      { name:'MDLZ', value:23.4, status:'reference' },
+      { name:'PG', value:24.1, status:'reference' },
+      { name:'KDP', value:35.0, status:'reference' },
+      { name:'MNST', value:42.3, status:'reference' },
+      { name:'WMT', value:43.0, status:'reference' }
     ]
   },
   pbr: {
-    title: '음료·식품 대형주 PBR 비교 · 10/9 종가(KO 막대는 10/16)',
+    title: '음료·식품 대형주 PBR 비교 · 10/16 종가',
     unit: 'PBR', max: 15, koValue: null,
     peers: [
-      { name:'PEP', value:7.7, status:'reference' },
-      { name:'MDLZ', value:2.9, status:'reference' },
-      { name:'PG', value:6.5, status:'reference' },
-      { name:'KDP', value:1.7, status:'reference' },
-      { name:'MNST', value:9.1, status:'reference' },
-      { name:'WMT', value:9.0, status:'reference' }
+      { name:'PEP', value:8.0, status:'reference' },
+      { name:'MDLZ', value:3.1, status:'reference' },
+      { name:'PG', value:6.8, status:'reference' },
+      { name:'KDP', value:1.9, status:'reference' },
+      { name:'MNST', value:9.6, status:'reference' },
+      { name:'WMT', value:9.6, status:'reference' }
     ]
   },
   psr: {
-    title: '음료·식품 대형주 PSR 비교 · 10/9 종가(KO 막대는 10/16)',
+    title: '음료·식품 대형주 PSR 비교 · 10/16 종가',
     unit: 'PSR(TTM)', max: 15, koValue: null,
     peers: [
       { name:'PEP', value:1.8, status:'reference' },
-      { name:'MDLZ', value:1.9, status:'reference' },
-      { name:'PG', value:4.0, status:'reference' },
-      { name:'KDP', value:2.1, status:'reference' },
-      { name:'MNST', value:9.3, status:'reference' },
-      { name:'WMT', value:1.2, status:'reference' }
+      { name:'MDLZ', value:2.1, status:'reference' },
+      { name:'PG', value:4.3, status:'reference' },
+      { name:'KDP', value:2.4, status:'reference' },
+      { name:'MNST', value:9.7, status:'reference' },
+      { name:'WMT', value:1.3, status:'reference' }
     ]
   },
   pcr: {
-    title: '음료·식품 대형주 PCR(FCF) 비교 · 10/9 종가(KO 막대는 10/16)',
-    unit: 'PCR(FCF)', max: 80, koValue: null,
+    title: '음료·식품 대형주 PCR(FCF) 비교 · 10/16 종가',
+    unit: 'PCR(FCF)', max: 85, koValue: null,
     peers: [
-      { name:'PEP', value:16.4, status:'reference' },
-      { name:'MDLZ', value:25.0, status:'reference' },
-      { name:'PG', value:23.2, status:'reference' },
-      { name:'KDP', value:21.9, status:'reference' },
-      { name:'MNST', value:40.8, status:'reference' },
-      { name:'WMT', value:65.4, status:'reference' }
+      { name:'PEP', value:17.1, status:'reference' },
+      { name:'MDLZ', value:26.4, status:'reference' },
+      { name:'PG', value:24.4, status:'reference' },
+      { name:'KDP', value:23.9, status:'reference' },
+      { name:'MNST', value:42.7, status:'reference' },
+      { name:'WMT', value:69.8, status:'reference' }
     ]
   },
   evebitda: {
-    title: '음료·식품 대형주 EV/EBITDA 비교 · 10/9 종가(KO 막대는 10/16)',
-    unit: 'EV/EBITDA', max: 35, koValue: null,
+    title: '음료·식품 대형주 EV/EBITDA 비교 · 10/16 종가',
+    unit: 'EV/EBITDA', max: 40, koValue: null,
     peers: [
-      { name:'PEP', value:11.5, status:'reference' },
-      { name:'MDLZ', value:16.1, status:'reference' },
-      { name:'PG', value:16.5, status:'reference' },
-      { name:'KDP', value:17.2, status:'reference' },
-      { name:'MNST', value:29.3, status:'reference' },
-      { name:'WMT', value:19.9, status:'reference' }
+      { name:'PEP', value:11.9, status:'reference' },
+      { name:'MDLZ', value:16.9, status:'reference' },
+      { name:'PG', value:17.3, status:'reference' },
+      { name:'KDP', value:18.2, status:'reference' },
+      { name:'MNST', value:30.8, status:'reference' },
+      { name:'WMT', value:21.2, status:'reference' }
     ]
   }
 };
@@ -1824,7 +1824,7 @@ const KO_FUNDAMENTAL = {"ticker": "KO", "basis": "quarter", "asOf": "2026-07-03"
 //
 // 갱신: python3 v2/build_peer_score.py KO --self v2/KO_multiples.json --card
 /* VALUATION:BEGIN */
-const KO_VALUATION = {"peer": {"score": 18.5, "sector": "Consumer Staples (S&P500 34종목)", "asOf": ["2026-10-09", "2026-10-09"], "priceSession": null, "metrics": [{"metric": "per", "score": 42.3, "rank": 16, "peers": 26}, {"metric": "pbr", "score": 16.0, "rank": 22, "peers": 25}, {"metric": "psr", "score": 3.7, "rank": 27, "peers": 27}, {"metric": "pcr", "score": 16.0, "rank": 22, "peers": 25}, {"metric": "evebitda", "score": 14.3, "rank": 19, "peers": 21}]}, "self": {"score": 18.0, "window": ["2021-10-18", "2026-10-16"], "perBasis": "diluted", "metrics": [{"metric": "per", "score": 19.8, "percentile": 80.2, "current": 28.2, "min": 21.64, "median": 26.3, "max": 30.66, "days": 1255, "currentNote": null}, {"metric": "pbr", "score": 32.4, "percentile": 67.6, "current": 11.18, "min": 8.71, "median": 10.57, "max": 12.79, "days": 1255, "currentNote": null}, {"metric": "psr", "score": 0.1, "percentile": 99.9, "current": 8.06, "min": 5.13, "median": 6.36, "max": 8.06, "days": 1255, "currentNote": null}, {"metric": "pcr", "score": 29.0, "percentile": 71.0, "current": 28.26, "min": 19.29, "median": 26.83, "max": 88.47, "days": 944, "currentNote": null}, {"metric": "evebitda", "score": 8.7, "percentile": 91.3, "current": 27.38, "min": 20.46, "median": 24.57, "max": 30.6, "days": 1085, "currentNote": null}]}};
+const KO_VALUATION = {"peer": {"score": 18.5, "sector": "Consumer Staples (S&P500 34종목)", "asOf": ["2026-10-16", "2026-10-16"], "priceSession": null, "metrics": [{"metric": "per", "score": 42.3, "rank": 16, "peers": 26}, {"metric": "pbr", "score": 16.0, "rank": 22, "peers": 25}, {"metric": "psr", "score": 3.7, "rank": 27, "peers": 27}, {"metric": "pcr", "score": 16.0, "rank": 22, "peers": 25}, {"metric": "evebitda", "score": 14.3, "rank": 19, "peers": 21}]}, "self": {"score": 18.0, "window": ["2021-10-18", "2026-10-16"], "perBasis": "diluted", "metrics": [{"metric": "per", "score": 19.8, "percentile": 80.2, "current": 28.2, "min": 21.64, "median": 26.3, "max": 30.66, "days": 1255, "currentNote": null}, {"metric": "pbr", "score": 32.4, "percentile": 67.6, "current": 11.18, "min": 8.71, "median": 10.57, "max": 12.79, "days": 1255, "currentNote": null}, {"metric": "psr", "score": 0.1, "percentile": 99.9, "current": 8.06, "min": 5.13, "median": 6.36, "max": 8.06, "days": 1255, "currentNote": null}, {"metric": "pcr", "score": 29.0, "percentile": 71.0, "current": 28.26, "min": 19.29, "median": 26.83, "max": 88.47, "days": 944, "currentNote": null}, {"metric": "evebitda", "score": 8.7, "percentile": 91.3, "current": 27.38, "min": 20.46, "median": 24.57, "max": 30.6, "days": 1085, "currentNote": null}]}};
 /* VALUATION:END */
 
 // ── 종합 평가 자동 판정 (2026-09-25 사용자 결정 · 방향 합산) ──
@@ -2120,8 +2120,8 @@ const KO_ACTIVITY = {"ticker": "KO", "status": "ok", "asOf": "2026-07-03", "prev
 // ── 투자포인트 탭: 애널리스트 목표가 (출처·기준일 포함) ──
 // 갱신: StockAnalysis 예측 페이지(stockanalysis.com/stocks/ko/forecast/)의 값과 날짜를 옮긴다.
 // 현재가 대비는 마지막 종가에서 계산한다.
-const KO_ANALYST = { asOf: '2026-10-13', source: 'StockAnalysis (의견 집계 · 개별 목표가)', rating: 'Buy', n: 24, nTargets: 16, mean: 95.88, median: 97,
-  low: 84, high: 104, strongBuy: 12, buy: 7, hold: 4, sell: 1, strongSell: 0 };
+const KO_ANALYST = { asOf: '2026-10-17', source: 'StockAnalysis (의견 집계 · 개별 목표가)', rating: 'Buy', n: 24, nTargets: 17, mean: 97.06, median: 98,
+  low: 86, high: 104, strongBuy: 12, buy: 7, hold: 4, sell: 1, strongSell: 0 };
 (function(){
   const A = KO_ANALYST, last = (typeof KO_DAILY !== 'undefined' && KO_DAILY.length) ? KO_DAILY[KO_DAILY.length - 1] : null;
   const put = (k, t) => document.querySelectorAll(`#invest [data-an="${k}"]`).forEach(el => { el.textContent = t; });

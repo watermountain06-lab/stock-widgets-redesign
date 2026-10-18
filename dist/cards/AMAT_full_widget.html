@@ -1112,8 +1112,8 @@ Chart.overrides.doughnut.animation = false;
         <div class="op-dist"><div data-an-bar="buy" style="width: 82.5%; background: var(--green);"></div><div data-an-bar="hold" style="width: 17.5%; background: var(--gold);"></div><div data-an-bar="sell" style="width: 0%; background: var(--red);"></div></div>
       </div>
       <div class="op-cell">
-        <span class="op-label">평균 목표주가 · <span data-an="asof">2026-10-13</span></span>
-        <span class="op-val"><span data-an="mean">$676.52</span> <span class="op-sub op-up" data-an="upside">+65.3%</span></span>
+        <span class="op-label">평균 목표주가 · <span data-an="asof">2026-10-17</span></span>
+        <span class="op-val"><span data-an="mean">$665.78</span> <span class="op-sub op-up" data-an="upside">+62.7%</span></span>
       </div>
       <div class="op-cell">
         <span class="op-label">다음 실적</span>
@@ -1288,13 +1288,13 @@ function selectFundPeriod(period) {
 function renderSegmentChart() {
   const ctx = document.getElementById('segmentPieChart');
   if (!ctx) return;
-  const total = 9115;
+  const total = 9115.0;
   new Chart(ctx,{
     type:'doughnut',
     data:{
       labels:["반도체 장비(Semiconductor Systems)", "글로벌 서비스(AGS)", "디스플레이·기타"],
       datasets:[{
-        data:[7040, 1781, 294],
+        data:[7040.0, 1781.0, 294.0],
         backgroundColor:["#7c6ad6", "#f7b600", "#9b59b6"],
         borderColor:'#8a8d9e',
         borderWidth:2
@@ -2107,7 +2107,7 @@ const AMAT_ACTIVITY = {"ticker": "AMAT", "status": "ok", "asOf": "2026-07-26", "
 // ── 투자포인트 탭: 애널리스트 목표가 (출처·기준일 포함) ──
 // 갱신: StockAnalysis 예측 페이지(stockanalysis.com/stocks/amat/forecast/)의 값과 날짜를 옮긴다.
 // 현재가 대비는 마지막 종가에서 계산한다.
-const AMAT_ANALYST = { asOf: '2026-10-13', source: 'StockAnalysis (의견 집계 · 개별 목표가)', rating: 'Strong Buy', n: 40, nTargets: 27, mean: 676.52, median: 683,
+const AMAT_ANALYST = { asOf: '2026-10-17', source: 'StockAnalysis (의견 집계 · 개별 목표가)', rating: 'Strong Buy', n: 40, nTargets: 27, mean: 665.78, median: 670,
   low: 500, high: 900, strongBuy: 29, buy: 4, hold: 7, sell: 0, strongSell: 0 };
 (function(){
   const A = AMAT_ANALYST, last = (typeof AMAT_DAILY !== 'undefined' && AMAT_DAILY.length) ? AMAT_DAILY[AMAT_DAILY.length - 1] : null;

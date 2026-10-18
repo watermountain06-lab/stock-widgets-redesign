@@ -1099,7 +1099,7 @@ Chart.overrides.doughnut.animation = false;
         <div class="op-dist"><div data-an-bar="buy" style="width: 95.2%; background: var(--green);"></div><div data-an-bar="hold" style="width: 3.2%; background: var(--gold);"></div><div data-an-bar="sell" style="width:1.6%;background:var(--red);"></div></div>
       </div>
       <div class="op-cell">
-        <span class="op-label">평균 목표주가 · <span data-an="asof">2026-10-13</span></span>
+        <span class="op-label">평균 목표주가 · <span data-an="asof">2026-10-17</span></span>
         <span class="op-val"><span data-an="mean">$323.87</span> <span class="op-sub op-up" data-an="upside">+51.2%</span></span>
       </div>
       <div class="op-cell">
@@ -1275,13 +1275,13 @@ function selectFundPeriod(period) {
 function renderSegmentChart() {
   const ctx = document.getElementById('segmentPieChart');
   if (!ctx) return;
-  const total = 96221;
+  const total = 96221.0;
   new Chart(ctx,{
     type:'doughnut',
     data:{
       labels:["하이퍼스케일", "AI 클라우드·산업·기업", "엣지 컴퓨팅"],
       datasets:[{
-        data:[48710, 40313, 7198],
+        data:[48710.0, 40313.0, 7198.0],
         backgroundColor:["#7c6ad6", "#4d7a00", "#3b82f6"],
         borderColor:'#8a8d9e',
         borderWidth:2
@@ -2086,7 +2086,7 @@ const NVDA_ACTIVITY = {"ticker": "NVDA", "status": "ok", "asOf": "2026-07-26", "
 // ── 투자포인트 탭: 애널리스트 목표가 (출처·기준일 포함) ──
 // 갱신: StockAnalysis 예측 페이지(stockanalysis.com/stocks/nvda/forecast/)의 값과 날짜를 옮긴다.
 // 현재가 대비는 마지막 종가에서 계산한다.
-const NVDA_ANALYST = { asOf: '2026-10-13', source: 'StockAnalysis (의견 집계 · 개별 목표가)', rating: 'Strong Buy', n: 62, nTargets: 39, mean: 323.87, median: 315,
+const NVDA_ANALYST = { asOf: '2026-10-17', source: 'StockAnalysis (의견 집계 · 개별 목표가)', rating: 'Strong Buy', n: 62, nTargets: 39, mean: 323.87, median: 315,
   low: 250, high: 500, strongBuy: 49, buy: 10, hold: 2, sell: 0, strongSell: 1 };
 (function(){
   const A = NVDA_ANALYST, last = (typeof NVDA_DAILY !== 'undefined' && NVDA_DAILY.length) ? NVDA_DAILY[NVDA_DAILY.length - 1] : null;

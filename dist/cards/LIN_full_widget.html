@@ -975,7 +975,7 @@ Chart.overrides.doughnut.animation = false;
     </div>
 
     <div class="card" style="display:flex;flex-direction:column;">
-      <div class="card-title"><span id="multipleCompareTitle">산업용 가스·화학·건자재·금속 6곳 PER 비교 (점수는 S&amp;P500 소재 기준) (APD 값 없음) · 10/9 종가(LIN 막대는 10/16)</span></div>
+      <div class="card-title"><span id="multipleCompareTitle">산업용 가스·화학·건자재·금속 6곳 PER 비교 (점수는 S&amp;P500 소재 기준) (APD 값 없음) · 10/16 종가</span></div>
       <div class="chart-wrap" style="flex:1;min-height:230px;">
         <canvas id="multipleChart"></canvas>
       </div>
@@ -1071,13 +1071,13 @@ Chart.overrides.doughnut.animation = false;
     <div class="card-title">투자의견 요약</div>
     <div class="op-strip">
       <div class="op-cell">
-        <span class="op-label">애널리스트 <span data-an="n">28명 · 목표가 18</span>명</span>
-        <span class="op-val"><span data-an="rating">Buy</span> <span class="op-sub">매수 <span data-an="buy">22</span> · 유지 <span data-an="hold">5</span> · 매도 <span data-an="sell">1</span></span></span>
-        <div class="op-dist"><div data-an-bar="buy" style="width: 78.6%; background: var(--green);"></div><div data-an-bar="hold" style="width: 17.9%; background: var(--gold);"></div><div data-an-bar="sell" style="width: 3.6%; background: var(--red);"></div></div>
+        <span class="op-label">애널리스트 <span data-an="n">29명 · 목표가 19</span>명</span>
+        <span class="op-val"><span data-an="rating">Buy</span> <span class="op-sub">매수 <span data-an="buy">23</span> · 유지 <span data-an="hold">5</span> · 매도 <span data-an="sell">1</span></span></span>
+        <div class="op-dist"><div data-an-bar="buy" style="width: 79.3%; background: var(--green);"></div><div data-an-bar="hold" style="width: 17.2%; background: var(--gold);"></div><div data-an-bar="sell" style="width: 3.4%; background: var(--red);"></div></div>
       </div>
       <div class="op-cell">
-        <span class="op-label">평균 목표주가 · <span data-an="asof">2026-10-13</span></span>
-        <span class="op-val"><span data-an="mean">$555.33</span> <span class="op-sub op-up" data-an="upside">+11.4%</span></span>
+        <span class="op-label">평균 목표주가 · <span data-an="asof">2026-10-17</span></span>
+        <span class="op-val"><span data-an="mean">$556.26</span> <span class="op-sub op-up" data-an="upside">+11.6%</span></span>
       </div>
       <div class="op-cell">
         <span class="op-label">다음 실적</span>
@@ -1252,13 +1252,13 @@ function selectFundPeriod(period) {
 function renderSegmentChart() {
   const ctx = document.getElementById('segmentPieChart');
   if (!ctx) return;
-  const total = 9289;
+  const total = 9289.0;
   new Chart(ctx,{
     type:'doughnut',
     data:{
       labels:["미주", "유럽·중동·아프리카(EMEA)", "아시아·태평양(APAC)", "엔지니어링", "기타"],
       datasets:[{
-        data:[4083, 2303, 1870, 625, 408],
+        data:[4083.0, 2303.0, 1870.0, 625.0, 408.0],
         backgroundColor:["#00a0e1", "#005591", "#5aa9e6", "#d4a017", "#94a3b8"],
         borderColor:'#8a8d9e',
         borderWidth:2
@@ -1281,58 +1281,58 @@ function renderSegmentChart() {
 // ══════ #valuation ══════
 const MULTIPLE_DATA = {
   per: {
-    title: '산업용 가스·화학·건자재·금속 6곳 PER 비교 (점수는 S&P500 소재 기준) (APD 값 없음) · 10/9 종가(LIN 막대는 10/16)',
+    title: '산업용 가스·화학·건자재·금속 6곳 PER 비교 (점수는 S&P500 소재 기준) (APD 값 없음) · 10/16 종가',
     unit: 'PER', max: 45, linValue: null,
     peers: [
-      { name:'ECL', value:37.8, status:'reference' },
-      { name:'SHW', value:29.5, status:'reference' },
-      { name:'PPG', value:14.9, status:'reference' },
-      { name:'FCX', value:32.3, status:'reference' },
-      { name:'VMC', value:28.9, status:'reference' }
+      { name:'ECL', value:38.8, status:'reference' },
+      { name:'SHW', value:30.9, status:'reference' },
+      { name:'PPG', value:15.4, status:'reference' },
+      { name:'FCX', value:34.3, status:'reference' },
+      { name:'VMC', value:30.4, status:'reference' }
     ]
   },
   pbr: {
-    title: '소재 6곳 PBR 비교 · 10/9 종가(LIN 막대는 10/16)',
+    title: '소재 6곳 PBR 비교 · 10/16 종가',
     unit: 'PBR', max: 25, linValue: null,
     peers: [
-      { name:'APD', value:4.5, status:'reference' },
-      { name:'ECL', value:7.9, status:'reference' },
-      { name:'SHW', value:20.1, status:'reference' },
-      { name:'PPG', value:2.7, status:'reference' },
-      { name:'FCX', value:5.3, status:'reference' },
-      { name:'VMC', value:3.7, status:'reference' }
-    ]
-  },
-  psr: {
-    title: '소재 6곳 PSR 비교 · 10/9 종가(LIN 막대는 10/16)',
-    unit: 'PSR(TTM)', max: 10, linValue: null,
-    peers: [
-      { name:'APD', value:5.0, status:'reference' },
-      { name:'ECL', value:4.7, status:'reference' },
-      { name:'SHW', value:3.2, status:'reference' },
-      { name:'PPG', value:1.4, status:'reference' },
-      { name:'FCX', value:4.0, status:'reference' },
+      { name:'APD', value:4.8, status:'reference' },
+      { name:'ECL', value:8.1, status:'reference' },
+      { name:'SHW', value:21.1, status:'reference' },
+      { name:'PPG', value:2.8, status:'reference' },
+      { name:'FCX', value:5.0, status:'reference' },
       { name:'VMC', value:3.9, status:'reference' }
     ]
   },
+  psr: {
+    title: '소재 6곳 PSR 비교 · 10/16 종가',
+    unit: 'PSR(TTM)', max: 10, linValue: null,
+    peers: [
+      { name:'APD', value:5.3, status:'reference' },
+      { name:'ECL', value:4.8, status:'reference' },
+      { name:'SHW', value:3.3, status:'reference' },
+      { name:'PPG', value:1.4, status:'reference' },
+      { name:'FCX', value:3.9, status:'reference' },
+      { name:'VMC', value:4.1, status:'reference' }
+    ]
+  },
   pcr: {
-    title: '소재 6곳 PCR(FCF) 비교 (APD 값 없음) · 10/9 종가(LIN 막대는 10/16)',
+    title: '소재 6곳 PCR(FCF) 비교 (APD 값 없음) · 10/16 종가',
     unit: 'PCR(FCF)', max: 70, linValue: null,
     peers: [
-      { name:'ECL', value:42.1, status:'reference' },
-      { name:'SHW', value:24.1, status:'reference' },
-      { name:'PPG', value:16.5, status:'reference' },
-      { name:'FCX', value:60.4, status:'reference' },
-      { name:'VMC', value:30.9, status:'reference' }
+      { name:'ECL', value:43.2, status:'reference' },
+      { name:'SHW', value:25.3, status:'reference' },
+      { name:'PPG', value:17.0, status:'reference' },
+      { name:'FCX', value:56.7, status:'reference' },
+      { name:'VMC', value:32.5, status:'reference' }
     ]
   },
   evebitda: {
-    title: '소재 6곳 EV/EBITDA 비교 (APD 67.6배는 축 밖이라 표시 안 함) (SHW 값 없음·PPG 값 없음) · 10/9 종가(LIN 막대는 10/16)',
+    title: '소재 6곳 EV/EBITDA 비교 (APD 67.6배는 축 밖이라 표시 안 함) (SHW 값 없음·PPG 값 없음) · 10/16 종가',
     unit: 'EV/EBITDA', max: 30, linValue: null,
     peers: [
-      { name:'ECL', value:22.5, status:'reference' },
-      { name:'FCX', value:13.8, status:'reference' },
-      { name:'VMC', value:15.4, status:'reference' }
+      { name:'ECL', value:23.0, status:'reference' },
+      { name:'FCX', value:13.0, status:'reference' },
+      { name:'VMC', value:16.1, status:'reference' }
     ]
   }
 };
@@ -1780,7 +1780,7 @@ const LIN_FUNDAMENTAL = {"ticker": "LIN", "basis": "quarter", "asOf": "2026-06-3
 //
 // 갱신: python3 v2/build_peer_score.py LIN --self v2/LIN_multiples.json --card
 /* VALUATION:BEGIN */
-const LIN_VALUATION = {"peer": {"score": 11.7, "sector": "Materials (S&P500 25종목)", "asOf": ["2026-10-09", "2026-10-09"], "priceSession": null, "metrics": [{"metric": "per", "score": 23.5, "rank": 14, "peers": 17}, {"metric": "pbr", "score": 8.3, "rank": 23, "peers": 24}, {"metric": "psr", "score": 0.0, "rank": 25, "peers": 24}, {"metric": "pcr", "score": 13.6, "rank": 20, "peers": 22}, {"metric": "evebitda", "score": 13.3, "rank": 14, "peers": 15}]}, "self": {"score": 35.0, "window": ["2021-10-18", "2026-10-16"], "perBasis": "diluted", "metrics": [{"metric": "per", "score": 87.0, "percentile": 13.0, "current": 32.16, "min": 26.06, "median": 34.51, "max": 51.2, "days": 1255, "currentNote": null}, {"metric": "pbr", "score": 11.4, "percentile": 88.6, "current": 5.88, "min": 3.12, "median": 5.16, "max": 6.56, "days": 1255, "currentNote": null}, {"metric": "psr", "score": 32.9, "percentile": 67.1, "current": 6.48, "min": 4.04, "median": 6.1, "max": 7.3, "days": 1255, "currentNote": null}, {"metric": "pcr", "score": 6.6, "percentile": 93.4, "current": 46.18, "min": 19.18, "median": 38.96, "max": 49.62, "days": 1255, "currentNote": null}, {"metric": "evebitda", "score": 37.3, "percentile": 62.7, "current": 19.34, "min": 15.22, "median": 18.95, "max": 21.38, "days": 1255, "currentNote": null}]}};
+const LIN_VALUATION = {"peer": {"score": 11.7, "sector": "Materials (S&P500 25종목)", "asOf": ["2026-10-16", "2026-10-16"], "priceSession": null, "metrics": [{"metric": "per", "score": 23.5, "rank": 14, "peers": 17}, {"metric": "pbr", "score": 8.3, "rank": 23, "peers": 24}, {"metric": "psr", "score": 0.0, "rank": 25, "peers": 24}, {"metric": "pcr", "score": 13.6, "rank": 20, "peers": 22}, {"metric": "evebitda", "score": 13.3, "rank": 14, "peers": 15}]}, "self": {"score": 35.0, "window": ["2021-10-18", "2026-10-16"], "perBasis": "diluted", "metrics": [{"metric": "per", "score": 87.0, "percentile": 13.0, "current": 32.16, "min": 26.06, "median": 34.51, "max": 51.2, "days": 1255, "currentNote": null}, {"metric": "pbr", "score": 11.4, "percentile": 88.6, "current": 5.88, "min": 3.12, "median": 5.16, "max": 6.56, "days": 1255, "currentNote": null}, {"metric": "psr", "score": 32.9, "percentile": 67.1, "current": 6.48, "min": 4.04, "median": 6.1, "max": 7.3, "days": 1255, "currentNote": null}, {"metric": "pcr", "score": 6.6, "percentile": 93.4, "current": 46.18, "min": 19.18, "median": 38.96, "max": 49.62, "days": 1255, "currentNote": null}, {"metric": "evebitda", "score": 37.3, "percentile": 62.7, "current": 19.34, "min": 15.22, "median": 18.95, "max": 21.38, "days": 1255, "currentNote": null}]}};
 /* VALUATION:END */
 
 // ── 종합 평가 자동 판정 (2026-09-25 사용자 결정 · 방향 합산) ──
@@ -2067,8 +2067,8 @@ const LIN_ACTIVITY = {"ticker": "LIN", "status": "N/A", "reason": "매출원가 
 // ── 투자포인트 탭: 애널리스트 목표가 (출처·기준일 포함) ──
 // 갱신: StockAnalysis 예측 페이지(stockanalysis.com/stocks/lin/forecast/)의 값과 날짜를 옮긴다.
 // 현재가 대비는 마지막 종가에서 계산한다.
-const LIN_ANALYST = { asOf: '2026-10-13', source: 'StockAnalysis (의견 집계 · 개별 목표가)', rating: 'Buy', n: 28, nTargets: 18, mean: 555.33, median: 560,
-  low: 525, high: 580, strongBuy: 17, buy: 5, hold: 5, sell: 0, strongSell: 1 };
+const LIN_ANALYST = { asOf: '2026-10-17', source: 'StockAnalysis (의견 집계 · 개별 목표가)', rating: 'Buy', n: 29, nTargets: 19, mean: 556.26, median: 560,
+  low: 525, high: 580, strongBuy: 17, buy: 6, hold: 5, sell: 0, strongSell: 1 };
 (function(){
   const A = LIN_ANALYST, last = (typeof LIN_DAILY !== 'undefined' && LIN_DAILY.length) ? LIN_DAILY[LIN_DAILY.length - 1] : null;
   const put = (k, t) => document.querySelectorAll(`#invest [data-an="${k}"]`).forEach(el => { el.textContent = t; });
