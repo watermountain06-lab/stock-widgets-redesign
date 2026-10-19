@@ -537,7 +537,7 @@ Chart.overrides.doughnut.animation = false;
   <div class="header-meta" style="grid-template-columns:repeat(4,1fr);">
     <div class="meta-item">
       <span class="meta-label">종합 평가 (밸류에이션)</span>
-      <span class="meta-value" data-verdict style="font-size:22px;color:var(--gold);">적정~고평가</span>
+      <span class="meta-value" data-verdict style="font-size:22px;color:var(--red);">고평가</span>
     </div>
     <div class="meta-item">
       <span class="meta-label">현재가 요구 영업이익률 (최근 4분기 21.7%)</span>
@@ -573,9 +573,9 @@ Chart.overrides.doughnut.animation = false;
       <div class="logic-head"><span class="logic-tag">밸류에이션 <span class="logic-denom">동종업 대비</span></span><span class="logic-verdict" id="pfePeerVerdict">중간</span></div>
       <div class="logic-score" id="pfePeerScore">68.3<span class="logic-denom">/100</span></div>
     </div>
-    <div class="logic-box logic-neutral" id="pfeSelfBox">
-      <div class="logic-head"><span class="logic-tag">밸류에이션 <span class="logic-denom">자기 이력 대비</span></span><span class="logic-verdict" id="pfeSelfVerdict">중간</span></div>
-      <div class="logic-score" id="pfeSelfScore">31.7<span class="logic-denom">/100</span></div>
+    <div class="logic-box logic-negative" id="pfeSelfBox">
+      <div class="logic-head"><span class="logic-tag">밸류에이션 <span class="logic-denom">자기 이력 대비</span></span><span class="logic-verdict" id="pfeSelfVerdict">비싼 편</span></div>
+      <div class="logic-score" id="pfeSelfScore">29.1<span class="logic-denom">/100</span></div>
     </div>
   </div>
 
@@ -897,11 +897,11 @@ Chart.overrides.doughnut.animation = false;
           </div>
         </div>
         <div class="zone-item">
-          <span class="zone-label">보통주 배당 지급</span>
-          <span class="zone-val">공시 없음</span>
+          <span class="zone-label">배당 지급 (연초~6/28, 25주)</span>
+          <span class="zone-val">$4.9B</span>
         </div>
         <div class="zone-item">
-          <span class="zone-label">최근 분기 주당 배당 (선언 기준, 6/28 분기)</span>
+          <span class="zone-label">최근 분기 주당 배당 (선언 기준, 그 분기 선언액 합계 — 직전 분기엔 선언 없음, 6/28 분기)</span>
           <div style="display:flex;align-items:center;gap:8px;">
             <span class="zone-tag" style="background:rgba(212,160,23,0.18);color:var(--gold);">1년 전 $0.86 · +0.0%</span>
             <span class="zone-val">$0.86</span>
@@ -917,7 +917,8 @@ Chart.overrides.doughnut.animation = false;
     <div style="font-size:12px;color:var(--text2);line-height:1.8;">
       <div style="margin-bottom:8px;"><strong style="color:var(--accent2);">①</strong> 매출 증가율(1년 전 대비)이 최근 흐름(−1.2% → +5.4% → +2.6%)보다 낮아지지 않는지</div>
       <div style="margin-bottom:8px;"><strong style="color:var(--accent2);">②</strong> Q3 2026 합성 영업이익률(세전이익 기준)이 1년 전 같은 분기(Q3 2025 23.1%)보다 높은지(직전 Q2 2026 20.4%)</div>
-      <div style="margin-bottom:8px;"><strong style="color:var(--accent2);">③</strong> 차입금 $63.2B이 줄어드는지</div>
+      <div style="margin-bottom:8px;"><strong style="color:var(--accent2);">③</strong> FCF(최근 4분기 $11.0B)가 배당 지급(연 환산 약 $10.2B)을 넘는지</div>
+      <div><strong style="color:var(--accent2);">④</strong> 차입금 $63.2B이 줄어드는지</div>
     </div>
   </div>
 </div>
@@ -926,10 +927,10 @@ Chart.overrides.doughnut.animation = false;
   <div class="section-title">밸류에이션 (Valuation Multiples) — 현재가 <span data-vs="price">$29.58</span></div>
 
   <div class="card val-summary">
-    <div class="vs-head"><span class="vs-head-l">종합 밸류에이션</span><span class="vs-verdict" data-verdict>적정~고평가</span><span class="vs-asof"><span data-vs="asof">2026.10.16</span> 종가 기준</span></div>
+    <div class="vs-head"><span class="vs-head-l">종합 밸류에이션</span><span class="vs-verdict" data-verdict>고평가</span><span class="vs-asof"><span data-vs="asof">2026.10.16</span> 종가 기준</span></div>
     <div class="vs-table-wrap"><div class="vs-table" id="valComp">
       <div></div><div></div><div class="vc-head">PER</div><div class="vc-head">PBR</div><div class="vc-head">PSR</div><div class="vc-head">PCR</div><div class="vc-head">EV/EBITDA</div><div></div>
-      <div class="vs-name" title="지난 5년 PFE 자신의 배수보다 지금이 얼마나 낮은가. 높을수록 싸다.">자기 이력 대비</div><div class="vs-val" data-vc-score="self">31.7</div><div class="sc-tile low" data-vc="self" data-m="per">5</div><div class="sc-tile lost" data-vc="self" data-m="pbr">38</div><div class="sc-tile lost" data-vc="self" data-m="psr">33</div><div class="sc-tile lost" data-vc="self" data-m="pcr">38</div><div class="sc-tile lost" data-vc="self" data-m="evebitda">46</div><div class="vs-pill mid" data-vs-pill="self">중간</div>
+      <div class="vs-name" title="지난 5년 PFE 자신의 배수보다 지금이 얼마나 낮은가. 높을수록 싸다.">자기 이력 대비</div><div class="vs-val" data-vc-score="self">29.1</div><div class="sc-tile low" data-vc="self" data-m="per">5</div><div class="sc-tile lost" data-vc="self" data-m="pbr">38</div><div class="sc-tile lost" data-vc="self" data-m="psr">33</div><div class="sc-tile lost" data-vc="self" data-m="pcr">38</div><div class="sc-tile lost" data-vc="self" data-m="evebitda">33</div><div class="vs-pill high" data-vs-pill="self">비싸다</div>
       <div class="vs-name" title="회사가 앞으로 벌어들일 현금만으로 계산한 주당 가치(기본 시나리오).">현금흐름 (내재가치)</div><div class="vs-val" data-vs="dcf">$9.34</div><div class="vs-note">현재가 <span data-vs="price">$29.58</span> 대비 <strong data-vs="upside">−68.4%</strong> · 기본 시나리오</div><div class="vs-pill-wrap"><span class="vs-hard" title="· 자본수익률 8.1% &lt; 할인율 10% — 평균 투하자본 기준이라, 추가 투자의 수익률이 할인율보다 높지 않으면 성장이 가치를 만들지 못한다
 · 어떤 일정 성장률로도 현재가에 닿지 않는다
 · 잔존가치(5년 뒤)가 내재가치의 77%
@@ -939,8 +940,8 @@ Chart.overrides.doughnut.animation = false;
 이 칸은 보수적으로 잡혀 있다(할인율 10%, 5년 뒤 영구성장 2.5%). S&amp;P500 비금융 종목의 83~91%가 매달 '매우 비싸다'에 들어간다(2024-10~2026-09). 다른 종목과 견주려면 위 비율 숫자를 함께 볼 것.">매우 비싸다</div></div>
       <div class="vs-name" title="S&amp;P500 헬스케어 종목들보다 배수가 얼마나 낮은가. 높을수록 싸다.">동종업 대비</div><div class="vs-val" data-vc-score="peer">68.3</div><div class="sc-tile low" data-vc="peer" data-m="per">29</div><div class="sc-tile" data-vc="peer" data-m="pbr">87</div><div class="sc-tile lost" data-vc="peer" data-m="psr">58</div><div class="sc-tile" data-vc="peer" data-m="pcr">77</div><div class="sc-tile" data-vc="peer" data-m="evebitda">92</div><div class="vs-pill mid" data-vs-pill="peer">중간</div>
     </div></div>
-    <div class="vs-premise">PER 38.9배(4.5년 중앙값 15.0배)로 자기 이력 31.7점(중간), 동종업 68.3점(중간)이다. <strong>현금흐름 내재가치(기본 $9.34)는 현재가의 32%다</strong>.</div>
-    <div class="verdict-summary-risk">⚠️ 세 칸이 자기 이력 0 · 동종업 0 · 현금흐름 −2, 합계 −2 “적정~고평가”이다. 현금흐름 내재가치(기본 $9.34)는 현재가의 32%다. 현재가를 정당화하려면 영업이익률이 37.9%까지 올라야 한다(최근 4분기 21.7%, 5년 중앙값 22.1%). 내재가치에서 차입금 $63.2B를 빼고 현금·단기투자 $11.7B를 더한다.</div>
+    <div class="vs-premise">PER 38.9배(4.5년 중앙값 15.0배)로 자기 이력 29.1점(비싸다), 동종업 68.3점(중간)이다. <strong>현금흐름 내재가치(기본 $9.34)는 현재가의 32%다</strong>.</div>
+    <div class="verdict-summary-risk">⚠️ 세 칸이 자기 이력 −1 · 동종업 0 · 현금흐름 −2, 합계 −3 “고평가”이다. 현금흐름 내재가치(기본 $9.34)는 현재가의 32%다. 현재가를 정당화하려면 영업이익률이 37.9%까지 올라야 한다(최근 4분기 21.7%, 5년 중앙값 22.1%). 내재가치에서 차입금 $63.2B를 빼고 현금·단기투자 $11.7B를 더한다.</div>
   </div>
 
   <div class="grid-2">
@@ -997,14 +998,14 @@ Chart.overrides.doughnut.animation = false;
 
       <div class="val-item" data-metric="evebitda" onclick="selectMultiple('evebitda')">
         <div class="val-header">
-          <span class="val-name">EV/EBITDA <span class="hist-note" data-hist="note">유효 이력 1.7년(적자·결측 구간 제외)</span></span>
+          <span class="val-name">EV/EBITDA <span class="hist-note" data-hist="note">유효 이력 2.4년(적자·결측 구간 제외)</span></span>
           <div style="display:flex;align-items:center;gap:8px;">
             <span class="val-number" data-hist="cur">10.9x</span>
-            <span class="hist-badge mid" data-hist="badge">1.7년 중 상위 46%</span>
+            <span class="hist-badge mid" data-hist="badge">2.4년 중 상위 33%</span>
           </div>
         </div>
-        <div class="val-track"><div class="val-fill hist-fill mid" data-hist="fill" style="width: 54.1%;"></div></div>
-        <div class="hist-labels"><span data-hist="min">최저 9.0x</span><span data-hist="median">중앙 10.6x</span><span data-hist="max">최고 52.8x</span></div>
+        <div class="val-track"><div class="val-fill hist-fill mid" data-hist="fill" style="width: 67%;"></div></div>
+        <div class="hist-labels"><span data-hist="min">최저 8.6x</span><span data-hist="median">중앙 10.0x</span><span data-hist="max">최고 63.0x</span></div>
       </div>
     </div>
 
@@ -1023,8 +1024,8 @@ Chart.overrides.doughnut.animation = false;
 
   <div class="card">
     <div class="card-title">종합 해석</div>
-    <div class="verdict-summary-head">지배적 내러티브 · Q2 2026 매출 $15.0B(+2.6%), 영업이익률 20.4%(1년 전 25.8%). 주가는 1년 새 +21%<span class="tag">배수 중간·매출 성장 비슷</span></div>
-    <div class="verdict-summary-counter">⚠️ 세 칸이 자기 이력 0 · 동종업 0 · 현금흐름 −2, 합계 −2 “적정~고평가”이다. 현금흐름 내재가치(기본 $9.34)는 현재가의 32%다.</div>
+    <div class="verdict-summary-head">지배적 내러티브 · Q2 2026 매출 $15.0B(+2.6%), 영업이익률 20.4%(1년 전 25.8%). 주가는 1년 새 +21%<span class="tag">배수 비싼 쪽·매출 성장 비슷</span></div>
+    <div class="verdict-summary-counter">⚠️ 세 칸이 자기 이력 −1 · 동종업 0 · 현금흐름 −2, 합계 −3 “고평가”이다. 현금흐름 내재가치(기본 $9.34)는 현재가의 32%다.</div>
     <div class="verdict-summary-next">🔍 다음 확인 포인트 · 2026년 11월 3일 무렵 (예상) Q3 2026 실적 공시.</div>
   </div>
 
@@ -1115,7 +1116,7 @@ Chart.overrides.doughnut.animation = false;
       <div class="bb-title bb-bear">🐻 Bear 요인</div>
       <div class="bb-row bear"><span class="bb-icon">▼</span><span class="bb-head">내재가치</span><span class="bb-text">현금흐름 내재가치(기본 $9.34)는 현재가의 32%.</span></div>
       <div class="bb-row bear"><span class="bb-icon">▼</span><span class="bb-head">부채</span><span class="bb-text">순차입금(리스 포함) $54.1B, 최근 4분기 영업이익의 3.9배.</span></div>
-      <div class="bb-row bear"><span class="bb-icon">▼</span><span class="bb-head">밸류</span><span class="bb-text">자기 이력 32점(배수 5개) · PER 38.9배(4.5년 중앙값 15.0배).</span></div>
+      <div class="bb-row bear"><span class="bb-icon">▼</span><span class="bb-head">밸류</span><span class="bb-text">자기 이력 29점(배수 5개) · PER 38.9배(4.5년 중앙값 15.0배).</span></div>
     </div>
   </div>
 
@@ -1518,7 +1519,7 @@ const DCF_SKEW_NOTE = "이 칸은 보수적으로 잡혀 있다(할인율 10%, 5
 const PFE_SCORES = {
   fundamental: 36.9,   // 재무건전성 + 성장·수익성 (밸류에이션 축 제외)
   peer: 68.3,          // S&P500 헬스케어 대비 배수 순위 (v2/peer_universe/health_care.json)
-  selfHistory: 31.7,   // 자기 5년 배수 분포 백분위 (2021-10-18 ~ 2026-10-16)
+  selfHistory: 29.1,   // 자기 5년 배수 분포 백분위 (2021-10-18 ~ 2026-10-16)
   asOf: "2026-10-16",
   fundamentalAsOf: "2026-06-28",   // Q2 2026 10-Q
 };
@@ -1835,7 +1836,7 @@ const PFE_FUNDAMENTAL = {"ticker": "PFE", "basis": "quarter", "asOf": "2026-06-2
 //
 // 갱신: python3 v2/build_peer_score.py PFE --self v2/PFE_multiples.json --card
 /* VALUATION:BEGIN */
-const PFE_VALUATION = {"peer": {"score": 68.3, "sector": "Health Care (S&P500 59종목)", "asOf": ["2026-10-16", "2026-10-16"], "priceSession": null, "metrics": [{"metric": "per", "score": 28.6, "rank": 36, "peers": 49}, {"metric": "pbr", "score": 86.5, "rank": 8, "peers": 52}, {"metric": "psr", "score": 57.9, "rank": 25, "peers": 57}, {"metric": "pcr", "score": 76.5, "rank": 13, "peers": 51}, {"metric": "evebitda", "score": 92.0, "rank": 5, "peers": 50}]}, "self": {"score": 31.7, "window": ["2021-10-18", "2026-10-16"], "perBasis": "diluted", "metrics": [{"metric": "per", "score": 4.8, "percentile": 95.2, "current": 38.92, "min": 6.9, "median": 15.04, "max": 76.68, "days": 1131, "currentNote": null}, {"metric": "pbr", "score": 37.5, "percentile": 62.5, "current": 1.98, "min": 1.39, "median": 1.82, "max": 4.54, "days": 1255, "currentNote": null}, {"metric": "psr", "score": 32.8, "percentile": 67.2, "current": 2.65, "min": 1.92, "median": 2.46, "max": 5.45, "days": 1255, "currentNote": null}, {"metric": "pcr", "score": 37.5, "percentile": 62.5, "current": 15.35, "min": 8.12, "median": 13.96, "max": 35.57, "days": 1255, "currentNote": null}, {"metric": "evebitda", "score": 45.9, "percentile": 54.1, "current": 10.93, "min": 8.96, "median": 10.55, "max": 52.84, "days": 440, "currentNote": null}]}};
+const PFE_VALUATION = {"peer": {"score": 68.3, "sector": "Health Care (S&P500 59종목)", "asOf": ["2026-10-16", "2026-10-16"], "priceSession": null, "metrics": [{"metric": "per", "score": 28.6, "rank": 36, "peers": 49}, {"metric": "pbr", "score": 86.5, "rank": 8, "peers": 52}, {"metric": "psr", "score": 57.9, "rank": 25, "peers": 57}, {"metric": "pcr", "score": 76.5, "rank": 13, "peers": 51}, {"metric": "evebitda", "score": 92.0, "rank": 5, "peers": 50}]}, "self": {"score": 29.1, "window": ["2021-10-18", "2026-10-16"], "perBasis": "diluted", "metrics": [{"metric": "per", "score": 4.8, "percentile": 95.2, "current": 38.92, "min": 6.9, "median": 15.04, "max": 76.68, "days": 1131, "currentNote": null}, {"metric": "pbr", "score": 37.5, "percentile": 62.5, "current": 1.98, "min": 1.39, "median": 1.82, "max": 4.54, "days": 1255, "currentNote": null}, {"metric": "psr", "score": 32.8, "percentile": 67.2, "current": 2.65, "min": 1.92, "median": 2.46, "max": 5.45, "days": 1255, "currentNote": null}, {"metric": "pcr", "score": 37.5, "percentile": 62.5, "current": 15.35, "min": 8.12, "median": 13.96, "max": 35.57, "days": 1255, "currentNote": null}, {"metric": "evebitda", "score": 33.0, "percentile": 67.0, "current": 10.93, "min": 8.59, "median": 9.99, "max": 62.97, "days": 613, "currentNote": null}]}};
 /* VALUATION:END */
 
 // ── 종합 평가 자동 판정 (2026-09-25 사용자 결정 · 방향 합산) ──

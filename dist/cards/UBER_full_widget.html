@@ -541,7 +541,7 @@ Chart.overrides.doughnut.animation = false;
     </div>
     <div class="meta-item">
       <span class="meta-label">현재가 요구 성장 (5년 · 실제 3년 연 +16.4%)</span>
-      <span class="meta-value" id="uberDcfReq" style="font-size: 22px; color: var(--red);">연 37.1%</span>
+      <span class="meta-value" id="uberDcfReq" style="font-size: 22px; color: var(--red);">21.6%</span>
     </div>
     <div class="meta-item">
       <span class="meta-label" id="uberConfidenceLabel">밴드 적중률</span>
@@ -563,7 +563,7 @@ Chart.overrides.doughnut.animation = false;
   <div class="logic-grid" id="uberLogicGrid">
     <div class="logic-box logic-info">
       <div class="logic-head"><span class="logic-tag">내재가치 <span class="logic-denom">현금흐름</span></span><span class="logic-verdict" id="uberDcfVerdict">매우 비싸다</span></div>
-      <div class="logic-score" id="uberDcfBox">$29<span class="logic-denom"> · 보수 $4.78 · 낙관 $33</span></div>
+      <div class="logic-score" id="uberDcfBox">$23<span class="logic-denom"> · 보수 $4.78 · 낙관 $33</span></div>
     </div>
     <div class="logic-box logic-neutral" id="uberFundBox">
       <div class="logic-head"><span class="logic-tag">기본적 분석 <span class="logic-denom">재무제표</span></span><span class="logic-verdict" id="uberFundVerdict">보통</span></div>
@@ -575,7 +575,7 @@ Chart.overrides.doughnut.animation = false;
     </div>
     <div class="logic-box logic-positive" id="uberSelfBox">
       <div class="logic-head"><span class="logic-tag">밸류에이션 <span class="logic-denom">자기 이력 대비</span></span><span class="logic-verdict" id="uberSelfVerdict">싼 편</span></div>
-      <div class="logic-score" id="uberSelfScore">89.2<span class="logic-denom">/100</span></div>
+      <div class="logic-score" id="uberSelfScore">89.0<span class="logic-denom">/100</span></div>
     </div>
   </div>
 
@@ -681,12 +681,12 @@ Chart.overrides.doughnut.animation = false;
         <tr>
           <td class="scn-name scn-low">보수</td>
           <td class="big scn-low" data-dcf-value="low">$4.78</td><td style="color: var(--red);" data-dcf-upside="low">−93.2%</td>
-          <td class="story">매출이 5년 성장률의 절반(연 8.2%)로 시작해 2.5%로 식고, 영업이익률이 5년 중앙값 3.5%로 간다.</td>
+          <td class="story">매출이 3년 성장률의 절반(연 8.2%)로 시작해 2.5%로 식고, 영업이익률이 5년 중앙값 3.5%로 간다.</td>
         </tr>
         <tr>
           <td class="scn-name scn-base">기본</td>
-          <td class="big scn-base" data-dcf-value="base">$29.31</td><td style="color: var(--red);" data-dcf-upside="base">−58.3%</td>
-          <td class="story">매출이 5년 성장률(연 16.4%)로 시작해 2.5%로 식고, 영업이익률이 최근 2년 중앙값 9.4%로 간다.</td>
+          <td class="big scn-base" data-dcf-value="base">$23.46</td><td style="color: var(--red);" data-dcf-upside="base">−66.7%</td>
+          <td class="story">매출이 3년 성장률(연 16.4%)로 시작해 2.5%로 식고, 영업이익률이 최근 2년 중앙값 9.4%로 간다.</td>
         </tr>
         <tr>
           <td class="scn-name scn-high">낙관</td>
@@ -696,8 +696,8 @@ Chart.overrides.doughnut.animation = false;
       </tbody>
     </table></div>
     <div class="note">세 값은 확률이 아니라, 과거 실적에서 서로 다른 가정을 뽑아 계산한 결과다. 세 시나리오는 $4.78~$32.91다. 영업이익률은 최근 4분기 12.1%, 2년 중앙값 9.4%, 5년 중앙값 3.5%를 쓴다.</div>
-    <div class="note" data-dcf-nonop>기본 시나리오 $29.31 = 사업 가치 $27.44 + 비영업 자산 $1.87(주당, 지분 투자)</div>
-    <div class="reverse">지금 가격(<span data-dcf-price>$70.35</span>)이 정당하려면 5년간 매출이 매년 <b data-dcf-req>37.1%</b>씩 커야 한다. 기본 시나리오(<span data-dcf-basev>$29</span>)를 같은 방식으로 환산하면 연 <span data-dcf-baseeq>10.4%</span>다.</div>
+    <div class="note" data-dcf-nonop>기본 시나리오 $23.46 = 사업 가치 $21.59 + 비영업 자산 $1.87(주당, 지분 투자)</div>
+    <div class="reverse">—</div>
   </div>
 
   <!-- ── 2. 직접 바꿔보기 ── -->
@@ -708,7 +708,7 @@ Chart.overrides.doughnut.animation = false;
       <div class="knob"><span class="knob-l">할인율 <span class="knob-d" data-knob-default="wacc">(10%)</span></span><span class="knob-btns" data-knob="wacc"></span></div>
       <div class="knob"><span class="knob-l">영구성장 <span class="knob-d" data-knob-default="term">(2.5%)</span></span><span class="knob-btns" data-knob="term"></span></div>
     </div>
-    <div class="pick-result"><span style="color: rgb(14, 165, 233);" id="dcfPickValue">주당 $29</span><span style="color: var(--red);" id="dcfPickUpside">현재가 대비 −58.3%</span></div>
+    <div class="pick-result"><span style="color: rgb(14, 165, 233);" id="dcfPickValue">주당 $23</span><span style="color: var(--red);" id="dcfPickUpside">현재가 대비 −66.7%</span></div>
     <div class="ruler" id="dcfRuler"></div>
   </div>
 </div>
@@ -894,15 +894,15 @@ Chart.overrides.doughnut.animation = false;
     <div class="vs-head"><span class="vs-head-l">종합 밸류에이션</span><span class="vs-verdict" data-verdict>적정~고평가</span><span class="vs-asof"><span data-vs="asof">2026.10.16</span> 종가 기준</span></div>
     <div class="vs-table-wrap"><div class="vs-table" id="valComp">
       <div></div><div></div><div class="vc-head">PER</div><div class="vc-head">PBR</div><div class="vc-head">PSR</div><div class="vc-head">PCR</div><div class="vc-head">EV/EBITDA</div><div></div>
-      <div class="vs-name" title="지난 5년 UBER 자신의 배수보다 지금이 얼마나 낮은가. 높을수록 싸다.">자기 이력 대비</div><div class="vs-val" data-vc-score="self">89.2</div><div class="sc-tile" data-vc="self" data-m="per">87</div><div class="sc-tile" data-vc="self" data-m="pbr">89</div><div class="sc-tile" data-vc="self" data-m="psr">74</div><div class="sc-tile" data-vc="self" data-m="pcr">98</div><div class="sc-tile" data-vc="self" data-m="evebitda">98</div><div class="vs-pill" data-vs-pill="self">싸다</div>
-      <div class="vs-name" title="회사가 앞으로 벌어들일 현금만으로 계산한 주당 가치(기본 시나리오).">현금흐름 (내재가치)</div><div class="vs-val" data-vs="dcf">$29</div><div class="vs-note">현재가 <span data-vs="price">$70.35</span> 대비 <strong data-vs="upside">−58.3%</strong> · 기본 시나리오</div><div class="vs-pill-wrap"><div class="vs-pill high" data-vs-pill="dcf" title="현재가 ÷ 기본 내재가치 = 2.40
+      <div class="vs-name" title="지난 5년 UBER 자신의 배수보다 지금이 얼마나 낮은가. 높을수록 싸다.">자기 이력 대비</div><div class="vs-val" data-vc-score="self">89.0</div><div class="sc-tile" data-vc="self" data-m="per">87</div><div class="sc-tile" data-vc="self" data-m="pbr">89</div><div class="sc-tile" data-vc="self" data-m="psr">74</div><div class="sc-tile" data-vc="self" data-m="pcr">98</div><div class="sc-tile" data-vc="self" data-m="evebitda">97</div><div class="vs-pill" data-vs-pill="self">싸다</div>
+      <div class="vs-name" title="회사가 앞으로 벌어들일 현금만으로 계산한 주당 가치(기본 시나리오).">현금흐름 (내재가치)</div><div class="vs-val" data-vs="dcf">$23</div><div class="vs-note">현재가 <span data-vs="price">$70.35</span> 대비 <strong data-vs="upside">−66.7%</strong> · 기본 시나리오</div><div class="vs-pill-wrap"><div class="vs-pill high" data-vs-pill="dcf" title="현재가 ÷ 기본 내재가치 = 3.00
 시나리오 범위: 2.14 ~ 14.72(세 시나리오 최대·최소 기준)
 0.7 이하 매우 싸다 · 0.9 이하 싸다 · 1.1 이하 적정 · 1.5 이하 비싸다 · 초과 매우 비싸다
 이 칸은 보수적으로 잡혀 있다(할인율 10%, 5년 뒤 영구성장 2.5%). S&amp;P500 비금융 종목의 83~91%가 매달 '매우 비싸다'에 들어간다(2024-10~2026-09). 다른 종목과 견주려면 위 비율 숫자를 함께 볼 것.">매우 비싸다</div></div>
       <div class="vs-name" title="S&amp;P500 산업재 종목들보다 배수가 얼마나 낮은가. 높을수록 싸다.">동종업 대비</div><div class="vs-val" data-vc-score="peer">55.1</div><div class="sc-tile lost" data-vc="peer" data-m="per">43</div><div class="sc-tile lost" data-vc="peer" data-m="pbr">55</div><div class="sc-tile lost" data-vc="peer" data-m="psr">62</div><div class="sc-tile" data-vc="peer" data-m="pcr">87</div><div class="sc-tile low" data-vc="peer" data-m="evebitda">29</div><div class="vs-pill mid" data-vs-pill="peer">중간</div>
     </div></div>
-    <div class="vs-premise">PER 31.4배(2.9년 중앙값 38.1배)로 자기 이력 89.2점(싸다), 동종업 55.1점(중간)이다. <strong>현금흐름 내재가치(기본 $29.31)는 현재가의 42%다</strong>.</div>
-    <div class="verdict-summary-risk">⚠️ 세 칸이 자기 이력 +1 · 동종업 0 · 현금흐름 −2, 합계 −1 “적정~고평가”이다. 현금흐름 내재가치(기본 $29.31)는 현재가의 42%다. 현재가를 정당화하려면 매출이 5년간 연 37.1% 커야 한다. 내재가치에서 차입금·금융리스 $12.9B를 빼고 현금·단기투자 $5.4B를 더한다.</div>
+    <div class="vs-premise">PER 31.4배(2.9년 중앙값 38.1배)로 자기 이력 89.0점(싸다), 동종업 55.1점(중간)이다. <strong>현금흐름 내재가치(기본 $23.46)는 현재가의 33%다</strong>.</div>
+    <div class="verdict-summary-risk">⚠️ 세 칸이 자기 이력 +1 · 동종업 0 · 현금흐름 −2, 합계 −1 “적정~고평가”이다. 현금흐름 내재가치(기본 $23.46)는 현재가의 33%다. 현재가를 정당화하려면 영업이익률이 21.6%까지 올라야 한다(최근 4분기 12.1%, 5년 중앙값 3.5%). 내재가치에서 차입금·금융리스 $12.9B를 빼고 현금·단기투자 $5.4B를 더한다.</div>
   </div>
 
   <div class="grid-2">
@@ -959,14 +959,14 @@ Chart.overrides.doughnut.animation = false;
 
       <div class="val-item" data-metric="evebitda" onclick="selectMultiple('evebitda')">
         <div class="val-header">
-          <span class="val-name">EV/EBITDA <span class="hist-note" data-hist="note">유효 이력 3.2년(적자·결측 구간 제외)</span></span>
+          <span class="val-name">EV/EBITDA <span class="hist-note" data-hist="note">유효 이력 2.3년(적자·결측 구간 제외)</span></span>
           <div style="display:flex;align-items:center;gap:8px;">
             <span class="val-number" data-hist="cur">20.6x</span>
-            <span class="hist-badge good" data-hist="badge">3.2년 중 하위 2%</span>
+            <span class="hist-badge good" data-hist="badge">2.3년 중 하위 3%</span>
           </div>
         </div>
-        <div class="val-track"><div class="val-fill hist-fill good" data-hist="fill" style="width: 2%;"></div></div>
-        <div class="hist-labels"><span data-hist="min">최저 19.9x</span><span data-hist="median">중앙 67.2x</span><span data-hist="max">최고 361.4x</span></div>
+        <div class="val-track"><div class="val-fill hist-fill good" data-hist="fill" style="width: 2.8%;"></div></div>
+        <div class="hist-labels"><span data-hist="min">최저 19.9x</span><span data-hist="median">중앙 64.6x</span><span data-hist="max">최고 361.4x</span></div>
       </div>
     </div>
 
@@ -986,7 +986,7 @@ Chart.overrides.doughnut.animation = false;
   <div class="card">
     <div class="card-title">종합 해석</div>
     <div class="verdict-summary-head">지배적 내러티브 · Q2 2026 매출 $14.2B(+12.2%), 영업이익률 13.3%(1년 전 11.5%). 주가는 1년 새 −26%<span class="tag">배수 5년 최저권·매출 성장 느려짐</span></div>
-    <div class="verdict-summary-counter">⚠️ 세 칸이 자기 이력 +1 · 동종업 0 · 현금흐름 −2, 합계 −1 “적정~고평가”이다. 현금흐름 내재가치(기본 $29.31)는 현재가의 42%다.</div>
+    <div class="verdict-summary-counter">⚠️ 세 칸이 자기 이력 +1 · 동종업 0 · 현금흐름 −2, 합계 −1 “적정~고평가”이다. 현금흐름 내재가치(기본 $23.46)는 현재가의 33%다.</div>
     <div class="verdict-summary-next">🔍 다음 확인 포인트 · 2026년 11월 3일 무렵 (예상) Q3 2026 실적 공시.</div>
   </div>
 
@@ -1064,7 +1064,7 @@ Chart.overrides.doughnut.animation = false;
     </div>
     <div class="bb-box">
       <div class="bb-title bb-bear">🐻 Bear 요인</div>
-      <div class="bb-row bear"><span class="bb-icon">▼</span><span class="bb-head">내재가치</span><span class="bb-text">현금흐름 내재가치(기본 $29.31)는 현재가의 42%.</span></div>
+      <div class="bb-row bear"><span class="bb-icon">▼</span><span class="bb-head">내재가치</span><span class="bb-text">현금흐름 내재가치(기본 $23.46)는 현재가의 33%.</span></div>
       <div class="bb-row bear"><span class="bb-icon">▼</span><span class="bb-head">매출</span><span class="bb-text">Q2 2026 매출 +12.2%(보고 기준, 3년 연평균 16.4%).</span></div>
     </div>
   </div>
@@ -1416,7 +1416,7 @@ const UBER_MA120 = [46.23,46.164,46.091,46.021,45.959,45.914,45.908,45.889,45.87
 // 종합 평가는 시스템이 정한다 — 아래 VALUATION 블록 뒤의 자동 판정이 채운다(2026-09-25).
 let UBER_VERDICT = '계산 중';
 
-const UBER_DCF = {"low": 4.78, "base": 29.31, "high": 32.91, "requiredGrowth": 0.3712, "baseEquivGrowth": 0.1036, "reqMode": "growth", "requiredMargin": null, "marginNow": 0.1213, "growth5y": 0.1641, "nonopPerShare": 1.87, "s2cFallback": false, "asOf": "2026-10-16", "hard": [], "hardDetail": {"roic": 0.1315, "tax": 0.2765, "nonopShare": 0.0637}, "tvShare": 0.7002};   // build_dcf_block.py
+const UBER_DCF = {"low": 4.78, "base": 23.46, "high": 32.91, "requiredGrowth": 0.6379, "baseEquivGrowth": 0.0997, "reqMode": "margin", "requiredMargin": 0.2159, "marginNow": 0.1213, "growth5y": 0.1641, "nonopPerShare": 1.87, "s2cFallback": true, "asOf": "2026-10-16", "hard": [], "hardDetail": {"roic": 0.1315, "tax": 0.2765, "nonopShare": 0.0796}, "tvShare": 0.8622};   // build_dcf_block.py
 // 현금흐름 판정 5단계 — 헤더 색·요약 칸·밸류에이션 알약이 모두 이 함수 하나를 쓴다(2026-09-25).
 // 현재가 ÷ 기본 내재가치: ≤0.7 매우 싸다 · ≤0.9 싸다 · ≤1.1 적정 · ≤1.5 비싸다 · 초과 매우 비싸다.
 // 보수~낙관이 현재가를 사이에 두면 '시나리오별 갈림'을 붙인다(Fable: NVDA 0.38~1.46).
@@ -1470,7 +1470,7 @@ const DCF_SKEW_NOTE = "이 칸은 보수적으로 잡혀 있다(할인율 10%, 5
 const UBER_SCORES = {
   fundamental: 59.2,   // 재무건전성 + 성장·수익성 (밸류에이션 축 제외)
   peer: 55.1,          // S&P500 산업재 대비 배수 순위 (v2/peer_universe/industrials.json)
-  selfHistory: 89.2,   // 자기 5년 배수 분포 백분위 (2021-10-18 ~ 2026-10-16)
+  selfHistory: 89.0,   // 자기 5년 배수 분포 백분위 (2021-10-18 ~ 2026-10-16)
   asOf: "2026-10-16",
   fundamentalAsOf: "2026-06-30",   // Q2 2026 10-Q
 };
@@ -1517,11 +1517,16 @@ const UBER_SCORES = {
   // 마진 모드인데 영업이익률 100%로도 닿지 않으면(해 없음) 요구 성장률을 대신 보인다(2026-09-30 사용자 결정, LRCX·PLTR).
   const noSol = mMode && d.requiredMargin == null && d.requiredGrowth != null;
   if (req) req.textContent = noSol ? '연 ' + f1(d.requiredGrowth)
-                           : mMode ? (d.requiredMargin != null ? f1(d.requiredMargin) : '—')
+                           : mMode ? (d.requiredMargin != null ? f1(d.requiredMargin) : '100%로도 불가')   // 해 없음(카드 한정)
                                    : '연 ' + f1(d.requiredGrowth);
   if (req && mMode) {
     const lb = req.closest('.meta-item') && req.closest('.meta-item').querySelector('.meta-label');
-    if (lb) lb.textContent = noSol ? '현재가 요구 성장 (마진 100%로도 불가)' : `현재가 요구 영업이익률 (최근 4분기 ${f1(d.marginNow)})`;
+    if (lb) lb.textContent = noSol ? '현재가 요구 성장 (마진 100%로도 불가)' : d.requiredMargin == null ? '현재가 요구 영업이익률' : `현재가 요구 영업이익률 (최근 4분기 ${f1(d.marginNow)})`;
+    if (d.requiredMargin == null) {   // 해 없음: 모델 범위를 툴팁에(v2.1 B-4, 2026-10-05)
+      const _ps = 2.6;   // 생성 때 PSR(이 줄 위에서 UBER_VALUATION을 부르면 선언 전 접근으로 스크립트가 멈춘다)
+      req.title = '영업이익률을 100%로 올려도 이 모델(할인율 10%·영구성장 2.5%, 지난 성장 경로에서 식는 5년)로는 현재가에 닿지 않는다'
+        + (_ps ? (_ps > 10 ? ` — 현재가는 매출의 ${_ps.toFixed(1)}배(PSR)로, 모델 상한(세후 이익률 100% ÷ (할인율 − 영구성장) ≈ 매출의 10배)을 넘는 성장·마진 기대가 들어 있다.` : ` — 현재가는 매출의 ${_ps.toFixed(1)}배(PSR)로 모델 상한(≈ 매출의 10배)보다 낮다. 해가 없는 것은 순부채·재투자 가정이 사업 가치를 깎기 때문이다.`) : '.');
+    }
   }
   if (req && price != null) {
     const lv = dcfLevel(price, d);
@@ -1529,7 +1534,7 @@ const UBER_SCORES = {
     const cell = req.closest('.meta-item');
     if (cell) cell.title = (mMode
         ? `현재가 $${price.toFixed(2)} 가 정당화되려면 매출이 ` + (d.growth5y < 0.0245 ? `연 2.5%(지난 5년 연 ${f1(d.growth5y)}가 영구성장률보다 낮아 하한)로 크는 동안` : `지난 5년 속도(연 ${f1(d.growth5y)})로 크다가 식는 동안`)
-          + ` 영업이익률이 ${d.requiredMargin != null ? f1(d.requiredMargin) : '(범위 밖)'}여야 한다(현재 ${f1(d.marginNow)}).`
+          + (d.requiredMargin != null ? ` 영업이익률이 ${f1(d.requiredMargin)}여야 한다(현재 ${f1(d.marginNow)}).` : ` 영업이익률을 100%로 올려도 모자란다(현재 ${f1(d.marginNow)}).`)
           + `\n성장만으로는 설명되지 않는다. ` + (d.requiredGrowth != null
             ? `일정 성장이라면 연 ${f1(d.requiredGrowth)}` + (d.growth5y <= 0 ? `가 필요하다(지난 5년 실제는 연 ${f1(d.growth5y)}로 줄었다).` : `가 필요해 지난 5년의 3배를 넘는다.`)
             : `어떤 일정 성장률로도 현재가에 닿지 않는다.`)
@@ -1565,7 +1570,7 @@ const UBER_SCORES = {
 //
 // 갱신: python3 v2/build_dcf_grid.py UBER
 /* DCF_GRID:BEGIN */
-const UBER_DCF_GRID = {"waccs": [0.08, 0.09, 0.1, 0.11, 0.12], "terms": [0.015, 0.02, 0.025, 0.03, 0.035], "default": [0.1, 0.025], "values": {"보수": [[8.43, 7.12, 6.11, 5.31, 4.66], [7.76, 6.46, 5.49, 4.72, 4.1], [6.96, 5.7, 4.78, 4.06, 3.49], [6.0, 4.82, 3.96, 3.32, 2.8], [4.82, 3.77, 3.02, 2.47, 2.04]], "기본": [[37.13, 32.2, 28.39, 25.37, 22.9], [38.2, 32.87, 28.83, 25.66, 23.1], [39.42, 33.62, 29.31, 25.97, 23.3], [40.84, 34.46, 29.84, 26.31, 23.52], [42.53, 35.43, 30.41, 26.66, 23.74]], "낙관": [[42.97, 36.39, 31.34, 27.35, 24.11], [44.71, 37.51, 32.08, 27.84, 24.43], [46.75, 38.78, 32.91, 28.38, 24.79], [49.17, 40.26, 33.84, 28.99, 25.19], [52.11, 41.99, 34.91, 29.67, 25.62]]}};
+const UBER_DCF_GRID = {"waccs": [0.08, 0.09, 0.1, 0.11, 0.12], "terms": [0.015, 0.02, 0.025, 0.03, 0.035], "default": [0.1, 0.025], "values": {"보수": [[8.43, 7.12, 6.11, 5.31, 4.66], [7.76, 6.46, 5.49, 4.72, 4.1], [6.96, 5.7, 4.78, 4.06, 3.49], [6.0, 4.82, 3.96, 3.32, 2.8], [4.82, 3.77, 3.02, 2.47, 2.04]], "기본": [[31.49, 26.58, 22.81, 19.81, 17.37], [32.41, 27.12, 23.12, 19.98, 17.45], [33.49, 27.73, 23.46, 20.16, 17.52], [34.77, 28.44, 23.85, 20.36, 17.61], [36.32, 29.26, 24.29, 20.58, 17.7]], "낙관": [[42.97, 36.39, 31.34, 27.35, 24.11], [44.71, 37.51, 32.08, 27.84, 24.43], [46.75, 38.78, 32.91, 28.38, 24.79], [49.17, 40.26, 33.84, 28.99, 25.19], [52.11, 41.99, 34.91, 29.67, 25.62]]}};
 /* DCF_GRID:END */
 (function(){
   const D = UBER_DCF, G = (typeof UBER_DCF_GRID !== 'undefined') ? UBER_DCF_GRID : null;
@@ -1602,7 +1607,7 @@ const UBER_DCF_GRID = {"waccs": [0.08, 0.09, 0.1, 0.11, 0.12], "terms": [0.015, 
   const pc = v => (v * 100).toFixed(1) + '%';
   if (D.reqMode === 'margin') document.querySelectorAll('#dcf .reverse').forEach(el => {
     el.innerHTML = `지금 가격(${price != null ? '$' + price.toFixed(2) : '현재가'})이 정당하려면, 매출이 ` + (D.growth5y < 0.0245 ? `연 2.5%(지난 5년 연 ${pc(D.growth5y)}가 영구성장률보다 낮아 하한)로 크는 동안` : `지난 5년 속도(연 ${pc(D.growth5y)})로 크다가 식는 동안`)
-      + ` 영업이익률이 <b>${D.requiredMargin != null ? pc(D.requiredMargin) : '범위 밖'}</b>여야 한다(지금 ${pc(D.marginNow)}).`
+      + (D.requiredMargin != null ? ` 영업이익률이 <b>${pc(D.requiredMargin)}</b>여야 한다(지금 ${pc(D.marginNow)}).` : ` 영업이익률을 <b>100%</b>로 올려도 모자란다(지금 ${pc(D.marginNow)}).`)
       + ` 성장만으로는 설명되지 않는다. ` + (D.requiredGrowth != null
         ? `일정 성장으로 맞추려면 연 ${pc(D.requiredGrowth)}` + (D.growth5y <= 0 ? `가 필요하다(지난 5년 실제는 연 ${pc(D.growth5y)}로 줄었다).` : `가 필요해 지난 5년 실제의 3배를 넘는다.`)
         : `어떤 일정 성장률로도 현재가에 닿지 않는다.`);
@@ -1782,7 +1787,7 @@ const UBER_FUNDAMENTAL = {"ticker": "UBER", "basis": "quarter", "asOf": "2026-06
 //
 // 갱신: python3 v2/build_peer_score.py UBER --self v2/UBER_multiples.json --card
 /* VALUATION:BEGIN */
-const UBER_VALUATION = {"peer": {"score": 55.1, "sector": "Industrials (S&P500 81종목)", "asOf": ["2026-10-16", "2026-10-16"], "priceSession": null, "metrics": [{"metric": "per", "score": 42.9, "rank": 45, "peers": 77}, {"metric": "pbr", "score": 55.4, "rank": 34, "peers": 74}, {"metric": "psr", "score": 61.5, "rank": 31, "peers": 78}, {"metric": "pcr", "score": 86.5, "rank": 11, "peers": 74}, {"metric": "evebitda", "score": 29.0, "rank": 50, "peers": 69}]}, "self": {"score": 89.2, "window": ["2021-10-18", "2026-10-16"], "perBasis": "diluted", "metrics": [{"metric": "per", "score": 87.0, "percentile": 13.0, "current": 31.41, "min": 28.63, "median": 38.13, "max": 149.34, "days": 738, "currentNote": null}, {"metric": "pbr", "score": 88.8, "percentile": 11.2, "current": 5.26, "min": 3.8, "median": 8.61, "max": 17.41, "days": 1255, "currentNote": null}, {"metric": "psr", "score": 73.7, "percentile": 26.3, "current": 2.6, "min": 1.68, "median": 3.38, "max": 7.3, "days": 1255, "currentNote": null}, {"metric": "pcr", "score": 98.4, "percentile": 1.6, "current": 14.2, "min": 13.7, "median": 32.24, "max": 188.21, "days": 1055, "currentNote": null}, {"metric": "evebitda", "score": 98.0, "percentile": 2.0, "current": 20.56, "min": 19.88, "median": 67.16, "max": 361.41, "days": 806, "currentNote": null}]}};
+const UBER_VALUATION = {"peer": {"score": 55.1, "sector": "Industrials (S&P500 81종목)", "asOf": ["2026-10-16", "2026-10-16"], "priceSession": null, "metrics": [{"metric": "per", "score": 42.9, "rank": 45, "peers": 77}, {"metric": "pbr", "score": 55.4, "rank": 34, "peers": 74}, {"metric": "psr", "score": 61.5, "rank": 31, "peers": 78}, {"metric": "pcr", "score": 86.5, "rank": 11, "peers": 74}, {"metric": "evebitda", "score": 29.0, "rank": 50, "peers": 69}]}, "self": {"score": 89.0, "window": ["2021-10-18", "2026-10-16"], "perBasis": "diluted", "metrics": [{"metric": "per", "score": 87.0, "percentile": 13.0, "current": 31.41, "min": 28.63, "median": 38.13, "max": 149.34, "days": 738, "currentNote": null}, {"metric": "pbr", "score": 88.8, "percentile": 11.2, "current": 5.26, "min": 3.8, "median": 8.61, "max": 17.41, "days": 1255, "currentNote": null}, {"metric": "psr", "score": 73.7, "percentile": 26.3, "current": 2.6, "min": 1.68, "median": 3.35, "max": 7.3, "days": 1255, "currentNote": null}, {"metric": "pcr", "score": 98.4, "percentile": 1.6, "current": 14.2, "min": 13.7, "median": 32.24, "max": 188.21, "days": 1055, "currentNote": null}, {"metric": "evebitda", "score": 97.2, "percentile": 2.8, "current": 20.56, "min": 19.88, "median": 64.64, "max": 361.41, "days": 579, "currentNote": null}]}};
 /* VALUATION:END */
 
 // ── 종합 평가 자동 판정 (2026-09-25 사용자 결정 · 방향 합산) ──
