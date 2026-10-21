@@ -1,0 +1,33 @@
+/* 시장 지표 구역의 [시장 지표] [지수·ETF] 탭(2026-10-20; 2026-10-21부터 preview·라이브 공용) — etf.js와 함께
+   (pipeline/site_ui/UI_DIFF.md etf). 회전 화면·카드 모양은 flow.css(.coverflow, .macro-flow-card)를 그대로 쓴다. */
+.etf-tabs{display:inline-flex;gap:4px;vertical-align:middle}
+.etf-tabs button{font:inherit;font-size:12px;color:var(--text2);background:transparent;border:1px solid transparent;border-radius:999px;padding:3px 11px;cursor:pointer}
+.etf-tabs button[aria-selected="true"]{color:var(--accent);border-color:var(--accent);background:var(--panel);font-weight:600}
+.etf-pane{background:var(--panel)}
+.etf-pane[hidden],.market-demo>div[hidden]{display:none!important}
+.market-flow.etf-flow .coverflow{height:262px}
+.etf-card{display:block;box-sizing:border-box;color:var(--text);text-decoration:none}
+.etf-card-label{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap;margin-bottom:2px}
+.etf-tk{font-size:30px;font-weight:800;letter-spacing:.02em;color:var(--text);line-height:1.1}
+.etf-nm{font-size:14px;font-weight:600;color:var(--text2)}
+.etf-kind{font-size:10.5px;color:var(--text3);margin-left:auto}
+.etf-card-main{font-size:17px;font-weight:700;margin-top:8px;line-height:1.25}
+.etf-card-sub{font-size:13px;font-weight:600;margin-top:4px;color:var(--text)}
+.etf-tab{font-variant-numeric:tabular-nums}
+.etf-held{color:var(--text2)}
+.etf-card-main.etf-held{font-size:16px}
+.etf-card-sub.etf-held{font-weight:400;font-size:12px}
+.etf-card-tag{font-size:11px;color:var(--text3);margin-top:2px}
+.etf-card-go{font-size:11.5px;color:var(--accent);margin-top:10px}
+.etf-ref{font-size:10.5px;color:var(--text3);margin-top:2px}
+.etf-bar{display:flex;height:6px;border-radius:3px;overflow:hidden;background:var(--border2);margin:10px 0 4px}
+.etf-seg{display:block;height:100%}
+.etf-seg-0{background:#1f7a4d}.etf-seg-1{background:#5cae7f}.etf-seg-2{background:#c9c5b3}.etf-seg-3{background:#e6935a}.etf-seg-4{background:#d92d20}
+.etf-seg-5{background:#9aa3b5}.etf-seg-6{background:#6b7280}.etf-seg-7{background:#4b5563}.etf-seg-8{background:#111827}
+@media(max-width:600px){.etf-card{width:100%}}
+.market-flow.etf-flow .coverflow-card{min-height:214px}
+/* 접는 표시(▾)를 제목 줄 오른쪽 끝으로(2026-10-20 사용자 요청) */
+.market-demo>summary{list-style:none;display:flex;align-items:center;flex-wrap:wrap;gap:4px}
+.market-demo>summary::-webkit-details-marker{display:none}
+.market-demo>summary::after{content:'▾';margin-left:auto;color:var(--text3);font-size:12px;transition:transform .2s}
+.market-demo:not([open])>summary::after{transform:rotate(-90deg)}

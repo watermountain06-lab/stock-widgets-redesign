@@ -87,3 +87,11 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: gh api -X POST "repos/${{ github.repository }}/pages/builds"
+      # ETF(2026-10-21): ETF 입력 거부는 카드 승격을 막지 않는다 — Promote가 사유를 표시 파일에 남기면 여기서 실패해 메일로 알린다.
+      # 앞 단계가 실패·건너뛰어도 돈다(Promote가 실패한 날은 그 실패 메일이 따로 간다).
+      - name: ETF status
+        if: always() && needs.when.outputs.go == 'true'
+        run: |
+          f="$RUNNER_TEMP/etf_status"
+          if [ -s "$f" ]; then echo "ETF 갱신 실패 — 카드 승격은 따로 진행됐다:"; cut -c1-1000 "$f"; exit 1; fi
+          echo "ETF 정상"

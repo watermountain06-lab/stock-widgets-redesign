@@ -76,6 +76,7 @@ preview(`~/Workspace/stock-widgets-preview`)가 매일 갱신한 카드와 숫�
 
 1. `python3 scripts/sync_cards.py` (카드 복사)
 2. `python3 scripts/fix_backbar_chain.py --cards-dir "$PWD/cards"` (카드 위 이전/다음 링크와 "시총 N위" 라벨을 순위표대로 다시 맞춤)
+2b. `python3 scripts/sync_etf.py --session <preview v2/daily_status.json의 session — 필수> [--rev <preview 커밋>]` (ETF 카드 여섯 장과 홈 지수·ETF 탭 데이터 `etf-*.html`·`etf-data.js`, 2026-10-21 사용자 결정 — 판정은 preview와 같고, 종목 링크는 1번이 맞춘 `cards/`로, 라이브에 없는 종목은 회색 이름. preview 입력이 검증에 어긋나면 기존 라이브 묶음의 링크만 다시 맞추고 종료 4 — 자동 승격은 카드 승격을 계속하고 워크플로 "ETF status" 단계가 메일로 알린다. 종료 5(기존 묶음도 없음·preview 검사기가 옛 버전)는 승격을 멈춘다. ETF 목록은 `etf.js`의 ORDER — ETF를 더하거나 빼는 일, `etf.js`·`etf.css`·index.html의 두 줄은 화면 파일이라 손 승격만: preview에서 바꾸고, 이 저장소에서 sync_etf가 0으로 끝나는 것을 확인한 뒤 함께 커밋한다. 빼는 ETF의 루트 `etf-<티커>.html`도 그때 지운다)
 3. 로고 확인 (`logos/`에 새로 든 종목 로고 — 1번이 preview `logos/`에서 복사한다)
 4. `python3 scripts/build_home.py` (`stock-data.js`의 종목·시장 지표)
 5. `python3 scripts/build_value_gap.py` (홈 "매수 기준가와의 거리" 칸의 `value-data.js`. 종목 이름을 `stock-data.js`에서 읽으므로 4번 다음에 돌린다)
