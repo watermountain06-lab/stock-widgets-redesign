@@ -11,7 +11,7 @@
 <link rel="stylesheet" href="theme.css?v=2">
 <script src="theme.js?v=2"></script>
 <link rel="stylesheet" href="flow.css?v=17">
-<link rel="stylesheet" href="tracking.css?v=2">
+<link rel="stylesheet" href="tracking.css?v=4">
 </head>
 <body>
   <header class="site-header"><div class="header-inner"><a class="brand" href="index.html">◧ US stock 가치를 말하다</a><span class="brand-note">공시로 읽는 기업의 흐름<br>하루씩, 한 종목씩</span><nav aria-label="주 메뉴"><a href="index.html">Home</a><a href="today.html" aria-current="page">Tracking</a><a href="market-news.html">뉴스·영상</a></nav></div></header>
@@ -19,7 +19,7 @@
 <section class="tracking tk-now" aria-labelledby="tk-title">
 <div class="tk-title-row"><h1 id="tk-title">지금 저평가 목록</h1><span id="tk-meta"></span></div>
 <p class="tk-lead">현재 판정과 이후 주가를 기록합니다.</p>
-<div class="tk-days" id="tk-days" role="group" aria-label="날짜 선택"></div>
+<div class="tk-days-wrap"><button type="button" class="tk-days-nav" data-dir="-1" aria-label="이전 날짜 보기">◀</button><div class="tk-days" id="tk-days" role="group" aria-label="날짜 선택"></div><button type="button" class="tk-days-nav" data-dir="1" aria-label="다음 날짜 보기">▶</button></div>
 <p class="tk-change" id="tk-change"></p>
 <div class="tk-chips" id="tk-chips" role="group" aria-label="종목 선택"></div>
 <div class="today-flow" id="today-flow"></div>
@@ -46,7 +46,7 @@
   <script src="reading.js?v=resume-only"></script>
 <script src="navigation.js?v=local-20260913-2"></script>
   <script src="tracking-data.js?v=2"></script>
-  <script src="today.js?v=tracking-2"></script>
+  <script src="today.js?v=tracking-3"></script>
 <script src="flow.js?v=tracking-2"></script>
 </body>
 </html>

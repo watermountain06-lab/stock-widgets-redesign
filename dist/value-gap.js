@@ -13,6 +13,10 @@
   };
   var LO = 0.6, HI = 1.4;  // 게이지 범위: 기준가의 0.6~1.4배
   function money(v){ return '$' + v.toLocaleString('en-US', {minimumFractionDigits:2, maximumFractionDigits:2}); }
+  // 카드 주소는 이 사이트의 stock-data.js href에서 읽는다(preview는 루트, 라이브는 cards/) — 화면 코드에 경로를 박지 않는다(2026-10-17)
+  var STOCKS = (window.StockData && window.StockData.stocks) || [];
+  var CARD_BASE = STOCKS.length ? STOCKS[0].href.slice(0, STOCKS[0].href.length - (STOCKS[0].ticker + '_full_widget.html').length) : '';
+  function cardHref(t){ var f = STOCKS.find(function(x){ return x.ticker === t; }); return f ? f.href : CARD_BASE + encodeURIComponent(t) + '_full_widget.html'; }
   function esc(s){ return String(s).replace(/[&<>"]/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
   function pos(r){ return Math.max(0, Math.min(100, (r - LO) / (HI - LO) * 100)); }
   // 라벨은 가운데 정렬이라 막대 끝에서 잘리지 않게 안쪽으로 당긴다.
@@ -102,7 +106,7 @@
       // 끝난 분기인데 분기 말 등락이 없으면 그 분기 마지막 날에 들어온 것이다.
       var end = h.running ? '' : stat('end', '분기 말', s.endChange == null ? '진입' : s.endChange);
       var now = s.change == null ? '' : stat('now', '현재', s.change);
-      return '<a class="discovery-card" href="cards/' + esc(s.ticker) + '_full_widget.html"><img src="logos/' + s.ticker.toLowerCase() + '.png" alt=""><span><strong>' + esc(s.ticker) + '</strong><small>' + esc(s.name) + '</small></span>'
+      return '<a class="discovery-card" href="' + esc(cardHref(s.ticker)) + '"><img src="logos/' + s.ticker.toLowerCase() + '.png" alt=""><span><strong>' + esc(s.ticker) + '</strong><small>' + esc(s.name) + '</small></span>'
         + '<span class="discovery-quote vg-stats">' + end + now + '</span>'
         + bandInfo(s) + quarterBar(s) + '</a>';
     }).join('');
