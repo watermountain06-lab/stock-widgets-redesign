@@ -126,3 +126,9 @@ main{--tk-up:#14804a;--tk-down:#c42b1c;--tk-soft:#efebfc;--tk-track:#f1eff6;--tk
 /* 카드 흐름 높이(2026-10-20): Tracking 카드는 줄이 3개라 공통 높이(250px)보다 17px 길어 아래가 잘렸다.
    카드(약 243px) + 위 여백 24px + 그림자 여유를 담는다. */
 .tracking .today-flow .coverflow{height:292px}
+
+/* 종목 칩 줄(2026-10-24): 날짜 줄과 같은 방식 — 한 줄, 가로로 넘김, ◀ ▶(칩 높이 44px에 맞춤). 관찰 목록 칩은 그대로 줄바꿈 */
+.tk-chips-wrap .tk-chips{flex:1;min-width:0;flex-wrap:nowrap;overflow-x:auto;scroll-snap-type:x proximity;scrollbar-width:none;padding:2px}
+.tk-chips-wrap .tk-chips::-webkit-scrollbar{display:none}
+.tk-chips-wrap .tk-chip{flex:none;scroll-snap-align:start}
+.tk-chips-wrap .tk-days-nav{height:44px}
