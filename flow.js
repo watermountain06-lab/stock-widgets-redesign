@@ -1,5 +1,5 @@
 (() => {
-  function flowing(container, cards, selectable = false, onSelect = null, initialIndex = 0, onCenter = null) {
+  function flowing(container, cards, selectable = false, onSelect = null, initialIndex = 0, onCenter = null, isPaused = null) {
     let index=initialIndex,position=initialIndex,manual=null;
     const reduced=matchMedia('(prefers-reduced-motion: reduce)');
     const viewport=document.createElement('div');viewport.className='coverflow continuous-flow';viewport.tabIndex=0;viewport.setAttribute('aria-label','카드 탐색 · 좌우 방향키로 이동');
@@ -18,7 +18,7 @@
           const eased=t*t*(3-2*t);
           position=manual.from+(manual.to-manual.from)*eased;
           if(t===1)manual=null;
-        }else if(!reduced.matches){position+=elapsed/6500;}
+        }else if(!reduced.matches&&!(isPaused&&isPaused())){position+=elapsed/6500;}
         position=(position+cards.length)%cards.length;
         const was=index;index=Math.round(position)%cards.length;render();
         if(onCenter&&index!==was)onCenter(index);
@@ -55,7 +55,8 @@
       const cards=selection.cards.map(s=>{
       const card=document.createElement('button');card.type='button';card.className='flow-stock tk-flow-card';card.setAttribute('aria-label',s.name+' 선택');
       card.innerHTML=`<div class="flow-stock-heading"><img src="logos/${esc(s.ticker.toLowerCase())}.png" alt=""><span><strong>${esc(s.ticker)}</strong><small>${esc(s.name)}</small></span></div><div class="flow-price">$${s.close.toFixed(2)}</div><div class="flow-score"><span>종합평가</span><b>${esc(s.verdict)}</b></div><div class="flow-score"><span>밴드 점수</span><b>${esc(s.band.replace(/^밴드 점수 /,''))}</b></div><div class="flow-score"><span>판정 뒤</span><b class="${s.ret>0?'tk-up':s.ret<0?'tk-down':''}">${pct(s.ret)}</b></div>`;return card;});
-      focusCard=flowing(today,cards,true,i=>window.selectTodayStock(selection.tickers[i]),selection.index,i=>window.centerTodayStock&&window.centerTodayStock(i));}
+      focusCard=flowing(today,cards,true,i=>window.selectTodayStock(selection.tickers[i]),selection.index,i=>window.centerTodayStock&&window.centerTodayStock(i),
+        ()=>window.todayFlowPaused===true);}   // Tracking 종목 상세를 펼친 동안은 멈춘다(2026-10-24)
     render();window.addEventListener('today-selection',render);
   }
 })();

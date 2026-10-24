@@ -157,13 +157,14 @@ function navState(id){
 });
 window.addEventListener('resize',()=>{keepVisible('tk-days');keepVisible('tk-chips');});
 document.getElementById('tk-days').addEventListener('click',e=>{const b=e.target.closest('[data-day]');if(!b)return;day=Number(b.dataset.day);index=0;renderDays();renderChips();renderStock();renderBars();publish();});
-// 종목 상세 접기·펴기(2026-10-24): 종목을 바꿔도 펼친 상태는 그대로 둔다
+// 종목 상세 접기·펴기(2026-10-24): 종목을 바꿔도 펼친 상태는 그대로 둔다. 펼치면 카드 흐름 멈춤, 접으면 다시 흐름
 document.getElementById('tk-detail-toggle').addEventListener('click',()=>{
  detailOpen=!detailOpen;
  const btn=document.getElementById('tk-detail-toggle');
  btn.setAttribute('aria-expanded',detailOpen);btn.querySelector('.tk-caret').textContent=detailOpen?'▾':'▸';
  btn.querySelector('.tk-detail-hint').textContent=detailOpen?'접기':'자세히';
  document.getElementById('tk-detail').hidden=!detailOpen;document.getElementById('tk-stock').classList.toggle('is-open',detailOpen);
+ window.todayFlowPaused=detailOpen;   // 펼친 동안 카드 흐름이 멈춘다(flow.js) — 흐르면서 선택 종목이 바뀌어 상세 내용이 저절로 바뀌지 않게
 });
 document.getElementById('tk-chips').addEventListener('click',e=>{const b=e.target.closest('[data-i]');if(b)select(Number(b.dataset.i),false);});
 document.getElementById('summary-body').addEventListener('click',e=>{if(e.target.closest('#tk-why')){whyOpen=!whyOpen;renderStock();}});
