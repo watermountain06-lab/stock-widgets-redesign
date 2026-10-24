@@ -132,3 +132,12 @@ main{--tk-up:#14804a;--tk-down:#c42b1c;--tk-soft:#efebfc;--tk-track:#f1eff6;--tk
 .tk-chips-wrap .tk-chips::-webkit-scrollbar{display:none}
 .tk-chips-wrap .tk-chip{flex:none;scroll-snap-align:start}
 .tk-chips-wrap .tk-days-nav{height:44px}
+
+/* 그날 변화(2026-10-24): 목록별 한 줄, 종목 배지(▲ 초록 · ▼ 회색) */
+.tk-change{display:flex;flex-direction:column;gap:6px}
+.tk-mv-row{display:flex;align-items:flex-start;gap:6px}
+.tk-mv-row>b{flex:none;width:72px;padding-top:4px;font-size:12px;color:var(--muted,var(--text2))}
+.tk-mv-row>span{display:flex;flex-wrap:wrap;gap:6px;min-width:0}
+.tk-mv{display:inline-flex;align-items:center;gap:4px;padding:2px 10px;border-radius:999px;background:var(--tk-panel);border:1px solid var(--line);font-size:13px;font-weight:700;white-space:nowrap}
+.tk-mv.in{color:var(--tk-up)}.tk-mv.out{color:var(--muted,var(--text2))}
+.tk-mv small{font-size:11px;font-weight:500;color:var(--muted,var(--text2))}
