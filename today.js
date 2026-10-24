@@ -43,12 +43,13 @@ function renderDays(){
  const rows=T.journal.filter(j=>j.session===d.session);
  document.getElementById('tk-change').textContent=day===0?'기록 시작일 · '+d.list.length+'종목이 이미 목록에 있었습니다'
   :rows.length?null:'목록 변화 없음';
- // 그날 변화(2026-10-24): 목록별 한 줄, 종목은 ▲(초록)·▼(회색) 배지. 저평가 ↔ 관찰 이동은 '관찰에서'·'관찰로' 꼬리표.
+ // 그날 변화(2026-10-24): 목록별 한 줄, 종목은 ▲ 들어옴(초록)·▼ 나감(빨강) 배지. 저평가 ↔ 관찰 이동은 '관찰에서'·'관찰로' 꼬리표.
  // 점수 변화는 아래 변화 일지에만 둔다.
  if(day!==0&&rows.length){
   const badge=j=>`<span class="tk-mv ${j.move}">${j.move==='in'?'▲':'▼'} ${esc(j.ticker)}${j.list==='list'&&j.move==='in'&&j.from==='적정'?' <small>관찰에서</small>':j.list==='list'&&j.move==='out'&&j.to==='적정'?' <small>관찰로</small>':''}</span>`;
   document.getElementById('tk-change').innerHTML=[['list','저평가 목록'],['watch','관찰 목록']].map(([k,label])=>{
-   const g=rows.filter(j=>j.list===k);return g.length?`<span class="tk-mv-row"><b>${label}</b><span>${g.map(badge).join('')}</span></span>`:'';}).join('');
+   const g=rows.filter(j=>j.list===k);return g.length?`<span class="tk-mv-row"><b>${label}</b><span>${g.map(badge).join('')}</span></span>`:'';}).join('')
+   +'<small class="tk-mv-key">▲ 들어옴 · ▼ 나감</small>';
  }
  document.getElementById('watch-count').textContent=d.watch.length+'종목';
  document.getElementById('tk-watch-list').innerHTML=d.watch.map(t=>`<a class="tk-chip" href="${card(t)}">${esc(t)} <small>${esc(name(t))}</small></a>`).join('')||'<span class="tk-note">없음</span>';
