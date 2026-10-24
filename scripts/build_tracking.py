@@ -7,6 +7,11 @@ What counts
     적정~저평가 or cheaper (the same line as the home 저평가 tab and value check). It
     starts at that session's close and ends at the close of the first session the verdict
     is no longer on the list; a call still on the list is "진행 중", marked to the latest close.
+  - A card that leaves and comes back within the same calendar quarter as its call's start
+    keeps that call (2026-10-24 user decision, LOW 10/16 -> out 10/22 -> back 10/23): the start
+    session and close stay the first ones, the call is open again, returns run from the first
+    close (days off the list included), and "gaps" lists each [left, back] pair. Coming back
+    in a later quarter starts a new call.
   - v2 only. The verdicts come from preview's v2/daily_status.json, which the daily rebuild
     commits every session with every card's verdict; its git history is the record. A call
     already on the list in the first recorded session starts there and says so.
@@ -191,6 +196,27 @@ def build():
                     call.update(end=None, result="open", onList=round(cn / c0 - 1, 4))
                 calls.append(call)
                 start = None
+    # 같은 분기 안에 다시 들어오면 원래 건을 이어 쓴다(2026-10-24 사용자 결정) - 시작일·기준가는 처음 것,
+    # 나가 있던 구간은 gaps에 [나간 날, 다시 들어온 날]로 남긴다. 분기가 바뀐 뒤 들어오면 새 건.
+    def quarter(d):
+        return f"{d[:4]}Q{(int(d[5:7]) - 1) // 3 + 1}"
+    merged = []
+    for call in calls:   # 종목별로 시작일 순서대로 쌓여 있다
+        prev = merged[-1] if merged and merged[-1]["ticker"] == call["ticker"] else None
+        if prev and prev["end"] and quarter(call["start"]) == quarter(prev["start"]):
+            c0 = prev["startClose"]
+            prev["gaps"] = prev.get("gaps", []) + [[prev["end"], call["start"]]]
+            for k in ("end", "endClose", "endVerdict"):
+                prev.pop(k, None)
+            if call["end"]:
+                prev.update(end=call["end"], endClose=call["endClose"], endVerdict=call["endVerdict"],
+                            onList=round(call["endClose"] / c0 - 1, 4),
+                            result="up" if call["endClose"] > c0 else "down")
+            else:
+                prev.update(end=None, result="open", onList=round(prev["now"] / c0 - 1, 4))
+        else:
+            merged.append(call)
+    calls = merged
     calls.sort(key=lambda c: (c["end"] is not None, c["start"], c["ticker"]))
 
     journal = []

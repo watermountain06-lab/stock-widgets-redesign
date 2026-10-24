@@ -12,6 +12,11 @@ const pct=r=>r==null?'—':(r>0?'+':r<0?'−':'')+Math.abs(r*100).toFixed(1)+'%'
 const cls=r=>r>0?'up':r<0?'down':'';
 const name=t=>(stocks.find(s=>s.ticker===t)||{}).name||t;
 const sign=v=>(v>0?'+':v<0?'−':'')+Math.abs(v);
+// 일지 문구: 저평가 목록 ↔ 관찰 목록(적정) 이동은 build_tracking이 저평가 목록 줄 하나로 합치므로 옮겨 간 곳을 말한다(2026-10-24)
+const moveText=j=>j.list!=='list'?(j.move==='in'?'관찰 목록에 들어옴':'관찰 목록에서 나감')
+ :j.move==='out'&&j.to==='적정'?'저평가 목록에서 관찰 목록으로'
+ :j.move==='in'&&j.from==='적정'?'관찰 목록에서 저평가 목록으로'
+ :j.move==='in'?'저평가 목록에 들어옴':'저평가 목록에서 나감';
 // 카드 주소는 이 사이트의 stock-data.js href에서 읽는다(preview는 루트, 라이브는 cards/) — 화면 코드에 경로를 박지 않는다(2026-10-17)
 const cardBase=(f=>f?f.href.slice(0,f.href.length-(f.ticker+'_full_widget.html').length):'')(stocks[0]);
 const card=t=>((stocks.find(s=>s.ticker===t)||{}).href)||cardBase+encodeURIComponent(t)+'_full_widget.html';
@@ -21,10 +26,12 @@ const D=()=>T.days[day];
 const tickers=()=>D()?D().list:[];
 const session=()=>D()?D().session:T.asOf;
 // 판정일부터 고른 날까지(그 전에 목록에서 나갔으면 나간 날까지)
+// 같은 분기 안에 나갔다 다시 들어온 건은 한 건(gaps: [나간 날, 다시 들어온 날]) — 나가 있던 날을 고르면 그날 기준 '나감'(2026-10-24)
 function callOn(c,s){
  if(c.start>s)return null;
- const ended=c.end&&c.end<=s,at=ended?c.end:s,close=(T.closes[c.ticker]||{})[at];
- return close==null?null:{...c,at,close,ret:close/c.startClose-1,open:!ended,days:T.sessions.indexOf(at)-T.sessions.indexOf(c.start)};
+ const gap=(c.gaps||[]).find(g=>g[0]<=s&&s<g[1]),ended=gap?true:!!(c.end&&c.end<=s),at=gap?gap[0]:ended?c.end:s,close=(T.closes[c.ticker]||{})[at];
+ const back=(c.gaps||[]).filter(g=>g[1]<=s).map(g=>g[1]);
+ return close==null?null:{...c,at,close,back,ret:close/c.startClose-1,open:!ended,days:T.sessions.indexOf(at)-T.sessions.indexOf(c.start)};
 }
 
 function renderDays(){
@@ -36,7 +43,7 @@ function renderDays(){
  const rows=T.journal.filter(j=>j.session===d.session);
  document.getElementById('tk-change').textContent=day===0?'기록 시작일 · '+d.list.length+'종목이 이미 목록에 있었습니다'
   :rows.length?rows.map(j=>{const v=j.votes.length?' ('+j.votes.map(x=>`${x[0]} ${sign(x[1])} → ${sign(x[2])}`).join(', ')+')':'';
-   return `${j.move==='in'?'▲':'▼'} ${j.ticker} ${j.list==='list'?'저평가 목록':'관찰 목록'}${j.move==='in'?'에 들어옴':'에서 나감'}${v}`;}).join(' · ')
+   return `${j.move==='in'?'▲':'▼'} ${j.ticker} ${moveText(j)}${v}`;}).join(' · ')
   :'목록 변화 없음';
  document.getElementById('watch-count').textContent=d.watch.length+'종목';
  document.getElementById('tk-watch-list').innerHTML=d.watch.map(t=>`<a class="tk-chip" href="${card(t)}">${esc(t)} <small>${esc(name(t))}</small></a>`).join('')||'<span class="tk-note">없음</span>';
@@ -78,7 +85,7 @@ function renderBars(){
    +`<div class="tk-bar"><i class="zero"></i><i class="fill ${up?'up':'down'}${r.open?' open':''}" style="${up?'left':'right'}:50%;width:${w}%"></i>`
    +`<span class="p0" style="${up?'right:50%':'left:50%'}">판정 ${money(r.startClose)}</span>`
    +`<span class="p1 ${cls(r.ret)}" style="${up?'left':'right'}:${50+w}%">${money(r.close)}</span></div>`
-   +`<b class="${cls(r.ret)}">${pct(r.ret)}</b><small>${md(r.start)} · ${r.days}일${r.open?'':' · 나감'}</small></div>`;
+   +`<b class="${cls(r.ret)}">${pct(r.ret)}</b><small>${md(r.start)} · ${r.days}일${r.open?'':' · 나감'}${r.back.length?'<br>다시 들어옴 '+r.back.map(md).join('·'):''}</small></div>`;
  }).join('')||'<p class="tk-note">이 날짜까지 기록된 판정이 없습니다.</p>';
 }
 
@@ -87,7 +94,7 @@ function renderTable(){
  document.getElementById('tracking-calls').innerHTML='<thead><tr><th>종목</th><th>판정</th><th>판정일 · 종가</th><th>나간 날 · 종가</th><th>목록에 있던 동안</th><th>판정일 → 오늘</th><th>결과</th></tr></thead><tbody>'
   +T.calls.map(c=>`<tr><td><a href="${card(c.ticker)}"><strong>${esc(c.ticker)}</strong><small>${esc(c.name)}</small></a></td>`
    +`<td>${esc(c.verdict)}</td><td>${md(c.start)} · ${money(c.startClose)}${c.fromStart?'<small title="v2 판정 기록이 시작된 날에 이미 목록에 있었다">기록 시작일</small>':''}</td>`
-   +`<td>${c.end?md(c.end)+' · '+money(c.endClose)+'<small>'+esc(c.endVerdict||'')+'(으)로</small>':'<small>목록에 있음</small>'}</td>`
+   +`<td>${c.end?md(c.end)+' · '+money(c.endClose)+'<small>'+esc(c.endVerdict||'')+'(으)로</small>':'<small>목록에 있음</small>'}${(c.gaps||[]).map(g=>`<small>${md(g[0])} 나갔다 ${md(g[1])} 다시 들어옴</small>`).join('')}</td>`
    +`<td class="num ${cls(c.onList)}">${pct(c.onList)}</td><td class="num ${cls(c.sinceStart)}">${pct(c.sinceStart)}</td><td>${result(c)}</td></tr>`).join('')
   +'</tbody>';
  // 변화 일지: 최근 10거래일, '더 보기'로 10거래일씩
@@ -99,7 +106,7 @@ function renderTable(){
    if(j.session!==last){html+=`<li class="tk-day">${md(j.session)} 종가 기준</li>`;last=j.session;}
    const votes=j.votes.map(v=>`${esc(v[0])} ${sign(v[1])} → ${sign(v[2])}`).join(' · ');
    html+=`<li class="tk-row ${j.move}"><span class="tk-arrow">${j.move==='in'?'▲':'▼'}</span><a href="${card(j.ticker)}"><strong>${esc(j.ticker)}</strong> ${esc(j.name)}</a>`
-    +`<span>${esc(j.from||'—')} → ${esc(j.to||'—')} <em>${j.list==='list'?'저평가 목록':'관찰 목록'}${j.move==='in'?'에 들어옴':'에서 나감'}</em></span>${votes?`<small>${votes}</small>`:''}<small>종가 ${money(j.close)}</small></li>`;
+    +`<span>${esc(j.from||'—')} → ${esc(j.to||'—')} <em>${moveText(j)}</em></span>${votes?`<small>${votes}</small>`:''}<small>종가 ${money(j.close)}</small></li>`;
   }
   list.innerHTML=(html||'<li class="tk-day">아직 목록을 드나든 기록이 없습니다.</li>')+(days.length>shown?'<li><button type="button" class="tk-more">이전 기록 더 보기</button></li>':'');
  }
