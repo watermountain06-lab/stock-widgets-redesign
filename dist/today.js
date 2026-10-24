@@ -4,7 +4,7 @@
 // 아래: 판정 성적표(판정일 종가 → 고른 날 종가 막대), 상세 표·변화 일지는 접어 둔다.
 const stocks=window.StockData.stocks;
 const T=window.TrackingData||{calls:[],journal:[],current:[],watch:[],detail:{},sessions:[],days:[],closes:{},judges:{}};
-let day=T.days.length-1,index=0,whyOpen=false;
+let day=T.days.length-1,index=0,whyOpen=false,detailOpen=false;
 const esc=s=>String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const md=d=>d?Number(d.slice(5,7))+'/'+Number(d.slice(8,10)):'';
 const money=v=>'$'+Number(v).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
@@ -64,7 +64,7 @@ function renderStock(){
  const t=tickers()[index],panel=document.getElementById('tk-stock');
  panel.hidden=!t;if(!t)return;   // 목록이 빈 날에는 앞 날짜 종목을 남기지 않는다(Codex)
  const c=D().cards[t],j=T.judges[t]||{},x=T.detail[t]||{},s=x.summary;
- document.getElementById('tk-stock-title').innerHTML=`${esc(t)} <small>${esc(name(t))}</small>`;
+ document.getElementById('tk-stock-name').innerHTML=`${esc(t)} <small>${esc(name(t))}</small>`;
  document.getElementById('tk-verdict').textContent=c.verdict;
  const pill=v=>`<span class="tk-pill ${/^싸다|^매우 싸다/.test(v||'')?'cheap':/비싸다/.test(v||'')?'dear':''}">${esc(v||'—')}</span>`;
  const meter=v=>{const n=Math.max(0,Math.min(100,Number(v)));return `<div class="tk-track tk-meter"><i style="left:30%"></i><i style="left:70%"></i><b style="left:${isFinite(n)?n:0}%"></b></div>`;};
@@ -157,6 +157,14 @@ function navState(id){
 });
 window.addEventListener('resize',()=>{keepVisible('tk-days');keepVisible('tk-chips');});
 document.getElementById('tk-days').addEventListener('click',e=>{const b=e.target.closest('[data-day]');if(!b)return;day=Number(b.dataset.day);index=0;renderDays();renderChips();renderStock();renderBars();publish();});
+// 종목 상세 접기·펴기(2026-10-24): 종목을 바꿔도 펼친 상태는 그대로 둔다
+document.getElementById('tk-detail-toggle').addEventListener('click',()=>{
+ detailOpen=!detailOpen;
+ const btn=document.getElementById('tk-detail-toggle');
+ btn.setAttribute('aria-expanded',detailOpen);btn.querySelector('.tk-caret').textContent=detailOpen?'▾':'▸';
+ btn.querySelector('.tk-detail-hint').textContent=detailOpen?'접기':'자세히';
+ document.getElementById('tk-detail').hidden=!detailOpen;document.getElementById('tk-stock').classList.toggle('is-open',detailOpen);
+});
 document.getElementById('tk-chips').addEventListener('click',e=>{const b=e.target.closest('[data-i]');if(b)select(Number(b.dataset.i),false);});
 document.getElementById('summary-body').addEventListener('click',e=>{if(e.target.closest('#tk-why')){whyOpen=!whyOpen;renderStock();}});
 document.getElementById('tk-watch-toggle').addEventListener('click',e=>{const b=e.currentTarget,open=b.getAttribute('aria-expanded')!=='true';b.setAttribute('aria-expanded',String(open));b.lastElementChild.textContent=open?'▴':'▾';document.getElementById('tk-watch-list').hidden=!open;});

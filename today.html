@@ -11,7 +11,7 @@
 <link rel="stylesheet" href="theme.css?v=2">
 <script src="theme.js?v=2"></script>
 <link rel="stylesheet" href="flow.css?v=17">
-<link rel="stylesheet" href="tracking.css?v=7">
+<link rel="stylesheet" href="tracking.css?v=8">
 </head>
 <body>
   <header class="site-header"><div class="header-inner"><a class="brand" href="index.html">◧ US stock 가치를 말하다</a><span class="brand-note">공시로 읽는 기업의 흐름<br>하루씩, 한 종목씩</span><nav aria-label="주 메뉴"><a href="index.html">Home</a><a href="today.html" aria-current="page">Tracking</a><a href="market-news.html">뉴스·영상</a></nav></div></header>
@@ -22,14 +22,17 @@
 <div class="tk-days-wrap"><button type="button" class="tk-days-nav" data-dir="-1" aria-label="이전 날짜 보기">◀</button><div class="tk-days" id="tk-days" role="group" aria-label="날짜 선택"></div><button type="button" class="tk-days-nav" data-dir="1" aria-label="다음 날짜 보기">▶</button></div>
 <p class="tk-change" id="tk-change"></p>
 <div class="tk-days-wrap tk-chips-wrap"><button type="button" class="tk-days-nav" data-dir="-1" aria-label="이전 종목 보기">◀</button><div class="tk-chips" id="tk-chips" role="group" aria-label="종목 선택"></div><button type="button" class="tk-days-nav" data-dir="1" aria-label="다음 종목 보기">▶</button></div>
-<div class="today-flow" id="today-flow"></div>
-<div class="tk-watch"><button type="button" id="tk-watch-toggle" aria-expanded="false" aria-controls="tk-watch-list"><span>관찰 목록 <small>적정 · 한 표 차이 · <span id="watch-count"></span></small></span><span aria-hidden="true">▾</span></button><div class="tk-chips" id="tk-watch-list" hidden></div></div>
-</section>
-<section class="tracking tk-panel" id="tk-stock" aria-labelledby="tk-stock-title">
-<div class="tk-stock-head"><h2 id="tk-stock-title"></h2><span class="tk-verdict" id="tk-verdict"></span></div>
+<!-- 종목 상세: 칩 바로 아래, 처음엔 접힘(2026-10-24) -->
+<section class="tk-panel tk-stock" id="tk-stock" aria-labelledby="tk-stock-title">
+<div class="tk-stock-head"><h2 id="tk-stock-title"><button type="button" id="tk-detail-toggle" aria-expanded="false" aria-controls="tk-detail"><span class="tk-caret" aria-hidden="true">▸</span> <span id="tk-stock-name"></span> <small class="tk-detail-hint">자세히</small></button></h2><span class="tk-verdict" id="tk-verdict"></span></div>
+<div class="tk-detail" id="tk-detail" hidden>
 <div class="tk-judges" id="tk-judges"></div>
 <div class="tk-band"><div class="tk-band-row"><strong>예상밴드 백테스트</strong><div class="tk-track" id="tk-band-track"></div><b id="tk-band-text"></b></div><p class="tk-note">밴드 점수: 지금 가격이 카드 예상밴드의 어디쯤인지. 하단 100 · 상단 0, 하단보다 아래면 100 초과(쌀수록 높음).</p></div>
 <div class="tk-summary-body" id="summary-body"></div>
+</div>
+</section>
+<div class="today-flow" id="today-flow"></div>
+<div class="tk-watch"><button type="button" id="tk-watch-toggle" aria-expanded="false" aria-controls="tk-watch-list"><span>관찰 목록 <small>적정 · 한 표 차이 · <span id="watch-count"></span></small></span><span aria-hidden="true">▾</span></button><div class="tk-chips" id="tk-watch-list" hidden></div></div>
 </section>
 <section class="tracking tk-panel" aria-labelledby="tk-score-title">
 <div><h2 id="tk-score-title">판정 성적표 <small>판정 후 경과 · 아직 평가 전</small></h2><p class="tk-score-note" id="tracking-note"></p></div>
@@ -46,7 +49,7 @@
   <script src="reading.js?v=resume-only"></script>
 <script src="navigation.js?v=local-20260913-2"></script>
   <script src="tracking-data.js?v=2"></script>
-  <script src="today.js?v=tracking-8"></script>
+  <script src="today.js?v=tracking-9"></script>
 <script src="flow.js?v=tracking-2"></script>
 </body>
 </html>
