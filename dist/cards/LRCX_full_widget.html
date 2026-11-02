@@ -1072,13 +1072,13 @@ Chart.overrides.doughnut.animation = false;
     <div class="card-title">투자의견 요약</div>
     <div class="op-strip">
       <div class="op-cell">
-        <span class="op-label">애널리스트 <span data-an="n">35명 · 목표가 25</span>명</span>
-        <span class="op-val"><span data-an="rating">Strong Buy</span> <span class="op-sub">매수 <span data-an="buy">29</span> · 유지 <span data-an="hold">6</span> · 매도 <span data-an="sell">0</span></span></span>
-        <div class="op-dist"><div data-an-bar="buy" style="width: 82.9%; background: var(--green);"></div><div data-an-bar="hold" style="width: 17.1%; background: var(--gold);"></div><div data-an-bar="sell" style="width: 0%; background: var(--red);"></div></div>
+        <span class="op-label">애널리스트 <span data-an="n">34명 · 목표가 25</span>명</span>
+        <span class="op-val"><span data-an="rating">Strong Buy</span> <span class="op-sub">매수 <span data-an="buy">30</span> · 유지 <span data-an="hold">4</span> · 매도 <span data-an="sell">0</span></span></span>
+        <div class="op-dist"><div data-an-bar="buy" style="width: 88.2%; background: var(--green);"></div><div data-an-bar="hold" style="width: 11.8%; background: var(--gold);"></div><div data-an-bar="sell" style="width: 0%; background: var(--red);"></div></div>
       </div>
       <div class="op-cell">
-        <span class="op-label">평균 목표주가 · <span data-an="asof">2026-10-24</span></span>
-        <span class="op-val"><span data-an="mean">$375.04</span> <span class="op-sub op-up" data-an="upside">+56.8%</span></span>
+        <span class="op-label">평균 목표주가 · <span data-an="asof">2026-10-31</span></span>
+        <span class="op-val"><span data-an="mean">$373.64</span> <span class="op-sub op-up" data-an="upside">+56.3%</span></span>
       </div>
       <div class="op-cell">
         <span class="op-label">다음 실적</span>
@@ -2087,8 +2087,8 @@ const LRCX_ACTIVITY = {"ticker": "LRCX", "status": "stale", "asOf": "2025-06-29"
 // ── 투자포인트 탭: 애널리스트 목표가 (출처·기준일 포함) ──
 // 갱신: StockAnalysis 예측 페이지(stockanalysis.com/stocks/lrcx/forecast/)의 값과 날짜를 옮긴다.
 // 현재가 대비는 마지막 종가에서 계산한다.
-const LRCX_ANALYST = { asOf: '2026-10-24', source: 'StockAnalysis (의견 집계 · 개별 목표가)', rating: 'Strong Buy', n: 35, nTargets: 25, mean: 375.04, median: 375,
-  low: 290, high: 500, strongBuy: 25, buy: 4, hold: 6, sell: 0, strongSell: 0 };
+const LRCX_ANALYST = { asOf: '2026-10-31', source: 'StockAnalysis (의견 집계 · 개별 목표가)', rating: 'Strong Buy', n: 34, nTargets: 25, mean: 373.64, median: 360,
+  low: 290, high: 500, strongBuy: 25, buy: 5, hold: 4, sell: 0, strongSell: 0 };
 (function(){
   const A = LRCX_ANALYST, last = (typeof LRCX_DAILY !== 'undefined' && LRCX_DAILY.length) ? LRCX_DAILY[LRCX_DAILY.length - 1] : null;
   const put = (k, t) => document.querySelectorAll(`#invest [data-an="${k}"]`).forEach(el => { el.textContent = t; });

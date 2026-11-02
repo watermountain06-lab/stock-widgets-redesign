@@ -951,7 +951,7 @@ Chart.overrides.doughnut.animation = false;
           </div>
         </div>
         <div class="val-track"><div class="val-fill hist-fill mid" data-hist="fill" style="width: 64.6%;"></div></div>
-        <div class="hist-labels"><span data-hist="min">최저 23.2x</span><span data-hist="median">중앙 35.7x</span><span data-hist="max">최고 55.3x</span></div>
+        <div class="hist-labels"><span data-hist="min">최저 23.4x</span><span data-hist="median">중앙 35.7x</span><span data-hist="max">최고 55.3x</span></div>
       </div>
 
       <div class="val-item" data-metric="pbr" onclick="selectMultiple('pbr')">
@@ -1118,13 +1118,13 @@ Chart.overrides.doughnut.animation = false;
     <div class="card-title">투자의견 요약</div>
     <div class="op-strip">
       <div class="op-cell">
-        <span class="op-label">애널리스트 <span data-an="n">19명 · 목표가 12</span>명</span>
+        <span class="op-label">애널리스트 <span data-an="n">19명 · 목표가 11</span>명</span>
         <span class="op-val"><span data-an="rating">Strong Buy</span> <span class="op-sub">매수 <span data-an="buy">17</span> · 유지 <span data-an="hold">2</span> · 매도 <span data-an="sell">0</span></span></span>
         <div class="op-dist"><div data-an-bar="buy" style="width: 89.5%; background: var(--green);"></div><div data-an-bar="hold" style="width: 10.5%; background: var(--gold);"></div><div data-an-bar="sell" style="width: 0%; background: var(--red);"></div></div>
       </div>
       <div class="op-cell">
-        <span class="op-label">평균 목표주가 · <span data-an="asof">2026-10-24</span></span>
-        <span class="op-val"><span data-an="mean">$102.88</span> <span class="op-sub op-up" data-an="upside">+29.7%</span></span>
+        <span class="op-label">평균 목표주가 · <span data-an="asof">2026-10-31</span></span>
+        <span class="op-val"><span data-an="mean">$108.09</span> <span class="op-sub op-up" data-an="upside">+36.3%</span></span>
       </div>
       <div class="op-cell">
         <span class="op-label">다음 실적</span>
@@ -1838,7 +1838,7 @@ const APH_FUNDAMENTAL = {"ticker": "APH", "basis": "quarter", "asOf": "2026-06-3
 //
 // 갱신: python3 v2/build_peer_score.py APH --self v2/APH_multiples.json --card
 /* VALUATION:BEGIN */
-const APH_VALUATION = {"peer": {"score": 53.0, "sector": "Information Technology", "asOf": ["2026-08-27", "2026-09-11"], "priceSession": "2026-10-30", "metrics": [{"metric": "per", "score": 45.8, "rank": 14, "peers": 24}, {"metric": "pbr", "score": 39.1, "rank": 15, "peers": 23}, {"metric": "psr", "score": 74.1, "rank": 8, "peers": 27}, {"metric": "pcr", "score": 43.5, "rank": 14, "peers": 23}, {"metric": "evebitda", "score": 62.5, "rank": 10, "peers": 24}]}, "self": {"score": 31.0, "window": ["2021-11-01", "2026-10-30"], "perBasis": "diluted", "metrics": [{"metric": "per", "score": 35.4, "percentile": 64.6, "current": 39.75, "min": 23.24, "median": 35.68, "max": 55.32, "days": 1255, "currentNote": null}, {"metric": "pbr", "score": 17.5, "percentile": 82.5, "current": 12.62, "min": 5.81, "median": 8.3, "max": 16.25, "days": 1255, "currentNote": null}, {"metric": "psr", "score": 24.4, "percentile": 75.6, "current": 6.74, "min": 3.26, "median": 5.29, "max": 9.7, "days": 1255, "currentNote": null}, {"metric": "pcr", "score": 27.2, "percentile": 72.8, "current": 41.49, "min": 22.24, "median": 35.98, "max": 58.63, "days": 1255, "currentNote": null}, {"metric": "evebitda", "score": 50.4, "percentile": 49.6, "current": 22.92, "min": 15.59, "median": 22.95, "max": 35.18, "days": 1255, "currentNote": null}]}};
+const APH_VALUATION = {"peer": {"score": 53.0, "sector": "Information Technology", "asOf": ["2026-08-27", "2026-09-11"], "priceSession": "2026-10-30", "metrics": [{"metric": "per", "score": 45.8, "rank": 14, "peers": 24}, {"metric": "pbr", "score": 39.1, "rank": 15, "peers": 23}, {"metric": "psr", "score": 74.1, "rank": 8, "peers": 27}, {"metric": "pcr", "score": 43.5, "rank": 14, "peers": 23}, {"metric": "evebitda", "score": 62.5, "rank": 10, "peers": 24}]}, "self": {"score": 31.0, "window": ["2021-11-01", "2026-10-30"], "perBasis": "diluted", "metrics": [{"metric": "per", "score": 35.4, "percentile": 64.6, "current": 39.75, "min": 23.42, "median": 35.68, "max": 55.32, "days": 1255, "currentNote": null}, {"metric": "pbr", "score": 17.5, "percentile": 82.5, "current": 12.62, "min": 5.81, "median": 8.3, "max": 16.25, "days": 1255, "currentNote": null}, {"metric": "psr", "score": 24.4, "percentile": 75.6, "current": 6.74, "min": 3.26, "median": 5.29, "max": 9.7, "days": 1255, "currentNote": null}, {"metric": "pcr", "score": 27.2, "percentile": 72.8, "current": 41.49, "min": 22.24, "median": 35.98, "max": 58.63, "days": 1255, "currentNote": null}, {"metric": "evebitda", "score": 50.4, "percentile": 49.6, "current": 22.92, "min": 15.59, "median": 22.95, "max": 35.18, "days": 1255, "currentNote": null}]}};
 /* VALUATION:END */
 
 // ── 종합 평가 자동 판정 (2026-09-25 사용자 결정 · 방향 합산) ──
@@ -2127,8 +2127,8 @@ const APH_ACTIVITY = {"ticker": "APH", "status": "ok", "asOf": "2026-06-30", "pr
 // ── 투자포인트 탭: 애널리스트 목표가 (출처·기준일 포함) ──
 // 갱신: StockAnalysis 예측 페이지(stockanalysis.com/stocks/aph/forecast/)의 값과 날짜를 옮긴다.
 // 현재가 대비는 마지막 종가에서 계산한다.
-const APH_ANALYST = { asOf: '2026-10-24', source: 'StockAnalysis (의견 집계 · 개별 목표가)', rating: 'Strong Buy', n: 19, nTargets: 12, mean: 102.88, median: 105,
-  low: 88.5, high: 116, strongBuy: 13, buy: 4, hold: 2, sell: 0, strongSell: 0 };
+const APH_ANALYST = { asOf: '2026-10-31', source: 'StockAnalysis (의견 집계 · 개별 목표가)', rating: 'Strong Buy', n: 19, nTargets: 11, mean: 108.09, median: 111,
+  low: 90, high: 122, strongBuy: 13, buy: 4, hold: 2, sell: 0, strongSell: 0 };
 (function(){
   const A = APH_ANALYST, last = (typeof APH_DAILY !== 'undefined' && APH_DAILY.length) ? APH_DAILY[APH_DAILY.length - 1] : null;
   const put = (k, t) => document.querySelectorAll(`#invest [data-an="${k}"]`).forEach(el => { el.textContent = t; });

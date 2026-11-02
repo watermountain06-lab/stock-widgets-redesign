@@ -1107,13 +1107,13 @@ Chart.overrides.doughnut.animation = false;
     <div class="card-title">투자의견 요약</div>
     <div class="op-strip">
       <div class="op-cell">
-        <span class="op-label">애널리스트 <span data-an="n">41명 · 목표가 9</span>명</span>
+        <span class="op-label">애널리스트 <span data-an="n">41명 · 목표가 8</span>명</span>
         <span class="op-val"><span data-an="rating">Strong Buy</span> <span class="op-sub">매수 <span data-an="buy">38</span> · 유지 <span data-an="hold">2</span> · 매도 <span data-an="sell">1</span></span></span>
         <div class="op-dist"><div data-an-bar="buy" style="width: 92.7%; background: var(--green);"></div><div data-an-bar="hold" style="width: 4.9%; background: var(--gold);"></div><div data-an-bar="sell" style="width: 2.4%; background: var(--red);"></div></div>
       </div>
       <div class="op-cell">
-        <span class="op-label">평균 목표주가 · <span data-an="asof">2026-10-24</span></span>
-        <span class="op-val"><span data-an="mean">$2291.10</span> <span class="op-sub op-up" data-an="upside">+46.3%</span></span>
+        <span class="op-label">평균 목표주가 · <span data-an="asof">2026-10-31</span></span>
+        <span class="op-val"><span data-an="mean">$2471.61</span> <span class="op-sub op-up" data-an="upside">+57.8%</span></span>
       </div>
       <div class="op-cell">
         <span class="op-label">다음 실적</span>
@@ -2126,8 +2126,8 @@ const ASML_ACTIVITY = {"ticker": "ASML", "status": "ok", "asOf": "2026-06-28", "
 // ── 투자포인트 탭: 애널리스트 목표가 (출처·기준일 포함) ──
 // 갱신: StockAnalysis 예측 페이지(stockanalysis.com/stocks/asml/forecast/)의 값과 날짜를 옮긴다.
 // 현재가 대비는 마지막 종가에서 계산한다.
-const ASML_ANALYST = { asOf: '2026-10-24', source: 'StockAnalysis (의견 집계 · 개별 목표가)', rating: 'Strong Buy', n: 41, nTargets: 9, mean: 2291.1, median: 2393.41,
-  low: 749, high: 2814.39, strongBuy: 31, buy: 7, hold: 2, sell: 0, strongSell: 1 };
+const ASML_ANALYST = { asOf: '2026-10-31', source: 'StockAnalysis (의견 집계 · 개별 목표가)', rating: 'Strong Buy', n: 41, nTargets: 8, mean: 2471.61, median: 2500,
+  low: 2100, high: 2788.9, strongBuy: 31, buy: 7, hold: 2, sell: 0, strongSell: 1 };
 (function(){
   const A = ASML_ANALYST, last = (typeof ASML_DAILY !== 'undefined' && ASML_DAILY.length) ? ASML_DAILY[ASML_DAILY.length - 1] : null;
   const put = (k, t) => document.querySelectorAll(`#invest [data-an="${k}"]`).forEach(el => { el.textContent = t; });

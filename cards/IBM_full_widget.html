@@ -549,7 +549,7 @@ Chart.overrides.doughnut.animation = false;
     </div>
     <div class="meta-item">
       <span class="meta-label">적정주가 (배수 기준)</span>
-      <span class="meta-value" id="ibmFairBand" title="최근 1년 PER 25~75% 구간(24.0~34.8배) × 최근 4분기 희석 EPS $10.19(회사가 밝힌 2025년 4분기 세무조사 종결 법인세 혜택 $1.47B를 뺀 값, 10달러 단위 반올림). PER만으로 낸 범위라 판정과 따로 읽는다." style="font-size:22px;color:var(--green);">$240 ~ $350</span>
+      <span class="meta-value" id="ibmFairBand" title="최근 1년 PER 25~75% 구간(24.0~34.7배) × 최근 4분기 희석 EPS $10.19(회사가 밝힌 2025년 4분기 세무조사 종결 법인세 혜택 $1.47B를 뺀 값, 10달러 단위 반올림). PER만으로 낸 범위라 판정과 따로 읽는다." style="font-size:22px;color:var(--green);">$240 ~ $350</span>
     </div>
   </div>
   </div>
@@ -1111,13 +1111,13 @@ Chart.overrides.doughnut.animation = false;
     <div class="card-title">투자의견 요약</div>
     <div class="op-strip">
       <div class="op-cell">
-        <span class="op-label">애널리스트 <span data-an="n">25명 · 목표가 20</span>명</span>
+        <span class="op-label">애널리스트 <span data-an="n">25명 · 목표가 21</span>명</span>
         <span class="op-val"><span data-an="rating">Buy</span> <span class="op-sub">매수 <span data-an="buy">12</span> · 유지 <span data-an="hold">11</span> · 매도 <span data-an="sell">2</span></span></span>
         <div class="op-dist"><div data-an-bar="buy" style="width: 48%; background: var(--green);"></div><div data-an-bar="hold" style="width: 44%; background: var(--gold);"></div><div data-an-bar="sell" style="width: 8%; background: var(--red);"></div></div>
       </div>
       <div class="op-cell">
-        <span class="op-label">평균 목표주가 · <span data-an="asof">2026-10-24</span></span>
-        <span class="op-val"><span data-an="mean">$265.80</span> <span class="op-sub op-up" data-an="upside">+3.1%</span></span>
+        <span class="op-label">평균 목표주가 · <span data-an="asof">2026-10-31</span></span>
+        <span class="op-val"><span data-an="mean">$267.90</span> <span class="op-sub op-up" data-an="upside">+3.9%</span></span>
       </div>
       <div class="op-cell">
         <span class="op-label">다음 실적</span>
@@ -1836,7 +1836,7 @@ const IBM_FUNDAMENTAL = {"ticker": "IBM", "basis": "quarter", "asOf": "2026-09-3
 //
 // 갱신: python3 v2/build_peer_score.py IBM --self v2/IBM_multiples.json --card
 /* VALUATION:BEGIN */
-const IBM_VALUATION = {"peer": {"score": 83.2, "sector": "Information Technology", "asOf": ["2026-08-27", "2026-09-11"], "priceSession": "2026-10-30", "metrics": [{"metric": "per", "score": 79.2, "rank": 6, "peers": 24}, {"metric": "pbr", "score": 82.6, "rank": 5, "peers": 23}, {"metric": "psr", "score": 96.3, "rank": 2, "peers": 27}, {"metric": "pcr", "score": 87.0, "rank": 4, "peers": 23}, {"metric": "evebitda", "score": 70.8, "rank": 8, "peers": 24}]}, "self": {"score": 40.2, "window": ["2022-02-22", "2026-10-30"], "perBasis": "diluted", "metrics": [{"metric": "per", "score": 59.2, "percentile": 40.8, "current": 25.3, "min": 18.64, "median": 30.53, "max": 99.72, "days": 1178, "currentNote": null}, {"metric": "pbr", "score": 47.0, "percentile": 53.0, "current": 6.86, "min": 5.08, "median": 6.71, "max": 10.55, "days": 1178, "currentNote": null}, {"metric": "psr", "score": 24.8, "percentile": 75.2, "current": 3.49, "min": 1.78, "median": 2.8, "max": 4.5, "days": 1178, "currentNote": null}, {"metric": "pcr", "score": 36.8, "percentile": 63.2, "current": 16.63, "min": 10.17, "median": 15.48, "max": 23.96, "days": 1178, "currentNote": null}, {"metric": "evebitda", "score": 33.2, "percentile": 66.8, "current": 18.1, "min": 12.11, "median": 16.6, "max": 24.28, "days": 1178, "currentNote": null}]}};
+const IBM_VALUATION = {"peer": {"score": 83.2, "sector": "Information Technology", "asOf": ["2026-08-27", "2026-09-11"], "priceSession": "2026-10-30", "metrics": [{"metric": "per", "score": 79.2, "rank": 6, "peers": 24}, {"metric": "pbr", "score": 82.6, "rank": 5, "peers": 23}, {"metric": "psr", "score": 96.3, "rank": 2, "peers": 27}, {"metric": "pcr", "score": 87.0, "rank": 4, "peers": 23}, {"metric": "evebitda", "score": 70.8, "rank": 8, "peers": 24}]}, "self": {"score": 40.2, "window": ["2022-02-22", "2026-10-30"], "perBasis": "diluted", "metrics": [{"metric": "per", "score": 59.2, "percentile": 40.8, "current": 25.3, "min": 18.64, "median": 30.51, "max": 99.72, "days": 1178, "currentNote": null}, {"metric": "pbr", "score": 47.0, "percentile": 53.0, "current": 6.86, "min": 5.08, "median": 6.71, "max": 10.55, "days": 1178, "currentNote": null}, {"metric": "psr", "score": 24.8, "percentile": 75.2, "current": 3.49, "min": 1.78, "median": 2.8, "max": 4.5, "days": 1178, "currentNote": null}, {"metric": "pcr", "score": 36.8, "percentile": 63.2, "current": 16.63, "min": 10.17, "median": 15.48, "max": 23.96, "days": 1178, "currentNote": null}, {"metric": "evebitda", "score": 33.2, "percentile": 66.8, "current": 18.1, "min": 12.11, "median": 16.6, "max": 24.28, "days": 1178, "currentNote": null}]}};
 /* VALUATION:END */
 
 // ── 종합 평가 자동 판정 (2026-09-25 사용자 결정 · 방향 합산) ──
@@ -2125,7 +2125,7 @@ const IBM_ACTIVITY = {"ticker": "IBM", "status": "ok", "asOf": "2026-09-30", "pr
 // ── 투자포인트 탭: 애널리스트 목표가 (출처·기준일 포함) ──
 // 갱신: StockAnalysis 예측 페이지(stockanalysis.com/stocks/ibm/forecast/)의 값과 날짜를 옮긴다.
 // 현재가 대비는 마지막 종가에서 계산한다.
-const IBM_ANALYST = { asOf: '2026-10-24', source: 'StockAnalysis (의견 집계 · 개별 목표가)', rating: 'Buy', n: 25, nTargets: 20, mean: 265.8, median: 269,
+const IBM_ANALYST = { asOf: '2026-10-31', source: 'StockAnalysis (의견 집계 · 개별 목표가)', rating: 'Buy', n: 25, nTargets: 21, mean: 267.9, median: 269,
   low: 191, high: 350, strongBuy: 9, buy: 3, hold: 11, sell: 1, strongSell: 1 };
 (function(){
   const A = IBM_ANALYST, last = (typeof IBM_DAILY !== 'undefined' && IBM_DAILY.length) ? IBM_DAILY[IBM_DAILY.length - 1] : null;

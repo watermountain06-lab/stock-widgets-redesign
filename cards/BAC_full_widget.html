@@ -1006,7 +1006,7 @@ Chart.overrides.doughnut.animation = false;
     </div>
 
     <div class="card" style="display:flex;flex-direction:column;">
-      <div class="card-title"><span id="multipleCompareTitle">S&amp;P500 은행 PER 비교 · 10/28 종가</span></div>
+      <div class="card-title"><span id="multipleCompareTitle">S&amp;P500 은행 PER 비교 · 10/30 종가</span></div>
       <div class="chart-wrap" style="flex:1;min-height:230px;">
         <canvas id="multipleChart"></canvas>
       </div>
@@ -1094,13 +1094,13 @@ Chart.overrides.doughnut.animation = false;
     <div class="card-title">투자의견 요약</div>
     <div class="op-strip">
       <div class="op-cell">
-        <span class="op-label">애널리스트 <span data-an="n">25명 · 목표가 19</span>명</span>
+        <span class="op-label">애널리스트 <span data-an="n">25명 · 목표가 18</span>명</span>
         <span class="op-val"><span data-an="rating">Strong Buy</span> <span class="op-sub">매수 <span data-an="buy">22</span> · 유지 <span data-an="hold">3</span> · 매도 <span data-an="sell">0</span></span></span>
         <div class="op-dist"><div data-an-bar="buy" style="width: 88%; background: var(--green);"></div><div data-an-bar="hold" style="width: 12%; background: var(--gold);"></div><div data-an-bar="sell" style="width: 0%; background: var(--red);"></div></div>
       </div>
       <div class="op-cell">
-        <span class="op-label">평균 목표주가 · <span data-an="asof">2026-10-24</span></span>
-        <span class="op-val"><span data-an="mean">$63.66</span> <span class="op-sub op-up" data-an="upside">+27.3%</span></span>
+        <span class="op-label">평균 목표주가 · <span data-an="asof">2026-10-31</span></span>
+        <span class="op-val"><span data-an="mean">$63.25</span> <span class="op-sub op-up" data-an="upside">+26.5%</span></span>
       </div>
       <div class="op-cell">
         <span class="op-label">다음 실적</span>
@@ -1304,67 +1304,67 @@ function renderSegmentChart() {
 // 은행 동종업(peer_universe/banks.json, 은행 사전 등록 §3)에서 고른 6곳. 값이 없는 은행은 뺀다.
 const MULTIPLE_DATA = {
   "per": {
-    "title": "S&P500 은행 PER 비교 · 10/28 종가",
+    "title": "S&P500 은행 PER 비교 · 10/30 종가",
     "unit": "PER(TTM)",
     "max": 25,
     "bacValue": null,
     "peers": [
       {
         "name": "JPM",
-        "value": 14.53,
+        "value": 14.43,
         "status": "reference"
       },
       {
         "name": "USB",
-        "value": 11.9,
+        "value": 11.87,
         "status": "reference"
       },
       {
         "name": "FITB",
-        "value": 18.31,
+        "value": 18.45,
         "status": "reference"
       },
       {
         "name": "RF",
-        "value": 11.54,
+        "value": 11.61,
         "status": "reference"
       },
       {
         "name": "MTB",
-        "value": 11.66,
+        "value": 11.68,
         "status": "reference"
       },
       {
         "name": "HBAN",
-        "value": 12.08,
+        "value": 12.14,
         "status": "reference"
       }
     ]
   },
   "pbr": {
-    "title": "S&P500 은행 P/TBV 비교 · 10/28 종가 (PNC는 유형자본을 만들 수 없음)",
+    "title": "S&P500 은행 P/TBV 비교 · 10/30 종가 (PNC는 유형자본을 만들 수 없음)",
     "unit": "P/TBV",
     "max": 4,
     "bacValue": null,
     "peers": [
       {
         "name": "JPM",
-        "value": 3.03,
+        "value": 3.01,
         "status": "reference"
       },
       {
         "name": "USB",
-        "value": 2.04,
+        "value": 2.03,
         "status": "reference"
       },
       {
         "name": "FITB",
-        "value": 2.3,
+        "value": 2.32,
         "status": "reference"
       },
       {
         "name": "RF",
-        "value": 2.08,
+        "value": 2.1,
         "status": "reference"
       },
       {
@@ -1374,7 +1374,7 @@ const MULTIPLE_DATA = {
       },
       {
         "name": "HBAN",
-        "value": 1.64,
+        "value": 1.65,
         "status": "reference"
       }
     ]
@@ -2149,7 +2149,7 @@ const BAC_ACTIVITY = {"ticker": "BAC", "status": "na", "reason": "은행이라 �
 // ── 투자포인트 탭: 애널리스트 목표가 (출처·기준일 포함) ──
 // 갱신: StockAnalysis 예측 페이지(stockanalysis.com/stocks/bac/forecast/)의 값과 날짜를 옮긴다.
 // 현재가 대비는 마지막 종가에서 계산한다.
-const BAC_ANALYST = { asOf: '2026-10-24', source: 'StockAnalysis (의견 집계 · 개별 목표가)', rating: 'Strong Buy', n: 25, nTargets: 19, mean: 63.66, median: 63,
+const BAC_ANALYST = { asOf: '2026-10-31', source: 'StockAnalysis (의견 집계 · 개별 목표가)', rating: 'Strong Buy', n: 25, nTargets: 18, mean: 63.25, median: 63,
   low: 56, high: 75, strongBuy: 16, buy: 6, hold: 3, sell: 0, strongSell: 0 };
 (function(){
   const A = BAC_ANALYST, last = (typeof BAC_DAILY !== 'undefined' && BAC_DAILY.length) ? BAC_DAILY[BAC_DAILY.length - 1] : null;

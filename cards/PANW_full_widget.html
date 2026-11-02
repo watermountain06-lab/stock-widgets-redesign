@@ -1082,11 +1082,11 @@ Chart.overrides.doughnut.animation = false;
     <div class="op-strip">
       <div class="op-cell">
         <span class="op-label">애널리스트 <span data-an="n">55명 · 목표가 43</span>명</span>
-        <span class="op-val"><span data-an="rating">Buy</span> <span class="op-sub">매수 <span data-an="buy">42</span> · 유지 <span data-an="hold">12</span> · 매도 <span data-an="sell">1</span></span></span>
-        <div class="op-dist"><div data-an-bar="buy" style="width: 76.4%; background: var(--green);"></div><div data-an-bar="hold" style="width: 21.8%; background: var(--gold);"></div><div data-an-bar="sell" style="width: 1.8%; background: var(--red);"></div></div>
+        <span class="op-val"><span data-an="rating">Buy</span> <span class="op-sub">매수 <span data-an="buy">42</span> · 유지 <span data-an="hold">11</span> · 매도 <span data-an="sell">2</span></span></span>
+        <div class="op-dist"><div data-an-bar="buy" style="width: 76.4%; background: var(--green);"></div><div data-an-bar="hold" style="width: 20%; background: var(--gold);"></div><div data-an-bar="sell" style="width: 3.6%; background: var(--red);"></div></div>
       </div>
       <div class="op-cell">
-        <span class="op-label">평균 목표주가 · <span data-an="asof">2026-10-24</span></span>
+        <span class="op-label">평균 목표주가 · <span data-an="asof">2026-10-31</span></span>
         <span class="op-val"><span data-an="mean">$406.30</span> <span class="op-sub op-up" data-an="upside">+11.1%</span></span>
       </div>
       <div class="op-cell">
@@ -2093,8 +2093,8 @@ const PANW_ACTIVITY = {"ticker": "PANW", "status": "N/A", "reason": "5년 비교
 // ── 투자포인트 탭: 애널리스트 목표가 (출처·기준일 포함) ──
 // 갱신: StockAnalysis 예측 페이지(stockanalysis.com/stocks/panw/forecast/)의 값과 날짜를 옮긴다.
 // 현재가 대비는 마지막 종가에서 계산한다.
-const PANW_ANALYST = { asOf: '2026-10-24', source: 'StockAnalysis (의견 집계 · 개별 목표가)', rating: 'Buy', n: 55, nTargets: 43, mean: 406.3, median: 415,
-  low: 290, high: 525, strongBuy: 32, buy: 10, hold: 12, sell: 0, strongSell: 1 };
+const PANW_ANALYST = { asOf: '2026-10-31', source: 'StockAnalysis (의견 집계 · 개별 목표가)', rating: 'Buy', n: 55, nTargets: 43, mean: 406.3, median: 415,
+  low: 290, high: 525, strongBuy: 32, buy: 10, hold: 11, sell: 1, strongSell: 1 };
 (function(){
   const A = PANW_ANALYST, last = (typeof PANW_DAILY !== 'undefined' && PANW_DAILY.length) ? PANW_DAILY[PANW_DAILY.length - 1] : null;
   const put = (k, t) => document.querySelectorAll(`#invest [data-an="${k}"]`).forEach(el => { el.textContent = t; });

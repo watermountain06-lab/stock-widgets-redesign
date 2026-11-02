@@ -1099,7 +1099,7 @@ Chart.overrides.doughnut.animation = false;
         <div class="op-dist"><div data-an-bar="buy" style="width: 95.2%; background: var(--green);"></div><div data-an-bar="hold" style="width: 3.2%; background: var(--gold);"></div><div data-an-bar="sell" style="width:1.6%;background:var(--red);"></div></div>
       </div>
       <div class="op-cell">
-        <span class="op-label">평균 목표주가 · <span data-an="asof">2026-10-24</span></span>
+        <span class="op-label">평균 목표주가 · <span data-an="asof">2026-10-31</span></span>
         <span class="op-val"><span data-an="mean">$323.29</span> <span class="op-sub op-up" data-an="upside">+58.0%</span></span>
       </div>
       <div class="op-cell">
@@ -2101,7 +2101,7 @@ const NVDA_ACTIVITY = {"ticker": "NVDA", "status": "ok", "asOf": "2026-07-26", "
 // ── 투자포인트 탭: 애널리스트 목표가 (출처·기준일 포함) ──
 // 갱신: StockAnalysis 예측 페이지(stockanalysis.com/stocks/nvda/forecast/)의 값과 날짜를 옮긴다.
 // 현재가 대비는 마지막 종가에서 계산한다.
-const NVDA_ANALYST = { asOf: '2026-10-24', source: 'StockAnalysis (의견 집계 · 개별 목표가)', rating: 'Strong Buy', n: 62, nTargets: 38, mean: 323.29, median: 315,
+const NVDA_ANALYST = { asOf: '2026-10-31', source: 'StockAnalysis (의견 집계 · 개별 목표가)', rating: 'Strong Buy', n: 62, nTargets: 38, mean: 323.29, median: 315,
   low: 250, high: 500, strongBuy: 49, buy: 10, hold: 2, sell: 0, strongSell: 1 };
 (function(){
   const A = NVDA_ANALYST, last = (typeof NVDA_DAILY !== 'undefined' && NVDA_DAILY.length) ? NVDA_DAILY[NVDA_DAILY.length - 1] : null;

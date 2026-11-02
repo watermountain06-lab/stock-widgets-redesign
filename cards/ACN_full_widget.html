@@ -1115,8 +1115,8 @@ Chart.overrides.doughnut.animation = false;
         <div class="op-dist"><div data-an-bar="buy" style="width: 37%; background: var(--green);"></div><div data-an-bar="hold" style="width: 63%; background: var(--gold);"></div><div data-an-bar="sell" style="width: 0%; background: var(--red);"></div></div>
       </div>
       <div class="op-cell">
-        <span class="op-label">평균 목표주가 · <span data-an="asof">2026-10-24</span></span>
-        <span class="op-val"><span data-an="mean">$227.25</span> <span class="op-sub op-down" data-an="upside">−12.0%</span></span>
+        <span class="op-label">평균 목표주가 · <span data-an="asof">2026-10-31</span></span>
+        <span class="op-val"><span data-an="mean">$230.45</span> <span class="op-sub op-down" data-an="upside">−10.8%</span></span>
       </div>
       <div class="op-cell">
         <span class="op-label">다음 실적</span>
@@ -2119,8 +2119,8 @@ const ACN_ACTIVITY = {"ticker": "ACN", "status": "ok", "asOf": "2026-08-31", "pr
 // ── 투자포인트 탭: 애널리스트 목표가 (출처·기준일 포함) ──
 // 갱신: StockAnalysis 예측 페이지(stockanalysis.com/stocks/acn/forecast/)의 값과 날짜를 옮긴다.
 // 현재가 대비는 마지막 종가에서 계산한다.
-const ACN_ANALYST = { asOf: '2026-10-24', source: 'StockAnalysis (의견 집계 · 개별 목표가)', rating: 'Buy', n: 27, nTargets: 20, mean: 227.25, median: 235,
-  low: 175, high: 278, strongBuy: 8, buy: 2, hold: 17, sell: 0, strongSell: 0 };
+const ACN_ANALYST = { asOf: '2026-10-31', source: 'StockAnalysis (의견 집계 · 개별 목표가)', rating: 'Buy', n: 27, nTargets: 20, mean: 230.45, median: 235,
+  low: 175, high: 300, strongBuy: 8, buy: 2, hold: 17, sell: 0, strongSell: 0 };
 (function(){
   const A = ACN_ANALYST, last = (typeof ACN_DAILY !== 'undefined' && ACN_DAILY.length) ? ACN_DAILY[ACN_DAILY.length - 1] : null;
   const put = (k, t) => document.querySelectorAll(`#invest [data-an="${k}"]`).forEach(el => { el.textContent = t; });

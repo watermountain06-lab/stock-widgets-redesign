@@ -973,7 +973,7 @@ Chart.overrides.doughnut.animation = false;
     </div>
 
     <div class="card" style="display:flex;flex-direction:column;">
-      <div class="card-title"><span id="multipleCompareTitle">자산운용 6곳 PER 비교 (점수는 S&amp;P500 자산운용·수탁은행 기준) (ARES 값 없음) · 10/23 종가(BX 막대는 10/30)</span></div>
+      <div class="card-title"><span id="multipleCompareTitle">자산운용 6곳 PER 비교 (점수는 S&amp;P500 자산운용·수탁은행 기준) (ARES 값 없음) · 10/30 종가</span></div>
       <div class="chart-wrap" style="flex:1;min-height:230px;">
         <canvas id="multipleChart"></canvas>
       </div>
@@ -1080,8 +1080,8 @@ Chart.overrides.doughnut.animation = false;
         <div class="op-dist"><div data-an-bar="buy" style="width: 54.2%; background: var(--green);"></div><div data-an-bar="hold" style="width: 45.8%; background: var(--gold);"></div><div data-an-bar="sell" style="width: 0%; background: var(--red);"></div></div>
       </div>
       <div class="op-cell">
-        <span class="op-label">평균 목표주가 · <span data-an="asof">2026-10-24</span></span>
-        <span class="op-val"><span data-an="mean">$139.60</span> <span class="op-sub op-up" data-an="upside">+17.8%</span></span>
+        <span class="op-label">평균 목표주가 · <span data-an="asof">2026-10-31</span></span>
+        <span class="op-val"><span data-an="mean">$139.75</span> <span class="op-sub op-up" data-an="upside">+17.9%</span></span>
       </div>
       <div class="op-cell">
         <span class="op-label">다음 실적</span>
@@ -1285,54 +1285,54 @@ function renderSegmentChart() {
 // ══════ #valuation ══════
 const MULTIPLE_DATA = {
   per: {
-    title: '자산운용 6곳 PER 비교 (점수는 S&P500 자산운용·수탁은행 기준) (ARES 값 없음) · 10/23 종가(BX 막대는 10/30)',
+    title: '자산운용 6곳 PER 비교 (점수는 S&P500 자산운용·수탁은행 기준) (ARES 값 없음) · 10/30 종가',
     unit: 'PER', max: 50, bxValue: null,
     peers: [
-      { name:'BLK', value:26.8, status:'reference' },
-      { name:'KKR', value:29.1, status:'reference' },
-      { name:'APO', value:41.0, status:'reference' },
+      { name:'BLK', value:27.5, status:'reference' },
+      { name:'KKR', value:30.1, status:'reference' },
+      { name:'APO', value:42.1, status:'reference' },
       { name:'TROW', value:10.5, status:'reference' },
-      { name:'BEN', value:21.1, status:'reference' }
+      { name:'BEN', value:21.5, status:'reference' }
     ]
   },
   pbr: {
-    title: '자산운용 PBR 비교 · 10/23 종가(BX 막대는 10/30)',
+    title: '자산운용 PBR 비교 · 10/30 종가',
     unit: 'PBR', max: 15, bxValue: null,
     peers: [
-      { name:'BLK', value:3.0, status:'reference' },
-      { name:'KKR', value:2.6, status:'reference' },
-      { name:'APO', value:3.2, status:'reference' },
-      { name:'ARES', value:9.6, status:'reference' },
-      { name:'TROW', value:2.0, status:'reference' },
-      { name:'BEN', value:1.3, status:'reference' }
+      { name:'BLK', value:3.1, status:'reference' },
+      { name:'KKR', value:2.7, status:'reference' },
+      { name:'APO', value:3.5, status:'reference' },
+      { name:'ARES', value:10.1, status:'reference' },
+      { name:'TROW', value:1.9, status:'reference' },
+      { name:'BEN', value:1.4, status:'reference' }
     ]
   },
   psr: {
-    title: '자산운용 PSR 비교 · 10/23 종가(BX 막대는 10/30)',
+    title: '자산운용 PSR 비교 · 10/30 종가',
     unit: 'PSR(TTM)', max: 15, bxValue: null,
     peers: [
-      { name:'BLK', value:6.3, status:'reference' },
-      { name:'KKR', value:3.9, status:'reference' },
+      { name:'BLK', value:6.8, status:'reference' },
+      { name:'KKR', value:4.0, status:'reference' },
       { name:'APO', value:1.9, status:'reference' },
-      { name:'ARES', value:6.4, status:'reference' },
+      { name:'ARES', value:6.7, status:'reference' },
       { name:'TROW', value:2.9, status:'reference' },
       { name:'BEN', value:1.7, status:'reference' }
     ]
   },
   pcr: {
-    title: '자산운용 PCR(FCF) 비교 (KKR 값 없음·APO 값 없음·ARES 값 없음·BEN 값 없음) · 10/23 종가(BX 막대는 10/30)',
-    unit: 'PCR(FCF)', max: 60, bxValue: null,
+    title: '자산운용 PCR(FCF) 비교 (KKR 값 없음·APO 값 없음·ARES 값 없음·BEN 값 없음) · 10/30 종가',
+    unit: 'PCR(FCF)', max: 65, bxValue: null,
     peers: [
-      { name:'BLK', value:49.3, status:'reference' },
-      { name:'TROW', value:13.3, status:'reference' }
+      { name:'BLK', value:53.1, status:'reference' },
+      { name:'TROW', value:13.9, status:'reference' }
     ]
   },
   evebitda: {
-    title: '자산운용 EV/EBITDA 비교 (KKR 값 없음·APO 값 없음·ARES 값 없음·TROW 값 없음) · 10/23 종가(BX 막대는 10/30)',
+    title: '자산운용 EV/EBITDA 비교 (KKR 값 없음·APO 값 없음·ARES 값 없음·TROW 값 없음) · 10/30 종가',
     unit: 'EV/EBITDA', max: 25, bxValue: null,
     peers: [
-      { name:'BLK', value:18.7, status:'reference' },
-      { name:'BEN', value:14.4, status:'reference' }
+      { name:'BLK', value:20.1, status:'reference' },
+      { name:'BEN', value:14.7, status:'reference' }
     ]
   }
 };
@@ -1790,7 +1790,7 @@ const BX_FUNDAMENTAL = {"ticker": "BX", "basis": "quarter", "asOf": "2026-06-30"
 //
 // 갱신: python3 v2/build_peer_score.py BX --self v2/BX_multiples.json --card
 /* VALUATION:BEGIN */
-const BX_VALUATION = {"peer": {"score": 12.5, "sector": "Financials (S&P500 12종목)", "asOf": ["2026-10-23", "2026-10-23"], "priceSession": null, "metrics": [{"metric": "per", "score": 37.5, "rank": 6, "peers": 8}, {"metric": "pbr", "score": 0.0, "rank": 12, "peers": 11}, {"metric": "psr", "score": 0.0, "rank": 12, "peers": 11}]}, "self": {"score": 71.9, "window": ["2021-11-01", "2026-10-30"], "perBasis": "diluted", "metrics": [{"metric": "per", "score": 73.3, "percentile": 26.7, "current": 26.57, "min": 12.23, "median": 41.1, "max": 133.54, "days": 1255, "currentNote": null}, {"metric": "pbr", "score": 60.4, "percentile": 39.6, "current": 10.56, "min": 6.55, "median": 11.51, "max": 19.37, "days": 1255, "currentNote": null}, {"metric": "psr", "score": 72.9, "percentile": 27.1, "current": 9.15, "min": 4.81, "median": 13.23, "max": 27.46, "days": 1255, "currentNote": null}, {"metric": "pcr", "score": 80.9, "percentile": 19.1, "current": 26.86, "min": 15.86, "median": 34.79, "max": 70.76, "days": 1255, "currentNote": null}, {"metric": "evebitda", "score": 72.0, "percentile": 28.0, "current": 19.35, "min": 8.63, "median": 28.27, "max": 114.82, "days": 1255, "currentNote": null}]}};
+const BX_VALUATION = {"peer": {"score": 12.5, "sector": "Financials (S&P500 12종목)", "asOf": ["2026-10-30", "2026-10-30"], "priceSession": null, "metrics": [{"metric": "per", "score": 37.5, "rank": 6, "peers": 8}, {"metric": "pbr", "score": 0.0, "rank": 12, "peers": 11}, {"metric": "psr", "score": 0.0, "rank": 12, "peers": 11}]}, "self": {"score": 71.9, "window": ["2021-11-01", "2026-10-30"], "perBasis": "diluted", "metrics": [{"metric": "per", "score": 73.3, "percentile": 26.7, "current": 26.57, "min": 12.23, "median": 41.1, "max": 133.54, "days": 1255, "currentNote": null}, {"metric": "pbr", "score": 60.4, "percentile": 39.6, "current": 10.56, "min": 6.55, "median": 11.51, "max": 19.37, "days": 1255, "currentNote": null}, {"metric": "psr", "score": 72.9, "percentile": 27.1, "current": 9.15, "min": 4.81, "median": 13.23, "max": 27.46, "days": 1255, "currentNote": null}, {"metric": "pcr", "score": 80.9, "percentile": 19.1, "current": 26.86, "min": 15.86, "median": 34.79, "max": 70.76, "days": 1255, "currentNote": null}, {"metric": "evebitda", "score": 72.0, "percentile": 28.0, "current": 19.35, "min": 8.63, "median": 28.27, "max": 114.82, "days": 1255, "currentNote": null}]}};
 /* VALUATION:END */
 
 // ── 종합 평가 자동 판정 (2026-09-25 사용자 결정 · 방향 합산) ──
@@ -2078,7 +2078,7 @@ const BX_ACTIVITY = {"ticker": "BX", "status": "N/A", "reason": "5년 비교 이
 // ── 투자포인트 탭: 애널리스트 목표가 (출처·기준일 포함) ──
 // 갱신: StockAnalysis 예측 페이지(stockanalysis.com/stocks/bx/forecast/)의 값과 날짜를 옮긴다.
 // 현재가 대비는 마지막 종가에서 계산한다.
-const BX_ANALYST = { asOf: '2026-10-24', source: 'StockAnalysis (의견 집계 · 개별 목표가)', rating: 'Buy', n: 24, nTargets: 20, mean: 139.6, median: 138,
+const BX_ANALYST = { asOf: '2026-10-31', source: 'StockAnalysis (의견 집계 · 개별 목표가)', rating: 'Buy', n: 24, nTargets: 20, mean: 139.75, median: 140,
   low: 118, high: 169, strongBuy: 9, buy: 4, hold: 11, sell: 0, strongSell: 0 };
 (function(){
   const A = BX_ANALYST, last = (typeof BX_DAILY !== 'undefined' && BX_DAILY.length) ? BX_DAILY[BX_DAILY.length - 1] : null;

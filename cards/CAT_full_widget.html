@@ -933,7 +933,7 @@ Chart.overrides.doughnut.animation = false;
 시나리오 범위: 1.87 ~ 2.19(세 시나리오 최대·최소 기준)
 0.7 이하 매우 싸다 · 0.9 이하 싸다 · 1.1 이하 적정 · 1.5 이하 비싸다 · 초과 매우 비싸다
 이 칸은 보수적으로 잡혀 있다(할인율 10%, 5년 뒤 영구성장 2.5%). S&amp;P500 비금융 종목의 83~91%가 매달 '매우 비싸다'에 들어간다(2024-10~2026-09). 다른 종목과 견주려면 위 비율 숫자를 함께 볼 것.">매우 비싸다</div></div>
-      <div class="vs-name" title="S&amp;P500 산업재 종목들보다 배수가 얼마나 낮은가. 높을수록 싸다.">동종업 대비</div><div class="vs-val" data-vc-score="peer">36.4</div><div class="sc-tile lost" data-vc="peer" data-m="per">51</div><div class="sc-tile low" data-vc="peer" data-m="pbr">12</div><div class="sc-tile lost" data-vc="peer" data-m="psr">39</div><div class="sc-tile lost" data-vc="peer" data-m="pcr">38</div><div class="sc-tile lost" data-vc="peer" data-m="evebitda">43</div><div class="vs-pill mid" data-vs-pill="peer">중간</div>
+      <div class="vs-name" title="S&amp;P500 산업재 종목들보다 배수가 얼마나 낮은가. 높을수록 싸다.">동종업 대비</div><div class="vs-val" data-vc-score="peer">36.4</div><div class="sc-tile lost" data-vc="peer" data-m="per">51</div><div class="sc-tile low" data-vc="peer" data-m="pbr">12</div><div class="sc-tile lost" data-vc="peer" data-m="psr">41</div><div class="sc-tile lost" data-vc="peer" data-m="pcr">42</div><div class="sc-tile lost" data-vc="peer" data-m="evebitda">36</div><div class="vs-pill mid" data-vs-pill="peer">중간</div>
     </div></div>
     <div class="vs-premise">PER 26.8배(5년 중앙값 17.8배)로 자기 이력 19.7점(비싸다), 동종업 36.4점(중간)이다. <strong>현금흐름 내재가치(기본 $332.27)는 현재가의 53%다</strong>.</div>
     <div class="verdict-summary-risk">⚠️ 세 칸이 자기 이력 −1 · 동종업 0 · 현금흐름 −2, 합계 −3 “고평가”이다. 현금흐름 내재가치(기본 $332.27)는 현재가의 53%다. 현재가를 정당화하려면 매출이 5년간 연 24.1% 커야 한다. 내재가치에서 차입금 $10.7B를 빼고 현금·단기투자 $6.7B를 더한다.</div>
@@ -1005,7 +1005,7 @@ Chart.overrides.doughnut.animation = false;
     </div>
 
     <div class="card" style="display:flex;flex-direction:column;">
-      <div class="card-title"><span id="multipleCompareTitle">기계·장비 대형주 PER 비교 · 10/23 종가(CAT 막대는 10/30)</span></div>
+      <div class="card-title"><span id="multipleCompareTitle">기계·장비 대형주 PER 비교 · 10/30 종가</span></div>
       <div class="chart-wrap" style="flex:1;min-height:230px;">
         <canvas id="multipleChart"></canvas>
       </div>
@@ -1114,13 +1114,13 @@ Chart.overrides.doughnut.animation = false;
     <div class="card-title">투자의견 요약</div>
     <div class="op-strip">
       <div class="op-cell">
-        <span class="op-label">애널리스트 <span data-an="n">28명 · 목표가 17</span>명</span>
-        <span class="op-val"><span data-an="rating">Buy</span> <span class="op-sub">매수 <span data-an="buy">15</span> · 유지 <span data-an="hold">12</span> · 매도 <span data-an="sell">1</span></span></span>
-        <div class="op-dist"><div data-an-bar="buy" style="width: 53.6%; background: var(--green);"></div><div data-an-bar="hold" style="width: 42.9%; background: var(--gold);"></div><div data-an-bar="sell" style="width: 3.6%; background: var(--red);"></div></div>
+        <span class="op-label">애널리스트 <span data-an="n">29명 · 목표가 18</span>명</span>
+        <span class="op-val"><span data-an="rating">Buy</span> <span class="op-sub">매수 <span data-an="buy">16</span> · 유지 <span data-an="hold">12</span> · 매도 <span data-an="sell">1</span></span></span>
+        <div class="op-dist"><div data-an-bar="buy" style="width: 55.2%; background: var(--green);"></div><div data-an-bar="hold" style="width: 41.4%; background: var(--gold);"></div><div data-an-bar="sell" style="width: 3.4%; background: var(--red);"></div></div>
       </div>
       <div class="op-cell">
-        <span class="op-label">평균 목표주가 · <span data-an="asof">2026-10-24</span></span>
-        <span class="op-val"><span data-an="mean">$994.29</span> <span class="op-sub op-up" data-an="upside">+59.7%</span></span>
+        <span class="op-label">평균 목표주가 · <span data-an="asof">2026-10-31</span></span>
+        <span class="op-val"><span data-an="mean">$876.83</span> <span class="op-sub op-up" data-an="upside">+40.8%</span></span>
       </div>
       <div class="op-cell">
         <span class="op-label">다음 실적</span>
@@ -1324,63 +1324,63 @@ function renderSegmentChart() {
 // ══════ #valuation ══════
 const MULTIPLE_DATA = {
   per: {
-    title: '기계·장비 대형주 PER 비교 · 10/23 종가(CAT 막대는 10/30)',
+    title: '기계·장비 대형주 PER 비교 · 10/30 종가',
     unit: 'PER', max: 45, catValue: null,
     peers: [
-      { name:'DE', value:35.9, status:'reference' },
-      { name:'PCAR', value:22.5, status:'reference' },
-      { name:'CMI', value:26.5, status:'reference' },
-      { name:'ETN', value:37.3, status:'reference' },
-      { name:'GE', value:32.6, status:'reference' },
-      { name:'PH', value:30.9, status:'reference' }
+      { name:'DE', value:37.5, status:'reference' },
+      { name:'PCAR', value:19.4, status:'reference' },
+      { name:'CMI', value:21.4, status:'reference' },
+      { name:'ETN', value:37.7, status:'reference' },
+      { name:'GE', value:34.4, status:'reference' },
+      { name:'PH', value:31.6, status:'reference' }
     ]
   },
   pbr: {
-    title: '기계·장비 대형주 PBR 비교 · 10/23 종가(CAT 막대는 10/30)',
-    unit: 'PBR', max: 20, catValue: null,
+    title: '기계·장비 대형주 PBR 비교 · 10/30 종가',
+    unit: 'PBR', max: 25, catValue: null,
     peers: [
-      { name:'DE', value:6.2, status:'reference' },
-      { name:'PCAR', value:2.8, status:'reference' },
-      { name:'CMI', value:5.5, status:'reference' },
-      { name:'ETN', value:7.0, status:'reference' },
-      { name:'GE', value:16.9, status:'reference' },
-      { name:'PH', value:7.2, status:'reference' }
+      { name:'DE', value:6.5, status:'reference' },
+      { name:'PCAR', value:2.6, status:'reference' },
+      { name:'CMI', value:5.4, status:'reference' },
+      { name:'ETN', value:7.1, status:'reference' },
+      { name:'GE', value:17.8, status:'reference' },
+      { name:'PH', value:7.4, status:'reference' }
     ]
   },
   psr: {
-    title: '기계·장비 대형주 PSR 비교 · 10/23 종가(CAT 막대는 10/30)',
+    title: '기계·장비 대형주 PSR 비교 · 10/30 종가',
     unit: 'PSR(TTM)', max: 10, catValue: null,
     peers: [
-      { name:'DE', value:3.6, status:'reference' },
-      { name:'PCAR', value:2.0, status:'reference' },
+      { name:'DE', value:3.8, status:'reference' },
+      { name:'PCAR', value:1.9, status:'reference' },
       { name:'CMI', value:2.0, status:'reference' },
-      { name:'ETN', value:4.7, status:'reference' },
-      { name:'GE', value:5.6, status:'reference' },
-      { name:'PH', value:5.2, status:'reference' }
+      { name:'ETN', value:4.8, status:'reference' },
+      { name:'GE', value:5.9, status:'reference' },
+      { name:'PH', value:5.3, status:'reference' }
     ]
   },
   pcr: {
-    title: '기계·장비 대형주 PCR(FCF) 비교 · 10/23 종가(CAT 막대는 10/30)',
+    title: '기계·장비 대형주 PCR(FCF) 비교 · 10/30 종가',
     unit: 'PCR(FCF)', max: 45, catValue: null,
     peers: [
-      { name:'DE', value:28.9, status:'reference' },
-      { name:'PCAR', value:15.2, status:'reference' },
-      { name:'CMI', value:21.1, status:'reference' },
-      { name:'ETN', value:36.1, status:'reference' },
-      { name:'GE', value:36.9, status:'reference' },
-      { name:'PH', value:28.4, status:'reference' }
+      { name:'DE', value:30.2, status:'reference' },
+      { name:'PCAR', value:17.6, status:'reference' },
+      { name:'CMI', value:20.4, status:'reference' },
+      { name:'ETN', value:36.5, status:'reference' },
+      { name:'GE', value:39.0, status:'reference' },
+      { name:'PH', value:29.0, status:'reference' }
     ]
   },
   evebitda: {
-    title: '기계·장비 대형주 EV/EBITDA 비교 · 10/23 종가(CAT 막대는 10/30)',
-    unit: 'EV/EBITDA', max: 35, catValue: null,
+    title: '기계·장비 대형주 EV/EBITDA 비교 · 10/30 종가',
+    unit: 'EV/EBITDA', max: 40, catValue: null,
     peers: [
-      { name:'DE', value:19.9, status:'reference' },
-      { name:'PCAR', value:12.9, status:'reference' },
-      { name:'CMI', value:15.3, status:'reference' },
-      { name:'ETN', value:25.1, status:'reference' },
-      { name:'GE', value:29.5, status:'reference' },
-      { name:'PH', value:19.9, status:'reference' }
+      { name:'DE', value:20.8, status:'reference' },
+      { name:'PCAR', value:10.9, status:'reference' },
+      { name:'CMI', value:14.8, status:'reference' },
+      { name:'ETN', value:25.3, status:'reference' },
+      { name:'GE', value:31.1, status:'reference' },
+      { name:'PH', value:20.3, status:'reference' }
     ]
   }
 };
@@ -1836,7 +1836,7 @@ const CAT_FUNDAMENTAL = {"ticker": "CAT", "basis": "quarter", "asOf": "2026-06-3
 //
 // 갱신: python3 v2/build_peer_score.py CAT --self v2/CAT_multiples.json --card
 /* VALUATION:BEGIN */
-const CAT_VALUATION = {"peer": {"score": 36.4, "sector": "Industrials (S&P500 81종목)", "asOf": ["2026-10-23", "2026-10-23"], "priceSession": null, "metrics": [{"metric": "per", "score": 50.6, "rank": 39, "peers": 77}, {"metric": "pbr", "score": 12.2, "rank": 66, "peers": 74}, {"metric": "psr", "score": 38.5, "rank": 49, "peers": 78}, {"metric": "pcr", "score": 37.8, "rank": 47, "peers": 74}, {"metric": "evebitda", "score": 43.1, "rank": 42, "peers": 72}]}, "self": {"score": 19.7, "window": ["2021-11-01", "2026-10-30"], "perBasis": "diluted", "metrics": [{"metric": "per", "score": 20.6, "percentile": 79.4, "current": 26.81, "min": 12.42, "median": 17.79, "max": 53.03, "days": 1255, "currentNote": null}, {"metric": "pbr", "score": 15.1, "percentile": 84.9, "current": 14.76, "min": 5.31, "median": 8.45, "max": 26.28, "days": 1255, "currentNote": null}, {"metric": "psr", "score": 21.0, "percentile": 79.0, "current": 3.83, "min": 1.59, "median": 2.44, "max": 6.93, "days": 1255, "currentNote": null}, {"metric": "pcr", "score": 21.5, "percentile": 78.5, "current": 26.76, "min": 11.65, "median": 18.11, "max": 51.73, "days": 1255, "currentNote": null}, {"metric": "evebitda", "score": 20.2, "percentile": 79.8, "current": 18.81, "min": 8.75, "median": 12.23, "max": 35.63, "days": 1255, "currentNote": null}]}};
+const CAT_VALUATION = {"peer": {"score": 36.4, "sector": "Industrials (S&P500 81종목)", "asOf": ["2026-10-30", "2026-10-30"], "priceSession": null, "metrics": [{"metric": "per", "score": 50.7, "rank": 38, "peers": 75}, {"metric": "pbr", "score": 12.2, "rank": 66, "peers": 74}, {"metric": "psr", "score": 41.0, "rank": 47, "peers": 78}, {"metric": "pcr", "score": 42.1, "rank": 45, "peers": 76}, {"metric": "evebitda", "score": 36.0, "rank": 49, "peers": 75}]}, "self": {"score": 19.7, "window": ["2021-11-01", "2026-10-30"], "perBasis": "diluted", "metrics": [{"metric": "per", "score": 20.6, "percentile": 79.4, "current": 26.81, "min": 12.42, "median": 17.79, "max": 53.03, "days": 1255, "currentNote": null}, {"metric": "pbr", "score": 15.1, "percentile": 84.9, "current": 14.76, "min": 5.31, "median": 8.45, "max": 26.28, "days": 1255, "currentNote": null}, {"metric": "psr", "score": 21.0, "percentile": 79.0, "current": 3.83, "min": 1.59, "median": 2.44, "max": 6.93, "days": 1255, "currentNote": null}, {"metric": "pcr", "score": 21.5, "percentile": 78.5, "current": 26.76, "min": 11.65, "median": 18.11, "max": 51.73, "days": 1255, "currentNote": null}, {"metric": "evebitda", "score": 20.2, "percentile": 79.8, "current": 18.81, "min": 8.75, "median": 12.23, "max": 35.63, "days": 1255, "currentNote": null}]}};
 /* VALUATION:END */
 
 // ── 종합 평가 자동 판정 (2026-09-25 사용자 결정 · 방향 합산) ──
@@ -2125,8 +2125,8 @@ const CAT_ACTIVITY = {"ticker": "CAT", "status": "ok", "asOf": "2026-06-30", "pr
 // ── 투자포인트 탭: 애널리스트 목표가 (출처·기준일 포함) ──
 // 갱신: StockAnalysis 예측 페이지(stockanalysis.com/stocks/cat/forecast/)의 값과 날짜를 옮긴다.
 // 현재가 대비는 마지막 종가에서 계산한다.
-const CAT_ANALYST = { asOf: '2026-10-24', source: 'StockAnalysis (의견 집계 · 개별 목표가)', rating: 'Buy', n: 28, nTargets: 17, mean: 994.29, median: 980,
-  low: 882, high: 1155, strongBuy: 14, buy: 1, hold: 12, sell: 0, strongSell: 1 };
+const CAT_ANALYST = { asOf: '2026-10-31', source: 'StockAnalysis (의견 집계 · 개별 목표가)', rating: 'Buy', n: 29, nTargets: 18, mean: 876.83, median: 900,
+  low: 675, high: 1103, strongBuy: 15, buy: 1, hold: 12, sell: 0, strongSell: 1 };
 (function(){
   const A = CAT_ANALYST, last = (typeof CAT_DAILY !== 'undefined' && CAT_DAILY.length) ? CAT_DAILY[CAT_DAILY.length - 1] : null;
   const put = (k, t) => document.querySelectorAll(`#invest [data-an="${k}"]`).forEach(el => { el.textContent = t; });

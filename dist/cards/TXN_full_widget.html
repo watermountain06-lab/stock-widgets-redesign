@@ -1125,13 +1125,13 @@ Chart.overrides.doughnut.animation = false;
     <div class="card-title">투자의견 요약</div>
     <div class="op-strip">
       <div class="op-cell">
-        <span class="op-label">애널리스트 <span data-an="n">36명 · 목표가 26</span>명</span>
-        <span class="op-val"><span data-an="rating">Buy</span> <span class="op-sub">매수 <span data-an="buy">19</span> · 유지 <span data-an="hold">15</span> · 매도 <span data-an="sell">2</span></span></span>
-        <div class="op-dist"><div data-an-bar="buy" style="width: 52.8%; background: var(--green);"></div><div data-an-bar="hold" style="width: 41.7%; background: var(--gold);"></div><div data-an-bar="sell" style="width: 5.6%; background: var(--red);"></div></div>
+        <span class="op-label">애널리스트 <span data-an="n">35명 · 목표가 27</span>명</span>
+        <span class="op-val"><span data-an="rating">Buy</span> <span class="op-sub">매수 <span data-an="buy">20</span> · 유지 <span data-an="hold">13</span> · 매도 <span data-an="sell">2</span></span></span>
+        <div class="op-dist"><div data-an-bar="buy" style="width: 57.1%; background: var(--green);"></div><div data-an-bar="hold" style="width: 37.1%; background: var(--gold);"></div><div data-an-bar="sell" style="width: 5.7%; background: var(--red);"></div></div>
       </div>
       <div class="op-cell">
-        <span class="op-label">평균 목표주가 · <span data-an="asof">2026-10-24</span></span>
-        <span class="op-val"><span data-an="mean">$334.81</span> <span class="op-sub op-up" data-an="upside">+11.3%</span></span>
+        <span class="op-label">평균 목표주가 · <span data-an="asof">2026-10-31</span></span>
+        <span class="op-val"><span data-an="mean">$333.89</span> <span class="op-sub op-up" data-an="upside">+11.0%</span></span>
       </div>
       <div class="op-cell">
         <span class="op-label">다음 실적</span>
@@ -2138,8 +2138,8 @@ const TXN_ACTIVITY = {"ticker": "TXN", "status": "ok", "asOf": "2026-09-30", "pr
 // ── 투자포인트 탭: 애널리스트 목표가 (출처·기준일 포함) ──
 // 갱신: StockAnalysis 예측 페이지(stockanalysis.com/stocks/txn/forecast/)의 값과 날짜를 옮긴다.
 // 현재가 대비는 마지막 종가에서 계산한다.
-const TXN_ANALYST = { asOf: '2026-10-24', source: 'StockAnalysis (의견 집계 · 개별 목표가)', rating: 'Buy', n: 36, nTargets: 26, mean: 334.81, median: 340,
-  low: 250, high: 405, strongBuy: 17, buy: 2, hold: 15, sell: 0, strongSell: 2 };
+const TXN_ANALYST = { asOf: '2026-10-31', source: 'StockAnalysis (의견 집계 · 개별 목표가)', rating: 'Buy', n: 35, nTargets: 27, mean: 333.89, median: 330,
+  low: 250, high: 405, strongBuy: 18, buy: 2, hold: 13, sell: 0, strongSell: 2 };
 (function(){
   const A = TXN_ANALYST, last = (typeof TXN_DAILY !== 'undefined' && TXN_DAILY.length) ? TXN_DAILY[TXN_DAILY.length - 1] : null;
   const put = (k, t) => document.querySelectorAll(`#invest [data-an="${k}"]`).forEach(el => { el.textContent = t; });

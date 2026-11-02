@@ -973,7 +973,7 @@ Chart.overrides.doughnut.animation = false;
     </div>
 
     <div class="card" style="display:flex;flex-direction:column;">
-      <div class="card-title"><span id="multipleCompareTitle">외식·소매 6곳 PER 비교 (점수는 S&amp;P500 경기소비재 기준) · 10/23 종가(SBUX 막대는 10/30)</span></div>
+      <div class="card-title"><span id="multipleCompareTitle">외식·소매 6곳 PER 비교 (점수는 S&amp;P500 경기소비재 기준) · 10/30 종가</span></div>
       <div class="chart-wrap" style="flex:1;min-height:230px;">
         <canvas id="multipleChart"></canvas>
       </div>
@@ -1092,13 +1092,13 @@ Chart.overrides.doughnut.animation = false;
     <div class="card-title">투자의견 요약</div>
     <div class="op-strip">
       <div class="op-cell">
-        <span class="op-label">애널리스트 <span data-an="n">35명 · 목표가 19</span>명</span>
-        <span class="op-val"><span data-an="rating">Buy</span> <span class="op-sub">매수 <span data-an="buy">14</span> · 유지 <span data-an="hold">19</span> · 매도 <span data-an="sell">2</span></span></span>
-        <div class="op-dist"><div data-an-bar="buy" style="width: 40%; background: var(--green);"></div><div data-an-bar="hold" style="width: 54.3%; background: var(--gold);"></div><div data-an-bar="sell" style="width: 5.7%; background: var(--red);"></div></div>
+        <span class="op-label">애널리스트 <span data-an="n">35명 · 목표가 16</span>명</span>
+        <span class="op-val"><span data-an="rating">Buy</span> <span class="op-sub">매수 <span data-an="buy">14</span> · 유지 <span data-an="hold">18</span> · 매도 <span data-an="sell">3</span></span></span>
+        <div class="op-dist"><div data-an-bar="buy" style="width: 40%; background: var(--green);"></div><div data-an-bar="hold" style="width: 51.4%; background: var(--gold);"></div><div data-an-bar="sell" style="width: 8.6%; background: var(--red);"></div></div>
       </div>
       <div class="op-cell">
-        <span class="op-label">평균 목표주가 · <span data-an="asof">2026-10-24</span></span>
-        <span class="op-val"><span data-an="mean">$115.26</span> <span class="op-sub op-up" data-an="upside">+11.2%</span></span>
+        <span class="op-label">평균 목표주가 · <span data-an="asof">2026-10-31</span></span>
+        <span class="op-val"><span data-an="mean">$116.38</span> <span class="op-sub op-up" data-an="upside">+12.3%</span></span>
       </div>
       <div class="op-cell">
         <span class="op-label">다음 실적</span>
@@ -1302,57 +1302,57 @@ function renderSegmentChart() {
 // ══════ #valuation ══════
 const MULTIPLE_DATA = {
   per: {
-    title: '외식·소매 6곳 PER 비교 (점수는 S&P500 경기소비재 기준) · 10/23 종가(SBUX 막대는 10/30)',
+    title: '외식·소매 6곳 PER 비교 (점수는 S&P500 경기소비재 기준) · 10/30 종가',
     unit: 'PER', max: 55, sbuxValue: null,
     peers: [
-      { name:'MCD', value:20.2, status:'reference' },
-      { name:'CMG', value:25.2, status:'reference' },
-      { name:'YUM', value:18.8, status:'reference' },
-      { name:'DRI', value:20.8, status:'reference' },
+      { name:'MCD', value:21.0, status:'reference' },
+      { name:'CMG', value:29.8, status:'reference' },
+      { name:'YUM', value:19.6, status:'reference' },
+      { name:'DRI', value:21.4, status:'reference' },
       { name:'DPZ', value:17.3, status:'reference' },
-      { name:'TJX', value:26.9, status:'reference' }
+      { name:'TJX', value:26.0, status:'reference' }
     ]
   },
   pbr: {
-    title: '외식·소매 PBR 비교 (MCD 값 없음·YUM 값 없음·DPZ 값 없음) · 10/23 종가(SBUX 막대는 10/30)',
+    title: '외식·소매 PBR 비교 (MCD 값 없음·YUM 값 없음·DPZ 값 없음) · 10/30 종가',
     unit: 'PBR', max: 20, sbuxValue: null,
     peers: [
-      { name:'CMG', value:15.8, status:'reference' },
-      { name:'DRI', value:11.6, status:'reference' },
-      { name:'TJX', value:15.0, status:'reference' }
+      { name:'CMG', value:16.4, status:'reference' },
+      { name:'DRI', value:12.0, status:'reference' },
+      { name:'TJX', value:14.5, status:'reference' }
     ]
   },
   psr: {
-    title: '외식·소매 PSR 비교 (DPZ 값 없음) · 10/23 종가(SBUX 막대는 10/30)',
+    title: '외식·소매 PSR 비교 (DPZ 값 없음) · 10/30 종가',
     unit: 'PSR(TTM)', max: 10, sbuxValue: null,
     peers: [
-      { name:'MCD', value:6.3, status:'reference' },
-      { name:'CMG', value:2.8, status:'reference' },
-      { name:'YUM', value:4.7, status:'reference' },
-      { name:'DRI', value:1.8, status:'reference' },
-      { name:'TJX', value:2.6, status:'reference' }
+      { name:'MCD', value:6.6, status:'reference' },
+      { name:'CMG', value:3.2, status:'reference' },
+      { name:'YUM', value:4.9, status:'reference' },
+      { name:'DRI', value:1.9, status:'reference' },
+      { name:'TJX', value:2.5, status:'reference' }
     ]
   },
   pcr: {
-    title: '외식·소매 PCR(FCF) 비교 (DPZ 값 없음) · 10/23 종가(SBUX 막대는 10/30)',
+    title: '외식·소매 PCR(FCF) 비교 (DPZ 값 없음) · 10/30 종가',
     unit: 'PCR(FCF)', max: 40, sbuxValue: null,
     peers: [
-      { name:'MCD', value:22.6, status:'reference' },
-      { name:'CMG', value:22.2, status:'reference' },
-      { name:'YUM', value:24.3, status:'reference' },
-      { name:'DRI', value:22.8, status:'reference' },
-      { name:'TJX', value:27.1, status:'reference' }
+      { name:'MCD', value:23.5, status:'reference' },
+      { name:'CMG', value:26.7, status:'reference' },
+      { name:'YUM', value:25.3, status:'reference' },
+      { name:'DRI', value:23.6, status:'reference' },
+      { name:'TJX', value:26.3, status:'reference' }
     ]
   },
   evebitda: {
-    title: '외식·소매 EV/EBITDA 비교 (DPZ 값 없음) · 10/23 종가(SBUX 막대는 10/30)',
+    title: '외식·소매 EV/EBITDA 비교 (DPZ 값 없음) · 10/30 종가',
     unit: 'EV/EBITDA', max: 35, sbuxValue: null,
     peers: [
-      { name:'MCD', value:15.2, status:'reference' },
-      { name:'CMG', value:18.0, status:'reference' },
-      { name:'YUM', value:19.2, status:'reference' },
-      { name:'DRI', value:13.6, status:'reference' },
-      { name:'TJX', value:18.2, status:'reference' }
+      { name:'MCD', value:15.7, status:'reference' },
+      { name:'CMG', value:20.6, status:'reference' },
+      { name:'YUM', value:19.7, status:'reference' },
+      { name:'DRI', value:14.0, status:'reference' },
+      { name:'TJX', value:17.6, status:'reference' }
     ]
   }
 };
@@ -2112,8 +2112,8 @@ const SBUX_ACTIVITY = {"ticker": "SBUX", "status": "N/A", "reason": "5년 비교
 // ── 투자포인트 탭: 애널리스트 목표가 (출처·기준일 포함) ──
 // 갱신: StockAnalysis 예측 페이지(stockanalysis.com/stocks/sbux/forecast/)의 값과 날짜를 옮긴다.
 // 현재가 대비는 마지막 종가에서 계산한다.
-const SBUX_ANALYST = { asOf: '2026-10-24', source: 'StockAnalysis (의견 집계 · 개별 목표가)', rating: 'Buy', n: 35, nTargets: 19, mean: 115.26, median: 115,
-  low: 97, high: 143, strongBuy: 12, buy: 2, hold: 19, sell: 1, strongSell: 1 };
+const SBUX_ANALYST = { asOf: '2026-10-31', source: 'StockAnalysis (의견 집계 · 개별 목표가)', rating: 'Buy', n: 35, nTargets: 16, mean: 116.38, median: 116,
+  low: 104, high: 141, strongBuy: 12, buy: 2, hold: 18, sell: 2, strongSell: 1 };
 (function(){
   const A = SBUX_ANALYST, last = (typeof SBUX_DAILY !== 'undefined' && SBUX_DAILY.length) ? SBUX_DAILY[SBUX_DAILY.length - 1] : null;
   const put = (k, t) => document.querySelectorAll(`#invest [data-an="${k}"]`).forEach(el => { el.textContent = t; });

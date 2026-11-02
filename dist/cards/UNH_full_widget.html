@@ -571,7 +571,7 @@ Chart.overrides.doughnut.animation = false;
     </div>
     <div class="logic-box logic-neutral" id="unhPeerBox">
       <div class="logic-head"><span class="logic-tag">밸류에이션 <span class="logic-denom">동종업 대비</span></span><span class="logic-verdict" id="unhPeerVerdict">중간</span></div>
-      <div class="logic-score" id="unhPeerScore">64.1<span class="logic-denom">/100</span></div>
+      <div class="logic-score" id="unhPeerScore">64.7<span class="logic-denom">/100</span></div>
     </div>
     <div class="logic-box logic-neutral" id="unhSelfBox">
       <div class="logic-head"><span class="logic-tag">밸류에이션 <span class="logic-denom">자기 이력 대비</span></span><span class="logic-verdict" id="unhSelfVerdict">중간</span></div>
@@ -898,9 +898,9 @@ Chart.overrides.doughnut.animation = false;
 판정은 그대로 두고, 이 값을 해석할 때 주의할 점만 보여 준다.">⚠ 계산 어려움 1/4</span><div class="vs-pill high" data-vs-pill="dcf" title="현재가 ÷ 기본 내재가치 = 2.33
 시나리오 범위: 1.61 ~ 2.55(세 시나리오 최대·최소 기준)
 0.7 이하 매우 싸다 · 0.9 이하 싸다 · 1.1 이하 적정 · 1.5 이하 비싸다 · 초과 매우 비싸다">매우 비싸다</div></div>
-      <div class="vs-name" title="S&amp;P500 헬스케어 종목들보다 배수가 얼마나 낮은가. 높을수록 싸다.">동종업 대비</div><div class="vs-val" data-vc-score="peer">64.1</div><div class="sc-tile lost" data-vc="peer" data-m="per">60</div><div class="sc-tile lost" data-vc="peer" data-m="pbr">48</div><div class="sc-tile" data-vc="peer" data-m="psr">84</div><div class="sc-tile none" data-vc="peer" data-m="pcr">—</div><div class="sc-tile none" data-vc="peer" data-m="evebitda">—</div><div class="vs-pill mid" data-vs-pill="peer">중간</div>
+      <div class="vs-name" title="S&amp;P500 헬스케어 종목들보다 배수가 얼마나 낮은가. 높을수록 싸다.">동종업 대비</div><div class="vs-val" data-vc-score="peer">64.7</div><div class="sc-tile lost" data-vc="peer" data-m="per">60</div><div class="sc-tile lost" data-vc="peer" data-m="pbr">50</div><div class="sc-tile" data-vc="peer" data-m="psr">84</div><div class="sc-tile none" data-vc="peer" data-m="pcr">—</div><div class="sc-tile none" data-vc="peer" data-m="evebitda">—</div><div class="vs-pill mid" data-vs-pill="peer">중간</div>
     </div></div>
-    <div class="vs-premise">PER 26.1배(5년 중앙값 25.5배)로 자기 이력 65.3점(중간), 동종업 64.1점(중간)이다. <strong>초과이익 내재가치(기본 $174.59)는 현재가의 43%다</strong>.</div>
+    <div class="vs-premise">PER 26.1배(5년 중앙값 25.5배)로 자기 이력 65.3점(중간), 동종업 64.7점(중간)이다. <strong>초과이익 내재가치(기본 $174.59)는 현재가의 43%다</strong>.</div>
     <div class="verdict-summary-risk">⚠️ 세 칸이 자기 이력 0 · 동종업 0 · 초과이익 −2, 합계 −2 “적정~고평가”이다. 초과이익 내재가치(기본 $174.59)는 현재가의 43%다. 현재가를 정당화하려면 5년 내내 ROE가 33.1%여야 한다(최근 4분기 14.9%, 2년 중앙값 16.6%). 자산이 가벼운 사업은 장부 기준 모델에서 낮게 나온다.</div>
   </div>
 
@@ -970,7 +970,7 @@ Chart.overrides.doughnut.animation = false;
     </div>
 
     <div class="card" style="display:flex;flex-direction:column;">
-      <div class="card-title"><span id="multipleCompareTitle">관리형 의료보험 PER 비교 (HUM 값 없음·CNC 값 없음) · 10/23 종가(UNH 막대는 10/30)</span></div>
+      <div class="card-title"><span id="multipleCompareTitle">관리형 의료보험 PER 비교 (HUM 값 없음·CNC 값 없음) · 10/30 종가</span></div>
       <div class="chart-wrap" style="flex:1;min-height:230px;">
         <canvas id="multipleChart"></canvas>
       </div>
@@ -1083,8 +1083,8 @@ Chart.overrides.doughnut.animation = false;
         <div class="op-dist"><div data-an-bar="buy" style="width: 80.8%; background: var(--green);"></div><div data-an-bar="hold" style="width: 19.2%; background: var(--gold);"></div><div data-an-bar="sell" style="width: 0%; background: var(--red);"></div></div>
       </div>
       <div class="op-cell">
-        <span class="op-label">평균 목표주가 · <span data-an="asof">2026-10-24</span></span>
-        <span class="op-val"><span data-an="mean">$480.24</span> <span class="op-sub op-up" data-an="upside">+18.0%</span></span>
+        <span class="op-label">평균 목표주가 · <span data-an="asof">2026-10-31</span></span>
+        <span class="op-val"><span data-an="mean">$478.48</span> <span class="op-sub op-up" data-an="upside">+17.6%</span></span>
       </div>
       <div class="op-cell">
         <span class="op-label">다음 실적</span>
@@ -1288,27 +1288,27 @@ function renderSegmentChart() {
 // ══════ #valuation ══════
 const MULTIPLE_DATA = {
   per: {
-    title: '관리형 의료보험 PER 비교 (HUM 값 없음·CNC 값 없음) · 10/23 종가(UNH 막대는 10/30)',
+    title: '관리형 의료보험 PER 비교 (HUM 값 없음·CNC 값 없음) · 10/30 종가',
     unit: 'PER', max: 35, unhValue: null,
     peers: [
-      { name:'ELV', value:18.8, status:'reference' },
-      { name:'CI', value:12.7, status:'reference' },
-      { name:'CVS', value:24.7, status:'reference' }
+      { name:'ELV', value:17.9, status:'reference' },
+      { name:'CI', value:12.3, status:'reference' },
+      { name:'CVS', value:11.1, status:'reference' }
     ]
   },
   pbr: {
-    title: '관리형 의료보험 PBR 비교 · 10/23 종가(UNH 막대는 10/30)',
+    title: '관리형 의료보험 PBR 비교 · 10/30 종가',
     unit: 'PBR', max: 5, unhValue: null,
     peers: [
-      { name:'ELV', value:2.1, status:'reference' },
+      { name:'ELV', value:2.0, status:'reference' },
       { name:'CI', value:1.9, status:'reference' },
-      { name:'CVS', value:1.5, status:'reference' },
+      { name:'CVS', value:1.4, status:'reference' },
       { name:'HUM', value:2.6, status:'reference' },
       { name:'CNC', value:1.5, status:'reference' }
     ]
   },
   psr: {
-    title: '관리형 의료보험 PSR 비교 · 10/23 종가(UNH 막대는 10/30)',
+    title: '관리형 의료보험 PSR 비교 · 10/30 종가',
     unit: 'PSR(TTM)', max: 5, unhValue: null,
     peers: [
       { name:'ELV', value:0.5, status:'reference' },
@@ -1319,23 +1319,24 @@ const MULTIPLE_DATA = {
     ]
   },
   pcr: {
-    title: '관리형 의료보험 PCR(FCF) 비교 (CI 값 없음) · 10/23 종가(UNH 막대는 10/30)',
+    title: '관리형 의료보험 PCR(FCF) 비교 (CI 값 없음) · 10/30 종가',
     unit: 'PCR(FCF)', max: 30, unhValue: null,
     peers: [
-      { name:'ELV', value:14.6, status:'reference' },
-      { name:'CVS', value:10.2, status:'reference' },
-      { name:'HUM', value:26.0, status:'reference' },
-      { name:'CNC', value:3.9, status:'reference' }
+      { name:'ELV', value:13.9, status:'reference' },
+      { name:'CVS', value:9.8, status:'reference' },
+      { name:'HUM', value:25.5, status:'reference' },
+      { name:'CNC', value:8.6, status:'reference' }
     ]
   },
   evebitda: {
-    title: '관리형 의료보험 EV/EBITDA 비교 (CNC 적자) · 10/23 종가(UNH 막대는 10/30)',
+    title: '관리형 의료보험 EV/EBITDA 비교 · 10/30 종가',
     unit: 'EV/EBITDA', max: 20, unhValue: null,
     peers: [
-      { name:'ELV', value:9.9, status:'reference' },
-      { name:'CI', value:8.2, status:'reference' },
-      { name:'CVS', value:14.2, status:'reference' },
-      { name:'HUM', value:11.7, status:'reference' }
+      { name:'ELV', value:9.4, status:'reference' },
+      { name:'CI', value:8.1, status:'reference' },
+      { name:'CVS', value:13.9, status:'reference' },
+      { name:'HUM', value:11.4, status:'reference' },
+      { name:'CNC', value:11.9, status:'reference' }
     ]
   }
 };
@@ -1462,7 +1463,7 @@ const DCF_RULE_TEXT = '0.7 이하 매우 싸다 · 0.9 이하 싸다 · 1.1 이�
 //       python3 v2/build_fundamental_score.py UNH
 const UNH_SCORES = {
   fundamental: 42.0,   // 재무건전성 + 성장·수익성 (밸류에이션 축 제외)
-  peer: 64.1,          // S&P500 헬스케어 대비 배수 순위 (v2/peer_universe/health_care.json)
+  peer: 64.7,          // S&P500 헬스케어 대비 배수 순위 (v2/peer_universe/health_care.json)
   selfHistory: 65.3,   // 자기 5년 배수 분포 백분위 (2021-11-01 ~ 2026-10-30)
   asOf: "2026-10-30",
   fundamentalAsOf: "2026-06-30",   // Q2 2026 10-Q
@@ -1796,7 +1797,7 @@ const UNH_FUNDAMENTAL = {"ticker": "UNH", "basis": "quarter", "asOf": "2026-06-3
 //
 // 갱신: python3 v2/build_peer_score.py UNH --self v2/UNH_multiples.json --card
 /* VALUATION:BEGIN */
-const UNH_VALUATION = {"peer": {"score": 64.1, "sector": "Health Care (S&P500 59종목)", "asOf": ["2026-10-23", "2026-10-23"], "priceSession": null, "metrics": [{"metric": "per", "score": 60.0, "rank": 21, "peers": 50}, {"metric": "pbr", "score": 48.1, "rank": 28, "peers": 52}, {"metric": "psr", "score": 84.2, "rank": 10, "peers": 57}]}, "self": {"score": 65.3, "window": ["2021-11-01", "2026-10-30"], "perBasis": "diluted", "metrics": [{"metric": "per", "score": 46.9, "percentile": 53.1, "current": 26.12, "min": 9.95, "median": 25.49, "max": 40.68, "days": 1255, "currentNote": null}, {"metric": "pbr", "score": 74.5, "percentile": 25.5, "current": 3.71, "min": 2.27, "median": 5.56, "max": 7.16, "days": 1255, "currentNote": null}, {"metric": "psr", "score": 74.6, "percentile": 25.4, "current": 0.81, "min": 0.53, "median": 1.33, "max": 1.79, "days": 1255, "currentNote": null}]}};
+const UNH_VALUATION = {"peer": {"score": 64.7, "sector": "Health Care (S&P500 59종목)", "asOf": ["2026-10-30", "2026-10-30"], "priceSession": null, "metrics": [{"metric": "per", "score": 60.0, "rank": 21, "peers": 50}, {"metric": "pbr", "score": 50.0, "rank": 27, "peers": 52}, {"metric": "psr", "score": 84.2, "rank": 10, "peers": 57}]}, "self": {"score": 65.3, "window": ["2021-11-01", "2026-10-30"], "perBasis": "diluted", "metrics": [{"metric": "per", "score": 46.9, "percentile": 53.1, "current": 26.12, "min": 9.95, "median": 25.49, "max": 40.68, "days": 1255, "currentNote": null}, {"metric": "pbr", "score": 74.5, "percentile": 25.5, "current": 3.71, "min": 2.27, "median": 5.56, "max": 7.16, "days": 1255, "currentNote": null}, {"metric": "psr", "score": 74.6, "percentile": 25.4, "current": 0.81, "min": 0.53, "median": 1.33, "max": 1.79, "days": 1255, "currentNote": null}]}};
 /* VALUATION:END */
 
 // ── 종합 평가 자동 판정 (2026-09-25 사용자 결정 · 방향 합산) ──
@@ -2098,8 +2099,8 @@ const UNH_ACTIVITY = {"ticker": "UNH", "status": "N/A", "reason": "5년 비교 �
 // ── 투자포인트 탭: 애널리스트 목표가 (출처·기준일 포함) ──
 // 갱신: StockAnalysis 예측 페이지(stockanalysis.com/stocks/unh/forecast/)의 값과 날짜를 옮긴다.
 // 현재가 대비는 마지막 종가에서 계산한다.
-const UNH_ANALYST = { asOf: '2026-10-24', source: 'StockAnalysis (의견 집계 · 개별 목표가)', rating: 'Buy', n: 26, nTargets: 21, mean: 480.24, median: 498,
-  low: 380, high: 529, strongBuy: 15, buy: 6, hold: 5, sell: 0, strongSell: 0 };
+const UNH_ANALYST = { asOf: '2026-10-31', source: 'StockAnalysis (의견 집계 · 개별 목표가)', rating: 'Buy', n: 26, nTargets: 21, mean: 478.48, median: 490,
+  low: 380, high: 531, strongBuy: 15, buy: 6, hold: 5, sell: 0, strongSell: 0 };
 (function(){
   const A = UNH_ANALYST, last = (typeof UNH_DAILY !== 'undefined' && UNH_DAILY.length) ? UNH_DAILY[UNH_DAILY.length - 1] : null;
   const put = (k, t) => document.querySelectorAll(`#invest [data-an="${k}"]`).forEach(el => { el.textContent = t; });

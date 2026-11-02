@@ -952,7 +952,7 @@ Chart.overrides.doughnut.animation = false;
           </div>
         </div>
         <div class="val-track"><div class="val-fill hist-fill mid" data-hist="fill" style="width: 44.9%;"></div></div>
-        <div class="hist-labels"><span data-hist="min">최저 18.5x</span><span data-hist="median">중앙 46.0x</span><span data-hist="max">최고 119.3x</span></div>
+        <div class="hist-labels"><span data-hist="min">최저 18.5x</span><span data-hist="median">중앙 46.0x</span><span data-hist="max">최고 115.0x</span></div>
       </div>
 
       <div class="val-item" data-metric="pbr" onclick="selectMultiple('pbr')">
@@ -1119,12 +1119,12 @@ Chart.overrides.doughnut.animation = false;
     <div class="op-strip">
       <div class="op-cell">
         <span class="op-label">애널리스트 <span data-an="n">51명 · 목표가 30</span>명</span>
-        <span class="op-val"><span data-an="rating">Strong Buy</span> <span class="op-sub">매수 <span data-an="buy">48</span> · 유지 <span data-an="hold">3</span> · 매도 <span data-an="sell">0</span></span></span>
-        <div class="op-dist"><div data-an-bar="buy" style="width: 94.1%; background: var(--green);"></div><div data-an-bar="hold" style="width: 5.9%; background: var(--gold);"></div><div data-an-bar="sell" style="width: 0%; background: var(--red);"></div></div>
+        <span class="op-val"><span data-an="rating">Strong Buy</span> <span class="op-sub">매수 <span data-an="buy">49</span> · 유지 <span data-an="hold">2</span> · 매도 <span data-an="sell">0</span></span></span>
+        <div class="op-dist"><div data-an-bar="buy" style="width: 96.1%; background: var(--green);"></div><div data-an-bar="hold" style="width: 3.9%; background: var(--gold);"></div><div data-an-bar="sell" style="width: 0%; background: var(--red);"></div></div>
       </div>
       <div class="op-cell">
-        <span class="op-label">평균 목표주가 · <span data-an="asof">2026-10-24</span></span>
-        <span class="op-val"><span data-an="mean">$521.77</span> <span class="op-sub op-up" data-an="upside">+60.0%</span></span>
+        <span class="op-label">평균 목표주가 · <span data-an="asof">2026-10-31</span></span>
+        <span class="op-val"><span data-an="mean">$523.43</span> <span class="op-sub op-up" data-an="upside">+60.5%</span></span>
       </div>
       <div class="op-cell">
         <span class="op-label">다음 실적</span>
@@ -1834,7 +1834,7 @@ const AVGO_FUNDAMENTAL = {"ticker": "AVGO", "basis": "quarter", "asOf": "2026-08
 //
 // 갱신: python3 v2/build_peer_score.py AVGO --self v2/AVGO_multiples.json --card
 /* VALUATION:BEGIN */
-const AVGO_VALUATION = {"peer": {"score": 34.7, "sector": "Information Technology", "asOf": ["2026-08-27", "2026-09-11"], "priceSession": "2026-10-30", "metrics": [{"metric": "per", "score": 37.5, "rank": 16, "peers": 24}, {"metric": "pbr", "score": 26.1, "rank": 18, "peers": 23}, {"metric": "psr", "score": 22.2, "rank": 22, "peers": 27}, {"metric": "pcr", "score": 50.0, "rank": 13, "peers": 24}, {"metric": "evebitda", "score": 37.5, "rank": 16, "peers": 24}]}, "self": {"score": 47.4, "window": ["2021-11-01", "2026-10-30"], "perBasis": "diluted", "metrics": [{"metric": "per", "score": 55.1, "percentile": 44.9, "current": 41.59, "min": 18.47, "median": 46.0, "max": 119.33, "days": 1255, "currentNote": null}, {"metric": "pbr", "score": 45.1, "percentile": 54.9, "current": 15.61, "min": 7.94, "median": 13.57, "max": 28.55, "days": 1255, "currentNote": null}, {"metric": "psr", "score": 38.8, "percentile": 61.2, "current": 17.47, "min": 5.46, "median": 15.96, "max": 33.39, "days": 1255, "currentNote": null}, {"metric": "pcr", "score": 44.8, "percentile": 55.2, "current": 39.5, "min": 11.3, "median": 34.35, "max": 78.87, "days": 1255, "currentNote": null}, {"metric": "evebitda", "score": 53.3, "percentile": 46.7, "current": 30.98, "min": 11.38, "median": 32.99, "max": 64.09, "days": 1255, "currentNote": null}]}};
+const AVGO_VALUATION = {"peer": {"score": 34.7, "sector": "Information Technology", "asOf": ["2026-08-27", "2026-09-11"], "priceSession": "2026-10-30", "metrics": [{"metric": "per", "score": 37.5, "rank": 16, "peers": 24}, {"metric": "pbr", "score": 26.1, "rank": 18, "peers": 23}, {"metric": "psr", "score": 22.2, "rank": 22, "peers": 27}, {"metric": "pcr", "score": 50.0, "rank": 13, "peers": 24}, {"metric": "evebitda", "score": 37.5, "rank": 16, "peers": 24}]}, "self": {"score": 47.4, "window": ["2021-11-01", "2026-10-30"], "perBasis": "diluted", "metrics": [{"metric": "per", "score": 55.1, "percentile": 44.9, "current": 41.59, "min": 18.47, "median": 46.03, "max": 115.0, "days": 1255, "currentNote": null}, {"metric": "pbr", "score": 45.1, "percentile": 54.9, "current": 15.61, "min": 7.94, "median": 13.57, "max": 28.55, "days": 1255, "currentNote": null}, {"metric": "psr", "score": 38.8, "percentile": 61.2, "current": 17.47, "min": 5.46, "median": 15.96, "max": 33.39, "days": 1255, "currentNote": null}, {"metric": "pcr", "score": 44.8, "percentile": 55.2, "current": 39.5, "min": 11.3, "median": 34.35, "max": 78.87, "days": 1255, "currentNote": null}, {"metric": "evebitda", "score": 53.3, "percentile": 46.7, "current": 30.98, "min": 11.38, "median": 32.99, "max": 64.09, "days": 1255, "currentNote": null}]}};
 /* VALUATION:END */
 
 // ── 종합 평가 자동 판정 (2026-09-25 사용자 결정 · 방향 합산) ──
@@ -2123,8 +2123,8 @@ const AVGO_ACTIVITY = {"ticker": "AVGO", "status": "ok", "asOf": "2026-08-02", "
 // ── 투자포인트 탭: 애널리스트 목표가 (출처·기준일 포함) ──
 // 갱신: StockAnalysis 예측 페이지(stockanalysis.com/stocks/avgo/forecast/)의 값과 날짜를 옮긴다.
 // 현재가 대비는 마지막 종가에서 계산한다.
-const AVGO_ANALYST = { asOf: '2026-10-24', source: 'StockAnalysis (의견 집계 · 개별 목표가)', rating: 'Strong Buy', n: 51, nTargets: 30, mean: 521.77, median: 530,
-  low: 350, high: 630, strongBuy: 40, buy: 8, hold: 3, sell: 0, strongSell: 0 };
+const AVGO_ANALYST = { asOf: '2026-10-31', source: 'StockAnalysis (의견 집계 · 개별 목표가)', rating: 'Strong Buy', n: 51, nTargets: 30, mean: 523.43, median: 530,
+  low: 400, high: 630, strongBuy: 41, buy: 8, hold: 2, sell: 0, strongSell: 0 };
 (function(){
   const A = AVGO_ANALYST, last = (typeof AVGO_DAILY !== 'undefined' && AVGO_DAILY.length) ? AVGO_DAILY[AVGO_DAILY.length - 1] : null;
   const put = (k, t) => document.querySelectorAll(`#invest [data-an="${k}"]`).forEach(el => { el.textContent = t; });

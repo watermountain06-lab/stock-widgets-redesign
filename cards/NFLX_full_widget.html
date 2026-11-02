@@ -1102,7 +1102,7 @@ Chart.overrides.doughnut.animation = false;
         <div class="op-dist"><div data-an-bar="buy" style="width: 64.7%; background: var(--green);"></div><div data-an-bar="hold" style="width: 31.4%; background: var(--gold);"></div><div data-an-bar="sell" style="width: 3.9%; background: var(--red);"></div></div>
       </div>
       <div class="op-cell">
-        <span class="op-label">평균 목표주가 · <span data-an="asof">2026-10-24</span></span>
+        <span class="op-label">평균 목표주가 · <span data-an="asof">2026-10-31</span></span>
         <span class="op-val"><span data-an="mean">$86.33</span> <span class="op-sub op-up" data-an="upside">+39.1%</span></span>
       </div>
       <div class="op-cell">
@@ -2097,7 +2097,7 @@ const NFLX_ACTIVITY = {"ticker": "NFLX", "status": "N/A", "reason": "5년 비교
 // ── 투자포인트 탭: 애널리스트 목표가 (출처·기준일 포함) ──
 // 갱신: StockAnalysis 예측 페이지(stockanalysis.com/stocks/nflx/forecast/)의 값과 날짜를 옮긴다.
 // 현재가 대비는 마지막 종가에서 계산한다.
-const NFLX_ANALYST = { asOf: '2026-10-24', source: 'StockAnalysis (의견 집계 · 개별 목표가)', rating: 'Buy', n: 51, nTargets: 33, mean: 86.33, median: 85,
+const NFLX_ANALYST = { asOf: '2026-10-31', source: 'StockAnalysis (의견 집계 · 개별 목표가)', rating: 'Buy', n: 51, nTargets: 33, mean: 86.33, median: 85,
   low: 57, high: 125, strongBuy: 26, buy: 7, hold: 16, sell: 0, strongSell: 2 };
 (function(){
   const A = NFLX_ANALYST, last = (typeof NFLX_DAILY !== 'undefined' && NFLX_DAILY.length) ? NFLX_DAILY[NFLX_DAILY.length - 1] : null;
