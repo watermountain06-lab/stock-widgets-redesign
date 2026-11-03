@@ -82,17 +82,42 @@ function renderStock(){
   +(s&&whyOpen?`<ul class="tk-why">${s.points.map(p=>`<li>${esc(p)}</li>`).join('')}${s.counter?`<li>${esc(clean(s.counter))}</li>`:''}</ul>`:'');
 }
 
+// 이달 성적표(2026-11-03 사용자 결정): 고른 날이 속한 달의 첫 거래일에 목록에 있던 종목은 그날 종가에서 출발하고,
+// 달 중에 들어온 종목은 들어온 날 종가에서 출발한다. 같은 달 안에 나갔다 다시 들어오면 한 건(gaps).
+// 지난달 건은 그달 마지막 거래일 종가로 마감. 처음 판정일부터의 누적은 T.calls(callOn)로 따로 보여 준다.
+function monthRows(s){
+ const m=s.slice(0,7),ms=T.days.filter(x=>x.session.slice(0,7)===m&&x.session<=s).map(x=>x.session);
+ const on=(t,x)=>T.days.find(y=>y.session===x).list.includes(t);
+ const seen=[...new Set(T.days.filter(x=>ms.includes(x.session)).flatMap(x=>x.list))];
+ const rows=[];
+ for(const t of seen){
+  let start=null,gaps=[],out=null;
+  for(const x of ms){
+   if(on(t,x)){if(start===null)start=x;else if(out){gaps.push([out,x]);out=null;}}
+   else if(start!==null&&!out)out=x;
+  }
+  const cl=T.closes[t]||{},at=out||s;if(cl[start]==null||cl[at]==null)continue;
+  const call=T.calls.filter(c=>c.ticker===t&&c.start<=start).sort((a,b)=>a.start<b.start?1:-1)[0],cum=call?callOn(call,s):null;
+  rows.push({ticker:t,start,startClose:cl[start],at,close:cl[at],ret:cl[at]/cl[start]-1,open:!out,back:gaps.filter(g=>g[1]<=s).map(g=>g[1]),
+   days:T.sessions.indexOf(at)-T.sessions.indexOf(start),carried:start===ms[0]&&call&&call.start<start,first:call&&call.start,cum:cum&&cum.ret});
+ }
+ return rows.sort((a,b)=>(a.open!==b.open?(a.open?-1:1):a.start<b.start?-1:a.start>b.start?1:a.ticker<b.ticker?-1:1));
+}
+const monthName=d=>Number(d.slice(5,7))+'월';
 function renderBars(){
- const s=session(),rows=T.calls.map(c=>callOn(c,s)).filter(Boolean);
- document.getElementById('tracking-note').textContent=`기록 ${T.sessions.indexOf(s)+1}거래일(${md(T.firstSession)}~${md(s)}) · ${rows.length}건${rows.every(r=>r.open)?', 모두 진행 중':''}. 판정의 예측력은 확인되지 않았습니다.`;
+ const s=session(),rows=monthRows(s),m=s.slice(0,7),first=T.sessions.find(x=>x.slice(0,7)===m);
+ const prevLast=[...T.sessions].reverse().find(x=>x<first),prev=prevLast?monthRows(prevLast):[];
+ const tally=r=>`오름 ${r.filter(x=>x.ret>0).length} · 내림 ${r.filter(x=>x.ret<=0).length}`;
+ document.getElementById('tracking-note').textContent=`${monthName(s)} 성적 · ${first===s?md(s):md(first)+'~'+md(s)} ${T.sessions.indexOf(s)-T.sessions.indexOf(first)+1}거래일 · ${rows.length}건${rows.every(r=>r.open)?', 모두 진행 중':''}`
+  +(prev.length?` · ${monthName(prevLast)} 마감(${md(prevLast)} 종가) ${tally(prev)}`:'')+'. 판정의 예측력은 확인되지 않았습니다.';
  const max=Math.max(0.08,...rows.map(r=>Math.abs(r.ret)));
  document.getElementById('tk-bars').innerHTML=rows.map(r=>{
   const w=Math.abs(r.ret)/max*36,up=r.ret>=0;
   return `<div class="tk-bar-row"><a href="${card(r.ticker)}"><strong>${esc(r.ticker)}</strong></a>`
    +`<div class="tk-bar"><i class="zero"></i><i class="fill ${up?'up':'down'}${r.open?' open':''}" style="${up?'left':'right'}:50%;width:${w}%"></i>`
-   +`<span class="p0" style="${up?'right:50%':'left:50%'}">판정 ${money(r.startClose)}</span>`
+   +`<span class="p0" style="${up?'right:50%':'left:50%'}">${r.carried?'월초':'판정'} ${money(r.startClose)}</span>`
    +`<span class="p1 ${cls(r.ret)}" style="${up?'left':'right'}:${50+w}%">${money(r.close)}</span></div>`
-   +`<b class="${cls(r.ret)}">${pct(r.ret)}</b><small>${md(r.start)} · ${r.days}일${r.open?'':' · 나감'}${r.back.length?'<br>다시 들어옴 '+r.back.map(md).join('·'):''}</small></div>`;
+   +`<b class="${cls(r.ret)}">${pct(r.ret)}</b><small>${md(r.start)} · ${r.days}일${r.open?'':' · 나감'}${r.back.length?'<br>다시 들어옴 '+r.back.map(md).join('·'):''}${r.carried&&r.cum!=null?'<br><span title="처음 판정일부터 누적">'+md(r.first)+'부터 '+pct(r.cum)+'</span>':''}</small></div>`;
  }).join('')||'<p class="tk-note">이 날짜까지 기록된 판정이 없습니다.</p>';
 }
 
