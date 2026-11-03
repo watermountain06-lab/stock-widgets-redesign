@@ -101,14 +101,16 @@ function monthRows(s){
   rows.push({ticker:t,start,startClose:cl[start],at,close:cl[at],ret:cl[at]/cl[start]-1,open:!out,back:gaps.filter(g=>g[1]<=s).map(g=>g[1]),
    days:T.sessions.indexOf(at)-T.sessions.indexOf(start),carried:start===ms[0]&&call&&call.start<start,first:call&&call.start,cum:cum&&cum.ret});
  }
- return rows.sort((a,b)=>(a.open!==b.open?(a.open?-1:1):a.start<b.start?-1:a.start>b.start?1:a.ticker<b.ticker?-1:1));
+ // 시총 순위 순(2026-11-03 사용자) — 순위가 없는 종목은 맨 뒤
+ const rank=t=>{const f=stocks.find(x=>x.ticker===t);return f&&f.rank!=null?Number(f.rank):1e9;};
+ return rows.sort((a,b)=>rank(a.ticker)-rank(b.ticker)||(a.ticker<b.ticker?-1:1));
 }
 const monthName=d=>Number(d.slice(5,7))+'월';
 function renderBars(){
  const s=session(),rows=monthRows(s),m=s.slice(0,7),first=T.sessions.find(x=>x.slice(0,7)===m);
  const prevLast=[...T.sessions].reverse().find(x=>x<first),prev=prevLast?monthRows(prevLast):[];
  const tally=r=>`오름 ${r.filter(x=>x.ret>0).length} · 내림 ${r.filter(x=>x.ret<=0).length}`;
- document.getElementById('tracking-note').textContent=`${monthName(s)} 성적 · ${first===s?md(s):md(first)+'~'+md(s)} ${T.sessions.indexOf(s)-T.sessions.indexOf(first)+1}거래일 · ${rows.length}건${rows.every(r=>r.open)?', 모두 진행 중':''}`
+ document.getElementById('tracking-note').textContent=`${monthName(s)} 성적 · ${first===s?md(s):md(first)+'~'+md(s)} ${T.sessions.indexOf(s)-T.sessions.indexOf(first)+1}거래일 · ${rows.length}건${rows.every(r=>r.open)?', 모두 진행 중':''} · 시총 순`
   +(prev.length?` · ${monthName(prevLast)} 마감(${md(prevLast)} 종가) ${tally(prev)}`:'')+'. 판정의 예측력은 확인되지 않았습니다.';
  const max=Math.max(0.08,...rows.map(r=>Math.abs(r.ret)));
  document.getElementById('tk-bars').innerHTML=rows.map(r=>{
