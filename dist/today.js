@@ -11,6 +11,7 @@ const money=v=>'$'+Number(v).toLocaleString('en-US',{minimumFractionDigits:2,max
 const pct=r=>r==null?'—':(r>0?'+':r<0?'−':'')+Math.abs(r*100).toFixed(1)+'%';
 const cls=r=>r>0?'up':r<0?'down':'';
 const name=t=>(stocks.find(s=>s.ticker===t)||{}).name||t;
+const rank=t=>{const f=stocks.find(x=>x.ticker===t);return f&&f.rank!=null?Number(f.rank):1e9;};
 const sign=v=>(v>0?'+':v<0?'−':'')+Math.abs(v);
 // 일지 문구: 저평가 목록 ↔ 관찰 목록(적정) 이동은 build_tracking이 저평가 목록 줄 하나로 합치므로 옮겨 간 곳을 말한다(2026-10-24)
 const moveText=j=>j.list!=='list'?(j.move==='in'?'관찰 목록에 들어옴':'관찰 목록에서 나감')
@@ -102,7 +103,6 @@ function monthRows(s){
    days:T.sessions.indexOf(at)-T.sessions.indexOf(start),carried:start===ms[0]&&call&&call.start<start,first:call&&call.start,cum:cum&&cum.ret});
  }
  // 시총 순위 순(2026-11-03 사용자) — 순위가 없는 종목은 맨 뒤
- const rank=t=>{const f=stocks.find(x=>x.ticker===t);return f&&f.rank!=null?Number(f.rank):1e9;};
  return rows.sort((a,b)=>rank(a.ticker)-rank(b.ticker)||(a.ticker<b.ticker?-1:1));
 }
 const monthName=d=>Number(d.slice(5,7))+'월';
@@ -113,9 +113,12 @@ function renderBars(){
  document.getElementById('tracking-note').textContent=`${monthName(s)} 성적 · ${first===s?md(s):md(first)+'~'+md(s)} ${T.sessions.indexOf(s)-T.sessions.indexOf(first)+1}거래일 · ${rows.length}건${rows.every(r=>r.open)?', 모두 진행 중':''} · 시총 순`
   +(prev.length?` · ${monthName(prevLast)} 마감(${md(prevLast)} 종가) ${tally(prev)}`:'')+'. 판정의 예측력은 확인되지 않았습니다.';
  const max=Math.max(0.08,...rows.map(r=>Math.abs(r.ret)));
- document.getElementById('tk-bars').innerHTML=rows.map(r=>{
+ // 시총 구간(2026-11-05 사용자): 1~100위, 101~200위 … 구간이 바뀌는 곳에 머리줄(건수·오름/내림)
+ const band=r=>{const k=rank(r.ticker);return k>=1e9?-1:Math.floor((k-1)/100);};
+ const head=b=>{const g=rows.filter(r=>band(r)===b);return `<div class="tk-bar-sep"><b>${b<0?'순위 없음':(b*100+1)+'~'+(b*100+100)+'위'}</b><span>${g.length}건 · 오름 ${g.filter(r=>r.ret>0).length} · 내림 ${g.filter(r=>r.ret<=0).length}</span></div>`;};
+ document.getElementById('tk-bars').innerHTML=rows.map((r,i)=>{
   const w=Math.abs(r.ret)/max*36,up=r.ret>=0;
-  return `<div class="tk-bar-row"><a href="${card(r.ticker)}"><strong>${esc(r.ticker)}</strong></a>`
+  return (i===0||band(rows[i-1])!==band(r)?head(band(r)):'')+`<div class="tk-bar-row"><a href="${card(r.ticker)}"><strong>${esc(r.ticker)}</strong></a>`
    +`<div class="tk-bar"><i class="zero"></i><i class="fill ${up?'up':'down'}${r.open?' open':''}" style="${up?'left':'right'}:50%;width:${w}%"></i>`
    +`<span class="p0" style="${up?'right:50%':'left:50%'}">${r.carried?'월초':'판정'} ${money(r.startClose)}</span>`
    +`<span class="p1 ${cls(r.ret)}" style="${up?'left':'right'}:${50+w}%">${money(r.close)}</span></div>`

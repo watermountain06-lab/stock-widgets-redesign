@@ -154,3 +154,8 @@ main{--tk-up:#14804a;--tk-down:#c42b1c;--tk-soft:#efebfc;--tk-track:#f1eff6;--tk
 .tk-caret{font-size:12px;color:var(--tk-accent)}
 .tk-detail-hint{font-size:12px!important;font-weight:600!important;color:var(--tk-accent)}
 .tk-detail{display:flex;flex-direction:column;gap:18px;margin-top:16px}
+
+/* 판정 성적표 시총 구간 머리줄(2026-11-05) */
+.tk-bar-sep{display:flex;justify-content:space-between;align-items:baseline;gap:8px;margin-top:14px;padding:6px 0;border-bottom:2px solid var(--line);font-size:12px;color:var(--muted,var(--text2))}
+.tk-bar-sep:first-child{margin-top:0}
+.tk-bar-sep b{font-size:13px;color:var(--ink)}
