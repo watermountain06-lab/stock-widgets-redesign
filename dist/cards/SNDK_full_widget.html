@@ -906,7 +906,7 @@ Chart.overrides.doughnut.animation = false;
       <div class="vs-name" title="같은 IT 섹터 종목들보다 배수가 얼마나 낮은가. 높을수록 싸다.">동종업 대비</div><div class="vs-val" data-vc-score="peer">92.7</div><div class="sc-tile" data-vc="peer" data-m="per">100</div><div class="sc-tile" data-vc="peer" data-m="pbr">78</div><div class="sc-tile" data-vc="peer" data-m="psr">85</div><div class="sc-tile" data-vc="peer" data-m="pcr">100</div><div class="sc-tile" data-vc="peer" data-m="evebitda">100</div><div class="vs-pill" data-vs-pill="peer">싸다</div>
     </div></div>
     <div class="vs-premise">PER 7.0배(0.5년 중앙값 42.2배)로 자기 이력 86.9점(싸다), 동종업 92.7점(싸다)이다. <strong>현금흐름 내재가치(기본 $735.78)는 현재가의 83%다</strong>.</div>
-    <div class="verdict-summary-risk">⚠️ 세 칸이 자기 이력 +1 · 동종업 +1 · 현금흐름 −1, 합계 +1 “적정~저평가”이다. 현금흐름 내재가치(기본 $735.78)는 현재가의 83%다. 현재가를 정당화하려면 영업이익률이 8.6%까지 올라야 한다(최근 4분기 72.5%, 2.0년 중앙값 4.4%). 내재가치에서 차입금 $0M를 빼고 현금·단기투자 $5.1B를 더한다.</div>
+    <div class="verdict-summary-risk">⚠️ 세 칸이 자기 이력 +1 · 동종업 +1 · 현금흐름 −1, 합계 +1 “적정~저평가”이다. 현금흐름 내재가치(기본 $735.78)는 현재가의 83%다. 현재가를 정당화하는 영업이익률은 8.6%로, 최근 4분기 72.5%보다 낮다(2.0년 중앙값 4.4%). 내재가치에서 차입금 $0M를 빼고 현금·단기투자 $5.1B를 더한다.</div>
   </div>
 
   <div class="grid-2">
@@ -1082,13 +1082,13 @@ Chart.overrides.doughnut.animation = false;
     <div class="card-title">투자의견 요약</div>
     <div class="op-strip">
       <div class="op-cell">
-        <span class="op-label">애널리스트 <span data-an="n">25명 · 목표가 18</span>명</span>
+        <span class="op-label">애널리스트 <span data-an="n">25명 · 목표가 17</span>명</span>
         <span class="op-val"><span data-an="rating">Strong Buy</span> <span class="op-sub">매수 <span data-an="buy">21</span> · 유지 <span data-an="hold">4</span> · 매도 <span data-an="sell">0</span></span></span>
         <div class="op-dist"><div data-an-bar="buy" style="width: 84%; background: var(--green);"></div><div data-an-bar="hold" style="width: 16%; background: var(--gold);"></div><div data-an-bar="sell" style="width: 0%; background: var(--red);"></div></div>
       </div>
       <div class="op-cell">
-        <span class="op-label">평균 목표주가 · <span data-an="asof">2026-11-08</span></span>
-        <span class="op-val"><span data-an="mean">$2095.56</span> <span class="op-sub op-up" data-an="upside">+136.8%</span></span>
+        <span class="op-label">평균 목표주가 · <span data-an="asof">2026-11-15</span></span>
+        <span class="op-val"><span data-an="mean">$2101.18</span> <span class="op-sub op-up" data-an="upside">+137.4%</span></span>
       </div>
       <div class="op-cell">
         <span class="op-label">다음 실적</span>
@@ -2098,7 +2098,7 @@ const SNDK_ACTIVITY = {"ticker": "SNDK", "status": "N/A", "reason": "5년 비교
 // ── 투자포인트 탭: 애널리스트 목표가 (출처·기준일 포함) ──
 // 갱신: StockAnalysis 예측 페이지(stockanalysis.com/stocks/sndk/forecast/)의 값과 날짜를 옮긴다.
 // 현재가 대비는 마지막 종가에서 계산한다.
-const SNDK_ANALYST = { asOf: '2026-11-08', source: 'StockAnalysis (의견 집계 · 개별 목표가)', rating: 'Strong Buy', n: 25, nTargets: 18, mean: 2095.56, median: 2200,
+const SNDK_ANALYST = { asOf: '2026-11-15', source: 'StockAnalysis (의견 집계 · 개별 목표가)', rating: 'Strong Buy', n: 25, nTargets: 17, mean: 2101.18, median: 2200,
   low: 1300, high: 3000, strongBuy: 17, buy: 4, hold: 4, sell: 0, strongSell: 0 };
 (function(){
   const A = SNDK_ANALYST, last = (typeof SNDK_DAILY !== 'undefined' && SNDK_DAILY.length) ? SNDK_DAILY[SNDK_DAILY.length - 1] : null;

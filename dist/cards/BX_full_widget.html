@@ -973,7 +973,7 @@ Chart.overrides.doughnut.animation = false;
     </div>
 
     <div class="card" style="display:flex;flex-direction:column;">
-      <div class="card-title"><span id="multipleCompareTitle">자산운용 6곳 PER 비교 (점수는 S&amp;P500 자산운용·수탁은행 기준) (APO 값 없음·ARES 값 없음) · 11/6 종가(BX 막대는 11/13)</span></div>
+      <div class="card-title"><span id="multipleCompareTitle">자산운용 6곳 PER 비교 (점수는 S&amp;P500 자산운용·수탁은행 기준) (APO 값 없음·ARES 값 없음) · 11/13 종가</span></div>
       <div class="chart-wrap" style="flex:1;min-height:230px;">
         <canvas id="multipleChart"></canvas>
       </div>
@@ -1081,7 +1081,7 @@ Chart.overrides.doughnut.animation = false;
         <div class="op-dist"><div data-an-bar="buy" style="width: 54.2%; background: var(--green);"></div><div data-an-bar="hold" style="width: 45.8%; background: var(--gold);"></div><div data-an-bar="sell" style="width: 0%; background: var(--red);"></div></div>
       </div>
       <div class="op-cell">
-        <span class="op-label">평균 목표주가 · <span data-an="asof">2026-11-08</span></span>
+        <span class="op-label">평균 목표주가 · <span data-an="asof">2026-11-15</span></span>
         <span class="op-val"><span data-an="mean">$139.75</span> <span class="op-sub op-up" data-an="upside">+16.3%</span></span>
       </div>
       <div class="op-cell">
@@ -1286,53 +1286,53 @@ function renderSegmentChart() {
 // ══════ #valuation ══════
 const MULTIPLE_DATA = {
   per: {
-    title: '자산운용 6곳 PER 비교 (점수는 S&P500 자산운용·수탁은행 기준) (APO 값 없음·ARES 값 없음) · 11/6 종가(BX 막대는 11/13)',
-    unit: 'PER', max: 40, bxValue: null,
+    title: '자산운용 6곳 PER 비교 (점수는 S&P500 자산운용·수탁은행 기준) (APO 값 없음·ARES 값 없음) · 11/13 종가',
+    unit: 'PER', max: 35, bxValue: null,
     peers: [
-      { name:'BLK', value:26.9, status:'reference' },
-      { name:'KKR', value:30.7, status:'reference' },
+      { name:'BLK', value:29.3, status:'reference' },
+      { name:'KKR', value:28.6, status:'reference' },
       { name:'TROW', value:11.0, status:'reference' },
-      { name:'BEN', value:22.9, status:'reference' }
+      { name:'BEN', value:24.5, status:'reference' }
     ]
   },
   pbr: {
-    title: '자산운용 PBR 비교 · 11/6 종가(BX 막대는 11/13)',
+    title: '자산운용 PBR 비교 · 11/13 종가',
     unit: 'PBR', max: 15, bxValue: null,
     peers: [
-      { name:'BLK', value:3.1, status:'reference' },
-      { name:'KKR', value:2.8, status:'reference' },
-      { name:'APO', value:4.3, status:'reference' },
-      { name:'ARES', value:10.9, status:'reference' },
+      { name:'BLK', value:3.2, status:'reference' },
+      { name:'KKR', value:2.9, status:'reference' },
+      { name:'APO', value:4.6, status:'reference' },
+      { name:'ARES', value:11.0, status:'reference' },
       { name:'TROW', value:2.0, status:'reference' },
-      { name:'BEN', value:1.5, status:'reference' }
+      { name:'BEN', value:1.6, status:'reference' }
     ]
   },
   psr: {
-    title: '자산운용 PSR 비교 · 11/6 종가(BX 막대는 11/13)',
+    title: '자산운용 PSR 비교 · 11/13 종가',
     unit: 'PSR(TTM)', max: 15, bxValue: null,
     peers: [
-      { name:'BLK', value:6.7, status:'reference' },
-      { name:'KKR', value:4.1, status:'reference' },
-      { name:'APO', value:2.2, status:'reference' },
+      { name:'BLK', value:7.0, status:'reference' },
+      { name:'KKR', value:4.3, status:'reference' },
+      { name:'APO', value:2.4, status:'reference' },
       { name:'ARES', value:7.3, status:'reference' },
       { name:'TROW', value:3.0, status:'reference' },
-      { name:'BEN', value:1.8, status:'reference' }
+      { name:'BEN', value:2.0, status:'reference' }
     ]
   },
   pcr: {
-    title: '자산운용 PCR(FCF) 비교 (KKR 값 없음·APO 값 없음·ARES 값 없음·BEN 값 없음) · 11/6 종가(BX 막대는 11/13)',
+    title: '자산운용 PCR(FCF) 비교 (KKR 값 없음·APO 값 없음·ARES 값 없음·BEN 값 없음) · 11/13 종가',
     unit: 'PCR(FCF)', max: 50, bxValue: null,
     peers: [
-      { name:'BLK', value:40.0, status:'reference' },
+      { name:'BLK', value:41.5, status:'reference' },
       { name:'TROW', value:14.5, status:'reference' }
     ]
   },
   evebitda: {
-    title: '자산운용 EV/EBITDA 비교 (KKR 값 없음·APO 값 없음·ARES 값 없음·TROW 값 없음) · 11/6 종가(BX 막대는 11/13)',
+    title: '자산운용 EV/EBITDA 비교 (KKR 값 없음·APO 값 없음·ARES 값 없음·TROW 값 없음) · 11/13 종가',
     unit: 'EV/EBITDA', max: 25, bxValue: null,
     peers: [
-      { name:'BLK', value:19.2, status:'reference' },
-      { name:'BEN', value:15.3, status:'reference' }
+      { name:'BLK', value:19.9, status:'reference' },
+      { name:'BEN', value:13.7, status:'reference' }
     ]
   }
 };
@@ -1790,7 +1790,7 @@ const BX_FUNDAMENTAL = {"ticker": "BX", "basis": "quarter", "asOf": "2026-09-30"
 //
 // 갱신: python3 v2/build_peer_score.py BX --self v2/BX_multiples.json --card
 /* VALUATION:BEGIN */
-const BX_VALUATION = {"peer": {"score": 4.5, "sector": "Financials (S&P500 12종목)", "asOf": ["2026-11-06", "2026-11-06"], "priceSession": null, "metrics": [{"metric": "pbr", "score": 9.1, "rank": 11, "peers": 11}, {"metric": "psr", "score": 0.0, "rank": 12, "peers": 11}]}, "self": {"score": 71.5, "window": ["2021-11-15", "2026-11-13"], "perBasis": "diluted", "metrics": [{"metric": "per", "score": 73.3, "percentile": 26.7, "current": 26.77, "min": 12.23, "median": 41.1, "max": 133.54, "days": 1255, "currentNote": null}, {"metric": "pbr", "score": 56.1, "percentile": 43.9, "current": 10.93, "min": 6.55, "median": 11.45, "max": 19.37, "days": 1255, "currentNote": null}, {"metric": "psr", "score": 71.9, "percentile": 28.1, "current": 9.29, "min": 4.81, "median": 13.23, "max": 27.46, "days": 1255, "currentNote": null}, {"metric": "pcr", "score": 83.5, "percentile": 16.5, "current": 25.64, "min": 15.86, "median": 34.75, "max": 70.76, "days": 1255, "currentNote": null}, {"metric": "evebitda", "score": 72.7, "percentile": 27.3, "current": 19.31, "min": 8.63, "median": 28.27, "max": 114.82, "days": 1255, "currentNote": null}]}};
+const BX_VALUATION = {"peer": {"score": 4.5, "sector": "Financials (S&P500 12종목)", "asOf": ["2026-11-13", "2026-11-13"], "priceSession": null, "metrics": [{"metric": "pbr", "score": 9.1, "rank": 11, "peers": 11}, {"metric": "psr", "score": 0.0, "rank": 12, "peers": 11}]}, "self": {"score": 71.5, "window": ["2021-11-15", "2026-11-13"], "perBasis": "diluted", "metrics": [{"metric": "per", "score": 73.3, "percentile": 26.7, "current": 26.77, "min": 12.23, "median": 41.1, "max": 133.54, "days": 1255, "currentNote": null}, {"metric": "pbr", "score": 56.1, "percentile": 43.9, "current": 10.93, "min": 6.55, "median": 11.45, "max": 19.37, "days": 1255, "currentNote": null}, {"metric": "psr", "score": 71.9, "percentile": 28.1, "current": 9.29, "min": 4.81, "median": 13.23, "max": 27.46, "days": 1255, "currentNote": null}, {"metric": "pcr", "score": 83.5, "percentile": 16.5, "current": 25.64, "min": 15.86, "median": 34.75, "max": 70.76, "days": 1255, "currentNote": null}, {"metric": "evebitda", "score": 72.7, "percentile": 27.3, "current": 19.31, "min": 8.63, "median": 28.27, "max": 114.82, "days": 1255, "currentNote": null}]}};
 /* VALUATION:END */
 
 // ── 종합 평가 자동 판정 (2026-09-25 사용자 결정 · 방향 합산) ──
@@ -2078,7 +2078,7 @@ const BX_ACTIVITY = {"ticker": "BX", "status": "N/A", "reason": "5년 비교 이
 // ── 투자포인트 탭: 애널리스트 목표가 (출처·기준일 포함) ──
 // 갱신: StockAnalysis 예측 페이지(stockanalysis.com/stocks/bx/forecast/)의 값과 날짜를 옮긴다.
 // 현재가 대비는 마지막 종가에서 계산한다.
-const BX_ANALYST = { asOf: '2026-11-08', source: 'StockAnalysis (의견 집계 · 개별 목표가)', rating: 'Buy', n: 24, nTargets: 20, mean: 139.75, median: 140,
+const BX_ANALYST = { asOf: '2026-11-15', source: 'StockAnalysis (의견 집계 · 개별 목표가)', rating: 'Buy', n: 24, nTargets: 20, mean: 139.75, median: 140,
   low: 118, high: 169, strongBuy: 9, buy: 4, hold: 11, sell: 0, strongSell: 0 };
 (function(){
   const A = BX_ANALYST, last = (typeof BX_DAILY !== 'undefined' && BX_DAILY.length) ? BX_DAILY[BX_DAILY.length - 1] : null;

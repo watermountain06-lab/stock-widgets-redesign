@@ -973,7 +973,7 @@ Chart.overrides.doughnut.animation = false;
     </div>
 
     <div class="card" style="display:flex;flex-direction:column;">
-      <div class="card-title"><span id="multipleCompareTitle">소매 유통 6곳 PER 비교 (점수는 S&amp;P500 경기소비재 기준) · 11/6 종가(LOW 막대는 11/13)</span></div>
+      <div class="card-title"><span id="multipleCompareTitle">소매 유통 6곳 PER 비교 (점수는 S&amp;P500 경기소비재 기준) · 11/13 종가</span></div>
       <div class="chart-wrap" style="flex:1;min-height:230px;">
         <canvas id="multipleChart"></canvas>
       </div>
@@ -1070,12 +1070,12 @@ Chart.overrides.doughnut.animation = false;
     <div class="op-strip">
       <div class="op-cell">
         <span class="op-label">애널리스트 <span data-an="n">35명 · 목표가 23</span>명</span>
-        <span class="op-val"><span data-an="rating">Buy</span> <span class="op-sub">매수 <span data-an="buy">25</span> · 유지 <span data-an="hold">9</span> · 매도 <span data-an="sell">1</span></span></span>
-        <div class="op-dist"><div data-an-bar="buy" style="width: 71.4%; background: var(--green);"></div><div data-an-bar="hold" style="width: 25.7%; background: var(--gold);"></div><div data-an-bar="sell" style="width: 2.9%; background: var(--red);"></div></div>
+        <span class="op-val"><span data-an="rating">Buy</span> <span class="op-sub">매수 <span data-an="buy">24</span> · 유지 <span data-an="hold">9</span> · 매도 <span data-an="sell">2</span></span></span>
+        <div class="op-dist"><div data-an-bar="buy" style="width: 68.6%; background: var(--green);"></div><div data-an-bar="hold" style="width: 25.7%; background: var(--gold);"></div><div data-an-bar="sell" style="width: 5.7%; background: var(--red);"></div></div>
       </div>
       <div class="op-cell">
-        <span class="op-label">평균 목표주가 · <span data-an="asof">2026-11-08</span></span>
-        <span class="op-val"><span data-an="mean">$249.96</span> <span class="op-sub op-up" data-an="upside">+9.8%</span></span>
+        <span class="op-label">평균 목표주가 · <span data-an="asof">2026-11-15</span></span>
+        <span class="op-val"><span data-an="mean">$250.78</span> <span class="op-sub op-up" data-an="upside">+10.1%</span></span>
       </div>
       <div class="op-cell">
         <span class="op-label">다음 실적</span>
@@ -1279,33 +1279,33 @@ function renderSegmentChart() {
 // ══════ #valuation ══════
 const MULTIPLE_DATA = {
   per: {
-    title: '소매 유통 6곳 PER 비교 (점수는 S&P500 경기소비재 기준) · 11/6 종가(LOW 막대는 11/13)',
+    title: '소매 유통 6곳 PER 비교 (점수는 S&P500 경기소비재 기준) · 11/13 종가',
     unit: 'PER', max: 35, lowValue: null,
     peers: [
-      { name:'HD', value:24.0, status:'reference' },
-      { name:'TSCO', value:19.5, status:'reference' },
-      { name:'TJX', value:25.1, status:'reference' },
+      { name:'HD', value:24.4, status:'reference' },
+      { name:'TSCO', value:19.6, status:'reference' },
+      { name:'TJX', value:24.9, status:'reference' },
       { name:'WSM', value:26.0, status:'reference' },
-      { name:'BBY', value:16.6, status:'reference' },
-      { name:'ORLY', value:28.6, status:'reference' }
+      { name:'BBY', value:17.3, status:'reference' },
+      { name:'ORLY', value:28.3, status:'reference' }
     ]
   },
   pbr: {
-    title: '소매 유통 PBR 비교 (ORLY 값 없음) · 11/6 종가(LOW 막대는 11/13)',
+    title: '소매 유통 PBR 비교 (ORLY 값 없음) · 11/13 종가',
     unit: 'PBR', max: 25, lowValue: null,
     peers: [
-      { name:'HD', value:20.6, status:'reference' },
+      { name:'HD', value:20.9, status:'reference' },
       { name:'TSCO', value:7.1, status:'reference' },
-      { name:'TJX', value:14.0, status:'reference' },
+      { name:'TJX', value:13.9, status:'reference' },
       { name:'WSM', value:14.0, status:'reference' },
-      { name:'BBY', value:6.6, status:'reference' }
+      { name:'BBY', value:6.9, status:'reference' }
     ]
   },
   psr: {
-    title: '소매 유통 PSR 비교 · 11/6 종가(LOW 막대는 11/13)',
+    title: '소매 유통 PSR 비교 · 11/13 종가',
     unit: 'PSR(TTM)', max: 5, lowValue: null,
     peers: [
-      { name:'HD', value:2.0, status:'reference' },
+      { name:'HD', value:2.1, status:'reference' },
       { name:'TSCO', value:1.2, status:'reference' },
       { name:'TJX', value:2.4, status:'reference' },
       { name:'WSM', value:3.7, status:'reference' },
@@ -1314,27 +1314,27 @@ const MULTIPLE_DATA = {
     ]
   },
   pcr: {
-    title: '소매 유통 PCR(FCF) 비교 · 11/6 종가(LOW 막대는 11/13)',
+    title: '소매 유통 PCR(FCF) 비교 · 11/13 종가',
     unit: 'PCR(FCF)', max: 75, lowValue: null,
     peers: [
-      { name:'HD', value:22.7, status:'reference' },
-      { name:'TSCO', value:64.9, status:'reference' },
-      { name:'TJX', value:25.3, status:'reference' },
+      { name:'HD', value:23.0, status:'reference' },
+      { name:'TSCO', value:65.1, status:'reference' },
+      { name:'TJX', value:25.1, status:'reference' },
       { name:'WSM', value:22.3, status:'reference' },
-      { name:'BBY', value:11.8, status:'reference' },
-      { name:'ORLY', value:33.7, status:'reference' }
+      { name:'BBY', value:12.3, status:'reference' },
+      { name:'ORLY', value:35.2, status:'reference' }
     ]
   },
   evebitda: {
-    title: '소매 유통 EV/EBITDA 비교 · 11/6 종가(LOW 막대는 11/13)',
+    title: '소매 유통 EV/EBITDA 비교 · 11/13 종가',
     unit: 'EV/EBITDA', max: 25, lowValue: null,
     peers: [
-      { name:'HD', value:16.1, status:'reference' },
-      { name:'TSCO', value:11.4, status:'reference' },
-      { name:'TJX', value:15.8, status:'reference' },
+      { name:'HD', value:16.3, status:'reference' },
+      { name:'TSCO', value:11.5, status:'reference' },
+      { name:'TJX', value:15.7, status:'reference' },
       { name:'WSM', value:16.3, status:'reference' },
-      { name:'BBY', value:7.9, status:'reference' },
-      { name:'ORLY', value:19.1, status:'reference' }
+      { name:'BBY', value:8.3, status:'reference' },
+      { name:'ORLY', value:18.9, status:'reference' }
     ]
   }
 };
@@ -2094,8 +2094,8 @@ const LOW_ACTIVITY = {"ticker": "LOW", "status": "N/A", "reason": "5년 비교 �
 // ── 투자포인트 탭: 애널리스트 목표가 (출처·기준일 포함) ──
 // 갱신: StockAnalysis 예측 페이지(stockanalysis.com/stocks/low/forecast/)의 값과 날짜를 옮긴다.
 // 현재가 대비는 마지막 종가에서 계산한다.
-const LOW_ANALYST = { asOf: '2026-11-08', source: 'StockAnalysis (의견 집계 · 개별 목표가)', rating: 'Buy', n: 35, nTargets: 23, mean: 249.96, median: 254,
-  low: 195, high: 275, strongBuy: 20, buy: 5, hold: 9, sell: 1, strongSell: 0 };
+const LOW_ANALYST = { asOf: '2026-11-15', source: 'StockAnalysis (의견 집계 · 개별 목표가)', rating: 'Buy', n: 35, nTargets: 23, mean: 250.78, median: 260,
+  low: 190, high: 275, strongBuy: 19, buy: 5, hold: 9, sell: 1, strongSell: 1 };
 (function(){
   const A = LOW_ANALYST, last = (typeof LOW_DAILY !== 'undefined' && LOW_DAILY.length) ? LOW_DAILY[LOW_DAILY.length - 1] : null;
   const put = (k, t) => document.querySelectorAll(`#invest [data-an="${k}"]`).forEach(el => { el.textContent = t; });

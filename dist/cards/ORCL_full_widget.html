@@ -1084,13 +1084,13 @@ Chart.overrides.doughnut.animation = false;
     <div class="card-title">투자의견 요약</div>
     <div class="op-strip">
       <div class="op-cell">
-        <span class="op-label">애널리스트 <span data-an="n">42명 · 목표가 33</span>명</span>
-        <span class="op-val"><span data-an="rating">Buy</span> <span class="op-sub">매수 <span data-an="buy">35</span> · 유지 <span data-an="hold">6</span> · 매도 <span data-an="sell">1</span></span></span>
-        <div class="op-dist"><div data-an-bar="buy" style="width: 83.3%; background: var(--green);"></div><div data-an-bar="hold" style="width: 14.3%; background: var(--gold);"></div><div data-an-bar="sell" style="width: 2.4%; background: var(--red);"></div></div>
+        <span class="op-label">애널리스트 <span data-an="n">42명 · 목표가 32</span>명</span>
+        <span class="op-val"><span data-an="rating">Buy</span> <span class="op-sub">매수 <span data-an="buy">36</span> · 유지 <span data-an="hold">5</span> · 매도 <span data-an="sell">1</span></span></span>
+        <div class="op-dist"><div data-an-bar="buy" style="width: 85.7%; background: var(--green);"></div><div data-an-bar="hold" style="width: 11.9%; background: var(--gold);"></div><div data-an-bar="sell" style="width: 2.4%; background: var(--red);"></div></div>
       </div>
       <div class="op-cell">
-        <span class="op-label">평균 목표주가 · <span data-an="asof">2026-11-08</span></span>
-        <span class="op-val"><span data-an="mean">$241.67</span> <span class="op-sub op-up" data-an="upside">+92.8%</span></span>
+        <span class="op-label">평균 목표주가 · <span data-an="asof">2026-11-15</span></span>
+        <span class="op-val"><span data-an="mean">$240.63</span> <span class="op-sub op-up" data-an="upside">+92.0%</span></span>
       </div>
       <div class="op-cell">
         <span class="op-label">다음 실적</span>
@@ -2099,8 +2099,8 @@ const ORCL_ACTIVITY = {"ticker": "ORCL", "status": "N/A", "reason": "5년 비교
 // ── 투자포인트 탭: 애널리스트 목표가 (출처·기준일 포함) ──
 // 갱신: StockAnalysis 예측 페이지(stockanalysis.com/stocks/orcl/forecast/)의 값과 날짜를 옮긴다.
 // 현재가 대비는 마지막 종가에서 계산한다.
-const ORCL_ANALYST = { asOf: '2026-11-08', source: 'StockAnalysis (의견 집계 · 개별 목표가)', rating: 'Buy', n: 42, nTargets: 33, mean: 241.67, median: 240,
-  low: 110, high: 400, strongBuy: 28, buy: 7, hold: 6, sell: 0, strongSell: 1 };
+const ORCL_ANALYST = { asOf: '2026-11-15', source: 'StockAnalysis (의견 집계 · 개별 목표가)', rating: 'Buy', n: 42, nTargets: 32, mean: 240.63, median: 240,
+  low: 110, high: 400, strongBuy: 29, buy: 7, hold: 5, sell: 0, strongSell: 1 };
 (function(){
   const A = ORCL_ANALYST, last = (typeof ORCL_DAILY !== 'undefined' && ORCL_DAILY.length) ? ORCL_DAILY[ORCL_DAILY.length - 1] : null;
   const put = (k, t) => document.querySelectorAll(`#invest [data-an="${k}"]`).forEach(el => { el.textContent = t; });

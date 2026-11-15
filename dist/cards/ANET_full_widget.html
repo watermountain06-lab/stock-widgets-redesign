@@ -1100,13 +1100,13 @@ Chart.overrides.doughnut.animation = false;
     <div class="card-title">투자의견 요약</div>
     <div class="op-strip">
       <div class="op-cell">
-        <span class="op-label">애널리스트 <span data-an="n">29명 · 목표가 17</span>명</span>
-        <span class="op-val"><span data-an="rating">Strong Buy</span> <span class="op-sub">매수 <span data-an="buy">29</span> · 유지 <span data-an="hold">0</span> · 매도 <span data-an="sell">0</span></span></span>
+        <span class="op-label">애널리스트 <span data-an="n">30명 · 목표가 17</span>명</span>
+        <span class="op-val"><span data-an="rating">Strong Buy</span> <span class="op-sub">매수 <span data-an="buy">30</span> · 유지 <span data-an="hold">0</span> · 매도 <span data-an="sell">0</span></span></span>
         <div class="op-dist"><div data-an-bar="buy" style="width: 100%; background: var(--green);"></div><div data-an-bar="hold" style="width: 0%; background: var(--gold);"></div><div data-an-bar="sell" style="width: 0%; background: var(--red);"></div></div>
       </div>
       <div class="op-cell">
-        <span class="op-label">평균 목표주가 · <span data-an="asof">2026-11-08</span></span>
-        <span class="op-val"><span data-an="mean">$245.59</span> <span class="op-sub op-up" data-an="upside">+24.5%</span></span>
+        <span class="op-label">평균 목표주가 · <span data-an="asof">2026-11-15</span></span>
+        <span class="op-val"><span data-an="mean">$246.76</span> <span class="op-sub op-up" data-an="upside">+25.1%</span></span>
       </div>
       <div class="op-cell">
         <span class="op-label">다음 실적</span>
@@ -2109,8 +2109,8 @@ const ANET_ACTIVITY = {"ticker": "ANET", "status": "ok", "asOf": "2026-09-30", "
 // ── 투자포인트 탭: 애널리스트 목표가 (출처·기준일 포함) ──
 // 갱신: StockAnalysis 예측 페이지(stockanalysis.com/stocks/anet/forecast/)의 값과 날짜를 옮긴다.
 // 현재가 대비는 마지막 종가에서 계산한다.
-const ANET_ANALYST = { asOf: '2026-11-08', source: 'StockAnalysis (의견 집계 · 개별 목표가)', rating: 'Strong Buy', n: 29, nTargets: 17, mean: 245.59, median: 248,
-  low: 164, high: 291, strongBuy: 21, buy: 8, hold: 0, sell: 0, strongSell: 0 };
+const ANET_ANALYST = { asOf: '2026-11-15', source: 'StockAnalysis (의견 집계 · 개별 목표가)', rating: 'Strong Buy', n: 30, nTargets: 17, mean: 246.76, median: 248,
+  low: 164, high: 291, strongBuy: 21, buy: 9, hold: 0, sell: 0, strongSell: 0 };
 (function(){
   const A = ANET_ANALYST, last = (typeof ANET_DAILY !== 'undefined' && ANET_DAILY.length) ? ANET_DAILY[ANET_DAILY.length - 1] : null;
   const put = (k, t) => document.querySelectorAll(`#invest [data-an="${k}"]`).forEach(el => { el.textContent = t; });

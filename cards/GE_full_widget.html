@@ -899,7 +899,7 @@ Chart.overrides.doughnut.animation = false;
 시나리오 범위: 2.91 ~ 4.06(세 시나리오 최대·최소 기준)
 0.7 이하 매우 싸다 · 0.9 이하 싸다 · 1.1 이하 적정 · 1.5 이하 비싸다 · 초과 매우 비싸다
 이 칸은 보수적으로 잡혀 있다(할인율 10%, 5년 뒤 영구성장 2.5%). S&amp;P500 비금융 종목의 83~91%가 매달 '매우 비싸다'에 들어간다(2024-10~2026-09). 다른 종목과 견주려면 위 비율 숫자를 함께 볼 것.">매우 비싸다</div></div>
-      <div class="vs-name" title="S&amp;P500 산업재 종목들보다 배수가 얼마나 낮은가. 높을수록 싸다.">동종업 대비</div><div class="vs-val" data-vc-score="peer">7.7</div><div class="sc-tile low" data-vc="peer" data-m="per">12</div><div class="sc-tile low" data-vc="peer" data-m="pbr">5</div><div class="sc-tile low" data-vc="peer" data-m="psr">9</div><div class="sc-tile low" data-vc="peer" data-m="pcr">8</div><div class="sc-tile low" data-vc="peer" data-m="evebitda">4</div><div class="vs-pill high" data-vs-pill="peer">비싸다</div>
+      <div class="vs-name" title="S&amp;P500 산업재 종목들보다 배수가 얼마나 낮은가. 높을수록 싸다.">동종업 대비</div><div class="vs-val" data-vc-score="peer">7.7</div><div class="sc-tile low" data-vc="peer" data-m="per">11</div><div class="sc-tile low" data-vc="peer" data-m="pbr">5</div><div class="sc-tile low" data-vc="peer" data-m="psr">9</div><div class="sc-tile low" data-vc="peer" data-m="pcr">9</div><div class="sc-tile low" data-vc="peer" data-m="evebitda">4</div><div class="vs-pill high" data-vs-pill="peer">비싸다</div>
     </div></div>
     <div class="vs-premise">PER 37.8배(2.3년 중앙값 38.8배)로 자기 이력 53.1점(중간), 동종업 7.7점(비싸다)이다. <strong>현금흐름 내재가치(기본 $113.91)는 현재가의 34%다</strong>.</div>
     <div class="verdict-summary-risk">⚠️ 세 칸이 자기 이력 0 · 동종업 −1 · 현금흐름 −2, 합계 −3 “고평가”이다. 현금흐름 내재가치(기본 $113.91)는 현재가의 34%다. 현재가를 정당화하려면 매출이 5년간 연 39.1% 커야 한다. 내재가치에서 차입금 $19.3B를 빼고 현금·단기투자 $8.8B를 더한다.</div>
@@ -971,7 +971,7 @@ Chart.overrides.doughnut.animation = false;
     </div>
 
     <div class="card" style="display:flex;flex-direction:column;">
-      <div class="card-title"><span id="multipleCompareTitle">항공우주·방산 PER 비교 · 11/6 종가(GE 막대는 11/13)</span></div>
+      <div class="card-title"><span id="multipleCompareTitle">항공우주·방산 PER 비교 · 11/13 종가</span></div>
       <div class="chart-wrap" style="flex:1;min-height:230px;">
         <canvas id="multipleChart"></canvas>
       </div>
@@ -1080,11 +1080,11 @@ Chart.overrides.doughnut.animation = false;
     <div class="op-strip">
       <div class="op-cell">
         <span class="op-label">애널리스트 <span data-an="n">23명 · 목표가 14</span>명</span>
-        <span class="op-val"><span data-an="rating">Strong Buy</span> <span class="op-sub">매수 <span data-an="buy">20</span> · 유지 <span data-an="hold">2</span> · 매도 <span data-an="sell">1</span></span></span>
-        <div class="op-dist"><div data-an-bar="buy" style="width: 87%; background: var(--green);"></div><div data-an-bar="hold" style="width: 8.7%; background: var(--gold);"></div><div data-an-bar="sell" style="width: 4.3%; background: var(--red);"></div></div>
+        <span class="op-val"><span data-an="rating">Buy</span> <span class="op-sub">매수 <span data-an="buy">19</span> · 유지 <span data-an="hold">3</span> · 매도 <span data-an="sell">1</span></span></span>
+        <div class="op-dist"><div data-an-bar="buy" style="width: 82.6%; background: var(--green);"></div><div data-an-bar="hold" style="width: 13%; background: var(--gold);"></div><div data-an-bar="sell" style="width: 4.3%; background: var(--red);"></div></div>
       </div>
       <div class="op-cell">
-        <span class="op-label">평균 목표주가 · <span data-an="asof">2026-11-08</span></span>
+        <span class="op-label">평균 목표주가 · <span data-an="asof">2026-11-15</span></span>
         <span class="op-val"><span data-an="mean">$385.36</span> <span class="op-sub op-up" data-an="upside">+16.1%</span></span>
       </div>
       <div class="op-cell">
@@ -1289,62 +1289,62 @@ function renderSegmentChart() {
 // ══════ #valuation ══════
 const MULTIPLE_DATA = {
   per: {
-    title: '항공우주·방산 PER 비교 · 11/6 종가(GE 막대는 11/13)',
+    title: '항공우주·방산 PER 비교 · 11/13 종가',
     unit: 'PER', max: 50, geValue: null,
     peers: [
-      { name:'RTX', value:30.8, status:'reference' },
-      { name:'BA', value:18.9, status:'reference' },
-      { name:'TDG', value:36.3, status:'reference' },
-      { name:'HWM', value:40.3, status:'reference' },
-      { name:'GD', value:20.8, status:'reference' },
-      { name:'NOC', value:16.6, status:'reference' }
+      { name:'RTX', value:32.2, status:'reference' },
+      { name:'BA', value:18.7, status:'reference' },
+      { name:'TDG', value:34.3, status:'reference' },
+      { name:'HWM', value:43.2, status:'reference' },
+      { name:'GD', value:21.4, status:'reference' },
+      { name:'NOC', value:17.4, status:'reference' }
     ]
   },
   pbr: {
-    title: '항공우주·방산 PBR 비교 (TDG 값 없음) · 11/6 종가(GE 막대는 11/13)',
+    title: '항공우주·방산 PBR 비교 (TDG 값 없음) · 11/13 종가',
     unit: 'PBR', max: 25, geValue: null,
     peers: [
-      { name:'RTX', value:3.7, status:'reference' },
-      { name:'BA', value:21.0, status:'reference' },
-      { name:'HWM', value:14.2, status:'reference' },
-      { name:'GD', value:3.5, status:'reference' },
-      { name:'NOC', value:4.0, status:'reference' }
+      { name:'RTX', value:3.9, status:'reference' },
+      { name:'BA', value:20.8, status:'reference' },
+      { name:'HWM', value:15.2, status:'reference' },
+      { name:'GD', value:3.6, status:'reference' },
+      { name:'NOC', value:4.2, status:'reference' }
     ]
   },
   psr: {
-    title: '항공우주·방산 PSR 비교 · 11/6 종가(GE 막대는 11/13)',
-    unit: 'PSR(TTM)', max: 10, geValue: null,
+    title: '항공우주·방산 PSR 비교 · 11/13 종가',
+    unit: 'PSR(TTM)', max: 15, geValue: null,
     peers: [
-      { name:'RTX', value:2.7, status:'reference' },
+      { name:'RTX', value:2.8, status:'reference' },
       { name:'BA', value:1.4, status:'reference' },
-      { name:'TDG', value:6.6, status:'reference' },
-      { name:'HWM', value:8.4, status:'reference' },
+      { name:'TDG', value:6.3, status:'reference' },
+      { name:'HWM', value:9.0, status:'reference' },
       { name:'GD', value:1.7, status:'reference' },
-      { name:'NOC', value:1.7, status:'reference' }
+      { name:'NOC', value:1.8, status:'reference' }
     ]
   },
   pcr: {
-    title: '항공우주·방산 PCR(FCF) 비교 · 11/6 종가(GE 막대는 11/13)',
-    unit: 'PCR(FCF)', max: 9880, geValue: null,
+    title: '항공우주·방산 PCR(FCF) 비교 · 11/13 종가',
+    unit: 'PCR(FCF)', max: 9770, geValue: null,
     peers: [
-      { name:'RTX', value:26.9, status:'reference' },
-      { name:'BA', value:8588.2, status:'reference' },
-      { name:'TDG', value:34.3, status:'reference' },
-      { name:'HWM', value:42.4, status:'reference' },
-      { name:'GD', value:16.6, status:'reference' },
-      { name:'NOC', value:19.5, status:'reference' }
+      { name:'RTX', value:28.2, status:'reference' },
+      { name:'BA', value:8494.1, status:'reference' },
+      { name:'TDG', value:34.7, status:'reference' },
+      { name:'HWM', value:45.5, status:'reference' },
+      { name:'GD', value:17.0, status:'reference' },
+      { name:'NOC', value:20.4, status:'reference' }
     ]
   },
   evebitda: {
-    title: '항공우주·방산 EV/EBITDA 비교 · 11/6 종가(GE 막대는 11/13)',
+    title: '항공우주·방산 EV/EBITDA 비교 · 11/13 종가',
     unit: 'EV/EBITDA', max: 40, geValue: null,
     peers: [
-      { name:'RTX', value:18.2, status:'reference' },
-      { name:'BA', value:13.5, status:'reference' },
-      { name:'TDG', value:19.3, status:'reference' },
-      { name:'HWM', value:28.1, status:'reference' },
-      { name:'GD', value:14.6, status:'reference' },
-      { name:'NOC', value:13.9, status:'reference' }
+      { name:'RTX', value:19.0, status:'reference' },
+      { name:'BA', value:13.4, status:'reference' },
+      { name:'TDG', value:18.9, status:'reference' },
+      { name:'HWM', value:30.0, status:'reference' },
+      { name:'GD', value:15.0, status:'reference' },
+      { name:'NOC', value:14.5, status:'reference' }
     ]
   }
 };
@@ -1800,7 +1800,7 @@ const GE_FUNDAMENTAL = {"ticker": "GE", "basis": "quarter", "asOf": "2026-09-30"
 //
 // 갱신: python3 v2/build_peer_score.py GE --self v2/GE_multiples.json --card
 /* VALUATION:BEGIN */
-const GE_VALUATION = {"peer": {"score": 7.7, "sector": "Industrials (S&P500 81종목)", "asOf": ["2026-11-06", "2026-11-06"], "priceSession": null, "metrics": [{"metric": "per", "score": 12.0, "rank": 67, "peers": 75}, {"metric": "pbr", "score": 5.4, "rank": 71, "peers": 74}, {"metric": "psr", "score": 9.0, "rank": 72, "peers": 78}, {"metric": "pcr", "score": 7.9, "rank": 71, "peers": 76}, {"metric": "evebitda", "score": 4.1, "rank": 72, "peers": 74}]}, "self": {"score": 53.1, "window": ["2024-07-23", "2026-11-13"], "perBasis": "diluted", "metrics": [{"metric": "per", "score": 59.1, "percentile": 40.9, "current": 37.83, "min": 27.35, "median": 38.81, "max": 47.84, "days": 582, "currentNote": null}, {"metric": "pbr", "score": 10.5, "percentile": 89.5, "current": 19.57, "min": 9.17, "median": 15.9, "max": 22.42, "days": 582, "currentNote": null}, {"metric": "psr", "score": 51.9, "percentile": 48.1, "current": 6.52, "min": 4.63, "median": 6.57, "max": 8.18, "days": 582, "currentNote": null}, {"metric": "pcr", "score": 63.9, "percentile": 36.1, "current": 42.9, "min": 36.52, "median": 44.96, "max": 60.47, "days": 582, "currentNote": null}, {"metric": "evebitda", "score": 80.2, "percentile": 19.8, "current": 33.92, "min": 28.77, "median": 36.43, "max": 45.29, "days": 582, "currentNote": null}]}};
+const GE_VALUATION = {"peer": {"score": 7.7, "sector": "Industrials (S&P500 81종목)", "asOf": ["2026-11-13", "2026-11-13"], "priceSession": null, "metrics": [{"metric": "per", "score": 10.7, "rank": 68, "peers": 75}, {"metric": "pbr", "score": 5.4, "rank": 71, "peers": 74}, {"metric": "psr", "score": 9.0, "rank": 72, "peers": 78}, {"metric": "pcr", "score": 9.2, "rank": 70, "peers": 76}, {"metric": "evebitda", "score": 4.0, "rank": 73, "peers": 75}]}, "self": {"score": 53.1, "window": ["2024-07-23", "2026-11-13"], "perBasis": "diluted", "metrics": [{"metric": "per", "score": 59.1, "percentile": 40.9, "current": 37.83, "min": 27.35, "median": 38.81, "max": 47.84, "days": 582, "currentNote": null}, {"metric": "pbr", "score": 10.5, "percentile": 89.5, "current": 19.57, "min": 9.17, "median": 15.9, "max": 22.42, "days": 582, "currentNote": null}, {"metric": "psr", "score": 51.9, "percentile": 48.1, "current": 6.52, "min": 4.63, "median": 6.57, "max": 8.18, "days": 582, "currentNote": null}, {"metric": "pcr", "score": 63.9, "percentile": 36.1, "current": 42.9, "min": 36.52, "median": 44.96, "max": 60.47, "days": 582, "currentNote": null}, {"metric": "evebitda", "score": 80.2, "percentile": 19.8, "current": 33.92, "min": 28.77, "median": 36.43, "max": 45.29, "days": 582, "currentNote": null}]}};
 /* VALUATION:END */
 
 // ── 종합 평가 자동 판정 (2026-09-25 사용자 결정 · 방향 합산) ──
@@ -2089,8 +2089,8 @@ const GE_ACTIVITY = {"ticker": "GE", "status": "N/A", "reason": "5년 비교 이
 // ── 투자포인트 탭: 애널리스트 목표가 (출처·기준일 포함) ──
 // 갱신: StockAnalysis 예측 페이지(stockanalysis.com/stocks/ge/forecast/)의 값과 날짜를 옮긴다.
 // 현재가 대비는 마지막 종가에서 계산한다.
-const GE_ANALYST = { asOf: '2026-11-08', source: 'StockAnalysis (의견 집계 · 개별 목표가)', rating: 'Strong Buy', n: 23, nTargets: 14, mean: 385.36, median: 380,
-  low: 350, high: 431, strongBuy: 16, buy: 4, hold: 2, sell: 1, strongSell: 0 };
+const GE_ANALYST = { asOf: '2026-11-15', source: 'StockAnalysis (의견 집계 · 개별 목표가)', rating: 'Buy', n: 23, nTargets: 14, mean: 385.36, median: 380,
+  low: 350, high: 431, strongBuy: 16, buy: 3, hold: 3, sell: 1, strongSell: 0 };
 (function(){
   const A = GE_ANALYST, last = (typeof GE_DAILY !== 'undefined' && GE_DAILY.length) ? GE_DAILY[GE_DAILY.length - 1] : null;
   const put = (k, t) => document.querySelectorAll(`#invest [data-an="${k}"]`).forEach(el => { el.textContent = t; });

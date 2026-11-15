@@ -1118,13 +1118,13 @@ Chart.overrides.doughnut.animation = false;
     <div class="card-title">투자의견 요약</div>
     <div class="op-strip">
       <div class="op-cell">
-        <span class="op-label">애널리스트 <span data-an="n">51명 · 목표가 30</span>명</span>
-        <span class="op-val"><span data-an="rating">Strong Buy</span> <span class="op-sub">매수 <span data-an="buy">49</span> · 유지 <span data-an="hold">2</span> · 매도 <span data-an="sell">0</span></span></span>
-        <div class="op-dist"><div data-an-bar="buy" style="width: 96.1%; background: var(--green);"></div><div data-an-bar="hold" style="width: 3.9%; background: var(--gold);"></div><div data-an-bar="sell" style="width: 0%; background: var(--red);"></div></div>
+        <span class="op-label">애널리스트 <span data-an="n">51명 · 목표가 29</span>명</span>
+        <span class="op-val"><span data-an="rating">Strong Buy</span> <span class="op-sub">매수 <span data-an="buy">48</span> · 유지 <span data-an="hold">3</span> · 매도 <span data-an="sell">0</span></span></span>
+        <div class="op-dist"><div data-an-bar="buy" style="width: 94.1%; background: var(--green);"></div><div data-an-bar="hold" style="width: 5.9%; background: var(--gold);"></div><div data-an-bar="sell" style="width: 0%; background: var(--red);"></div></div>
       </div>
       <div class="op-cell">
-        <span class="op-label">평균 목표주가 · <span data-an="asof">2026-11-08</span></span>
-        <span class="op-val"><span data-an="mean">$523.43</span> <span class="op-sub op-up" data-an="upside">+50.8%</span></span>
+        <span class="op-label">평균 목표주가 · <span data-an="asof">2026-11-15</span></span>
+        <span class="op-val"><span data-an="mean">$519.34</span> <span class="op-sub op-up" data-an="upside">+49.7%</span></span>
       </div>
       <div class="op-cell">
         <span class="op-label">다음 실적</span>
@@ -2123,8 +2123,8 @@ const AVGO_ACTIVITY = {"ticker": "AVGO", "status": "ok", "asOf": "2026-08-02", "
 // ── 투자포인트 탭: 애널리스트 목표가 (출처·기준일 포함) ──
 // 갱신: StockAnalysis 예측 페이지(stockanalysis.com/stocks/avgo/forecast/)의 값과 날짜를 옮긴다.
 // 현재가 대비는 마지막 종가에서 계산한다.
-const AVGO_ANALYST = { asOf: '2026-11-08', source: 'StockAnalysis (의견 집계 · 개별 목표가)', rating: 'Strong Buy', n: 51, nTargets: 30, mean: 523.43, median: 530,
-  low: 400, high: 630, strongBuy: 41, buy: 8, hold: 2, sell: 0, strongSell: 0 };
+const AVGO_ANALYST = { asOf: '2026-11-15', source: 'StockAnalysis (의견 집계 · 개별 목표가)', rating: 'Strong Buy', n: 51, nTargets: 29, mean: 519.34, median: 520,
+  low: 398, high: 630, strongBuy: 40, buy: 8, hold: 3, sell: 0, strongSell: 0 };
 (function(){
   const A = AVGO_ANALYST, last = (typeof AVGO_DAILY !== 'undefined' && AVGO_DAILY.length) ? AVGO_DAILY[AVGO_DAILY.length - 1] : null;
   const put = (k, t) => document.querySelectorAll(`#invest [data-an="${k}"]`).forEach(el => { el.textContent = t; });

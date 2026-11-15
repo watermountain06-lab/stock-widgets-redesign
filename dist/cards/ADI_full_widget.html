@@ -1122,12 +1122,12 @@ Chart.overrides.doughnut.animation = false;
     <div class="card-title">투자의견 요약</div>
     <div class="op-strip">
       <div class="op-cell">
-        <span class="op-label">애널리스트 <span data-an="n">34명 · 목표가 22</span>명</span>
-        <span class="op-val"><span data-an="rating">Strong Buy</span> <span class="op-sub">매수 <span data-an="buy">31</span> · 유지 <span data-an="hold">3</span> · 매도 <span data-an="sell">0</span></span></span>
-        <div class="op-dist"><div data-an-bar="buy" style="width: 91.2%; background: var(--green);"></div><div data-an-bar="hold" style="width: 8.8%; background: var(--gold);"></div><div data-an-bar="sell" style="width: 0%; background: var(--red);"></div></div>
+        <span class="op-label">애널리스트 <span data-an="n">35명 · 목표가 22</span>명</span>
+        <span class="op-val"><span data-an="rating">Strong Buy</span> <span class="op-sub">매수 <span data-an="buy">31</span> · 유지 <span data-an="hold">4</span> · 매도 <span data-an="sell">0</span></span></span>
+        <div class="op-dist"><div data-an-bar="buy" style="width: 88.6%; background: var(--green);"></div><div data-an-bar="hold" style="width: 11.4%; background: var(--gold);"></div><div data-an-bar="sell" style="width: 0%; background: var(--red);"></div></div>
       </div>
       <div class="op-cell">
-        <span class="op-label">평균 목표주가 · <span data-an="asof">2026-11-08</span></span>
+        <span class="op-label">평균 목표주가 · <span data-an="asof">2026-11-15</span></span>
         <span class="op-val"><span data-an="mean">$478.41</span> <span class="op-sub op-up" data-an="upside">+20.2%</span></span>
       </div>
       <div class="op-cell">
@@ -2135,8 +2135,8 @@ const ADI_ACTIVITY = {"ticker": "ADI", "status": "ok", "asOf": "2026-08-01", "pr
 // ── 투자포인트 탭: 애널리스트 목표가 (출처·기준일 포함) ──
 // 갱신: StockAnalysis 예측 페이지(stockanalysis.com/stocks/adi/forecast/)의 값과 날짜를 옮긴다.
 // 현재가 대비는 마지막 종가에서 계산한다.
-const ADI_ANALYST = { asOf: '2026-11-08', source: 'StockAnalysis (의견 집계 · 개별 목표가)', rating: 'Strong Buy', n: 34, nTargets: 22, mean: 478.41, median: 474,
-  low: 405, high: 675, strongBuy: 24, buy: 7, hold: 3, sell: 0, strongSell: 0 };
+const ADI_ANALYST = { asOf: '2026-11-15', source: 'StockAnalysis (의견 집계 · 개별 목표가)', rating: 'Strong Buy', n: 35, nTargets: 22, mean: 478.41, median: 474,
+  low: 405, high: 675, strongBuy: 25, buy: 6, hold: 4, sell: 0, strongSell: 0 };
 (function(){
   const A = ADI_ANALYST, last = (typeof ADI_DAILY !== 'undefined' && ADI_DAILY.length) ? ADI_DAILY[ADI_DAILY.length - 1] : null;
   const put = (k, t) => document.querySelectorAll(`#invest [data-an="${k}"]`).forEach(el => { el.textContent = t; });

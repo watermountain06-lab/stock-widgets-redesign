@@ -1116,7 +1116,7 @@ Chart.overrides.doughnut.animation = false;
         <div class="op-dist"><div data-an-bar="buy" style="width: 48%; background: var(--green);"></div><div data-an-bar="hold" style="width: 44%; background: var(--gold);"></div><div data-an-bar="sell" style="width: 8%; background: var(--red);"></div></div>
       </div>
       <div class="op-cell">
-        <span class="op-label">평균 목표주가 · <span data-an="asof">2026-11-08</span></span>
+        <span class="op-label">평균 목표주가 · <span data-an="asof">2026-11-15</span></span>
         <span class="op-val"><span data-an="mean">$267.90</span> <span class="op-sub op-up" data-an="upside">+8.4%</span></span>
       </div>
       <div class="op-cell">
@@ -2125,7 +2125,7 @@ const IBM_ACTIVITY = {"ticker": "IBM", "status": "ok", "asOf": "2026-09-30", "pr
 // ── 투자포인트 탭: 애널리스트 목표가 (출처·기준일 포함) ──
 // 갱신: StockAnalysis 예측 페이지(stockanalysis.com/stocks/ibm/forecast/)의 값과 날짜를 옮긴다.
 // 현재가 대비는 마지막 종가에서 계산한다.
-const IBM_ANALYST = { asOf: '2026-11-08', source: 'StockAnalysis (의견 집계 · 개별 목표가)', rating: 'Buy', n: 25, nTargets: 21, mean: 267.9, median: 269,
+const IBM_ANALYST = { asOf: '2026-11-15', source: 'StockAnalysis (의견 집계 · 개별 목표가)', rating: 'Buy', n: 25, nTargets: 21, mean: 267.9, median: 269,
   low: 191, high: 350, strongBuy: 9, buy: 3, hold: 11, sell: 1, strongSell: 1 };
 (function(){
   const A = IBM_ANALYST, last = (typeof IBM_DAILY !== 'undefined' && IBM_DAILY.length) ? IBM_DAILY[IBM_DAILY.length - 1] : null;

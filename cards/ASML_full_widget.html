@@ -1112,8 +1112,8 @@ Chart.overrides.doughnut.animation = false;
         <div class="op-dist"><div data-an-bar="buy" style="width: 92.7%; background: var(--green);"></div><div data-an-bar="hold" style="width: 4.9%; background: var(--gold);"></div><div data-an-bar="sell" style="width: 2.4%; background: var(--red);"></div></div>
       </div>
       <div class="op-cell">
-        <span class="op-label">평균 목표주가 · <span data-an="asof">2026-11-08</span></span>
-        <span class="op-val"><span data-an="mean">$2485.62</span> <span class="op-sub op-up" data-an="upside">+66.2%</span></span>
+        <span class="op-label">평균 목표주가 · <span data-an="asof">2026-11-15</span></span>
+        <span class="op-val"><span data-an="mean">$2476.95</span> <span class="op-sub op-up" data-an="upside">+65.7%</span></span>
       </div>
       <div class="op-cell">
         <span class="op-label">다음 실적</span>
@@ -2126,8 +2126,8 @@ const ASML_ACTIVITY = {"ticker": "ASML", "status": "ok", "asOf": "2026-06-28", "
 // ── 투자포인트 탭: 애널리스트 목표가 (출처·기준일 포함) ──
 // 갱신: StockAnalysis 예측 페이지(stockanalysis.com/stocks/asml/forecast/)의 값과 날짜를 옮긴다.
 // 현재가 대비는 마지막 종가에서 계산한다.
-const ASML_ANALYST = { asOf: '2026-11-08', source: 'StockAnalysis (의견 집계 · 개별 목표가)', rating: 'Strong Buy', n: 41, nTargets: 8, mean: 2485.62, median: 2500,
-  low: 2100, high: 2818.06, strongBuy: 31, buy: 7, hold: 2, sell: 0, strongSell: 1 };
+const ASML_ANALYST = { asOf: '2026-11-15', source: 'StockAnalysis (의견 집계 · 개별 목표가)', rating: 'Strong Buy', n: 41, nTargets: 8, mean: 2476.95, median: 2500,
+  low: 2100, high: 2800.02, strongBuy: 31, buy: 7, hold: 2, sell: 0, strongSell: 1 };
 (function(){
   const A = ASML_ANALYST, last = (typeof ASML_DAILY !== 'undefined' && ASML_DAILY.length) ? ASML_DAILY[ASML_DAILY.length - 1] : null;
   const put = (k, t) => document.querySelectorAll(`#invest [data-an="${k}"]`).forEach(el => { el.textContent = t; });

@@ -976,7 +976,7 @@ Chart.overrides.doughnut.animation = false;
     </div>
 
     <div class="card" style="display:flex;flex-direction:column;">
-      <div class="card-title"><span id="multipleCompareTitle">통신·케이블·미디어 6곳 PER 비교 (점수는 S&amp;P500 커뮤니케이션 기준) · 11/6 종가(VZ 막대는 11/13)</span></div>
+      <div class="card-title"><span id="multipleCompareTitle">통신·케이블·미디어 6곳 PER 비교 (점수는 S&amp;P500 커뮤니케이션 기준) · 11/13 종가</span></div>
       <div class="chart-wrap" style="flex:1;min-height:230px;">
         <canvas id="multipleChart"></canvas>
       </div>
@@ -1099,7 +1099,7 @@ Chart.overrides.doughnut.animation = false;
         <div class="op-dist"><div data-an-bar="buy" style="width: 50%; background: var(--green);"></div><div data-an-bar="hold" style="width: 50%; background: var(--gold);"></div><div data-an-bar="sell" style="width: 0%; background: var(--red);"></div></div>
       </div>
       <div class="op-cell">
-        <span class="op-label">평균 목표주가 · <span data-an="asof">2026-11-08</span></span>
+        <span class="op-label">평균 목표주가 · <span data-an="asof">2026-11-15</span></span>
         <span class="op-val"><span data-an="mean">$49.29</span> <span class="op-sub op-up" data-an="upside">+6.3%</span></span>
       </div>
       <div class="op-cell">
@@ -1304,63 +1304,63 @@ function renderSegmentChart() {
 // ══════ #valuation ══════
 const MULTIPLE_DATA = {
   per: {
-    title: '통신·케이블·미디어 6곳 PER 비교 (점수는 S&P500 커뮤니케이션 기준) · 11/6 종가(VZ 막대는 11/13)',
+    title: '통신·케이블·미디어 6곳 PER 비교 (점수는 S&P500 커뮤니케이션 기준) · 11/13 종가',
     unit: 'PER', max: 35, vzValue: null,
     peers: [
-      { name:'T', value:11.6, status:'reference' },
-      { name:'TMUS', value:15.6, status:'reference' },
-      { name:'CMCSA', value:7.7, status:'reference' },
-      { name:'DIS', value:24.1, status:'reference' },
-      { name:'GOOGL', value:26.9, status:'reference' },
-      { name:'META', value:23.9, status:'reference' }
+      { name:'T', value:11.9, status:'reference' },
+      { name:'TMUS', value:16.4, status:'reference' },
+      { name:'CMCSA', value:7.9, status:'reference' },
+      { name:'DIS', value:24.6, status:'reference' },
+      { name:'GOOGL', value:27.9, status:'reference' },
+      { name:'META', value:25.1, status:'reference' }
     ]
   },
   pbr: {
-    title: '통신·케이블·미디어 PBR 비교 · 11/6 종가(VZ 막대는 11/13)',
+    title: '통신·케이블·미디어 PBR 비교 · 11/13 종가',
     unit: 'PBR', max: 10, vzValue: null,
     peers: [
       { name:'T', value:1.4, status:'reference' },
-      { name:'TMUS', value:3.0, status:'reference' },
+      { name:'TMUS', value:3.2, status:'reference' },
       { name:'CMCSA', value:1.1, status:'reference' },
-      { name:'DIS', value:1.8, status:'reference' },
-      { name:'GOOGL', value:5.2, status:'reference' },
-      { name:'META', value:5.7, status:'reference' }
+      { name:'DIS', value:1.9, status:'reference' },
+      { name:'GOOGL', value:5.4, status:'reference' },
+      { name:'META', value:6.0, status:'reference' }
     ]
   },
   psr: {
-    title: '통신·케이블·미디어 PSR 비교 · 11/6 종가(VZ 막대는 11/13)',
+    title: '통신·케이블·미디어 PSR 비교 · 11/13 종가',
     unit: 'PSR(TTM)', max: 10, vzValue: null,
     peers: [
-      { name:'T', value:1.1, status:'reference' },
-      { name:'TMUS', value:1.8, status:'reference' },
+      { name:'T', value:1.2, status:'reference' },
+      { name:'TMUS', value:1.9, status:'reference' },
       { name:'CMCSA', value:0.8, status:'reference' },
-      { name:'DIS', value:2.0, status:'reference' },
-      { name:'GOOGL', value:7.5, status:'reference' },
-      { name:'META', value:6.4, status:'reference' }
+      { name:'DIS', value:2.1, status:'reference' },
+      { name:'GOOGL', value:7.8, status:'reference' },
+      { name:'META', value:6.8, status:'reference' }
     ]
   },
   pcr: {
-    title: '통신·케이블·미디어 PCR(FCF) 비교 · 11/6 종가(VZ 막대는 11/13)',
-    unit: 'PCR(FCF)', max: 205, vzValue: null,
+    title: '통신·케이블·미디어 PCR(FCF) 비교 · 11/13 종가',
+    unit: 'PCR(FCF)', max: 215, vzValue: null,
     peers: [
-      { name:'T', value:8.2, status:'reference' },
-      { name:'TMUS', value:9.2, status:'reference' },
-      { name:'CMCSA', value:5.1, status:'reference' },
-      { name:'DIS', value:24.3, status:'reference' },
-      { name:'GOOGL', value:178.1, status:'reference' },
-      { name:'META', value:54.3, status:'reference' }
+      { name:'T', value:8.4, status:'reference' },
+      { name:'TMUS', value:9.7, status:'reference' },
+      { name:'CMCSA', value:5.3, status:'reference' },
+      { name:'DIS', value:24.8, status:'reference' },
+      { name:'GOOGL', value:184.9, status:'reference' },
+      { name:'META', value:57.1, status:'reference' }
     ]
   },
   evebitda: {
-    title: '통신·케이블·미디어 EV/EBITDA 비교 · 11/6 종가(VZ 막대는 11/13)',
+    title: '통신·케이블·미디어 EV/EBITDA 비교 · 11/13 종가',
     unit: 'EV/EBITDA', max: 25, vzValue: null,
     peers: [
-      { name:'T', value:7.1, status:'reference' },
-      { name:'TMUS', value:5.0, status:'reference' },
-      { name:'CMCSA', value:5.3, status:'reference' },
-      { name:'DIS', value:12.9, status:'reference' },
-      { name:'GOOGL', value:18.1, status:'reference' },
-      { name:'META', value:14.9, status:'reference' }
+      { name:'T', value:7.2, status:'reference' },
+      { name:'TMUS', value:5.2, status:'reference' },
+      { name:'CMCSA', value:5.4, status:'reference' },
+      { name:'DIS', value:13.1, status:'reference' },
+      { name:'GOOGL', value:18.8, status:'reference' },
+      { name:'META', value:15.7, status:'reference' }
     ]
   }
 };
@@ -1821,7 +1821,7 @@ const VZ_FUNDAMENTAL = {"ticker": "VZ", "basis": "quarter", "asOf": "2026-09-30"
 //
 // 갱신: python3 v2/build_peer_score.py VZ --self v2/VZ_multiples.json --card
 /* VALUATION:BEGIN */
-const VZ_VALUATION = {"peer": {"score": 75.5, "sector": "Communication Services (S&P500 20종목)", "asOf": ["2026-11-06", "2026-11-06"], "priceSession": null, "metrics": [{"metric": "per", "score": 88.2, "rank": 3, "peers": 17}, {"metric": "pbr", "score": 70.6, "rank": 6, "peers": 17}, {"metric": "psr", "score": 70.6, "rank": 6, "peers": 17}, {"metric": "pcr", "score": 75.0, "rank": 5, "peers": 16}, {"metric": "evebitda", "score": 73.3, "rank": 5, "peers": 15}]}, "self": {"score": 50.0, "window": ["2021-11-15", "2026-11-13"], "perBasis": "diluted", "metrics": [{"metric": "per", "score": 34.6, "percentile": 65.4, "current": 9.95, "min": 6.12, "median": 9.54, "max": 12.66, "days": 1255, "currentNote": null}, {"metric": "pbr", "score": 52.0, "percentile": 48.0, "current": 1.81, "min": 1.35, "median": 1.82, "max": 2.91, "days": 1255, "currentNote": null}, {"metric": "psr", "score": 29.6, "percentile": 70.4, "current": 1.38, "min": 0.96, "median": 1.3, "max": 1.73, "days": 1255, "currentNote": null}, {"metric": "pcr", "score": 91.1, "percentile": 8.9, "current": 8.59, "min": 7.77, "median": 9.51, "max": 14.53, "days": 1255, "currentNote": null}, {"metric": "evebitda", "score": 42.5, "percentile": 57.5, "current": 7.31, "min": 5.9, "median": 7.01, "max": 8.39, "days": 1255, "currentNote": null}]}};
+const VZ_VALUATION = {"peer": {"score": 75.5, "sector": "Communication Services (S&P500 20종목)", "asOf": ["2026-11-13", "2026-11-13"], "priceSession": null, "metrics": [{"metric": "per", "score": 88.2, "rank": 3, "peers": 17}, {"metric": "pbr", "score": 70.6, "rank": 6, "peers": 17}, {"metric": "psr", "score": 70.6, "rank": 6, "peers": 17}, {"metric": "pcr", "score": 75.0, "rank": 5, "peers": 16}, {"metric": "evebitda", "score": 73.3, "rank": 5, "peers": 15}]}, "self": {"score": 50.0, "window": ["2021-11-15", "2026-11-13"], "perBasis": "diluted", "metrics": [{"metric": "per", "score": 34.6, "percentile": 65.4, "current": 9.95, "min": 6.12, "median": 9.54, "max": 12.66, "days": 1255, "currentNote": null}, {"metric": "pbr", "score": 52.0, "percentile": 48.0, "current": 1.81, "min": 1.35, "median": 1.82, "max": 2.91, "days": 1255, "currentNote": null}, {"metric": "psr", "score": 29.6, "percentile": 70.4, "current": 1.38, "min": 0.96, "median": 1.3, "max": 1.73, "days": 1255, "currentNote": null}, {"metric": "pcr", "score": 91.1, "percentile": 8.9, "current": 8.59, "min": 7.77, "median": 9.51, "max": 14.53, "days": 1255, "currentNote": null}, {"metric": "evebitda", "score": 42.5, "percentile": 57.5, "current": 7.31, "min": 5.9, "median": 7.01, "max": 8.39, "days": 1255, "currentNote": null}]}};
 /* VALUATION:END */
 
 // ── 종합 평가 자동 판정 (2026-09-25 사용자 결정 · 방향 합산) ──
@@ -2110,7 +2110,7 @@ const VZ_ACTIVITY = {"ticker": "VZ", "status": "N/A", "reason": "매출원가·�
 // ── 투자포인트 탭: 애널리스트 목표가 (출처·기준일 포함) ──
 // 갱신: StockAnalysis 예측 페이지(stockanalysis.com/stocks/vz/forecast/)의 값과 날짜를 옮긴다.
 // 현재가 대비는 마지막 종가에서 계산한다.
-const VZ_ANALYST = { asOf: '2026-11-08', source: 'StockAnalysis (의견 집계 · 개별 목표가)', rating: 'Buy', n: 24, nTargets: 14, mean: 49.29, median: 49,
+const VZ_ANALYST = { asOf: '2026-11-15', source: 'StockAnalysis (의견 집계 · 개별 목표가)', rating: 'Buy', n: 24, nTargets: 14, mean: 49.29, median: 49,
   low: 44, high: 55, strongBuy: 9, buy: 3, hold: 12, sell: 0, strongSell: 0 };
 (function(){
   const A = VZ_ANALYST, last = (typeof VZ_DAILY !== 'undefined' && VZ_DAILY.length) ? VZ_DAILY[VZ_DAILY.length - 1] : null;
